@@ -1,0 +1,34 @@
+name: Feature request
+description: Propose a new capability or an improvement to existing behavior
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Describe the outcome you want, not only the implementation. Search the open issues
+        first to avoid duplicates.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: The situation or limitation today, and who it affects.
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: What would you like to happen?
+      description: The behavior you want, ideally with a short example. Keep the scope small and concrete.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: What alternatives have you considered?
+      description: Other approaches, workarounds you use today, or reasons they fall short.
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: Contribution
+      options:
+        - label: I would like to implement this myself (see CONTRIBUTING.md for the fold-in path)

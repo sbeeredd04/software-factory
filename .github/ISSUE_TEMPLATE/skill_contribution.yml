@@ -1,0 +1,52 @@
+name: Skill or integration contribution
+description: Propose a new skill, role, or integration to fold into the factory
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The fold-in path is documented in CONTRIBUTING.md ("Adding a skill to the factory").
+        Canonical skills live in skills/<name>/, use only standard frontmatter keys, and pass
+        scripts/validate.py plus the Agent Skills validator. At runtime, users fold third-party
+        skills into their own factory with the sf-evolve skill.
+  - type: input
+    id: name
+    attributes:
+      label: Name
+      description: The proposed skill, role, or integration name.
+      placeholder: sf-my-skill
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind
+      options:
+        - Skill
+        - Role agent
+        - Review-bot integration
+        - Tracker adapter
+        - MCP or tool integration
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: purpose
+    attributes:
+      label: What does it do, and when should the factory load it?
+      description: Trigger conditions first. The pack favors short, trigger-first descriptions.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence that it works
+      description: Tests, an example run, or a link to the upstream project. Contributions ship standard-library-only Python and real verification, not claims.
+  - type: checkboxes
+    id: fold-in-checklist
+    attributes:
+      label: Fold-in checklist (for skills)
+      options:
+        - label: I have read the fold-in path in CONTRIBUTING.md
+        - label: The skill's folder name equals its frontmatter name
+        - label: Frontmatter uses only standard keys, with a trigger-first description of at most 300 characters

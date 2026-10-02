@@ -1,0 +1,72 @@
+name: Bug report
+description: Something in the pack does not work as documented
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug. Include the exact commands or prompts you
+        ran and their real output, and redact secrets, tokens, and private information.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What you observed, and what you expected instead.
+      placeholder: |
+        Observed - the installer ...
+        Expected - ...
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      description: Which part of the pack is affected?
+      options:
+        - Orchestrator (software-factory skill)
+        - Design skills (sf-design, sf-smell-audit, sf-refactor, sf-patterns)
+        - Onboarding and integrations (sf-help, sf-agents, sf-evolve)
+        - Role agents
+        - Installer (install.py, install.sh)
+        - Kernel helpers and hooks
+        - Validation tooling and scanners
+        - Documentation
+        - Other
+    validations:
+      required: true
+  - type: dropdown
+    id: host
+    attributes:
+      label: Host
+      description: Which coding-agent host were you using?
+      options:
+        - Claude Code
+        - Cursor
+        - Codex
+        - Multiple hosts
+        - Not host-specific
+        - Not applicable
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: A minimal, concrete sequence. Quote the exact commands or prompts.
+      placeholder: |
+        1. Install the pack into a scratch repository with ...
+        2. Run ...
+        3. ...
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, Python version, host and its version, and how the pack was installed.
+      placeholder: macOS 15, Python 3.13, installed via install.sh
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Command output, exit codes, or file excerpts that show the bug. Redact secrets.

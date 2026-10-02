@@ -1,0 +1,23 @@
+# Dependabot keeps the CI actions current and covers Python dependency
+# manifests if the repository ever gains one. The shipped pack itself is
+# standard-library-only and has no dependencies.
+version: 2
+
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    commit-message:
+      prefix: chore
+      include: scope
+
+  - package-ecosystem: pip
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    commit-message:
+      prefix: chore
+      include: scope

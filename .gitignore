@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Virtual environments (never required, but never committed either)
+.venv/
+venv/
+
+# Node (dev-tooling caches only; the pack ships no npm manifest)
+node_modules/
+
+# OS
+.DS_Store
+
+# Secrets and local environment files
+.env
+.env.*
+
+# Generated release output (built at release time, never committed)
+dist/
+
+# Local factory runtime state (if the pack is dogfooded into this repository)
+.software-factory/runtime/
+.software-factory/backups/
+.software-factory/runs/
+.software-factory/active.json
+.software-factory/state.lock
+.software-factory/installation.json

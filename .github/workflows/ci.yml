@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ci:
+    name: ${{ matrix.os }} / Python ${{ matrix.python-version }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        python-version: ['3.11', '3.12', '3.13']
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v5
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install uv (the static gate uses uvx-based checks)
+        run: python3 -m pip install uv
+      - name: Byte-compile shipped Python
+        run: python3 -m compileall -q install.py scripts skills tests
+      - name: Unit tests
+        run: python3 -m unittest discover -s tests -v
+      - name: Static gate
+        run: bash scripts/check_all.sh
