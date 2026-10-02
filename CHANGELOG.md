@@ -10,6 +10,20 @@ ISO 8601 `YYYY-MM-DD` format.
 
 ### Added
 
+- Standard-library kernel helpers under `skills/software-factory/scripts/`: `state.py`
+  (active-program pointer, exclusive path claims with Git common-dir identity and
+  parent/child collision detection, checkpoint notes with shape limits, snapshot,
+  read-only status, deactivate/repair; atomic writes and an `fcntl` state lock),
+  `gate.py` (evidence-manifest validation with configuration-driven check names and a
+  `deploy`/`deployed_sha` proof; reads data only), `hook.py` (session-start recovery
+  pointer and pre-compact snapshot for Claude Code, Cursor and Codex with host-correct
+  envelopes; inert without an active pointer) and `config.py` (fail-closed parsing of
+  the documented JSON-compatible YAML subset; never executes configuration content).
+- Unit tests for the kernel helpers (`tests/test_state.py`, `tests/test_gate.py`,
+  `tests/test_hook.py`, `tests/test_config_kernel.py`) covering concurrency,
+  worktree collisions, credential refusal, degraded Git observation and sanitized
+  failure modes, with a shared fixture module (`tests/support.py`).
+
 - Repository skeleton and community health files: MIT [LICENSE](LICENSE), [NOTICE.md](NOTICE.md)
   with attribution and trademark notices, [CONTRIBUTING.md](CONTRIBUTING.md),
   [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) (Contributor Covenant 2.1), [SECURITY.md](SECURITY.md),
