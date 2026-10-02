@@ -10,6 +10,12 @@ ISO 8601 `YYYY-MM-DD` format.
 
 ### Added
 
+- The `software-factory` orchestrator skill: a host-neutral entry map, the
+  feature and bug workflow graphs with prose walkthroughs, eleven phase
+  references (team, planning, dispatch, verification, integration, recovery,
+  configuration, authority, hosts, evidence, handoff), and clearly marked
+  placeholder entries for `sf-help`, `sf-agents` and `sf-evolve` so the
+  eight-skill layout validates ahead of the onboarding milestone.
 - Standard-library kernel helpers under `skills/software-factory/scripts/`: `state.py`
   (active-program pointer, exclusive path claims with Git common-dir identity and
   parent/child collision detection, checkpoint notes with shape limits, snapshot,

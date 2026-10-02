@@ -1,0 +1,62 @@
+# Planning and readiness
+
+Phase: planning — from grounded intent to an approved, story-sliced plan, and
+the ready-frontier decision that follows it.
+
+## Grounding
+
+Read the project's configured principles and architecture documents, the
+canonical tracker and the current code before planning. Reuse existing approved
+plans and GO decisions; fill only the actual gaps. Missing product outcomes or
+acceptance criteria benefit from the product manager; changed cross-module
+contracts from the architect; these are examples, not compulsory staffing.
+
+When BMad is installed, its planning skills do the heavy lifting: PRD or spec
+work for genuinely missing planning, architecture skills for contract changes,
+and the ticket/sprint artifacts to slice an initiative into epics and stories.
+When BMad is absent, plan natively with the same discipline: outcome, acceptance
+criteria, stories, proof per story. The orchestrator keeps ownership of design
+and acceptance either way.
+
+## What a plan names
+
+Map the request to acceptance criteria and current modules: responsibility
+owners, boundaries, data flow, contracts, obsolete paths to delete,
+compatibility and non-goals. Use `sf-design` and its focused skills
+(`sf-smell-audit`, `sf-refactor`, `sf-patterns`) during planning to reach the
+simplest complete design, and hold the anti-bloat bar: reuse first, the smallest
+complete diff, no unrequested abstraction, obsolete-path deletion as part of
+done, and one runnable check per story.
+
+Risk includes auth, money, privacy, state and concurrency, migrations,
+deployment and user-visible behavior. Each story names its failure, unknown and
+recovery cases; its deterministic tests; its actual-effect assertions; any
+qualitative eval slice; its staging or deploy flow; and its rollback. Doc-only
+or non-deployable work carries an explicitly approved narrower proof, not a
+silent exemption.
+
+Ceremony scales with risk: a small low-risk change gets a small spec and the
+relevant proof, not the full apparatus.
+
+## Independent plan review
+
+A non-author reviewer receives the actual sources, code anchors, acceptance
+criteria and risks — not the planner's summary. Material acceptance or risk
+findings force revision; re-review the affected portions until the gaps resolve
+or the human owner decides. Iterations are bounded; do not optimize for cosmetic
+perfection.
+
+Reuse a scoped GO whenever it covers the request. Only new scope, new authority
+or a genuine conflict with a recorded decision goes back to the human, as one
+short question with a recommendation and 2-4 options. A blocked decision leaves
+independent safe work eligible.
+
+## Ready frontier
+
+Readiness is defined by dependency-unlock evidence — each prerequisite's unlock
+condition demonstrably holds — never by story title, list order or position in a
+tracking table. Ready work across eligible epics may overlap within the approved
+scope and the human checkpoint gates. Brief each dispatch with actual file
+scope, dependency evidence, acceptance criteria, proof expectations and any
+phase-scoped resources. Schedule by coupling, current capacity and observed
+rework, not by a global order.
