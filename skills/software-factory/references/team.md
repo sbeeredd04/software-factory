@@ -18,13 +18,13 @@ ones not shipped here.
 | --- | --- |
 | `sf-product-manager` | Outcomes and acceptance criteria; uses BMad PM/PRD skills when installed |
 | `sf-architect` | Cross-module contracts and boundaries; uses BMad architecture skills when installed |
-| `sf-design-reviewer` | Applies the four `sf-design` skills as the anti-bloat bar on plans and diffs |
-| `sf-engineer` | Standard implementation plus tests; smallest complete change |
+| `sf-design-reviewer` | Applies the four `sf-` design skills as the anti-bloat bar on plans and diffs |
+| `sf-engineer` | Standard implementation plus tests; smallest complete change including error/recovery and obsolete paths |
 | `sf-principal-engineer` | High-risk or complex work: auth, money, state machines, migrations, concurrency |
-| `sf-qa-engineer` | Exercises acceptance criteria on the actual HEAD: effects, recovery, regression |
+| `sf-qa-engineer` | Exercises acceptance criteria on the actual HEAD: effects, recovery, regression, compatibility; uses BMad TEA when installed |
 | `sf-code-reviewer` | Reviews the actual diff with cited anchors; never authors the reviewed work |
-| `sf-evaluator` | Calibrated qualitative evals; runs known-good/bad canaries first |
-| `sf-ai-engineer` | Prompts, context, tools, evals and harness boundaries |
+| `sf-evaluator` | Grades calibrated qualitative rubrics after deterministic effect checks; runs known-good/bad canaries first |
+| `sf-ai-engineer` | Prompts, context, tools, evals and harness boundaries, without duplicating lifecycle or status machinery |
 | `sf-release-engineer` | CI/CD, pipelines, gated sequential merges, deploy-SHA proof |
 | `sf-security-reviewer` | STRIDE/OWASP review on risky diffs |
 
