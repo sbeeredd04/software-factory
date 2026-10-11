@@ -9,6 +9,10 @@ on:
 permissions:
   contents: read
 
+env:
+  # Pinned ruff for gate reproducibility; keep in sync with scripts/check_all.sh.
+  SF_RUFF_VERSION: "0.17.0"
+
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true

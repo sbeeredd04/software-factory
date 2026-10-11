@@ -589,7 +589,7 @@ class CheckAllShTest(unittest.TestCase):
         for needle in (
             "python3 -m compileall",
             "python3 -m unittest discover -s tests -v",
-            "uvx ruff check .",
+            'uvx --from "ruff==${RUFF_VERSION}" ruff check .',
             "shellcheck",
             "install.sh",
             "python3 scripts/validate.py",

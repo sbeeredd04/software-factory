@@ -4,6 +4,25 @@ Owns the active-program pointer, exclusive path claims and checkpoint notes
 under a consumer project's `.software-factory/` directory. Standard library
 only. It observes Git read-only and never calls models, the network or any
 Git writer, and never dispatches work.
+
+Bounds (the full contract lives in the skill's recovery reference):
+
+- Claims are a lease, not a ledger: release each claim when its work is done.
+  New claims warn above CLAIM_WARN_THRESHOLD (50) and are refused at
+  MAX_ACTIVE_CLAIMS (100); the refusal names `release` and `reconcile` as the
+  way out. `reconcile` lists claims whose worktree or HEAD no longer resolves
+  (exit 1 when any are listed); claims are never expired silently.
+- `snapshot` observes Git once per distinct worktree, never once per claim,
+  and no Git subprocess ever runs while the state lock is held.
+- `run.json` stays under MAX_RUN_BYTES (256 KiB); oversized or malformed
+  state is refused whole, never partially read. Released claims are pruned
+  from the active document; the last HISTORY_LIMIT (16) releases are kept as
+  compact history — longer history belongs in the board record or checkpoint.
+- `runs/<program>/` holds only run.json, CHECKPOINT.md, notes/, briefs/,
+  evidence/, evals/ and handoffs/. Text receipts only: no binaries, no
+  symlinks, at most 1 MiB per artifact and 16 MiB across the run tree.
+  Derived boards and status summaries are never stored there. `audit`
+  reports usage against those budgets (exit 1 on violations) read-only.
 """
 from __future__ import annotations
 
@@ -30,6 +49,14 @@ SECRET = re.compile(
 )
 STATE_DIR = ".software-factory"
 LOCK_WAIT_SECONDS = 5.0
+CLAIM_WARN_THRESHOLD = 50
+MAX_ACTIVE_CLAIMS = 100
+HISTORY_LIMIT = 16
+MAX_RUN_BYTES = 256 * 1024
+MAX_ARTIFACT_BYTES = 1024 * 1024
+RUNS_BUDGET_BYTES = 16 * 1024 * 1024
+RUN_LAYOUT_FILES = {"run.json", "CHECKPOINT.md"}
+RUN_LAYOUT_DIRS = {"notes", "briefs", "evidence", "evals", "handoffs"}
 
 
 class StateError(ValueError):
@@ -120,6 +147,19 @@ def read_json(path):
     return data
 
 
+def read_run(path):
+    """Read a run document, refusing anything over the byte budget whole."""
+    try:
+        size = Path(path).stat().st_size
+    except OSError as exc:
+        raise StateError("missing or invalid state; reconcile before continuing") from exc
+    if size > MAX_RUN_BYTES:
+        raise StateError(
+            f"run state exceeds the {MAX_RUN_BYTES}-byte budget; reconcile or archive before continuing"
+        )
+    return read_json(path)
+
+
 def load(workspace):
     pointer_file = pointer_path(workspace)
     if not pointer_file.is_file():
@@ -131,7 +171,7 @@ def load(workspace):
     if not isinstance(relative, str):
         raise StateError("invalid active pointer")
     path = within(workspace, workspace / relative)
-    data = read_json(path)
+    data = read_run(path)
     validate_state(data)
     return path, data
 
@@ -158,6 +198,15 @@ def validate_state(data):
             raise StateError("invalid claim scope")
         if "observation" in item and not isinstance(item["observation"], dict):
             raise StateError("invalid claim observation")
+    history = data.get("history", [])
+    if not isinstance(history, list) or len(history) > HISTORY_LIMIT:
+        raise StateError("invalid release history")
+    for entry in history:
+        if not isinstance(entry, dict) or not all(
+            isinstance(entry.get(key), str) and entry[key]
+            for key in ("task", "owner", "released_at")
+        ):
+            raise StateError("invalid release history")
 
 
 def projection(data):
@@ -165,7 +214,7 @@ def projection(data):
     rows = [
         f"# Software Factory checkpoint: {data['program']}",
         f"Updated: {data.get('updated_at', 'unknown')}",
-        f"Canonical tracker: {data['tracker']}",
+        f"Planning source: {data['tracker']} (the tracker feeds planning; it is never a status store)",
         f"Principles: {data['principles']}",
         f"Objective: {notes.get('objective', 'Read the checkpoint and reconcile')}",
         f"Next: {notes.get('next', 'No dispatch until readiness is verified')}",
@@ -221,7 +270,10 @@ def initialize(workspace, program, tracker, principles):
         if any(existing.get(key) != value for key, value in links.items()):
             raise StateError("existing source links differ; reconcile before resuming")
     else:
-        save(path, {"version": 1, "program": program, "claims": {}, "checkpoint": {}, **links})
+        save(
+            path,
+            {"version": 1, "program": program, "claims": {}, "checkpoint": {}, "history": [], **links},
+        )
     atomic_json(pointer, {"version": 1, "run": str(path.relative_to(workspace))})
 
 
@@ -242,7 +294,7 @@ def repair(workspace, program):
     path = run_path(workspace, program)
     if not path.is_file():
         raise StateError(f"no run state for program '{program}'")
-    data = read_json(path)
+    data = read_run(path)
     validate_state(data)
     if data["program"] != program:
         raise StateError("program mismatch")
@@ -261,13 +313,8 @@ def repair(workspace, program):
     atomic_json(pointer, {"version": 1, "run": str(path.relative_to(workspace))})
 
 
-def claim(data, task, owner, repo, paths):
-    if not task or not owner or len(task) > 128 or len(owner) > 128:
-        raise StateError("task and owner must be short nonempty IDs")
-    if SECRET.search(json.dumps([task, owner, list(paths)])):
-        raise StateError("credential-like value refused")
-    if task in data["claims"]:
-        raise StateError("task already claimed; reconcile before reassignment")
+def prepare_claim(repo, paths):
+    """Resolve a claim's Git identity and scope; runs before the state lock."""
     repo = repo.resolve()
     if Path(git(repo, "rev-parse", "--show-toplevel")).resolve() != repo:
         raise StateError("repo must be the worktree root")
@@ -288,6 +335,21 @@ def claim(data, task, owner, repo, paths):
         normalized.append(str(relative))
     if not normalized:
         raise StateError("claim needs file scopes")
+    return repo, identity, normalized
+
+
+def claim(data, task, owner, repo, identity, normalized):
+    if not task or not owner or len(task) > 128 or len(owner) > 128:
+        raise StateError("task and owner must be short nonempty IDs")
+    if SECRET.search(json.dumps([task, owner, list(normalized)])):
+        raise StateError("credential-like value refused")
+    if task in data["claims"]:
+        raise StateError("task already claimed; reconcile before reassignment")
+    if len(data["claims"]) >= MAX_ACTIVE_CLAIMS:
+        raise StateError(
+            f"active claim cap ({MAX_ACTIVE_CLAIMS}) reached; release finished claims "
+            "or run reconcile to list stale ones"
+        )
     for old in data["claims"].values():
         if old["identity"] != identity:
             continue
@@ -300,7 +362,7 @@ def claim(data, task, owner, repo, paths):
         "owner": owner,
         "repo": str(repo),
         "identity": identity,
-        "paths": normalized,
+        "paths": list(normalized),
         "claimed_at": now(),
     }
 
@@ -310,6 +372,10 @@ def release(data, task, owner):
     if old is None or old["owner"] != owner:
         raise StateError("owner mismatch; reconcile before release")
     del data["claims"][task]
+    # Released claims leave the active document; a bounded trail preserves history.
+    history = data.setdefault("history", [])
+    history.append({"task": task, "owner": owner, "released_at": now()})
+    del history[:-HISTORY_LIMIT]
 
 
 def validate_notes(notes):
@@ -331,22 +397,27 @@ def validate_notes(notes):
 
 
 def snapshot(data):
+    """Observe Git once per distinct worktree, never once per claim."""
+    observed_by_repo = {}
+    stamp = now()
     for item in data["claims"].values():
-        try:
-            observed = {
-                "head": git(Path(item["repo"]), "rev-parse", "HEAD"),
-                "dirty": bool(git(Path(item["repo"]), "status", "--porcelain")),
-                "observed_at": now(),
-            }
-        except (StateError, subprocess.TimeoutExpired, OSError):
-            observed = {"head": "unknown", "dirty": "unknown", "observed_at": now()}
+        repo = item["repo"]
+        if repo not in observed_by_repo:
+            try:
+                observed_by_repo[repo] = {
+                    "head": git(Path(repo), "rev-parse", "HEAD"),
+                    "dirty": bool(git(Path(repo), "status", "--porcelain")),
+                }
+            except (StateError, subprocess.TimeoutExpired, OSError):
+                observed_by_repo[repo] = {"head": "unknown", "dirty": "unknown"}
+        observed = observed_by_repo[repo]
         prior = item.get("observation")
         if (
             not isinstance(prior, dict)
             or prior.get("head") != observed["head"]
             or prior.get("dirty") != observed["dirty"]
         ):
-            item["observation"] = observed
+            item["observation"] = {**observed, "observed_at": stamp}
 
 
 def refresh(workspace, notes=None):
@@ -373,11 +444,132 @@ def read_notes(path):
         raise StateError("checkpoint notes file missing or invalid") from exc
 
 
+def sanitize(value):
+    """One printable line of a state value for terminal output."""
+    return "".join(char for char in str(value) if char.isprintable())[:128]
+
+
+def reconcile(workspace):
+    """List claims whose worktree or HEAD no longer resolves; never releases."""
+    _, data = load(workspace)
+    resolved = {}
+    stale = []
+    for task, item in data["claims"].items():
+        repo = item["repo"]
+        if repo not in resolved:
+            try:
+                head = git(Path(repo), "rev-parse", "HEAD")
+                resolved[repo] = bool(re.fullmatch(r"[0-9a-f]{40}", head))
+            except (StateError, subprocess.TimeoutExpired, OSError):
+                resolved[repo] = False
+        if not resolved[repo]:
+            stale.append((task, item))
+    for task, item in stale:
+        print(
+            f"stale claim: task={sanitize(task)} owner={sanitize(item['owner'])} "
+            f"worktree={sanitize(item['repo'])}"
+        )
+    if stale:
+        print(
+            f"{len(stale)} stale claim(s); release each with "
+            "`state.py release --task <task> --owner <owner>` after confirming the owner"
+        )
+        print("claims are never expired silently")
+        return 1
+    print("no stale claims; every claimed worktree and HEAD resolves")
+    return 0
+
+
+def is_binary(path):
+    try:
+        with path.open("rb") as stream:
+            chunk = stream.read(4096)
+    except OSError:
+        return True
+    return b"\0" in chunk
+
+
+def audit_runs(workspace, budget=RUNS_BUDGET_BYTES, artifact_limit=MAX_ARTIFACT_BYTES):
+    """Measure the run tree against its layout and size budgets; read-only."""
+    root = state_dir(workspace) / "runs"
+    problems = []
+    total = 0
+    files = 0
+    if root.is_dir():
+        for program in sorted(root.iterdir()):
+            slug = sanitize(program.name)
+            if program.is_symlink() or not program.is_dir() or not SLUG.fullmatch(program.name):
+                problems.append(f"undocumented entry under runs/: {slug}")
+                continue
+            for entry in sorted(program.iterdir()):
+                if entry.is_symlink():
+                    problems.append(f"symlink refused under runs/{slug}: {sanitize(entry.name)}")
+                elif (entry.name in RUN_LAYOUT_FILES and entry.is_file()) or (
+                    entry.name in RUN_LAYOUT_DIRS and entry.is_dir()
+                ):
+                    pass
+                else:
+                    problems.append(
+                        f"undocumented entry under runs/{slug}: {sanitize(entry.name)}; "
+                        "derived boards and status summaries are regenerable projections "
+                        "and never stored in the run folder"
+                    )
+            for path in sorted(program.rglob("*")):
+                if path.is_symlink():
+                    problems.append(
+                        f"symlink refused under runs/{slug}: {sanitize(path.relative_to(program))}"
+                    )
+                    continue
+                if not path.is_file():
+                    continue
+                size = path.stat().st_size
+                total += size
+                files += 1
+                relative = sanitize(path.relative_to(program))
+                if is_binary(path):
+                    problems.append(f"binary content refused under runs/: {relative}")
+                elif size > artifact_limit:
+                    problems.append(
+                        f"artifact above the {artifact_limit}-byte limit under runs/: "
+                        f"{relative}; keep large artifacts in the project or external "
+                        "storage and link them"
+                    )
+                if path.name == "run.json" and size > MAX_RUN_BYTES:
+                    problems.append(f"run.json above its {MAX_RUN_BYTES}-byte budget")
+    if total > budget:
+        problems.append(
+            f"runs/ holds {total} bytes, above the {budget}-byte budget; "
+            "move large artifacts to the project or external storage and link them"
+        )
+    return total, files, problems
+
+
+def audit(workspace):
+    """Report run-tree usage against the budgets; flags violations, never writes."""
+    total, files, problems = audit_runs(workspace)
+    print(
+        f"runs/ usage: {total} bytes in {files} files "
+        f"(budget {RUNS_BUDGET_BYTES} bytes, per-artifact limit {MAX_ARTIFACT_BYTES} bytes)"
+    )
+    for problem in problems:
+        print(f"runs: {problem}", file=sys.stderr)
+    if problems:
+        print(
+            "runs: reconcile the run tree against the documented layout and budgets",
+            file=sys.stderr,
+        )
+        return 1
+    return 0
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "command",
-        choices=["init", "claim", "release", "checkpoint", "snapshot", "status", "deactivate", "repair"],
+        choices=[
+            "init", "claim", "release", "checkpoint", "snapshot", "status",
+            "reconcile", "audit", "deactivate", "repair",
+        ],
     )
     parser.add_argument("--workspace", type=Path, default=Path.cwd())
     parser.add_argument("--program")
@@ -405,11 +597,18 @@ def main():
             _, data = load(root)
             print(projection(data), end="")
             return 0
+        if args.command == "reconcile":
+            return reconcile(root)
+        if args.command == "audit":
+            return audit(root)
         if args.command in ("checkpoint", "snapshot"):
             notes = validate_notes(read_notes(args.notes)) if args.command == "checkpoint" else None
             refresh(root, notes)
             print("Software Factory checkpoint refreshed.")
             return 0
+        prepared = None
+        if args.command == "claim":
+            prepared = prepare_claim(args.repo, args.paths)  # Git runs before the lock.
         with locked(root):
             if args.command == "init":
                 initialize(root, args.program, args.tracker, args.principles)
@@ -420,10 +619,16 @@ def main():
             else:
                 path, data = load(root)
                 if args.command == "claim":
-                    claim(data, args.task, args.owner, args.repo, args.paths)
+                    claim(data, args.task, args.owner, *prepared)
                 elif args.command == "release":
                     release(data, args.task, args.owner)
                 save(path, data)
+                if args.command == "claim" and len(data["claims"]) > CLAIM_WARN_THRESHOLD:
+                    print(
+                        f"state: warning: {len(data['claims'])} active claims "
+                        f"(above {CLAIM_WARN_THRESHOLD}); release each claim when its work is done",
+                        file=sys.stderr,
+                    )
         print("Software Factory state updated.")
         return 0
     except (StateError, OSError, subprocess.TimeoutExpired) as exc:

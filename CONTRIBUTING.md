@@ -34,7 +34,7 @@ bash scripts/check_all.sh
 
 ```bash
 python3 -m unittest discover -s tests -v   # unit tests (SF_SKIP_NETWORK=1 skips network-marked tests)
-uvx ruff check .                          # Python lint
+uvx --from ruff==0.17.0 ruff check .       # Python lint (pinned; keep in sync with CI)
 npx -y shellcheck@latest install.sh        # shell lint (runs when install.sh exists)
 python3 scripts/validate.py               # canonical layout and frontmatter rules
 python3 scripts/scan_public.py             # public-cleanliness scan (private terms, secrets, paths)
@@ -50,7 +50,7 @@ For a quick inner loop, run the narrow checks directly:
 
 ```bash
 python3 -m unittest discover -s tests -v
-uvx ruff check .
+uvx --from ruff==0.17.0 ruff check .
 ```
 
 CI runs the same gate on Linux and macOS across Python 3.11 to 3.13 on every push and pull

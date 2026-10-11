@@ -34,9 +34,13 @@ skip_step() {
   SKIPPED_STEPS+=("$1")
 }
 
+# Pinned lint version for gate reproducibility; keep in sync with the
+# SF_RUFF_VERSION env in .github/workflows/ci.yml.
+RUFF_VERSION="${SF_RUFF_VERSION:-0.17.0}"
+
 run_step "compileall" python3 -m compileall -q install.py scripts skills tests
 run_step "unit tests" python3 -m unittest discover -s tests -v
-run_step "ruff" uvx ruff check .
+run_step "ruff" uvx --from "ruff==${RUFF_VERSION}" ruff check .
 
 if [ -f install.sh ]; then
   run_step "shellcheck" npx -y shellcheck@latest install.sh

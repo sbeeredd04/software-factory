@@ -42,7 +42,7 @@ no sudo. Development tools run on demand through `uvx`/`npx` and are never insta
 ```bash
 python3 -m unittest discover -s tests -v   # unit tests (SF_SKIP_NETWORK=1 skips network-marked tests)
 python3 -m compileall -q install.py scripts skills tests   # syntax check
-uvx ruff check .                           # lint
+uvx --from ruff==0.17.0 ruff check .       # lint (pinned; matches scripts/check_all.sh and CI)
 bash scripts/check_all.sh                  # the full static gate - run before every handoff
 ```
 

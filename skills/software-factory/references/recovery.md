@@ -38,10 +38,13 @@ python3 scripts/state.py status --workspace "<project-root>"
 Commands: `init` (start an authorized program; refuses a second one), `claim` /
 `release` (exclusive repo-relative paths per owner), `checkpoint` (validated
 notes), `snapshot` (read-only Git observations; a failed observation degrades to
-`unknown`), `status` (read-only projection), `deactivate` (archives the pointer
-once every claim is released), `repair` (restores a validated existing run after
-a missing or corrupt pointer; never invents a run). `--help` prints the full
-syntax. Refusals exit nonzero with one sanitized line and leave state untouched.
+`unknown`), `status` (read-only projection), `reconcile` (lists claims whose
+worktree or HEAD no longer resolves; never releases them), `audit` (read-only
+run-folder usage against the layout and size budgets below), `deactivate`
+(archives the pointer once every claim is released), `repair` (restores a
+validated existing run after a missing or corrupt pointer; never invents a
+run). `--help` prints the full syntax. Refusals exit nonzero with one
+sanitized line and leave state untouched.
 
 ## Hooks
 
@@ -70,3 +73,30 @@ Atomic writes and a local lock protect the run files; the lock is not a Git
 lock, a distributed fence, a task lease or an effect ledger. Helpers do not
 infer intent, choose models or prove artifact truth — independent review still
 reads and runs the evidence. Installation creates no run state.
+
+## Bounds: claims, run.json and the run folder
+
+Claims are a lease, not a ledger: release each claim when its work merges or
+stops. The helper warns above 50 active claims and refuses new claims at 100
+with an error naming the way out; `state.py reconcile` lists claims whose
+worktree or HEAD no longer resolves (exit 1 when any are listed) so a human
+can release them through the normal owner check. Claims are never expired
+silently. A snapshot observes Git once per distinct worktree, never once per
+claim, and no Git subprocess runs while the state lock is held.
+
+`run.json` stays under 256 KiB: claim records are compact (owner, repo,
+identity, paths, timestamps, a HEAD/dirty observation), released claims are
+pruned from the active document, and only the last 16 releases are kept as
+history — longer history belongs in the board record or the checkpoint.
+Oversized or malformed state is refused whole, never partially read.
+
+Program folder layout: `runs/<program>/` holds exactly `run.json`,
+`CHECKPOINT.md`, `notes/`, `briefs/`, `evidence/`, `evals/` and `handoffs/`.
+Receipts are small text files: nothing above 1 MiB (larger artifacts stay in
+the consumer project or external storage and are linked by path), no binaries,
+no symlinks, and at most 16 MiB across the run tree. Derived boards and status
+summaries are not stored here — they are regenerable projections with no
+canonical role. `state.py audit` reports usage against these budgets and
+flags violations (exit 1) without altering any run artifact; the installer
+keeps `runs/` out of version control while `config.yaml` and `context/` stay
+tracked.
