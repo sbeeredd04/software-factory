@@ -390,7 +390,15 @@ def crawl(root: Path, max_files: int) -> dict:
     unreadable_dirs: list[str] = []
 
     def onerror(error: OSError) -> None:
-        unreadable_dirs.append(str(error.filename))
+        # Report repo-relative: error.filename is absolute once main()
+        # resolves root, and an absolute user path must never reach the
+        # report or the committed artifact.
+        filename = error.filename
+        if filename:
+            rel = os.path.relpath(filename, root)
+            unreadable_dirs.append(Path(rel).as_posix())
+        else:
+            unreadable_dirs.append("(unknown)")
 
     for dirpath, dirnames, filenames in os.walk(root, onerror=onerror):
         dirnames[:] = sorted(

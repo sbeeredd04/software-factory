@@ -10,9 +10,8 @@ metadata:
 
 # sf-crawl
 
-Understand a codebase once, then work from the map. This skill regenerates
-`.software-factory/context/CODEBASE.md`, the codebase map every worker reads
-before planning or implementing.
+This skill regenerates `.software-factory/context/CODEBASE.md`, the
+codebase map every worker reads before planning or implementing.
 
 ## Read-only rules
 
@@ -29,11 +28,10 @@ directory, e.g. `.claude/skills/sf-crawl`, `.agents/skills/sf-crawl`):
 
     python3 <skill-dir>/scripts/crawl.py .
 
-The deterministic script builds the map — do not read files yourself. One
-command regenerates the artifact atomically in place; re-run whenever the
-tree changes. Output is deterministic: a refresh changes only what the tree
-change changed, with no cache and no partial state. `--json <path>` adds
-the machine-readable report; `--help` lists the options.
+The deterministic script builds the map. One command regenerates the artifact
+atomically in place; re-run whenever the tree changes. Output is
+deterministic: a refresh changes only what the tree change changed, with no
+cache and no partial state. `--json <path>` adds the machine-readable report.
 
 ## Coverage
 

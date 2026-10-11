@@ -435,6 +435,26 @@
           "hitl": false,
           "plan_checkpoint": false,
           "done_checkpoint": true
+        },
+        {
+          "key": "crawl-unreadable-path-leak-fix",
+          "title": "Report unreadable directories repo-relative in the crawl",
+          "type": "story",
+          "after": [
+            "crawl-skill"
+          ],
+          "covers": [
+            "VAL-CRAWL-004"
+          ],
+          "risk": "standard",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": true,
+          "scope": [
+            "skills/sf-crawl/",
+            "tests/test_crawl.py",
+            ".software-factory/context/"
+          ]
         }
       ]
     },

@@ -5,8 +5,8 @@
 > (`<skill-dir>` is the installed skill directory, e.g. `.claude/skills/sf-crawl`
 > or `.agents/skills/sf-crawl`).
 
-- Source revision: 180cc3620d79765e7b365e127f3dfb3f38e79704
-- Generated: 2026-10-11T20:56:44Z
+- Source revision: 52e6d9cfc0fc8544f8ef652668fb901a9b586fb3
+- Generated: 2026-10-11T22:32:35Z
 
 ## Limits
 
@@ -54,7 +54,7 @@
 | `tests.support` | `tests/support.py` | 7 | 0 | 9 |
 | `tests.test_board` | `tests/test_board.py` | 10 | 0 | 6 |
 | `tests.test_config_kernel` | `tests/test_config_kernel.py` | 4 | 0 | 6 |
-| `tests.test_crawl` | `tests/test_crawl.py` | 9 | 0 | 10 |
+| `tests.test_crawl` | `tests/test_crawl.py` | 9 | 0 | 11 |
 | `tests.test_dogfood` | `tests/test_dogfood.py` | 9 | 0 | 10 |
 | `tests.test_gate` | `tests/test_gate.py` | 5 | 0 | 6 |
 | `tests.test_hook` | `tests/test_hook.py` | 8 | 0 | 8 |
@@ -121,10 +121,10 @@ No internal import edges.
 - `skills.sf-crawl.scripts.crawl.analyze_script` (line 291) calls `EXPORT_RE.match` (unconfirmed), `IMPORT_RE.match` (unconfirmed), `exports.add` (unconfirmed), `imports.add` (unconfirmed), `match.group` (unconfirmed), `path.read_text` (unconfirmed), `set` (unconfirmed), `sorted` (unconfirmed), `splitlines` (unconfirmed)
 - `skills.sf-crawl.scripts.crawl.pyproject_entry_points` (line 305) calls `data.get` (unconfirmed), `entries.items` (unconfirmed), `found.append` (unconfirmed), `isinstance` (unconfirmed), `path.is_file` (unconfirmed), `path.read_text` (unconfirmed), `problems.append` (unconfirmed), `project.get` (unconfirmed), `sorted` (unconfirmed), `tomllib.loads` (unconfirmed), `type` (unconfirmed)
 - `skills.sf-crawl.scripts.crawl.package_json_entry_points` (line 340) calls `bins.items` (unconfirmed), `data.get` (unconfirmed), `found.append` (unconfirmed), `isinstance` (unconfirmed), `json.loads` (unconfirmed), `path.is_file` (unconfirmed), `path.read_text` (unconfirmed), `problems.append` (unconfirmed), `sorted` (unconfirmed), `type` (unconfirmed)
-- `skills.sf-crawl.scripts.crawl.crawl` (line 384) calls `Path` (unconfirmed), `analyze_python` (confirmed: skills.sf-crawl.scripts.crawl.analyze_python), `analyze_script` (confirmed: skills.sf-crawl.scripts.crawl.analyze_script), `as_posix` (unconfirmed), `candidates.append` (unconfirmed), `candidates.sort` (unconfirmed), `census.get` (unconfirmed), `census.items` (unconfirmed), `dict` (unconfirmed), `e.get` (unconfirmed), `endswith` (unconfirmed), `entry_points.append` (unconfirmed), `entry_points.sort` (unconfirmed), `eprint` (confirmed: skills.sf-crawl.scripts.crawl.eprint), `is_file` (unconfirmed), `is_symlink` (unconfirmed), `join` (unconfirmed), `js_files.append` (unconfirmed), `js_files.sort` (unconfirmed), `len` (unconfirmed), `module_name` (confirmed: skills.sf-crawl.scripts.crawl.module_name), `module_names.add` (unconfirmed), `os.walk` (unconfirmed), `oversized.append` (unconfirmed), `package_json_entry_points` (confirmed: skills.sf-crawl.scripts.crawl.package_json_entry_points) … (call cap reached)
-- `skills.sf-crawl.scripts.crawl.render_markdown` (line 523) calls `add` (unconfirmed), `entry.get` (unconfirmed), `failure.get` (unconfirmed), `fmt_confirmed` (confirmed: skills.sf-crawl.scripts.crawl.fmt_confirmed), `get` (unconfirmed), `items` (unconfirmed), `join` (unconfirmed), `len` (unconfirmed), `rendered.append` (unconfirmed), `sorted` (unconfirmed), `sum` (unconfirmed), `values` (unconfirmed)
-- `skills.sf-crawl.scripts.crawl.write_atomic` (line 714) calls `os.fdopen` (unconfirmed), `os.replace` (unconfirmed), `os.unlink` (unconfirmed), `path.parent.mkdir` (unconfirmed), `tempfile.mkstemp` (unconfirmed), `tmp.write` (unconfirmed)
-- `skills.sf-crawl.scripts.crawl.main` (line 732) calls `Path` (unconfirmed), `argparse.ArgumentParser` (unconfirmed), `crawl` (confirmed: skills.sf-crawl.scripts.crawl.crawl), `datetime.now` (unconfirmed), `eprint` (confirmed: skills.sf-crawl.scripts.crawl.eprint), `json.dumps` (unconfirmed), `len` (unconfirmed), `max` (unconfirmed), `parser.add_argument` (unconfirmed), `parser.parse_args` (unconfirmed), `render_markdown` (confirmed: skills.sf-crawl.scripts.crawl.render_markdown), `root.is_dir` (unconfirmed), `root.resolve` (unconfirmed), `strftime` (unconfirmed), `sys.stdout.write` (unconfirmed), `write_atomic` (confirmed: skills.sf-crawl.scripts.crawl.write_atomic), `write_text` (unconfirmed)
+- `skills.sf-crawl.scripts.crawl.crawl` (line 384) calls `Path` (unconfirmed), `analyze_python` (confirmed: skills.sf-crawl.scripts.crawl.analyze_python), `analyze_script` (confirmed: skills.sf-crawl.scripts.crawl.analyze_script), `as_posix` (unconfirmed), `candidates.append` (unconfirmed), `candidates.sort` (unconfirmed), `census.get` (unconfirmed), `census.items` (unconfirmed), `dict` (unconfirmed), `e.get` (unconfirmed), `endswith` (unconfirmed), `entry_points.append` (unconfirmed), `entry_points.sort` (unconfirmed), `eprint` (confirmed: skills.sf-crawl.scripts.crawl.eprint), `is_file` (unconfirmed), `is_symlink` (unconfirmed), `join` (unconfirmed), `js_files.append` (unconfirmed), `js_files.sort` (unconfirmed), `len` (unconfirmed), `module_name` (confirmed: skills.sf-crawl.scripts.crawl.module_name), `module_names.add` (unconfirmed), `os.path.relpath` (unconfirmed), `os.walk` (unconfirmed), `oversized.append` (unconfirmed) … (call cap reached)
+- `skills.sf-crawl.scripts.crawl.render_markdown` (line 531) calls `add` (unconfirmed), `entry.get` (unconfirmed), `failure.get` (unconfirmed), `fmt_confirmed` (confirmed: skills.sf-crawl.scripts.crawl.fmt_confirmed), `get` (unconfirmed), `items` (unconfirmed), `join` (unconfirmed), `len` (unconfirmed), `rendered.append` (unconfirmed), `sorted` (unconfirmed), `sum` (unconfirmed), `values` (unconfirmed)
+- `skills.sf-crawl.scripts.crawl.write_atomic` (line 722) calls `os.fdopen` (unconfirmed), `os.replace` (unconfirmed), `os.unlink` (unconfirmed), `path.parent.mkdir` (unconfirmed), `tempfile.mkstemp` (unconfirmed), `tmp.write` (unconfirmed)
+- `skills.sf-crawl.scripts.crawl.main` (line 740) calls `Path` (unconfirmed), `argparse.ArgumentParser` (unconfirmed), `crawl` (confirmed: skills.sf-crawl.scripts.crawl.crawl), `datetime.now` (unconfirmed), `eprint` (confirmed: skills.sf-crawl.scripts.crawl.eprint), `json.dumps` (unconfirmed), `len` (unconfirmed), `max` (unconfirmed), `parser.add_argument` (unconfirmed), `parser.parse_args` (unconfirmed), `render_markdown` (confirmed: skills.sf-crawl.scripts.crawl.render_markdown), `root.is_dir` (unconfirmed), `root.resolve` (unconfirmed), `strftime` (unconfirmed), `sys.stdout.write` (unconfirmed), `write_atomic` (confirmed: skills.sf-crawl.scripts.crawl.write_atomic), `write_text` (unconfirmed)
 - `skills.sf-eval.scripts.sf_eval.utc_now` (line 77) calls `datetime.now` (unconfirmed), `strftime` (unconfirmed)
 - `skills.sf-eval.scripts.sf_eval.receipt_digest` (line 82) calls `encode` (unconfirmed), `hashlib.sha256` (unconfirmed), `hexdigest` (unconfirmed), `json.dumps` (unconfirmed), `obj.items` (unconfirmed)
 - `skills.sf-eval.scripts.sf_eval.atomic_write_json` (line 95) calls `handle.write` (unconfirmed), `json.dumps` (unconfirmed), `os.fdopen` (unconfirmed), `os.replace` (unconfirmed), `path.parent.mkdir` (unconfirmed), `tempfile.mkstemp` (unconfirmed)
@@ -168,7 +168,7 @@ No internal import edges.
 - `skills.software-factory.scripts.dashboard.render_streams` (line 135) calls `append` (unconfirmed), `badge` (confirmed: skills.software-factory.scripts.dashboard.badge), `counts.get` (unconfirmed), `esc` (confirmed: skills.software-factory.scripts.dashboard.esc), `join` (unconfirmed), `lanes.append` (unconfirmed), `out.append` (unconfirmed), `stories_by_stream.get` (unconfirmed), `stories_by_stream.setdefault` (unconfirmed), `story_card` (confirmed: skills.software-factory.scripts.dashboard.story_card)
 - `skills.software-factory.scripts.dashboard.render_frontier` (line 179) calls `esc` (confirmed: skills.software-factory.scripts.dashboard.esc), `join` (unconfirmed), `out.append` (unconfirmed)
 - `skills.software-factory.scripts.dashboard.render_blockers` (line 210) calls `append` (unconfirmed), `esc` (confirmed: skills.software-factory.scripts.dashboard.esc), `grouped.setdefault` (unconfirmed), `join` (unconfirmed), `out.append` (unconfirmed), `sorted` (unconfirmed)
-- … 494 more call rows (cap reached)
+- … 495 more call rows (cap reached)
 
 ## Entry points
 

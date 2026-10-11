@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import subprocess
 import sys
 import tempfile
@@ -296,6 +297,40 @@ class HonestDegradation(unittest.TestCase):
             self.assertTrue(messages[0].startswith("crawl: "))
             self.assertNotIn("Traceback", result.stderr)
             self.assertFalse(artifact.exists())
+
+    def test_unreadable_directory_reported_repo_relative(self):
+        if hasattr(os, "geteuid") and os.geteuid() == 0:
+            self.skipTest("chmod 000 does not restrict the superuser")
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp) / "repo"
+            root.mkdir()
+            (root / "app.py").write_text('"""App."""\n')
+            restricted = root / "restricted"
+            restricted.mkdir()
+            (restricted / "hidden.py").write_text("X = 1\n")
+            restricted.chmod(0o000)
+            out = Path(tmp) / "report.json"
+            artifact = Path(tmp) / "CB.md"
+            try:
+                result = run_crawl(root, "--json", out, "--artifact", artifact)
+            finally:
+                restricted.chmod(0o700)
+            # Honest degradation: the entry is named, the rest is kept, exit 0.
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertNotIn("Traceback", result.stderr)
+            report = json.loads(out.read_text())
+            self.assertIn("app", {m["name"] for m in report["python"]["modules"]})
+            named = [p for p in report["not_determined"] if "restricted" in p]
+            self.assertTrue(named, report["not_determined"])
+            # No absolute, home or leading-slash path may leak into the
+            # JSON report or the committed artifact.
+            payload = json.dumps(report)
+            text = artifact.read_text()
+            for needle in (str(root), str(root.resolve()), str(Path.home())):
+                self.assertNotIn(needle, payload)
+                self.assertNotIn(needle, text)
+            for problem in report["not_determined"]:
+                self.assertNotRegex(problem, r"(^|[\s(])/")
 
     def test_file_cap_is_reported_not_silent(self):
         with tempfile.TemporaryDirectory() as tmp:
