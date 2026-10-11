@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-11T20:23:13.396847+00:00",
-  "revision": 88,
+  "generated_at": "2026-10-11T20:23:58.092264+00:00",
+  "revision": 90,
   "streams": [
     {
       "id": "W-foundation",
@@ -34,10 +34,10 @@
         2
       ],
       "counts": {
-        "planned": 1,
-        "ready": 0,
-        "in-progress": 1,
-        "review": 0,
+        "planned": 0,
+        "ready": 1,
+        "in-progress": 0,
+        "review": 1,
         "built": 0,
         "done": 8,
         "cancelled": 0
@@ -1624,8 +1624,8 @@
       "stream": "W-expansion",
       "type": "story",
       "title": "Dogfood: the repo's own context home, board and eval suite in the gate",
-      "status": "in-progress",
-      "state": "in-progress",
+      "status": "in-review",
+      "state": "review",
       "owner": "worker-dogfood-evals",
       "after": [
         16
@@ -1638,7 +1638,17 @@
       "plan_checkpoint": false,
       "done_checkpoint": false,
       "blocked": null,
-      "receipts": {},
+      "receipts": {
+        "completion": {
+          "type": "completion-attestation",
+          "subject_sha": "25131c26e730dba3114c2ab9020137d499ac9216",
+          "statement": "Context home, board, decision records and the 30-case eval suite landed in the subject commit; the static gate including the pack's own eval step is green at that sha.",
+          "evidence": [
+            "git show --stat 25131c26e730dba3114c2ab9020137d499ac9216",
+            "SF_SKIP_NETWORK=1 bash scripts/check_all.sh (30 eval cases pass at the subject sha)"
+          ]
+        }
+      },
       "baseline_sha": null,
       "branch": null,
       "pr": null,
@@ -1661,6 +1671,12 @@
           "by": "worker-dogfood-evals",
           "from": "ready-for-dev",
           "to": "in-progress"
+        },
+        {
+          "at": "2026-10-11T20:23:58.000050+00:00",
+          "by": "worker-dogfood-evals",
+          "from": "in-progress",
+          "to": "in-review"
         }
       ],
       "findings": [],
@@ -1682,7 +1698,7 @@
       "type": "story",
       "title": "State and enforce every file budget in the gate",
       "status": "backlog",
-      "state": "planned",
+      "state": "ready",
       "owner": null,
       "after": [
         17
@@ -2358,17 +2374,17 @@
     }
   ],
   "frontier": {
-    "ready": [],
-    "waiting_on_prereq": [
+    "ready": [
       {
         "id": 18,
         "epic": 2,
         "stream": "W-expansion",
         "title": "State and enforce every file budget in the gate",
-        "missing": [
-          "17 (in-progress)"
-        ]
-      },
+        "why": "after 17 in-review; unclaimed",
+        "claimed": false
+      }
+    ],
+    "waiting_on_prereq": [
       {
         "id": 19,
         "epic": 3,
@@ -2511,13 +2527,7 @@
     "unpinned_gates": [],
     "undeclared_after": [],
     "order_conflicts": [],
-    "inconsistencies": [
-      {
-        "kind": "in-progress-without-claim",
-        "story": 17,
-        "detail": "story 17 is in-progress but holds no live claim"
-      }
-    ]
+    "inconsistencies": []
   },
   "decision_queue": [
     {

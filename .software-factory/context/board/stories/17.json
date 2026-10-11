@@ -4,7 +4,7 @@
   "epic": 2,
   "type": "story",
   "title": "Dogfood: the repo's own context home, board and eval suite in the gate",
-  "status": "in-progress",
+  "status": "in-review",
   "owner": "worker-dogfood-evals",
   "after": [
     16
@@ -17,7 +17,17 @@
   "plan_checkpoint": false,
   "done_checkpoint": false,
   "blocked": null,
-  "receipts": {},
+  "receipts": {
+    "completion": {
+      "type": "completion-attestation",
+      "subject_sha": "25131c26e730dba3114c2ab9020137d499ac9216",
+      "statement": "Context home, board, decision records and the 30-case eval suite landed in the subject commit; the static gate including the pack's own eval step is green at that sha.",
+      "evidence": [
+        "git show --stat 25131c26e730dba3114c2ab9020137d499ac9216",
+        "SF_SKIP_NETWORK=1 bash scripts/check_all.sh (30 eval cases pass at the subject sha)"
+      ]
+    }
+  },
   "baseline_sha": null,
   "branch": null,
   "pr": null,
@@ -34,6 +44,12 @@
       "by": "worker-dogfood-evals",
       "from": "ready-for-dev",
       "to": "in-progress"
+    },
+    {
+      "at": "2026-10-11T20:23:58.000050+00:00",
+      "by": "worker-dogfood-evals",
+      "from": "in-progress",
+      "to": "in-review"
     }
   ],
   "findings": [],
