@@ -10,13 +10,9 @@ metadata:
 
 # sf-agents (placeholder)
 
-> **Placeholder — this is not the shipped skill.** This file exists so the
-> eleven-skill layout validates. The full skill (agent registry and detection
-> probes, risk/complexity routing, review-bot config generation, PR comment and
-> thread triage) is authored in the onboarding milestone and will replace this
-> body. Until then, do not rely on this skill for routing or bot setup.
+> **Placeholder — this is not the shipped skill.** It exists so the
+> eleven-skill layout validates; the real integrations skill lands in the
+> onboarding milestone and replaces this body.
 
-Intended scope, so readers know what is coming: `sf-agents` keeps the `agents`
-and `review_bots` sections of `.software-factory/config.yaml` honest — probes
-are local presence checks only, routing always keeps the native fallback, and
-no review bot is required by default.
+Scope preview: agent registry and probes, risk-tier routing with the native
+fallback, review-bot configs and PR triage — probes stay local-only.

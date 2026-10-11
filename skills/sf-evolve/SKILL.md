@@ -10,12 +10,9 @@ metadata:
 
 # sf-evolve (placeholder)
 
-> **Placeholder — this is not the shipped skill.** This file exists so the
-> eleven-skill layout validates. The full skill (skill/MCP registry, overlays
-> that survive reinstall, BMad custom overrides, the retro-to-patch pipeline) is
-> authored in the onboarding milestone and will replace this body. Until then,
-> do not rely on this skill for fold-in work.
+> **Placeholder — this is not the shipped skill.** It exists so the
+> eleven-skill layout validates; the real fold-in skill lands in the
+> onboarding milestone and replaces this body.
 
-Intended scope, so readers know what is coming: `sf-evolve` turns retrospective
-learnings into proposed patches that get independent review and a tested apply —
-the same evidence discipline the factory applies to product code.
+Scope preview: skill/MCP registry, overlays that survive reinstall, BMad
+overrides and the retro-to-patch pipeline with independent review.

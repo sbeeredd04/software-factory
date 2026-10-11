@@ -47,16 +47,10 @@ python3 scripts/state.py checkpoint --workspace "<project-root>" --notes "<notes
 python3 scripts/state.py status --workspace "<project-root>"
 ```
 
-Commands: `init` (start an authorized program; refuses a second one), `claim` /
-`release` (exclusive repo-relative paths per owner), `checkpoint` (validated
-notes), `snapshot` (read-only Git observations; a failed observation degrades to
-`unknown`), `status` (read-only projection), `reconcile` (lists claims whose
-worktree or HEAD no longer resolves; never releases them), `audit` (read-only
-run-folder usage against the layout and size budgets below), `deactivate`
-(archives the pointer once every claim is released), `repair` (restores a
-validated existing run after a missing or corrupt pointer; never invents a
-run). `--help` prints the full syntax. Refusals exit nonzero with one
-sanitized line and leave state untouched.
+Commands: `init`, `claim` / `release`, `checkpoint`, `snapshot`, `status`,
+`reconcile`, `audit`, `deactivate`, `repair` — `--help` prints the full
+syntax. Refusals exit nonzero with one sanitized line and leave state
+untouched.
 
 ## Hooks
 

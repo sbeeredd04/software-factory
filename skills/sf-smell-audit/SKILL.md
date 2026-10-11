@@ -43,11 +43,11 @@ A tree can have a wide catalog smell and still be healthy if the tail is short. 
 
 ## How to read this codebase style
 
-- Procedural modules: score Large Class on the file, and name the biggest real class separately so a config bag is not called a god object.
-- One dispatcher full of branches is Switch Statements; copied branch sets are the expensive form.
-- Parallel packages with the same filenames are duplicate structure, not Parallel Inheritance Hierarchies, unless adding one type forces a twin in a second tree — say which smell you used.
-- Boundary models with fields and no behavior are DTOs; score Data Class only when domain behavior lives in clients that should sit on that type.
-- Comments that narrate a long method count; comments that state an invariant do not.
+Procedural modules score Large Class on the file, with the biggest real class named separately;
+a branchy dispatcher is Switch Statements, copied branch sets the expensive form; parallel
+same-filename packages are duplicate structure, not Parallel Inheritance Hierarchies; field-only
+boundary models are DTOs — score Data Class only when domain behavior lives in clients;
+narrative comments count, invariant comments do not.
 
 ## Second pass: the deep catalog
 

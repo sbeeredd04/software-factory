@@ -11,6 +11,8 @@ Checks, all offline and standard-library only:
 - budgets: the entry skill stays short, other skills stay under their cap;
 - references: relative Markdown links inside skill files resolve;
 - agents: ``model: inherit`` and no isolation field;
+- legacy names: retired pre-rename names (the old role and skill names)
+  never appear in prose content, only the current ``sf-*`` names;
 - manifests: any ``plugin.json``/``marketplace.json`` parses and every
   repo-relative path it names stays inside the repo and exists.
 
@@ -69,6 +71,24 @@ PROJECTION_KEYS = frozenset(
 )
 
 PLACEHOLDER_MARKERS = ("placeholder", "not the shipped skill")
+
+# Retired pre-rename names. Folder/file names are already pinned by the
+# SKILLS/AGENTS palettes above; this guards prose content (bodies only, so
+# frontmatter keys such as ``factory-role`` are never matched). The
+# ``factory-`` prefix excludes the ``factory-role`` metadata key and requires
+# the hyphenated form, so plain words like "software-factory" never match.
+LEGACY_NAME_RE = re.compile(
+    r"\b("
+    r"risk-coder"
+    r"|coder"
+    r"|factory-(?!role\b)[a-z0-9-]*[a-z0-9]"
+    r"|software-design"
+    r"|code-smell-audit"
+    r"|refactoring-playbook"
+    r"|design-pattern-judgment"
+    r")\b",
+    re.IGNORECASE,
+)
 
 LINK_RE = re.compile(r"!?\[[^\]]*\]\(([^)\s]+)(?:\s+\"[^\"]*\")?\)")
 FENCE_RE = re.compile(r"^\s*(```|~~~)")
@@ -323,6 +343,29 @@ class Validator:
                 elif not resolved.exists():
                     self.error(f"{md}: link target '{path_part}' does not exist")
 
+    def check_legacy_names(self) -> None:
+        """Flag retired pre-rename names in prose bodies (frontmatter exempt)."""
+        candidates: list[Path] = []
+        for base, pattern in (
+            (self.root / "skills", "**/*.md"),
+            (self.root / "agents", "*.md"),
+        ):
+            if base.is_dir():
+                candidates.extend(sorted(base.glob(pattern)))
+        for md in candidates:
+            text = md.read_text(encoding="utf-8")
+            try:
+                raw_lines, body = split_frontmatter(text, md)
+                first_body_line = len(raw_lines) + 3
+            except FrontmatterError:
+                body, first_body_line = text, 1
+            for line_no, line in enumerate(body.splitlines(), start=first_body_line):
+                for match in LEGACY_NAME_RE.finditer(line):
+                    self.error(
+                        f"{md}:{line_no}: legacy name '{match.group(0)}' in "
+                        "prose content; use the current sf-* names"
+                    )
+
     def check_manifest(self, path: Path) -> None:
         try:
             data = json.loads(path.read_text(encoding="utf-8"))
@@ -378,6 +421,7 @@ class Validator:
                 self.check_agent(agents_dir / f"{name}.md")
 
         self.check_references()
+        self.check_legacy_names()
         for manifest in sorted(self.root.rglob("*")):
             if (
                 manifest.is_file()

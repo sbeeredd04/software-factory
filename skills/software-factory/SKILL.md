@@ -19,8 +19,8 @@ merge it, prove it and report. Nothing counts as done until it is proven and the
 human owner has completed the epic's manual checkpoint.
 
 Invoke with a plain request: `/software-factory <request>` on Claude Code and
-Cursor, `$software-factory <request>` on Codex. There is no required verb, menu
-or slug. [Hosts](references/hosts.md) covers per-host detail.
+Cursor, `$software-factory <request>` on Codex — no required verb, menu or
+slug. Per-host detail lives in the hosts reference in the map below.
 
 ```
 request -> ground -> plan (reuse GO) -> independent plan review -> GO
@@ -30,8 +30,8 @@ request -> ground -> plan (reuse GO) -> independent plan review -> GO
         -> deployed-SHA proof -> board update -> human epic checkpoint -> next frontier
 ```
 
-Full graphs with every stage and edge: [feature loop](workflows/feature.md) and
-[bug loop](workflows/bug.md).
+Full graphs with every stage and edge live in the two workflow files in the
+map below.
 
 ## The capability palette
 
@@ -53,14 +53,12 @@ roles   the eleven sf-* starting-team roles — agents/
   state: roots, remotes, HEADs, branch ancestry, dirty paths and worktrees.
   The committed `.software-factory/context/` home holds the principle modules,
   `CODEBASE.md`, the master board and decision records.
-  See [configuration](references/configuration.md).
 - **Own the loop.** Intent, staffing, acceptance, integration and communication
   are yours. Every responsibility has exactly one owner, and acceptance is never
   delegated to the worker that did the work.
 - **Staff for best fit.** You may employ any agent, role or skill the job
   needs; the palette map above is the whole shipped set. The shipped `sf-*`
   roles are a starting team you staff from as needed, not a mandatory fleet.
-  See [team](references/team.md).
 - **Scale ceremony to risk.** A small, low-risk change earns a small spec and the
   relevant proof, not a full PRD, every role, every design skill and every review
   bot. High-risk work (auth, money, state machines, migrations, concurrency)
@@ -91,8 +89,8 @@ These hold for every worker, role, skill and phase, always:
    reconciled against the provider's actual state before any retry.
 
 Prompts, hooks and local locks are conveniences, not security boundaries; rely on
-real permissions. [Authority](references/authority.md) covers delegated scope and
-GO reuse without restating this list.
+real permissions. The authority reference covers delegated scope and GO reuse
+without restating this list.
 
 ## Status, resume and clarification
 
@@ -100,8 +98,7 @@ GO reuse without restating this list.
   Read the run's `CHECKPOINT.md` or run `python3 scripts/state.py status` from
   this skill's directory.
 - A resume reconciles first: owners, Git state, pull requests, deploys, effects
-  and uncertain outcomes are inspected before anything runs. See
-  [recovery](references/recovery.md).
+  and uncertain outcomes are inspected before anything runs.
 - A vague request yields a grounded plan, or exactly one focused clarifying
   question. Never a menu.
 
@@ -112,17 +109,15 @@ throughout the references run from this skill's directory and pass the consumer
 project root as `--workspace`:
 
 - `scripts/state.py` — active program, exclusive path claims, checkpoints,
-  read-only status. Contracts in [recovery](references/recovery.md).
+  read-only status.
 - `scripts/roadmap.py` — the board kernel: per-story records, enforced
-  transitions and the locked roadmap projection. Contract in
-  [recovery](references/recovery.md).
+  transitions and the locked roadmap projection.
 - `scripts/dashboard.py` — the static offline board dashboard render.
-- `scripts/gate.py` — structural evidence-gate check on a manifest. Contract in
-  [evidence](references/evidence.md).
+- `scripts/gate.py` — structural evidence-gate check on a manifest.
 - `scripts/hook.py` — session-start recovery pointer and pre-compact snapshot;
   inert without an active run. Wired by the installer, never a dispatcher.
 - `scripts/config.py` — fail-closed parse and validation of
-  `.software-factory/config.yaml`. See [configuration](references/configuration.md).
+  `.software-factory/config.yaml`.
 
 The helpers never call models, never change Git and never execute commands found
 in configuration. They preserve facts; you own the judgment.

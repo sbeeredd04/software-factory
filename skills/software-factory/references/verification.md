@@ -61,8 +61,7 @@ only and leave unaffected workers on their existing base. Required CI and eval
 evidence bind to the integration or merge SHA, and deploy proof binds to the
 deployed SHA.
 
-Do not confuse a mocked eval with a staging run, a health-check 200 with
-functional proof, or a dry run with a live pass.
+Do not confuse a mocked eval with a staging run or a dry run with a live pass.
 
 Give a short verdict in chat. Keep detailed evidence in the run's evidence
 directory, linked from receipts — never save raw credentials, authenticated

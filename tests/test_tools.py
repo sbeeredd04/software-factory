@@ -324,6 +324,72 @@ class ValidateReferencesAndManifestsTest(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 
 
+class ValidateLegacyNamesTest(unittest.TestCase):
+    """Retired pre-rename names must not appear in shipped prose content."""
+
+    def assert_violation(self, fixture, needle):
+        result = fixture.validate()
+        output = result.stdout + result.stderr
+        self.assertEqual(result.returncode, 1, output)
+        self.assertIn(needle, output)
+
+    def test_clean_fixture_passes(self):
+        fixture = Fixture(self)
+        result = fixture.validate()
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+    def test_legacy_skill_name_flagged(self):
+        fixture = Fixture(self)
+        text = skill_text("sf-help") + "\nThis replaced the software-design skill.\n"
+        fixture.write_skill("sf-help", text)
+        self.assert_violation(fixture, "software-design")
+
+    def test_legacy_catalog_names_flagged(self):
+        for legacy in (
+            "code-smell-audit",
+            "refactoring-playbook",
+            "design-pattern-judgment",
+        ):
+            with self.subTest(legacy=legacy):
+                fixture = Fixture(self)
+                text = skill_text("sf-refactor") + f"\nSee {legacy} for detail.\n"
+                fixture.write_skill("sf-refactor", text)
+                self.assert_violation(fixture, legacy)
+
+    def test_legacy_role_names_flagged(self):
+        for legacy in ("risk-coder", "coder"):
+            with self.subTest(legacy=legacy):
+                fixture = Fixture(self)
+                text = agent_text("sf-engineer") + f"\nFormerly the {legacy} role.\n"
+                fixture.write_agent("sf-engineer", text)
+                self.assert_violation(fixture, legacy)
+
+    def test_legacy_factory_agent_name_flagged(self):
+        fixture = Fixture(self)
+        text = agent_text("sf-engineer") + "\nFormerly factory-coder.\n"
+        fixture.write_agent("sf-engineer", text)
+        self.assert_violation(fixture, "factory-coder")
+
+    def test_legacy_name_in_frontmatter_key_not_flagged(self):
+        fixture = Fixture(self)
+        text = skill_text("sf-design").replace(
+            "  release: v0.1", "  factory-role: design\n  release: v0.1"
+        )
+        fixture.write_skill("sf-design", text)
+        result = fixture.validate()
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+    def test_current_names_and_lookalikes_pass(self):
+        fixture = Fixture(self)
+        text = skill_text("sf-help") + (
+            "\nWorks beside sf-design, sf-refactor and the software-factory"
+            " entry; the decoder and CodeRabbit integrations stay.\n"
+        )
+        fixture.write_skill("sf-help", text)
+        result = fixture.validate()
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+
 class ValidateOfflineTest(unittest.TestCase):
     def test_no_network_or_model_cli_in_source(self):
         source = (TOOLS / "validate.py").read_text()

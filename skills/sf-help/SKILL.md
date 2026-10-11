@@ -10,16 +10,9 @@ metadata:
 
 # sf-help (placeholder)
 
-> **Placeholder — this is not the shipped skill.** This file exists so the
-> eleven-skill layout validates. The full onboarding skill (discovery crawl,
-> document drafts, the 20-question interview, approved-setup apply, optional
-> design audit, first-lap proposal) is authored in the onboarding milestone and
-> will replace this body. Until then, do not rely on this skill for real setup.
+> **Placeholder — this is not the shipped skill.** It exists so the
+> eleven-skill layout validates; the real onboarding skill lands in the
+> onboarding milestone and replaces this body.
 
-Intended scope, so readers know what is coming: `sf-help` interviews the
-codebase and the human, then writes `.software-factory/config.yaml` (validated
-by `scripts/config.py` from the orchestrator skill) plus drafts of the project
-principle documents. Nothing is applied before the human approves the drafted
-setup. Its codebase discovery consumes `.software-factory/context/CODEBASE.md`
-— produced by [`sf-crawl`](../sf-crawl/SKILL.md) — and never re-crawls; the
-factory has exactly one crawler.
+Scope preview: crawl, document drafts, the 20-question interview and
+approved-setup apply — nothing is written before human approval.

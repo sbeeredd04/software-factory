@@ -27,9 +27,9 @@ python3 scripts/state.py claim --workspace "<project-root>" \
 One writer per conflicting path, including parent/child scopes across worktrees
 that share a Git common dir. Worktrees isolate files only — not ports,
 credentials, databases or external effects. A genuinely shared resource (schema
-pins, migrations, ports, a staging test profile, environment writes) is held by
-one contending phase at a time; a test-only resource does not serialize the
-whole story. Record the resource owner and phase, and reconcile before reuse.
+pins, migrations, ports, environment writes) is held by one contending phase at
+a time, never the whole story. Record the resource owner and phase, and
+reconcile before reuse.
 
 Claims do not expire automatically. Before releasing or redispatching, reconnect
 the live owner or confirm it stopped, and reconcile its work and effects. Claims
@@ -51,17 +51,14 @@ isolation, not collectibles.
 
 Staff the approved ready frontier adaptively: serial, batches or continuous
 backfill, chosen by coupling, best-fit capacity and observed failure and rework.
-There is no fixed worker cap and no cheapest-first rule. A human question or
-checkpoint blocks only its dependents. Record a one-line scheduling rationale in
-briefs and checkpoint notes.
+There is no fixed worker cap and no cheapest-first rule. Record a one-line
+scheduling rationale in briefs and checkpoint notes.
 
 ## Work and return
 
-Brief each worker with outcome, fresh sources, contracts and deletions, scope
-and authority, the exact repo and base SHA, dependency-unlock receipts,
-exclusive paths, phase resources, acceptance criteria and the proof destination
-— the template is in [handoff](handoff.md). Direction and evidence expectations
-enable judgment; workers may use specialists or skills suited to the problem.
+Brief each worker per the [handoff](handoff.md) template. Direction and
+evidence expectations enable judgment; workers may use specialists or skills
+suited to the problem.
 
 Workers return the actual diff and HEAD, changed paths, commands with exit
 codes, verified effects and per-criterion results, plus uncertainty and one exact

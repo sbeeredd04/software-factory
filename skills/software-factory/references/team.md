@@ -53,11 +53,11 @@ records in `context/decisions/` so the next story starts from them.
 
 ## Best-fit routing
 
-Choose by capability, risk, reliability, latency and likely total rework — not by
-price or by habit. Record the requested model, the effective model when the host
-reports it, and a one-line route rationale. Never infer a model version from an
-alias and never invent model IDs. When a capability is unavailable, use a
-suitable fallback or report a concrete gap — the answer is not weaker proof.
+Choose by capability, risk and likely total rework — not by price or habit.
+Record the requested and effective model and a one-line route rationale; never
+invent model IDs. Risk tiers and the native fallback are owned by `sf-agents`;
+an unavailable capability degrades to the fallback or a concrete gap report,
+never to weaker proof.
 
 ## Independence
 

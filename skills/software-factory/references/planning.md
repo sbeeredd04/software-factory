@@ -57,10 +57,8 @@ findings force revision; re-review the affected portions until the gaps resolve
 or the human owner decides. Iterations are bounded; do not optimize for cosmetic
 perfection.
 
-Reuse a scoped GO whenever it covers the request. Only new scope, new authority
-or a genuine conflict with a recorded decision goes back to the human, as one
-short question with a recommendation and 2-4 options. A blocked decision leaves
-independent safe work eligible.
+Reuse a scoped GO when it covers the request; new scope or authority escalates
+per [authority](authority.md).
 
 ## Ready frontier
 
