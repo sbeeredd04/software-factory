@@ -67,6 +67,86 @@ unknown push, merge, deploy or external effect is inspected at the provider
 before any retry. After a merge, retest the affected stories only. Continue only
 an authorized program.
 
+## The board: records, transitions and projections
+
+The master board lives in the committed context home at
+`.software-factory/context/board/`: `streams.json` (the streams and their
+epic order), `meta.json` (the id counters), `epics/<id>.json` (outcome,
+done-when list, covered requirement ids, explicit build `order`, declared
+cross-epic `needs`, status) and `stories/<id>.json` — one live record per
+story carrying its id, epic, type (`story | bug | spike`), title, status,
+owner, `after` prerequisites, `covers` ids, risk, the human-checkpoint
+fields (`hitl`, `plan_checkpoint`, `done_checkpoint`), the `blocked` overlay,
+receipts, branch/baseline/PR/merge fields and a transition history. The
+normative record contract is `schemas/board.schema.json`; every record is
+validated at generation. Ids are integers assigned once and never reused,
+joins are by id and never by filename (a title rename breaks nothing), build
+order is the explicit `order` array separate from the ids, and unknown record
+keys are ignored at read time so receipts and project fields extend the
+schema without code changes.
+
+Two status layers. The worker-facing `status` runs
+`backlog → ready-for-dev → in-progress → in-review → built → done`, plus
+`cancelled`; `blocked` is an overlay object (type, reason, since, owner,
+exact next action) that rides on top of any status instead of replacing it.
+The board columns (`planned | ready | in-progress | review | built | done |
+cancelled`) are derived at generation and never hand-written. Who writes
+what — stated here only, enforced by `scripts/roadmap.py`:
+
+| Transition | Written by | Rule |
+| --- | --- | --- |
+| `backlog → ready-for-dev` | orchestrator | plan approved and frontier verified |
+| `ready-for-dev → in-progress` | worker | only after a successful `state.py` claim for the story id |
+| `in-progress → in-review` | worker | with its receipts bound to the story HEAD |
+| `in-review → built` | orchestrator | the premerge gate passed; every `after` provider is done (merge order is enforced even though review counts as met for starting) |
+| `built → done` | orchestrator | merge landed; evidence bound to the merge SHA |
+| set/clear `blocked` | worker (own story) or orchestrator | stored blockers are `human-decision`, `external`, `resource-contention` or `design`; dependency waiting is derived from `after`, never stored |
+| `any → cancelled` | orchestrator proposes, human confirms | terminal; needs a recorded decision reference; a cancelled story still blocks its dependents until each is repointed |
+| epic → `in-progress` / `awaiting-acceptance` | orchestrator | awaiting-acceptance only after every story is done or cancelled — closing children never closes the parent |
+| epic → `done` / `parked` / `cancelled` | human | acceptance is the human checkpoint; parking carries a resume pointer; cancelling cancels the descendants |
+
+Corollaries: no actor moves a story past `built` except the merge step; no
+agent self-declares done; `done` and `cancelled` records are frozen — a
+correction is a decision record or a new story, never a rewrite; review
+findings append dated blocks to the record and never change status.
+
+Readiness is computed from the dependency graph, never from list position or
+titles: a story is ready when every `after` prerequisite is done or in
+review, every epic gate it rides on is human-done, and it is unclaimed,
+unblocked and not cancelled. The ready frontier is global across streams —
+every unblocked, unclaimed candidate is offered, ordered inside an epic by
+its `order` array. Generation also reports the cross-stream diagnostics (an
+epic gate no story pins, a story waiting on an epic its own epic does not
+declare, an order that contradicts a declared dependency), rejects cycles
+loudly, reports degenerate records per story as problems instead of
+crashing, and lists claim/record inconsistencies (in-progress with no live
+claim, a claim with no record, claim paths outside the story scope) without
+auto-repairing any of them.
+
+Checkout and checkin are one protocol: the claim's task id is the story id.
+Checkout = the frontier shows the story ready, then `state.py claim`, then
+the worker writes `in-progress` on its own record. Checkin = receipts on the
+record, then `state.py release`, then `in-review`. The generator mirrors live
+claims read-only into the projection; no board code ever writes claims or
+the run state.
+
+Regenerate the projections from this skill's directory:
+
+```sh
+python3 scripts/roadmap.py build --workspace "<project-root>"
+```
+
+`build` reads the records under the board lock and rewrites `roadmap.json`
+and `dashboard.html` atomically; the revision counter and timestamp change
+only when the inputs changed, so an unchanged board regenerates byte
+identical, and deleting both artifacts rebuilds them in full from the
+records. `roadmap.py derive --source <plan.json>` creates or refreshes
+records from the planning source (joining by source key, never reusing ids,
+never touching live fields); `roadmap.py update` and `roadmap.py epic` are
+the transition writes above. The board directory and the regeneration
+policy (`on-write` or `manual`) are declared in `config.yaml` under `board`;
+a malformed config fails closed.
+
 ## Helper limits
 
 Atomic writes and a local lock protect the run files; the lock is not a Git

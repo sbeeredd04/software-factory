@@ -102,6 +102,10 @@ project root as `--workspace`:
 
 - `scripts/state.py` — active program, exclusive path claims, checkpoints,
   read-only status. Contracts in [recovery](references/recovery.md).
+- `scripts/roadmap.py` — the board kernel: per-story records, enforced
+  transitions and the locked roadmap projection. Contract in
+  [recovery](references/recovery.md).
+- `scripts/dashboard.py` — the static offline board dashboard render.
 - `scripts/gate.py` — structural evidence-gate check on a manifest. Contract in
   [evidence](references/evidence.md).
 - `scripts/hook.py` — session-start recovery pointer and pre-compact snapshot;

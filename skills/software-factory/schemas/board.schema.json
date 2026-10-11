@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://software-factory.local/schemas/board.schema.json",
+  "title": "Software Factory board records",
+  "description": "The per-story record files under .software-factory/context/board/ are the single live story-status store. roadmap.json and dashboard.html are locked, regenerable projections; state.py claims remain the path-exclusivity system of record. Ids are integers assigned once and never reused; joins are by id, never by filename; build order is an explicit array separate from ids. Unknown keys on the record roots are ignored at read time so receipts and project-specific fields extend the schema without code changes.",
+  "type": "object",
+  "$defs": {
+    "meta": {
+      "type": "object",
+      "required": ["version", "next_story_id", "next_epic_id"],
+      "additionalProperties": true,
+      "properties": {
+        "version": {"const": 1},
+        "next_story_id": {"type": "integer", "minimum": 1},
+        "next_epic_id": {"type": "integer", "minimum": 1}
+      }
+    },
+    "streams": {
+      "type": "object",
+      "required": ["version", "streams"],
+      "additionalProperties": true,
+      "properties": {
+        "version": {"const": 1},
+        "streams": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "title", "status", "epics"],
+            "additionalProperties": true,
+            "properties": {
+              "id": {"type": "string", "pattern": "^W-[a-z0-9][a-z0-9-]{0,63}$"},
+              "title": {"type": "string", "minLength": 1},
+              "status": {"enum": ["active", "paused", "done"]},
+              "epics": {
+                "type": "array",
+                "items": {"type": "integer", "minimum": 1},
+                "description": "Explicit epic build order inside the stream; also the epic-to-stream membership join."
+              }
+            }
+          }
+        }
+      }
+    },
+    "epic": {
+      "type": "object",
+      "required": ["version", "id", "title", "outcome", "done_when", "covers", "order", "needs", "status"],
+      "additionalProperties": true,
+      "properties": {
+        "version": {"const": 1},
+        "id": {"type": "integer", "minimum": 1},
+        "title": {"type": "string", "minLength": 1},
+        "outcome": {"type": "string"},
+        "done_when": {"type": "array", "items": {"type": "string"}},
+        "covers": {"type": "array", "items": {"type": "string"}},
+        "order": {
+          "type": "array",
+          "items": {"type": "integer", "minimum": 1},
+          "description": "Explicit story build order; the story id is never an order."
+        },
+        "needs": {
+          "type": "array",
+          "items": {"type": "integer", "minimum": 1},
+          "description": "Declared cross-epic gates: epics this epic depends on."
+        },
+        "status": {"enum": ["planned", "in-progress", "awaiting-acceptance", "done", "parked", "cancelled"]},
+        "acceptance": {"type": ["object", "null"]},
+        "parked": {"type": ["object", "null"]},
+        "park_proposal": {"type": ["object", "null"]},
+        "history": {"type": "array", "items": {"$ref": "#/$defs/historyRow"}},
+        "source_key": {"type": "string"}
+      }
+    },
+    "story": {
+      "type": "object",
+      "required": ["version", "id", "epic", "type", "title", "status", "after", "covers", "risk", "hitl", "plan_checkpoint", "done_checkpoint", "blocked", "receipts", "history"],
+      "additionalProperties": true,
+      "properties": {
+        "version": {"const": 1},
+        "id": {"type": "integer", "minimum": 1},
+        "epic": {"type": "integer", "minimum": 1},
+        "type": {"enum": ["story", "bug", "spike"]},
+        "title": {"type": "string", "minLength": 1},
+        "status": {"enum": ["backlog", "ready-for-dev", "in-progress", "in-review", "built", "done", "cancelled"]},
+        "owner": {"type": ["string", "null"]},
+        "after": {
+          "type": "array",
+          "items": {"oneOf": [{"type": "integer", "minimum": 1}, {"type": "object", "required": ["epic"], "additionalProperties": false, "properties": {"epic": {"type": "integer", "minimum": 1}}}]},
+          "description": "Real prerequisites only, never the intended sequence; an {'epic': id} entry is a whole-epic gate."
+        },
+        "covers": {"type": "array", "items": {"type": "string"}},
+        "risk": {"type": "string"},
+        "hitl": {"type": "boolean"},
+        "plan_checkpoint": {"type": "boolean"},
+        "done_checkpoint": {"type": "boolean"},
+        "sprint": {"type": "string"},
+        "scope": {"type": "array", "items": {"type": "string"}},
+        "blocked": {
+          "type": ["object", "null"],
+          "required": ["type", "reason", "since", "owner", "next_action"],
+          "additionalProperties": false,
+          "properties": {
+            "type": {"enum": ["human-decision", "external", "resource-contention", "design"]},
+            "reason": {"type": "string", "minLength": 1},
+            "since": {"type": "string", "minLength": 1},
+            "owner": {"type": "string", "minLength": 1},
+            "next_action": {"type": "string", "minLength": 1}
+          },
+          "description": "Stored blockers are human/external/contention/design only; dependency waiting is derived from the after graph, never stored."
+        },
+        "cancel_proposal": {"type": ["object", "null"]},
+        "receipts": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "required": ["subject_sha"],
+            "properties": {"subject_sha": {"type": "string", "minLength": 1}}
+          }
+        },
+        "baseline_sha": {"type": ["string", "null"]},
+        "branch": {"type": ["string", "null"]},
+        "pr": {"type": ["string", "null"]},
+        "merged_sha": {"type": ["string", "null"]},
+        "history": {"type": "array", "items": {"$ref": "#/$defs/historyRow"}},
+        "findings": {"type": "array"},
+        "source_key": {"type": "string"}
+      }
+    },
+    "historyRow": {
+      "type": "object",
+      "required": ["at", "by", "from", "to"],
+      "additionalProperties": true,
+      "properties": {
+        "at": {"type": "string", "minLength": 1},
+        "by": {"type": "string", "minLength": 1},
+        "from": {"type": ["string", "null"]},
+        "to": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

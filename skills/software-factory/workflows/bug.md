@@ -55,7 +55,9 @@ through a full PRD.
 the effect proof, any eval slice and the staging proof. An independent plan
 review precedes the shared implement, test, review, fix loop — the same loop the
 feature workflow uses, with the same actual-diff review, CI, review bots and the
-risk/human gate. See [the feature loop](feature.md).
+risk/human gate, and the same board discipline: the worker updates its own
+story record (status plus receipts) as each step completes, before checkin.
+See [the feature loop](feature.md).
 
 **Prove the close.** After the single integration owner's gated merge, the
 original reproduction must pass against the deployed staging SHA, or against the

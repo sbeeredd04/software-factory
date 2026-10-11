@@ -61,3 +61,11 @@ scope and the human checkpoint gates. Brief each dispatch with actual file
 scope, dependency evidence, acceptance criteria, proof expectations and any
 phase-scoped resources. Schedule by coupling, current capacity and observed
 rework, not by a global order.
+
+The board makes this mechanical: `roadmap.json`'s frontier is computed from the
+`after` graph (review counts as met for starting, epic gates wait for human
+acceptance), spans every stream at once, and carries the cross-stream
+diagnostics. Workstreams run in parallel; the frontier offers all unblocked,
+unclaimed candidates rather than one global next story. The readiness rule, the
+transition table and the regeneration command live in
+[recovery](recovery.md) — stated there once, never restated here.

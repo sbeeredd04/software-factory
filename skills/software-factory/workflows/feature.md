@@ -64,7 +64,10 @@ the contending phase, not the whole story. Workers get direction, context and
 evidence expectations, not a rigid script. Details: [dispatch](../references/dispatch.md).
 
 **Work and independent verification.** Workers implement, test, self-inspect and
-fix. Independent QA then exercises the tests, the actual effects and — where
+fix. Each worker keeps its own story record current as it works: the claim comes
+first, then the worker writes `in-progress`; status moves and receipts land on
+the record as each step completes, always before checkin (`roadmap.py update`).
+Independent QA then exercises the tests, the actual effects and — where
 behavior is qualitative — a calibrated eval, all on the actual HEAD. The story's
 eval cases (set up by `sf-eval`) gate acceptance; eval failures iterate through
 this loop like any other finding. Actual-diff review, CI and the configured
