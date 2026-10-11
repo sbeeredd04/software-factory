@@ -6,10 +6,11 @@ the ready-frontier decision that follows it.
 ## Grounding
 
 Read the project's configured principles and architecture documents, the
-canonical tracker and the current code before planning. Reuse existing approved
-plans and GO decisions; fill only the actual gaps. Missing product outcomes or
-acceptance criteria benefit from the product manager; changed cross-module
-contracts from the architect; these are examples, not compulsory staffing.
+per-story board records and the tracker that feeds them, and the current code
+before planning. Reuse existing approved plans and GO decisions; fill only the
+actual gaps. Missing product outcomes or acceptance criteria benefit from the
+product manager; changed cross-module contracts from the architect; these are
+examples, not compulsory staffing.
 
 When BMad is installed, its planning skills do the heavy lifting: PRD or spec
 work for genuinely missing planning, architecture skills for contract changes,

@@ -2,9 +2,10 @@
 
 Phase: recovery — surviving context resets, interruptions and uncertain states.
 
-The tracker owns story status and Git owns the code. The kernel preserves local
-execution facts only: who owns which paths, what was decided, what happens next.
-It is not a second status system.
+The per-story board record owns story status and Git owns the code. The kernel
+preserves local execution facts only: who owns which paths, what was decided,
+what happens next. Its claims are the path-exclusivity system of record and its
+checkpoints are recovery context — not a second live status store.
 
 ## When to checkpoint
 
@@ -52,9 +53,10 @@ showing a pointer never authorizes work by itself.
 
 ## Resume and reconciliation
 
-On resume, re-read the principles, decisions, checkpoint, canonical tracker,
-actual Git state and diffs, PRs, deploys, effects, live workers and claims, and
-evidence freshness. Saved notes are hints until corroborated. Reconnect or steer
+On resume, re-read the principles, decisions, checkpoint, the board records and
+their planning source, actual Git state and diffs, PRs, deploys, effects, live
+workers and claims, and evidence freshness. Saved notes are hints until
+corroborated. Reconnect or steer
 live owners; confirm a worker is stopped and reconcile its work and effects
 before releasing or reclaiming its paths — no stale-owner expiry and no
 duplicate redispatch. Preserve dirty user trees and conflicting receipts. An

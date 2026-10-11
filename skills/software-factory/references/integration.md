@@ -46,7 +46,8 @@ approved, recorded narrower applicability instead of a silent exemption.
 ## Closing
 
 Record the PR, merge, deployment and effect receipts. Release reconciled claims
-when safe, checkpoint, and update the tracker after merge and deploy proof.
+when safe, checkpoint, and update the story's board record and its planning
+source after merge and deploy proof.
 Keep epic acceptance pending until the human owner completes the manual
 checkpoint; independent eligible work continues meanwhile. Reports distinguish
 implemented, tested, merged, deployed and manually accepted — five separate

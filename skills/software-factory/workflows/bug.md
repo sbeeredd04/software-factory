@@ -22,7 +22,7 @@ flowchart TD
   M --> S[Deployed staging SHA: the original reproduction now passes]
   S -->|fails or unknown: loop reopens| O
   S --> H[Applicable epic manual checkpoint with the human owner]
-  H --> K[Durable evidence: bug, tracker and board closure, follow-ups recorded]
+  H --> K[Durable evidence: bug, planning-source and board-record closure, follow-ups recorded]
 ```
 
 ## The flow in prose
@@ -63,6 +63,8 @@ configured local equivalent for work that does not deploy. If it fails or the
 outcome is unknown, the loop reopens at the work stage with receipts preserved.
 
 **Close durably.** Hold the applicable epic's manual checkpoint with the human
-owner, then close with durable evidence: the bug, tracker and master-board
-entries closed (`.software-factory/context/board/`), no-fix evidence kept where
-relevant, and unresolved obligations recorded as follow-ups.
+owner, then close with durable evidence: the bug ledger, the planning source
+and the story's own board record closed (`.software-factory/context/board/`),
+no-fix evidence kept where relevant, and unresolved obligations recorded as
+follow-ups. The same single-status rule as [the feature loop](feature.md)
+applies: the board record is the only live story-status store.

@@ -27,7 +27,7 @@ flowchart TD
   S -->|failed or unknown: back to work| W
   S --> C{Epic boundary?}
   C -->|yes| E[Human epic checkpoint: acceptance stays pending until confirmed]
-  C -->|no| K[Durable receipts, decisions, tracker and board update, short retro]
+  C -->|no| K[Durable receipts, decisions, planning-source and board-record update, short retro]
   E --> K
   K -->|next frontier| O
 ```
@@ -84,7 +84,12 @@ Failed or unknown proof goes back into the work loop with receipts preserved.
 
 **Checkpoint and close.** At an epic boundary the human owner performs the
 manual checkpoint; the epic stays pending until they confirm. Close with durable
-receipts, recorded decisions, tracker and master-board updates
-(`.software-factory/context/board/`) and a short retro whose learnings feed the
-next frontier. The tracker is the story-status authority — there is no
-parallel status system. Then select the next ready frontier.
+receipts, recorded decisions, planning-source updates plus the worker's own
+board-record update (`.software-factory/context/board/`) and a short retro whose
+learnings feed the next frontier — under one single-status rule: the per-story
+board record is the only live story-status store; the configured tracker (BMad
+ticket tree or markdown plan) is a planning source that feeds the records, not a
+parallel live store; `roadmap.json` and the dashboard are locked, regenerable
+derived projections; `state.py` claims remain the path-exclusivity system of
+record; the checkpoint is recovery context. There is no second live status
+store. Then select the next ready frontier.

@@ -26,9 +26,10 @@ contains.
   principle, architecture and convention documents. Grounding reads these; the
   principles documents are the only principles authority, referenced, never
   copied.
-- **tracker** — the status authority: `bmad-v6` (sprint status), `markdown`, or
-  the `bmad-v7` read-only preview adapter. Story status lives there, not in
-  chat, not in a parallel system.
+- **tracker** — the planning source: `bmad-v6` (sprint status), `markdown`, or
+  the `bmad-v7` read-only preview adapter. The tracker feeds planning; the
+  per-story board record is the only live story-status store — never chat,
+  never the tracker itself.
 - **branches** — the integration branch (default `dev`) and the protected
   branches (default `main`). Integration merges go to the former; the latter are
   never pushed or merged to directly. The two are never the same branch.
