@@ -13,19 +13,18 @@ approve its own work.
    compatibility.
 2. **Project evals:** reuse the project's own eval runner and acceptance slice.
    Pin source, model and rubric versions; capture scenario IDs, commands, exit
-   codes and evidence paths. The `sf-eval` skill owns the eval gate: per-surface
-   suites, per-story `fail_to_pass` and `pass_to_pass` cases with stable IDs,
-   deterministic-first grading and cost-tiered runs. Eval receipts carry a
-   sha256 self-hash and are cited by gate manifests; a story does not pass
-   without its evals or an approved override record.
+   codes and evidence paths. The [`sf-eval`](../../sf-eval/SKILL.md) skill owns
+   the eval gate: per-surface suites, per-story `fail_to_pass` and
+   `pass_to_pass` cases with stable IDs, deterministic-first grading and
+   cost-tiered runs. Eval receipts carry a sha256 self-hash and are cited by
+   gate manifests; a story does not pass without its evals or an approved
+   override record.
 3. **Actual effects:** verify effects in real state — files, database rows,
    provider dashboards, queues — not in promising prose. An effect failure fails
    the scenario regardless of any qualitative grade.
-4. **Qualitative eval:** where behavior is qualitative, a fresh, best-fit
-   evaluator grades redacted traces and receipts against a rubric. Run
-   known-good and known-bad canaries before accepting any judge's grades; a
-   judge that passes a known-bad case is unusable. Evaluator grades stay
-   subordinate to effect tests.
+4. **Qualitative eval:** subjective criteria follow the judge rung of the
+   [sf-eval grading ladder](../../sf-eval/references/grading.md); judge
+   grades stay subordinate to effect tests.
 5. **Independent review:** a non-author reads the actual diff with the plan and
    the failure/effect evidence, and confirms findings by reproducing them.
 

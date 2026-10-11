@@ -1,0 +1,282 @@
+{
+  "version": 1,
+  "plan_file": "evals/eval.config.json",
+  "receipts_dir": ".software-factory/runs",
+  "user_signoff_required": true,
+  "risk_tier": 1,
+  "minimums": {
+    "cases_per_criterion": 1,
+    "negative_cases_per_behavior": "tier1",
+    "smoke_paths_per_surface": 1,
+    "regression_cases_per_epic": 3,
+    "deterministic_only_below_tier": 1
+  },
+  "surfaces": [
+    {
+      "id": "frontend",
+      "kind": "web-ui",
+      "base_url_env": "SHOPFRONT_URL",
+      "harness": {
+        "type": "browser",
+        "run": "npx playwright test --config evals/playwright.evals.ts --reporter=json",
+        "report": "json"
+      },
+      "suites": ["smoke", "story", "regression"]
+    },
+    {
+      "id": "backend",
+      "kind": "http-api",
+      "base_url_env": "SHOPFRONT_API_URL",
+      "harness": { "type": "http" },
+      "suites": ["smoke", "story", "contract", "regression"]
+    },
+    {
+      "id": "behavior",
+      "kind": "agent-llm",
+      "harness": { "type": "judge" },
+      "suites": ["story"]
+    },
+    {
+      "id": "ops",
+      "kind": "deploy",
+      "base_url_env": "DEPLOY_URL",
+      "harness": { "type": "http" },
+      "suites": ["canary"]
+    }
+  ],
+  "cases": [
+    {
+      "id": "FE-CART-001",
+      "story": "S-12",
+      "epic": "E-2",
+      "suite": "story",
+      "kind": "fail_to_pass",
+      "criterion": "AC1: Given an authenticated user on an in-stock product page, When they click 'Add to cart', Then the cart badge increments to the item count",
+      "surface": "frontend",
+      "tier": ["quick", "epic", "premerge"],
+      "grade": {
+        "type": "browser",
+        "steps": [
+          { "goto": "/products/mug-01" },
+          { "click": "role=button[name='Add to cart']" },
+          { "wait": "text=Added to cart" }
+        ],
+        "expect": { "visible": "text=Added to cart", "cart_badge_equals": 1 },
+        "on_fail_capture": ["screenshot", "trace"]
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "FE-CART-002",
+      "story": "S-12",
+      "epic": "E-2",
+      "suite": "story",
+      "kind": "fail_to_pass",
+      "criterion": "AC2 (negative): Given an out-of-stock product page, When the user views it, Then the 'Add to cart' button is disabled",
+      "surface": "frontend",
+      "tier": ["quick", "epic", "premerge"],
+      "grade": {
+        "type": "browser",
+        "steps": [{ "goto": "/products/mug-02" }],
+        "expect": { "disabled": "role=button[name='Add to cart']" },
+        "on_fail_capture": ["screenshot", "trace"]
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "FE-CART-003",
+      "story": "S-12",
+      "epic": "E-2",
+      "suite": "story",
+      "kind": "fail_to_pass",
+      "criterion": "AC3: Given an item in the cart, When the user reloads the product list page, Then the cart badge still shows the item count",
+      "surface": "frontend",
+      "tier": ["quick", "epic", "premerge"],
+      "grade": {
+        "type": "browser",
+        "steps": [
+          { "goto": "/products/mug-01" },
+          { "click": "role=button[name='Add to cart']" },
+          { "goto": "/products" }
+        ],
+        "expect": { "cart_badge_equals": 1 },
+        "on_fail_capture": ["screenshot", "trace"]
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "BE-CART-001",
+      "story": "S-12",
+      "epic": "E-2",
+      "suite": "story",
+      "kind": "fail_to_pass",
+      "criterion": "AC1 (backend): adding an in-stock item returns 200 and the item appears in the server cart",
+      "surface": "backend",
+      "tier": ["quick", "epic", "premerge"],
+      "grade": {
+        "type": "http",
+        "request": {
+          "method": "POST",
+          "path": "/api/cart/items",
+          "body": { "sku": "mug-01", "qty": 1 }
+        },
+        "expect": { "status": 200, "json": { "items[0].sku": "mug-01", "items[0].qty": 1 } },
+        "then": {
+          "request": { "method": "GET", "path": "/api/cart" },
+          "expect": { "status": 200, "json": { "count": 1 } }
+        }
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "BE-CART-002",
+      "story": "S-12",
+      "epic": "E-2",
+      "suite": "story",
+      "kind": "fail_to_pass",
+      "criterion": "AC2 (backend, negative): adding an out-of-stock item returns 409 with {\"error\": \"out_of_stock\"} and the cart is unchanged",
+      "surface": "backend",
+      "tier": ["quick", "epic", "premerge"],
+      "grade": {
+        "type": "http",
+        "request": {
+          "method": "POST",
+          "path": "/api/cart/items",
+          "body": { "sku": "mug-02", "qty": 1 }
+        },
+        "expect": { "status": 409, "json": { "error": "out_of_stock" } }
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "BE-CART-003",
+      "story": "S-12",
+      "epic": "E-2",
+      "suite": "story",
+      "kind": "fail_to_pass",
+      "criterion": "AC1 (backend state): after adding, GET /api/cart shows the item persisted server-side",
+      "surface": "backend",
+      "tier": ["quick", "epic", "premerge"],
+      "grade": {
+        "type": "http",
+        "request": { "method": "GET", "path": "/api/cart" },
+        "expect": { "status": 200, "json": { "count": 1 } }
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "FE-PDP-001",
+      "story": "S-03",
+      "epic": "E-1",
+      "suite": "regression",
+      "kind": "pass_to_pass",
+      "criterion": "E-1 regression: product pages still render name, price and stock state",
+      "surface": "frontend",
+      "tier": ["epic", "premerge"],
+      "grade": {
+        "type": "http",
+        "request": { "method": "GET", "path": "/products/mug-01" },
+        "expect": { "status": 200, "contains": ["Mug", "$12.00", "In stock"] }
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "FE-HOME-001",
+      "story": "S-01",
+      "epic": "E-1",
+      "suite": "smoke",
+      "kind": "pass_to_pass",
+      "criterion": "Smoke: the homepage renders the storefront banner",
+      "surface": "frontend",
+      "tier": ["quick", "epic", "premerge", "canary"],
+      "grade": {
+        "type": "http",
+        "request": { "method": "GET", "path": "/" },
+        "expect": { "status": 200, "contains": ["Shopfront"] }
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "BEH-CHECKOUT-001",
+      "story": "S-14",
+      "epic": "E-2",
+      "suite": "story",
+      "kind": "fail_to_pass",
+      "criterion": "AC2: the confirmation page copy is friendly and states the delivery window",
+      "surface": "behavior",
+      "tier": ["epic", "premerge"],
+      "grade": {
+        "type": "judge",
+        "rubric": "evals/rubrics/checkout-copy.md",
+        "assertions": [
+          "copy states the delivery window in days",
+          "copy does not promise a specific courier date",
+          "tone is friendly and free of jargon"
+        ],
+        "reference_example": "evals/goldens/checkout-copy-good.txt",
+        "escape": "Unknown",
+        "trials": 3,
+        "consistency": "majority",
+        "calibration": "evals/calibration/checkout-copy.json"
+      },
+      "nondeterministic": true
+    },
+    {
+      "id": "OPS-HEALTH-001",
+      "story": "S-20",
+      "epic": "E-3",
+      "suite": "canary",
+      "kind": "pass_to_pass",
+      "criterion": "Canary: the deployed service answers health checks",
+      "surface": "ops",
+      "tier": ["canary", "premerge"],
+      "grade": {
+        "type": "http",
+        "request": { "method": "GET", "path": "/health" },
+        "expect": { "status": 200 }
+      },
+      "nondeterministic": false
+    }
+  ],
+  "modes": {
+    "quick": {
+      "scope": "story_cases_plus_smoke",
+      "max_duration_sec": 120,
+      "allow_grades": ["state", "command", "http", "browser", "golden"]
+    },
+    "epic": { "scope": "epic_cases_plus_regression" },
+    "premerge": {
+      "scope": "all_cases",
+      "nondeterministic_trials": 2,
+      "consistency": "pass^k"
+    },
+    "canary": { "scope": "smoke_plus_ops", "against_env": "DEPLOY_URL" }
+  },
+  "routing": {
+    "retry_cap_per_case": 3,
+    "escalate_after_cap": ["sf-principal-engineer", "human-checkpoint"],
+    "quarantine_on_flake": true,
+    "quarantine_must_resolve_by": "epic_close",
+    "override": { "allowed": true, "record": ["who", "when", "reason"] }
+  },
+  "receipts": {
+    "per_case_files": true,
+    "artifacts_on_failure": ["diff", "response_dump", "output_tail", "harness_log"],
+    "manifest_citation": {
+      "fields": ["run_id", "verdict", "case_results", "self_sha256"],
+      "required_for": ["story_done", "epic_close", "merge", "deploy_proof"]
+    }
+  },
+  "judge_policy": {
+    "last_resort": true,
+    "binary_assertions_only": true,
+    "one_dimension_per_call": true,
+    "never_sole_gate_below_tier": 2
+  },
+  "signoff": {
+    "status": "approved",
+    "approved_by": "user",
+    "approved_at": "2026-10-02T09:40:00Z",
+    "plan_sha256": "9f2c4a7b1d3e5f608192a4b6c8d0e2f4a6b8c0d2e4f6a8b0c2d4e6f8a0b2c4d6"
+  }
+}
