@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "id": 5,
+  "epic": 1,
+  "type": "story",
+  "title": "Four sf- design skills with the reference catalog",
+  "status": "done",
+  "owner": "dogfood-backfill",
+  "after": [
+    4
+  ],
+  "covers": [
+    "VAL-DESIGN-001",
+    "VAL-DESIGN-002",
+    "VAL-DESIGN-003",
+    "VAL-DESIGN-007",
+    "VAL-DESIGN-008"
+  ],
+  "risk": "standard",
+  "hitl": false,
+  "plan_checkpoint": false,
+  "done_checkpoint": false,
+  "blocked": null,
+  "receipts": {
+    "backfill": {
+      "type": "backfill-attestation",
+      "subject_sha": "f0a4d854cefe083ae3157f1181eb70bff661c0b2",
+      "statement": "Work predates the board; the merge commit is in git history and the static gate is green at the dogfood commit.",
+      "evidence": [
+        "git show f0a4d854cefe083ae3157f1181eb70bff661c0b2",
+        "bash scripts/check_all.sh"
+      ],
+      "recorded_by": "dogfood-evals backfill",
+      "recorded_at": "2026-10-11"
+    }
+  },
+  "baseline_sha": null,
+  "branch": null,
+  "pr": null,
+  "merged_sha": "f0a4d854cefe083ae3157f1181eb70bff661c0b2",
+  "history": [
+    {
+      "at": "2026-10-11T20:01:51.635161+00:00",
+      "by": "orchestrator",
+      "from": "backlog",
+      "to": "ready-for-dev"
+    },
+    {
+      "at": "2026-10-11T20:01:51.736448+00:00",
+      "by": "dogfood-backfill",
+      "from": "ready-for-dev",
+      "to": "in-progress"
+    },
+    {
+      "at": "2026-10-11T20:01:51.775944+00:00",
+      "by": "dogfood-backfill",
+      "from": "in-progress",
+      "to": "in-review"
+    },
+    {
+      "at": "2026-10-11T20:01:51.848364+00:00",
+      "by": "orchestrator",
+      "from": "in-review",
+      "to": "built"
+    },
+    {
+      "at": "2026-10-11T20:01:51.913901+00:00",
+      "by": "orchestrator",
+      "from": "built",
+      "to": "done"
+    }
+  ],
+  "findings": [],
+  "source_key": "foundation/design-skills"
+}

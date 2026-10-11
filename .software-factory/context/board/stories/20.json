@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "id": 20,
+  "epic": 3,
+  "type": "story",
+  "title": "Cursor and Codex projections",
+  "status": "backlog",
+  "owner": null,
+  "after": [
+    19
+  ],
+  "covers": [
+    "VAL-HOST-005",
+    "VAL-HOST-006",
+    "VAL-HOST-007",
+    "VAL-HOST-008",
+    "VAL-HOST-009",
+    "VAL-HOST-010",
+    "VAL-HOST-011",
+    "VAL-HOST-012",
+    "VAL-HOST-013",
+    "VAL-INSTALL-013",
+    "VAL-INSTALL-014",
+    "VAL-INSTALL-018"
+  ],
+  "risk": "standard",
+  "hitl": false,
+  "plan_checkpoint": false,
+  "done_checkpoint": false,
+  "blocked": null,
+  "receipts": {},
+  "baseline_sha": null,
+  "branch": null,
+  "pr": null,
+  "merged_sha": null,
+  "history": [],
+  "findings": [],
+  "source_key": "installer-hosts/cursor-codex-projections"
+}

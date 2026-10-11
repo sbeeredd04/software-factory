@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "id": 11,
+  "epic": 2,
+  "type": "story",
+  "title": "sf-crawl: read-only AST codebase crawl",
+  "status": "done",
+  "owner": "dogfood-backfill",
+  "after": [
+    10
+  ],
+  "covers": [
+    "VAL-CRAWL-001",
+    "VAL-CRAWL-002",
+    "VAL-CRAWL-003",
+    "VAL-CRAWL-004",
+    "VAL-CRAWL-005"
+  ],
+  "risk": "standard",
+  "hitl": false,
+  "plan_checkpoint": false,
+  "done_checkpoint": false,
+  "blocked": null,
+  "receipts": {
+    "backfill": {
+      "type": "backfill-attestation",
+      "subject_sha": "bec96ce0f77d3fe60d1ea57d9345a22dd44db24c",
+      "statement": "Work predates the board; the merge commit is in git history and the static gate is green at the dogfood commit.",
+      "evidence": [
+        "git show bec96ce0f77d3fe60d1ea57d9345a22dd44db24c",
+        "bash scripts/check_all.sh"
+      ],
+      "recorded_by": "dogfood-evals backfill",
+      "recorded_at": "2026-10-11"
+    }
+  },
+  "baseline_sha": null,
+  "branch": null,
+  "pr": null,
+  "merged_sha": "bec96ce0f77d3fe60d1ea57d9345a22dd44db24c",
+  "history": [
+    {
+      "at": "2026-10-11T20:01:53.567734+00:00",
+      "by": "orchestrator",
+      "from": "backlog",
+      "to": "ready-for-dev"
+    },
+    {
+      "at": "2026-10-11T20:01:53.661588+00:00",
+      "by": "dogfood-backfill",
+      "from": "ready-for-dev",
+      "to": "in-progress"
+    },
+    {
+      "at": "2026-10-11T20:01:53.697659+00:00",
+      "by": "dogfood-backfill",
+      "from": "in-progress",
+      "to": "in-review"
+    },
+    {
+      "at": "2026-10-11T20:01:53.768305+00:00",
+      "by": "orchestrator",
+      "from": "in-review",
+      "to": "built"
+    },
+    {
+      "at": "2026-10-11T20:01:53.806218+00:00",
+      "by": "orchestrator",
+      "from": "built",
+      "to": "done"
+    }
+  ],
+  "findings": [],
+  "source_key": "expansion/crawl-skill"
+}

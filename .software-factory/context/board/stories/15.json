@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "id": 15,
+  "epic": 2,
+  "type": "story",
+  "title": "Workstream expansion integrated into the loop",
+  "status": "done",
+  "owner": "dogfood-backfill",
+  "after": [
+    14
+  ],
+  "covers": [
+    "VAL-WORKSTREAM-002",
+    "VAL-WORKSTREAM-003"
+  ],
+  "risk": "standard",
+  "hitl": false,
+  "plan_checkpoint": false,
+  "done_checkpoint": false,
+  "blocked": null,
+  "receipts": {
+    "backfill": {
+      "type": "backfill-attestation",
+      "subject_sha": "a7e0b0f704c62ca5989f96aee25059f25d6bf530",
+      "statement": "Work predates the board; the merge commit is in git history and the static gate is green at the dogfood commit.",
+      "evidence": [
+        "git show a7e0b0f704c62ca5989f96aee25059f25d6bf530",
+        "bash scripts/check_all.sh"
+      ],
+      "recorded_by": "dogfood-evals backfill",
+      "recorded_at": "2026-10-11"
+    }
+  },
+  "baseline_sha": null,
+  "branch": null,
+  "pr": null,
+  "merged_sha": "a7e0b0f704c62ca5989f96aee25059f25d6bf530",
+  "history": [
+    {
+      "at": "2026-10-11T20:01:54.809110+00:00",
+      "by": "orchestrator",
+      "from": "backlog",
+      "to": "ready-for-dev"
+    },
+    {
+      "at": "2026-10-11T20:01:54.901458+00:00",
+      "by": "dogfood-backfill",
+      "from": "ready-for-dev",
+      "to": "in-progress"
+    },
+    {
+      "at": "2026-10-11T20:01:54.941705+00:00",
+      "by": "dogfood-backfill",
+      "from": "in-progress",
+      "to": "in-review"
+    },
+    {
+      "at": "2026-10-11T20:01:55.011385+00:00",
+      "by": "orchestrator",
+      "from": "in-review",
+      "to": "built"
+    },
+    {
+      "at": "2026-10-11T20:01:55.055599+00:00",
+      "by": "orchestrator",
+      "from": "built",
+      "to": "done"
+    }
+  ],
+  "findings": [],
+  "source_key": "expansion/loop-integration"
+}

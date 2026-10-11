@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "id": 1,
+  "epic": 1,
+  "type": "story",
+  "title": "Repository skeleton and community health files",
+  "status": "done",
+  "owner": "dogfood-backfill",
+  "after": [],
+  "covers": [
+    "VAL-REPO-001",
+    "VAL-REPO-002",
+    "VAL-REPO-003",
+    "VAL-REPO-004",
+    "VAL-REPO-005",
+    "VAL-REPO-006",
+    "VAL-REPO-007",
+    "VAL-REPO-008",
+    "VAL-REPO-009",
+    "VAL-REPO-010",
+    "VAL-REPO-011",
+    "VAL-REPO-012"
+  ],
+  "risk": "standard",
+  "hitl": false,
+  "plan_checkpoint": false,
+  "done_checkpoint": false,
+  "blocked": null,
+  "receipts": {
+    "backfill": {
+      "type": "backfill-attestation",
+      "subject_sha": "4a790d95fa8431a91815c859d8951233ff155e34",
+      "statement": "Work predates the board; the merge commit is in git history and the static gate is green at the dogfood commit.",
+      "evidence": [
+        "git show 4a790d95fa8431a91815c859d8951233ff155e34",
+        "bash scripts/check_all.sh"
+      ],
+      "recorded_by": "dogfood-evals backfill",
+      "recorded_at": "2026-10-11"
+    }
+  },
+  "baseline_sha": null,
+  "branch": null,
+  "pr": null,
+  "merged_sha": "4a790d95fa8431a91815c859d8951233ff155e34",
+  "history": [
+    {
+      "at": "2026-10-11T20:01:50.422534+00:00",
+      "by": "orchestrator",
+      "from": "backlog",
+      "to": "ready-for-dev"
+    },
+    {
+      "at": "2026-10-11T20:01:50.515500+00:00",
+      "by": "dogfood-backfill",
+      "from": "ready-for-dev",
+      "to": "in-progress"
+    },
+    {
+      "at": "2026-10-11T20:01:50.558631+00:00",
+      "by": "dogfood-backfill",
+      "from": "in-progress",
+      "to": "in-review"
+    },
+    {
+      "at": "2026-10-11T20:01:50.632090+00:00",
+      "by": "orchestrator",
+      "from": "in-review",
+      "to": "built"
+    },
+    {
+      "at": "2026-10-11T20:01:50.669601+00:00",
+      "by": "orchestrator",
+      "from": "built",
+      "to": "done"
+    }
+  ],
+  "findings": [],
+  "source_key": "foundation/repo-skeleton-community"
+}

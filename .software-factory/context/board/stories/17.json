@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "id": 17,
+  "epic": 2,
+  "type": "story",
+  "title": "Dogfood: the repo's own context home, board and eval suite in the gate",
+  "status": "in-progress",
+  "owner": "worker-dogfood-evals",
+  "after": [
+    16
+  ],
+  "covers": [
+    "VAL-EVAL-010"
+  ],
+  "risk": "standard",
+  "hitl": false,
+  "plan_checkpoint": false,
+  "done_checkpoint": false,
+  "blocked": null,
+  "receipts": {},
+  "baseline_sha": null,
+  "branch": null,
+  "pr": null,
+  "merged_sha": null,
+  "history": [
+    {
+      "at": "2026-10-11T20:01:55.517189+00:00",
+      "by": "orchestrator",
+      "from": "backlog",
+      "to": "ready-for-dev"
+    },
+    {
+      "at": "2026-10-11T20:17:48.650676+00:00",
+      "by": "worker-dogfood-evals",
+      "from": "ready-for-dev",
+      "to": "in-progress"
+    }
+  ],
+  "findings": [],
+  "source_key": "expansion/dogfood-evals",
+  "scope": [
+    "evals/",
+    ".software-factory/context/",
+    "tests/test_dogfood.py",
+    "scripts/check_all.sh",
+    "CONTRIBUTING.md",
+    ".gitignore",
+    "skills/sf-principles/references/context-home.md"
+  ]
+}

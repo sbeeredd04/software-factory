@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "id": 26,
+  "epic": 4,
+  "type": "story",
+  "title": "sf-help: discovery, interview and approved setup",
+  "status": "backlog",
+  "owner": null,
+  "after": [
+    25
+  ],
+  "covers": [
+    "VAL-HELP-001",
+    "VAL-HELP-002",
+    "VAL-HELP-003",
+    "VAL-HELP-004",
+    "VAL-HELP-005",
+    "VAL-HELP-006",
+    "VAL-HELP-007",
+    "VAL-HELP-008",
+    "VAL-HELP-009",
+    "VAL-HELP-010"
+  ],
+  "risk": "standard",
+  "hitl": false,
+  "plan_checkpoint": false,
+  "done_checkpoint": false,
+  "blocked": null,
+  "receipts": {},
+  "baseline_sha": null,
+  "branch": null,
+  "pr": null,
+  "merged_sha": null,
+  "history": [],
+  "findings": [],
+  "source_key": "onboarding-integrations/sf-help-skill"
+}

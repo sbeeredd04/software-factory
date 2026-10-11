@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "id": 16,
+  "epic": 2,
+  "type": "story",
+  "title": "Pack-lean-audit cuts and the legacy-name prose check",
+  "status": "done",
+  "owner": "dogfood-backfill",
+  "after": [
+    15
+  ],
+  "covers": [],
+  "risk": "low",
+  "hitl": false,
+  "plan_checkpoint": false,
+  "done_checkpoint": false,
+  "blocked": null,
+  "receipts": {
+    "backfill": {
+      "type": "backfill-attestation",
+      "subject_sha": "777c0836e50f6dbc852531cfb1b92650e8d275cd",
+      "statement": "Work predates the board; the merge commit is in git history and the static gate is green at the dogfood commit.",
+      "evidence": [
+        "git show 777c0836e50f6dbc852531cfb1b92650e8d275cd",
+        "bash scripts/check_all.sh"
+      ],
+      "recorded_by": "dogfood-evals backfill",
+      "recorded_at": "2026-10-11"
+    }
+  },
+  "baseline_sha": null,
+  "branch": null,
+  "pr": null,
+  "merged_sha": "777c0836e50f6dbc852531cfb1b92650e8d275cd",
+  "history": [
+    {
+      "at": "2026-10-11T20:01:55.118659+00:00",
+      "by": "orchestrator",
+      "from": "backlog",
+      "to": "ready-for-dev"
+    },
+    {
+      "at": "2026-10-11T20:01:55.209798+00:00",
+      "by": "dogfood-backfill",
+      "from": "ready-for-dev",
+      "to": "in-progress"
+    },
+    {
+      "at": "2026-10-11T20:01:55.246348+00:00",
+      "by": "dogfood-backfill",
+      "from": "in-progress",
+      "to": "in-review"
+    },
+    {
+      "at": "2026-10-11T20:01:55.321886+00:00",
+      "by": "orchestrator",
+      "from": "in-review",
+      "to": "built"
+    },
+    {
+      "at": "2026-10-11T20:01:55.360417+00:00",
+      "by": "orchestrator",
+      "from": "built",
+      "to": "done"
+    }
+  ],
+  "findings": [],
+  "source_key": "expansion/lean-down"
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "id": 3,
+  "epic": 1,
+  "type": "story",
+  "title": "Orchestrator skill with workflows and references",
+  "status": "done",
+  "owner": "dogfood-backfill",
+  "after": [
+    2
+  ],
+  "covers": [
+    "VAL-ORCH-001",
+    "VAL-ORCH-002",
+    "VAL-ORCH-003",
+    "VAL-ORCH-004",
+    "VAL-ORCH-005",
+    "VAL-ORCH-006",
+    "VAL-ORCH-007",
+    "VAL-ORCH-008",
+    "VAL-ORCH-010",
+    "VAL-ORCH-011",
+    "VAL-ORCH-012"
+  ],
+  "risk": "standard",
+  "hitl": false,
+  "plan_checkpoint": false,
+  "done_checkpoint": false,
+  "blocked": null,
+  "receipts": {
+    "backfill": {
+      "type": "backfill-attestation",
+      "subject_sha": "844654c4cdd7ea7d93c13ae139673d7f6e8138ba",
+      "statement": "Work predates the board; the merge commit is in git history and the static gate is green at the dogfood commit.",
+      "evidence": [
+        "git show 844654c4cdd7ea7d93c13ae139673d7f6e8138ba",
+        "bash scripts/check_all.sh"
+      ],
+      "recorded_by": "dogfood-evals backfill",
+      "recorded_at": "2026-10-11"
+    }
+  },
+  "baseline_sha": null,
+  "branch": null,
+  "pr": null,
+  "merged_sha": "844654c4cdd7ea7d93c13ae139673d7f6e8138ba",
+  "history": [
+    {
+      "at": "2026-10-11T20:01:51.028469+00:00",
+      "by": "orchestrator",
+      "from": "backlog",
+      "to": "ready-for-dev"
+    },
+    {
+      "at": "2026-10-11T20:01:51.120318+00:00",
+      "by": "dogfood-backfill",
+      "from": "ready-for-dev",
+      "to": "in-progress"
+    },
+    {
+      "at": "2026-10-11T20:01:51.159814+00:00",
+      "by": "dogfood-backfill",
+      "from": "in-progress",
+      "to": "in-review"
+    },
+    {
+      "at": "2026-10-11T20:01:51.234117+00:00",
+      "by": "orchestrator",
+      "from": "in-review",
+      "to": "built"
+    },
+    {
+      "at": "2026-10-11T20:01:51.271346+00:00",
+      "by": "orchestrator",
+      "from": "built",
+      "to": "done"
+    }
+  ],
+  "findings": [],
+  "source_key": "foundation/orchestrator-skill"
+}

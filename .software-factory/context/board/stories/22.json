@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "id": 22,
+  "epic": 3,
+  "type": "story",
+  "title": "Safe uninstall and the doctor report",
+  "status": "backlog",
+  "owner": null,
+  "after": [
+    21
+  ],
+  "covers": [
+    "VAL-INSTALL-015",
+    "VAL-INSTALL-016",
+    "VAL-INSTALL-017",
+    "VAL-DOCTOR-001",
+    "VAL-DOCTOR-002",
+    "VAL-DOCTOR-003",
+    "VAL-DOCTOR-004",
+    "VAL-DOCTOR-005",
+    "VAL-DOCTOR-006",
+    "VAL-DOCTOR-007",
+    "VAL-DOCTOR-008",
+    "VAL-DOCTOR-009"
+  ],
+  "risk": "high",
+  "hitl": false,
+  "plan_checkpoint": false,
+  "done_checkpoint": false,
+  "blocked": null,
+  "receipts": {},
+  "baseline_sha": null,
+  "branch": null,
+  "pr": null,
+  "merged_sha": null,
+  "history": [],
+  "findings": [],
+  "source_key": "installer-hosts/uninstall-doctor"
+}

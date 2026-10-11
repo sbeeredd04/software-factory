@@ -51,6 +51,10 @@ fi
 run_step "validate" python3 scripts/validate.py
 run_step "scan_public" python3 scripts/scan_public.py
 run_step "check_links" python3 scripts/check_links.py
+# The pack verifies itself: its own eval suite, offline and deterministic.
+run_step "evals (pack self-verification)" \
+  python3 skills/sf-eval/scripts/sf_eval.py run \
+    --plan evals/eval.config.json --mode premerge --project-root .
 
 if [ "${SF_SKIP_NETWORK:-0}" = "1" ]; then
   skip_step "check_mermaid"

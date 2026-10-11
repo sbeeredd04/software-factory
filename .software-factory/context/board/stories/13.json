@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "id": 13,
+  "epic": 2,
+  "type": "story",
+  "title": "sf-eval: eval-first skill and stdlib eval runner",
+  "status": "done",
+  "owner": "dogfood-backfill",
+  "after": [
+    12
+  ],
+  "covers": [
+    "VAL-EVAL-001",
+    "VAL-EVAL-002",
+    "VAL-EVAL-003",
+    "VAL-EVAL-004",
+    "VAL-EVAL-005",
+    "VAL-EVAL-006",
+    "VAL-EVAL-007",
+    "VAL-EVAL-008",
+    "VAL-EVAL-009"
+  ],
+  "risk": "standard",
+  "hitl": false,
+  "plan_checkpoint": false,
+  "done_checkpoint": false,
+  "blocked": null,
+  "receipts": {
+    "backfill": {
+      "type": "backfill-attestation",
+      "subject_sha": "41293e3829a763a1aee0db0be1df902eae021506",
+      "statement": "Work predates the board; the merge commit is in git history and the static gate is green at the dogfood commit.",
+      "evidence": [
+        "git show 41293e3829a763a1aee0db0be1df902eae021506",
+        "bash scripts/check_all.sh"
+      ],
+      "recorded_by": "dogfood-evals backfill",
+      "recorded_at": "2026-10-11"
+    }
+  },
+  "baseline_sha": null,
+  "branch": null,
+  "pr": null,
+  "merged_sha": "41293e3829a763a1aee0db0be1df902eae021506",
+  "history": [
+    {
+      "at": "2026-10-11T20:01:54.177492+00:00",
+      "by": "orchestrator",
+      "from": "backlog",
+      "to": "ready-for-dev"
+    },
+    {
+      "at": "2026-10-11T20:01:54.273768+00:00",
+      "by": "dogfood-backfill",
+      "from": "ready-for-dev",
+      "to": "in-progress"
+    },
+    {
+      "at": "2026-10-11T20:01:54.311644+00:00",
+      "by": "dogfood-backfill",
+      "from": "in-progress",
+      "to": "in-review"
+    },
+    {
+      "at": "2026-10-11T20:01:54.386044+00:00",
+      "by": "orchestrator",
+      "from": "in-review",
+      "to": "built"
+    },
+    {
+      "at": "2026-10-11T20:01:54.423849+00:00",
+      "by": "orchestrator",
+      "from": "built",
+      "to": "done"
+    }
+  ],
+  "findings": [],
+  "source_key": "expansion/eval-skill"
+}

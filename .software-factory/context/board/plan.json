@@ -1,0 +1,858 @@
+{
+  "streams": [
+    {
+      "id": "W-foundation",
+      "title": "Foundation",
+      "status": "active"
+    },
+    {
+      "id": "W-expansion",
+      "title": "Expansion",
+      "status": "active"
+    },
+    {
+      "id": "W-installer",
+      "title": "Installer and hosts",
+      "status": "active"
+    },
+    {
+      "id": "W-onboarding",
+      "title": "Onboarding and integrations",
+      "status": "active"
+    },
+    {
+      "id": "W-launch",
+      "title": "Launch and publication",
+      "status": "active"
+    }
+  ],
+  "epics": [
+    {
+      "key": "foundation",
+      "stream": "W-foundation",
+      "title": "Foundation: skeleton, kernel, orchestrator, team, design module, tooling",
+      "outcome": "The canonical pack validates and its gate runs.",
+      "done_when": [
+        "eleven skills and eleven roles validate",
+        "kernel helpers and the evidence gate pass their unit suites",
+        "scripts/check_all.sh runs the static checks"
+      ],
+      "covers": [
+        "VAL-REPO",
+        "VAL-KERNEL",
+        "VAL-ORCH",
+        "VAL-TEAM",
+        "VAL-DESIGN",
+        "VAL-TOOLS"
+      ],
+      "needs": [],
+      "stories": [
+        {
+          "key": "repo-skeleton-community",
+          "title": "Repository skeleton and community health files",
+          "type": "story",
+          "after": [],
+          "covers": [
+            "VAL-REPO-001",
+            "VAL-REPO-002",
+            "VAL-REPO-003",
+            "VAL-REPO-004",
+            "VAL-REPO-005",
+            "VAL-REPO-006",
+            "VAL-REPO-007",
+            "VAL-REPO-008",
+            "VAL-REPO-009",
+            "VAL-REPO-010",
+            "VAL-REPO-011",
+            "VAL-REPO-012"
+          ],
+          "risk": "standard",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": false
+        },
+        {
+          "key": "kernel-helpers",
+          "title": "Stdlib kernel helpers: state, gate, hook, config",
+          "type": "story",
+          "after": [
+            "repo-skeleton-community"
+          ],
+          "covers": [
+            "VAL-KERNEL-001",
+            "VAL-KERNEL-002",
+            "VAL-KERNEL-003",
+            "VAL-KERNEL-004",
+            "VAL-KERNEL-005",
+            "VAL-KERNEL-006",
+            "VAL-KERNEL-007",
+            "VAL-KERNEL-008",
+            "VAL-KERNEL-009",
+            "VAL-KERNEL-010",
+            "VAL-KERNEL-011",
+            "VAL-KERNEL-012",
+            "VAL-KERNEL-013",
+            "VAL-KERNEL-014",
+            "VAL-KERNEL-015",
+            "VAL-KERNEL-016"
+          ],
+          "risk": "standard",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": false
+        },
+        {
+          "key": "orchestrator-skill",
+          "title": "Orchestrator skill with workflows and references",
+          "type": "story",
+          "after": [
+            "kernel-helpers"
+          ],
+          "covers": [
+            "VAL-ORCH-001",
+            "VAL-ORCH-002",
+            "VAL-ORCH-003",
+            "VAL-ORCH-004",
+            "VAL-ORCH-005",
+            "VAL-ORCH-006",
+            "VAL-ORCH-007",
+            "VAL-ORCH-008",
+            "VAL-ORCH-010",
+            "VAL-ORCH-011",
+            "VAL-ORCH-012"
+          ],
+          "risk": "standard",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": false
+        },
+        {
+          "key": "team-agents",
+          "title": "Eleven canonical role agents with the shared worker contract",
+          "type": "story",
+          "after": [
+            "orchestrator-skill"
+          ],
+          "covers": [
+            "VAL-TEAM-001",
+            "VAL-TEAM-002",
+            "VAL-TEAM-003",
+            "VAL-TEAM-004",
+            "VAL-TEAM-005",
+            "VAL-TEAM-006",
+            "VAL-TEAM-007"
+          ],
+          "risk": "standard",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": false
+        },
+        {
+          "key": "design-skills",
+          "title": "Four sf- design skills with the reference catalog",
+          "type": "story",
+          "after": [
+            "team-agents"
+          ],
+          "covers": [
+            "VAL-DESIGN-001",
+            "VAL-DESIGN-002",
+            "VAL-DESIGN-003",
+            "VAL-DESIGN-007",
+            "VAL-DESIGN-008"
+          ],
+          "risk": "standard",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": false
+        },
+        {
+          "key": "palette-expansion-placeholders",
+          "title": "Eleven-skill palette with marked placeholders",
+          "type": "story",
+          "after": [
+            "orchestrator-skill"
+          ],
+          "covers": [],
+          "risk": "low",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": false
+        },
+        {
+          "key": "validation-tooling",
+          "title": "Validation tooling and the single static gate",
+          "type": "story",
+          "after": [
+            "design-skills"
+          ],
+          "covers": [
+            "VAL-TOOLS-001",
+            "VAL-TOOLS-002",
+            "VAL-TOOLS-003",
+            "VAL-TOOLS-004",
+            "VAL-TOOLS-005",
+            "VAL-TOOLS-006",
+            "VAL-TOOLS-007",
+            "VAL-TOOLS-008",
+            "VAL-TOOLS-009",
+            "VAL-TOOLS-010"
+          ],
+          "risk": "standard",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": false
+        },
+        {
+          "key": "loop-status-reconciliation",
+          "title": "Per-story records as the only live status store",
+          "type": "story",
+          "after": [
+            "validation-tooling"
+          ],
+          "covers": [
+            "VAL-ORCH-009"
+          ],
+          "risk": "standard",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": true
+        }
+      ]
+    },
+    {
+      "key": "expansion",
+      "stream": "W-expansion",
+      "title": "Expansion: evals, principles, crawl, board, workstreams, lean pass",
+      "outcome": "The pack carries the eval-first, context-home and board capabilities and dogfoods them.",
+      "done_when": [
+        "sf-eval, sf-principles and sf-crawl ship with tests",
+        "the board kernel enforces ownership in code",
+        "the pack's own context home, board and eval suite are committed and in the gate"
+      ],
+      "covers": [
+        "VAL-KERNEL",
+        "VAL-ROADMAP",
+        "VAL-CRAWL",
+        "VAL-PRIN",
+        "VAL-CONTEXT",
+        "VAL-EVAL",
+        "VAL-DESIGN",
+        "VAL-WORKSTREAM"
+      ],
+      "needs": [
+        "foundation"
+      ],
+      "stories": [
+        {
+          "key": "kernel-hardening",
+          "title": "Bound kernel claims, snapshot cost and run-folder size",
+          "type": "story",
+          "after": [
+            "foundation/loop-status-reconciliation"
+          ],
+          "covers": [
+            "VAL-KERNEL-017",
+            "VAL-KERNEL-018",
+            "VAL-KERNEL-019"
+          ],
+          "risk": "standard",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": false
+        },
+        {
+          "key": "board-roadmap",
+          "title": "Board kernel: per-story records and regenerable projections",
+          "type": "story",
+          "after": [
+            "kernel-hardening"
+          ],
+          "covers": [
+            "VAL-ROADMAP-001",
+            "VAL-ROADMAP-002",
+            "VAL-ROADMAP-003",
+            "VAL-ROADMAP-004",
+            "VAL-ROADMAP-005",
+            "VAL-ROADMAP-006",
+            "VAL-ROADMAP-007",
+            "VAL-WORKSTREAM-001"
+          ],
+          "risk": "standard",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": false
+        },
+        {
+          "key": "crawl-skill",
+          "title": "sf-crawl: read-only AST codebase crawl",
+          "type": "story",
+          "after": [
+            "board-roadmap"
+          ],
+          "covers": [
+            "VAL-CRAWL-001",
+            "VAL-CRAWL-002",
+            "VAL-CRAWL-003",
+            "VAL-CRAWL-004",
+            "VAL-CRAWL-005"
+          ],
+          "risk": "standard",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": false
+        },
+        {
+          "key": "principles-context",
+          "title": "sf-principles and the project-context home",
+          "type": "story",
+          "after": [
+            "crawl-skill"
+          ],
+          "covers": [
+            "VAL-PRIN-001",
+            "VAL-PRIN-002",
+            "VAL-PRIN-003",
+            "VAL-PRIN-004",
+            "VAL-PRIN-005",
+            "VAL-CONTEXT-001",
+            "VAL-CONTEXT-002",
+            "VAL-CONTEXT-003",
+            "VAL-CONTEXT-004"
+          ],
+          "risk": "standard",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": false
+        },
+        {
+          "key": "eval-skill",
+          "title": "sf-eval: eval-first skill and stdlib eval runner",
+          "type": "story",
+          "after": [
+            "principles-context"
+          ],
+          "covers": [
+            "VAL-EVAL-001",
+            "VAL-EVAL-002",
+            "VAL-EVAL-003",
+            "VAL-EVAL-004",
+            "VAL-EVAL-005",
+            "VAL-EVAL-006",
+            "VAL-EVAL-007",
+            "VAL-EVAL-008",
+            "VAL-EVAL-009"
+          ],
+          "risk": "standard",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": false
+        },
+        {
+          "key": "design-module-expansion",
+          "title": "Design module: architecture references and second smell catalog",
+          "type": "story",
+          "after": [
+            "eval-skill"
+          ],
+          "covers": [
+            "VAL-DESIGN-004",
+            "VAL-DESIGN-005",
+            "VAL-DESIGN-006",
+            "VAL-DESIGN-009",
+            "VAL-DESIGN-010",
+            "VAL-DESIGN-011"
+          ],
+          "risk": "standard",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": false
+        },
+        {
+          "key": "loop-integration",
+          "title": "Workstream expansion integrated into the loop",
+          "type": "story",
+          "after": [
+            "design-module-expansion"
+          ],
+          "covers": [
+            "VAL-WORKSTREAM-002",
+            "VAL-WORKSTREAM-003"
+          ],
+          "risk": "standard",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": false
+        },
+        {
+          "key": "lean-down",
+          "title": "Pack-lean-audit cuts and the legacy-name prose check",
+          "type": "story",
+          "after": [
+            "loop-integration"
+          ],
+          "covers": [],
+          "risk": "low",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": false
+        },
+        {
+          "key": "dogfood-evals",
+          "title": "Dogfood: the repo's own context home, board and eval suite in the gate",
+          "type": "story",
+          "after": [
+            "lean-down"
+          ],
+          "covers": [
+            "VAL-EVAL-010"
+          ],
+          "risk": "standard",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": false,
+          "scope": [
+            "evals/",
+            ".software-factory/context/",
+            "tests/test_dogfood.py",
+            "scripts/check_all.sh",
+            "CONTRIBUTING.md",
+            ".gitignore",
+            "skills/sf-principles/references/context-home.md"
+          ]
+        },
+        {
+          "key": "budget-caps-enforcement",
+          "title": "State and enforce every file budget in the gate",
+          "type": "story",
+          "after": [
+            "dogfood-evals"
+          ],
+          "covers": [
+            "VAL-WORKSTREAM-004"
+          ],
+          "risk": "standard",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": true
+        }
+      ]
+    },
+    {
+      "key": "installer-hosts",
+      "stream": "W-installer",
+      "title": "Installer and hosts: install.py, projections, hooks, doctor, BMad, distribution",
+      "outcome": "The pack installs idempotently into all three hosts with backups and a safe uninstall.",
+      "done_when": [
+        "golden projections for Claude Code, Cursor and Codex",
+        "hooks wired per host with documented limits",
+        "doctor reports pass/warning/blocked/unverified"
+      ],
+      "covers": [
+        "VAL-INSTALL",
+        "VAL-HOST",
+        "VAL-DOCTOR",
+        "VAL-BMAD",
+        "VAL-DIST"
+      ],
+      "needs": [
+        "expansion"
+      ],
+      "stories": [
+        {
+          "key": "installer-core-claude",
+          "title": "install.py transaction engine and Claude Code projection",
+          "type": "story",
+          "after": [
+            "expansion/budget-caps-enforcement"
+          ],
+          "covers": [
+            "VAL-INSTALL-001",
+            "VAL-INSTALL-002",
+            "VAL-INSTALL-003",
+            "VAL-INSTALL-004",
+            "VAL-INSTALL-005",
+            "VAL-INSTALL-006",
+            "VAL-INSTALL-007",
+            "VAL-INSTALL-008",
+            "VAL-INSTALL-009",
+            "VAL-INSTALL-010",
+            "VAL-INSTALL-011",
+            "VAL-INSTALL-012",
+            "VAL-HOST-001",
+            "VAL-HOST-002",
+            "VAL-HOST-003",
+            "VAL-HOST-004"
+          ],
+          "risk": "high",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": false
+        },
+        {
+          "key": "cursor-codex-projections",
+          "title": "Cursor and Codex projections",
+          "type": "story",
+          "after": [
+            "installer-core-claude"
+          ],
+          "covers": [
+            "VAL-HOST-005",
+            "VAL-HOST-006",
+            "VAL-HOST-007",
+            "VAL-HOST-008",
+            "VAL-HOST-009",
+            "VAL-HOST-010",
+            "VAL-HOST-011",
+            "VAL-HOST-012",
+            "VAL-HOST-013",
+            "VAL-INSTALL-013",
+            "VAL-INSTALL-014",
+            "VAL-INSTALL-018"
+          ],
+          "risk": "standard",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": false
+        },
+        {
+          "key": "hooks-wiring",
+          "title": "Session-start and pre-compact hooks per host",
+          "type": "story",
+          "after": [
+            "cursor-codex-projections"
+          ],
+          "covers": [
+            "VAL-HOST-014",
+            "VAL-HOST-015",
+            "VAL-HOST-016",
+            "VAL-HOST-017",
+            "VAL-HOST-018"
+          ],
+          "risk": "standard",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": false
+        },
+        {
+          "key": "uninstall-doctor",
+          "title": "Safe uninstall and the doctor report",
+          "type": "story",
+          "after": [
+            "hooks-wiring"
+          ],
+          "covers": [
+            "VAL-INSTALL-015",
+            "VAL-INSTALL-016",
+            "VAL-INSTALL-017",
+            "VAL-DOCTOR-001",
+            "VAL-DOCTOR-002",
+            "VAL-DOCTOR-003",
+            "VAL-DOCTOR-004",
+            "VAL-DOCTOR-005",
+            "VAL-DOCTOR-006",
+            "VAL-DOCTOR-007",
+            "VAL-DOCTOR-008",
+            "VAL-DOCTOR-009"
+          ],
+          "risk": "high",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": false
+        },
+        {
+          "key": "bmad-install",
+          "title": "Pinned BMad 6.12.0 install through the official installer",
+          "type": "story",
+          "after": [
+            "uninstall-doctor"
+          ],
+          "covers": [
+            "VAL-BMAD-001",
+            "VAL-BMAD-002",
+            "VAL-BMAD-003",
+            "VAL-BMAD-004",
+            "VAL-BMAD-005",
+            "VAL-BMAD-006",
+            "VAL-BMAD-007"
+          ],
+          "risk": "high",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": false
+        },
+        {
+          "key": "distribution",
+          "title": "Plugin and marketplace manifests and install.sh bootstrap",
+          "type": "story",
+          "after": [
+            "bmad-install"
+          ],
+          "covers": [
+            "VAL-DIST-001",
+            "VAL-DIST-002",
+            "VAL-DIST-003",
+            "VAL-DIST-004",
+            "VAL-DIST-005",
+            "VAL-DIST-006",
+            "VAL-DIST-007",
+            "VAL-DIST-008"
+          ],
+          "risk": "standard",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": true
+        }
+      ]
+    },
+    {
+      "key": "onboarding-integrations",
+      "stream": "W-onboarding",
+      "title": "Onboarding and integrations: config, trackers, sf-help, sf-agents, sf-evolve",
+      "outcome": "A new project is interviewed, configured and routed in one sitting.",
+      "done_when": [
+        "config schema validates with semantic checks",
+        "sf-help drafts documents and applies an approved setup",
+        "sf-agents routes by risk with review-bot templates"
+      ],
+      "covers": [
+        "VAL-CONFIG",
+        "VAL-HELP",
+        "VAL-AGENTS",
+        "VAL-EVOLVE"
+      ],
+      "needs": [
+        "installer-hosts"
+      ],
+      "stories": [
+        {
+          "key": "config-schema-trackers",
+          "title": "Config contract, JSON Schema and tracker adapters",
+          "type": "story",
+          "after": [
+            "installer-hosts/distribution"
+          ],
+          "covers": [
+            "VAL-CONFIG-001",
+            "VAL-CONFIG-002",
+            "VAL-CONFIG-003",
+            "VAL-CONFIG-004",
+            "VAL-CONFIG-005",
+            "VAL-CONFIG-006",
+            "VAL-CONFIG-007",
+            "VAL-CONFIG-008",
+            "VAL-CONFIG-009",
+            "VAL-CONFIG-010",
+            "VAL-CONFIG-011"
+          ],
+          "risk": "standard",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": false
+        },
+        {
+          "key": "sf-help-skill",
+          "title": "sf-help: discovery, interview and approved setup",
+          "type": "story",
+          "after": [
+            "config-schema-trackers"
+          ],
+          "covers": [
+            "VAL-HELP-001",
+            "VAL-HELP-002",
+            "VAL-HELP-003",
+            "VAL-HELP-004",
+            "VAL-HELP-005",
+            "VAL-HELP-006",
+            "VAL-HELP-007",
+            "VAL-HELP-008",
+            "VAL-HELP-009",
+            "VAL-HELP-010"
+          ],
+          "risk": "standard",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": false
+        },
+        {
+          "key": "sf-agents-skill",
+          "title": "sf-agents: registry, routing, review bots and triage",
+          "type": "story",
+          "after": [
+            "sf-help-skill"
+          ],
+          "covers": [
+            "VAL-AGENTS-001",
+            "VAL-AGENTS-002",
+            "VAL-AGENTS-003",
+            "VAL-AGENTS-004",
+            "VAL-AGENTS-005",
+            "VAL-AGENTS-006",
+            "VAL-AGENTS-007",
+            "VAL-AGENTS-008"
+          ],
+          "risk": "standard",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": false
+        },
+        {
+          "key": "sf-evolve-skill",
+          "title": "sf-evolve: fold-in registry, overlays and retro pipeline",
+          "type": "story",
+          "after": [
+            "sf-agents-skill"
+          ],
+          "covers": [
+            "VAL-EVOLVE-001",
+            "VAL-EVOLVE-002",
+            "VAL-EVOLVE-003",
+            "VAL-EVOLVE-004",
+            "VAL-EVOLVE-005",
+            "VAL-EVOLVE-006"
+          ],
+          "risk": "standard",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": true
+        }
+      ]
+    },
+    {
+      "key": "launch-publication",
+      "stream": "W-launch",
+      "title": "Launch and publication: site, assets, docs, README, release",
+      "outcome": "The public repository ships v0.1.0 with a viral-quality launch kit.",
+      "done_when": [
+        "showcase site and marketing assets committed",
+        "docs, examples and dogfood artifacts walk the repo's own method",
+        "public sbeeredd04/software-factory with a v0.1.0 release"
+      ],
+      "covers": [
+        "VAL-SITE",
+        "VAL-ASSET",
+        "VAL-README",
+        "VAL-PUB",
+        "VAL-CROSS"
+      ],
+      "needs": [
+        "onboarding-integrations"
+      ],
+      "stories": [
+        {
+          "key": "showcase-site",
+          "title": "Hand-built showcase site with self-hosted OFL fonts",
+          "type": "story",
+          "after": [
+            "onboarding-integrations/sf-evolve-skill"
+          ],
+          "covers": [
+            "VAL-SITE-001",
+            "VAL-SITE-002",
+            "VAL-SITE-003",
+            "VAL-SITE-004",
+            "VAL-SITE-005",
+            "VAL-SITE-006",
+            "VAL-SITE-007",
+            "VAL-SITE-008",
+            "VAL-SITE-009",
+            "VAL-SITE-010"
+          ],
+          "risk": "standard",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": false
+        },
+        {
+          "key": "marketing-assets",
+          "title": "Marketing PNGs rendered reproducibly from HTML templates",
+          "type": "story",
+          "after": [
+            "showcase-site"
+          ],
+          "covers": [
+            "VAL-ASSET-001",
+            "VAL-ASSET-002",
+            "VAL-ASSET-003",
+            "VAL-ASSET-004",
+            "VAL-ASSET-005"
+          ],
+          "risk": "standard",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": false
+        },
+        {
+          "key": "docs-examples-dogfood",
+          "title": "Docs set, examples and the dogfood journey",
+          "type": "story",
+          "after": [
+            "marketing-assets"
+          ],
+          "covers": [
+            "VAL-README-006",
+            "VAL-README-007",
+            "VAL-README-008",
+            "VAL-README-009",
+            "VAL-README-011"
+          ],
+          "risk": "standard",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": false
+        },
+        {
+          "key": "readme",
+          "title": "Viral-quality README with diagrams and quickstart",
+          "type": "story",
+          "after": [
+            "docs-examples-dogfood"
+          ],
+          "covers": [
+            "VAL-README-001",
+            "VAL-README-002",
+            "VAL-README-003",
+            "VAL-README-004",
+            "VAL-README-005",
+            "VAL-README-010",
+            "VAL-CROSS-001",
+            "VAL-CROSS-002",
+            "VAL-CROSS-003",
+            "VAL-CROSS-004",
+            "VAL-CROSS-005",
+            "VAL-CROSS-007"
+          ],
+          "risk": "standard",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": false
+        },
+        {
+          "key": "publication",
+          "title": "Public repository, v0.1.0 release and Pages",
+          "type": "story",
+          "after": [
+            "readme"
+          ],
+          "covers": [
+            "VAL-PUB-001",
+            "VAL-PUB-002",
+            "VAL-PUB-003",
+            "VAL-PUB-004",
+            "VAL-PUB-005",
+            "VAL-PUB-006",
+            "VAL-PUB-007",
+            "VAL-PUB-008",
+            "VAL-PUB-009",
+            "VAL-PUB-010",
+            "VAL-CROSS-006"
+          ],
+          "risk": "high",
+          "hitl": true,
+          "plan_checkpoint": false,
+          "done_checkpoint": true
+        }
+      ]
+    }
+  ]
+}

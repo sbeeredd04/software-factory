@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "id": 7,
+  "epic": 1,
+  "type": "story",
+  "title": "Validation tooling and the single static gate",
+  "status": "done",
+  "owner": "dogfood-backfill",
+  "after": [
+    5
+  ],
+  "covers": [
+    "VAL-TOOLS-001",
+    "VAL-TOOLS-002",
+    "VAL-TOOLS-003",
+    "VAL-TOOLS-004",
+    "VAL-TOOLS-005",
+    "VAL-TOOLS-006",
+    "VAL-TOOLS-007",
+    "VAL-TOOLS-008",
+    "VAL-TOOLS-009",
+    "VAL-TOOLS-010"
+  ],
+  "risk": "standard",
+  "hitl": false,
+  "plan_checkpoint": false,
+  "done_checkpoint": false,
+  "blocked": null,
+  "receipts": {
+    "backfill": {
+      "type": "backfill-attestation",
+      "subject_sha": "eb75a7fa0894e659db7994f4d162b6e9c8d57240",
+      "statement": "Work predates the board; the merge commit is in git history and the static gate is green at the dogfood commit.",
+      "evidence": [
+        "git show eb75a7fa0894e659db7994f4d162b6e9c8d57240",
+        "bash scripts/check_all.sh"
+      ],
+      "recorded_by": "dogfood-evals backfill",
+      "recorded_at": "2026-10-11"
+    }
+  },
+  "baseline_sha": null,
+  "branch": null,
+  "pr": null,
+  "merged_sha": "eb75a7fa0894e659db7994f4d162b6e9c8d57240",
+  "history": [
+    {
+      "at": "2026-10-11T20:01:52.294362+00:00",
+      "by": "orchestrator",
+      "from": "backlog",
+      "to": "ready-for-dev"
+    },
+    {
+      "at": "2026-10-11T20:01:52.385657+00:00",
+      "by": "dogfood-backfill",
+      "from": "ready-for-dev",
+      "to": "in-progress"
+    },
+    {
+      "at": "2026-10-11T20:01:52.428671+00:00",
+      "by": "dogfood-backfill",
+      "from": "in-progress",
+      "to": "in-review"
+    },
+    {
+      "at": "2026-10-11T20:01:52.500843+00:00",
+      "by": "orchestrator",
+      "from": "in-review",
+      "to": "built"
+    },
+    {
+      "at": "2026-10-11T20:01:52.537595+00:00",
+      "by": "orchestrator",
+      "from": "built",
+      "to": "done"
+    }
+  ],
+  "findings": [],
+  "source_key": "foundation/validation-tooling"
+}

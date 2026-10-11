@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "id": 5,
+  "title": "Launch and publication: site, assets, docs, README, release",
+  "outcome": "The public repository ships v0.1.0 with a viral-quality launch kit.",
+  "done_when": [
+    "showcase site and marketing assets committed",
+    "docs, examples and dogfood artifacts walk the repo's own method",
+    "public sbeeredd04/software-factory with a v0.1.0 release"
+  ],
+  "covers": [
+    "VAL-SITE",
+    "VAL-ASSET",
+    "VAL-README",
+    "VAL-PUB",
+    "VAL-CROSS"
+  ],
+  "order": [
+    29,
+    30,
+    31,
+    32,
+    33
+  ],
+  "needs": [
+    4
+  ],
+  "status": "planned",
+  "acceptance": null,
+  "parked": null,
+  "park_proposal": null,
+  "history": [],
+  "source_key": "launch-publication"
+}

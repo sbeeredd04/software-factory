@@ -19,10 +19,12 @@ node_modules/
 # Generated release output (built at release time, never committed)
 dist/
 
-# Local factory runtime state (if the pack is dogfooded into this repository)
+# Local factory runtime state (the pack is dogfooded into this repository;
+# only the volatile siblings are ignored, never .software-factory/context/)
 .software-factory/runtime/
 .software-factory/backups/
 .software-factory/runs/
 .software-factory/active.json
 .software-factory/state.lock
+.software-factory/board.lock
 .software-factory/installation.json

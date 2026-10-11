@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "id": 2,
+  "title": "Expansion: evals, principles, crawl, board, workstreams, lean pass",
+  "outcome": "The pack carries the eval-first, context-home and board capabilities and dogfoods them.",
+  "done_when": [
+    "sf-eval, sf-principles and sf-crawl ship with tests",
+    "the board kernel enforces ownership in code",
+    "the pack's own context home, board and eval suite are committed and in the gate"
+  ],
+  "covers": [
+    "VAL-KERNEL",
+    "VAL-ROADMAP",
+    "VAL-CRAWL",
+    "VAL-PRIN",
+    "VAL-CONTEXT",
+    "VAL-EVAL",
+    "VAL-DESIGN",
+    "VAL-WORKSTREAM"
+  ],
+  "order": [
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18
+  ],
+  "needs": [
+    1
+  ],
+  "status": "in-progress",
+  "acceptance": null,
+  "parked": null,
+  "park_proposal": null,
+  "history": [
+    {
+      "at": "2026-10-11T20:01:55.477088+00:00",
+      "by": "orchestrator",
+      "from": "planned",
+      "to": "in-progress"
+    }
+  ],
+  "source_key": "expansion"
+}

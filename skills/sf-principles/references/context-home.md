@@ -12,6 +12,7 @@ context read before planning, designing and reviewing. Only the volatile sibling
 | `principles/{product,conventions,risk,evals}.md` | core principles, user-authored | `sf-principles`, with `sf-help` setup |
 | `CODEBASE.md` | codebase map | `sf-crawl` |
 | `board/streams.json`, `board/epics/*.json`, `board/stories/*.json` | per-story records, the progress truth | the board helper (`roadmap.py`) |
+| `board/plan.json` | planning source the records derive from | the planning step (`roadmap.py derive`) |
 | `board/roadmap.json`, `board/dashboard.html` | regenerable projections | `roadmap.py build` |
 | `decisions/NNNN-title-with-dashes.md` | decision records | the design module |
 

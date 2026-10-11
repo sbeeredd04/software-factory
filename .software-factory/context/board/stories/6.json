@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "id": 6,
+  "epic": 1,
+  "type": "story",
+  "title": "Eleven-skill palette with marked placeholders",
+  "status": "done",
+  "owner": "dogfood-backfill",
+  "after": [
+    3
+  ],
+  "covers": [],
+  "risk": "low",
+  "hitl": false,
+  "plan_checkpoint": false,
+  "done_checkpoint": false,
+  "blocked": null,
+  "receipts": {
+    "backfill": {
+      "type": "backfill-attestation",
+      "subject_sha": "e5123590d348ca1985f83bfeac9e7cd5c0bc6e49",
+      "statement": "Work predates the board; the merge commit is in git history and the static gate is green at the dogfood commit.",
+      "evidence": [
+        "git show e5123590d348ca1985f83bfeac9e7cd5c0bc6e49",
+        "bash scripts/check_all.sh"
+      ],
+      "recorded_by": "dogfood-evals backfill",
+      "recorded_at": "2026-10-11"
+    }
+  },
+  "baseline_sha": null,
+  "branch": null,
+  "pr": null,
+  "merged_sha": "e5123590d348ca1985f83bfeac9e7cd5c0bc6e49",
+  "history": [
+    {
+      "at": "2026-10-11T20:01:51.988039+00:00",
+      "by": "orchestrator",
+      "from": "backlog",
+      "to": "ready-for-dev"
+    },
+    {
+      "at": "2026-10-11T20:01:52.079902+00:00",
+      "by": "dogfood-backfill",
+      "from": "ready-for-dev",
+      "to": "in-progress"
+    },
+    {
+      "at": "2026-10-11T20:01:52.118748+00:00",
+      "by": "dogfood-backfill",
+      "from": "in-progress",
+      "to": "in-review"
+    },
+    {
+      "at": "2026-10-11T20:01:52.193032+00:00",
+      "by": "orchestrator",
+      "from": "in-review",
+      "to": "built"
+    },
+    {
+      "at": "2026-10-11T20:01:52.230211+00:00",
+      "by": "orchestrator",
+      "from": "built",
+      "to": "done"
+    }
+  ],
+  "findings": [],
+  "source_key": "foundation/palette-expansion-placeholders"
+}

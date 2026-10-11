@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "id": 29,
+  "epic": 5,
+  "type": "story",
+  "title": "Hand-built showcase site with self-hosted OFL fonts",
+  "status": "backlog",
+  "owner": null,
+  "after": [
+    28
+  ],
+  "covers": [
+    "VAL-SITE-001",
+    "VAL-SITE-002",
+    "VAL-SITE-003",
+    "VAL-SITE-004",
+    "VAL-SITE-005",
+    "VAL-SITE-006",
+    "VAL-SITE-007",
+    "VAL-SITE-008",
+    "VAL-SITE-009",
+    "VAL-SITE-010"
+  ],
+  "risk": "standard",
+  "hitl": false,
+  "plan_checkpoint": false,
+  "done_checkpoint": false,
+  "blocked": null,
+  "receipts": {},
+  "baseline_sha": null,
+  "branch": null,
+  "pr": null,
+  "merged_sha": null,
+  "history": [],
+  "findings": [],
+  "source_key": "launch-publication/showcase-site"
+}

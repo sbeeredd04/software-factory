@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "id": 1,
+  "title": "Foundation: skeleton, kernel, orchestrator, team, design module, tooling",
+  "outcome": "The canonical pack validates and its gate runs.",
+  "done_when": [
+    "eleven skills and eleven roles validate",
+    "kernel helpers and the evidence gate pass their unit suites",
+    "scripts/check_all.sh runs the static checks"
+  ],
+  "covers": [
+    "VAL-REPO",
+    "VAL-KERNEL",
+    "VAL-ORCH",
+    "VAL-TEAM",
+    "VAL-DESIGN",
+    "VAL-TOOLS"
+  ],
+  "order": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "needs": [],
+  "status": "awaiting-acceptance",
+  "acceptance": null,
+  "parked": null,
+  "park_proposal": null,
+  "history": [
+    {
+      "at": "2026-10-11T20:01:55.399014+00:00",
+      "by": "orchestrator",
+      "from": "planned",
+      "to": "in-progress"
+    },
+    {
+      "at": "2026-10-11T20:01:55.438754+00:00",
+      "by": "orchestrator",
+      "from": "in-progress",
+      "to": "awaiting-acceptance"
+    }
+  ],
+  "source_key": "foundation"
+}

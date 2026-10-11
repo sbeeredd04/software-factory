@@ -39,12 +39,25 @@ npx -y shellcheck@latest install.sh        # shell lint (runs when install.sh ex
 python3 scripts/validate.py               # canonical layout and frontmatter rules
 python3 scripts/scan_public.py             # public-cleanliness scan (private terms, secrets, paths)
 python3 scripts/check_links.py             # relative-link resolution
+python3 skills/sf-eval/scripts/sf_eval.py run --plan evals/eval.config.json --mode premerge  # the pack's own evals
 ```
 
 It also runs the Agent Skills spec validator
 (`uvx --from skills-ref agentskills validate skills/<name>`) on every skill, schema checks
 (`uvx check-jsonschema`) on the GitHub workflows and issue forms, and renders every Mermaid
 diagram (network-dependent). The script itself is the authoritative, ordered list.
+
+## The pack dogfoods itself
+
+This repository runs on the method it ships. Its committed project-context home is
+`.software-factory/context/`: the principles modules under `principles/`, the `CODEBASE.md`
+crawl artifact, the master board under `board/` (per-story records plus the regenerable
+`roadmap.json` and `dashboard.html`), and the decision records under `decisions/`. Its own
+eval plan is `evals/eval.config.json`, and the gate above runs it on every change. After
+board record changes, regenerate the projections with
+`python3 skills/software-factory/scripts/roadmap.py build`; after source changes, regenerate
+the crawl artifact with `python3 skills/sf-crawl/scripts/crawl.py .`. Both are checked for
+freshness by the eval suite.
 
 For a quick inner loop, run the narrow checks directly:
 

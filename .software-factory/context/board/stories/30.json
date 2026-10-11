@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "id": 30,
+  "epic": 5,
+  "type": "story",
+  "title": "Marketing PNGs rendered reproducibly from HTML templates",
+  "status": "backlog",
+  "owner": null,
+  "after": [
+    29
+  ],
+  "covers": [
+    "VAL-ASSET-001",
+    "VAL-ASSET-002",
+    "VAL-ASSET-003",
+    "VAL-ASSET-004",
+    "VAL-ASSET-005"
+  ],
+  "risk": "standard",
+  "hitl": false,
+  "plan_checkpoint": false,
+  "done_checkpoint": false,
+  "blocked": null,
+  "receipts": {},
+  "baseline_sha": null,
+  "branch": null,
+  "pr": null,
+  "merged_sha": null,
+  "history": [],
+  "findings": [],
+  "source_key": "launch-publication/marketing-assets"
+}

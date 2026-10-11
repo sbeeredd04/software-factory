@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "id": 4,
+  "title": "Onboarding and integrations: config, trackers, sf-help, sf-agents, sf-evolve",
+  "outcome": "A new project is interviewed, configured and routed in one sitting.",
+  "done_when": [
+    "config schema validates with semantic checks",
+    "sf-help drafts documents and applies an approved setup",
+    "sf-agents routes by risk with review-bot templates"
+  ],
+  "covers": [
+    "VAL-CONFIG",
+    "VAL-HELP",
+    "VAL-AGENTS",
+    "VAL-EVOLVE"
+  ],
+  "order": [
+    25,
+    26,
+    27,
+    28
+  ],
+  "needs": [
+    3
+  ],
+  "status": "planned",
+  "acceptance": null,
+  "parked": null,
+  "park_proposal": null,
+  "history": [],
+  "source_key": "onboarding-integrations"
+}

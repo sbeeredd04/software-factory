@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "id": 12,
+  "epic": 2,
+  "type": "story",
+  "title": "sf-principles and the project-context home",
+  "status": "done",
+  "owner": "dogfood-backfill",
+  "after": [
+    11
+  ],
+  "covers": [
+    "VAL-PRIN-001",
+    "VAL-PRIN-002",
+    "VAL-PRIN-003",
+    "VAL-PRIN-004",
+    "VAL-PRIN-005",
+    "VAL-CONTEXT-001",
+    "VAL-CONTEXT-002",
+    "VAL-CONTEXT-003",
+    "VAL-CONTEXT-004"
+  ],
+  "risk": "standard",
+  "hitl": false,
+  "plan_checkpoint": false,
+  "done_checkpoint": false,
+  "blocked": null,
+  "receipts": {
+    "backfill": {
+      "type": "backfill-attestation",
+      "subject_sha": "fd2b1b0625956a0b2a6a76adff4c1974630bd41d",
+      "statement": "Work predates the board; the merge commit is in git history and the static gate is green at the dogfood commit.",
+      "evidence": [
+        "git show fd2b1b0625956a0b2a6a76adff4c1974630bd41d",
+        "bash scripts/check_all.sh"
+      ],
+      "recorded_by": "dogfood-evals backfill",
+      "recorded_at": "2026-10-11"
+    }
+  },
+  "baseline_sha": null,
+  "branch": null,
+  "pr": null,
+  "merged_sha": "fd2b1b0625956a0b2a6a76adff4c1974630bd41d",
+  "history": [
+    {
+      "at": "2026-10-11T20:01:53.883099+00:00",
+      "by": "orchestrator",
+      "from": "backlog",
+      "to": "ready-for-dev"
+    },
+    {
+      "at": "2026-10-11T20:01:53.970091+00:00",
+      "by": "dogfood-backfill",
+      "from": "ready-for-dev",
+      "to": "in-progress"
+    },
+    {
+      "at": "2026-10-11T20:01:54.006856+00:00",
+      "by": "dogfood-backfill",
+      "from": "in-progress",
+      "to": "in-review"
+    },
+    {
+      "at": "2026-10-11T20:01:54.077616+00:00",
+      "by": "orchestrator",
+      "from": "in-review",
+      "to": "built"
+    },
+    {
+      "at": "2026-10-11T20:01:54.114576+00:00",
+      "by": "orchestrator",
+      "from": "built",
+      "to": "done"
+    }
+  ],
+  "findings": [],
+  "source_key": "expansion/principles-context"
+}

@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "id": 4,
+  "epic": 1,
+  "type": "story",
+  "title": "Eleven canonical role agents with the shared worker contract",
+  "status": "done",
+  "owner": "dogfood-backfill",
+  "after": [
+    3
+  ],
+  "covers": [
+    "VAL-TEAM-001",
+    "VAL-TEAM-002",
+    "VAL-TEAM-003",
+    "VAL-TEAM-004",
+    "VAL-TEAM-005",
+    "VAL-TEAM-006",
+    "VAL-TEAM-007"
+  ],
+  "risk": "standard",
+  "hitl": false,
+  "plan_checkpoint": false,
+  "done_checkpoint": false,
+  "blocked": null,
+  "receipts": {
+    "backfill": {
+      "type": "backfill-attestation",
+      "subject_sha": "ac65277c0b274aaf12ec98156013c9dfef6ef2c4",
+      "statement": "Work predates the board; the merge commit is in git history and the static gate is green at the dogfood commit.",
+      "evidence": [
+        "git show ac65277c0b274aaf12ec98156013c9dfef6ef2c4",
+        "bash scripts/check_all.sh"
+      ],
+      "recorded_by": "dogfood-evals backfill",
+      "recorded_at": "2026-10-11"
+    }
+  },
+  "baseline_sha": null,
+  "branch": null,
+  "pr": null,
+  "merged_sha": "ac65277c0b274aaf12ec98156013c9dfef6ef2c4",
+  "history": [
+    {
+      "at": "2026-10-11T20:01:51.330854+00:00",
+      "by": "orchestrator",
+      "from": "backlog",
+      "to": "ready-for-dev"
+    },
+    {
+      "at": "2026-10-11T20:01:51.419088+00:00",
+      "by": "dogfood-backfill",
+      "from": "ready-for-dev",
+      "to": "in-progress"
+    },
+    {
+      "at": "2026-10-11T20:01:51.461383+00:00",
+      "by": "dogfood-backfill",
+      "from": "in-progress",
+      "to": "in-review"
+    },
+    {
+      "at": "2026-10-11T20:01:51.529696+00:00",
+      "by": "orchestrator",
+      "from": "in-review",
+      "to": "built"
+    },
+    {
+      "at": "2026-10-11T20:01:51.568813+00:00",
+      "by": "orchestrator",
+      "from": "built",
+      "to": "done"
+    }
+  ],
+  "findings": [],
+  "source_key": "foundation/team-agents"
+}

@@ -1,0 +1,11 @@
+{
+  "schema": "sf-eval/1",
+  "run_id": "r-19700101T000000Z-premerge",
+  "mode": "premerge",
+  "verdict": "pass",
+  "cases": {
+    "KRN-KERNEL-001": "pass"
+  },
+  "note": "deliberately tampered fixture: self_sha256 does not match the content, so `sf_eval.py verify` must refuse it",
+  "self_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+}

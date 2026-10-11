@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "streams": [
+    {
+      "id": "W-foundation",
+      "title": "Foundation",
+      "status": "active",
+      "epics": [
+        1
+      ]
+    },
+    {
+      "id": "W-expansion",
+      "title": "Expansion",
+      "status": "active",
+      "epics": [
+        2
+      ]
+    },
+    {
+      "id": "W-installer",
+      "title": "Installer and hosts",
+      "status": "active",
+      "epics": [
+        3
+      ]
+    },
+    {
+      "id": "W-onboarding",
+      "title": "Onboarding and integrations",
+      "status": "active",
+      "epics": [
+        4
+      ]
+    },
+    {
+      "id": "W-launch",
+      "title": "Launch and publication",
+      "status": "active",
+      "epics": [
+        5
+      ]
+    }
+  ]
+}

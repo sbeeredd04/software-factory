@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "id": 23,
+  "epic": 3,
+  "type": "story",
+  "title": "Pinned BMad 6.12.0 install through the official installer",
+  "status": "backlog",
+  "owner": null,
+  "after": [
+    22
+  ],
+  "covers": [
+    "VAL-BMAD-001",
+    "VAL-BMAD-002",
+    "VAL-BMAD-003",
+    "VAL-BMAD-004",
+    "VAL-BMAD-005",
+    "VAL-BMAD-006",
+    "VAL-BMAD-007"
+  ],
+  "risk": "high",
+  "hitl": false,
+  "plan_checkpoint": false,
+  "done_checkpoint": false,
+  "blocked": null,
+  "receipts": {},
+  "baseline_sha": null,
+  "branch": null,
+  "pr": null,
+  "merged_sha": null,
+  "history": [],
+  "findings": [],
+  "source_key": "installer-hosts/bmad-install"
+}

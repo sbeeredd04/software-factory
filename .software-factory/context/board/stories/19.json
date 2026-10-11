@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "id": 19,
+  "epic": 3,
+  "type": "story",
+  "title": "install.py transaction engine and Claude Code projection",
+  "status": "backlog",
+  "owner": null,
+  "after": [
+    18
+  ],
+  "covers": [
+    "VAL-INSTALL-001",
+    "VAL-INSTALL-002",
+    "VAL-INSTALL-003",
+    "VAL-INSTALL-004",
+    "VAL-INSTALL-005",
+    "VAL-INSTALL-006",
+    "VAL-INSTALL-007",
+    "VAL-INSTALL-008",
+    "VAL-INSTALL-009",
+    "VAL-INSTALL-010",
+    "VAL-INSTALL-011",
+    "VAL-INSTALL-012",
+    "VAL-HOST-001",
+    "VAL-HOST-002",
+    "VAL-HOST-003",
+    "VAL-HOST-004"
+  ],
+  "risk": "high",
+  "hitl": false,
+  "plan_checkpoint": false,
+  "done_checkpoint": false,
+  "blocked": null,
+  "receipts": {},
+  "baseline_sha": null,
+  "branch": null,
+  "pr": null,
+  "merged_sha": null,
+  "history": [],
+  "findings": [],
+  "source_key": "installer-hosts/installer-core-claude"
+}

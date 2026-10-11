@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "id": 24,
+  "epic": 3,
+  "type": "story",
+  "title": "Plugin and marketplace manifests and install.sh bootstrap",
+  "status": "backlog",
+  "owner": null,
+  "after": [
+    23
+  ],
+  "covers": [
+    "VAL-DIST-001",
+    "VAL-DIST-002",
+    "VAL-DIST-003",
+    "VAL-DIST-004",
+    "VAL-DIST-005",
+    "VAL-DIST-006",
+    "VAL-DIST-007",
+    "VAL-DIST-008"
+  ],
+  "risk": "standard",
+  "hitl": false,
+  "plan_checkpoint": false,
+  "done_checkpoint": true,
+  "blocked": null,
+  "receipts": {},
+  "baseline_sha": null,
+  "branch": null,
+  "pr": null,
+  "merged_sha": null,
+  "history": [],
+  "findings": [],
+  "source_key": "installer-hosts/distribution"
+}

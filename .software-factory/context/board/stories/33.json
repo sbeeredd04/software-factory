@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "id": 33,
+  "epic": 5,
+  "type": "story",
+  "title": "Public repository, v0.1.0 release and Pages",
+  "status": "backlog",
+  "owner": null,
+  "after": [
+    32
+  ],
+  "covers": [
+    "VAL-PUB-001",
+    "VAL-PUB-002",
+    "VAL-PUB-003",
+    "VAL-PUB-004",
+    "VAL-PUB-005",
+    "VAL-PUB-006",
+    "VAL-PUB-007",
+    "VAL-PUB-008",
+    "VAL-PUB-009",
+    "VAL-PUB-010",
+    "VAL-CROSS-006"
+  ],
+  "risk": "high",
+  "hitl": true,
+  "plan_checkpoint": false,
+  "done_checkpoint": true,
+  "blocked": null,
+  "receipts": {},
+  "baseline_sha": null,
+  "branch": null,
+  "pr": null,
+  "merged_sha": null,
+  "history": [],
+  "findings": [],
+  "source_key": "launch-publication/publication"
+}
