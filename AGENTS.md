@@ -16,7 +16,7 @@ installed separately through its own pinned installer; this repository never ven
 
 | Path | What lives there |
 | --- | --- |
-| `skills/` | The eight canonical skills. The only hand-edited skill source. |
+| `skills/` | The eleven canonical skills. The only hand-edited skill source. |
 | `agents/` | The eleven role prompts (`sf-*.md`). Canonical, never host-forked. |
 | `hosts/` | Host policy files for Claude Code, Cursor, and Codex. |
 | `schemas/` | JSON Schema 2020-12 documents for config, runs, and evidence. |

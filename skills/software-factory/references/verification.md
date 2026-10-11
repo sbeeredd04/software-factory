@@ -13,7 +13,11 @@ approve its own work.
    compatibility.
 2. **Project evals:** reuse the project's own eval runner and acceptance slice.
    Pin source, model and rubric versions; capture scenario IDs, commands, exit
-   codes and evidence paths.
+   codes and evidence paths. The `sf-eval` skill owns the eval gate: per-surface
+   suites, per-story `fail_to_pass` and `pass_to_pass` cases with stable IDs,
+   deterministic-first grading and cost-tiered runs. Eval receipts carry a
+   sha256 self-hash and are cited by gate manifests; a story does not pass
+   without its evals or an approved override record.
 3. **Actual effects:** verify effects in real state — files, database rows,
    provider dashboards, queues — not in promising prose. An effect failure fails
    the scenario regardless of any qualitative grade.

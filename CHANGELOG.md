@@ -10,12 +10,21 @@ ISO 8601 `YYYY-MM-DD` format.
 
 ### Added
 
+- Palette expansion to eleven skills: clearly marked placeholder entries for
+  `sf-eval` (eval-first setup and story evaluation), `sf-principles` (core
+  principles and the `.software-factory/context/` project-context home) and
+  `sf-crawl` (read-only AST crawl producing `CODEBASE.md`), pending full
+  authoring in the expansion milestone. The orchestrator skill, its team and
+  verification references and the loop workflows now name the eleven-skill
+  palette, the eval gate, the master-board update step and the context home,
+  and the public-facing documents (README, AGENTS.md, the bug-report form)
+  count the same eleven skills.
 - The `software-factory` orchestrator skill: a host-neutral entry map, the
   feature and bug workflow graphs with prose walkthroughs, eleven phase
   references (team, planning, dispatch, verification, integration, recovery,
   configuration, authority, hosts, evidence, handoff), and clearly marked
   placeholder entries for `sf-help`, `sf-agents` and `sf-evolve` so the
-  eight-skill layout validates ahead of the onboarding milestone.
+  eleven-skill layout validates ahead of the onboarding milestone.
 - Standard-library kernel helpers under `skills/software-factory/scripts/`: `state.py`
   (active-program pointer, exclusive path claims with Git common-dir identity and
   parent/child collision detection, checkpoint notes with shape limits, snapshot,

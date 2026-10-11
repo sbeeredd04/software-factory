@@ -25,9 +25,9 @@ or slug. [Hosts](references/hosts.md) covers per-host detail.
 ```
 request -> ground -> plan (reuse GO) -> independent plan review -> GO
         -> ready frontier in claimed worktrees -> implement / test / review / fix
-        -> independent QA -> actual-diff review + CI + review bots -> fix loop
+        -> independent QA + story evals -> actual-diff review + CI + review bots -> fix loop
         -> single-owner gated merge to the integration branch
-        -> deployed-SHA proof -> human epic checkpoint -> next frontier
+        -> deployed-SHA proof -> board update -> human epic checkpoint -> next frontier
 ```
 
 Full graphs with every stage and edge: [feature loop](workflows/feature.md) and
@@ -38,12 +38,17 @@ Full graphs with every stage and edge: [feature loop](workflows/feature.md) and
 - **Ground first.** Read the project's configured principles and architecture
   documents before planning, code or review, and inspect the real repository
   state: roots, remotes, HEADs, branch ancestry, dirty paths and worktrees.
+  The committed `.software-factory/context/` home holds the principle modules,
+  `CODEBASE.md`, the master board and decision records.
   See [configuration](references/configuration.md).
 - **Own the loop.** Intent, staffing, acceptance, integration and communication
   are yours. Every responsibility has exactly one owner, and acceptance is never
   delegated to the worker that did the work.
 - **Staff for best fit.** You may employ any agent, role or skill the job needs.
-  The shipped `sf-*` roles are a starting team you staff from as needed, not a
+  The palette is eleven skills: this orchestrator, `sf-help`, `sf-agents`,
+  `sf-evolve`, the design set (`sf-design`, `sf-smell-audit`, `sf-refactor`,
+  `sf-patterns`), `sf-eval`, `sf-principles` and `sf-crawl`. The shipped `sf-*`
+  roles are likewise a starting team you staff from as needed, not a
   mandatory fleet. See [team](references/team.md).
 - **Scale ceremony to risk.** A small, low-risk change earns a small spec and the
   relevant proof, not a full PRD, every role, every design skill and every review
@@ -110,10 +115,10 @@ in configuration. They preserve facts; you own the judgment.
 ## Map: read only what the current step needs
 
 - Workflows: [feature loop](workflows/feature.md), [bug loop](workflows/bug.md)
-- [Team and staffing](references/team.md) — roles, best-fit routing, independence
+- [Team and staffing](references/team.md) — roles, the skill palette, best-fit routing, independence
 - [Planning and readiness](references/planning.md) — grounding, BMad, plan review, ready frontier
 - [Dispatch and isolation](references/dispatch.md) — worktrees, claims, shared resources
-- [Verification](references/verification.md) — the evidence ladder and the quality bar
+- [Verification](references/verification.md) — the evidence ladder, the eval gate and the quality bar
 - [Integration](references/integration.md) — one owner, gated merges, deploy proof
 - [Recovery](references/recovery.md) — checkpoints, state helper, resume reconciliation
 - [Configuration](references/configuration.md) — the config.yaml contract

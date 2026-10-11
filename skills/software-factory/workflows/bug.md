@@ -22,7 +22,7 @@ flowchart TD
   M --> S[Deployed staging SHA: the original reproduction now passes]
   S -->|fails or unknown: loop reopens| O
   S --> H[Applicable epic manual checkpoint with the human owner]
-  H --> K[Durable evidence: bug and tracker closure, follow-ups recorded]
+  H --> K[Durable evidence: bug, tracker and board closure, follow-ups recorded]
 ```
 
 ## The flow in prose
@@ -63,6 +63,6 @@ configured local equivalent for work that does not deploy. If it fails or the
 outcome is unknown, the loop reopens at the work stage with receipts preserved.
 
 **Close durably.** Hold the applicable epic's manual checkpoint with the human
-owner, then close with durable evidence: the bug and tracker entries closed,
-no-fix evidence kept where relevant, and unresolved obligations recorded as
-follow-ups.
+owner, then close with durable evidence: the bug, tracker and master-board
+entries closed (`.software-factory/context/board/`), no-fix evidence kept where
+relevant, and unresolved obligations recorded as follow-ups.

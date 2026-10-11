@@ -15,7 +15,7 @@ flowchart TD
   H -->|answer recorded| A
   A -->|yes: reuse the GO| O[Orchestrator selects the adaptive ready frontier across eligible epics]
   O --> W[Claimed exact worktrees: implement, test, self-review, fix]
-  W --> V[Independent QA: tests, actual effects, qualitative eval]
+  W --> V[Independent QA: tests, actual effects, story evals, qualitative eval]
   V -->|fail or unknown| W
   V --> D[Actual-diff review plus CI and configured review bots]
   D -->|confirmed findings: fix| W
@@ -27,7 +27,7 @@ flowchart TD
   S -->|failed or unknown: back to work| W
   S --> C{Epic boundary?}
   C -->|yes| E[Human epic checkpoint: acceptance stays pending until confirmed]
-  C -->|no| K[Durable receipts, decisions, tracker update, short retro]
+  C -->|no| K[Durable receipts, decisions, tracker and board update, short retro]
   E --> K
   K -->|next frontier| O
 ```
@@ -65,10 +65,12 @@ evidence expectations, not a rigid script. Details: [dispatch](../references/dis
 
 **Work and independent verification.** Workers implement, test, self-inspect and
 fix. Independent QA then exercises the tests, the actual effects and — where
-behavior is qualitative — a calibrated eval, all on the actual HEAD. Actual-diff
-review, CI and the configured review bots feed the same fix loop; confirmed
-findings go back to the owning worker. A human risk or authority question blocks
-the affected dependents only. Details: [verification](../references/verification.md).
+behavior is qualitative — a calibrated eval, all on the actual HEAD. The story's
+eval cases (set up by `sf-eval`) gate acceptance; eval failures iterate through
+this loop like any other finding. Actual-diff review, CI and the configured
+review bots feed the same fix loop; confirmed findings go back to the owning
+worker. A human risk or authority question blocks the affected dependents only.
+Details: [verification](../references/verification.md).
 
 **Integration.** A single integration owner merges sequentially to the
 configured integration branch after the gates pass — never to a protected
@@ -82,6 +84,7 @@ Failed or unknown proof goes back into the work loop with receipts preserved.
 
 **Checkpoint and close.** At an epic boundary the human owner performs the
 manual checkpoint; the epic stays pending until they confirm. Close with durable
-receipts, recorded decisions, tracker updates and a short retro whose learnings
-feed the next frontier. The tracker is the story-status authority — there is no
+receipts, recorded decisions, tracker and master-board updates
+(`.software-factory/context/board/`) and a short retro whose learnings feed the
+next frontier. The tracker is the story-status authority — there is no
 parallel status system. Then select the next ready frontier.

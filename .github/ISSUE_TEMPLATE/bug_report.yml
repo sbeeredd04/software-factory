@@ -26,6 +26,9 @@ body:
         - Orchestrator (software-factory skill)
         - Design skills (sf-design, sf-smell-audit, sf-refactor, sf-patterns)
         - Onboarding and integrations (sf-help, sf-agents, sf-evolve)
+        - Evals (sf-eval)
+        - Principles and project context (sf-principles)
+        - Codebase crawl (sf-crawl)
         - Role agents
         - Installer (install.py, install.sh)
         - Kernel helpers and hooks

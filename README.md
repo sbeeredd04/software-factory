@@ -20,9 +20,11 @@ or Codex - into an autonomous software factory. One orchestrator owns the whole 
 
 ## What's inside
 
-- **8 skills** - `software-factory` (the orchestrator), `sf-help` (onboarding interview),
-  `sf-agents` (agent registry and routing), `sf-evolve` (fold in new skills over time), and the
-  design set: `sf-design`, `sf-smell-audit`, `sf-refactor`, `sf-patterns`.
+- **11 skills** - `software-factory` (the orchestrator), `sf-help` (onboarding interview),
+  `sf-agents` (agent registry and routing), `sf-evolve` (fold in new skills over time), the
+  design set (`sf-design`, `sf-smell-audit`, `sf-refactor`, `sf-patterns`), `sf-eval`
+  (eval-first suites and story evals), `sf-principles` (core principles and the project
+  context home), and `sf-crawl` (read-only codebase crawl).
 - **11 role prompts** - product manager, architect, design reviewer, engineer, principal
   engineer, QA engineer, code reviewer, evaluator, AI engineer, release engineer, security
   reviewer. A starting team the orchestrator staffs from as needed, not a mandatory fleet.

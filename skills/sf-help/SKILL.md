@@ -11,7 +11,7 @@ metadata:
 # sf-help (placeholder)
 
 > **Placeholder — this is not the shipped skill.** This file exists so the
-> eight-skill layout validates. The full onboarding skill (discovery crawl,
+> eleven-skill layout validates. The full onboarding skill (discovery crawl,
 > document drafts, the 20-question interview, approved-setup apply, optional
 > design audit, first-lap proposal) is authored in the onboarding milestone and
 > will replace this body. Until then, do not rely on this skill for real setup.

@@ -33,6 +33,25 @@ it is absent they do the same job natively with the pack's own templates. A smal
 change may need none of them. Architecture consultation is for unresolved
 contracts, not every function.
 
+## The shipped skill palette
+
+Eleven skills ship in the pack (`skills/`). Like the roles, they are a starting
+palette — you may use any skill the job needs, shipped or not.
+
+| Skill | Job |
+| --- | --- |
+| `software-factory` | This orchestrator: the loop from grounded intent to proven merge |
+| `sf-help` | First-time setup: codebase discovery, the interview, the approved setup |
+| `sf-agents` | Agent registry and detection, risk routing, review-bot configs, PR triage |
+| `sf-evolve` | Folds in third-party skills and MCP connections; the retro-to-patch pipeline |
+| `sf-design` | Routes software-design judgment work |
+| `sf-smell-audit` | Measured smell audit against the catalog |
+| `sf-refactor` | Behavior-preserving refactoring moves |
+| `sf-patterns` | Pattern judgment with the anti-bloat bar |
+| `sf-eval` | Eval-first: per-surface suites, per-story eval cases, cost-tiered runs |
+| `sf-principles` | Core principles and the `.software-factory/context/` home |
+| `sf-crawl` | Read-only AST crawl producing `CODEBASE.md` |
+
 ## Best-fit routing
 
 Choose by capability, risk, reliability, latency and likely total rework — not by
