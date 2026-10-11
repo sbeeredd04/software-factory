@@ -21,3 +21,12 @@ updates:
     commit-message:
       prefix: chore
       include: scope
+
+  # The only npm manifest is the inert crawl test fixture (no dependencies).
+  - package-ecosystem: npm
+    directory: /tests/fixtures/repos/typescript-web
+    schedule:
+      interval: monthly
+    commit-message:
+      prefix: chore
+      include: scope

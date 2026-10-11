@@ -1,0 +1,13 @@
+{
+  "name": "fixture-web",
+  "version": "0.1.0",
+  "description": "Deterministic crawl fixture: a tiny TypeScript web app.",
+  "main": "src/index.ts",
+  "bin": {
+    "fixture-web": "src/cli.ts"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "node --test"
+  }
+}

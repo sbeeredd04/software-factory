@@ -20,4 +20,6 @@ Intended scope, so readers know what is coming: `sf-help` interviews the
 codebase and the human, then writes `.software-factory/config.yaml` (validated
 by `scripts/config.py` from the orchestrator skill) plus drafts of the project
 principle documents. Nothing is applied before the human approves the drafted
-setup.
+setup. Its codebase discovery consumes `.software-factory/context/CODEBASE.md`
+— produced by [`sf-crawl`](../sf-crawl/SKILL.md) — and never re-crawls; the
+factory has exactly one crawler.

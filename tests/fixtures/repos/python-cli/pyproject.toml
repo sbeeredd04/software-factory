@@ -1,0 +1,8 @@
+[project]
+name = "fixture-cli"
+version = "0.1.0"
+description = "Deterministic crawl fixture: a tiny Python CLI package."
+requires-python = ">=3.11"
+
+[project.scripts]
+fixture-cli = "fixture_cli.cli:main"

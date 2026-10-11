@@ -7,7 +7,11 @@ the ready-frontier decision that follows it.
 
 Read the project's configured principles and architecture documents, the
 per-story board records and the tracker that feeds them, and the current code
-before planning. Reuse existing approved plans and GO decisions; fill only the
+before planning. Planners and workers alike start from the project-context
+home: the configured principles together with
+`.software-factory/context/CODEBASE.md`, the generated codebase map owned by
+[sf-crawl](../../sf-crawl/SKILL.md) — refresh it with `sf-crawl` when it is
+missing or stale. Reuse existing approved plans and GO decisions; fill only the
 actual gaps. Missing product outcomes or acceptance criteria benefit from the
 product manager; changed cross-module contracts from the architect; these are
 examples, not compulsory staffing.

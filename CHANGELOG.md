@@ -10,6 +10,15 @@ ISO 8601 `YYYY-MM-DD` format.
 
 ### Added
 
+- The `sf-crawl` skill (replacing its placeholder): a deterministic,
+  read-only codebase crawler (`skills/sf-crawl/scripts/crawl.py`,
+  standard library only) that maps a repository into
+  `.software-factory/context/CODEBASE.md` — full AST treatment for Python
+  (module map, import edges, call edges, entry points), documented
+  best-effort lexical analysis for JavaScript/TypeScript, stated limits,
+  honest degradation and an atomic in-place rewrite — plus the artifact and
+  coverage references and shared repository fixtures under
+  `tests/fixtures/repos/`.
 - Validation tooling under `scripts/`: `validate.py` (canonical layout of the
   eleven skills and eleven role agents from a single data constant, frontmatter
   budgets and standard keys, reference resolution, agent and manifest rules,
