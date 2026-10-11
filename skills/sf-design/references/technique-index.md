@@ -99,3 +99,29 @@ Long methods hide the logic. These moves name a piece or remove a name that hide
 | Form Template Method | Subclasses run the same steps in the same order. Do this after the steps are real, not before. |
 | Replace Inheritance with Delegation | A subclass uses only part of its parent. The cost is forwarding methods. |
 | Replace Delegation with Inheritance | A type forwards almost every call and does not already have a parent. If it forwards only some, keep delegation. |
+
+## Tidies — structure-only, before a behavior change
+
+Tidies are the smallest allowed unit: structure-only moves, batched small and
+reversible, and never in the same diff as a behavior change. Tidy first when a
+little order unblocks the change; stop when the next behavior change is
+unblocked, not when the file is pretty. The individual moves already live in
+the catalog above: guard clauses, dead-code deletion, renames, extract and
+inline.
+
+## Architecture-scale moves
+
+Three moves operate above the technique scale. The safety contract is
+unchanged: pin current behavior first, adding a characterization or golden
+test only where the seam has no pin; one move at a time with the tree
+runnable; run the existing tests after each move and treat a red test as a bug
+or an over-coupled assertion rather than weakening the pin; stop when the
+named smell is gone; never ship a feature in the same change. A move that
+crosses a module boundary writes or amends a decision record
+([adr.md](adr.md)).
+
+| Move | Shape |
+|---|---|
+| Strangler Fig | Incremental replacement behind a stable front door: route new work to the new implementation until the old one has no callers left. |
+| Branch by Abstraction | A temporary seam in front of the old implementation lets callers migrate one at a time. |
+| Parallel Change | Expand → migrate → contract: add the new path alongside, move the callers, then delete the old path in the same plan — a seam with no deletion date becomes a flag farm. |

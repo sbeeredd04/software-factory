@@ -12,7 +12,7 @@ metadata:
 
 A pattern is a named blueprint you adapt. It is not a requirement. The criticism that matters: patterns often patch a missing language feature, people copy the class diagram literally, and a freshly learned catalog makes every problem look like a nail.
 
-Index: [../sf-design/references/pattern-index.md](../sf-design/references/pattern-index.md).
+Index: [../sf-design/references/pattern-index.md](../sf-design/references/pattern-index.md). On the default stacks (React/Next, FastAPI/Flask/Django, Postgres/Redis, serverless), read [../sf-design/references/modern-patterns.md](../sf-design/references/modern-patterns.md) before judging — the framework usually already provides the pattern.
 
 ## Decide
 
@@ -38,4 +38,9 @@ Answer these in order. Stop at the first no.
 
 ## Report line
 
-For each pattern you mention, one line: present, absent on purpose, or harmful if added. A healthy catalog is mostly "absent on purpose."
+For each pattern you mention, one line: present, absent on purpose, or harmful if added. A fourth value is allowed only where the framework's provision is named and measured: `already provided by <framework>`. A healthy catalog is mostly "absent on purpose."
+
+## Project principles
+
+Read the repository's own governing principles; they remain authoritative.
+Do not create a second format.

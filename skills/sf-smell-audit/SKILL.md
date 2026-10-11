@@ -16,6 +16,8 @@ Palette and the smell-to-move table: [../sf-design/SKILL.md](../sf-design/SKILL.
 
 ## Measure before you score
 
+First discover the selected worktree's production tree, current schema, and project conventions. Do not invent a second data shape, and do not silently resolve conflicting contract instructions while describing a smell.
+
 Exclude tests, virtualenvs, snapshots, and generated code from production totals. Count them separately. A large test suite is evidence against "no tests," not a large-class smell in the product.
 
 On Python, parse the AST. Record:
@@ -30,7 +32,7 @@ A function span double-counts if you sum it with the helpers inside it. Report f
 
 ## Health
 
-5 absent, 4 local, 3 present and contained, 2 expensive, 1 owns the tree. The family score is the mean of its smells. The overall score is the unweighted mean of all 23. Say so.
+5 absent, 4 local, 3 present and contained, 2 expensive, 1 owns the tree. The family score is the mean of its smells. The overall score is the unweighted mean of the stable 23. Say so. The second, deep-pass catalog never enters the mean.
 
 Always publish two numbers for Long Method and Long Parameter List:
 
@@ -41,11 +43,30 @@ A tree can have a wide catalog smell and still be healthy if the tail is short. 
 
 ## How to read this codebase style
 
-- Procedural modules: score Large Class on the file. Name the biggest real class separately so a config bag is not called a god object.
-- One dispatcher full of branches is Switch Statements. Copied branch sets are the expensive form.
-- Parallel packages with the same filenames are not Parallel Inheritance Hierarchies unless adding one type forces a twin in a second tree. Score the package echo as duplicate structure, and say which smell you used.
-- Boundary models with fields and no behavior are DTOs. Score Data Class only when domain behavior lives in clients that should sit on that type.
-- Comments that narrate a long method count. Comments that state an invariant do not.
+- Procedural modules: score Large Class on the file, and name the biggest real class separately so a config bag is not called a god object.
+- One dispatcher full of branches is Switch Statements; copied branch sets are the expensive form.
+- Parallel packages with the same filenames are duplicate structure, not Parallel Inheritance Hierarchies, unless adding one type forces a twin in a second tree — say which smell you used.
+- Boundary models with fields and no behavior are DTOs; score Data Class only when domain behavior lives in clients that should sit on that type.
+- Comments that narrate a long method count; comments that state an invariant do not.
+
+## Second pass: the deep catalog
+
+The smell map's second catalog (twelve rows, deep pass only) runs on a deep audit request, or when the first pass scored 1–2 on the change-preventer family. Report each finding as a count against the row's detection bar; it never enters the 5-to-1 health score.
+
+## History pass (optional)
+
+Measure change, not just shape, from git over roughly a 2–3 month window — `git log --since=<date> --name-only --format=%h` feeds the counts. Report as measured facts, never scores, each marked confirmed (with the command) or unconfirmed:
+
+- Hotspots: the top decile of churn × complexity.
+- Temporal coupling: pairs that co-change in at least 30% of their commits.
+- A single-dominant-author note where one author wrote nearly all of a file.
+
+These facts justify the first move for divergent change and shotgun surgery, and locate boundary defects that static shape misses.
+
+## Architecture smells (module scope, on request)
+
+Report as counts and ratios with the same confirmed/unconfirmed marking and no re-architecture recommendation: import cycles (0 allowed), layer-direction breaches, hub-module fan-in above the tree-share bar, a stable module importing an unstable one, and shallow modules (interface size versus hidden implementation mass).
+Bars and per-ecosystem tools: [../sf-design/references/fitness-functions.md](../sf-design/references/fitness-functions.md).
 
 ## Report card
 
@@ -61,4 +82,5 @@ Mark each fact confirmed (path, count, or command) or unconfirmed. An unconfirme
 
 ## Project principles
 
-Read the repository's own governing principles; they remain authoritative. Discover the selected worktree's production tree, current schema, and project conventions before scoring. Do not invent a second data shape, and do not silently resolve conflicting contract instructions while describing a smell.
+Read the repository's own governing principles; they remain authoritative.
+Do not create a second format.

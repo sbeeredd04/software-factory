@@ -18,6 +18,8 @@ Technique names and the when-not rules live in [../sf-design/references/smell-te
 
 Rule of three: the third copy is the refactor. Also when the change you need cannot be made safely inside the mess, and when a bug sits in a method you cannot read. A dedicated cleanup of a healthy module is not the job.
 
+Tidies — small structure-only moves — are the smallest allowed unit before a behavior change, batched small and reversible, and they never travel in the same diff as the behavior change.
+
 ## Safety
 
 1. Pin the current behavior with the tests that already exist. Add a characterization test only where a seam has no pin. Feathers: seam first, then move.
@@ -42,9 +44,18 @@ Pay interest where change is already slow: the module everyone edits, the seam t
 
 Quadrant, used as a label not a score: prudent-deliberate debt was a known loan; prudent-inadvertent debt is a design you can see only after the code taught you; reckless debt skipped a seam you already knew how to make. Repay prudent debt in the module that owns it. Reckless debt still gets the same techniques, with a test pinned first because the seam was never there.
 
+## Architecture-scale moves
+
+The index's three architecture-scale moves — Strangler Fig, Branch by Abstraction, Parallel Change — run under the same safety contract above: pin first, one move at a time with the tree runnable, tests green after each move, stop when the named smell is gone, and never ship a feature in the same change. Two bars are added: a move crossing a module boundary writes or amends a decision record, and a Parallel Change deletes the old path in the same plan rather than leaving a permanent seam. Shapes: [../sf-design/references/technique-index.md](../sf-design/references/technique-index.md).
+
 ## Reject
 
 - A base class for packages that happen to share filenames, before the steps are the same. That is Form Template Method too early, and it creates the hierarchy smell.
 - A strategy class per branch in a language with first-class functions.
 - Comment deletion as the project. Rename and extract, then the narration comment has nothing left to say.
 - A new abstraction layer that forwards every call. That is Middle Man.
+
+## Project principles
+
+Read the repository's own governing principles; they remain authoritative.
+Do not create a second format.
