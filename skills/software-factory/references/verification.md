@@ -28,6 +28,12 @@ approve its own work.
 5. **Independent review:** a non-author reads the actual diff with the plan and
    the failure/effect evidence, and confirms findings by reproducing them.
 
+The eval gate applies on both loops: a bug fix verifies against the story's
+eval cases just as a feature does, with the confirmed reproduction captured as
+a `fail_to_pass` case before the fix is accepted. An eval failure is a finding
+that routes back into the owning loop; it is never waived silently — only an
+approved override record excuses it.
+
 Apply `sf-design` and its focused skills (`sf-smell-audit`, `sf-refactor`,
 `sf-patterns`) again at diff review, holding the anti-bloat bar: reuse first,
 the smallest complete diff, no unrequested abstraction, obsolete-path deletion

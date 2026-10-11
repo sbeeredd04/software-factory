@@ -40,6 +40,12 @@ qualitative eval slice; its staging or deploy flow; and its rollback. Doc-only
 or non-deployable work carries an explicitly approved narrower proof, not a
 silent exemption.
 
+A story enters the queue eval-ready: it carries `fail_to_pass` and
+`pass_to_pass` cases with stable, story-linked IDs drawn from the per-surface
+suites the user has signed off. `sf-eval` owns the suite setup, the case shape
+and the grading ladder; planning's job is to keep unevaluated scope out of the
+queue.
+
 Ceremony scales with risk: a small low-risk change gets a small spec and the
 relevant proof, not the full apparatus.
 

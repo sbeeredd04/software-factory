@@ -16,7 +16,9 @@ flowchart TD
   B --> P[Risk-sized plan: regression, effect, eval and staging proof]
   P --> PR[Independent plan review: revise on material findings]
   PR --> O[Shared loop: workers implement, test, review, fix in claimed worktrees]
-  O --> C[Actual-diff review plus CI and review bots, plus the risk and human gate]
+  O --> V[Independent QA on the actual HEAD: regression, effects and the story's eval cases]
+  V -->|eval or check failure: back to work| O
+  V --> C[Actual-diff review plus CI and review bots, plus the risk and human gate]
   C -->|confirmed findings| O
   C --> M[Gated merge by the single integration owner]
   M --> S[Deployed staging SHA: the original reproduction now passes]
@@ -57,6 +59,10 @@ review precedes the shared implement, test, review, fix loop — the same loop t
 feature workflow uses, with the same actual-diff review, CI, review bots and the
 risk/human gate, and the same board discipline: the worker updates its own
 story record (status plus receipts) as each step completes, before checkin.
+The eval gate holds on this loop exactly as on the feature loop: the confirmed
+reproduction is captured as a `fail_to_pass` case, and the fix does not pass
+until the story's eval cases pass or an approved override record exists — eval
+failures iterate through this loop like any other finding.
 See [the feature loop](feature.md).
 
 **Prove the close.** After the single integration owner's gated merge, the

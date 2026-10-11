@@ -33,24 +33,23 @@ it is absent they do the same job natively with the pack's own templates. A smal
 change may need none of them. Architecture consultation is for unresolved
 contracts, not every function.
 
-## The shipped skill palette
+## The skill palette
 
-Eleven skills ship in the pack (`skills/`). Like the roles, they are a starting
-palette — you may use any skill the job needs, shipped or not.
+The eleven skills are stated once, as the capability map in the
+[entry](../SKILL.md); this file deliberately does not re-enumerate them. Like
+the roles, they are a starting palette — you may use any skill the job needs,
+shipped or not.
 
-| Skill | Job |
-| --- | --- |
-| `software-factory` | This orchestrator: the loop from grounded intent to proven merge |
-| `sf-help` | First-time setup: codebase discovery, the interview, the approved setup |
-| `sf-agents` | Agent registry and detection, risk routing, review-bot configs, PR triage |
-| `sf-evolve` | Folds in third-party skills and MCP connections; the retro-to-patch pipeline |
-| `sf-design` | Routes software-design judgment work |
-| `sf-smell-audit` | Measured smell audit against the catalog |
-| `sf-refactor` | Behavior-preserving refactoring moves |
-| `sf-patterns` | Pattern judgment with the anti-bloat bar |
-| `sf-eval` | Eval-first: per-surface suites, per-story eval cases, cost-tiered runs |
-| `sf-principles` | Core principles and the `.software-factory/context/` home |
-| `sf-crawl` | Read-only AST crawl producing `CODEBASE.md` |
+## Workstreams
+
+Work is organized into parallel workstreams, all visible on one board; the
+frontier rule (every unblocked, unclaimed candidate is offered) is owned by
+[planning](planning.md). Staff each stream independently by its risk profile —
+a stream is a staffing unit, not a reason to serialize — and let claims keep
+paths exclusive across streams. R&D is first-class: when a task needs a spike
+or technology research, it gets its own story (type `spike`) with the same
+claim, receipt and review discipline, and its findings land as decision
+records in `context/decisions/` so the next story starts from them.
 
 ## Best-fit routing
 

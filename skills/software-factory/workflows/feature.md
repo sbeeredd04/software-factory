@@ -57,7 +57,8 @@ frontier within the approved scope and the human checkpoint gates. A blocked
 decision blocks only its dependents; independent safe work continues.
 
 **Dispatch.** The orchestrator creates the exact target-repo worktree for each
-story and claims its exclusive paths before any worker writes. One writer per
+story and claims its exclusive paths before any worker writes — a small
+low-risk change may instead take the clean-checkout escape route. One writer per
 conflicting path, including parent/child scopes across worktrees; genuinely
 shared resources (schemas, migrations, ports, environment writes) serialize only
 the contending phase, not the whole story. Workers get direction, context and

@@ -13,7 +13,8 @@ Persist at meaningful transitions — dispatch, proof, integration, blocker,
 decision — and before a context reset or a risky action. Ask workers for factual
 handoffs and their running/stopped status before the human clears context; pause
 new dispatch until a readable checkpoint exists. The note shape the helper
-accepts (short fields, bounded lists, no secrets):
+accepts (exactly the five keys below, strings of 1-500 characters, lists of at
+most eight items, no secrets):
 
 ```json
 {
@@ -24,6 +25,17 @@ accepts (short fields, bounded lists, no secrets):
   "open_questions": ["Uncertain outcome and its reconciliation action"]
 }
 ```
+
+## Compact done/next per step
+
+Context degrades; the durable record must not. Every step ends in a compact,
+re-readable record: the worker's own board record (status, receipts,
+transition history), the bounded checkpoint note above, and a handoff that
+ends in one exact next action (the shape is in [handoff](handoff.md)). The
+board and the checkpoint on disk are the durable state — session memory is
+not. Write each entry so a cold reader can resume from it; if a note would
+not survive the session-start injection cap described under Hooks, it is too
+long.
 
 ## The state helper
 
@@ -53,6 +65,13 @@ a short recovery pointer — where the checkpoint lives and that it is recovery
 state, not a new authorization. On pre-compact it refreshes the Git snapshot.
 Without an active program the hook is inert: no output, exit zero. A hook
 showing a pointer never authorizes work by itself.
+
+The injection is bounded and content-aware: the pointer is capped at 1,500
+characters, and the projection is ordered to survive that cap — header, then
+the objective and the exact next action, then the bounded note lists, with the
+per-claim rows last. A run with many claims or a long completed list truncates
+history, never the objective or the next action. The injected text is a
+pointer to the checkpoint on disk, never the full history.
 
 ## Resume and reconciliation
 

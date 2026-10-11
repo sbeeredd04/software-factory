@@ -36,6 +36,17 @@ the live owner or confirm it stopped, and reconcile its work and effects. Claims
 protect owner/path collisions; they are not readiness, not a lease and not a
 fence on external systems. No new scheduler, queue, daemon or workflow engine.
 
+## The small-task escape
+
+Ceremony scales with risk and the floor is low: a small, low-risk change may
+work directly in the clean checkout with its paths claimed — no new worktree —
+briefed in a few lines (outcome, paths, proof) instead of the full template.
+The escape lowers ceremony, never the bar: the entry's hard boundaries,
+independent review of the actual diff and the eval floor (the story's eval
+cases where they exist, else one runnable check) still apply. Reuse a story's
+worktree while the story is in flight and prune it once merged; worktrees are
+isolation, not collectibles.
+
 ## Scheduling
 
 Staff the approved ready frontier adaptively: serial, batches or continuous

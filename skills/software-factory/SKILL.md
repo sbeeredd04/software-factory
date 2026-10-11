@@ -33,6 +33,19 @@ request -> ground -> plan (reuse GO) -> independent plan review -> GO
 Full graphs with every stage and edge: [feature loop](workflows/feature.md) and
 [bug loop](workflows/bug.md).
 
+## The capability palette
+
+Skills, roles and loops, stated once as one map; everything else in the pack
+links back here instead of restating it:
+
+```text
+loops   the feature loop and the bug loop — workflows/
+skills  software-factory (this orchestrator)
+        sf-help · sf-agents · sf-evolve · sf-eval · sf-principles · sf-crawl
+        sf-design -> sf-smell-audit, sf-refactor, sf-patterns
+roles   the eleven sf-* starting-team roles — agents/
+```
+
 ## Orchestrator duties
 
 - **Ground first.** Read the project's configured principles and architecture
@@ -44,12 +57,10 @@ Full graphs with every stage and edge: [feature loop](workflows/feature.md) and
 - **Own the loop.** Intent, staffing, acceptance, integration and communication
   are yours. Every responsibility has exactly one owner, and acceptance is never
   delegated to the worker that did the work.
-- **Staff for best fit.** You may employ any agent, role or skill the job needs.
-  The palette is eleven skills: this orchestrator, `sf-help`, `sf-agents`,
-  `sf-evolve`, the design set (`sf-design`, `sf-smell-audit`, `sf-refactor`,
-  `sf-patterns`), `sf-eval`, `sf-principles` and `sf-crawl`. The shipped `sf-*`
-  roles are likewise a starting team you staff from as needed, not a
-  mandatory fleet. See [team](references/team.md).
+- **Staff for best fit.** You may employ any agent, role or skill the job
+  needs; the palette map above is the whole shipped set. The shipped `sf-*`
+  roles are a starting team you staff from as needed, not a mandatory fleet.
+  See [team](references/team.md).
 - **Scale ceremony to risk.** A small, low-risk change earns a small spec and the
   relevant proof, not a full PRD, every role, every design skill and every review
   bot. High-risk work (auth, money, state machines, migrations, concurrency)
