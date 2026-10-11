@@ -4,7 +4,7 @@
   "epic": 2,
   "type": "story",
   "title": "State and enforce every file budget in the gate",
-  "status": "in-progress",
+  "status": "in-review",
   "owner": "worker-budget-caps-enforcement",
   "after": [
     17
@@ -17,7 +17,19 @@
   "plan_checkpoint": false,
   "done_checkpoint": true,
   "blocked": null,
-  "receipts": {},
+  "receipts": {
+    "completion": {
+      "type": "completion-attestation",
+      "subject_sha": "ae540950f04bc8b596232d5fd35da515e7c8fa17",
+      "statement": "Every file budget is stated in CONTRIBUTING.md's File budgets table and enforced by validate.py constants at the subject commit: entry skill 150, non-entry skill 120, agents 60, descriptions 300 characters, canonical keys only, prose references 240, data/catalog/index references 320. Breaches fail the gate with the cap beside the measured value; a clean run prints the per-class maximum (entry 138, skill 86, agent 28, description 296, prose 195, data 127).",
+      "evidence": [
+        "git show --stat ae540950f04bc8b596232d5fd35da515e7c8fa17",
+        "python3 scripts/validate.py (prints 'validate budgets: entry skill 138/150; non-entry skill 86/120; agent 28/60; description 296/300; prose reference 195/240; data/catalog/index reference 127/320')",
+        "python3 -m unittest discover -s tests -p test_tools.py (72 tests, incl. ValidateBudgetsTest seeded over-budget skill and reference fixtures)",
+        "SF_SKIP_NETWORK=1 bash scripts/check_all.sh (all run steps passed at the subject sha)"
+      ]
+    }
+  },
   "baseline_sha": null,
   "branch": null,
   "pr": null,
@@ -34,6 +46,12 @@
       "by": "worker-budget-caps-enforcement",
       "from": "ready-for-dev",
       "to": "in-progress"
+    },
+    {
+      "at": "2026-10-11T21:01:38.061613+00:00",
+      "by": "worker-budget-caps-enforcement",
+      "from": "in-progress",
+      "to": "in-review"
     }
   ],
   "findings": [],

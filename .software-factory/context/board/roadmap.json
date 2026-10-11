@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-11T20:47:06.204328+00:00",
-  "revision": 92,
+  "generated_at": "2026-10-11T21:01:38.125987+00:00",
+  "revision": 94,
   "streams": [
     {
       "id": "W-foundation",
@@ -36,8 +36,8 @@
       "counts": {
         "planned": 0,
         "ready": 0,
-        "in-progress": 1,
-        "review": 1,
+        "in-progress": 0,
+        "review": 2,
         "built": 0,
         "done": 8,
         "cancelled": 0
@@ -55,8 +55,8 @@
         3
       ],
       "counts": {
-        "planned": 6,
-        "ready": 0,
+        "planned": 5,
+        "ready": 1,
         "in-progress": 0,
         "review": 0,
         "built": 0,
@@ -1697,8 +1697,8 @@
       "stream": "W-expansion",
       "type": "story",
       "title": "State and enforce every file budget in the gate",
-      "status": "in-progress",
-      "state": "in-progress",
+      "status": "in-review",
+      "state": "review",
       "owner": "worker-budget-caps-enforcement",
       "after": [
         17
@@ -1711,24 +1711,25 @@
       "plan_checkpoint": false,
       "done_checkpoint": true,
       "blocked": null,
-      "receipts": {},
+      "receipts": {
+        "completion": {
+          "type": "completion-attestation",
+          "subject_sha": "ae540950f04bc8b596232d5fd35da515e7c8fa17",
+          "statement": "Every file budget is stated in CONTRIBUTING.md's File budgets table and enforced by validate.py constants at the subject commit: entry skill 150, non-entry skill 120, agents 60, descriptions 300 characters, canonical keys only, prose references 240, data/catalog/index references 320. Breaches fail the gate with the cap beside the measured value; a clean run prints the per-class maximum (entry 138, skill 86, agent 28, description 296, prose 195, data 127).",
+          "evidence": [
+            "git show --stat ae540950f04bc8b596232d5fd35da515e7c8fa17",
+            "python3 scripts/validate.py (prints 'validate budgets: entry skill 138/150; non-entry skill 86/120; agent 28/60; description 296/300; prose reference 195/240; data/catalog/index reference 127/320')",
+            "python3 -m unittest discover -s tests -p test_tools.py (72 tests, incl. ValidateBudgetsTest seeded over-budget skill and reference fixtures)",
+            "SF_SKIP_NETWORK=1 bash scripts/check_all.sh (all run steps passed at the subject sha)"
+          ]
+        }
+      },
       "baseline_sha": null,
       "branch": null,
       "pr": null,
       "merged_sha": null,
       "claim": {
-        "live": true,
-        "owner": "worker-budget-caps-enforcement",
-        "paths": [
-          "scripts/validate.py",
-          "tests/test_tools.py",
-          "CONTRIBUTING.md",
-          ".software-factory/context/CODEBASE.md",
-          ".software-factory/context/board/stories/18.json",
-          ".software-factory/context/board/roadmap.json",
-          ".software-factory/context/board/dashboard.html"
-        ],
-        "claimed_at": "2026-10-11T20:45:38.938825+00:00"
+        "live": false
       },
       "blocks": [
         19
@@ -1745,6 +1746,12 @@
           "by": "worker-budget-caps-enforcement",
           "from": "ready-for-dev",
           "to": "in-progress"
+        },
+        {
+          "at": "2026-10-11T21:01:38.061613+00:00",
+          "by": "worker-budget-caps-enforcement",
+          "from": "in-progress",
+          "to": "in-review"
         }
       ],
       "findings": [],
@@ -1757,7 +1764,7 @@
       "type": "story",
       "title": "install.py transaction engine and Claude Code projection",
       "status": "backlog",
-      "state": "planned",
+      "state": "ready",
       "owner": null,
       "after": [
         18
@@ -2398,17 +2405,17 @@
     }
   ],
   "frontier": {
-    "ready": [],
-    "waiting_on_prereq": [
+    "ready": [
       {
         "id": 19,
         "epic": 3,
         "stream": "W-installer",
         "title": "install.py transaction engine and Claude Code projection",
-        "missing": [
-          "18 (in-progress)"
-        ]
-      },
+        "why": "after 18 in-review; unclaimed",
+        "claimed": false
+      }
+    ],
+    "waiting_on_prereq": [
       {
         "id": 20,
         "epic": 3,
