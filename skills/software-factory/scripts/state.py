@@ -19,7 +19,7 @@ import tempfile
 import time
 import uuid
 from contextlib import contextmanager
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 SLUG = re.compile(r"^[a-z0-9][a-z0-9-]{0,63}$")
@@ -37,7 +37,7 @@ class StateError(ValueError):
 
 
 def now():
-    return datetime.now(timezone.utc).isoformat()
+    return datetime.now(UTC).isoformat()
 
 
 def within(root: Path, path: Path) -> Path:

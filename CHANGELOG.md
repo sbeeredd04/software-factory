@@ -10,6 +10,17 @@ ISO 8601 `YYYY-MM-DD` format.
 
 ### Added
 
+- Validation tooling under `scripts/`: `validate.py` (canonical layout of the
+  eleven skills and eleven role agents from a single data constant, frontmatter
+  budgets and standard keys, reference resolution, agent and manifest rules,
+  clear quoting hints for the unquoted-colon frontmatter pitfall),
+  `scan_public.py` (SHA-256 hashed denylist over tokens and n-grams plus
+  length/context-gated path, secret and private-domain patterns; tracked-file
+  scope with `--stdin`/`--history` modes; fails closed without a denylist),
+  `check_links.py` (offline relative-link and anchor resolution), and
+  `check_mermaid.py` (renders every diagram, never passes an unverified one),
+  unified by the `scripts/check_all.sh` gate. Unit tests in
+  `tests/test_tools.py`.
 - Palette expansion to eleven skills: clearly marked placeholder entries for
   `sf-eval` (eval-first setup and story evaluation), `sf-principles` (core
   principles and the `.software-factory/context/` project-context home) and
