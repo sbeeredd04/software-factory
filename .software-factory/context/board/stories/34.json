@@ -4,7 +4,7 @@
   "epic": 2,
   "type": "story",
   "title": "Report unreadable directories repo-relative in the crawl",
-  "status": "in-progress",
+  "status": "in-review",
   "owner": "worker-crawl-unreadable-path-leak-fix",
   "after": [
     11
@@ -17,7 +17,20 @@
   "plan_checkpoint": false,
   "done_checkpoint": true,
   "blocked": null,
-  "receipts": {},
+  "receipts": {
+    "completion": {
+      "type": "completion-attestation",
+      "subject_sha": "24f43bdd86a28527f3b492decc799dd2e28ab7a7",
+      "statement": "The crawl's os.walk onerror handler now reports unreadable directories repo-relative via os.path.relpath(error.filename, root), so a chmod-000 directory names only its repo-relative path in not_determined; no absolute, home or leading-slash path reaches the JSON report or the committed CODEBASE.md artifact. Honest degradation is preserved: the entry is named, the rest of the tree still scans, and the run exits 0 with the warning. A chmod-000 fixture regression test in tests/test_crawl.py fails before the fix and passes after; skills/sf-crawl/SKILL.md is back at its 50-line budget with no contract clause dropped.",
+      "evidence": [
+        "git show --stat 24f43bdd86a28527f3b492decc799dd2e28ab7a7",
+        "python3 -m unittest discover -s tests -p test_crawl.py -v (21 tests OK, incl. test_unreadable_directory_reported_repo_relative; the test fails pre-fix with the absolute /private/var path in not_determined)",
+        "manual crawl of a $TMPDIR repo with a chmod-000 subdirectory: exit 0, not_determined carries 'could not read: restricted (counted only)', grep for the tmp root and $HOME across the artifact and JSON returns nothing",
+        "uvx --from ruff==0.17.0 ruff check . && python3 scripts/validate.py && python3 scripts/scan_public.py (all clean)",
+        "python3 -m unittest discover -s tests (294 tests, 0 failures after CODEBASE.md regeneration)"
+      ]
+    }
+  },
   "baseline_sha": null,
   "branch": null,
   "pr": null,
@@ -34,6 +47,12 @@
       "by": "worker-crawl-unreadable-path-leak-fix",
       "from": "ready-for-dev",
       "to": "in-progress"
+    },
+    {
+      "at": "2026-10-11T22:38:19.171766+00:00",
+      "by": "worker-crawl-unreadable-path-leak-fix",
+      "from": "in-progress",
+      "to": "in-review"
     }
   ],
   "findings": [],
