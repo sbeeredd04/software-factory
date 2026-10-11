@@ -1,6 +1,6 @@
 ---
 name: sf-principles
-description: "Authors and maintains the project's core principles and keeps the committed .software-factory/context/ home: principle modules for product, conventions, risk and evals, plus CODEBASE.md, the master board and decision records. Use when principles or project context change."
+description: "Authors the project's core principles with the user and keeps the committed .software-factory/context/ home honest. Use when drafting or changing principles (product, conventions, risk, evals), judging work against them, or recording a decision."
 license: MIT
 compatibility: Works with Claude Code, Cursor and Codex.
 metadata:
@@ -8,19 +8,28 @@ metadata:
   release: v0.1
 ---
 
-# sf-principles (placeholder)
+# sf-principles
 
-> **Placeholder — this is not the shipped skill.** This file exists so the
-> eleven-skill layout validates. The full principles skill (core-principles
-> authoring and stewardship of the committed `.software-factory/context/`
-> project-context home) is authored in the expansion milestone and will
-> replace this body. Until then, do not rely on this skill for principles or
-> context work.
+The core principles are the project's standing law: four user-authored
+modules — `product.md`, `conventions.md`, `risk.md`, `evals.md` — under the
+configured principles paths. Contracts: [modules](references/modules.md).
 
-Intended scope, so readers know what is coming: `sf-principles` keeps
-`.software-factory/context/` accurate, committed and free of stale claims —
-the principle modules (`principles/product.md`, `principles/conventions.md`,
-`principles/risk.md`, `principles/evals.md`), `CODEBASE.md`, the master board
-under `board/`, and decision records under `decisions/`. The context home is
-committed content; only its volatile siblings (`runtime/`, `backups/`,
-`runs/`, `active.json`, `state.lock`, `installation.json`) are ignored.
+## Authoring flow
+
+Interview (user answers plus the codebase map), draft, get explicit user
+sign-off, then record; re-read before relying on them. The skill proposes
+and records — it never silently applies an edit, never invents content.
+
+## Enforcement
+
+Read the principles before planning, before design scoring or judgment, and before
+review — they are the design-review bar. A conflict with a recorded decision
+escalates to the named human owner with a recommendation, never silently resolved;
+a missing, empty or contradictory set blocks the work instead of being guessed.
+
+## One home
+
+Exactly one home, no competing copy anywhere: pre-existing principles
+documents are discovered and pointed at, never duplicated; the installer
+never writes a principles body. Layout, owners, decision-record contract:
+[context-home](references/context-home.md).
