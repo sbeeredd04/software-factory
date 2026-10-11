@@ -141,6 +141,10 @@ class ValidateCleanRepoTest(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertIn("11 skills", result.stdout)
         self.assertIn("11 agents", result.stdout)
+        # The success report names every cap class with the measured maximum.
+        self.assertIn("budgets:", result.stdout)
+        self.assertIn("prose reference", result.stdout)
+        self.assertIn("data/catalog/index reference", result.stdout)
 
 
 class ValidateLayoutTest(unittest.TestCase):
@@ -214,8 +218,13 @@ class ValidateFrontmatterTest(unittest.TestCase):
 
     def test_other_skill_line_budget(self):
         fixture = Fixture(self)
-        fixture.write_skill("sf-help", skill_text("sf-help", body_lines=500))
-        self.assert_violation(fixture, "500")
+        # 11 frontmatter/heading lines + 200 body lines = 211 measured lines.
+        fixture.write_skill("sf-help", skill_text("sf-help", body_lines=200))
+        result = fixture.validate()
+        output = result.stdout + result.stderr
+        self.assertEqual(result.returncode, 1, output)
+        self.assertIn("120", output)  # the non-entry skill cap
+        self.assertIn("211", output)  # the measured value beside the cap
 
     def test_description_budget(self):
         fixture = Fixture(self)
@@ -272,6 +281,88 @@ class ValidateFrontmatterTest(unittest.TestCase):
         )
         fixture.write_agent("sf-engineer", text)
         self.assert_violation(fixture, "isolation")
+
+
+class ValidateBudgetsTest(unittest.TestCase):
+    """Every cap class is enforced with the cap beside the measured value."""
+
+    def assert_violation(self, fixture, *needles):
+        result = fixture.validate()
+        output = result.stdout + result.stderr
+        self.assertEqual(result.returncode, 1, output)
+        for needle in needles:
+            self.assertIn(needle, output)
+        return output
+
+    def write_reference(self, fixture, skill, name, lines):
+        path = fixture.root / "skills" / skill / "references" / name
+        path.parent.mkdir(parents=True, exist_ok=True)
+        body = [f"# {name}", ""] + [f"Reference line {index}." for index in range(lines)]
+        path.write_text("\n".join(body) + "\n")
+        return path
+
+    def test_entry_skill_over_budget_reports_cap_and_measured(self):
+        fixture = Fixture(self)
+        # 11 frontmatter/heading lines + 200 body lines = 211 measured lines.
+        fixture.write_skill(
+            "software-factory", skill_text("software-factory", body_lines=200)
+        )
+        self.assert_violation(fixture, "150", "211")
+
+    def test_agent_over_budget_reports_cap_and_measured(self):
+        fixture = Fixture(self)
+        lines = [
+            "---",
+            "name: sf-engineer",
+            'description: "Fixture role."',
+            "model: inherit",
+            "---",
+            "",
+            "# sf-engineer",
+        ]
+        lines.extend(f"Role line {index}." for index in range(63))  # 70 lines
+        fixture.write_agent("sf-engineer", "\n".join(lines) + "\n")
+        self.assert_violation(fixture, "60", "70")
+
+    def test_agent_description_over_budget_reports_cap(self):
+        fixture = Fixture(self)
+        text = agent_text("sf-engineer").replace(
+            'description: "Fixture role."', f'description: "{"x" * 301}"'
+        )
+        fixture.write_agent("sf-engineer", text)
+        self.assert_violation(fixture, "300", "301")
+
+    def test_prose_reference_over_budget_reports_cap_and_measured(self):
+        fixture = Fixture(self)
+        # "# notes" + blank + 250 filler lines = 252 measured lines.
+        self.write_reference(fixture, "sf-help", "notes.md", 250)
+        self.assert_violation(fixture, "prose", "240", "252")
+
+    def test_data_reference_over_budget_reports_cap_and_measured(self):
+        fixture = Fixture(self)
+        # "sources.md" is a named data/catalog/index file; 332 measured lines.
+        self.write_reference(fixture, "sf-help", "sources.md", 330)
+        self.assert_violation(fixture, "data/catalog/index", "320", "332")
+
+    def test_references_within_budget_pass(self):
+        fixture = Fixture(self)
+        self.write_reference(fixture, "sf-help", "notes.md", 100)
+        self.write_reference(fixture, "sf-help", "sources.md", 200)
+        result = fixture.validate()
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+    def test_success_output_reports_maximum_per_cap_class(self):
+        fixture = Fixture(self)
+        result = fixture.validate()
+        output = result.stdout + result.stderr
+        self.assertEqual(result.returncode, 0, output)
+        self.assertIn("budgets:", output)
+        self.assertIn("entry skill", output)
+        self.assertIn("/150", output)
+        self.assertIn("/120", output)
+        self.assertIn("/60", output)
+        self.assertIn("/240", output)
+        self.assertIn("/320", output)
 
 
 class ValidateReferencesAndManifestsTest(unittest.TestCase):

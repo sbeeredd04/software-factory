@@ -8,7 +8,10 @@ Checks, all offline and standard-library only:
   truth; counts are derived, never re-hardcoded);
 - frontmatter: ``name`` matches the folder/file, ``description`` budget,
   standard keys only, string ``metadata`` values, no projection-only keys;
-- budgets: the entry skill stays short, other skills stay under their cap;
+- budgets: every cap class is enforced - the entry skill, non-entry
+  skills, agents, descriptions, and reference files by class (prose vs
+  data/catalog/index) - with the cap reported beside the measured value
+  on any breach, and the current maximum per class printed on success;
 - references: relative Markdown links inside skill files resolve;
 - agents: ``model: inherit`` and no isolation field;
 - legacy names: retired pre-rename names (the old role and skill names)
@@ -58,10 +61,42 @@ AGENTS = (
 )
 
 ENTRY_SKILL = "software-factory"
+
+# The budget cap classes, stated in CONTRIBUTING.md ("File budgets") and
+# enforced below. Every cap carries headroom above the measured maximum at
+# the 2026-10-11 baseline rather than sitting exactly on it:
+#   entry skill            138 measured -> 150 cap (pinned by the contract)
+#   non-entry skill         86 measured -> 120 cap (34 lines of headroom;
+#                          sf-smell-audit is the largest)
+#   agent                   28 measured ->  60 cap (32 lines of headroom)
+#   description            296 measured -> 300 characters (contract cap)
+#   prose reference        195 measured -> 240 cap (45 lines of headroom;
+#                          references/recovery.md is the largest)
+#   data/catalog/index     127 measured -> 320 cap (headroom for the planned
+#                          sf-help question bank and growing catalogs;
+#                          technique-index.md is the largest today)
 ENTRY_SKILL_MAX_LINES = 150
-SKILL_MAX_LINES = 500
+SKILL_MAX_LINES = 120
+AGENT_MAX_LINES = 60
 DESCRIPTION_MAX_CHARS = 300
 COMPATIBILITY_MAX_CHARS = 500
+REFERENCE_PROSE_MAX_LINES = 240
+REFERENCE_DATA_MAX_LINES = 320
+
+# Reference-file classes. Every Markdown file under ``skills/`` that is not
+# a ``SKILL.md`` entry (references and workflows) belongs to exactly one
+# class: data/catalog/index when its file name is listed here, prose
+# otherwise. Adding a catalog, index, map or question-bank file means
+# adding its name to this set.
+REFERENCE_DATA_FILES = frozenset(
+    {
+        "pattern-index.md",
+        "questions.md",  # the sf-help interview bank (onboarding milestone)
+        "smell-technique-map.md",
+        "sources.md",
+        "technique-index.md",
+    }
+)
 
 SKILL_KEYS = frozenset({"name", "description", "license", "compatibility", "metadata"})
 AGENT_KEYS = frozenset({"name", "description", "model"})
@@ -214,9 +249,16 @@ class Validator:
         self.root = root
         self.errors: list[str] = []
         self.placeholders = 0
+        # Measured maximum per budget cap class, reported on success.
+        self.budget_max: dict[str, int] = {}
 
     def error(self, message: str) -> None:
         self.errors.append(message)
+
+    def observe(self, cap_class: str, measured: int) -> None:
+        self.budget_max[cap_class] = max(
+            measured, self.budget_max.get(cap_class, 0)
+        )
 
     def check_skill(self, folder: Path) -> None:
         name = folder.name
@@ -257,11 +299,13 @@ class Validator:
         description = meta.get("description")
         if not isinstance(description, str) or not description.strip():
             self.error(f"{skill_md}: description is empty or missing")
-        elif len(description) > DESCRIPTION_MAX_CHARS:
-            self.error(
-                f"{skill_md}: description is {len(description)} characters, "
-                f"over the {DESCRIPTION_MAX_CHARS}-character budget"
-            )
+        else:
+            self.observe("description", len(description))
+            if len(description) > DESCRIPTION_MAX_CHARS:
+                self.error(
+                    f"{skill_md}: description is {len(description)} characters, "
+                    f"over the {DESCRIPTION_MAX_CHARS}-character budget"
+                )
         compatibility = meta.get("compatibility")
         if isinstance(compatibility, str) and len(compatibility) > COMPATIBILITY_MAX_CHARS:
             self.error(
@@ -283,16 +327,19 @@ class Validator:
                         )
         line_count = len(text.splitlines())
         if name == ENTRY_SKILL:
+            self.observe("entry skill", line_count)
             if line_count > ENTRY_SKILL_MAX_LINES:
                 self.error(
                     f"{skill_md}: entry skill is {line_count} lines, over the "
                     f"{ENTRY_SKILL_MAX_LINES}-line budget"
                 )
-        elif line_count >= SKILL_MAX_LINES:
-            self.error(
-                f"{skill_md}: skill is {line_count} lines, reaching the "
-                f"{SKILL_MAX_LINES}-line budget"
-            )
+        else:
+            self.observe("non-entry skill", line_count)
+            if line_count > SKILL_MAX_LINES:
+                self.error(
+                    f"{skill_md}: non-entry skill is {line_count} lines, over "
+                    f"the {SKILL_MAX_LINES}-line budget"
+                )
 
     def check_agent(self, path: Path) -> None:
         name = path.stem
@@ -322,8 +369,43 @@ class Validator:
         description = meta.get("description")
         if not isinstance(description, str) or not description.strip():
             self.error(f"{path}: description is empty or missing")
+        else:
+            self.observe("description", len(description))
+            if len(description) > DESCRIPTION_MAX_CHARS:
+                self.error(
+                    f"{path}: description is {len(description)} characters, "
+                    f"over the {DESCRIPTION_MAX_CHARS}-character budget"
+                )
         if meta.get("model") != "inherit":
             self.error(f"{path}: agents must declare 'model: inherit'")
+        line_count = len(text.splitlines())
+        self.observe("agent", line_count)
+        if line_count > AGENT_MAX_LINES:
+            self.error(
+                f"{path}: agent is {line_count} lines, over the "
+                f"{AGENT_MAX_LINES}-line budget"
+            )
+
+    def check_reference_budgets(self) -> None:
+        """Enforce the per-class line budget on every reference file."""
+        skills_dir = self.root / "skills"
+        if not skills_dir.is_dir():
+            return
+        for md in sorted(skills_dir.rglob("*.md")):
+            if md.name == "SKILL.md":
+                continue
+            if md.name in REFERENCE_DATA_FILES:
+                cap_class, cap = "data/catalog/index reference", REFERENCE_DATA_MAX_LINES
+            else:
+                cap_class, cap = "prose reference", REFERENCE_PROSE_MAX_LINES
+            line_count = len(md.read_text(encoding="utf-8").splitlines())
+            self.observe(cap_class, line_count)
+            if line_count > cap:
+                rel = md.relative_to(self.root)
+                self.error(
+                    f"{rel}: {cap_class} is {line_count} lines, over the "
+                    f"{cap}-line budget for its class"
+                )
 
     def check_references(self) -> None:
         skills_dir = self.root / "skills"
@@ -421,6 +503,7 @@ class Validator:
                 self.check_agent(agents_dir / f"{name}.md")
 
         self.check_references()
+        self.check_reference_budgets()
         self.check_legacy_names()
         for manifest in sorted(self.root.rglob("*")):
             if (
@@ -440,6 +523,20 @@ class Validator:
             f"validate ok: {len(SKILLS)} skills, {len(AGENTS)} agents{note} "
             f"validated under {self.root}"
         )
+        caps = (
+            ("entry skill", ENTRY_SKILL_MAX_LINES, "lines"),
+            ("non-entry skill", SKILL_MAX_LINES, "lines"),
+            ("agent", AGENT_MAX_LINES, "lines"),
+            ("description", DESCRIPTION_MAX_CHARS, "characters"),
+            ("prose reference", REFERENCE_PROSE_MAX_LINES, "lines"),
+            ("data/catalog/index reference", REFERENCE_DATA_MAX_LINES, "lines"),
+        )
+        parts = []
+        for cap_class, cap, unit in caps:
+            measured = self.budget_max.get(cap_class)
+            value = str(measured) if measured is not None else "none"
+            parts.append(f"{cap_class} {value}/{cap} {unit}")
+        print("validate budgets: " + "; ".join(parts))
         return 0
 
 

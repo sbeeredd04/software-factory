@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-11T20:23:58.092264+00:00",
-  "revision": 90,
+  "generated_at": "2026-10-11T20:47:06.204328+00:00",
+  "revision": 92,
   "streams": [
     {
       "id": "W-foundation",
@@ -35,8 +35,8 @@
       ],
       "counts": {
         "planned": 0,
-        "ready": 1,
-        "in-progress": 0,
+        "ready": 0,
+        "in-progress": 1,
         "review": 1,
         "built": 0,
         "done": 8,
@@ -1697,9 +1697,9 @@
       "stream": "W-expansion",
       "type": "story",
       "title": "State and enforce every file budget in the gate",
-      "status": "backlog",
-      "state": "ready",
-      "owner": null,
+      "status": "in-progress",
+      "state": "in-progress",
+      "owner": "worker-budget-caps-enforcement",
       "after": [
         17
       ],
@@ -1717,12 +1717,36 @@
       "pr": null,
       "merged_sha": null,
       "claim": {
-        "live": false
+        "live": true,
+        "owner": "worker-budget-caps-enforcement",
+        "paths": [
+          "scripts/validate.py",
+          "tests/test_tools.py",
+          "CONTRIBUTING.md",
+          ".software-factory/context/CODEBASE.md",
+          ".software-factory/context/board/stories/18.json",
+          ".software-factory/context/board/roadmap.json",
+          ".software-factory/context/board/dashboard.html"
+        ],
+        "claimed_at": "2026-10-11T20:45:38.938825+00:00"
       },
       "blocks": [
         19
       ],
-      "history": [],
+      "history": [
+        {
+          "at": "2026-10-11T20:47:06.157606+00:00",
+          "by": "orchestrator",
+          "from": "backlog",
+          "to": "ready-for-dev"
+        },
+        {
+          "at": "2026-10-11T20:47:06.202208+00:00",
+          "by": "worker-budget-caps-enforcement",
+          "from": "ready-for-dev",
+          "to": "in-progress"
+        }
+      ],
       "findings": [],
       "source_key": "expansion/budget-caps-enforcement"
     },
@@ -2374,16 +2398,7 @@
     }
   ],
   "frontier": {
-    "ready": [
-      {
-        "id": 18,
-        "epic": 2,
-        "stream": "W-expansion",
-        "title": "State and enforce every file budget in the gate",
-        "why": "after 17 in-review; unclaimed",
-        "claimed": false
-      }
-    ],
+    "ready": [],
     "waiting_on_prereq": [
       {
         "id": 19,
@@ -2391,7 +2406,7 @@
         "stream": "W-installer",
         "title": "install.py transaction engine and Claude Code projection",
         "missing": [
-          "18 (backlog)"
+          "18 (in-progress)"
         ]
       },
       {

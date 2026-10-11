@@ -69,6 +69,40 @@ uvx --from ruff==0.17.0 ruff check .
 CI runs the same gate on Linux and macOS across Python 3.11 to 3.13 on every push and pull
 request (see `.github/workflows/ci.yml`).
 
+## File budgets
+
+The pack gets leaner as it grows: every shipped file stays inside a stated budget. The caps
+live here and as named constants at the top of `scripts/validate.py`; the gate checks every
+class and fails on a breach, printing the cap beside the measured value, and a clean run
+prints the current maximum per class.
+
+| File class | Cap | Measured maximum (2026-10-11) |
+| --- | --- | --- |
+| Entry skill (`skills/software-factory/SKILL.md`) | 150 lines | 138 |
+| Non-entry skill (`skills/<name>/SKILL.md`) | 120 lines | 86 (`sf-smell-audit`) |
+| Role agent (`agents/sf-*.md`) | 60 lines | 28 |
+| Frontmatter `description` | 300 characters | 296 |
+| Frontmatter keys | canonical keys only (`name`, `description`, `license`, `compatibility`, `metadata`; agents `name`, `description`, `model`) | - |
+| Prose reference (any non-entry Markdown under `skills/`) | 240 lines | 195 (`references/recovery.md`) |
+| Data/catalog/index reference | 320 lines | 127 (`references/technique-index.md`) |
+
+Every cap carries headroom above the measured maximum on purpose; a cap that sits exactly on
+today's largest file is a broken cap. If your change needs more room, split the file
+(progressive disclosure) or raise the cap here and in `scripts/validate.py` in the same
+commit, with the new headroom stated.
+
+Reference files belong to exactly one class. A reference file is data/catalog/index exactly
+when its file name is listed in `REFERENCE_DATA_FILES` in `scripts/validate.py` - today
+`technique-index.md`, `pattern-index.md`, `smell-technique-map.md`, `sources.md`, and the
+`questions.md` interview bank that ships with the onboarding milestone. Every other
+non-entry Markdown file under `skills/` (references and workflows) is a prose reference.
+Adding a new catalog, index, map, or question-bank file means adding its name to that
+constant.
+
+One neighboring rule is deliberately not in this table: decision records (ADRs) under
+`.software-factory/context/decisions/` carry their own 40-line document-length rule. That is
+a per-record writing discipline, not a reference-file cap, and it is enforced separately.
+
 ## Conventions
 
 - **Commits.** Conventional commits (`feat:`, `fix:`, `docs:`, `chore:`, `refactor:`, `test:`)
@@ -100,7 +134,8 @@ improves without hand-patching.
 
 1. **Location.** Create `skills/<name>/SKILL.md`. The folder name must equal the frontmatter
    `name`. Keep the entry short and put detail in `references/` files linked from it
-   (progressive disclosure).
+   (progressive disclosure). Every file stays inside its class budget - see
+   [File budgets](#file-budgets).
 2. **Frontmatter.** Use only the standard keys: `name`, `description` (trigger-first, at most
    300 characters), `license`, `compatibility`, and `metadata` (string values only).
    Host-specific fields (for example, Claude-only argument hints) belong to the projection
