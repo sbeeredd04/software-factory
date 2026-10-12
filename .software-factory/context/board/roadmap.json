@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-12T08:43:42.234183+00:00",
-  "revision": 115,
+  "generated_at": "2026-10-12T08:52:22.437509+00:00",
+  "revision": 117,
   "streams": [
     {
       "id": "W-foundation",
@@ -36,8 +36,8 @@
       "counts": {
         "planned": 0,
         "ready": 0,
-        "in-progress": 1,
-        "review": 5,
+        "in-progress": 0,
+        "review": 6,
         "built": 0,
         "done": 8,
         "cancelled": 0
@@ -2629,8 +2629,8 @@
       "stream": "W-expansion",
       "type": "story",
       "title": "Refuse a missing or empty principles file at the kernel",
-      "status": "in-progress",
-      "state": "in-progress",
+      "status": "in-review",
+      "state": "review",
       "owner": "worker-principles-empty-file-guard",
       "after": [
         9
@@ -2643,21 +2643,25 @@
       "plan_checkpoint": false,
       "done_checkpoint": true,
       "blocked": null,
-      "receipts": {},
+      "receipts": {
+        "completion": {
+          "type": "completion-attestation",
+          "subject_sha": "0f0b229270eaff1fca13e2be8e6cf992598944e0",
+          "statement": "state.py now refuses an empty principles file exactly as it refuses a missing one: the source-path check moved into require_source_file (shared by init and repair), which refuses a missing path, a zero-byte file and a whitespace-only file with a nonzero result naming the offending path (state: principles file missing|empty: <path>, exit 2) and never substitutes a built-in default. Five new PrinciplesPathGuardTests cover the missing, zero-byte, whitespace-only, direct-initialize and repair-consistency cases; all five failed pre-fix (empty file accepted with exit 0; missing message lacked the path). The rest of init's behavior is unchanged (56 test_state cases pass).",
+          "evidence": [
+            "git show --stat 0f0b229270eaff1fca13e2be8e6cf992598944e0",
+            "python3 -m unittest tests.test_state -v (56 tests OK; the 5 new guard tests failed pre-fix with exit 0 acceptance)",
+            "manual $TMPDIR run: populated -> exit 0; missing -> exit 2 'state: principles file missing: nope.md'; zero-byte -> exit 2 'state: principles file empty: empty.md' (file still 0 bytes after); whitespace-only -> exit 2 'state: principles file empty: ws.md'; refused programs created no run state",
+            "python3 -m compileall -q scripts skills tests; uvx --from ruff==0.17.0 ruff check .; python3 scripts/validate.py; python3 scripts/scan_public.py; python3 scripts/check_links.py (all clean)"
+          ]
+        }
+      },
       "baseline_sha": null,
       "branch": null,
       "pr": null,
       "merged_sha": null,
       "claim": {
-        "live": true,
-        "owner": "worker-principles-empty-file-guard",
-        "paths": [
-          "skills/software-factory/scripts/state.py",
-          "tests/test_state.py",
-          ".software-factory/context/board",
-          ".software-factory/context/CODEBASE.md"
-        ],
-        "claimed_at": "2026-10-12T08:43:42.169154+00:00"
+        "live": false
       },
       "blocks": [],
       "history": [
@@ -2672,6 +2676,12 @@
           "by": "worker-principles-empty-file-guard",
           "from": "ready-for-dev",
           "to": "in-progress"
+        },
+        {
+          "at": "2026-10-12T08:52:22.372140+00:00",
+          "by": "worker-principles-empty-file-guard",
+          "from": "in-progress",
+          "to": "in-review"
         }
       ],
       "findings": [],

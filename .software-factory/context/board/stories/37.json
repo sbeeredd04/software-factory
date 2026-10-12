@@ -4,7 +4,7 @@
   "epic": 2,
   "type": "story",
   "title": "Refuse a missing or empty principles file at the kernel",
-  "status": "in-progress",
+  "status": "in-review",
   "owner": "worker-principles-empty-file-guard",
   "after": [
     9
@@ -17,7 +17,19 @@
   "plan_checkpoint": false,
   "done_checkpoint": true,
   "blocked": null,
-  "receipts": {},
+  "receipts": {
+    "completion": {
+      "type": "completion-attestation",
+      "subject_sha": "0f0b229270eaff1fca13e2be8e6cf992598944e0",
+      "statement": "state.py now refuses an empty principles file exactly as it refuses a missing one: the source-path check moved into require_source_file (shared by init and repair), which refuses a missing path, a zero-byte file and a whitespace-only file with a nonzero result naming the offending path (state: principles file missing|empty: <path>, exit 2) and never substitutes a built-in default. Five new PrinciplesPathGuardTests cover the missing, zero-byte, whitespace-only, direct-initialize and repair-consistency cases; all five failed pre-fix (empty file accepted with exit 0; missing message lacked the path). The rest of init's behavior is unchanged (56 test_state cases pass).",
+      "evidence": [
+        "git show --stat 0f0b229270eaff1fca13e2be8e6cf992598944e0",
+        "python3 -m unittest tests.test_state -v (56 tests OK; the 5 new guard tests failed pre-fix with exit 0 acceptance)",
+        "manual $TMPDIR run: populated -> exit 0; missing -> exit 2 'state: principles file missing: nope.md'; zero-byte -> exit 2 'state: principles file empty: empty.md' (file still 0 bytes after); whitespace-only -> exit 2 'state: principles file empty: ws.md'; refused programs created no run state",
+        "python3 -m compileall -q scripts skills tests; uvx --from ruff==0.17.0 ruff check .; python3 scripts/validate.py; python3 scripts/scan_public.py; python3 scripts/check_links.py (all clean)"
+      ]
+    }
+  },
   "baseline_sha": null,
   "branch": null,
   "pr": null,
@@ -34,6 +46,12 @@
       "by": "worker-principles-empty-file-guard",
       "from": "ready-for-dev",
       "to": "in-progress"
+    },
+    {
+      "at": "2026-10-12T08:52:22.372140+00:00",
+      "by": "worker-principles-empty-file-guard",
+      "from": "in-progress",
+      "to": "in-review"
     }
   ],
   "findings": [],
