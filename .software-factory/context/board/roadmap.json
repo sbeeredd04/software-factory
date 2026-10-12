@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-12T09:17:36.489987+00:00",
-  "revision": 119,
+  "generated_at": "2026-10-12T09:57:18.675476+00:00",
+  "revision": 121,
   "streams": [
     {
       "id": "W-foundation",
@@ -55,10 +55,10 @@
         3
       ],
       "counts": {
-        "planned": 5,
-        "ready": 0,
-        "in-progress": 1,
-        "review": 0,
+        "planned": 4,
+        "ready": 1,
+        "in-progress": 0,
+        "review": 1,
         "built": 0,
         "done": 0,
         "cancelled": 0
@@ -1771,8 +1771,8 @@
       "stream": "W-installer",
       "type": "story",
       "title": "install.py transaction engine and Claude Code projection",
-      "status": "in-progress",
-      "state": "in-progress",
+      "status": "in-review",
+      "state": "review",
       "owner": "worker-installer-core-claude",
       "after": [
         18
@@ -1800,22 +1800,26 @@
       "plan_checkpoint": false,
       "done_checkpoint": false,
       "blocked": null,
-      "receipts": {},
+      "receipts": {
+        "completion": {
+          "type": "completion-attestation",
+          "subject_sha": "4a44f98fc7594b616335d248d3d08034754c2e80",
+          "statement": "install.py (stdlib) transaction engine and the Claude Code projection are implemented: in-memory write plan with before/after hashes, conflict refusal with zero writes (unowned collisions, modified managed files, tampered block markers, symlink escapes, malformed settings), --allow-overwrite with 0700/0600 backups, a bounded fcntl install lock with before-hash rechecks, atomic writes with rollback, and the ownership manifest written last against schemas/installation.schema.json. Settings merges preserve all user keys/hooks/permissions; CLAUDE.md gets a managed block; .gitignore gains only volatile entries and never the committed context home (nothing under .software-factory/context/ is written or listed in the manifest). Dry-run writes nothing and spawns nothing; a second install is a byte-level no-op; Git and HOME configs are never touched; no active.json is created. The Claude projection mirrors the 11 skills into .claude/skills with argument-hint on all and disable-model-invocation on the six entry/admin skills, copies the 11 role agents, and merges SessionStart/PreCompact hook commands with stderr merged into stdout (2>&1).",
+          "evidence": [
+            "python3 -m unittest tests.test_installer tests.test_host_claude (32 tests OK)",
+            "python3 -m unittest discover -s tests (338 tests OK after board projection rebuild)",
+            "uvx --from ruff==0.17.0 ruff check . (all checks passed); python3 scripts/validate.py (ok); python3 scripts/scan_public.py (180 files, no hits)",
+            "manual: install --host claude-code into a $TMPDIR existing-project fixture preserved model/env/permissions/PreToolUse byte-values; uvx check-jsonschema --schemafile schemas/installation.schema.json -> ok; second install -> '0 changes'",
+            "manual: installed SessionStart command executed via sh -c on a spaced project path: inert without active.json (exit 0, silent), host-correct envelope with an active program, sanitized recovery warning on stdout with corrupt active.json (no payload, no traceback)"
+          ]
+        }
+      },
       "baseline_sha": null,
       "branch": null,
       "pr": null,
       "merged_sha": null,
       "claim": {
-        "live": true,
-        "owner": "worker-installer-core-claude",
-        "paths": [
-          "install.py",
-          "skills",
-          "tests",
-          "schemas",
-          ".software-factory/context/board"
-        ],
-        "claimed_at": "2026-10-12T09:17:36.418525+00:00"
+        "live": false
       },
       "blocks": [
         20
@@ -1832,6 +1836,12 @@
           "by": "worker-installer-core-claude",
           "from": "ready-for-dev",
           "to": "in-progress"
+        },
+        {
+          "at": "2026-10-12T09:57:13.837189+00:00",
+          "by": "worker-installer-core-claude",
+          "from": "in-progress",
+          "to": "in-review"
         }
       ],
       "findings": [],
@@ -1844,7 +1854,7 @@
       "type": "story",
       "title": "Cursor and Codex projections",
       "status": "backlog",
-      "state": "planned",
+      "state": "ready",
       "owner": null,
       "after": [
         19
@@ -2716,17 +2726,17 @@
     }
   ],
   "frontier": {
-    "ready": [],
-    "waiting_on_prereq": [
+    "ready": [
       {
         "id": 20,
         "epic": 3,
         "stream": "W-installer",
         "title": "Cursor and Codex projections",
-        "missing": [
-          "19 (in-progress)"
-        ]
-      },
+        "why": "after 19 in-review; unclaimed",
+        "claimed": false
+      }
+    ],
+    "waiting_on_prereq": [
       {
         "id": 21,
         "epic": 3,
