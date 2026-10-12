@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-12T06:41:53.427378+00:00",
-  "revision": 103,
+  "generated_at": "2026-10-12T06:50:36.400336+00:00",
+  "revision": 105,
   "streams": [
     {
       "id": "W-foundation",
@@ -36,8 +36,8 @@
       "counts": {
         "planned": 0,
         "ready": 0,
-        "in-progress": 1,
-        "review": 3,
+        "in-progress": 0,
+        "review": 4,
         "built": 0,
         "done": 8,
         "cancelled": 0
@@ -2483,8 +2483,8 @@
       "stream": "W-expansion",
       "type": "story",
       "title": "Refuse stale id counters in roadmap derive",
-      "status": "in-progress",
-      "state": "in-progress",
+      "status": "in-review",
+      "state": "review",
       "owner": "worker-board-derive-id-guard",
       "after": [
         10
@@ -2497,26 +2497,25 @@
       "plan_checkpoint": false,
       "done_checkpoint": true,
       "blocked": null,
-      "receipts": {},
+      "receipts": {
+        "completion": {
+          "type": "completion-attestation",
+          "subject_sha": "040bd48c59a94e69a623c5d03937edf1c51525e1",
+          "statement": "roadmap.py derive now fails closed on stale id counters: check_id_counters runs under the board lock before any mint or write and refuses (exit 2, one board: message naming the counter and the true maximum, zero files written) when next_story_id/next_epic_id do not exceed every existing record id or when the minted id would collide with an existing record file. Counter repair stays an explicit operator edit of meta.json. Id-join, never-reuse and build-order semantics are unchanged. Four new DeriveTests cases cover the stale story-counter refusal, the stale epic-counter refusal, the record-file collision, and the happy path after explicit repair; the documented safe add-a-story flow in references/recovery.md and the mission library notes now matches the refusal behavior. The full sha is recorded in the board record history for story 35.",
+          "evidence": [
+            "git show --stat 040bd48",
+            "python3 -m unittest discover -s tests -p test_board.py (48 tests OK, incl. 4 new DeriveTests cases that failed pre-fix with exit 0 on a stale counter)",
+            "manual derive in a $TMPDIR repo: stale next_story_id=1 -> exit 2 with 'meta.json next_story_id is 1 but story id 3 already exists', shasum snapshot of .software-factory identical before/after (zero writes); explicit repair to max+1 -> derive exit 0; record file stories/4.json holding id 3 with counter 4 -> exit 2 naming stories/4.json, file intact",
+            "python3 -m compileall -q scripts skills tests; uvx --from ruff==0.17.0 ruff check .; python3 scripts/validate.py; python3 scripts/scan_public.py (all clean)"
+          ]
+        }
+      },
       "baseline_sha": null,
       "branch": null,
       "pr": null,
       "merged_sha": null,
       "claim": {
-        "live": true,
-        "owner": "worker-board-derive-id-guard",
-        "paths": [
-          "skills/software-factory/scripts/roadmap.py",
-          "skills/software-factory/references/recovery.md",
-          "tests/test_board.py",
-          ".software-factory/context/board/plan.json",
-          ".software-factory/context/board/meta.json",
-          ".software-factory/context/board/stories/35.json",
-          ".software-factory/context/board/roadmap.json",
-          ".software-factory/context/board/dashboard.html",
-          ".software-factory/context/CODEBASE.md"
-        ],
-        "claimed_at": "2026-10-12T06:41:48.037337+00:00"
+        "live": false
       },
       "blocks": [],
       "history": [
@@ -2531,6 +2530,12 @@
           "by": "worker-board-derive-id-guard",
           "from": "ready-for-dev",
           "to": "in-progress"
+        },
+        {
+          "at": "2026-10-12T06:50:29.885279+00:00",
+          "by": "worker-board-derive-id-guard",
+          "from": "in-progress",
+          "to": "in-review"
         }
       ],
       "findings": [],

@@ -4,7 +4,7 @@
   "epic": 2,
   "type": "story",
   "title": "Refuse stale id counters in roadmap derive",
-  "status": "in-progress",
+  "status": "in-review",
   "owner": "worker-board-derive-id-guard",
   "after": [
     10
@@ -17,7 +17,19 @@
   "plan_checkpoint": false,
   "done_checkpoint": true,
   "blocked": null,
-  "receipts": {},
+  "receipts": {
+    "completion": {
+      "type": "completion-attestation",
+      "subject_sha": "040bd48c59a94e69a623c5d03937edf1c51525e1",
+      "statement": "roadmap.py derive now fails closed on stale id counters: check_id_counters runs under the board lock before any mint or write and refuses (exit 2, one board: message naming the counter and the true maximum, zero files written) when next_story_id/next_epic_id do not exceed every existing record id or when the minted id would collide with an existing record file. Counter repair stays an explicit operator edit of meta.json. Id-join, never-reuse and build-order semantics are unchanged. Four new DeriveTests cases cover the stale story-counter refusal, the stale epic-counter refusal, the record-file collision, and the happy path after explicit repair; the documented safe add-a-story flow in references/recovery.md and the mission library notes now matches the refusal behavior. The full sha is recorded in the board record history for story 35.",
+      "evidence": [
+        "git show --stat 040bd48",
+        "python3 -m unittest discover -s tests -p test_board.py (48 tests OK, incl. 4 new DeriveTests cases that failed pre-fix with exit 0 on a stale counter)",
+        "manual derive in a $TMPDIR repo: stale next_story_id=1 -> exit 2 with 'meta.json next_story_id is 1 but story id 3 already exists', shasum snapshot of .software-factory identical before/after (zero writes); explicit repair to max+1 -> derive exit 0; record file stories/4.json holding id 3 with counter 4 -> exit 2 naming stories/4.json, file intact",
+        "python3 -m compileall -q scripts skills tests; uvx --from ruff==0.17.0 ruff check .; python3 scripts/validate.py; python3 scripts/scan_public.py (all clean)"
+      ]
+    }
+  },
   "baseline_sha": null,
   "branch": null,
   "pr": null,
@@ -34,6 +46,12 @@
       "by": "worker-board-derive-id-guard",
       "from": "ready-for-dev",
       "to": "in-progress"
+    },
+    {
+      "at": "2026-10-12T06:50:29.885279+00:00",
+      "by": "worker-board-derive-id-guard",
+      "from": "in-progress",
+      "to": "in-review"
     }
   ],
   "findings": [],
