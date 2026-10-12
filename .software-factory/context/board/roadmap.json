@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-12T06:50:36.400336+00:00",
-  "revision": 105,
+  "generated_at": "2026-10-12T08:23:04.793089+00:00",
+  "revision": 110,
   "streams": [
     {
       "id": "W-foundation",
@@ -36,7 +36,7 @@
       "counts": {
         "planned": 0,
         "ready": 0,
-        "in-progress": 0,
+        "in-progress": 1,
         "review": 4,
         "built": 0,
         "done": 8,
@@ -187,7 +187,8 @@
         17,
         18,
         34,
-        35
+        35,
+        36
       ],
       "needs": [
         1
@@ -1347,7 +1348,8 @@
         "live": false
       },
       "blocks": [
-        14
+        14,
+        36
       ],
       "history": [
         {
@@ -2546,6 +2548,69 @@
         ".software-factory/context/"
       ],
       "source_key": "expansion/board-derive-id-guard"
+    },
+    {
+      "id": 36,
+      "epic": 2,
+      "stream": "W-expansion",
+      "type": "story",
+      "title": "Override refuses tampered receipts and reaches the documented end state",
+      "status": "in-progress",
+      "state": "in-progress",
+      "owner": "worker-eval-override-integrity",
+      "after": [
+        13
+      ],
+      "covers": [
+        "VAL-EVAL-011"
+      ],
+      "risk": "standard",
+      "hitl": false,
+      "plan_checkpoint": false,
+      "done_checkpoint": true,
+      "blocked": null,
+      "receipts": {},
+      "baseline_sha": null,
+      "branch": null,
+      "pr": null,
+      "merged_sha": null,
+      "claim": {
+        "live": true,
+        "owner": "worker-eval-override-integrity",
+        "paths": [
+          "skills/sf-eval/scripts/sf_eval.py",
+          "skills/sf-eval/references/receipts.md",
+          "skills/sf-eval/SKILL.md",
+          "tests/test_sf_eval.py",
+          ".software-factory/context/board",
+          ".software-factory/context/CODEBASE.md"
+        ],
+        "claimed_at": "2026-10-12T08:23:04.761751+00:00"
+      },
+      "blocks": [],
+      "history": [
+        {
+          "at": "2026-10-12T08:21:40.073661+00:00",
+          "by": "orchestrator",
+          "from": "backlog",
+          "to": "ready-for-dev"
+        },
+        {
+          "at": "2026-10-12T08:21:40.106574+00:00",
+          "by": "worker-eval-override-integrity",
+          "from": "ready-for-dev",
+          "to": "in-progress"
+        }
+      ],
+      "findings": [],
+      "scope": [
+        "skills/sf-eval/scripts/sf_eval.py",
+        "skills/sf-eval/references/receipts.md",
+        "skills/sf-eval/SKILL.md",
+        "tests/test_sf_eval.py",
+        ".software-factory/context/"
+      ],
+      "source_key": "expansion/eval-override-integrity"
     }
   ],
   "frontier": {

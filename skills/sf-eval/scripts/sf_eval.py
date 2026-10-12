@@ -12,8 +12,12 @@ receipts the factory's evidence gate cites.
   verdict must be ``pass``.
 - ``verify-manifest`` checks that a gate manifest's ``eval`` block cites a
   real, untampered, green receipt, or carries an approved override record.
-- ``override`` records a human override (who/when/why) on a receipt and
-  re-hashes it.
+- ``override`` records an approved human override (who/when/why) on a
+  receipt: it first re-digests the receipt exactly as ``verify`` does and
+  refuses a mismatch with no write, then records the approval, transitions
+  a non-pass verdict to ``pass`` (the prior verdict kept on the record,
+  the case results untouched as evidence) and re-hashes, so the manifest
+  can cite the new digest.
 
 The runner executes the deterministic ladder rungs natively (``state``,
 ``command``, ``http`` against case-declared local URLs, ``golden``) and
@@ -912,12 +916,39 @@ def cmd_verify_manifest(args):
 
 
 def cmd_override(args):
-    """Record a human override (who/when/why) on a receipt and re-hash it."""
+    """Record an approved human override (who/when/why) on a receipt.
+
+    The path is integrity-preserving: the receipt's stored digest must
+    reproduce before anything is recorded, computed exactly as ``verify``
+    does. A mismatch is refused with no write — an override can never
+    launder an altered receipt into a verifying one. On a digest-valid
+    receipt the record is appended, a non-pass verdict transitions to
+    ``pass`` on the strength of that recorded approval (the prior verdict
+    is kept on the record and the case results stay untouched as
+    evidence), and the receipt is re-hashed so the manifest can cite the
+    new digest.
+    """
     data = _load_receipt(args.receipt)
     if data is None:
         return 1
-    overrides = data.setdefault("overrides", [])
-    overrides.append({"who": args.who, "when": args.when, "reason": args.reason})
+    stored = data.get("self_sha256")
+    if not stored:
+        print(f"override refused: {args.receipt} has no self_sha256")
+        return 1
+    recomputed = receipt_digest(data)
+    if recomputed != stored:
+        print(
+            f"override refused: receipt digest mismatch in {args.receipt} "
+            f"(stored {stored}, recomputed {recomputed}); "
+            "an override cannot repair an altered receipt"
+        )
+        return 1
+    record = {"who": args.who, "when": args.when, "reason": args.reason}
+    verdict = data.get("verdict")
+    if verdict != PASS:
+        record["from_verdict"] = verdict
+        data["verdict"] = PASS
+    data.setdefault("overrides", []).append(record)
     data["self_sha256"] = receipt_digest(data)
     atomic_write_json(Path(args.receipt), data)
     print(f"override recorded on {args.receipt}")

@@ -46,5 +46,7 @@ offline, never calls a model and installs nothing. A missing harness is
 
 `verify --receipt` re-checks a receipt's self-hash and verdict;
 `verify-manifest` checks a gate manifest's eval citation; `override`
-records who/when/why. `--help` lists every option. A worked plan ships at
+records who/when/why on a digest-valid receipt (a tampered one is
+refused) and transitions its verdict so the manifest can cite the new
+digest. `--help` lists every option. A worked plan ships at
 [examples/eval.config.example.json](examples/eval.config.example.json).

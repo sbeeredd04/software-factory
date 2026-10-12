@@ -691,6 +691,76 @@ class OverrideTests(unittest.TestCase):
                           "--reason", "x")
         self.assertEqual(result.returncode, 2)
 
+    def test_override_refuses_a_tampered_receipt(self):
+        project = Project(self, base_plan([command_case("BE-ONE-001")]))
+        project.run("--mode", "quick", "--story", "S-1")
+        path, receipt = project.last_receipt()
+        receipt["cases"]["BE-ONE-001"] = "fail"  # altered, never re-hashed
+        path.write_text(json.dumps(receipt, indent=2, sort_keys=True) + "\n")
+        result = run_eval("verify", "--receipt", path)
+        self.assertEqual(result.returncode, 1)
+        self.assertIn("digest mismatch", result.stdout + result.stderr)
+        before = hashlib.sha256(path.read_bytes()).hexdigest()
+        result = run_eval("override", "--receipt", path, "--who", "fixture-user",
+                          "--reason", "attempted laundering of an altered receipt")
+        self.assertEqual(result.returncode, 1)
+        output = result.stdout + result.stderr
+        self.assertIn("digest mismatch", output)
+        self.assertIn(str(path), output)
+        self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), before)
+
+    def test_override_refuses_the_shipped_tampered_fixture(self):
+        source = REPO / "evals" / "fixtures" / "tampered-receipt.json"
+        with tempfile.TemporaryDirectory() as temp:
+            path = Path(temp) / "receipt.json"
+            path.write_bytes(source.read_bytes())
+            before = hashlib.sha256(path.read_bytes()).hexdigest()
+            self.assertEqual(
+                run_eval("verify", "--receipt", path).returncode, 1)
+            result = run_eval("override", "--receipt", path,
+                              "--who", "fixture-user",
+                              "--reason", "attempted laundering")
+            self.assertEqual(result.returncode, 1)
+            self.assertIn("digest mismatch", result.stdout + result.stderr)
+            self.assertEqual(
+                hashlib.sha256(path.read_bytes()).hexdigest(), before)
+
+    def test_override_of_a_failing_receipt_reaches_the_documented_end_state(self):
+        project = Project(self, base_plan([
+            command_case("BE-ONE-001", run="exit 1"),
+        ]))
+        project.run("--mode", "quick", "--story", "S-1")
+        path, receipt = project.last_receipt()
+        self.assertEqual(receipt["verdict"], "fail")
+        self.assertEqual(run_eval("verify", "--receipt", path).returncode, 1)
+        result = run_eval("override", "--receipt", path, "--who", "fixture-user",
+                          "--reason", "failure accepted by the maintainer")
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+        receipt = json.loads(path.read_text())
+        record = receipt["overrides"][-1]
+        self.assertEqual(record["who"], "fixture-user")
+        self.assertTrue(record["when"])
+        self.assertEqual(record["reason"], "failure accepted by the maintainer")
+        self.assertEqual(record["from_verdict"], "fail")
+        self.assertEqual(receipt["verdict"], "pass")
+        self.assertEqual(receipt["cases"]["BE-ONE-001"], "fail")  # evidence kept
+        self.assertEqual(receipt_digest(receipt), receipt["self_sha256"])
+        result = run_eval("verify", "--receipt", path)
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+        block = {
+            "status": "pass",
+            "run_id": receipt["run_id"],
+            "verdict": receipt["verdict"],
+            "cases": receipt["cases"],
+            "receipt": str(path.relative_to(project.root)),
+            "self_sha256": receipt["self_sha256"],
+        }
+        manifest = project.root / "manifest.json"
+        manifest.write_text(json.dumps({"checks": {"eval": block}}))
+        result = run_eval("verify-manifest", "--manifest", manifest,
+                          "--root", project.root)
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+
 
 class QuarantineTests(unittest.TestCase):
     def test_quarantined_failure_does_not_block_the_verdict(self):

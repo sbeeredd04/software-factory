@@ -51,7 +51,15 @@ pass.
 
 ## Overrides
 
-`sf_eval.py override --receipt R --who W --reason TEXT` appends the record
-(who/when/why) to the receipt's `overrides` and re-hashes it; the manifest
-then cites the new digest. An override is honest evidence on record; a
-silently skipped gate is not.
+A human may approve an override of a gate only as a recorded override.
+`sf_eval.py override --receipt R --who W --reason TEXT` first re-digests
+the receipt exactly as `verify` does and refuses — nonzero exit, no
+write, the receipt and the digest mismatch named — when the stored
+`self_sha256` does not reproduce: an override can never launder a
+tampered receipt into a verifying one. On a digest-valid receipt it
+appends the record (who/when/why, plus the prior verdict) to
+`overrides`, transitions a non-`pass` verdict to `pass` on the strength
+of that recorded approval — the case results stay untouched as evidence —
+and re-hashes. The manifest then cites the new digest and verdict, so
+`verify` and `verify-manifest` accept the overridden receipt. An override
+is honest evidence on record; a silently skipped gate is not.

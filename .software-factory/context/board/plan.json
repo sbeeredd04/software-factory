@@ -476,6 +476,28 @@
             "tests/test_board.py",
             ".software-factory/context/"
           ]
+        },
+        {
+          "key": "eval-override-integrity",
+          "title": "Override refuses tampered receipts and reaches the documented end state",
+          "type": "story",
+          "after": [
+            "eval-skill"
+          ],
+          "covers": [
+            "VAL-EVAL-011"
+          ],
+          "risk": "standard",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": true,
+          "scope": [
+            "skills/sf-eval/scripts/sf_eval.py",
+            "skills/sf-eval/references/receipts.md",
+            "skills/sf-eval/SKILL.md",
+            "tests/test_sf_eval.py",
+            ".software-factory/context/"
+          ]
         }
       ]
     },
