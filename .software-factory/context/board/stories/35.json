@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "id": 35,
+  "epic": 2,
+  "type": "story",
+  "title": "Refuse stale id counters in roadmap derive",
+  "status": "in-progress",
+  "owner": "worker-board-derive-id-guard",
+  "after": [
+    10
+  ],
+  "covers": [
+    "VAL-ROADMAP-001"
+  ],
+  "risk": "standard",
+  "hitl": false,
+  "plan_checkpoint": false,
+  "done_checkpoint": true,
+  "blocked": null,
+  "receipts": {},
+  "baseline_sha": null,
+  "branch": null,
+  "pr": null,
+  "merged_sha": null,
+  "history": [
+    {
+      "at": "2026-10-12T06:41:53.385182+00:00",
+      "by": "orchestrator",
+      "from": "backlog",
+      "to": "ready-for-dev"
+    },
+    {
+      "at": "2026-10-12T06:41:53.425020+00:00",
+      "by": "worker-board-derive-id-guard",
+      "from": "ready-for-dev",
+      "to": "in-progress"
+    }
+  ],
+  "findings": [],
+  "source_key": "expansion/board-derive-id-guard",
+  "scope": [
+    "skills/software-factory/scripts/roadmap.py",
+    "skills/software-factory/references/recovery.md",
+    "tests/test_board.py",
+    ".software-factory/context/"
+  ]
+}

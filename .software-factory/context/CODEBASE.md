@@ -5,8 +5,8 @@
 > (`<skill-dir>` is the installed skill directory, e.g. `.claude/skills/sf-crawl`
 > or `.agents/skills/sf-crawl`).
 
-- Source revision: 24f43bdd86a28527f3b492decc799dd2e28ab7a7
-- Generated: 2026-10-11T22:38:23Z
+- Source revision: 5919c593236a3d20db0e7fd84371025510a9d3de
+- Generated: 2026-10-12T06:48:04Z
 
 ## Limits
 
@@ -45,7 +45,7 @@
 | `skills.software-factory.scripts.dashboard` | `skills/software-factory/scripts/dashboard.py` | 15 | 0 | 6 |
 | `skills.software-factory.scripts.gate` | `skills/software-factory/scripts/gate.py` | 3 | 0 | 5 |
 | `skills.software-factory.scripts.hook` | `skills/software-factory/scripts/hook.py` | 8 | 0 | 7 |
-| `skills.software-factory.scripts.roadmap` | `skills/software-factory/scripts/roadmap.py` | 41 | 0 | 9 |
+| `skills.software-factory.scripts.roadmap` | `skills/software-factory/scripts/roadmap.py` | 42 | 0 | 9 |
 | `skills.software-factory.scripts.state` | `skills/software-factory/scripts/state.py` | 32 | 0 | 15 |
 | `tests.fixtures.repos.python-cli.fixture_cli` | `tests/fixtures/repos/python-cli/fixture_cli/__init__.py` | 0 | 0 | 0 |
 | `tests.fixtures.repos.python-cli.fixture_cli.__main__` | `tests/fixtures/repos/python-cli/fixture_cli/__main__.py` | 0 | 0 | 1 |
@@ -168,7 +168,7 @@ No internal import edges.
 - `skills.software-factory.scripts.dashboard.render_streams` (line 135) calls `append` (unconfirmed), `badge` (confirmed: skills.software-factory.scripts.dashboard.badge), `counts.get` (unconfirmed), `esc` (confirmed: skills.software-factory.scripts.dashboard.esc), `join` (unconfirmed), `lanes.append` (unconfirmed), `out.append` (unconfirmed), `stories_by_stream.get` (unconfirmed), `stories_by_stream.setdefault` (unconfirmed), `story_card` (confirmed: skills.software-factory.scripts.dashboard.story_card)
 - `skills.software-factory.scripts.dashboard.render_frontier` (line 179) calls `esc` (confirmed: skills.software-factory.scripts.dashboard.esc), `join` (unconfirmed), `out.append` (unconfirmed)
 - `skills.software-factory.scripts.dashboard.render_blockers` (line 210) calls `append` (unconfirmed), `esc` (confirmed: skills.software-factory.scripts.dashboard.esc), `grouped.setdefault` (unconfirmed), `join` (unconfirmed), `out.append` (unconfirmed), `sorted` (unconfirmed)
-- … 495 more call rows (cap reached)
+- … 503 more call rows (cap reached)
 
 ## Entry points
 

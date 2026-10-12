@@ -155,8 +155,14 @@ only when the inputs changed, so an unchanged board regenerates byte
 identical, and deleting both artifacts rebuilds them in full from the
 records. `roadmap.py derive --source <plan.json>` creates or refreshes
 records from the planning source (joining by source key, never reusing ids,
-never touching live fields); `roadmap.py update` and `roadmap.py epic` are
-the transition writes above. The board directory and the regeneration
+never touching live fields). Derive fails closed on a stale counter: before
+minting it checks that the `meta.json` counters exceed every existing record
+id and collide with no record file, and refuses with a `board:` message and
+zero writes otherwise — repair is an explicit edit of `meta.json` to above
+the true maximum, then re-run derive; never an implicit overwrite. Adding a
+story is therefore: extend the planning source, run derive, and only if it
+refuses, repair the counters by hand first. `roadmap.py update` and
+`roadmap.py epic` are the transition writes above. The board directory and the regeneration
 policy (`on-write` or `manual`) are declared in `config.yaml` under `board`;
 a malformed config fails closed.
 

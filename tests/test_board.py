@@ -96,12 +96,15 @@ class Board:
         return support.run("roadmap", "--workspace", self.root, *args, env=env)
 
     def derive(self, source=None):
+        result = self.derive_raw(source)
+        assert result.returncode == 0, result.stderr
+        return result
+
+    def derive_raw(self, source=None):
         source = planning_source() if source is None else source
         path = self.root / "plan.json"
         path.write_text(json.dumps(source))
-        result = self.board("derive", "--source", path)
-        assert result.returncode == 0, result.stderr
-        return result
+        return self.board("derive", "--source", path)
 
     def build(self, *args, env=None):
         return self.board("build", *args, env=env)
@@ -127,6 +130,20 @@ class Board:
 
     def roadmap(self):
         return json.loads(self.roadmap_file().read_text())
+
+    def board_snapshot(self):
+        """Every file under the board dir, content-keyed, for zero-write proofs."""
+        return {
+            str(path.relative_to(self.dir())): path.read_bytes()
+            for path in sorted(self.dir().rglob("*"))
+            if path.is_file()
+        }
+
+    def write_meta(self, **changes):
+        path = self.dir() / "meta.json"
+        data = json.loads(path.read_text())
+        data.update(changes)
+        path.write_text(json.dumps(data, indent=2) + "\n")
 
     def receipt(self, name="receipt.json", sha=SHA_A, **extra):
         path = self.root / name
@@ -261,6 +278,78 @@ class DeriveTests(unittest.TestCase):
         result = board.build()
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(board.roadmap()["problems"], [])
+
+    def test_derive_refuses_a_stale_story_counter_and_writes_nothing(self):
+        board = Board(self)
+        board.derive()
+        board.write_meta(next_story_id=1)  # stories 1..4 already exist
+        before = board.board_snapshot()
+        source = planning_source()
+        source["epics"][0]["stories"].append(
+            {"key": "hook", "title": "Hook helper", "type": "story",
+             "after": [], "covers": ["R5"], "risk": "T0"}
+        )
+        result = board.derive_raw(source)
+        self.assertEqual(result.returncode, 2)
+        self.assertTrue(result.stderr.startswith("board:"), result.stderr)
+        self.assertIn("next_story_id", result.stderr)
+        self.assertIn("story id 4", result.stderr)  # the true maximum
+        self.assertEqual(board.board_snapshot(), before)  # zero files written
+
+    def test_derive_refuses_a_stale_epic_counter_and_writes_nothing(self):
+        board = Board(self)
+        board.derive()
+        board.write_meta(next_epic_id=2)  # epics 1 and 2 already exist
+        before = board.board_snapshot()
+        # Fail closed even when the source mints nothing new: a stale counter
+        # is board drift, and repairing it is an explicit operator action.
+        result = board.derive_raw()
+        self.assertEqual(result.returncode, 2)
+        self.assertTrue(result.stderr.startswith("board:"), result.stderr)
+        self.assertIn("next_epic_id", result.stderr)
+        self.assertIn("epic id 2", result.stderr)  # the true maximum
+        self.assertEqual(board.board_snapshot(), before)
+
+    def test_derive_refuses_a_minted_id_colliding_with_a_record_file(self):
+        board = Board(self)
+        board.derive()
+        # Joins are by id, never by filename: record 4 may live in
+        # stories/5.json. The counter (5) exceeds every record id, yet minting
+        # id 5 would overwrite that existing file.
+        board.story_file(4).rename(board.story_file(5))
+        before = board.board_snapshot()
+        source = planning_source()
+        source["epics"][0]["stories"].append(
+            {"key": "hook", "title": "Hook helper", "type": "story",
+             "after": [], "covers": ["R5"], "risk": "T0"}
+        )
+        result = board.derive_raw(source)
+        self.assertEqual(result.returncode, 2)
+        self.assertTrue(result.stderr.startswith("board:"), result.stderr)
+        self.assertIn("next_story_id", result.stderr)
+        self.assertIn("stories/5.json", result.stderr)
+        self.assertEqual(board.board_snapshot(), before)
+        self.assertEqual(json.loads(board.story_file(5).read_text())["id"], 4)
+
+    def test_derive_happy_path_after_explicit_counter_repair(self):
+        board = Board(self)
+        board.derive()
+        board.write_meta(next_story_id=1)  # stale; the refusal above applies
+        source = planning_source()
+        source["epics"][0]["stories"].append(
+            {"key": "hook", "title": "Hook helper", "type": "story",
+             "after": [], "covers": ["R5"], "risk": "T0"}
+        )
+        self.assertEqual(board.derive_raw(source).returncode, 2)
+        # Repair is an explicit operator action: set the counter above the
+        # true maximum, then derive succeeds and mints the next id.
+        board.write_meta(next_story_id=5)
+        result = board.derive_raw(source)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(board.story(5)["title"], "Hook helper")
+        self.assertEqual(board.story(1)["title"], "State helper")  # never overwritten
+        meta = json.loads((board.dir() / "meta.json").read_text())
+        self.assertEqual(meta["next_story_id"], 6)
 
 
 class TransitionTests(unittest.TestCase):

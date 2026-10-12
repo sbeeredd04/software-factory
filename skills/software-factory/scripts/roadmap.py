@@ -9,7 +9,11 @@ path-exclusivity system of record and are never written from here.
 
 Ids are integers assigned once and never reused (the counters live in
 `meta.json`); joins are by id, never by filename; build order is the explicit
-`order` array, separate from ids. Unknown record keys are ignored at read
+`order` array, separate from ids. `derive` fails closed before minting: a
+counter that does not exceed every existing record id, or that would mint an
+id colliding with an existing record file, is refused with nothing written —
+repairing a stale counter is an explicit operator edit, never an implicit
+overwrite. Unknown record keys are ignored at read
 time so receipts and project-specific fields extend the schema without code
 changes. The normative record contract is the shipped
 `schemas/board.schema.json`.
@@ -450,11 +454,44 @@ def refresh_story(record, source, epic_id, after):
     return record
 
 
+def check_id_counters(directory, meta, epics, stories):
+    """Fail closed before minting: each meta.json counter must exceed every
+    existing record id and collide with no record file on disk. A stale
+    counter means the board drifted from its records; repairing it is an
+    explicit operator edit of meta.json, never an implicit overwrite of a
+    live record.
+    """
+    for key, records, subdir, noun in (
+        ("next_story_id", stories, "stories", "story"),
+        ("next_epic_id", epics, "epics", "epic"),
+    ):
+        counter = meta[key]
+        highest = max(records, default=0)
+        if counter <= highest:
+            raise BoardError(
+                f"meta.json {key} is {counter} but {noun} id {highest} already "
+                "exists; ids are assigned once and never reused — set "
+                f"{key} above {highest} in meta.json, then re-run derive"
+            )
+        file_ids = []
+        for path in (directory / subdir).glob("*.json"):
+            stem = _maybe_int(path.stem)
+            if isinstance(stem, int) and stem >= counter:
+                file_ids.append(stem)
+        if file_ids:
+            raise BoardError(
+                f"meta.json {key} {counter} would mint an id that collides with "
+                f"existing record file {subdir}/{min(file_ids)}.json; records join "
+                "by id, never by filename — reconcile the board, then re-run derive"
+            )
+
+
 def derive(workspace: Path, source_path: Path):
     """Create or refresh board records from the planning source document.
 
     Joins planning entries to records by source_key; ids come from the
-    never-reused counters in meta.json. Live fields (status, receipts,
+    never-reused counters in meta.json, verified against the existing
+    records before anything is written. Live fields (status, receipts,
     history, blocked) are never touched.
     """
     try:
@@ -477,6 +514,7 @@ def derive(workspace: Path, source_path: Path):
         if problems:
             named = ", ".join(item["file"] for item in problems)
             raise BoardError(f"degenerate records block a structural derive: {named}")
+        check_id_counters(directory, meta, epics, stories)
         epics_by_key = {e.get("source_key"): e for e in epics.values() if e.get("source_key")}
         stories_by_key = {s.get("source_key"): s for s in stories.values() if s.get("source_key")}
         streams_by_id = {s["id"]: s for s in streams}
