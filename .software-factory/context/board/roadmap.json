@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-12T08:23:04.793089+00:00",
-  "revision": 110,
+  "generated_at": "2026-10-12T08:31:50.881797+00:00",
+  "revision": 112,
   "streams": [
     {
       "id": "W-foundation",
@@ -36,8 +36,8 @@
       "counts": {
         "planned": 0,
         "ready": 0,
-        "in-progress": 1,
-        "review": 4,
+        "in-progress": 0,
+        "review": 5,
         "built": 0,
         "done": 8,
         "cancelled": 0
@@ -2555,8 +2555,8 @@
       "stream": "W-expansion",
       "type": "story",
       "title": "Override refuses tampered receipts and reaches the documented end state",
-      "status": "in-progress",
-      "state": "in-progress",
+      "status": "in-review",
+      "state": "review",
       "owner": "worker-eval-override-integrity",
       "after": [
         13
@@ -2569,23 +2569,26 @@
       "plan_checkpoint": false,
       "done_checkpoint": true,
       "blocked": null,
-      "receipts": {},
+      "receipts": {
+        "completion": {
+          "type": "completion-attestation",
+          "subject_sha": "592ce510bcb5bc06ddf4faa4ce96cedcfe53dbad",
+          "statement": "sf_eval.py override is now integrity-preserving: it recomputes the receipt self-hash exactly as verify does before recording anything and refuses a mismatch (exit 1, no write, receipt path and stored/recomputed digests named), so a tampered receipt can never be laundered into a verifying one; and an approved override of a digest-valid failing receipt appends the who/when/why record (plus from_verdict), transitions the verdict to pass with the case results untouched as evidence, and re-hashes, so verify and verify-manifest accept the overridden receipt citing the new digest \u2014 the end state receipts.md documents. receipts.md and SKILL.md now state these semantics. Three new OverrideTests cover the tampered-receipt refusal (live receipt and the shipped tampered fixture, each byte-identical afterwards) and the overridden-failing end state through verify-manifest. The full sha is recorded in the board record history for story 36.",
+          "evidence": [
+            "git show --stat 592ce510bcb5bc06ddf4faa4ce96cedcfe53dbad",
+            "SF_SKIP_NETWORK=1 python3 -m unittest discover -s tests -p test_sf_eval.py (53 tests OK; the 3 new override tests failed pre-fix with exit 0 laundering / no verdict transition)",
+            "manual repro in $TMPDIR: tampered fixture -> verify exit 1 'receipt digest mismatch'; override exit 1 'override refused: receipt digest mismatch in <path> (stored 0000..., recomputed 259b...)' and shasum before/after equal (ef6cdd35...)",
+            "manual repro in $TMPDIR: failing quick run -> verify exit 1 verdict 'fail'; override exit 0 -> record {who,when,reason,from_verdict=fail}, verdict pass, cases still fail; verify exit 0; verify-manifest citing the new digest exit 0",
+            "python3 -m compileall -q scripts skills tests; uvx --from ruff==0.17.0 ruff check .; python3 scripts/validate.py; python3 scripts/scan_public.py (all clean)"
+          ]
+        }
+      },
       "baseline_sha": null,
       "branch": null,
       "pr": null,
       "merged_sha": null,
       "claim": {
-        "live": true,
-        "owner": "worker-eval-override-integrity",
-        "paths": [
-          "skills/sf-eval/scripts/sf_eval.py",
-          "skills/sf-eval/references/receipts.md",
-          "skills/sf-eval/SKILL.md",
-          "tests/test_sf_eval.py",
-          ".software-factory/context/board",
-          ".software-factory/context/CODEBASE.md"
-        ],
-        "claimed_at": "2026-10-12T08:23:04.761751+00:00"
+        "live": false
       },
       "blocks": [],
       "history": [
@@ -2600,6 +2603,12 @@
           "by": "worker-eval-override-integrity",
           "from": "ready-for-dev",
           "to": "in-progress"
+        },
+        {
+          "at": "2026-10-12T08:31:50.818400+00:00",
+          "by": "worker-eval-override-integrity",
+          "from": "in-progress",
+          "to": "in-review"
         }
       ],
       "findings": [],
