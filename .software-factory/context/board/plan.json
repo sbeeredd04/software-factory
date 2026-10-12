@@ -498,6 +498,26 @@
             "tests/test_sf_eval.py",
             ".software-factory/context/"
           ]
+        },
+        {
+          "key": "principles-empty-file-guard",
+          "title": "Refuse a missing or empty principles file at the kernel",
+          "type": "story",
+          "after": [
+            "kernel-hardening"
+          ],
+          "covers": [
+            "VAL-KERNEL-020"
+          ],
+          "risk": "standard",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": true,
+          "scope": [
+            "skills/software-factory/scripts/state.py",
+            "tests/test_state.py",
+            ".software-factory/context/"
+          ]
         }
       ]
     },

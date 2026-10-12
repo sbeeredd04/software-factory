@@ -5,8 +5,8 @@
 > (`<skill-dir>` is the installed skill directory, e.g. `.claude/skills/sf-crawl`
 > or `.agents/skills/sf-crawl`).
 
-- Source revision: d9457bc2102f18cd4dfd0d0cfc653f28f20b3f8f
-- Generated: 2026-10-12T08:26:00Z
+- Source revision: 68d75a0b69d80ebc7f5f707c41f47387e3a62c64
+- Generated: 2026-10-12T08:48:58Z
 
 ## Limits
 
@@ -46,7 +46,7 @@
 | `skills.software-factory.scripts.gate` | `skills/software-factory/scripts/gate.py` | 3 | 0 | 5 |
 | `skills.software-factory.scripts.hook` | `skills/software-factory/scripts/hook.py` | 8 | 0 | 7 |
 | `skills.software-factory.scripts.roadmap` | `skills/software-factory/scripts/roadmap.py` | 42 | 0 | 9 |
-| `skills.software-factory.scripts.state` | `skills/software-factory/scripts/state.py` | 32 | 0 | 15 |
+| `skills.software-factory.scripts.state` | `skills/software-factory/scripts/state.py` | 33 | 0 | 15 |
 | `tests.fixtures.repos.python-cli.fixture_cli` | `tests/fixtures/repos/python-cli/fixture_cli/__init__.py` | 0 | 0 | 0 |
 | `tests.fixtures.repos.python-cli.fixture_cli.__main__` | `tests/fixtures/repos/python-cli/fixture_cli/__main__.py` | 0 | 0 | 1 |
 | `tests.fixtures.repos.python-cli.fixture_cli.cli` | `tests/fixtures/repos/python-cli/fixture_cli/cli.py` | 1 | 0 | 1 |
@@ -59,7 +59,7 @@
 | `tests.test_gate` | `tests/test_gate.py` | 5 | 0 | 6 |
 | `tests.test_hook` | `tests/test_hook.py` | 8 | 0 | 8 |
 | `tests.test_sf_eval` | `tests/test_sf_eval.py` | 22 | 0 | 13 |
-| `tests.test_state` | `tests/test_state.py` | 16 | 0 | 16 |
+| `tests.test_state` | `tests/test_state.py` | 17 | 0 | 16 |
 | `tests.test_tools` | `tests/test_tools.py` | 18 | 0 | 8 |
 
 ## Import edges (Python)
@@ -168,7 +168,7 @@ No internal import edges.
 - `skills.software-factory.scripts.dashboard.render_streams` (line 135) calls `append` (unconfirmed), `badge` (confirmed: skills.software-factory.scripts.dashboard.badge), `counts.get` (unconfirmed), `esc` (confirmed: skills.software-factory.scripts.dashboard.esc), `join` (unconfirmed), `lanes.append` (unconfirmed), `out.append` (unconfirmed), `stories_by_stream.get` (unconfirmed), `stories_by_stream.setdefault` (unconfirmed), `story_card` (confirmed: skills.software-factory.scripts.dashboard.story_card)
 - `skills.software-factory.scripts.dashboard.render_frontier` (line 179) calls `esc` (confirmed: skills.software-factory.scripts.dashboard.esc), `join` (unconfirmed), `out.append` (unconfirmed)
 - `skills.software-factory.scripts.dashboard.render_blockers` (line 210) calls `append` (unconfirmed), `esc` (confirmed: skills.software-factory.scripts.dashboard.esc), `grouped.setdefault` (unconfirmed), `join` (unconfirmed), `out.append` (unconfirmed), `sorted` (unconfirmed)
-- … 506 more call rows (cap reached)
+- … 513 more call rows (cap reached)
 
 ## Entry points
 

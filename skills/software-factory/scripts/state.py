@@ -23,6 +23,9 @@ Bounds (the full contract lives in the skill's recovery reference):
   symlinks, at most 1 MiB per artifact and 16 MiB across the run tree.
   Derived boards and status summaries are never stored there. `audit`
   reports usage against those budgets (exit 1 on violations) read-only.
+- The configured principles file must exist and carry content: a missing,
+  zero-byte or whitespace-only file is a blocked state refused with the
+  path named. There is no built-in default and never a silent fallback.
 """
 from __future__ import annotations
 
@@ -243,14 +246,32 @@ def save(path, data):
     atomic_text(path.parent / "CHECKPOINT.md", projection(data))
 
 
+def require_source_file(workspace, key, value):
+    """Validate a configured source path; every refusal names the path.
+
+    The principles file must carry real content: an empty (zero-byte or
+    whitespace-only) file is a blocked state, refused with its path named
+    and never replaced by a built-in default.
+    """
+    target = within(workspace, workspace / value)
+    if not target.is_file():
+        raise StateError(f"{key} file missing: {value}")
+    if key == "principles":
+        try:
+            text = target.read_text(errors="replace")
+        except OSError as exc:
+            raise StateError(f"principles file unreadable: {value}") from exc
+        if not text.strip():
+            raise StateError(f"principles file empty: {value}")
+    return target
+
+
 def initialize(workspace, program, tracker, principles):
     if not SLUG.fullmatch(program or ""):
         raise StateError("program must be a lowercase slug")
     links = {}
     for key, value in (("tracker", tracker), ("principles", principles)):
-        target = within(workspace, workspace / value)
-        if not target.is_file():
-            raise StateError(f"{key} file missing")
+        target = require_source_file(workspace, key, value)
         links[key] = str(target.relative_to(workspace))
     if SECRET.search(json.dumps(links)):
         raise StateError("credential-like value refused")
@@ -299,8 +320,7 @@ def repair(workspace, program):
     if data["program"] != program:
         raise StateError("program mismatch")
     for key in ("tracker", "principles"):
-        if not within(workspace, workspace / data[key]).is_file():
-            raise StateError("source missing")
+        require_source_file(workspace, key, data[key])
     pointer = pointer_path(workspace)
     if pointer.exists():
         try:

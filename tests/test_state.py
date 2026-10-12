@@ -1,6 +1,7 @@
 """Tests for the execution-state kernel helper (state.py).
 
 Encodes the VAL-KERNEL state assertions: neutral run paths, idempotent init,
+the missing/empty principles-file guard with the path named and no fallback,
 claim scope validation, worktree identity collisions, concurrency, checkpoint
 shape limits, credential refusal, degraded Git observation, read-only status,
 deactivate/repair ownership, atomic lock-protected writes, and the kernel
@@ -121,6 +122,67 @@ class InitTests(StateFixture):
         )
         self.assertNotEqual(0, result.returncode)
         self.assertIn("slug", result.stderr)
+
+
+class PrinciplesPathGuardTests(StateFixture):
+    """VAL-KERNEL-020: a missing or empty principles file is a blocked state.
+
+    Missing, zero-byte and whitespace-only principles files are each refused
+    with a nonzero result naming the offending path; there is no silent
+    fallback to a built-in default.
+    """
+
+    def run_init(self, principles, program="fresh"):
+        return self.ws.run_state(
+            "init",
+            "--tracker",
+            "tracker.yaml",
+            "--principles",
+            principles,
+            "--program",
+            program,
+        )
+
+    def test_missing_principles_file_refused_with_path_named(self):
+        result = self.run_init("missing-principles.md")
+        self.assertNotEqual(0, result.returncode)
+        self.assertIn("principles file missing", result.stderr)
+        self.assertIn("missing-principles.md", result.stderr)
+        self.assertFalse((self.ws.root / ".software-factory" / "runs" / "fresh").exists())
+
+    def test_zero_byte_principles_file_refused_with_path_named(self):
+        path = self.ws.root / "principles.md"
+        path.write_bytes(b"")
+        run_before = self.ws.run_file().read_bytes()
+        result = self.run_init("principles.md", program="demo")
+        self.assertNotEqual(0, result.returncode)
+        self.assertIn("principles file empty", result.stderr)
+        self.assertIn("principles.md", result.stderr)
+        # No silent fallback: the empty file and the recorded run stay untouched.
+        self.assertEqual(b"", path.read_bytes())
+        self.assertEqual(run_before, self.ws.run_file().read_bytes())
+
+    def test_whitespace_only_principles_file_refused(self):
+        path = self.ws.root / "principles.md"
+        path.write_text(" \n\t\n   \n")
+        result = self.run_init("principles.md", program="demo")
+        self.assertNotEqual(0, result.returncode)
+        self.assertIn("principles file empty", result.stderr)
+        self.assertIn("principles.md", result.stderr)
+        self.assertEqual(" \n\t\n   \n", path.read_text())
+
+    def test_initialize_raises_state_error_for_empty_principles(self):
+        (self.ws.root / "empty.md").write_text("\n\n")
+        with self.assertRaises(state.StateError) as caught:
+            state.initialize(self.ws.root, "fresh", "tracker.yaml", "empty.md")
+        self.assertIn("empty.md", str(caught.exception))
+
+    def test_repair_refuses_empty_principles_consistently(self):
+        (self.ws.root / "principles.md").write_bytes(b"")
+        result = self.ws.run_state("repair", "--program", "demo")
+        self.assertNotEqual(0, result.returncode)
+        self.assertIn("principles file empty", result.stderr)
+        self.assertIn("principles.md", result.stderr)
 
 
 class ClaimScopeTests(StateFixture):

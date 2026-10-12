@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-12T08:31:50.881797+00:00",
-  "revision": 112,
+  "generated_at": "2026-10-12T08:43:42.234183+00:00",
+  "revision": 115,
   "streams": [
     {
       "id": "W-foundation",
@@ -36,7 +36,7 @@
       "counts": {
         "planned": 0,
         "ready": 0,
-        "in-progress": 0,
+        "in-progress": 1,
         "review": 5,
         "built": 0,
         "done": 8,
@@ -188,7 +188,8 @@
         18,
         34,
         35,
-        36
+        36,
+        37
       ],
       "needs": [
         1
@@ -1007,7 +1008,8 @@
         "live": false
       },
       "blocks": [
-        10
+        10,
+        37
       ],
       "history": [
         {
@@ -2620,6 +2622,65 @@
         ".software-factory/context/"
       ],
       "source_key": "expansion/eval-override-integrity"
+    },
+    {
+      "id": 37,
+      "epic": 2,
+      "stream": "W-expansion",
+      "type": "story",
+      "title": "Refuse a missing or empty principles file at the kernel",
+      "status": "in-progress",
+      "state": "in-progress",
+      "owner": "worker-principles-empty-file-guard",
+      "after": [
+        9
+      ],
+      "covers": [
+        "VAL-KERNEL-020"
+      ],
+      "risk": "standard",
+      "hitl": false,
+      "plan_checkpoint": false,
+      "done_checkpoint": true,
+      "blocked": null,
+      "receipts": {},
+      "baseline_sha": null,
+      "branch": null,
+      "pr": null,
+      "merged_sha": null,
+      "claim": {
+        "live": true,
+        "owner": "worker-principles-empty-file-guard",
+        "paths": [
+          "skills/software-factory/scripts/state.py",
+          "tests/test_state.py",
+          ".software-factory/context/board",
+          ".software-factory/context/CODEBASE.md"
+        ],
+        "claimed_at": "2026-10-12T08:43:42.169154+00:00"
+      },
+      "blocks": [],
+      "history": [
+        {
+          "at": "2026-10-12T08:43:42.199740+00:00",
+          "by": "orchestrator",
+          "from": "backlog",
+          "to": "ready-for-dev"
+        },
+        {
+          "at": "2026-10-12T08:43:42.232107+00:00",
+          "by": "worker-principles-empty-file-guard",
+          "from": "ready-for-dev",
+          "to": "in-progress"
+        }
+      ],
+      "findings": [],
+      "scope": [
+        "skills/software-factory/scripts/state.py",
+        "tests/test_state.py",
+        ".software-factory/context/"
+      ],
+      "source_key": "expansion/principles-empty-file-guard"
     }
   ],
   "frontier": {
