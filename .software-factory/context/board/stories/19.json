@@ -4,8 +4,8 @@
   "epic": 3,
   "type": "story",
   "title": "install.py transaction engine and Claude Code projection",
-  "status": "backlog",
-  "owner": null,
+  "status": "in-progress",
+  "owner": "worker-installer-core-claude",
   "after": [
     18
   ],
@@ -37,7 +37,20 @@
   "branch": null,
   "pr": null,
   "merged_sha": null,
-  "history": [],
+  "history": [
+    {
+      "at": "2026-10-12T09:17:36.451784+00:00",
+      "by": "orchestrator",
+      "from": "backlog",
+      "to": "ready-for-dev"
+    },
+    {
+      "at": "2026-10-12T09:17:36.487868+00:00",
+      "by": "worker-installer-core-claude",
+      "from": "ready-for-dev",
+      "to": "in-progress"
+    }
+  ],
   "findings": [],
   "source_key": "installer-hosts/installer-core-claude"
 }

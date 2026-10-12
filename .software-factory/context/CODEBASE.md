@@ -5,8 +5,8 @@
 > (`<skill-dir>` is the installed skill directory, e.g. `.claude/skills/sf-crawl`
 > or `.agents/skills/sf-crawl`).
 
-- Source revision: 68d75a0b69d80ebc7f5f707c41f47387e3a62c64
-- Generated: 2026-10-12T08:48:58Z
+- Source revision: a38269fd0e5035020c14ec90f74ff41e171a8956
+- Generated: 2026-10-12T09:49:42Z
 
 ## Limits
 
@@ -35,6 +35,7 @@
 
 | Module | File | Definitions | Internal imports | Import fan-out |
 | --- | --- | --- | --- | --- |
+| `install` | `install.py` | 31 | 0 | 14 |
 | `scripts.check_links` | `scripts/check_links.py` | 10 | 0 | 7 |
 | `scripts.check_mermaid` | `scripts/check_mermaid.py` | 6 | 0 | 8 |
 | `scripts.scan_public` | `scripts/scan_public.py` | 10 | 0 | 7 |
@@ -51,13 +52,15 @@
 | `tests.fixtures.repos.python-cli.fixture_cli.__main__` | `tests/fixtures/repos/python-cli/fixture_cli/__main__.py` | 0 | 0 | 1 |
 | `tests.fixtures.repos.python-cli.fixture_cli.cli` | `tests/fixtures/repos/python-cli/fixture_cli/cli.py` | 1 | 0 | 1 |
 | `tests.fixtures.repos.python-cli.fixture_cli.core` | `tests/fixtures/repos/python-cli/fixture_cli/core.py` | 2 | 0 | 1 |
-| `tests.support` | `tests/support.py` | 7 | 0 | 9 |
+| `tests.support` | `tests/support.py` | 13 | 0 | 10 |
 | `tests.test_board` | `tests/test_board.py` | 10 | 0 | 6 |
 | `tests.test_config_kernel` | `tests/test_config_kernel.py` | 4 | 0 | 6 |
 | `tests.test_crawl` | `tests/test_crawl.py` | 9 | 0 | 11 |
 | `tests.test_dogfood` | `tests/test_dogfood.py` | 9 | 0 | 10 |
 | `tests.test_gate` | `tests/test_gate.py` | 5 | 0 | 6 |
 | `tests.test_hook` | `tests/test_hook.py` | 8 | 0 | 8 |
+| `tests.test_host_claude` | `tests/test_host_claude.py` | 7 | 0 | 11 |
+| `tests.test_installer` | `tests/test_installer.py` | 12 | 0 | 9 |
 | `tests.test_sf_eval` | `tests/test_sf_eval.py` | 22 | 0 | 13 |
 | `tests.test_state` | `tests/test_state.py` | 17 | 0 | 16 |
 | `tests.test_tools` | `tests/test_tools.py` | 18 | 0 | 8 |
@@ -68,6 +71,35 @@ No internal import edges.
 
 ## Call edges (Python)
 
+- `install.PlannedFile.before_hash` (line 119) calls `sha256` (confirmed: install.sha256)
+- `install.PlannedFile.after_hash` (line 123) calls `sha256` (confirmed: install.sha256)
+- `install.sha256` (line 127) calls `hashlib.sha256` (unconfirmed), `hexdigest` (unconfirmed)
+- `install.read_file` (line 131) calls `InstallError` (confirmed: install.InstallError), `path.exists` (unconfirmed), `path.is_file` (unconfirmed), `path.is_symlink` (unconfirmed), `path.read_bytes` (unconfirmed)
+- `install.check_symlink_safety` (line 145) calls `InstallError` (confirmed: install.InstallError), `Path` (unconfirmed), `current.is_symlink` (unconfirmed), `current.resolve` (unconfirmed)
+- `install.atomic_write` (line 158) calls `created_dirs.update` (unconfirmed), `handle.fileno` (unconfirmed), `handle.flush` (unconfirmed), `handle.write` (unconfirmed), `missing.append` (unconfirmed), `os.fdopen` (unconfirmed), `os.fsync` (unconfirmed), `os.replace` (unconfirmed), `os.unlink` (unconfirmed), `parent.mkdir` (unconfirmed), `str` (unconfirmed), `tempfile.mkstemp` (unconfirmed), `walk.exists` (unconfirmed)
+- `install.load_policy` (line 185) calls `InstallError` (confirmed: install.InstallError), `isinstance` (unconfirmed), `json.loads` (unconfirmed), `path.read_text` (unconfirmed), `policy.get` (unconfirmed)
+- `install.inject_claude_frontmatter` (line 196) calls `InstallError` (confirmed: install.InstallError), `content.decode` (unconfirmed), `encode` (unconfirmed), `extra.append` (unconfirmed), `get` (unconfirmed), `join` (unconfirmed), `len` (unconfirmed), `policy.get` (unconfirmed), `range` (unconfirmed), `strip` (unconfirmed), `text.split` (unconfirmed)
+- `install.project_claude` (line 217) calls `Action` (confirmed: install.Action), `actions.append` (unconfirmed), `as_posix` (unconfirmed), `glob` (unconfirmed), `inject_claude_frontmatter` (confirmed: install.inject_claude_frontmatter), `is_file` (unconfirmed), `skill_dir.rglob` (unconfirmed), `skills_src.iterdir` (unconfirmed), `sorted` (unconfirmed), `src.is_file` (unconfirmed), `src.read_bytes` (unconfirmed), `src.relative_to` (unconfirmed)
+- `install.detect_python` (line 257) calls `shutil.which` (unconfirmed)
+- `install.hook_command` (line 261) calls `detect_python` (confirmed: install.detect_python)
+- `install.is_owned_handler` (line 268) calls `handler.get` (unconfirmed), `isinstance` (unconfirmed), `str` (unconfirmed)
+- `install.merge_settings` (line 279) calls `InstallError` (confirmed: install.InstallError), `current.decode` (unconfirmed), `dict` (unconfirmed), `encode` (unconfirmed), `group.get` (unconfirmed), `hook_command` (confirmed: install.hook_command), `hooks.setdefault` (unconfirmed), `is_owned_handler` (confirmed: install.is_owned_handler), `isinstance` (unconfirmed), `json.dumps` (unconfirmed), `json.loads` (unconfirmed), `kept.append` (unconfirmed), `len` (unconfirmed), `settings.setdefault` (unconfirmed)
+- `install.merge_block` (line 335) calls `InstallError` (confirmed: install.InstallError), `block.encode` (unconfirmed), `block.rstrip` (unconfirmed), `block_text` (confirmed: install.block_text), `current.decode` (unconfirmed), `encode` (unconfirmed), `enumerate` (unconfirmed), `join` (unconfirmed), `len` (unconfirmed), `split` (unconfirmed), `text.count` (unconfirmed), `text.endswith` (unconfirmed), `text.split` (unconfirmed)
+- `install.merge_gitignore` (line 367) calls `InstallError` (confirmed: install.InstallError), `current.decode` (unconfirmed), `encode` (unconfirmed), `join` (unconfirmed), `text.endswith` (unconfirmed), `text.split` (unconfirmed)
+- `install.compute_content` (line 384) calls `InstallError` (confirmed: install.InstallError), `merge_block` (confirmed: install.merge_block), `merge_gitignore` (confirmed: install.merge_gitignore), `merge_settings` (confirmed: install.merge_settings)
+- `install.load_manifest` (line 399) calls `InstallError` (confirmed: install.InstallError), `isinstance` (unconfirmed), `json.loads` (unconfirmed), `manifest.get` (unconfirmed), `path.exists` (unconfirmed), `path.read_text` (unconfirmed)
+- `install.build_manifest` (line 415) calls `datetime.now` (unconfirmed), `files.append` (unconfirmed), `files.sort` (unconfirmed), `get` (unconfirmed), `isinstance` (unconfirmed), `isoformat` (unconfirmed), `previous.get` (unconfirmed), `prior.get` (unconfirmed)
+- `install.normalize_overwrite_paths` (line 456) calls `InstallError` (confirmed: install.InstallError), `Path` (unconfirmed), `normalized.add` (unconfirmed), `raw.removeprefix` (unconfirmed), `rel.startswith` (unconfirmed), `removesuffix` (unconfirmed), `set` (unconfirmed)
+- `install.build_plan` (line 466) calls `InstallError` (confirmed: install.InstallError), `Path` (unconfirmed), `PlannedFile` (confirmed: install.PlannedFile), `actions.extend` (unconfirmed), `check_symlink_safety` (confirmed: install.check_symlink_safety), `compute_content` (confirmed: install.compute_content), `conflicts.append` (unconfirmed), `covered.add` (unconfirmed), `entry.get` (unconfirmed), `isinstance` (unconfirmed), `load_manifest` (confirmed: install.load_manifest), `load_policy` (confirmed: install.load_policy), `owned.get` (unconfirmed), `planned.append` (unconfirmed), `previous.get` (unconfirmed), `read_file` (confirmed: install.read_file), `rel.startswith` (unconfirmed), `set` (unconfirmed), `sha256` (confirmed: install.sha256), `sorted` (unconfirmed)
+- `install.write_backup` (line 525) calls `atomic_write` (confirmed: install.atomic_write), `dest.parent.mkdir` (unconfirmed), `os.chmod` (unconfirmed), `set` (unconfirmed)
+- `install.acquire_lock` (line 541) calls `InstallError` (confirmed: install.InstallError), `created_dirs.add` (unconfirmed), `fcntl.flock` (unconfirmed), `os.close` (unconfirmed), `os.open` (unconfirmed), `state_dir.exists` (unconfirmed), `state_dir.mkdir` (unconfirmed), `time.monotonic` (unconfirmed), `time.sleep` (unconfirmed)
+- `install.rollback` (line 564) calls `atomic_write` (confirmed: install.atomic_write), `backup.is_file` (unconfirmed), `backup.read_bytes` (unconfirmed), `directory.rmdir` (unconfirmed), `len` (unconfirmed), `reversed` (unconfirmed), `set` (unconfirmed), `sha256` (confirmed: install.sha256), `sorted` (unconfirmed), `target.is_file` (unconfirmed), `target.read_bytes` (unconfirmed), `target.unlink` (unconfirmed)
+- `install.apply_plan` (line 592) calls `InstallError` (confirmed: install.InstallError), `acquire_lock` (confirmed: install.acquire_lock), `applied.append` (unconfirmed), `atomic_write` (confirmed: install.atomic_write), `build_manifest` (confirmed: install.build_manifest), `datetime.now` (unconfirmed), `encode` (unconfirmed), `fcntl.flock` (unconfirmed), `json.dumps` (unconfirmed), `lock_path.unlink` (unconfirmed), `os.close` (unconfirmed), `read_file` (confirmed: install.read_file), `rollback` (confirmed: install.rollback), `set` (unconfirmed), `sha256` (confirmed: install.sha256), `uuid.uuid4` (unconfirmed), `write_backup` (confirmed: install.write_backup)
+- `install.resolve_hosts` (line 640) calls `InstallError` (confirmed: install.InstallError), `auto_detect` (confirmed: install.auto_detect), `join` (unconfirmed), `part.strip` (unconfirmed), `resolved.append` (unconfirmed), `selection.split` (unconfirmed)
+- `install.auto_detect` (line 663) calls `InstallError` (confirmed: install.InstallError), `exists` (unconfirmed), `len` (unconfirmed), `print` (unconfirmed)
+- `install.format_plan` (line 680) calls `lines.append` (unconfirmed)
+- `install.cmd_install` (line 689) calls `InstallError` (confirmed: install.InstallError), `apply_plan` (confirmed: install.apply_plan), `args.project.expanduser` (unconfirmed), `build_plan` (confirmed: install.build_plan), `format_plan` (confirmed: install.format_plan), `join` (unconfirmed), `len` (unconfirmed), `normalize_overwrite_paths` (confirmed: install.normalize_overwrite_paths), `print` (unconfirmed), `resolve` (unconfirmed), `resolve_hosts` (confirmed: install.resolve_hosts), `root.is_dir` (unconfirmed), `sum` (unconfirmed)
+- `install.main` (line 722) calls `argparse.ArgumentParser` (unconfirmed), `cmd_install` (confirmed: install.cmd_install), `install.add_argument` (unconfirmed), `parser.add_subparsers` (unconfirmed), `parser.parse_args` (unconfirmed), `print` (unconfirmed), `sub.add_parser` (unconfirmed)
 - `scripts.check_links.tracked_files` (line 30) calls `endswith` (unconfirmed), `line.strip` (unconfirmed), `result.stdout.splitlines` (unconfirmed), `str` (unconfirmed), `subprocess.run` (unconfirmed)
 - `scripts.check_links.walk_files` (line 49) calls `found.append` (unconfirmed), `path.is_file` (unconfirmed), `path.name.endswith` (unconfirmed), `path.relative_to` (unconfirmed), `root.rglob` (unconfirmed), `set` (unconfirmed), `sorted` (unconfirmed)
 - `scripts.check_links.scope_files` (line 60) calls `path.is_file` (unconfirmed), `sorted` (unconfirmed), `tracked_files` (confirmed: scripts.check_links.tracked_files), `walk_files` (confirmed: scripts.check_links.walk_files)
@@ -139,40 +171,12 @@ No internal import edges.
 - `skills.sf-eval.scripts.sf_eval.check_state` (line 294) calls `_resolve_inside` (confirmed: skills.sf-eval.scripts.sf_eval._resolve_inside), `assertions.items` (unconfirmed), `bool` (unconfirmed), `dig` (confirmed: skills.sf-eval.scripts.sf_eval.dig), `expected.append` (unconfirmed), `grade.get` (unconfirmed), `join` (unconfirmed), `json.loads` (unconfirmed), `problems.append` (unconfirmed), `target.is_file` (unconfirmed), `target.read_text` (unconfirmed)
 - `skills.sf-eval.scripts.sf_eval._run_shell` (line 338) calls `subprocess.run` (unconfirmed)
 - `skills.sf-eval.scripts.sf_eval.check_command` (line 354) calls `_run_shell` (confirmed: skills.sf-eval.scripts.sf_eval._run_shell), `artifacts.append` (unconfirmed), `expect.get` (unconfirmed), `grade.get` (unconfirmed), `join` (unconfirmed), `problems.append` (unconfirmed), `re.search` (unconfirmed), `write_artifact` (confirmed: skills.sf-eval.scripts.sf_eval.write_artifact)
-- `skills.sf-eval.scripts.sf_eval._resolve_url` (line 395) calls `Unverified` (confirmed: skills.sf-eval.scripts.sf_eval.Unverified), `base.rstrip` (unconfirmed), `env.get` (unconfirmed), `get` (unconfirmed), `lower` (unconfirmed), `lstrip` (unconfirmed), `request.get` (unconfirmed), `str` (unconfirmed), `urllib.parse.urlparse` (unconfirmed)
-- `skills.sf-eval.scripts.sf_eval._http_request` (line 415) calls `ProbeDown` (confirmed: skills.sf-eval.scripts.sf_eval.ProbeDown), `_resolve_url` (confirmed: skills.sf-eval.scripts.sf_eval._resolve_url), `decode` (unconfirmed), `encode` (unconfirmed), `exc.read` (unconfirmed), `json.dumps` (unconfirmed), `request.get` (unconfirmed), `resp.read` (unconfirmed), `str` (unconfirmed), `urllib.request.Request` (unconfirmed), `urllib.request.urlopen` (unconfirmed)
-- `skills.sf-eval.scripts.sf_eval._http_assertions` (line 436) calls `assertions.items` (unconfirmed), `dig` (confirmed: skills.sf-eval.scripts.sf_eval.dig), `expect.get` (unconfirmed), `json.loads` (unconfirmed), `problems.append` (unconfirmed)
-- `skills.sf-eval.scripts.sf_eval.check_http` (line 462) calls `_http_assertions` (confirmed: skills.sf-eval.scripts.sf_eval._http_assertions), `_http_request` (confirmed: skills.sf-eval.scripts.sf_eval._http_request), `artifacts.append` (unconfirmed), `follow.get` (unconfirmed), `grade.get` (unconfirmed), `join` (unconfirmed), `str` (unconfirmed), `write_artifact` (confirmed: skills.sf-eval.scripts.sf_eval.write_artifact)
-- `skills.sf-eval.scripts.sf_eval.check_golden` (line 501) calls `Unverified` (confirmed: skills.sf-eval.scripts.sf_eval.Unverified), `_resolve_inside` (confirmed: skills.sf-eval.scripts.sf_eval._resolve_inside), `_run_shell` (confirmed: skills.sf-eval.scripts.sf_eval._run_shell), `difflib.unified_diff` (unconfirmed), `golden.splitlines` (unconfirmed), `golden_path.is_file` (unconfirmed), `golden_path.read_text` (unconfirmed), `grade.get` (unconfirmed), `join` (unconfirmed), `list` (unconfirmed), `produced.splitlines` (unconfirmed), `produced_path.is_file` (unconfirmed), `produced_path.read_text` (unconfirmed), `write_artifact` (confirmed: skills.sf-eval.scripts.sf_eval.write_artifact)
-- `skills.sf-eval.scripts.sf_eval.check_via_harness` (line 556) calls `Path` (unconfirmed), `Unverified` (confirmed: skills.sf-eval.scripts.sf_eval.Unverified), `artifacts.append` (unconfirmed), `case_file.write_text` (unconfirmed), `combined.strip` (unconfirmed), `data.get` (unconfirmed), `get` (unconfirmed), `harness.get` (unconfirmed), `json.dumps` (unconfirmed), `json.loads` (unconfirmed), `result_file.is_file` (unconfirmed), `result_file.read_text` (unconfirmed), `shlex.split` (unconfirmed), `str` (unconfirmed), `subprocess.run` (unconfirmed), `tail.strip` (unconfirmed), `tempfile.TemporaryDirectory` (unconfirmed), `write_artifact` (confirmed: skills.sf-eval.scripts.sf_eval.write_artifact)
-- `skills.sf-eval.scripts.sf_eval.grade_case` (line 625) calls `case.get` (unconfirmed), `grader` (unconfirmed), `outcome.pop` (unconfirmed), `str` (unconfirmed), `surfaces.get` (unconfirmed)
-- `skills.sf-eval.scripts.sf_eval.git_sha` (line 646) calls `proc.stdout.strip` (unconfirmed), `re.fullmatch` (unconfirmed), `subprocess.run` (unconfirmed)
-- `skills.sf-eval.scripts.sf_eval.mint_run_id` (line 659) calls `datetime.now` (unconfirmed), `exists` (unconfirmed), `strftime` (unconfirmed)
-- `skills.sf-eval.scripts.sf_eval.prior_failure_count` (line 670) calls `get` (unconfirmed), `json.loads` (unconfirmed), `receipt.get` (unconfirmed), `receipt_path.read_text` (unconfirmed), `runs_dir.glob` (unconfirmed), `sorted` (unconfirmed)
-- `skills.sf-eval.scripts.sf_eval.cmd_run` (line 686) calls `aggregate_trials` (confirmed: skills.sf-eval.scripts.sf_eval.aggregate_trials), `case.get` (unconfirmed), `dict` (unconfirmed), `get` (unconfirmed), `grade.get` (unconfirmed), `grade_case` (confirmed: skills.sf-eval.scripts.sf_eval.grade_case), `int` (unconfirmed), `load_plan` (confirmed: skills.sf-eval.scripts.sf_eval.load_plan), `max` (unconfirmed), `mint_run_id` (confirmed: skills.sf-eval.scripts.sf_eval.mint_run_id), `mode_cfg.get` (unconfirmed), `plan.get` (unconfirmed), `print` (unconfirmed), `range` (unconfirmed), `results.append` (unconfirmed), `select_cases` (confirmed: skills.sf-eval.scripts.sf_eval.select_cases), `utc_now` (confirmed: skills.sf-eval.scripts.sf_eval.utc_now), `write_run` (confirmed: skills.sf-eval.scripts.sf_eval.write_run)
-- `skills.sf-eval.scripts.sf_eval.write_run` (line 736) calls `Path` (unconfirmed), `atomic_write_json` (confirmed: skills.sf-eval.scripts.sf_eval.atomic_write_json), `bool` (unconfirmed), `c.get` (unconfirmed), `case.get` (unconfirmed), `cases_dir.mkdir` (unconfirmed), `cases_map.values` (unconfirmed), `get` (unconfirmed), `git_sha` (confirmed: skills.sf-eval.scripts.sf_eval.git_sha), `hashlib.sha256` (unconfirmed), `hexdigest` (unconfirmed), `int` (unconfirmed), `join` (unconfirmed), `len` (unconfirmed), `outcome.get` (unconfirmed), `plan.get` (unconfirmed), `prior_failure_count` (confirmed: skills.sf-eval.scripts.sf_eval.prior_failure_count), `quarantined.append` (unconfirmed), `read_bytes` (unconfirmed), `receipt_digest` (confirmed: skills.sf-eval.scripts.sf_eval.receipt_digest), `shlex.quote` (unconfirmed), `sorted` (unconfirmed), `sum` (unconfirmed), `utc_now` (confirmed: skills.sf-eval.scripts.sf_eval.utc_now)
-- `skills.sf-eval.scripts.sf_eval._load_receipt` (line 817) calls `Path` (unconfirmed), `json.loads` (unconfirmed), `print` (unconfirmed), `read_text` (unconfirmed)
-- `skills.sf-eval.scripts.sf_eval.verify_receipt` (line 826) calls `_load_receipt` (confirmed: skills.sf-eval.scripts.sf_eval._load_receipt), `data.get` (unconfirmed), `receipt_digest` (confirmed: skills.sf-eval.scripts.sf_eval.receipt_digest)
-- `skills.sf-eval.scripts.sf_eval.cmd_verify` (line 842) calls `join` (unconfirmed), `print` (unconfirmed), `verify_receipt` (confirmed: skills.sf-eval.scripts.sf_eval.verify_receipt)
-- `skills.sf-eval.scripts.sf_eval._eval_block` (line 852) calls `checks.get` (unconfirmed), `isinstance` (unconfirmed), `manifest.get` (unconfirmed)
-- `skills.sf-eval.scripts.sf_eval.cmd_verify_manifest` (line 861) calls `_eval_block` (confirmed: skills.sf-eval.scripts.sf_eval._eval_block), `args.manifest.read_text` (unconfirmed), `args.root.resolve` (unconfirmed), `block.get` (unconfirmed), `isinstance` (unconfirmed), `join` (unconfirmed), `json.loads` (unconfirmed), `override.get` (unconfirmed), `print` (unconfirmed), `receipt.get` (unconfirmed), `receipt_path.is_file` (unconfirmed), `receipt_path.is_relative_to` (unconfirmed), `receipt_path.read_text` (unconfirmed), `resolve` (unconfirmed), `verify_receipt` (confirmed: skills.sf-eval.scripts.sf_eval.verify_receipt)
-- `skills.sf-eval.scripts.sf_eval.cmd_override` (line 918) calls `Path` (unconfirmed), `_load_receipt` (confirmed: skills.sf-eval.scripts.sf_eval._load_receipt), `append` (unconfirmed), `atomic_write_json` (confirmed: skills.sf-eval.scripts.sf_eval.atomic_write_json), `data.get` (unconfirmed), `data.setdefault` (unconfirmed), `print` (unconfirmed), `receipt_digest` (confirmed: skills.sf-eval.scripts.sf_eval.receipt_digest)
-- `skills.sf-eval.scripts.sf_eval.main` (line 958) calls `Path.cwd` (unconfirmed), `argparse.ArgumentParser` (unconfirmed), `args.func` (unconfirmed), `args.plan.is_file` (unconfirmed), `args.plan.read_text` (unconfirmed), `args.reason.strip` (unconfirmed), `args.who.strip` (unconfirmed), `json.loads` (unconfirmed), `manifest.add_argument` (unconfirmed), `manifest.set_defaults` (unconfirmed), `override.add_argument` (unconfirmed), `override.set_defaults` (unconfirmed), `parser.add_subparsers` (unconfirmed), `parser.parse_args` (unconfirmed), `plan.get` (unconfirmed), `print` (unconfirmed), `run.add_argument` (unconfirmed), `run.set_defaults` (unconfirmed), `sub.add_parser` (unconfirmed), `utc_now` (confirmed: skills.sf-eval.scripts.sf_eval.utc_now), `verify.add_argument` (unconfirmed), `verify.set_defaults` (unconfirmed)
-- `skills.software-factory.scripts.config.parse` (line 21) calls `ConfigError` (confirmed: skills.software-factory.scripts.config.ConfigError), `isinstance` (unconfirmed), `json.loads` (unconfirmed)
-- `skills.software-factory.scripts.config.load` (line 35) calls `ConfigError` (confirmed: skills.software-factory.scripts.config.ConfigError), `Path` (unconfirmed), `parse` (confirmed: skills.software-factory.scripts.config.parse), `path.read_text` (unconfirmed)
-- `skills.software-factory.scripts.config.main` (line 46) calls `argparse.ArgumentParser` (unconfirmed), `join` (unconfirmed), `len` (unconfirmed), `load` (confirmed: skills.software-factory.scripts.config.load), `parser.add_argument` (unconfirmed), `parser.parse_args` (unconfirmed), `print` (unconfirmed), `sorted` (unconfirmed)
-- `skills.software-factory.scripts.dashboard.esc` (line 60) calls `html.escape` (unconfirmed), `str` (unconfirmed)
-- `skills.software-factory.scripts.dashboard.short_sha` (line 64) calls `esc` (confirmed: skills.software-factory.scripts.dashboard.esc)
-- `skills.software-factory.scripts.dashboard.badge` (line 68) calls `esc` (confirmed: skills.software-factory.scripts.dashboard.esc)
-- `skills.software-factory.scripts.dashboard.story_card` (line 72) calls `badge` (confirmed: skills.software-factory.scripts.dashboard.badge), `badges.append` (unconfirmed), `claim.get` (unconfirmed), `esc` (confirmed: skills.software-factory.scripts.dashboard.esc), `item.get` (unconfirmed), `items.append` (unconfirmed), `join` (unconfirmed), `len` (unconfirmed), `parts.append` (unconfirmed), `receipt.get` (unconfirmed), `receipts.items` (unconfirmed), `refs.append` (unconfirmed), `reversed` (unconfirmed), `row.get` (unconfirmed), `short_sha` (confirmed: skills.software-factory.scripts.dashboard.short_sha), `sorted` (unconfirmed), `story.get` (unconfirmed)
-- `skills.software-factory.scripts.dashboard.render_streams` (line 135) calls `append` (unconfirmed), `badge` (confirmed: skills.software-factory.scripts.dashboard.badge), `counts.get` (unconfirmed), `esc` (confirmed: skills.software-factory.scripts.dashboard.esc), `join` (unconfirmed), `lanes.append` (unconfirmed), `out.append` (unconfirmed), `stories_by_stream.get` (unconfirmed), `stories_by_stream.setdefault` (unconfirmed), `story_card` (confirmed: skills.software-factory.scripts.dashboard.story_card)
-- `skills.software-factory.scripts.dashboard.render_frontier` (line 179) calls `esc` (confirmed: skills.software-factory.scripts.dashboard.esc), `join` (unconfirmed), `out.append` (unconfirmed)
-- `skills.software-factory.scripts.dashboard.render_blockers` (line 210) calls `append` (unconfirmed), `esc` (confirmed: skills.software-factory.scripts.dashboard.esc), `grouped.setdefault` (unconfirmed), `join` (unconfirmed), `out.append` (unconfirmed), `sorted` (unconfirmed)
-- … 513 more call rows (cap reached)
+- … 588 more call rows (cap reached)
 
 ## Entry points
 
 - module execution — confirmed: `tests/fixtures/repos/python-cli/fixture_cli/__main__.py`
+- `__main__` guard — confirmed: `install.py`
 - `__main__` guard — confirmed: `scripts/check_links.py`
 - `__main__` guard — confirmed: `scripts/check_mermaid.py`
 - `__main__` guard — confirmed: `scripts/scan_public.py`
@@ -192,6 +196,8 @@ No internal import edges.
 - `__main__` guard — confirmed: `tests/test_dogfood.py`
 - `__main__` guard — confirmed: `tests/test_gate.py`
 - `__main__` guard — confirmed: `tests/test_hook.py`
+- `__main__` guard — confirmed: `tests/test_host_claude.py`
+- `__main__` guard — confirmed: `tests/test_installer.py`
 - `__main__` guard — confirmed: `tests/test_sf_eval.py`
 - `__main__` guard — confirmed: `tests/test_state.py`
 - `__main__` guard — confirmed: `tests/test_tools.py`
@@ -218,4 +224,4 @@ Everything parsed cleanly.
 
 ## File census
 
-109 file(s) crawled. Counts by extension: `.md` 65, `.py` 26, `.json` 5, `.yml` 5, `.ts` 3, `(no extension)` 2, `.sh` 1, `.sha256` 1, `.toml` 1.
+114 file(s) crawled. Counts by extension: `.md` 65, `.py` 29, `.json` 7, `.yml` 5, `.ts` 3, `(no extension)` 2, `.sh` 1, `.sha256` 1, `.toml` 1.

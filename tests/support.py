@@ -7,6 +7,7 @@ on sys.path tricks or an installed projection.
 from __future__ import annotations
 
 import ast
+import hashlib
 import importlib.util
 import json
 import os
@@ -202,3 +203,148 @@ def guard_env():
     env["PATH"] = str(stub_dir) + os.pathsep + env.get("PATH", "")
     env["SF_GUARD_LOG"] = str(log)
     return env, log, stub_dir
+
+
+# -- installer fixtures ------------------------------------------------------
+# Shared by tests/test_installer.py and tests/test_host_claude.py; they encode
+# the shared harness of the validation contract (mkfresh/mkexisting, HOME
+# sentinels, subprocess recorders, guard stubs).
+
+INSTALLER = REPO / "install.py"
+
+CLAUDE_SETTINGS_FIXTURE = (
+    '{"model":"opus","env":{"TEAM_CITY":"1"},'
+    '"permissions":{"allow":["Bash(npm test:*)"]},'
+    '"hooks":{"PreToolUse":[{"matcher":"Bash","hooks":'
+    '[{"type":"command","command":"\\"$HOME/guard-user.sh\\""}]}]}}'
+)
+CURSOR_HOOKS_FIXTURE = (
+    '{"version":1,"hooks":{"beforeShellExecution":'
+    '[{"type":"command","command":"echo user"}]}}'
+)
+
+
+def run_installer(*args, cwd=None, env=None, timeout=120):
+    """Run install.py exactly the way a validator would."""
+    return subprocess.run(
+        [sys.executable, str(INSTALLER), *(str(arg) for arg in args)],
+        capture_output=True,
+        text=True,
+        cwd=cwd,
+        env=env,
+        timeout=timeout,
+        check=False,
+    )
+
+
+def tree_hashes(root):
+    """sha256 manifest of every regular file below root (repo-relative keys).
+
+    The ``.git`` directory is Git's own state and never part of an
+    installer tree comparison.
+    """
+    root = Path(root)
+    hashes = {}
+    for path in sorted(root.rglob("*")):
+        if ".git" in path.relative_to(root).parts:
+            continue
+        if path.is_file() and not path.is_symlink():
+            rel = path.relative_to(root).as_posix()
+            hashes[rel] = hashlib.sha256(path.read_bytes()).hexdigest()
+    return hashes
+
+
+def recorder_env():
+    """Guard stubs plus side-effect recorders for package/download tools.
+
+    Returns (env, record_dir, guard_log). The recorders stand in for npx,
+    node, npm, uv and curl; every invocation appends its argv to
+    ``$SF_REC/<name>`` so tests can prove nothing was spawned. The guard
+    stubs prove the host CLIs are never executed.
+    """
+    env, guard_log, stub_dir = guard_env()
+    record_dir = Path(tempfile.mkdtemp(prefix="sf-rec-"))
+    for name in ("npx", "node", "npm", "uv", "curl"):
+        script = stub_dir / name
+        script.write_text(
+            '#!/bin/sh\nprintf \'%s\\n\' "$0 $*" >> "$SF_REC/'
+            + name
+            + '"\nexit 0\n'
+        )
+        script.chmod(0o755)
+    env["SF_REC"] = str(record_dir)
+    return env, record_dir, guard_log
+
+
+def home_sentinel(base):
+    """A fake HOME with host-config sentinels; returns (home, snapshot)."""
+    home = Path(base) / "home"
+    sentinels = {
+        ".claude/settings.json": '{"model":"sentinel"}\n',
+        ".cursor/hooks.json": '{"version":1,"hooks":{}}\n',
+        ".codex/config.toml": 'model = "sentinel"\n',
+    }
+    for rel, content in sentinels.items():
+        path = home / rel
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(content)
+
+    def snapshot():
+        return tree_hashes(home), sorted(
+            str(p.relative_to(home)) for p in home.rglob("*")
+        )
+
+    return home, snapshot
+
+
+def fresh_repo(base, name="repo"):
+    """mkfresh: a git repo with one committed README and nothing else."""
+    root = Path(base).resolve() / name
+    root.mkdir(parents=True)
+    Workspace.git(root, "init", "-q", "-b", "main")
+    (root / "README.md").write_text("fixture\n")
+    Workspace.git(root, "add", "-A")
+    Workspace.git(
+        root,
+        "-c",
+        f"user.email={FIXTURE_EMAIL}",
+        "-c",
+        f"user.name={FIXTURE_NAME}",
+        "commit",
+        "-q",
+        "-m",
+        "fixture commit",
+    )
+    return root
+
+
+def existing_repo(base, name="repo"):
+    """mkexisting: mkfresh plus realistic user-owned state (see contract)."""
+    root = fresh_repo(base, name)
+    (root / "CLAUDE.md").write_text(
+        "# My Project\n\nHouse rules: keep diffs small and tested.\n"
+    )
+    (root / "AGENTS.md").write_text("# Notes\n\nWater the tests.\n")
+    (root / ".gitignore").write_text("build/\n.env\n")
+    (root / "notes.txt").write_text("tracked\n")
+    Workspace.git(root, "add", "-A")
+    Workspace.git(
+        root,
+        "-c",
+        f"user.email={FIXTURE_EMAIL}",
+        "-c",
+        f"user.name={FIXTURE_NAME}",
+        "commit",
+        "-q",
+        "-m",
+        "user content",
+    )
+    (root / "notes.txt").write_text("tracked\nuser edit\n")  # dirty, uncommitted
+    (root / "scratch.txt").write_text("untracked\n")
+    settings = root / ".claude" / "settings.json"
+    settings.parent.mkdir(parents=True)
+    settings.write_text(CLAUDE_SETTINGS_FIXTURE)
+    cursor = root / ".cursor"
+    cursor.mkdir()
+    (cursor / "hooks.json").write_text(CURSOR_HOOKS_FIXTURE)
+    return root

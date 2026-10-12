@@ -1,0 +1,28 @@
+{
+  "host": "claude-code",
+  "skills_dest": ".claude/skills",
+  "agents_dest": ".claude/agents",
+  "settings": ".claude/settings.json",
+  "pointer": "CLAUDE.md",
+  "explicit_only": [
+    "software-factory",
+    "sf-help",
+    "sf-agents",
+    "sf-evolve",
+    "sf-eval",
+    "sf-principles"
+  ],
+  "argument_hints": {
+    "software-factory": "[request]",
+    "sf-help": "[focus]",
+    "sf-agents": "[task]",
+    "sf-evolve": "[skill-or-url]",
+    "sf-eval": "[scope]",
+    "sf-principles": "[topic]",
+    "sf-crawl": "[path]",
+    "sf-design": "[question]",
+    "sf-smell-audit": "[path]",
+    "sf-refactor": "[path]",
+    "sf-patterns": "[pattern]"
+  }
+}
