@@ -5,9 +5,9 @@
 > (`<skill-dir>` is the installed skill directory, e.g. `.claude/skills/sf-crawl`
 > or `.agents/skills/sf-crawl`).
 
-- Source revision: d012ad71df197c656664b9fdc563a80975f99409
+- Source revision: 2c7b5f9d54bb6783fad00531b8ff235dd1c553ce
 - File selection: git-tracked-and-unignored
-- Generated: 2026-10-15T20:10:54Z
+- Generated: 2026-10-15T20:34:59Z
 
 ## Limits
 
@@ -112,7 +112,7 @@
 | `tests.test_showcase` | `tests/test_showcase.py` | 4 | 0 | 14 |
 | `tests.test_skills_distribution` | `tests/test_skills_distribution.py` | 3 | 0 | 9 |
 | `tests.test_state` | `tests/test_state.py` | 17 | 0 | 16 |
-| `tests.test_tools` | `tests/test_tools.py` | 18 | 0 | 8 |
+| `tests.test_tools` | `tests/test_tools.py` | 19 | 0 | 12 |
 | `tests.test_trace` | `tests/test_trace.py` | 2 | 0 | 13 |
 | `tests.test_trackers` | `tests/test_trackers.py` | 1 | 0 | 5 |
 | `tests.test_uninstall` | `tests/test_uninstall.py` | 1 | 0 | 14 |
@@ -223,7 +223,7 @@ No internal import edges.
 - `scripts.bmad_install.provision` (line 425) calls `api.InstallError` (unconfirmed), `api.acquire_lock` (unconfirmed), `api.sha256` (unconfirmed), `attempt` (confirmed: scripts.bmad_install.attempt), `describe` (confirmed: scripts.bmad_install.describe), `fcntl.flock` (unconfirmed), `int` (unconfirmed), `isinstance` (unconfirmed), `load_ownership` (confirmed: scripts.bmad_install.load_ownership), `os.close` (unconfirmed), `previous.get` (unconfirmed), `print` (unconfirmed), `prior_bmad.get` (unconfirmed), `read_payload` (confirmed: scripts.bmad_install.read_payload), `record.update` (unconfirmed), `save_record` (confirmed: scripts.bmad_install.save_record), `set` (unconfirmed)
 - `scripts.build_release.release_files` (line 17) calls `Path` (unconfirmed), `ValueError` (unconfirmed), `all` (unconfirmed), `any` (unconfirmed), `distribution.bundle_files` (unconfirmed), `distribution.load_api` (unconfirmed), `files.items` (unconfirmed), `files.update` (unconfirmed), `is_relative_to` (unconfirmed), `isinstance` (unconfirmed), `items` (unconfirmed), `json.loads` (unconfirmed), `len` (unconfirmed), `name.startswith` (unconfirmed), `p.is_symlink` (unconfirmed), `path.is_file` (unconfirmed), `path.is_symlink` (unconfirmed), `path.parent.mkdir` (unconfirmed), `path.read_bytes` (unconfirmed), `path.resolve` (unconfirmed), `path.write_bytes` (unconfirmed), `read_text` (unconfirmed), `resolve` (unconfirmed), `root.resolve` (unconfirmed), `set` (unconfirmed) … (call cap reached)
 - `scripts.build_release.archive_bytes` (line 47) calls `archive.addfile` (unconfirmed), `files.items` (unconfirmed), `gzip.GzipFile` (unconfirmed), `io.BytesIO` (unconfirmed), `len` (unconfirmed), `name.endswith` (unconfirmed), `result.getvalue` (unconfirmed), `sorted` (unconfirmed), `tarfile.TarInfo` (unconfirmed), `tarfile.open` (unconfirmed)
-- … 1551 more call rows (cap reached)
+- … 1576 more call rows (cap reached)
 
 ## Entry points
 
