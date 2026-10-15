@@ -99,7 +99,7 @@ class FileSetTests(CodexInstallCase):
             f"{skill}/agents/openai.yaml"
             for skill in sorted(EXPLICIT_ONLY | WORKING_WITH_POLICY)
         }
-        self.assertEqual(canonical_tree() | policies | {"software-factory/schemas/config.schema.json", "software-factory/scripts/trackers.py", *{f"sf-help/templates/{name}" for name in ("PRINCIPLES.md", "ARCHITECTURE.md", "CONVENTIONS.md")}}, projected)
+        self.assertEqual(canonical_tree() | policies | {"software-factory/schemas/config.schema.json", "software-factory/scripts/trackers.py", "sf-agents/scripts/install_lifecycle.py", *{"sf-agents/templates/" + p.relative_to(support.REPO / "integrations/bots").as_posix() for p in (support.REPO / "integrations/bots").rglob("*.tmpl")}, *{f"sf-help/templates/{name}" for name in ("PRINCIPLES.md", "ARCHITECTURE.md", "CONVENTIONS.md")}}, projected)
         # Eleven TOML agents, hooks.json, runtime helpers, one AGENTS.md block.
         agents = sorted(p.name for p in (repo / ".codex/agents").glob("sf-*.toml"))
         self.assertEqual([f"{n}.toml" for n in sorted(validate.AGENTS)], agents)

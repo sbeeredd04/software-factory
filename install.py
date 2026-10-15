@@ -385,6 +385,7 @@ def project_claude(root: Path, policy: dict, profile: str) -> list[Action]:
     for name in ("PRINCIPLES.md", "ARCHITECTURE.md", "CONVENTIONS.md"):
         actions.append(Action(f".claude/skills/sf-help/templates/{name}", "write",
                               auxiliary_bytes(f"templates/{name}"), "claude-code"))
+    actions.extend(bot_assets(".claude/skills", "claude-code"))
     if profile == "full":
         for src in sorted((PACK_ROOT / "agents").glob("sf-*.md")):
             actions.append(Action(f".claude/agents/{src.name}", "write",
@@ -394,6 +395,15 @@ def project_claude(root: Path, policy: dict, profile: str) -> list[Action]:
                               "claude-code"))
         actions.append(Action("CLAUDE.md", "block", None, "claude-code"))
     actions.append(Action(".gitignore", "gitignore", None, None))
+    return actions
+
+
+def bot_assets(prefix: str, host: str | None) -> list[Action]:
+    assets = [p.relative_to(PACK_ROOT).as_posix() for p in sorted((PACK_ROOT / "integrations/bots").rglob("*.tmpl"))]
+    actions = [Action(f"{prefix}/sf-agents/templates/{rel.removeprefix('integrations/bots/')}",
+                      "write", auxiliary_bytes(rel), host) for rel in assets]
+    actions.append(Action(f"{prefix}/sf-agents/scripts/install_lifecycle.py", "write",
+                          auxiliary_bytes("scripts/install_lifecycle.py"), host))
     return actions
 
 
@@ -485,6 +495,7 @@ def project_shared_skills(hosts: list[str]) -> list[Action]:
     for name in ("PRINCIPLES.md", "ARCHITECTURE.md", "CONVENTIONS.md"):
         actions.append(Action(f".agents/skills/sf-help/templates/{name}", "write",
                               auxiliary_bytes(f"templates/{name}"), None))
+    actions.extend(bot_assets(".agents/skills", None))
     if "codex" in hosts:
         codex_policy = load_policy("codex")
         policy_skills = set(codex_policy.get("explicit_only", [])) | set(

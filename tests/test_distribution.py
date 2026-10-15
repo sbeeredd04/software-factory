@@ -232,6 +232,23 @@ class DistributionTests(unittest.TestCase):
                 path.write_bytes(data)
         return dist.load_api(source)
 
+    def test_agent_helpers_and_bot_assets_work_from_released_native_bundles(self):
+        from test_agents import fixture, load_module
+        api = self.release_source()
+        output = self.root/'released-native'
+        dist.project(api,'all',output)
+        for host in dist.HOSTS:
+            with self.subTest(host=host):
+                scripts = output/host/dist.PLUGIN/'skills/sf-agents/scripts'
+                consumer = self.root/('bot-consumer-'+host)
+                fixture(consumer,True)
+                renderer = load_module(scripts/'render_bots.py','native_'+host)
+                proposal = renderer.plan(consumer,['copilot'],'decision:principles-approved')
+                result = renderer.apply(consumer,proposal,proposal['sha256'],'decision:reviewed-bot-diff')
+                self.assertEqual('applied',result['status'])
+                self.assertIn('SHA256:',(consumer/'.github/copilot-instructions.md').read_text())
+                self.assertTrue((scripts/'install_lifecycle.py').is_file())
+
     def test_release_native_payload_excludes_unlisted_local_files(self):
         api = self.release_source()
         baseline = build_release.release_files(api)

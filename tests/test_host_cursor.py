@@ -96,7 +96,7 @@ class FileSetTests(CursorInstallCase):
             for path in sorted(skills_dir.rglob("*"))
             if path.is_file()
         }
-        self.assertEqual(canonical_tree() | {"software-factory/schemas/config.schema.json", "software-factory/scripts/trackers.py", *{f"sf-help/templates/{name}" for name in ("PRINCIPLES.md", "ARCHITECTURE.md", "CONVENTIONS.md")}}, projected)
+        self.assertEqual(canonical_tree() | {"software-factory/schemas/config.schema.json", "software-factory/scripts/trackers.py", "sf-agents/scripts/install_lifecycle.py", *{"sf-agents/templates/" + p.relative_to(support.REPO / "integrations/bots").as_posix() for p in (support.REPO / "integrations/bots").rglob("*.tmpl")}, *{f"sf-help/templates/{name}" for name in ("PRINCIPLES.md", "ARCHITECTURE.md", "CONVENTIONS.md")}}, projected)
         # Eleven role agents, hooks v1, the rule pointer, runtime helpers.
         agents = sorted(p.name for p in (repo / ".cursor/agents").glob("sf-*.md"))
         self.assertEqual([f"{n}.md" for n in sorted(validate.AGENTS)], agents)

@@ -42,7 +42,10 @@ contains.
   the route degrades to native, never to weaker proof. Detection probes are
   local presence checks only.
 - **review_bots** — optional review bots. Nothing is required by default; a
-  required bot's report must bind to the current HEAD before it counts.
+  required bot's report must bind to the current HEAD before it counts. Optional
+  `authors` lists exact GitHub logins for attribution; absent/empty means unknown,
+  never match-anything. `reader` names a host observation capability, never shell
+  text for helpers to execute. `triage` intentions do not grant write authority.
 - **verification** — the required check names as a unique list the gate enforces (see
   [evidence](evidence.md)).
 - **autonomy** — defaults: local work within the request; external actions

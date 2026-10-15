@@ -9,6 +9,21 @@ config = support.helper('config')
 
 
 class SchemaTests(unittest.TestCase):
+    def test_optional_bot_authors_closed_schema_and_legacy_compatibility(self):
+        schema = config.load(support.REPO/'schemas/config.schema.json')
+        data = config.load(support.REPO/'examples/config/config.yaml')
+        config.validate_schema(data,schema)
+        data['review_bots'] = {'copilot':{'enabled':True,'required':False,'config':'.github/copilot-instructions.md','authors':['Copilot','custom-review[bot]']}}
+        config.validate_schema(data,schema)
+        for authors in (['same','same'],['bad login'],['$(command)'],[True],['a'*129]):
+            with self.subTest(authors=authors),self.assertRaises(config.ConfigError):
+                invalid = copy.deepcopy(data)
+                invalid['review_bots']['copilot']['authors'] = authors
+                config.validate_schema(invalid,schema)
+        data['review_bots']['copilot']['unknown'] = True
+        with self.assertRaises(config.ConfigError):
+            config.validate_schema(data,schema)
+
     def test_supported_keywords(self):
         schema = {'type':'object','required':['x'],'properties':{'x':{'$ref':'#/$defs/n'}},'additionalProperties':False,'$defs':{'n':{'type':'integer','minimum':1,'maximum':4}}}
         config.validate_schema({'x':2},schema)

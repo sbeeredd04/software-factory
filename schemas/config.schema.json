@@ -303,6 +303,16 @@
                 "authorized-apply"
               ],
               "maxLength": 128
+            },
+            "authors": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9-]*(?:\\[bot\\])?$",
+                "maxLength": 128
+              },
+              "maxItems": 100,
+              "uniqueItems": true
             }
           },
           "required": [
@@ -1198,7 +1208,14 @@
         "json": {
           "type": "object",
           "additionalProperties": {
-            "type": ["string", "number", "boolean", "object", "array", "null"]
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "object",
+              "array",
+              "null"
+            ]
           }
         },
         "type": {
