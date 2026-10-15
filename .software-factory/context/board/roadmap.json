@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-15T18:35:51.512227+00:00",
-  "revision": 289,
+  "generated_at": "2026-10-15T18:38:25.626267+00:00",
+  "revision": 291,
   "streams": [
     {
       "id": "W-foundation",
@@ -106,8 +106,8 @@
       "counts": {
         "planned": 2,
         "ready": 0,
-        "in-progress": 2,
-        "review": 2,
+        "in-progress": 1,
+        "review": 3,
         "built": 0,
         "done": 0,
         "cancelled": 0
@@ -7748,8 +7748,8 @@
       "stream": "W-launch",
       "type": "story",
       "title": "Whole software factory messaging and continuous SDLC cycle visuals",
-      "status": "in-progress",
-      "state": "in-progress",
+      "status": "in-review",
+      "state": "review",
       "owner": "codex-cycle",
       "after": [
         30
@@ -7777,6 +7777,140 @@
           "phase": "implementation",
           "status": "assigned",
           "summary": "Latest direct owner feedback/ADR0027: broader whole-factory continuous-delivery pitch, BMad epics/stories central, readable clockwise SDLC cycle with conditional any-phase human escalation based on risk/impact/agreed autonomy. Disjoint claimed assets/site; real authorized render/readiness/visual tests remain required. No policy/runtime/board or docs31 writes."
+        },
+        "worker-handoff": {
+          "type": "agent-attempt",
+          "subject_sha": "03247128c9667860ce673d2b1d642a120f352223",
+          "agent": "/root/assets",
+          "role": "sf-principal-engineer",
+          "skill": "software-factory",
+          "requested_model": "gpt-6-astra",
+          "effective_model": null,
+          "phase": "implementation",
+          "status": "awaiting-review",
+          "summary": "Clean47candidate withwholefactorypitch,canonicalclockwiseSDLC/BMadcycle andconditionalhumanbranch.7realPNGmasters/3aliases/receipt,all67scopedtests/staticchecks pass. Independent source/visual/glyphreview accepted; root6nativepagecases pass onexactworkerSHA. Fullprimarygate and46mechanics separate.",
+          "artifact": ".software-factory/runs/software-factory-v01/evidence/cycle-author-evidence-032.json",
+          "artifact_sha256": "d654b287c0a8876e1443410686da0068d37f8337f644073884838a5848b1fd1a"
+        },
+        "independent-review": {
+          "type": "independent-review",
+          "subject_sha": "03247128c9667860ce673d2b1d642a120f352223",
+          "reviewer": "/root/launch_copy",
+          "status": "pass",
+          "artifact": ".software-factory/runs/software-factory-v01/evidence/cycle-independent-review-032.json",
+          "artifact_sha256": "2cc0a53eabff53c30efc95967bb7d19f505db10bf8a7925ed1e26a5a12feb880",
+          "scope": "Presentation/source and actual7PNG candidate: independent51tests,21input/10outputhashes/3aliases,all7originaldetailvisuals,5cyclecaptures17customIntertextnodeseach,actualfinalrawlaunch/readiness/cleanupscope andmissingcachepreservation. Latestownercontinuous/BMad/risk-adaptive visualscope accepted.",
+          "limitations": [
+            "Core46policy mechanics and integrated full gate remain separate.",
+            "Root native6caseassembledsiteQA separatelypassed; not rerun by this source reviewer."
+          ]
+        },
+        "native-browser-verification": {
+          "source_sha": "03247128c9667860ce673d2b1d642a120f352223",
+          "status": "passed",
+          "exit_code": 0,
+          "timed_out": false,
+          "script_hash_match": true,
+          "failures": [],
+          "cases": [
+            {
+              "viewport": {
+                "width": 360,
+                "height": 640
+              },
+              "motion": "default",
+              "failures": [],
+              "glyph_text_nodes": 17,
+              "cards": true
+            },
+            {
+              "viewport": {
+                "width": 360,
+                "height": 640
+              },
+              "motion": "reduce",
+              "failures": [],
+              "glyph_text_nodes": 17,
+              "cards": true
+            },
+            {
+              "viewport": {
+                "width": 768,
+                "height": 1024
+              },
+              "motion": "default",
+              "failures": [],
+              "glyph_text_nodes": 17,
+              "cards": true
+            },
+            {
+              "viewport": {
+                "width": 768,
+                "height": 1024
+              },
+              "motion": "reduce",
+              "failures": [],
+              "glyph_text_nodes": 17,
+              "cards": true
+            },
+            {
+              "viewport": {
+                "width": 1440,
+                "height": 900
+              },
+              "motion": "default",
+              "failures": [],
+              "glyph_text_nodes": 17,
+              "cards": true
+            },
+            {
+              "viewport": {
+                "width": 1440,
+                "height": 900
+              },
+              "motion": "reduce",
+              "failures": [],
+              "glyph_text_nodes": 17,
+              "cards": true
+            }
+          ],
+          "parity": [
+            {
+              "viewport": {
+                "width": 360,
+                "height": 640
+              },
+              "default_vs_reduce_equal": true,
+              "comparison": "body visible text, generated prompt/command, headings and link text/targets; no source mutation"
+            },
+            {
+              "viewport": {
+                "width": 768,
+                "height": 1024
+              },
+              "default_vs_reduce_equal": true,
+              "comparison": "body visible text, generated prompt/command, headings and link text/targets; no source mutation"
+            },
+            {
+              "viewport": {
+                "width": 1440,
+                "height": 900
+              },
+              "default_vs_reduce_equal": true,
+              "comparison": "body visible text, generated prompt/command, headings and link text/targets; no source mutation"
+            }
+          ],
+          "forbidden_flags": [],
+          "subject_sha": "03247128c9667860ce673d2b1d642a120f352223",
+          "type": "browser-verification"
+        },
+        "handoff-recovery": {
+          "type": "orchestration-recovery",
+          "subject_sha": "03247128c9667860ce673d2b1d642a120f352223",
+          "status": "reconciling",
+          "cause": "Initial board handoff refused a browser summary having source_sha but no required subject_sha. Root incorrectly continued dependent claim release and integrated accepted source before checking that refusal.",
+          "observed": "Source032 was independently accepted and exact source integrated as ae143e2. Story47 remained in-progress with missing claim; dashboard reported one diagnostic. No worker change or work loss inferred.",
+          "correction": "Reclaim exact same owner/worktree/paths, add explicit evidence subject binding without changing raw browser result, record in-review while claim live, then release and regenerate. Preserve failed attempt/history; no history rewrite or false completion."
         }
       },
       "baseline_sha": null,
@@ -7799,11 +7933,24 @@
           "by": "codex-cycle",
           "from": "ready-for-dev",
           "to": "in-progress"
+        },
+        {
+          "at": "2026-10-15T18:36:40.622369+00:00",
+          "by": "codex-cycle",
+          "from": "in-progress",
+          "to": "in-review"
         }
       ],
-      "findings": [],
+      "findings": [
+        {
+          "at": "2026-10-15T18:38:25.622197+00:00",
+          "by": "orchestrator",
+          "text": "Handoff receipt initially refused because browser summary omitted subject_sha. Root dependent sequencing then released the claim and integrated accepted source too early. Reclaimed the same owner/worktree/paths, preserved the deviation, added explicit subject binding, recorded exact032 in-review with live claim, then released. Source matches independently reviewed bytes; current ownership reconciled without history rewrite."
+        }
+      ],
       "source_key": "launch-publication/continuous-factory-cycle",
-      "evidence_contract": 1
+      "evidence_contract": 1,
+      "review_subject_sha": "03247128c9667860ce673d2b1d642a120f352223"
     }
   ],
   "frontier": {
@@ -7834,13 +7981,7 @@
     "unpinned_gates": [],
     "undeclared_after": [],
     "order_conflicts": [],
-    "inconsistencies": [
-      {
-        "kind": "in-progress-without-claim",
-        "story": 47,
-        "detail": "story 47 is in-progress but holds no live claim"
-      }
-    ]
+    "inconsistencies": []
   },
   "decision_queue": [
     {
