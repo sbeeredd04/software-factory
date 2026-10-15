@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-15T20:26:44.838124+00:00",
-  "revision": 333,
+  "generated_at": "2026-10-15T20:34:55.202593+00:00",
+  "revision": 339,
   "streams": [
     {
       "id": "W-foundation",
@@ -59,7 +59,7 @@
         "planned": 0,
         "ready": 0,
         "in-progress": 0,
-        "review": 9,
+        "review": 10,
         "built": 0,
         "done": 0,
         "cancelled": 0
@@ -71,7 +71,8 @@
         22,
         23,
         24,
-        48
+        51,
+        52
       ]
     },
     {
@@ -236,7 +237,8 @@
         24,
         48,
         50,
-        51
+        51,
+        52
       ],
       "needs": [
         2
@@ -8982,7 +8984,9 @@
       "claim": {
         "live": false
       },
-      "blocks": [],
+      "blocks": [
+        52
+      ],
       "history": [
         {
           "at": "2026-10-15T20:18:26.356375+00:00",
@@ -9007,6 +9011,109 @@
       "source_key": "installer-hosts/native-manifest-validation-bases",
       "evidence_contract": 1,
       "review_subject_sha": "5892e4996547bec11be47893292657fab4ffc026"
+    },
+    {
+      "id": 52,
+      "epic": 3,
+      "stream": "W-installer",
+      "type": "bug",
+      "title": "Close native bundle links and attribution resources",
+      "status": "in-review",
+      "state": "review",
+      "owner": "codex-native-links",
+      "after": [
+        51
+      ],
+      "covers": [
+        "TLS-DIST-001",
+        "VAL-HOST-001",
+        "VAL-INSTALL-009"
+      ],
+      "risk": "standard",
+      "hitl": false,
+      "plan_checkpoint": false,
+      "done_checkpoint": false,
+      "blocked": null,
+      "receipts": {
+        "reproduction": {
+          "type": "verification-observation",
+          "subject_sha": "4fff49f012c2916f4ffc06460d73886de65c9932",
+          "status": "failed",
+          "exit_code": 1,
+          "broken_links": 31,
+          "findings": [
+            "28 native manifest paths resolved from hidden directories instead of documented owners.",
+            "Three generated native NOTICE links target a canonical font-source document omitted from their self-contained bundle."
+          ],
+          "scope": "Generic offline link check of the actual extracted release, independently reproduced by root and the validator worker.",
+          "limits": [
+            "Specialized native validators passing does not waive these broken links. No full52 gate or release pass."
+          ]
+        },
+        "independent-review": {
+          "type": "independent-review",
+          "subject_sha": "0d8998abb006fe5a8e38e9ed9721f51a4b9cd7a8",
+          "reviewer": "/root",
+          "author": "/root/final_audit",
+          "status": "pass",
+          "scope": "Exact five-file checker and self-contained attribution closure repair. All old scopes, generic JSON interpretation, anchors, malformed-JSON ownership and missing/escaping-resource checks retained.",
+          "checks": {
+            "tools_tests_run": 89,
+            "tools_tests_passed": 89,
+            "tools_seconds": 51.038,
+            "distribution_tests_run": 19,
+            "distribution_tests_passed": 19,
+            "distribution_seconds": 8.051,
+            "skipped": 0,
+            "exit_code": 0,
+            "fresh_extracted_links_exit_code": 0,
+            "fresh_extracted_files_checked": 411,
+            "old_payload_remaining_real_missing_resources": 3,
+            "old_payload_exit_code": 1,
+            "start_end_head_and_five_file_hashes_unchanged": true
+          },
+          "findings": [],
+          "limits": [
+            "Old failed payload remains unchanged and fails its three real missing resources. Newly built closed payload passes; no waiver or exclusion. Combined full52 gate and release acceptance remain pending."
+          ],
+          "logs_sha256": {
+            "tools": "4e3efd3f0c3f29581b47fce6146b6bfc38c261b7d3d6e7fb4b13c354a386452d",
+            "distribution": "26fe84e90f5c61dc0e79ed299b2559eacaf0fc2c2ef742415999e9b06ac27d43"
+          }
+        }
+      },
+      "baseline_sha": null,
+      "branch": null,
+      "pr": null,
+      "merged_sha": null,
+      "claim": {
+        "live": false
+      },
+      "blocks": [],
+      "history": [
+        {
+          "at": "2026-10-15T20:26:57.940637+00:00",
+          "by": "orchestrator",
+          "from": "backlog",
+          "to": "ready-for-dev"
+        },
+        {
+          "at": "2026-10-15T20:26:58.040670+00:00",
+          "by": "codex-native-links",
+          "from": "ready-for-dev",
+          "to": "in-progress"
+        },
+        {
+          "at": "2026-10-15T20:34:55.028600+00:00",
+          "by": "codex-native-links",
+          "from": "in-progress",
+          "to": "in-review"
+        }
+      ],
+      "findings": [],
+      "source_key": "installer-hosts/native-link-resource-closure",
+      "evidence_contract": 1,
+      "review_subject_sha": "0d8998abb006fe5a8e38e9ed9721f51a4b9cd7a8"
     }
   ],
   "frontier": {
