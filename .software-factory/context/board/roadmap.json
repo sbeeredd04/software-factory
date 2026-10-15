@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-15T14:00:14.323289+00:00",
-  "revision": 262,
+  "generated_at": "2026-10-15T14:12:19.588791+00:00",
+  "revision": 263,
   "streams": [
     {
       "id": "W-foundation",
@@ -4352,6 +4352,36 @@
           "summary": "16 independent source checks confirm exact22 approvedcaseobjects/order, original30prefix and rawsignedhistory, current48payload8ed... and full52contract6de...; fourfuturecontracts remain approved/deferred. Chat authority comes from actualparent ownerreply, not source authentication.",
           "limits": [
             "No tests executed by reviewer; first rootfullgate independentlyfailed stale generatedfilecount."
+          ]
+        },
+        "approved-evaluation-admission": {
+          "type": "verification",
+          "status": "pass",
+          "subject_sha": "a70773df0c09f218602cc3a29fa16476a1de8485",
+          "command": "bash scripts/check_all.sh",
+          "exit_code": 0,
+          "artifact": ".software-factory/runs/software-factory-v01/evidence/eval-admission-refreshed-gate.log",
+          "artifact_sha256": "f350c4f51e0f1c4dbc42945d5c9c6989fe7788f03387c8346cee2331090ffa06",
+          "unit_tests": {
+            "run": 709,
+            "passed": 708,
+            "failed": 0,
+            "skipped": 1,
+            "seconds": 372.802
+          },
+          "evals": {
+            "failed": 0,
+            "passed": 48,
+            "quarantined": 0,
+            "skipped": 0,
+            "unverified": 0
+          },
+          "eval_run": "r-20261015T140631Z-premerge",
+          "eval_receipt_sha256": "3f389698c14a047f165f04d4c043db0a38cbac47e29baf4d60375777780f49da",
+          "summary": "Owner-approved additive admission: current48case suite passes after root refresh of source inventory for new tracked contract/history JSON files. Original failed247vs249 inventory gate is retained separately. All static steps and actual approved BMad/skills installer network checks pass.",
+          "limitations": [
+            "Four approved future launch cases remain prospectively deferred until their implementations exist.",
+            "No live host loading, remote integration, deployed effects, publication or human epic acceptance is established."
           ]
         }
       },
