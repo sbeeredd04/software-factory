@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-15T09:22:26.417974+00:00",
-  "revision": 185,
+  "generated_at": "2026-10-15T09:24:32.614310+00:00",
+  "revision": 188,
   "streams": [
     {
       "id": "W-foundation",
@@ -34,9 +34,9 @@
         2
       ],
       "counts": {
-        "planned": 1,
+        "planned": 0,
         "ready": 0,
-        "in-progress": 0,
+        "in-progress": 1,
         "review": 13,
         "built": 0,
         "done": 8,
@@ -3567,9 +3567,9 @@
       "stream": "W-expansion",
       "type": "story",
       "title": "Require evidence and decision provenance at acceptance transitions",
-      "status": "backlog",
-      "state": "planned",
-      "owner": null,
+      "status": "in-progress",
+      "state": "in-progress",
+      "owner": "codex-evidence-transitions",
       "after": [
         42
       ],
@@ -3578,24 +3578,61 @@
       "hitl": true,
       "plan_checkpoint": true,
       "done_checkpoint": true,
-      "blocked": {
-        "type": "human-decision",
-        "reason": "Approve mechanically refusing new built/done transitions without SHA-bound passing evidence, independent review and source-linked required checkpoint decisions, preserving historical records.",
-        "since": "2026-10-15T08:57:31.449186+00:00",
-        "owner": "human-owner",
-        "next_action": "Answer the focused transition-policy question in the current conversation; unrelated authorized work continues."
+      "blocked": null,
+      "receipts": {
+        "active-attempt": {
+          "type": "agent-attempt",
+          "subject_sha": "f51b0f75f51a7042995287fa12d842bf12569e7c",
+          "agent": "/root/mission_recovery",
+          "role": "sf-principal-engineer",
+          "skill": "software-factory",
+          "requested_model": "inherit",
+          "effective_model": null,
+          "phase": "implementation",
+          "status": "assigned",
+          "recorded_at": "2026-10-15T09:24:32.585277+00:00",
+          "summary": "Owner explicitly approved recommended enforcement; ADR0023 records final instruction. Independent worker implements subject-bound gates and required checkpoint provenance, preserving historical records."
+        }
       },
-      "receipts": {},
       "baseline_sha": null,
       "branch": null,
       "pr": null,
       "merged_sha": null,
       "claim": {
-        "live": false
+        "live": true,
+        "owner": "codex-evidence-transitions",
+        "paths": [
+          "skills/software-factory/scripts/roadmap.py",
+          "skills/software-factory/scripts/gate.py",
+          "skills/software-factory/schemas/board.schema.json",
+          "tests/test_board_gate.py",
+          "tests/test_gate.py",
+          "skills/software-factory/references/evidence.md"
+        ],
+        "claimed_at": "2026-10-15T09:24:04.769422+00:00"
       },
       "blocks": [],
-      "history": [],
-      "findings": [],
+      "history": [
+        {
+          "at": "2026-10-15T09:23:56.988592+00:00",
+          "by": "orchestrator",
+          "from": "backlog",
+          "to": "ready-for-dev"
+        },
+        {
+          "at": "2026-10-15T09:24:04.801753+00:00",
+          "by": "codex-evidence-transitions",
+          "from": "ready-for-dev",
+          "to": "in-progress"
+        }
+      ],
+      "findings": [
+        {
+          "at": "2026-10-15T09:23:56.988416+00:00",
+          "by": "orchestrator",
+          "text": "Owner explicitly approved both recommended decisions in the current conversation; ADR0023 records the final instruction and supersedes the initial guidance-only reply."
+        }
+      ],
       "scope": [
         "skills/software-factory/scripts/roadmap.py",
         "skills/software-factory/scripts/gate.py",
@@ -3812,33 +3849,23 @@
       }
     ]
   },
-  "blockers": [
-    {
-      "id": 44,
-      "epic": 2,
-      "stream": "W-expansion",
-      "type": "human-decision",
-      "reason": "Approve mechanically refusing new built/done transitions without SHA-bound passing evidence, independent review and source-linked required checkpoint decisions, preserving historical records.",
-      "owner": "human-owner",
-      "since": "2026-10-15T08:57:31.449186+00:00",
-      "next_action": "Answer the focused transition-policy question in the current conversation; unrelated authorized work continues.",
-      "stalls": []
-    }
-  ],
+  "blockers": [],
   "diagnostics": {
     "unpinned_gates": [],
     "undeclared_after": [],
     "order_conflicts": [],
-    "inconsistencies": []
+    "inconsistencies": [
+      {
+        "kind": "claim-outside-scope",
+        "story": 44,
+        "paths": [
+          "skills/software-factory/references/evidence.md"
+        ],
+        "detail": "claim for story 44 covers paths outside its declared scope: skills/software-factory/references/evidence.md"
+      }
+    ]
   },
   "decision_queue": [
-    {
-      "kind": "blocked",
-      "story": 44,
-      "question": "Approve mechanically refusing new built/done transitions without SHA-bound passing evidence, independent review and source-linked required checkpoint decisions, preserving historical records.",
-      "owner": "human-owner",
-      "next_action": "Answer the focused transition-policy question in the current conversation; unrelated authorized work continues."
-    },
     {
       "kind": "epic-acceptance",
       "epic": 1,

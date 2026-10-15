@@ -1,19 +1,7 @@
 {
   "answers": {
     "blocked": {
-      "blockers": [
-        {
-          "epic": 2,
-          "id": 44,
-          "next_action": "Answer the focused transition-policy question in the current conversation; unrelated authorized work continues.",
-          "owner": "human-owner",
-          "reason": "Approve mechanically refusing new built/done transitions without SHA-bound passing evidence, independent review and source-linked required checkpoint decisions, preserving historical records.",
-          "since": "2026-10-15T08:57:31.449186+00:00",
-          "stalls": [],
-          "stream": "W-expansion",
-          "type": "human-decision"
-        }
-      ],
+      "blockers": [],
       "problems": [],
       "waiting": [
         {
@@ -109,13 +97,6 @@
       ]
     },
     "decisions": [
-      {
-        "kind": "blocked",
-        "next_action": "Answer the focused transition-policy question in the current conversation; unrelated authorized work continues.",
-        "owner": "human-owner",
-        "question": "Approve mechanically refusing new built/done transitions without SHA-bound passing evidence, independent review and source-linked required checkpoint decisions, preserving historical records.",
-        "story": 44
-      },
       {
         "epic": 1,
         "kind": "epic-acceptance",
@@ -508,6 +489,17 @@
     }
   },
   "diagnostics": [
+    {
+      "category": "inconsistencies",
+      "kind": "board-diagnostic",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/44.json",
+          "pointer": "",
+          "sha256": "fe1b68d6d8cd4fb8243a23906ac2dbc1e703c8e42cfb6fc0635f73ba68a81a30"
+        }
+      ]
+    },
     {
       "kind": "crawl-binding-unverified",
       "provenance": [
@@ -7312,7 +7304,7 @@
         {
           "path": ".software-factory/context/board/stories/44.json",
           "pointer": "/scope/0",
-          "sha256": "499ab8dca2f1281c83184b734ed2d491cf64258aa8de64b09390a4c2530814d3"
+          "sha256": "fe1b68d6d8cd4fb8243a23906ac2dbc1e703c8e42cfb6fc0635f73ba68a81a30"
         }
       ],
       "relation": "scope",
@@ -7325,7 +7317,7 @@
         {
           "path": ".software-factory/context/board/stories/44.json",
           "pointer": "/scope/1",
-          "sha256": "499ab8dca2f1281c83184b734ed2d491cf64258aa8de64b09390a4c2530814d3"
+          "sha256": "fe1b68d6d8cd4fb8243a23906ac2dbc1e703c8e42cfb6fc0635f73ba68a81a30"
         }
       ],
       "relation": "scope",
@@ -7338,7 +7330,7 @@
         {
           "path": ".software-factory/context/board/stories/44.json",
           "pointer": "/scope/2",
-          "sha256": "499ab8dca2f1281c83184b734ed2d491cf64258aa8de64b09390a4c2530814d3"
+          "sha256": "fe1b68d6d8cd4fb8243a23906ac2dbc1e703c8e42cfb6fc0635f73ba68a81a30"
         }
       ],
       "relation": "scope",
@@ -7351,7 +7343,7 @@
         {
           "path": ".software-factory/context/board/stories/44.json",
           "pointer": "/scope/3",
-          "sha256": "499ab8dca2f1281c83184b734ed2d491cf64258aa8de64b09390a4c2530814d3"
+          "sha256": "fe1b68d6d8cd4fb8243a23906ac2dbc1e703c8e42cfb6fc0635f73ba68a81a30"
         }
       ],
       "relation": "scope",
@@ -7364,7 +7356,7 @@
         {
           "path": ".software-factory/context/board/stories/44.json",
           "pointer": "/scope/4",
-          "sha256": "499ab8dca2f1281c83184b734ed2d491cf64258aa8de64b09390a4c2530814d3"
+          "sha256": "fe1b68d6d8cd4fb8243a23906ac2dbc1e703c8e42cfb6fc0635f73ba68a81a30"
         }
       ],
       "relation": "scope",
@@ -18310,7 +18302,7 @@
         {
           "path": ".software-factory/context/board/stories/44.json",
           "pointer": "/after/0",
-          "sha256": "499ab8dca2f1281c83184b734ed2d491cf64258aa8de64b09390a4c2530814d3"
+          "sha256": "fe1b68d6d8cd4fb8243a23906ac2dbc1e703c8e42cfb6fc0635f73ba68a81a30"
         }
       ],
       "relation": "depends-on",
@@ -18322,12 +18314,48 @@
         {
           "path": ".software-factory/context/board/stories/44.json",
           "pointer": "/epic",
-          "sha256": "499ab8dca2f1281c83184b734ed2d491cf64258aa8de64b09390a4c2530814d3"
+          "sha256": "fe1b68d6d8cd4fb8243a23906ac2dbc1e703c8e42cfb6fc0635f73ba68a81a30"
         }
       ],
       "relation": "part-of",
       "source": "story:44",
       "target": "epic:2"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/44.json",
+          "pointer": "/findings/0",
+          "sha256": "fe1b68d6d8cd4fb8243a23906ac2dbc1e703c8e42cfb6fc0635f73ba68a81a30"
+        }
+      ],
+      "relation": "records",
+      "source": "story:44",
+      "target": "finding:44:0"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/44.json",
+          "pointer": "/receipts/active-attempt",
+          "sha256": "fe1b68d6d8cd4fb8243a23906ac2dbc1e703c8e42cfb6fc0635f73ba68a81a30"
+        }
+      ],
+      "relation": "records",
+      "source": "story:44",
+      "target": "receipt:44:active-attempt"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/44.json",
+          "pointer": "/receipts/active-attempt",
+          "sha256": "fe1b68d6d8cd4fb8243a23906ac2dbc1e703c8e42cfb6fc0635f73ba68a81a30"
+        }
+      ],
+      "relation": "subject",
+      "source": "receipt:44:active-attempt",
+      "target": "commit:f51b0f75f51a7042995287fa12d842bf12569e7c"
     },
     {
       "provenance": [
@@ -18658,12 +18686,24 @@
         {
           "path": ".software-factory/runs/software-factory-v01/run.json",
           "pointer": "/claims/23",
-          "sha256": "85063419cfe5e96e4d6d7136c109f7c2afe1323efbac7f73e9da92f89afd430e"
+          "sha256": "62998e627f5c3c752a12653d0b1ebc4200dc1face6eb0c013f602ecd130871cf"
         }
       ],
       "relation": "assigned-to",
       "source": "claim:23",
       "target": "story:23"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/runs/software-factory-v01/run.json",
+          "pointer": "/claims/44",
+          "sha256": "62998e627f5c3c752a12653d0b1ebc4200dc1face6eb0c013f602ecd130871cf"
+        }
+      ],
+      "relation": "assigned-to",
+      "source": "claim:44",
+      "target": "story:44"
     }
   ],
   "inputs": [
@@ -18925,7 +18965,7 @@
     {
       "kind": "file",
       "path": ".software-factory/context/board/stories/44.json",
-      "sha256": "499ab8dca2f1281c83184b734ed2d491cf64258aa8de64b09390a4c2530814d3"
+      "sha256": "fe1b68d6d8cd4fb8243a23906ac2dbc1e703c8e42cfb6fc0635f73ba68a81a30"
     },
     {
       "kind": "file",
@@ -18965,7 +19005,7 @@
     {
       "kind": "directory",
       "path": ".software-factory/context/decisions",
-      "sha256": "7046e959e91f17ccc26adf01fb8230b192bb76e9e32b1cd4224a483cacaeb12f"
+      "sha256": "283b37dbd31cd34dd3e2a5595f4685c50bd425d21fde3e0b6eeedb90011a891d"
     },
     {
       "kind": "file",
@@ -19079,13 +19119,23 @@
     },
     {
       "kind": "file",
+      "path": ".software-factory/context/decisions/0023-evidence-bound-transitions.md",
+      "sha256": "304ff56fabe0f51fae706a7f019b17b57ee820e56c89a745797b4482385c62e3"
+    },
+    {
+      "kind": "file",
+      "path": ".software-factory/context/decisions/0024-generated-native-distribution.md",
+      "sha256": "987843e207e93058ed5d623595dde220598d2238968f7921bfa809f6ede139e2"
+    },
+    {
+      "kind": "file",
       "path": ".software-factory/runs/software-factory-v01/evidence/code-map.json",
       "sha256": "d47a560a0639d5e3ae5f0e794b0aa976109693954a170c02bd11e87d6d023a44"
     },
     {
       "kind": "file",
       "path": ".software-factory/runs/software-factory-v01/run.json",
-      "sha256": "85063419cfe5e96e4d6d7136c109f7c2afe1323efbac7f73e9da92f89afd430e"
+      "sha256": "62998e627f5c3c752a12653d0b1ebc4200dc1face6eb0c013f602ecd130871cf"
     },
     {
       "kind": "file",
@@ -19419,7 +19469,7 @@
         {
           "path": ".software-factory/runs/software-factory-v01/run.json",
           "pointer": "/checkpoint",
-          "sha256": "85063419cfe5e96e4d6d7136c109f7c2afe1323efbac7f73e9da92f89afd430e"
+          "sha256": "62998e627f5c3c752a12653d0b1ebc4200dc1face6eb0c013f602ecd130871cf"
         }
       ],
       "type": "checkpoint"
@@ -19432,7 +19482,20 @@
         {
           "path": ".software-factory/runs/software-factory-v01/run.json",
           "pointer": "/claims/23",
-          "sha256": "85063419cfe5e96e4d6d7136c109f7c2afe1323efbac7f73e9da92f89afd430e"
+          "sha256": "62998e627f5c3c752a12653d0b1ebc4200dc1face6eb0c013f602ecd130871cf"
+        }
+      ],
+      "type": "claim"
+    },
+    {
+      "id": "claim:44",
+      "label": "codex-evidence-transitions",
+      "liveness": "unknown",
+      "provenance": [
+        {
+          "path": ".software-factory/runs/software-factory-v01/run.json",
+          "pointer": "/claims/44",
+          "sha256": "62998e627f5c3c752a12653d0b1ebc4200dc1face6eb0c013f602ecd130871cf"
         }
       ],
       "type": "claim"
@@ -19966,6 +20029,18 @@
       "type": "commit"
     },
     {
+      "id": "commit:f51b0f75f51a7042995287fa12d842bf12569e7c",
+      "label": "f51b0f75f51a7042995287fa12d842bf12569e7c",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/44.json",
+          "pointer": "/receipts/active-attempt/subject_sha",
+          "sha256": "fe1b68d6d8cd4fb8243a23906ac2dbc1e703c8e42cfb6fc0635f73ba68a81a30"
+        }
+      ],
+      "type": "commit"
+    },
+    {
       "id": "commit:fd2b1b0625956a0b2a6a76adff4c1974630bd41d",
       "label": "fd2b1b0625956a0b2a6a76adff4c1974630bd41d",
       "provenance": [
@@ -20315,6 +20390,34 @@
       "type": "decision"
     },
     {
+      "authenticated": false,
+      "content_sha256": "304ff56fabe0f51fae706a7f019b17b57ee820e56c89a745797b4482385c62e3",
+      "id": "decision:.software-factory/context/decisions/0023-evidence-bound-transitions.md",
+      "label": ".software-factory/context/decisions/0023-evidence-bound-transitions.md",
+      "provenance": [
+        {
+          "line": 1,
+          "path": ".software-factory/context/decisions/0023-evidence-bound-transitions.md",
+          "sha256": "304ff56fabe0f51fae706a7f019b17b57ee820e56c89a745797b4482385c62e3"
+        }
+      ],
+      "type": "decision"
+    },
+    {
+      "authenticated": false,
+      "content_sha256": "987843e207e93058ed5d623595dde220598d2238968f7921bfa809f6ede139e2",
+      "id": "decision:.software-factory/context/decisions/0024-generated-native-distribution.md",
+      "label": ".software-factory/context/decisions/0024-generated-native-distribution.md",
+      "provenance": [
+        {
+          "line": 1,
+          "path": ".software-factory/context/decisions/0024-generated-native-distribution.md",
+          "sha256": "987843e207e93058ed5d623595dde220598d2238968f7921bfa809f6ede139e2"
+        }
+      ],
+      "type": "decision"
+    },
+    {
       "id": "epic:1",
       "label": "Foundation: skeleton, kernel, orchestrator, team, design module, tooling",
       "provenance": [
@@ -20435,6 +20538,18 @@
           "path": ".software-factory/context/board/stories/43.json",
           "pointer": "/findings/0",
           "sha256": "25ca51da72ff4a29c8fffb80f6db6960213ce078a74a56e752176aebae17dc14"
+        }
+      ],
+      "type": "finding"
+    },
+    {
+      "id": "finding:44:0",
+      "label": "Owner explicitly approved both recommended decisions in the current conversation; ADR0023 records the final instruction and supersedes the initial guidance-only reply.",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/44.json",
+          "pointer": "/findings/0",
+          "sha256": "fe1b68d6d8cd4fb8243a23906ac2dbc1e703c8e42cfb6fc0635f73ba68a81a30"
         }
       ],
       "type": "finding"
@@ -34165,6 +34280,23 @@
     {
       "artifact_integrity": "unknown",
       "freshness": "unknown",
+      "id": "receipt:44:active-attempt",
+      "label": "active-attempt",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/44.json",
+          "pointer": "/receipts/active-attempt",
+          "sha256": "fe1b68d6d8cd4fb8243a23906ac2dbc1e703c8e42cfb6fc0635f73ba68a81a30"
+        }
+      ],
+      "reported_status": "assigned",
+      "story": 44,
+      "subject_sha": "f51b0f75f51a7042995287fa12d842bf12569e7c",
+      "type": "receipt"
+    },
+    {
+      "artifact_integrity": "unknown",
+      "freshness": "unknown",
       "id": "receipt:45:implementation-result",
       "label": "implementation-result",
       "provenance": [
@@ -38093,10 +38225,10 @@
         {
           "path": ".software-factory/context/board/stories/44.json",
           "pointer": "",
-          "sha256": "499ab8dca2f1281c83184b734ed2d491cf64258aa8de64b09390a4c2530814d3"
+          "sha256": "fe1b68d6d8cd4fb8243a23906ac2dbc1e703c8e42cfb6fc0635f73ba68a81a30"
         }
       ],
-      "status": "backlog",
+      "status": "in-progress",
       "type": "story"
     },
     {
@@ -38689,7 +38821,7 @@
         {
           "path": ".software-factory/context/board/stories/44.json",
           "pointer": "/scope/2",
-          "sha256": "499ab8dca2f1281c83184b734ed2d491cf64258aa8de64b09390a4c2530814d3"
+          "sha256": "fe1b68d6d8cd4fb8243a23906ac2dbc1e703c8e42cfb6fc0635f73ba68a81a30"
         }
       ],
       "type": "surface"
@@ -38751,7 +38883,7 @@
         {
           "path": ".software-factory/context/board/stories/44.json",
           "pointer": "/scope/1",
-          "sha256": "499ab8dca2f1281c83184b734ed2d491cf64258aa8de64b09390a4c2530814d3"
+          "sha256": "fe1b68d6d8cd4fb8243a23906ac2dbc1e703c8e42cfb6fc0635f73ba68a81a30"
         },
         {
           "path": ".software-factory/runs/software-factory-v01/evidence/code-map.json",
@@ -38804,7 +38936,7 @@
         {
           "path": ".software-factory/context/board/stories/44.json",
           "pointer": "/scope/0",
-          "sha256": "499ab8dca2f1281c83184b734ed2d491cf64258aa8de64b09390a4c2530814d3"
+          "sha256": "fe1b68d6d8cd4fb8243a23906ac2dbc1e703c8e42cfb6fc0635f73ba68a81a30"
         },
         {
           "path": ".software-factory/runs/software-factory-v01/evidence/code-map.json",
@@ -39054,7 +39186,7 @@
         {
           "path": ".software-factory/context/board/stories/44.json",
           "pointer": "/scope/3",
-          "sha256": "499ab8dca2f1281c83184b734ed2d491cf64258aa8de64b09390a4c2530814d3"
+          "sha256": "fe1b68d6d8cd4fb8243a23906ac2dbc1e703c8e42cfb6fc0635f73ba68a81a30"
         }
       ],
       "type": "surface"
@@ -39183,7 +39315,7 @@
         {
           "path": ".software-factory/context/board/stories/44.json",
           "pointer": "/scope/4",
-          "sha256": "499ab8dca2f1281c83184b734ed2d491cf64258aa8de64b09390a4c2530814d3"
+          "sha256": "fe1b68d6d8cd4fb8243a23906ac2dbc1e703c8e42cfb6fc0635f73ba68a81a30"
         },
         {
           "path": ".software-factory/runs/software-factory-v01/evidence/code-map.json",
@@ -39462,5 +39594,5 @@
     }
   ],
   "schema": "sf-trace/1",
-  "source_fingerprint": "07750b1176689a28346818c26eb38b41dd4a3fa5a2b1b405d881ee20025f5d74"
+  "source_fingerprint": "fea753aabe432f976bce1779d9a637aa1a0b068389d0e3b07e892f33ce7a76f9"
 }
