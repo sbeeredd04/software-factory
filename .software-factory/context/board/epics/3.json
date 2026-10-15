@@ -26,10 +26,17 @@
   "needs": [
     2
   ],
-  "status": "planned",
+  "status": "in-progress",
   "acceptance": null,
   "parked": null,
   "park_proposal": null,
-  "history": [],
+  "history": [
+    {
+      "at": "2026-10-15T08:26:32.967400+00:00",
+      "by": "orchestrator",
+      "from": "planned",
+      "to": "in-progress"
+    }
+  ],
   "source_key": "installer-hosts"
 }

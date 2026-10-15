@@ -4,7 +4,7 @@
   "epic": 2,
   "type": "bug",
   "title": "Serialize story updates and refuse unknown ownership readiness",
-  "status": "in-progress",
+  "status": "in-review",
   "owner": "codex-board-consistency",
   "after": [
     9
@@ -17,7 +17,21 @@
   "plan_checkpoint": false,
   "done_checkpoint": false,
   "blocked": null,
-  "receipts": {},
+  "receipts": {
+    "implementation-attempt": {
+      "type": "agent-attempt",
+      "subject_sha": "5999680c40961b8cf6d7fd79ccc0e0af9ed6a45d",
+      "agent": "/root/run_audit",
+      "role": "sf-engineer",
+      "skill": "software-factory",
+      "requested_model": "inherit",
+      "effective_model": null,
+      "phase": "implementation",
+      "status": "awaiting-review",
+      "recorded_at": "2026-10-15T08:26:32.883971+00:00",
+      "summary": "Serialized board mutations and blocked readiness for corrupt ownership. Independent source review accepted. Nine new real-process consistency tests and 48 board tests passed; integrated gate remains pending."
+    }
+  },
   "baseline_sha": null,
   "branch": null,
   "pr": null,
@@ -34,6 +48,12 @@
       "by": "codex-board-consistency",
       "from": "ready-for-dev",
       "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T08:26:32.908762+00:00",
+      "by": "codex-board-consistency",
+      "from": "in-progress",
+      "to": "in-review"
     }
   ],
   "findings": [],

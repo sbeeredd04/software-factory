@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "id": 43,
+  "epic": 2,
+  "type": "story",
+  "title": "Derive provenance-linked SDLC trace graph from authoritative records",
+  "status": "in-progress",
+  "owner": "codex-lifecycle-graph",
+  "after": [
+    42
+  ],
+  "covers": [],
+  "risk": "standard",
+  "hitl": false,
+  "plan_checkpoint": false,
+  "done_checkpoint": false,
+  "blocked": null,
+  "receipts": {},
+  "baseline_sha": null,
+  "branch": null,
+  "pr": null,
+  "merged_sha": null,
+  "history": [
+    {
+      "at": "2026-10-15T08:27:51.154200+00:00",
+      "by": "orchestrator",
+      "from": "backlog",
+      "to": "ready-for-dev"
+    },
+    {
+      "at": "2026-10-15T08:27:51.242371+00:00",
+      "by": "codex-lifecycle-graph",
+      "from": "ready-for-dev",
+      "to": "in-progress"
+    }
+  ],
+  "findings": [
+    {
+      "at": "2026-10-15T08:27:51.154030+00:00",
+      "by": "orchestrator",
+      "text": "Owner explicitly requested graph-based full SDLC skills. This derived read-only helper consumes existing version-1 board records and optional existing crawl JSON, so it can proceed after the consistency repair without changing config or gate policy. No second mutable state is introduced."
+    }
+  ],
+  "source_key": "expansion/derived-lifecycle-graph",
+  "scope": [
+    "skills/software-factory/scripts/trace.py",
+    "skills/software-factory/references/lifecycle-graph.md",
+    "tests/test_trace.py"
+  ]
+}

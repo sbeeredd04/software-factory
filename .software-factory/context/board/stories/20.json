@@ -76,6 +76,32 @@
       "status": "awaiting-review",
       "recorded_at": "2026-10-15T08:18:30.247845+00:00",
       "summary": "Current host contracts corrected; independent source review accepted. 50 host tests and 20 installer tests passed. Actual host loading remains unverified."
+    },
+    "integrated-local-proof": {
+      "type": "local-verification",
+      "subject_sha": "fdaaa900086578fa9e749a9a44f4a5550d266dae",
+      "recorded_at": "2026-10-15T08:24:55.202101+00:00",
+      "verifier": "codex-orchestrator",
+      "status": "pass",
+      "full_static_gate": {
+        "exit_code": 0,
+        "unit_tests": 409,
+        "evals": 30,
+        "failed": 0,
+        "unverified": 0,
+        "skipped": 0,
+        "artifact": "integrated-static-gate.log",
+        "sha256": "7e207abd17c5fa9dbb9639f5cabe0f0ab18e7249e90c537dfb727c1750afdb14"
+      },
+      "consumer_install_proof": {
+        "exit_code": 0,
+        "artifact": "consumer-install-proof.json",
+        "sha256": "b27adb0b68a5bf49276d04720e5a7d82be86349e9db2e80467d3f0a32ecfe1e1",
+        "owned_files": 153
+      },
+      "limitations": [
+        "Local candidate checks do not establish CI, integration, deployment, host loading or human epic acceptance."
+      ]
     }
   },
   "baseline_sha": null,
@@ -112,6 +138,11 @@
       "at": "2026-10-15T08:06:59.690960+00:00",
       "by": "orchestrator",
       "text": "Owner clarified the full autonomous skill-pack outcome and ongoing implementation. Current host-contract corrections preserve actual host permission boundaries and report unverified behavior; completion still requires independent proof."
+    },
+    {
+      "at": "2026-10-15T08:24:55.228810+00:00",
+      "by": "orchestrator",
+      "text": "Integrated candidate full static gate passed 409 unit tests and 30 evals, exit 0. Disposable combined/sequential consumer installs matched, repeat wrote zero changes, edited skills preserved on conflict. CI, integration, live host loading and epic acceptance remain unobserved."
     }
   ],
   "source_key": "installer-hosts/cursor-codex-projections"

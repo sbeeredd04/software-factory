@@ -610,6 +610,24 @@
             "skills/software-factory/scripts/roadmap.py",
             "tests/test_board_consistency.py"
           ]
+        },
+        {
+          "key": "derived-lifecycle-graph",
+          "title": "Derive provenance-linked SDLC trace graph from authoritative records",
+          "type": "story",
+          "after": [
+            "board-write-consistency"
+          ],
+          "covers": [],
+          "risk": "standard",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": false,
+          "scope": [
+            "skills/software-factory/scripts/trace.py",
+            "skills/software-factory/references/lifecycle-graph.md",
+            "tests/test_trace.py"
+          ]
         }
       ]
     },
