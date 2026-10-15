@@ -9,6 +9,13 @@ the planning; the factory ships.
 
 ## Outcomes that matter
 
+- One approved outcome drives the host's delivery loop without repeated
+  prompts for routine implementation, review, fixes or recovery. Material
+  risk, authority and required human acceptance still escalate.
+- Milestone progress, agent contributions, model attribution, evidence and
+  blockers stay visible through records and their regenerable dashboard.
+- Authorized monitoring and observed failures feed bug work and priorities;
+  setup asks the owner for the required monitoring access and authority.
 - A consumer can install the pack into a project and run a full feature lap
   with evidence at every gate, on any of the three hosts.
 - Every claim the pack makes is verifiable offline: formats, installers and

@@ -535,6 +535,43 @@
             "docs/research",
             "docs/plans"
           ]
+        },
+        {
+          "key": "mission-status-view",
+          "title": "Expose milestone progress, agent attempts and the activity log",
+          "type": "story",
+          "after": [
+            "lean-down"
+          ],
+          "covers": [],
+          "risk": "standard",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": false,
+          "scope": [
+            "skills/software-factory/scripts/dashboard.py",
+            "tests/test_dashboard.py"
+          ]
+        },
+        {
+          "key": "continuous-orchestration-contract",
+          "title": "Clarify continuous orchestration within an approved outcome",
+          "type": "story",
+          "after": [
+            "lean-down"
+          ],
+          "covers": [],
+          "risk": "low",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": false,
+          "scope": [
+            "skills/software-factory/SKILL.md",
+            "skills/software-factory/references/authority.md",
+            "skills/software-factory/references/team.md",
+            "skills/software-factory/references/handoff.md",
+            "skills/software-factory/references/recovery.md"
+          ]
         }
       ]
     },

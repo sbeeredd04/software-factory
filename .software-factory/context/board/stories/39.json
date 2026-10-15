@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "id": 39,
+  "epic": 2,
+  "type": "story",
+  "title": "Expose milestone progress, agent attempts and the activity log",
+  "status": "in-progress",
+  "owner": "codex-status-view",
+  "after": [
+    16
+  ],
+  "covers": [],
+  "risk": "standard",
+  "hitl": false,
+  "plan_checkpoint": false,
+  "done_checkpoint": false,
+  "blocked": null,
+  "receipts": {},
+  "baseline_sha": null,
+  "branch": null,
+  "pr": null,
+  "merged_sha": null,
+  "history": [
+    {
+      "at": "2026-10-15T08:03:56.123926+00:00",
+      "by": "orchestrator",
+      "from": "backlog",
+      "to": "ready-for-dev"
+    },
+    {
+      "at": "2026-10-15T08:03:56.227275+00:00",
+      "by": "codex-status-view",
+      "from": "ready-for-dev",
+      "to": "in-progress"
+    }
+  ],
+  "findings": [],
+  "source_key": "expansion/mission-status-view",
+  "scope": [
+    "skills/software-factory/scripts/dashboard.py",
+    "tests/test_dashboard.py"
+  ]
+}

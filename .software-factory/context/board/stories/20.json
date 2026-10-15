@@ -27,13 +27,7 @@
   "hitl": false,
   "plan_checkpoint": false,
   "done_checkpoint": false,
-  "blocked": {
-    "type": "human-decision",
-    "reason": "Current host invocation and permission contracts need owner resolution against official documentation.",
-    "since": "2026-10-15T07:55:12.141640+00:00",
-    "owner": "orchestrator",
-    "next_action": "Review docs/plans/host-contract-correction.md and approve the supported host contract."
-  },
+  "blocked": null,
   "receipts": {
     "ownership-repair": {
       "type": "partial-implementation-evidence",
@@ -94,6 +88,11 @@
       "at": "2026-10-15T07:55:12.141887+00:00",
       "by": "orchestrator",
       "text": "Recovered a stopped worker and integrated the independently inspected ownership repair. Story remains in progress; current host policy requirements are unresolved, and no completion is claimed."
+    },
+    {
+      "at": "2026-10-15T08:06:59.690960+00:00",
+      "by": "orchestrator",
+      "text": "Owner clarified the full autonomous skill-pack outcome and ongoing implementation. Current host-contract corrections preserve actual host permission boundaries and report unverified behavior; completion still requires independent proof."
     }
   ],
   "source_key": "installer-hosts/cursor-codex-projections"
