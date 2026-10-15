@@ -347,6 +347,13 @@ class BoundEvidenceTests(GateFixture):
             gate.bound_read(self.root, "alias/evidence.txt")
         with self.assertRaises((OSError, ValueError)):
             gate.bound_read(self.root, ".")
+        with self.assertRaises((OSError, ValueError)):
+            gate.bound_names(self.root, "alias")
+        (self.root / "records").mkdir()
+        (self.root / "records/1.json").write_text("{}")
+        (self.root / "records/2.json").write_text("{}")
+        with self.assertRaises(ValueError):
+            gate.bound_names(self.root, "records", limit=1)
 
     def test_strict_parser_rejects_duplicate_keys_and_non_finite_values(self):
         for text in ('{"decision":"revoke","decision":"approve"}',

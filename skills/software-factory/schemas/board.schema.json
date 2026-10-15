@@ -132,7 +132,7 @@
         "source_key": {"type": "string"}
       }
     },
-    "gateBinding": {"type": "object","required": ["path","sha256","subject_sha","phase","author","reviewer","checks"],"properties": {"path": {"type": "string","minLength": 1},"sha256": {"type": "string","pattern": "^[0-9a-f]{64}$"},"subject_sha": {"type": "string","pattern": "^[0-9a-f]{40}$"},"phase": {"enum": ["premerge","complete"]},"author": {"type": "string","minLength": 1},"reviewer": {"type": "string","minLength": 1},"checks": {"type": "object"}},"description": "Digest-bound structural acceptance; does not authenticate callers or attest external effects."},
+    "gateBinding": {"type": "object","required": ["path","sha256","subject_sha","phase","author","reviewer","checks"],"properties": {"path": {"type": "string","minLength": 1},"sha256": {"type": "string","pattern": "^[0-9a-f]{64}$"},"subject_sha": {"type": "string","pattern": "^[0-9a-f]{40}$"},"scope_sha256": {"type": "string","pattern": "^[0-9a-f]{64}$"},"phase": {"enum": ["premerge","complete"]},"author": {"type": "string","minLength": 1},"reviewer": {"type": "string","minLength": 1},"checks": {"type": "object"}},"description": "Digest-bound structural acceptance; does not authenticate callers or attest external effects."},
     "historyRow": {
       "type": "object",
       "required": ["at", "by", "from", "to"],

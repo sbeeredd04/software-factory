@@ -10,6 +10,7 @@ from __future__ import annotations
 import hashlib
 import json
 import re
+import stat
 import threading
 import unittest
 
@@ -161,7 +162,8 @@ class Board:
         bundle = self.root / f"epic-{epic}-review.json"
         bundle.write_text(json.dumps({"status": "pass", "scope_sha256": digest,
                                       "author": "fixture-reconciler", "reviewer": "fixture-independent",
-                                      "legacy_children": legacy}))
+                                      "legacy_children": legacy,
+                                      "reconciliation": "Synthetic review reconciled the fixture outcome and all child scope."}))
         source = self.root / f"epic-{epic}-owner.txt"
         source.write_text("Synthetic owner approval; not an authenticated decision.\n")
         approval = {"decision": "approve", "scope": {"epic": epic}, "phase": "epic",
@@ -192,11 +194,17 @@ class Board:
 
     def board_snapshot(self):
         """Every file under the board dir, content-keyed, for zero-write proofs."""
-        return {
-            str(path.relative_to(self.dir())): path.read_bytes()
-            for path in sorted(self.dir().rglob("*"))
-            if path.is_file()
-        }
+        snapshot = {}
+        for path in sorted(self.dir().rglob("*")):
+            mode = path.lstat().st_mode
+            key = str(path.relative_to(self.dir()))
+            if stat.S_ISREG(mode):
+                snapshot[key] = path.read_bytes()
+            elif stat.S_ISLNK(mode):
+                snapshot[key] = ("symlink", str(path.readlink()))
+            elif not stat.S_ISDIR(mode):
+                snapshot[key] = ("special", stat.S_IFMT(mode))
+        return snapshot
 
     def write_meta(self, **changes):
         path = self.dir() / "meta.json"

@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import types
 import unittest
 from pathlib import Path
@@ -193,6 +194,63 @@ class BoardGateTests(unittest.TestCase):
         (self.board.root / "proof/1-premerge.txt").write_text("tampered previously required test proof")
         self.refused(lambda: self.accept("complete", SHA_B, complete), "premerge evidence changed")
 
+    def test_initial_board_reads_reject_links_fifos_and_oversize_before_writes(self):
+        manifest = self.manifest()
+        targets = [self.board.story_file(1), self.board.story_file(2), self.board.epic_file(1),
+                   self.board.dir() / "streams.json", self.board.dir() / "meta.json",
+                   self.board.roadmap_file(), self.board.dashboard_file()]
+        for target in targets:
+            saved = target.read_bytes()
+            outside = self.board.root / "outside-record"
+            outside.write_bytes(saved)
+            for kind in ("symlink", "fifo"):
+                with self.subTest(target=target.name, kind=kind):
+                    target.unlink()
+                    if kind == "symlink":
+                        target.symlink_to(outside)
+                    else:
+                        os.mkfifo(target)
+                    try:
+                        self.refused(lambda: support.run(
+                            "roadmap", "--workspace", self.board.root, "update", "--story", "1",
+                            "--actor", "orchestrator", "--status", "built", "--sha", SHA_A,
+                            "--evidence", manifest.relative_to(self.board.root), timeout=3))
+                        self.assertEqual(saved, outside.read_bytes())
+                    finally:
+                        target.unlink()
+                        target.write_bytes(saved)
+        target = self.board.story_file(1)
+        saved = target.read_bytes()
+        target.write_bytes(b" " * (1024 * 1024 + 1))
+        self.refused(lambda: self.accept(path=manifest), "protected board")
+        target.write_bytes(saved)
+        remaining = [32 * roadmap.gate_module().MAX_EVIDENCE_BYTES - 1]
+        with self.assertRaises(roadmap.BoardError):
+            roadmap.protected_record(self.board.root, target, budget=remaining)
+        self.assertEqual(32 * roadmap.gate_module().MAX_EVIDENCE_BYTES - 1, remaining[0])
+
+    def test_board_directory_alias_is_not_followed_even_inside_workspace(self):
+        manifest = self.manifest()
+        directory = self.board.dir() / "stories"
+        actual = self.board.root / "saved-stories"
+        directory.rename(actual)
+        directory.symlink_to(actual, target_is_directory=True)
+        try:
+            before = {path.name: path.read_bytes() for path in actual.glob("*.json")}
+            self.refused(lambda: self.accept(path=manifest), "protected board")
+            self.assertEqual(before, {path.name: path.read_bytes() for path in actual.glob("*.json")})
+        finally:
+            directory.unlink()
+            actual.rename(directory)
+
+    def test_premerge_scope_changes_require_revision_before_completion(self):
+        self.board.write_story(1, done_checkpoint=True)
+        self.assertEqual(0, self.accept().returncode)
+        accepted = self.board.story(1)["accepted_gates"]["premerge"]
+        self.assertEqual(roadmap.scope_digest(self.board.story(1)), accepted["scope_sha256"])
+        self.board.write_story(1, done_checkpoint=False)
+        self.refused(lambda: self.accept("complete", SHA_B), "scope changed")
+
     def test_protected_config_first_read_is_bounded_and_no_follow(self):
         config = self.board.root / ".software-factory/config.yaml"
         external = self.board.root / "external-config.json"
@@ -202,12 +260,16 @@ class BoardGateTests(unittest.TestCase):
         config.unlink()
         config.write_bytes(b" " * (1024 * 1024 + 1))
         self.refused(lambda: self.accept(), "configuration")
+        for malformed in (None, [], True, "configuration", 1):
+            config.write_text(json.dumps(malformed))
+            self.refused(lambda: self.accept(), "configuration")
         config.write_text('{}')
         path = self.manifest()
         original = Path.read_text
 
         def guarded_read(path, *args, **kwargs):
             self.assertNotEqual(config, path, "protected config used the legacy unbounded reader")
+            self.assertFalse(path.is_relative_to(self.board.dir()), "protected board used legacy unbounded reader")
             return original(path, *args, **kwargs)
 
         args = types.SimpleNamespace(command="update", actor="orchestrator", status="built", story=1,
@@ -215,6 +277,7 @@ class BoardGateTests(unittest.TestCase):
                                      decision=None, receipt=None, finding=None, unblock=False, block=None)
         with mock.patch.object(Path, "read_text", new=guarded_read):
             record = roadmap.update_story(self.board.root, args)
+            roadmap.maybe_build(self.board.root, args._validated_config, protected=True)
         self.assertEqual("built", record["status"])
 
     def test_receipt_verdict_subject_and_self_hash_are_verified(self):
@@ -387,6 +450,8 @@ class BoardGateTests(unittest.TestCase):
         self.assertEqual(0, result.returncode, result.stderr)
         accepted = self.board.epic_record(1)
         self.assertTrue(accepted["acceptance"]["provenance_only"])
+        self.assertEqual("human", accepted["acceptance"]["by"])
+        self.assertEqual("fixture-owner", accepted["acceptance"]["approved_by"])
         self.assertEqual("done", accepted["status"])
         before = self.board.board_snapshot()
         result = self.close_epic(approval)
@@ -451,6 +516,47 @@ class BoardGateTests(unittest.TestCase):
         result = self.close_epic(approval)
         self.assertEqual(0, result.returncode, result.stderr)
         self.assertEqual(original, child_path.read_bytes(), "legacy source was backfilled")
+
+    def test_epic_bundle_needs_substantive_reconciliation_or_bound_outcome_bytes(self):
+        self.prepare_epic()
+        approval = self.board.root / self.board.epic_approval(1)
+        bundle = self.board.root / "epic-1-review.json"
+        report = json.loads(bundle.read_text())
+        report.pop("reconciliation")
+        self.write(bundle, report)
+        decision = json.loads(approval.read_text())
+        decision["evidence"]["sha256"] = hashlib.sha256(bundle.read_bytes()).hexdigest()
+        self.write(approval, decision)
+        self.refused(lambda: self.close_epic(approval), "reconciliation detail")
+        outcome = self.board.root / "outcome.txt"
+        outcome.write_text("Synthetic independent outcome reconciliation fixture.")
+        report["artifacts"] = [{"artifact": outcome.name,
+                                "sha256": hashlib.sha256(outcome.read_bytes()).hexdigest()}]
+        self.write(bundle, report)
+        decision["evidence"]["sha256"] = hashlib.sha256(bundle.read_bytes()).hexdigest()
+        self.write(approval, decision)
+        result = self.close_epic(approval)
+        self.assertEqual(0, result.returncode, result.stderr)
+
+    def test_epic_reconciliation_refuses_changed_protected_child_scope(self):
+        self.prepare_epic()
+        self.board.write_story(1, title="Changed historical outcome")
+        approval = self.board.root / self.board.epic_approval(1)
+        self.refused(lambda: self.close_epic(approval), "child scope changed")
+
+    def test_epic_initial_target_read_rejects_fifo_without_writes(self):
+        approval = self.prepare_epic()
+        target = self.board.epic_file(1)
+        saved = target.read_bytes()
+        target.unlink()
+        os.mkfifo(target)
+        try:
+            self.refused(lambda: support.run(
+                "roadmap", "--workspace", self.board.root, "epic", "--epic", "1",
+                "--actor", "human", "--status", "done", "--decision", approval.name, timeout=3))
+        finally:
+            target.unlink()
+            target.write_bytes(saved)
 
     def test_new_protected_child_cannot_take_the_legacy_reconciliation_path(self):
         self.prepare_epic()

@@ -97,15 +97,56 @@ def review_bundle(root, binding, scope_digest, legacy_children):
     artifacts = report.get("artifacts", [])
     if not isinstance(artifacts, list) or len(artifacts) > MAX_REQUIRED_CHECKS:
         raise ValueError("epic reconciliation artifact count exceeds its budget")
+    detail = report.get("reconciliation")
+    if not artifacts and (not isinstance(detail, str) or not detail.strip()):
+        raise ValueError("epic evidence needs reconciliation detail or an outcome artifact")
     total = len(content)
     for artifact in artifacts:
         if not isinstance(artifact, dict):
             raise TypeError("invalid reconciliation artifact")
-        proof = bound_read(root, artifact.get("artifact"))
+        if total >= MAX_BOUND_ARTIFACT_BYTES:
+            raise ValueError("epic reconciliation artifact reads exceeded their byte budget")
+        proof = bound_read(root, artifact.get("artifact"),
+                           limit=min(MAX_EVIDENCE_BYTES, MAX_BOUND_ARTIFACT_BYTES - total))
         total += len(proof)
-        if total > MAX_BOUND_ARTIFACT_BYTES or digest(proof) != artifact.get("sha256"):
+        if not proof.strip() or total > MAX_BOUND_ARTIFACT_BYTES or digest(proof) != artifact.get("sha256"):
             raise ValueError("epic reconciliation artifact changed or exceeded its budget")
     return report
+
+
+def bound_directory(root, relative):
+    """Open a contained directory without traversing symlinks."""
+    if (not isinstance(relative, str) or not relative or not relative.isprintable()
+            or Path(relative).is_absolute() or Path(relative).as_posix() != relative
+            or any(part in ("", ".", "..") for part in relative.split("/"))):
+        raise ValueError("evidence path must be a contained relative file")
+    descriptor = os.open(root, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+    try:
+        for part in Path(relative).parts:
+            child = os.open(part, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW,
+                            dir_fd=descriptor)
+            os.close(descriptor)
+            descriptor = child
+        return descriptor
+    except BaseException:
+        os.close(descriptor)
+        raise
+
+
+def bound_names(root, relative, limit=4096):
+    """Bound enumeration work; no directory symlink is followed."""
+    descriptor = bound_directory(root, relative)
+    try:
+        names = []
+        with os.scandir(descriptor) as entries:
+            for index, entry in enumerate(entries):
+                if index >= limit:
+                    raise ValueError("board directory exceeds its entry budget")
+                if entry.name.endswith(".json"):
+                    names.append(entry.name)
+        return sorted(names)
+    finally:
+        os.close(descriptor)
 
 
 def bound_read(root, relative, limit=MAX_EVIDENCE_BYTES):
@@ -114,14 +155,12 @@ def bound_read(root, relative, limit=MAX_EVIDENCE_BYTES):
             or Path(relative).is_absolute() or Path(relative).as_posix() != relative
             or any(part in ("", ".", "..") for part in relative.split("/"))):
         raise ValueError("evidence path must be a contained relative file")
-    descriptor = os.open(root, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+    parts = relative.split("/")
+    if len(parts) == 1:
+        descriptor = os.open(root, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+    else:
+        descriptor = bound_directory(root, "/".join(parts[:-1]))
     try:
-        parts = Path(relative).parts
-        for part in parts[:-1]:
-            child = os.open(part, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW,
-                            dir_fd=descriptor)
-            os.close(descriptor)
-            descriptor = child
         child = os.open(parts[-1], os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK,
                         dir_fd=descriptor)
         with os.fdopen(child, "rb") as stream:
@@ -204,7 +243,10 @@ def validate_bound(report, root, sha, phase, required, *, scope, scope_digest):
                 if approval["approved_by"] != check["approved_by"]:
                     raise ValueError("exception approver contradicts its source decision")
                 continue
-            content = bound_read(root, check.get("artifact"))
+            if measured >= MAX_BOUND_ARTIFACT_BYTES:
+                return ["protected gate artifact reads exceeded the aggregate byte budget"]
+            content = bound_read(root, check.get("artifact"),
+                                 limit=min(MAX_EVIDENCE_BYTES, MAX_BOUND_ARTIFACT_BYTES - measured))
             measured += len(content)
             if measured > MAX_BOUND_ARTIFACT_BYTES:
                 return ["protected gate artifact reads exceeded the aggregate byte budget"]

@@ -113,7 +113,10 @@ def scope_digest(record):
 
 def protected_configuration(workspace):
     try:
-        return gate_module().strict_json(gate_module().bound_read(workspace, CONFIG_FILE))
+        data = gate_module().strict_json(gate_module().bound_read(workspace, CONFIG_FILE))
+        if not isinstance(data, dict):
+            raise TypeError("protected configuration must be an object")
+        return data
     except FileNotFoundError:
         return None
     except (OSError, ValueError, TypeError) as exc:
@@ -130,6 +133,67 @@ def transition_config(workspace, args):
     args._strict_config_data = data
     args._validated_config = board_config(workspace, parsed_data=data)
     return args._validated_config
+
+
+def protected_record(workspace, path, *, missing=False, limit=None, budget=None):
+    gate = gate_module()
+    try:
+        read_limit = gate.MAX_EVIDENCE_BYTES if limit is None else limit
+        if budget is not None:
+            read_limit = min(read_limit, 32 * gate.MAX_EVIDENCE_BYTES - budget[0])
+        content = gate.bound_read(workspace, path.relative_to(workspace).as_posix(), limit=read_limit)
+        if budget is not None:
+            budget[0] += len(content)
+            if budget[0] > 32 * gate.MAX_EVIDENCE_BYTES:
+                raise ValueError("protected board exceeded its aggregate read budget")
+        record = gate.strict_json(content)
+        if not isinstance(record, dict):
+            raise TypeError("board record must be an object")
+        return record
+    except FileNotFoundError:
+        if missing:
+            return None
+        raise BoardError("protected board record is missing") from None
+    except (OSError, ValueError, TypeError, RecursionError) as exc:
+        raise BoardError("protected board record is unsafe, malformed or over budget") from exc
+
+
+def protected_board(workspace, config):
+    """Strict transition reader; default load_board still supports captured paths."""
+    gate = gate_module()
+    directory = workspace / config["dir"]
+    measured = [0]
+
+    def reader(path):
+        return protected_record(workspace, path, budget=measured)
+
+    def entries(path):
+        try:
+            return [path / name for name in gate.bound_names(workspace, path.relative_to(workspace).as_posix())]
+        except (OSError, ValueError, TypeError) as exc:
+            raise BoardError("protected board directory is unsafe or over budget") from exc
+
+    loaded = load_board(directory, reader=reader, entries=entries)
+    if loaded[-1]:
+        raise BoardError("protected transition requires valid consistent board records")
+    return loaded
+
+
+def protected_projection_inputs(workspace, config):
+    """Reject unsafe existing projection inputs before any transition write."""
+    gate = gate_module()
+    directory = workspace / config["dir"]
+    roadmap = protected_record(workspace, directory / "roadmap.json", missing=True,
+                               limit=gate.MAX_BOUND_ARTIFACT_BYTES)
+    dashboard = None
+    try:
+        dashboard = gate.bound_read(workspace, (directory / "dashboard.html").relative_to(workspace).as_posix(),
+                                   limit=gate.MAX_BOUND_ARTIFACT_BYTES).decode("utf-8")
+    except FileNotFoundError:
+        pass
+    except (OSError, ValueError, TypeError) as exc:
+        raise BoardError("protected dashboard input is unsafe, malformed or over budget") from exc
+    return roadmap, dashboard
 
 
 def required_checkpoint(workspace, record, args, phase, sha=None, *, use_argument=True):
@@ -178,6 +242,8 @@ def protected_gate(workspace, record, args, phase):
         if phase == "complete":
             if not isinstance(built, dict) or not isinstance(built.get("checks"), dict) or not built["checks"]:
                 raise ValueError("complete requires accepted premerge obligations")
+            if built.get("scope_sha256") != scope_digest(record):
+                raise ValueError("accepted story scope changed; return to revision before completion")
             accepted_checks = built["checks"]
             required = list(dict.fromkeys([*accepted_checks, *required]))
         errors = gate.validate_bound(report, root, sha, phase, required,
@@ -222,6 +288,7 @@ def protected_gate(workspace, record, args, phase):
         if phase == "complete" and (record["hitl"] or record["done_checkpoint"]):
             required_checkpoint(workspace, record, args, "complete", sha)
         binding = {"path": args.evidence, "sha256": gate.digest(content), "subject_sha": sha,
+                   "scope_sha256": scope_digest(record),
                    "phase": phase, "author": report["author"], "reviewer": report["reviewer"],
                    "checks": {name: report["checks"][name] for name in required}}
         record.setdefault("accepted_gates", {})[phase] = binding
@@ -233,8 +300,8 @@ def protected_gate(workspace, record, args, phase):
 def epic_review_scope(workspace, config, record):
     """Bind exact current child records and the declared epic outcome."""
     gate = gate_module()
-    directory = board_dir(workspace, config)
-    _, _, epics, stories, problems = load_board(directory)
+    directory = workspace / config["dir"]
+    _, _, epics, stories, problems = protected_board(workspace, config)
     if problems:
         raise BoardError("epic acceptance requires a readable consistent board")
     children = sorted((story for story in stories.values() if story["epic"] == record["id"]), key=lambda s: s["id"])
@@ -269,6 +336,8 @@ def validate_child_acceptance(workspace, child, config_data):
         binding = accepted.get(phase)
         if not isinstance(binding, dict) or not isinstance(binding.get("checks"), dict):
             raise TypeError("protected child has missing acceptance evidence")
+        if binding.get("scope_sha256") != scope_digest(child):
+            raise ValueError("accepted child scope changed; revision is required")
         content = gate.bound_read(workspace, binding.get("path"))
         if gate.digest(content) != binding.get("sha256"):
             raise ValueError("child acceptance manifest changed")
@@ -338,7 +407,8 @@ def accept_epic(workspace, config, record, args):
             raise ValueError("epic reconciliation reviewer also owns child implementation")
         if record.get("acceptance"):
             record.setdefault("acceptance_history", []).append(record["acceptance"])
-        record["acceptance"] = {"by": approval["approved_by"], "at": now(), "decision": args.decision,
+        record["acceptance"] = {"by": "human", "approved_by": approval["approved_by"],
+                                "at": now(), "decision": args.decision,
                                 "decision_sha256": decision_digest, "scope_sha256": scoped,
                                 "evidence": evidence, "legacy_children": legacy,
                                 "provenance_only": True}
@@ -551,10 +621,13 @@ def validate_epic(record):
     return None
 
 
-def load_board(directory: Path):
+def load_board(directory: Path, *, reader=None, entries=None):
     """Load and validate every record; degenerate entries become problems."""
     problems = []
-    streams_doc = read_record(directory / "streams.json")
+    reader = read_record if reader is None else reader
+    if entries is None:
+        entries = lambda path: sorted(path.glob("*.json")) if path.is_dir() else []
+    streams_doc = reader(directory / "streams.json")
     if (
         not streams_doc
         or streams_doc.get("version") != 1
@@ -573,11 +646,11 @@ def load_board(directory: Path):
             or not all(_is_int(item) for item in entry["epics"])
         ):
             raise BoardError(
-                f"board: invalid stream entry {entry.get('id')!r} in streams.json; "
+                "board: invalid stream entry in streams.json; "
                 "reconcile the board"
             )
         streams.append(entry)
-    meta = read_record(directory / "meta.json")
+    meta = reader(directory / "meta.json")
     if (
         not meta
         or meta.get("version") != 1
@@ -586,8 +659,8 @@ def load_board(directory: Path):
     ):
         raise BoardError("board: meta.json missing or invalid; reconcile the board")
     epics = {}
-    for path in sorted((directory / "epics").glob("*.json")) if (directory / "epics").is_dir() else []:
-        record = read_record(path)
+    for path in entries(directory / "epics"):
+        record = reader(path)
         reason = None if record is None else validate_epic(record)
         if record is None or reason:
             problems.append(
@@ -600,23 +673,22 @@ def load_board(directory: Path):
         epics[record["id"]] = record
     stories = {}
     stories_dir = directory / "stories"
-    if stories_dir.is_dir():
-        for path in sorted(stories_dir.glob("*.json")):
-            record = read_record(path)
-            reason = None if record is None else validate_story(record)
-            if record is None or reason:
-                problems.append(
-                    {"file": f"stories/{path.name}", "story": _maybe_int(path.stem),
-                     "reason": reason or "unreadable or not an object"}
-                )
-                continue
-            if record["id"] in stories:
-                problems.append(
-                    {"file": f"stories/{path.name}", "story": record["id"],
-                     "reason": f"duplicate story id {record['id']}"}
-                )
-                continue
-            stories[record["id"]] = record
+    for path in entries(stories_dir):
+        record = reader(path)
+        reason = None if record is None else validate_story(record)
+        if record is None or reason:
+            problems.append(
+                {"file": f"stories/{path.name}", "story": _maybe_int(path.stem),
+                 "reason": reason or "unreadable or not an object"}
+            )
+            continue
+        if record["id"] in stories:
+            problems.append(
+                {"file": f"stories/{path.name}", "story": record["id"],
+                 "reason": f"duplicate story id {record['id']}"}
+            )
+            continue
+        stories[record["id"]] = record
     return streams, meta, epics, stories, problems
 
 
@@ -941,10 +1013,10 @@ def resolve_after(after, epic_key, epics_by_key, stories_by_key):
 # -- transitions: who-transitions-what, enforced in code ---------------------------
 
 
-def story_path(workspace: Path, config, story_id):
-    directory = board_dir(workspace, config)
+def story_path(workspace: Path, config, story_id, *, protected=False):
+    directory = workspace / config["dir"] if protected else board_dir(workspace, config)
     path = directory / "stories" / f"{story_id}.json"
-    record = read_record(path)
+    record = protected_record(workspace, path) if protected else read_record(path)
     reason = None if record is None else validate_story(record)
     if record is None or reason:
         raise BoardError(
@@ -1146,8 +1218,7 @@ def human_update(record, args):
 
 def unmet_dependencies(workspace, config, record, for_merge=False):
     """Human-readable unmet prerequisites; merge-level needs providers done."""
-    directory = board_dir(workspace, config)
-    _, _, epics, stories, _ = load_board(directory)
+    _, _, epics, stories, _ = protected_board(workspace, config)
     unmet = []
     for item in record.get("after", []):
         if isinstance(item, dict):
@@ -1177,7 +1248,11 @@ def update_story(workspace: Path, args):
     if story_id < 1:
         raise BoardError("story id must be a positive integer")
     with board_locked(workspace):
-        path, record = story_path(workspace, config, story_id)
+        protected = hasattr(args, "_validated_config")
+        if protected:
+            protected_board(workspace, config)
+            protected_projection_inputs(workspace, config)
+        path, record = story_path(workspace, config, story_id, protected=protected)
         if record["status"] in TERMINAL and not (
             args.actor == "human" and args.status == "cancelled" and record["status"] == "cancelled"
         ):
@@ -1204,12 +1279,16 @@ def update_story(workspace: Path, args):
 
 def epic_update(workspace: Path, args):
     config = transition_config(workspace, args)
-    directory = board_dir(workspace, config)
+    protected = hasattr(args, "_validated_config")
+    directory = workspace / config["dir"] if protected else board_dir(workspace, config)
     epic_id = int(args.epic)
     with board_locked(workspace):
+        if protected:
+            protected_board(workspace, config)
+            protected_projection_inputs(workspace, config)
         path, record = None, None
         candidate = directory / "epics" / f"{epic_id}.json"
-        record = read_record(candidate)
+        record = protected_record(workspace, candidate) if protected else read_record(candidate)
         reason = None if record is None else validate_epic(record)
         if record is None or reason:
             raise BoardError(f"epic {epic_id} has no valid record ({reason or 'missing'})")
@@ -1376,9 +1455,9 @@ def critical_paths(stories, stream_of):
     return per_stream
 
 
-def compute_roadmap(workspace: Path, config, directory: Path):
+def compute_roadmap(workspace: Path, config, directory: Path, *, loaded_board=None):
     """Derive the full projection from the records plus a read-only claims mirror."""
-    streams, _meta, epics, stories, problems = load_board(directory)
+    streams, _meta, epics, stories, problems = load_board(directory) if loaded_board is None else loaded_board
 
     # Membership: an epic joins its stream through the stream's epics array.
     stream_of_epic = {}
@@ -1714,20 +1793,23 @@ def compute_roadmap(workspace: Path, config, directory: Path):
     return payload
 
 
-def build(workspace: Path, config=None):
+def build(workspace: Path, config=None, *, protected=False):
     """Regenerate roadmap.json and dashboard.html from the records; locked."""
     config = board_config(workspace) if config is None else config
-    directory = board_dir(workspace, config)
-    if not (directory / "streams.json").is_file():
+    directory = workspace / config["dir"] if protected else board_dir(workspace, config)
+    if not protected and not (directory / "streams.json").is_file():
         raise BoardError(
             f"no board at {config['dir']}; run `roadmap.py init` or `roadmap.py derive` first"
         )
     with board_locked(workspace):
-        payload = compute_roadmap(workspace, config, directory)
+        loaded = protected_board(workspace, config) if protected else None
+        existing, dashboard_before = protected_projection_inputs(workspace, config) if protected else (None, None)
+        payload = compute_roadmap(workspace, config, directory, loaded_board=loaded)
         roadmap_path = directory / "roadmap.json"
         revision = 1
         generated_at = now()
-        existing = read_record(roadmap_path)
+        if not protected:
+            existing = read_record(roadmap_path)
         if existing is not None:
             prior = {key: value for key, value in existing.items()
                      if key not in ("revision", "generated_at")}
@@ -1749,7 +1831,10 @@ def build(workspace: Path, config=None):
         state_module().atomic_json(roadmap_path, document)
         html = dashboard_module().render_html(document)
         dashboard_path = directory / "dashboard.html"
-        if not dashboard_path.is_file() or dashboard_path.read_text() != html:
+        if protected:
+            if dashboard_before != html:
+                state_module().atomic_text(dashboard_path, html)
+        elif not dashboard_path.is_file() or dashboard_path.read_text() != html:
             state_module().atomic_text(dashboard_path, html)
     stories = len(payload["stories"])
     problems = len(payload["problems"])
@@ -1775,9 +1860,9 @@ def init_board(workspace: Path):
     return directory
 
 
-def maybe_build(workspace: Path, config):
+def maybe_build(workspace: Path, config, *, protected=False):
     if config["regenerate"] == "on-write":
-        build(workspace, config=config)
+        build(workspace, config=config, protected=protected)
 
 
 def main():
@@ -1823,14 +1908,16 @@ def main():
             if args.story is None or args.actor is None:
                 parser.error("update needs --story and --actor")
             record = update_story(root, args)
-            maybe_build(root, args._validated_config if hasattr(args, "_validated_config") else board_config(root))
+            maybe_build(root, args._validated_config if hasattr(args, "_validated_config") else board_config(root),
+                        protected=hasattr(args, "_validated_config"))
             print(f"board: story {record['id']} updated ({record['status']})")
             return 0
         if args.command == "epic":
             if args.epic is None or args.actor is None or args.status is None:
                 parser.error("epic needs --epic, --actor and --status")
             record = epic_update(root, args)
-            maybe_build(root, args._validated_config if hasattr(args, "_validated_config") else board_config(root))
+            maybe_build(root, args._validated_config if hasattr(args, "_validated_config") else board_config(root),
+                        protected=hasattr(args, "_validated_config"))
             print(f"board: epic {record['id']} updated ({record['status']})")
             return 0
         return 2

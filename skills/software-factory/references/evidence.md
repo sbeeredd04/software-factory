@@ -89,8 +89,9 @@ These labels are structural assertions, not authenticated identities.
 
 `built` still requires every provider done and every applicable epic gate
 accepted; readiness continues to count in-review providers as met. It stores
-the manifest path, SHA-256, subject, identities and check bindings under
-`accepted_gates.premerge`. `done` consumes the complete-phase gate for the
+the manifest path, SHA-256, subject, current `scope_sha256`, identities and
+check bindings under `accepted_gates.premerge`. Changing accepted story scope
+or checkpoint flags requires revision before completion or epic reconciliation. `done` consumes the complete-phase gate for the
 merge SHA, rechecks the accepted premerge manifest/artifacts, and requires:
 
 - `candidate_sha` equal to the accepted premerge subject;
@@ -101,8 +102,13 @@ merge SHA, rechecks the accepted premerge manifest/artifacts, and requires:
 Completion retains every previously accepted premerge check obligation and
 adds current configured requirements. Weakening the configuration cannot
 remove old proof from revalidation. Protected transitions read configuration
-once through the same bounded, no-follow reader; graph queries retain their
-captured-source configuration contract.
+once through the same bounded, no-follow reader; present null/scalar/array
+configuration is invalid. Initial target and board reads also use bounded,
+no-follow regular-file reads, so a symlink, FIFO or oversize record cannot
+reach the legacy parser. Board loading is capped at 4096 directory entries
+per record directory and 32 MiB of source bytes in aggregate. Existing
+projection inputs are checked before transition writes and read safely during
+regeneration (8 MiB each). Graph queries retain their captured-source contract.
 
 Completion requires a passing effect check, rather than an applicability
 exclusion standing in for effect proof.
@@ -163,10 +169,13 @@ The source-linked decision uses `scope: {epic: <integer>}`, `phase: epic`, the
 matching `scope_sha256`, and an `evidence` binding with `artifact` and `sha256`.
 That contained independent reconciliation bundle has `status: pass`, the same
 `scope_sha256`, distinct nonempty `author`/`reviewer` identities and exact
-`legacy_children`. The reviewer cannot own a reviewed child implementation. Optional `artifacts` are contained digest bindings, at most
-64, totaling at most 8 MiB including the bundle. If `--evidence` is supplied,
+`legacy_children`. The reviewer cannot own a reviewed child implementation.
+The report includes substantive nonempty `reconciliation` outcome detail or
+nonempty digest-bound outcome `artifacts`. Those contained artifact bindings
+are limited to 64 and 8 MiB total including the bundle. If `--evidence` is supplied,
 it must identify the very bundle the owner approved. Replaced acceptance
-references remain in `acceptance_history`.
+references remain in `acceptance_history`. Acceptance retains `by: human`
+for existing board readers and records the decision identity in `approved_by`.
 
 Historical done children need no synthetic gate backfill. The new decision
 and independently reviewed bundle must explicitly list their IDs in
@@ -178,7 +187,7 @@ to omit their required gates. Cancelled children are included in the reviewed
 scope without implying implementation or deployment.
 
 Derivation also respects frozen terminal stories and epics: unchanged source
-preserves terminal source bytes, but changed terminal fields, child additions/order or stream
-membership are refused before publishing any records or projections. Route
+preserves terminal source bytes, but changed terminal fields, child additions,
+order or stream membership are refused before publishing any records or projections. Route
 changed accepted scope to new work and an explicit decision. Historical
 terminal records remain readable without a schema/version migration.
