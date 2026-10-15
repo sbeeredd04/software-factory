@@ -7,6 +7,7 @@ configuration-driven check names, and the never-execute rule.
 """
 from __future__ import annotations
 
+import hashlib
 import importlib.util
 import json
 import tempfile
@@ -268,6 +269,107 @@ class NoExecutionTests(GateFixture):
 
     def test_imports_are_standard_library_only(self):
         self.assertEqual([], support.non_stdlib_imports(SCRIPTS / "gate.py"))
+
+
+class BoundEvidenceTests(GateFixture):
+    def bound_report(self):
+        report = self.report("premerge")
+        for check in report["checks"].values():
+            check["artifact_sha256"] = gate.digest((self.root / "evidence.txt").read_bytes())
+        return report
+
+    def validate(self, report):
+        return gate.validate_bound(report, self.root, SHA, "premerge",
+                                   list(gate.DEFAULT_REQUIRED["premerge"]),
+                                   scope={"story": 1}, scope_digest="b" * 64)
+
+    def approval(self, phase):
+        source = self.root / "owner.txt"
+        source.write_text("Synthetic source evidence\n")
+        record = {"decision": "approve", "scope": {"story": 1}, "phase": phase,
+                  "subject_sha": SHA, "approved_by": "owner", "approved_at": "2026-10-15T00:00:00Z",
+                  "source": {"kind": "approval-surface", "ref": "fixture:approval",
+                             "artifact": source.name, "sha256": gate.digest(source.read_bytes())}}
+        path = self.write(record, "decision.json")
+        return path, gate.digest(path.read_bytes())
+
+    def test_strict_digest_binding_does_not_change_legacy_gate_contract(self):
+        self.assertEqual([], gate.validate(self.report("premerge"), self.root, SHA, "premerge"))
+        self.assertTrue(self.validate(self.report("premerge")))
+        self.assertEqual([], self.validate(self.bound_report()))
+
+    def test_not_applicable_needs_bound_scoped_source_and_cannot_exclude_review(self):
+        report = self.bound_report()
+        path, digest = self.approval("exception:ci")
+        report["checks"]["ci"] = {"status": "not_applicable", "subject_sha": SHA,
+                                   "approved_by": "owner", "reason": "fixture-only exclusion",
+                                   "decision_ref": path.name, "decision_sha256": digest}
+        self.assertEqual([], self.validate(report))
+        (self.root / "owner.txt").write_text("source changed")
+        self.assertTrue(self.validate(report))
+        path, digest = self.approval("exception:review")
+        report["checks"]["review"] = {**report["checks"]["ci"], "decision_sha256": digest}
+        self.assertTrue(self.validate(report))
+
+    def test_contradictory_or_revoked_decision_is_refused(self):
+        path, _ = self.approval("exception:ci")
+        record = json.loads(path.read_text())
+        for changes in ({"decision": "reject"}, {"phase": "other"},
+                        {"subject_sha": "c" * 40, "scope_sha256": "b" * 64},
+                        {"approved_at": "2026-10-15"}):
+            path.write_text(json.dumps({**record, **changes}))
+            with self.assertRaises((ValueError, TypeError)):
+                gate.decision(self.root, path.name, gate.digest(path.read_bytes()),
+                              scope={"story": 1}, phase="exception:ci", sha=SHA, scope_digest="b" * 64)
+
+    def test_overridden_failure_needs_explicit_source_bound_disposition(self):
+        receipt = {"subject_sha": SHA, "verdict": "pass",
+                   "overrides": [{"from_verdict": "fail", "who": "owner", "when": "fixture", "reason": "fixture"}]}
+        receipt["self_sha256"] = hashlib.sha256(json.dumps(
+            receipt, sort_keys=True, separators=(",", ":"), ensure_ascii=False
+        ).encode()).hexdigest()
+        path = self.write(receipt, "receipt.json")
+        report = self.bound_report()
+        report["checks"]["eval"].update(artifact=path.name, artifact_sha256=gate.digest(path.read_bytes()))
+        self.assertTrue(self.validate(report))
+        approval, digest = self.approval("override:eval")
+        record = json.loads(approval.read_text())
+        record["artifact_sha256"] = gate.digest(path.read_bytes())
+        approval.write_text(json.dumps(record))
+        digest = gate.digest(approval.read_bytes())
+        report["checks"]["eval"].update(disposition="approved_override",
+                                        override_decision_ref=approval.name, override_decision_sha256=digest)
+        self.assertEqual([], self.validate(report))
+
+    def test_bound_reads_refuse_parent_symlinks_and_non_regular_files(self):
+        (self.root / "alias").symlink_to(self.root, target_is_directory=True)
+        with self.assertRaises((OSError, ValueError)):
+            gate.bound_read(self.root, "alias/evidence.txt")
+        with self.assertRaises((OSError, ValueError)):
+            gate.bound_read(self.root, ".")
+
+    def test_strict_parser_rejects_duplicate_keys_and_non_finite_values(self):
+        for text in ('{"decision":"revoke","decision":"approve"}',
+                     '{"nested":{"verdict":"fail","verdict":"pass"}}',
+                     '{"value":NaN}', '{"value":Infinity}', '{"value":-Infinity}',
+                     '{"value":1e999}'):
+            with self.subTest(text=text), self.assertRaises(ValueError):
+                gate.strict_json(text)
+
+    def test_required_check_count_and_aggregate_artifact_budget_are_finite(self):
+        report = self.bound_report()
+        errors = gate.validate_bound(report, self.root, SHA, "premerge",
+                                     ["tests"] * (gate.MAX_REQUIRED_CHECKS + 1),
+                                     scope={"story": 1}, scope_digest="b" * 64)
+        self.assertIn("count", errors[0])
+        artifact = self.root / "evidence.txt"
+        artifact.write_bytes(b"a" * gate.MAX_EVIDENCE_BYTES)
+        report = self.bound_report()
+        names = ["review", *[f"check-{index}" for index in range(8)]]
+        report["checks"] = {name: report["checks"]["tests"] for name in names}
+        errors = gate.validate_bound(report, self.root, SHA, "premerge", names,
+                                     scope={"story": 1}, scope_digest="b" * 64)
+        self.assertIn("aggregate", errors[0])
 
 
 if __name__ == "__main__":

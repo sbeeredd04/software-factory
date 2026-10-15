@@ -63,7 +63,8 @@
           "description": "Declared cross-epic gates: epics this epic depends on."
         },
         "status": {"enum": ["planned", "in-progress", "awaiting-acceptance", "done", "parked", "cancelled"]},
-        "acceptance": {"type": ["object", "null"]},
+        "acceptance": {"type": ["object", "null"], "description": "New acceptance binds a source decision, exact epic/current-child scope and independent reconciliation bundle. Historical terminal acceptance objects remain readable."},
+        "acceptance_history": {"type": "array", "items": {"type": "object"}},
         "parked": {"type": ["object", "null"]},
         "park_proposal": {"type": ["object", "null"]},
         "history": {"type": "array", "items": {"$ref": "#/$defs/historyRow"}},
@@ -116,6 +117,12 @@
             "properties": {"subject_sha": {"type": "string", "minLength": 1}}
           }
         },
+        "evidence_contract": {"const": 1, "description": "Newly created or protected-accepted work uses the strict evidence contract; absent historical terminal records are not migrated."},
+        "review_subject_sha": {"type": "string","pattern": "^[0-9a-f]{40}$","description": "Current worker-submitted review subject; required for new premerge acceptance, never backfilled into history."},
+        "accepted_gates": {"type": "object","additionalProperties": {"$ref": "#/$defs/gateBinding"}},
+        "gate_history": {"type": "array","items": {"type": "object"},"description": "Preserved gate bindings from previous review attempts."},
+        "checkpoint_decisions": {"type": "object","additionalProperties": {"type": "object","required": ["path","sha256"],"properties": {"path": {"type": "string","minLength": 1},"sha256": {"type": "string","pattern": "^[0-9a-f]{64}$"}}}},
+        "checkpoint_history": {"type": "array","items": {"type": "object"}},
         "baseline_sha": {"type": ["string", "null"]},
         "branch": {"type": ["string", "null"]},
         "pr": {"type": ["string", "null"]},
@@ -125,6 +132,7 @@
         "source_key": {"type": "string"}
       }
     },
+    "gateBinding": {"type": "object","required": ["path","sha256","subject_sha","phase","author","reviewer","checks"],"properties": {"path": {"type": "string","minLength": 1},"sha256": {"type": "string","pattern": "^[0-9a-f]{64}$"},"subject_sha": {"type": "string","pattern": "^[0-9a-f]{40}$"},"phase": {"enum": ["premerge","complete"]},"author": {"type": "string","minLength": 1},"reviewer": {"type": "string","minLength": 1},"checks": {"type": "object"}},"description": "Digest-bound structural acceptance; does not authenticate callers or attest external effects."},
     "historyRow": {
       "type": "object",
       "required": ["at", "by", "from", "to"],
