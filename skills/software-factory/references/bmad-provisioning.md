@@ -26,7 +26,11 @@ transitive dependencies can resolve newer versions. Installation metadata record
 observed versions, module provenance, tool IDs and the manifest hash; unknown
 values remain unknown. The bounded reader supports the pinned manifest writer's
 YAML subset and legacy module names, not arbitrary YAML. Unsupported syntax is
-reported as unknown instead of partially interpreted.
+reported as unknown instead of partially interpreted. Output verification accepts
+at most 1,024 inventoried skills, 4 MiB per skill, and 64 MiB in aggregate across
+the inventory and selected host copies. These limits leave room above the pinned
+installation while bounding observation of untrusted upstream output. Exceeding
+a limit leaves completion unverified and reports the attempt as failed.
 
 The official CLI may check for a newer release; the factory does not act on that
 suggestion or switch package versions. npm can use its cache, and upstream defaults

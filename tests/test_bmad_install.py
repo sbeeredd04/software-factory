@@ -93,6 +93,10 @@ with (root/'_bmad/_config/skill-manifest.csv').open('w',newline='') as stream:
             skill.write_text('# Synthetic BMad skill\n')
 if mode=='conflict':
     (root/'.agents/skills/software-factory/SKILL.md').write_text('upstream collision')
+if mode in ('projection-fifo','manifest-fifo'):
+    target=(root/'.agents/skills/software-factory/SKILL.md') if mode=='projection-fifo' else metadata
+    target.unlink()
+    os.mkfifo(target)
 '''
 
 
@@ -163,8 +167,12 @@ class BmadTests(unittest.TestCase):
                 self.install(host)
                 calls = self.calls()[before:]
                 self.assertEqual(["node", "npm", "npx"], [c["name"] for c in calls])
-                expected = ["claude-code", "cursor", "codex"] if host == "all" else [host]
-                self.assertEqual(bmad.command(self.repo, expected)[1:], calls[-1]["argv"])
+                tools = {"claude-code": "claude-code", "cursor": "cursor", "codex": "codex",
+                         "all": "claude-code,cursor,codex"}[host]
+                self.assertEqual([
+                    "-y", "bmad-method@6.12.0", "install", "--directory", str(self.repo),
+                    "--tools", tools, "--modules", "bmm,bmb,cis,tea", "--yes",
+                ], calls[-1]["argv"])
                 self.assertEqual(str(self.repo), calls[-1]["cwd"])
                 self.assertEqual("", calls[-1]["stdin"])
                 record = self.record()
@@ -172,6 +180,32 @@ class BmadTests(unittest.TestCase):
                 self.assertEqual({"node": "v20.12.0", "npm": "10.8.2"}, record["runtime_versions"])
                 self.assertEqual(bmad.parse_manifest(MANIFEST.encode())["modules"], record["modules"])
                 self.assert_factory()
+
+    def test_output_verification_has_skill_count_and_aggregate_budgets(self):
+        record = bmad.parse_manifest(MANIFEST.encode())
+        header = "canonicalId,name,description,module,path\n"
+        oversized = header + "".join(
+            f"bmad-fixture-{index},fixture,fixture,core,unused\n"
+            for index in range(bmad.MAX_SKILLS + 1)
+        )
+        with mock.patch.object(bmad, "read_payload", return_value=oversized.encode()) as read:
+            self.assertFalse(bmad.complete(self.repo, ["codex"], record))
+            self.assertEqual(1, read.call_count)  # Reject inventory before reading skills.
+        inventory = (header + "".join(
+            f"bmad-fixture-{module},fixture,fixture,{module},unused\n" for module in bmad.MODULES
+        )).encode()
+        limits = []
+
+        def payload(root, rel, limit):
+            if rel.endswith("skill-manifest.csv"):
+                return inventory
+            limits.append(limit)
+            return b"x" * limit
+
+        with (mock.patch.object(bmad, "MAX_VERIFICATION_BYTES", len(inventory) + 7),
+              mock.patch.object(bmad, "read_payload", side_effect=payload)):
+            self.assertFalse(bmad.complete(self.repo, ["claude-code", "codex"], record))
+        self.assertEqual([7], limits)  # Stop before a second host read after exhaustion.
 
     def test_existing_manifest_preserved_without_probes_or_updates(self):
         path = self.repo / bmad.MANIFEST
@@ -281,6 +315,64 @@ class BmadTests(unittest.TestCase):
         self.assertEqual(0, result.returncode, result.stderr)
         self.assertEqual(bmad_before, support.tree_hashes(self.repo / "_bmad"))
         self.assertTrue((self.repo / ".agents/skills/bmad-fixture-core/SKILL.md").is_file())
+
+    def test_unsafe_ownership_paths_are_refused_before_upstream_or_payload_reads(self):
+        self.install("all", "--skip-bmad")
+        api = types.SimpleNamespace(**runpy.run_path(str(support.INSTALLER)))
+        path = self.repo / ".software-factory/installation.json"
+        original = json.loads(path.read_text())
+        for unsafe in ("../outside", str(self.temp / "outside"), "", ".", "x/../outside", "x//file"):
+            with self.subTest(path=unsafe):
+                data = json.loads(json.dumps(original))
+                data["files"][0]["path"] = unsafe
+                path.write_text(json.dumps(data))
+                with (mock.patch.object(bmad, "attempt", side_effect=AssertionError("upstream")),
+                      mock.patch.object(bmad, "read_payload", wraps=bmad.read_payload) as reads,
+                      self.assertRaises(api.InstallError)):
+                    bmad.provision(self.repo, ["cursor"], api)
+                self.assertEqual([api.MANIFEST_REL], [call.args[1] for call in reads.call_args_list])
+
+    def test_final_component_replacement_is_not_followed_and_is_reported_unstable(self):
+        target = self.repo / "payload"
+        target.write_bytes(b"original")
+        outside = self.temp / "outside"
+        outside.write_bytes(b"external private bytes")
+        original_fdopen = bmad.os.fdopen
+
+        def replace_before_read(*args, **kwargs):
+            target.unlink()
+            target.symlink_to(outside)
+            return original_fdopen(*args, **kwargs)
+
+        with (mock.patch.object(bmad.os, "fdopen", side_effect=replace_before_read),
+              self.assertRaisesRegex(ValueError, "changed during observation")):
+            bmad.read_payload(self.repo, "payload", 100)
+        self.assertEqual(b"external private bytes", outside.read_bytes())
+        with self.assertRaises(OSError):
+            bmad.read_payload(self.repo, "payload", 100)
+
+    def test_oversized_ownership_manifest_is_refused_before_upstream(self):
+        self.install("all", "--skip-bmad")
+        api = types.SimpleNamespace(**runpy.run_path(str(support.INSTALLER)))
+        (self.repo / api.MANIFEST_REL).write_bytes(b" " * (bmad.MAX_OWNERSHIP_BYTES + 1))
+        with (mock.patch.object(bmad, "attempt", side_effect=AssertionError("upstream")),
+              self.assertRaises(api.InstallError)):
+            bmad.provision(self.repo, ["cursor"], api)
+
+    def test_upstream_special_files_cannot_block_verification_or_metadata_publication(self):
+        for mode in ("projection-fifo", "manifest-fifo"):
+            with self.subTest(mode=mode):
+                self.repo = support.fresh_repo(self.temp, mode)
+                self.env["SF_BMAD_MODE"] = mode
+                result = support.run_installer("install", "--project", self.repo, "--host", "all",
+                                               env=self.env, timeout=5)
+                self.assertEqual(1, result.returncode, result.stderr)
+                self.assertNotIn("Traceback", result.stdout + result.stderr)
+                if mode == "projection-fifo":
+                    self.assertEqual("failed", self.record()["status"])
+                    self.assertIn("factory-owned files changed", self.record()["reason"])
+                else:
+                    self.assertIn("BMad metadata phase failed", result.stderr)
 
     def test_parser_subset_legacy_unknown_and_rejections(self):
         parsed = bmad.parse_manifest(b"installation:\n  version: '6.12.0'\nmodules:\n  - core\nides: []\n")

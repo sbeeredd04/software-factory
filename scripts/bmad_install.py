@@ -28,6 +28,11 @@ PREREQUISITES = ("node", "npm", "npx", "uv", "git")
 INSTALL_TIMEOUT = 300
 PROBE_TIMEOUT = 10
 MAX_MANIFEST_BYTES = 512 * 1024
+MAX_OWNERSHIP_BYTES = 4 * 1024 * 1024
+MAX_PROJECTION_BYTES = 8 * 1024 * 1024
+MAX_SKILLS = 1024
+MAX_SKILL_BYTES = 4 * 1024 * 1024
+MAX_VERIFICATION_BYTES = 64 * 1024 * 1024
 
 
 def scalar(text):
@@ -159,10 +164,18 @@ def parse_manifest(content):
     return {"version": version, "modules": normalized, "ides": ides}
 
 
+def relative_parts(rel):
+    if (not isinstance(rel, str) or not rel or not rel.isprintable()
+            or Path(rel).is_absolute() or Path(rel).as_posix() != rel
+            or "\\" in rel or any(part in (".", "..", "") for part in rel.split("/"))):
+        raise ValueError("unsafe provisioning path")
+    return Path(rel).parts
+
+
 def contained(root, rel):
-    """No symlink traversal, even for a path that resolves inside the project."""
+    """Conservative discovery only; payload reads use anchored descriptors."""
     path = root
-    for part in Path(rel).parts:
+    for part in relative_parts(rel):
         path /= part
         if path.is_symlink():
             raise ValueError("symlinked provisioning path")
@@ -185,26 +198,53 @@ def discovered(root):
     return False
 
 
+def read_at_bounded(parent, name, limit):
+    source = os.open(name, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK, dir_fd=parent)
+    with os.fdopen(source, "rb") as stream:
+        before = os.fstat(stream.fileno())
+        if not stat.S_ISREG(before.st_mode):
+            raise ValueError("payload is not a regular file")
+        if before.st_size > limit:
+            raise ValueError("payload above limit")
+        content = stream.read(limit + 1)
+        after = os.fstat(stream.fileno())
+        current = os.stat(name, dir_fd=parent, follow_symlinks=False)
+        def identity(info):
+            return (info.st_dev, info.st_ino, info.st_size, info.st_mtime_ns, info.st_ctime_ns)
+        if identity(before) != identity(after) or identity(after) != identity(current):
+            raise ValueError("payload changed during observation")
+    if len(content) > limit:
+        raise ValueError("payload above limit")
+    return content
+
+
 def read_payload(root, rel, limit):
+    parts = relative_parts(rel)
     descriptor = os.open(root, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
     try:
-        parts = Path(rel).parts
-        if Path(rel).is_absolute() or any(part in (".", "..") for part in parts):
-            raise ValueError("unsafe payload path")
         for part in parts[:-1]:
             child = os.open(part, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=descriptor)
             os.close(descriptor)
             descriptor = child
-        source = os.open(parts[-1], os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK, dir_fd=descriptor)
-        with os.fdopen(source, "rb") as stream:
-            if not stat.S_ISREG(os.fstat(stream.fileno()).st_mode):
-                raise ValueError("payload is not a regular file")
-            content = stream.read(limit + 1)
-        if len(content) > limit:
-            raise ValueError("payload above limit")
-        return content
+        return read_at_bounded(descriptor, parts[-1], limit)
     finally:
         os.close(descriptor)
+
+
+def load_ownership(root, api):
+    data = json.loads(read_payload(root, api.MANIFEST_REL, MAX_OWNERSHIP_BYTES))
+    if not isinstance(data, dict) or not isinstance(data.get("files"), list):
+        raise TypeError("invalid ownership metadata")
+    seen = set()
+    for entry in data["files"]:
+        if not isinstance(entry, dict):
+            raise TypeError("invalid ownership entry")
+        relative_parts(entry.get("path"))
+        if (entry["path"] in seen or not isinstance(entry.get("sha256"), str)
+                or not re.fullmatch(r"[0-9a-f]{64}", entry["sha256"])):
+            raise ValueError("invalid ownership entry")
+        seen.add(entry["path"])
+    return data
 
 
 def observe(root):
@@ -214,7 +254,7 @@ def observe(root):
         content = read_payload(root, MANIFEST, MAX_MANIFEST_BYTES)
         record.update(manifest=MANIFEST, manifest_sha256=hashlib.sha256(content).hexdigest())
         record.update(parse_manifest(content))
-    except (OSError, ValueError, TypeError):
+    except (OSError, ValueError, TypeError, RecursionError):
         return record, False
     return record, True
 
@@ -285,15 +325,25 @@ def complete(root, hosts, record):
         if set(hosts) & {"cursor", "codex"}:
             bases.append(".agents/skills")
         covered, identifiers = set(), set()
+        inventory = []
         for row in rows:
+            if len(inventory) >= MAX_SKILLS:
+                return False
             identifier = row.get("canonicalId")
             if (set(row) != set(rows.fieldnames) or not isinstance(identifier, str)
                     or not re.fullmatch(r"bmad-[a-z0-9][a-z0-9-]{0,127}", identifier)
                     or identifier in identifiers or row["module"] not in modules):
                 return False
             identifiers.add(identifier)
+            inventory.append(row)
+        remaining = MAX_VERIFICATION_BYTES - len(content)
+        for row in inventory:
+            identifier = row["canonicalId"]
             for base in bases:
-                skill = read_payload(root, f"{base}/{identifier}/SKILL.md", 4 * 1024 * 1024)
+                if remaining <= 0:
+                    return False
+                skill = read_payload(root, f"{base}/{identifier}/SKILL.md", min(MAX_SKILL_BYTES, remaining))
+                remaining -= len(skill)
                 if not skill.strip():
                     return False
             covered.add(row["module"])
@@ -353,7 +403,7 @@ def save_record(root, previous, record, api):
     root_fd = os.open(root, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
     try:
         with lifecycle.parent_fd(root_fd, api.MANIFEST_REL) as (fd, name):
-            before = lifecycle.read_at(fd, name)
+            before = read_at_bounded(fd, name, MAX_OWNERSHIP_BYTES)
             if before is None or json.loads(before) != previous:
                 raise api.InstallError("ownership changed during BMad provisioning; partial upstream effects may remain; reconcile manually")
             updated = {**previous, "bmad": record}
@@ -372,9 +422,7 @@ def provision(root, hosts, api):
     """Second transaction: serialize upstream work and persist provenance only."""
     fd, _ = api.acquire_lock(root, set())
     try:
-        previous = api.load_manifest(root)
-        if previous is None:
-            raise api.InstallError("factory ownership disappeared before BMad provisioning; retry")
+        previous = load_ownership(root, api)
         prior_bmad = previous.get("bmad")
         if isinstance(prior_bmad, dict) and prior_bmad.get("status") == "failed":
             print("install: BMad failed attempt retained; inspect partial effects and installation metadata before manual retry")
@@ -388,7 +436,7 @@ def provision(root, hosts, api):
         drift = False
         for entry in previous["files"]:
             try:
-                content = api.read_file(contained(root, entry["path"]), entry["path"])
+                content = read_payload(root, entry["path"], MAX_PROJECTION_BYTES)
                 drift |= content is None or api.sha256(content) != entry["sha256"]
             except (OSError, ValueError, api.InstallError):
                 drift = True
@@ -399,7 +447,7 @@ def provision(root, hosts, api):
         print(f"install: BMad {record['status']}: {record['reason']}")
         describe(record)
         return int(drift)
-    except (OSError, ValueError) as exc:
+    except (OSError, ValueError, TypeError, RecursionError) as exc:
         raise api.InstallError("BMad metadata phase failed; upstream effects and private backup receipts may remain; inspect before retrying") from exc
     finally:
         fcntl.flock(fd, fcntl.LOCK_UN)
