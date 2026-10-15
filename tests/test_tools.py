@@ -7,9 +7,12 @@ itself stays clean under scripts/scan_public.py.
 from __future__ import annotations
 
 import hashlib
+import json
 import os
+import shutil
 import subprocess
 import sys
+import tarfile
 import tempfile
 import unittest
 from pathlib import Path
@@ -413,6 +416,178 @@ class ValidateReferencesAndManifestsTest(unittest.TestCase):
         fixture.commit()
         result = fixture.validate()
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+
+class ValidateNativeManifestsTest(unittest.TestCase):
+    """Native paths use their owning root, including generated dist output."""
+
+    def write_json(self, path, data):
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(data))
+        return path
+
+    def native_fixture(self, host):
+        fixture = Fixture(self)
+        market = fixture.root / "dist" / host
+        plugin = market / "plugins" / "sample"
+        (plugin / "skills").mkdir(parents=True)
+        (plugin / "agents").mkdir()
+        (plugin / "agents" / "role.md").write_text("# Native role\n")
+        if host == "codex":
+            catalog = market / ".agents" / "plugins" / "marketplace.json"
+            self.write_json(catalog, {"plugins": [{"source": {
+                "source": "local", "path": "./plugins/sample"}}]})
+            manifest = self.write_json(plugin / "plugin.json", {"name": "sample"})
+        else:
+            hidden = ".claude-plugin" if host == "claude-code" else ".cursor-plugin"
+            catalog = market / hidden / "marketplace.json"
+            self.write_json(catalog, {"plugins": [{"source": "./plugins/sample"}]})
+            data = {"skills": ["./skills/"], "agents": ["./agents/role.md"]}
+            if host == "cursor":
+                (plugin / "rules").mkdir()
+                data["rules"] = ["./rules/"]
+            manifest = self.write_json(plugin / hidden / "plugin.json", data)
+        return fixture, market, plugin, catalog, manifest
+
+    def assert_valid(self, fixture):
+        result = fixture.validate()
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+
+    def assert_invalid(self, fixture, needle):
+        result = fixture.validate()
+        self.assertEqual(1, result.returncode, result.stdout + result.stderr)
+        self.assertIn(needle, result.stdout + result.stderr)
+
+    def test_all_native_hidden_bases_under_dist(self):
+        for host in ("claude-code", "cursor", "codex"):
+            with self.subTest(host=host):
+                fixture, _, _, _, _ = self.native_fixture(host)
+                self.assert_valid(fixture)
+
+    def test_missing_native_components_and_catalog_sources_fail(self):
+        for host in ("claude-code", "cursor", "codex"):
+            with self.subTest(host=host):
+                fixture, _, plugin, catalog, manifest = self.native_fixture(host)
+                self.assert_valid(fixture)
+                self.write_json(catalog, {"source": "./plugins/missing"})
+                self.assert_invalid(fixture, "./plugins/missing")
+                catalog.unlink()
+                if host != "codex":
+                    for kind, relative in (("skills", "./missing-skills/"),
+                                           ("agents", "./agents/missing.md"),
+                                           ("rules", "./missing-rules/")):
+                        self.write_json(manifest, {kind: [relative]})
+                        self.assert_invalid(fixture, relative)
+                self.assertTrue(plugin.is_dir())
+
+    def test_native_component_cannot_escape_its_plugin(self):
+        for host in ("claude-code", "cursor"):
+            with self.subTest(host=host):
+                fixture, _, plugin, _, manifest = self.native_fixture(host)
+                outside = plugin.parent / "outside.md"
+                outside.write_text("# Outside plugin\n")
+                self.write_json(manifest, {"agents": ["../outside.md"]})
+                self.assert_invalid(fixture, "outside its manifest root")
+
+    def test_native_catalog_cannot_escape_its_marketplace(self):
+        for host in ("claude-code", "cursor", "codex"):
+            with self.subTest(host=host):
+                fixture, market, _, catalog, _ = self.native_fixture(host)
+                (market.parent / "outside").mkdir(exist_ok=True)
+                self.write_json(catalog, {"source": "../outside"})
+                self.assert_invalid(fixture, "outside its manifest root")
+
+    def test_native_symlink_cannot_escape_its_owner(self):
+        fixture, _, plugin, _, manifest = self.native_fixture("claude-code")
+        target = plugin.parent / "outside.md"
+        target.write_text("# Outside plugin\n")
+        (plugin / "agents" / "link.md").symlink_to(target)
+        self.write_json(manifest, {"agents": ["./agents/link.md"]})
+        self.assert_invalid(fixture, "outside its manifest root")
+
+    def test_manifest_and_link_reject_existing_sibling_prefix_collision(self):
+        fixture = Fixture(self)
+        sibling = fixture.root.with_name(fixture.root.name + "-extra")
+        sibling.mkdir()
+        self.addCleanup(shutil.rmtree, sibling)
+        (sibling / "outside.md").write_text("# Outside root\n")
+        relative = "../" + sibling.name + "/outside.md"
+        self.write_json(fixture.root / "plugin.json", {"icon": relative})
+        self.assert_invalid(fixture, "outside the repository")
+        (fixture.root / "plugin.json").unlink()
+        link = "../../../" + sibling.name + "/outside.md"
+        fixture.write_skill("sf-help", skill_text("sf-help") + f"\n[Outside]({link})\n")
+        self.assert_invalid(fixture, "escapes the repository root")
+
+    def test_manifest_symlink_outside_repository_fails(self):
+        fixture = Fixture(self)
+        outside = tempfile.TemporaryDirectory()
+        self.addCleanup(outside.cleanup)
+        target = Path(outside.name).resolve() / "outside.md"
+        target.write_text("# Outside\n")
+        (fixture.root / "link.md").symlink_to(target)
+        self.write_json(fixture.root / "plugin.json", {"icon": "./link.md"})
+        self.assert_invalid(fixture, "outside the repository")
+
+    def test_generic_nested_manifests_keep_parent_relative_paths(self):
+        fixture = Fixture(self)
+        asset = fixture.root / "assets" / "existing.md"
+        asset.parent.mkdir()
+        asset.write_text("# Existing\n")
+        self.write_json(fixture.root / "custom" / "plugin.json",
+                        {"icon": "../assets/existing.md"})
+        self.write_json(fixture.root / "custom" / "deep" / "marketplace.json",
+                        {"source": "../../assets/existing.md"})
+        self.assert_valid(fixture)
+        asset.unlink()
+        self.assert_invalid(fixture, "existing.md")
+
+    def test_malformed_hidden_manifests_fail(self):
+        for host in ("claude-code", "cursor", "codex"):
+            with self.subTest(host=host):
+                fixture, _, _, catalog, _ = self.native_fixture(host)
+                catalog.write_text("{broken")
+                self.assert_invalid(fixture, "manifest does not parse")
+
+    def test_generated_bundles_and_extracted_release_validate(self):
+        from support import recorder_env
+
+        temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(temporary.cleanup)
+        base = Path(temporary.name).resolve()
+        env, records, guard = recorder_env()
+        self.addCleanup(shutil.rmtree, records)
+        self.addCleanup(shutil.rmtree, guard.parent)
+        for name in ("claude-code", "agent", "droid", "gh"):
+            stub = guard.parent / name
+            stub.write_text('#!/bin/sh\nprintf "%s\\n" "$0 $*" >> "$SF_GUARD_LOG"\nexit 127\n')
+            stub.chmod(0o755)
+        fixture = Fixture(self)
+        (fixture.root / "dist").mkdir()
+        generated = subprocess.run(
+            [sys.executable, "-B", str(REPO / "scripts" / "distribution.py"),
+             "--host", "all", "--out", str(fixture.root / "dist" / "native")],
+            env=env, capture_output=True, text=True, check=False, timeout=90)
+        self.assertEqual(0, generated.returncode, generated.stdout + generated.stderr)
+        self.assert_valid(fixture)
+        release = base / "release"
+        built = run_tool("build_release.py", "--out", release, env=env)
+        self.assertEqual(0, built.returncode, built.stdout + built.stderr)
+        extracted = base / "extracted"
+        extracted.mkdir()
+        with tarfile.open(release / "sf-v0.1.0.tar.gz", "r:gz") as archive:
+            for member in archive:
+                if not member.isfile():
+                    continue
+                target = extracted / member.name
+                self.assertTrue(target.resolve().is_relative_to(extracted))
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_bytes(archive.extractfile(member).read())
+        payload = extracted / "sf-v0.1.0"
+        checked = run_tool("validate.py", "--root", payload, env=env)
+        self.assertEqual(0, checked.returncode, checked.stdout + checked.stderr)
+        self.assertFalse(guard.exists(), "host or provider CLI invoked")
+        self.assertEqual([], list(records.iterdir()), "package or download tool invoked")
 
 
 class ValidateLegacyNamesTest(unittest.TestCase):
