@@ -4,8 +4,8 @@
   "epic": 3,
   "type": "story",
   "title": "Safe uninstall and the doctor report",
-  "status": "backlog",
-  "owner": null,
+  "status": "in-progress",
+  "owner": "codex-install-lifecycle",
   "after": [
     21
   ],
@@ -33,7 +33,20 @@
   "branch": null,
   "pr": null,
   "merged_sha": null,
-  "history": [],
+  "history": [
+    {
+      "at": "2026-10-15T08:31:49.494539+00:00",
+      "by": "orchestrator",
+      "from": "backlog",
+      "to": "ready-for-dev"
+    },
+    {
+      "at": "2026-10-15T08:31:49.590085+00:00",
+      "by": "codex-install-lifecycle",
+      "from": "ready-for-dev",
+      "to": "in-progress"
+    }
+  ],
   "findings": [],
   "source_key": "installer-hosts/uninstall-doctor"
 }
