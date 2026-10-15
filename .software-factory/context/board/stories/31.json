@@ -4,7 +4,7 @@
   "epic": 5,
   "type": "story",
   "title": "Docs set, examples and the dogfood journey",
-  "status": "in-progress",
+  "status": "in-review",
   "owner": "codex-docs",
   "after": [
     30
@@ -35,6 +35,33 @@
       "status": "assigned",
       "summary": "Story31 begins after clean reviewed30 handoff/integration through existing review-counts-as-met readiness. Reused clean managed worktree on exact integrated asset50prefix source; primary combined gate pending. Publish substantive manual, four examples, nine canonical diagrams and real public-clean dogfood account with literal-command tests. Root owns all board/run/maps/integration.",
       "routing_note": "Initially requested gpt-6.1-sol worker reported capacity error before work; fallback gpt-6-sol requested, effective runtime model unknown."
+    },
+    "worker-handoff": {
+      "type": "agent-attempt",
+      "subject_sha": "c21fc14a8d1f4f6e9c2d494068886dc79f1c0445",
+      "agent": "/root/docs_impl",
+      "role": "sf-engineer",
+      "skill": "software-factory",
+      "requested_model": "gpt-6-sol",
+      "requested_reasoning": "high",
+      "effective_model": null,
+      "phase": "implementation",
+      "status": "awaiting-review",
+      "summary": "Substantive manuals/examples/nine pinned rendered diagrams, literal3host journey and releaseclosure/scope/refusal/bodydeadline tests. Four initialP2s fixed, finalcorea8a93/cycle032 sourcealigned and independentlyaccepted. Author14docs+3API+16showcase pass; independentfinal14docs/static+all21inputs10outputs bound. Failed760gate vs50evalpass preserved. Actualselfinstall48repair/fullgate/publication separate.",
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/sf-docs-final-independent-review.json",
+      "artifact_sha256": "48ca1be0a1163253caa84f0e0c6e9de6b8b29287b82b6a18446f1ba8375d0168"
+    },
+    "independent-review": {
+      "type": "independent-review",
+      "subject_sha": "c21fc14a8d1f4f6e9c2d494068886dc79f1c0445",
+      "reviewer": "/root/launch_copy",
+      "status": "pass",
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/sf-docs-final-independent-review.json",
+      "artifact_sha256": "48ca1be0a1163253caa84f0e0c6e9de6b8b29287b82b6a18446f1ba8375d0168",
+      "scope": "Final docs/source/receiptalignment accepted; fresh14docs allpass, static4steps pass. Priorindependent14docs+3API+actual1.002s408 repairreview scope retained separately.",
+      "limitations": [
+        "Root configuredselfinstall failure unresolved; no livehost/BMadexecution/fullgate/publication fact inferred."
+      ]
     }
   },
   "baseline_sha": null,
@@ -53,8 +80,22 @@
       "by": "codex-docs",
       "from": "ready-for-dev",
       "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T18:57:51.337987+00:00",
+      "by": "codex-docs",
+      "from": "in-progress",
+      "to": "in-review"
     }
   ],
-  "findings": [],
-  "source_key": "launch-publication/docs-examples-dogfood"
+  "findings": [
+    {
+      "at": "2026-10-15T18:57:51.337847+00:00",
+      "by": "codex-docs",
+      "text": "Original2770 docs review found4P2s. Exact90dd repairs independentlyaccepted; c21 finalmergedcore/cycle sourcealignment accepted. Originalfailedreviews retained; implementation/in-review doesnotclaimintegration/effect/epicacceptance."
+    }
+  ],
+  "source_key": "launch-publication/docs-examples-dogfood",
+  "review_subject_sha": "c21fc14a8d1f4f6e9c2d494068886dc79f1c0445",
+  "evidence_contract": 1
 }
