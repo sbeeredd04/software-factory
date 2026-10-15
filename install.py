@@ -1026,13 +1026,31 @@ def acquire_lock(root: Path, created_dirs: set[Path]):
     return fd, lock_path
 
 
-def verify_composition(root, planned, hosts, profile):
-    """Recheck captured consumer inputs and the exact current generated upstream."""
+def composition_sources(planned, published=()):
+    """Advance captured inputs only across exact, completed transaction writes."""
+    sources = {}
+    for item in planned:
+        for path, expected in (item.action.inputs or {}).items():
+            if path in sources and sources[path] != expected:
+                raise InstallError("contradictory captured composition inputs")
+            sources[path] = expected
+    destinations = {item.action.path for item in planned}
+    if set(published) - destinations:
+        raise InstallError("composition publication is outside the exact plan")
+    for item in planned:
+        path = item.action.path
+        if path in sources:
+            if sources[path] != item.before_hash:
+                raise InstallError("captured composition input differs from the planned preimage")
+            if path in published:
+                sources[path] = item.after_hash
+    return sources
+
+
+def verify_composition(root, planned, hosts, profile, *, published=()):
+    """Recheck captured inputs, allowing only our exact completed planned writes."""
     try:
-        sources = {}
-        for item in planned:
-            sources.update(item.action.inputs or {})
-        evolution().revalidate(root, sources)
+        evolution().revalidate(root, composition_sources(planned, published))
         if any(item.action.overlay for item in planned):
             current, conflicts, _ = build_plan(root, hosts, profile, set())
             # Target ownership is checked separately: after writes the old ledger
@@ -1095,6 +1113,7 @@ def apply_plan(
     fd, _lock_path = acquire_lock(root, created_dirs)
     root_fd = None
     applied = []
+    published = set()
     quarantine_fd = None
     try:
         root_fd = os.open(root, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
@@ -1137,7 +1156,7 @@ def apply_plan(
                 if item.status == "noop":
                     continue
                 if item.action.overlay:
-                    evolution().revalidate(root, item.action.inputs or {})
+                    evolution().revalidate(root, composition_sources(planned, published))
                 if item.before is not None:
                     item.backup = f"{BACKUPS_REL}/{install_id}/{item.action.path}"
                     # Original restoration receipts retain the established path
@@ -1146,11 +1165,12 @@ def apply_plan(
                         lifecycle.publish(parent, name, item.before, expected=None,
                                           quarantine=quarantine_fd, relative=item.backup)
                 publish(item.action.path, item.before, item.after)
-            verify_composition(root, planned, hosts, profile)
+                published.add(item.action.path)
+            verify_composition(root, planned, hosts, profile, published=published)
             verify_outputs()
             manifest = build_manifest(planned, previous, hosts, profile, install_id)
             publish(MANIFEST_REL, manifest_before, (json.dumps(manifest, indent=2) + "\n").encode())
-            verify_composition(root, planned, hosts, profile)
+            verify_composition(root, planned, hosts, profile, published=published)
             verify_outputs()
         except BaseException:
             for relative, before, after, identity in reversed(applied):
