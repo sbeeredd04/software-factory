@@ -27263,7 +27263,7 @@
         {
           "path": ".software-factory/runs/software-factory-v01/run.json",
           "pointer": "/claims/31",
-          "sha256": "81adaea3dfa3def120021a67e1faa7e7a1f20c433854f9a6d2a200a154ddb096"
+          "sha256": "2c83fd2fc883c1a26d63aec7446554605fde03442fba37d56b51960474362ea9"
         }
       ],
       "relation": "assigned-to",
@@ -27275,7 +27275,7 @@
         {
           "path": ".software-factory/runs/software-factory-v01/run.json",
           "pointer": "/claims/46",
-          "sha256": "81adaea3dfa3def120021a67e1faa7e7a1f20c433854f9a6d2a200a154ddb096"
+          "sha256": "2c83fd2fc883c1a26d63aec7446554605fde03442fba37d56b51960474362ea9"
         }
       ],
       "relation": "assigned-to",
@@ -27997,7 +27997,7 @@
     {
       "kind": "file",
       "path": ".software-factory/runs/software-factory-v01/run.json",
-      "sha256": "81adaea3dfa3def120021a67e1faa7e7a1f20c433854f9a6d2a200a154ddb096"
+      "sha256": "2c83fd2fc883c1a26d63aec7446554605fde03442fba37d56b51960474362ea9"
     },
     {
       "kind": "file",
@@ -28496,7 +28496,7 @@
         {
           "path": ".software-factory/runs/software-factory-v01/run.json",
           "pointer": "/checkpoint",
-          "sha256": "81adaea3dfa3def120021a67e1faa7e7a1f20c433854f9a6d2a200a154ddb096"
+          "sha256": "2c83fd2fc883c1a26d63aec7446554605fde03442fba37d56b51960474362ea9"
         }
       ],
       "type": "checkpoint"
@@ -28509,7 +28509,7 @@
         {
           "path": ".software-factory/runs/software-factory-v01/run.json",
           "pointer": "/claims/31",
-          "sha256": "81adaea3dfa3def120021a67e1faa7e7a1f20c433854f9a6d2a200a154ddb096"
+          "sha256": "2c83fd2fc883c1a26d63aec7446554605fde03442fba37d56b51960474362ea9"
         }
       ],
       "type": "claim"
@@ -28522,7 +28522,7 @@
         {
           "path": ".software-factory/runs/software-factory-v01/run.json",
           "pointer": "/claims/46",
-          "sha256": "81adaea3dfa3def120021a67e1faa7e7a1f20c433854f9a6d2a200a154ddb096"
+          "sha256": "2c83fd2fc883c1a26d63aec7446554605fde03442fba37d56b51960474362ea9"
         }
       ],
       "type": "claim"
@@ -59622,5 +59622,5 @@
     }
   ],
   "schema": "sf-trace/1",
-  "source_fingerprint": "c9ab2f8aae516fc44dfe4307b26f887d99407dbf5addaebe924cd06f6b69d0f3"
+  "source_fingerprint": "4e3b538527c6c26818c5e3a48a2fede00e3055f4b4ecc71690c4523e48e46b52"
 }
