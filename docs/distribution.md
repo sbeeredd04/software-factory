@@ -105,9 +105,16 @@ The separate network-marked fixture records the CLI version, lists local skills,
 and installs into a disposable Git repository with all three explicit hosts:
 
 ```sh
-DISABLE_TELEMETRY=1 DO_NOT_TRACK=1 npx -y skills@1.7.2 add /path/to/software-factory --list
-DISABLE_TELEMETRY=1 DO_NOT_TRACK=1 npx -y skills@1.7.2 add /path/to/software-factory -a claude-code -a cursor -a codex -y
+cd '/absolute/path/to/consumer-project' || exit 1
+DISABLE_TELEMETRY=1 DO_NOT_TRACK=1 npx -y skills@1.7.2 add '/absolute/path/to/software-factory/skills' --list
+DISABLE_TELEMETRY=1 DO_NOT_TRACK=1 npx -y skills@1.7.2 add '/absolute/path/to/software-factory/skills' -a claude-code -a cursor -a codex -y
 ```
+
+Replace both paths with their physical locations. Select the canonical `skills/`
+directory: a configured checkout root may also contain separately installed BMad
+or other local skills, which recursive acquisition would otherwise include.
+BMad provisioning remains a separate route. The fixture exercises both the
+actual canonical directory and a disposable checkout with unrelated local skills.
 
 This checks eleven canonical skill names/descriptions, `.claude/skills`, shared
 `.agents/skills`, `skills-lock.json`, and absence of `.cursor`/`.codex` output.
