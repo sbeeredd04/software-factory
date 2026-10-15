@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-15T21:36:45.360048+00:00",
-  "revision": 349,
+  "generated_at": "2026-10-15T21:39:46.200818+00:00",
+  "revision": 350,
   "streams": [
     {
       "id": "W-foundation",
@@ -108,8 +108,8 @@
       "counts": {
         "planned": 0,
         "ready": 1,
-        "in-progress": 0,
-        "review": 7,
+        "in-progress": 1,
+        "review": 6,
         "built": 0,
         "done": 0,
         "cancelled": 0
@@ -9248,8 +9248,8 @@
       "stream": "W-launch",
       "type": "story",
       "title": "Explain the complete factory through orchestration and delivery graphs",
-      "status": "in-review",
-      "state": "review",
+      "status": "in-progress",
+      "state": "in-progress",
       "owner": "codex-lifecycle",
       "after": [
         47
@@ -9292,6 +9292,29 @@
             "Review findings corrected in f236; first c955 browser run remains failed and is not relabeled.",
             "No built/done, remote CI, external integration, publication or live-host execution claim."
           ]
+        },
+        "receipt-rejection": {
+          "type": "verification-observation",
+          "subject_sha": "fd5384dd435e797c3abf1f1df72289f5ea8d3af3",
+          "status": "failed",
+          "preflight_exit_code": 1,
+          "failed_command": "scripts/check_links.py --root <exact-source-archive>",
+          "broken_links": 5,
+          "raw_log_sha256": "0e7c4ca56aea74e9c5365e1926ec3a3793a6fa1311fbbae50d7c5abb6236fb2e",
+          "full_gate": {
+            "exit_code": 143,
+            "status": "cancelled after independently proven static failure",
+            "unit_suite_completed": false,
+            "passing": false
+          },
+          "native_ui": {
+            "status": "passed",
+            "exit_code": 0,
+            "cases": 6,
+            "host_setup_checks": 18,
+            "standalone_custom_inter_labels": 52
+          },
+          "failure": "New raw template-relative observed DOM href in render receipt was interpreted by generic JSON artifact-link semantics relative to the receipt directory. Fix truthful recorded DOM identity representation; keep exact reference verification, actual recapture and generic link checker unchanged."
         }
       },
       "baseline_sha": null,
@@ -9299,7 +9322,19 @@
       "pr": null,
       "merged_sha": null,
       "claim": {
-        "live": false
+        "live": true,
+        "owner": "codex-lifecycle",
+        "paths": [
+          "site/img/delivery-graph.svg",
+          "site/index.html",
+          "site/styles",
+          "assets",
+          "scripts/render_assets.py",
+          "tests/test_assets.py",
+          "tests/test_showcase.py",
+          "docs/launch-assets.md"
+        ],
+        "claimed_at": "2026-10-15T21:39:46.166199+00:00"
       },
       "blocks": [],
       "history": [
@@ -9320,12 +9355,17 @@
           "by": "codex-lifecycle",
           "from": "in-progress",
           "to": "in-review"
+        },
+        {
+          "at": "2026-10-15T21:39:46.197191+00:00",
+          "by": "codex-lifecycle",
+          "from": "in-review",
+          "to": "in-progress"
         }
       ],
       "findings": [],
       "source_key": "launch-publication/lifecycle-system-map",
-      "evidence_contract": 1,
-      "review_subject_sha": "f2369bab60f5baac0a6e2171cf4122215812a162"
+      "evidence_contract": 1
     }
   ],
   "frontier": {
