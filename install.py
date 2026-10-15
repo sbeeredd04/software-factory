@@ -44,6 +44,7 @@ import tempfile
 import time
 import tomllib
 import uuid
+from contextlib import contextmanager
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -141,6 +142,9 @@ class Action:
     kind: str  # write | merge | block | gitignore
     content: bytes | None  # None for merge kinds until planned
     host: str | None
+    inputs: dict[str, str | None] | None = None
+    overlay: bool = False
+    root_identity: tuple[int, int] | None = None
 
 
 @dataclasses.dataclass
@@ -386,6 +390,7 @@ def project_claude(root: Path, policy: dict, profile: str) -> list[Action]:
         actions.append(Action(f".claude/skills/sf-help/templates/{name}", "write",
                               auxiliary_bytes(f"templates/{name}"), "claude-code"))
     actions.extend(bot_assets(".claude/skills", "claude-code"))
+    actions.extend(evolve_assets(".claude/skills", "claude-code"))
     if profile == "full":
         for src in sorted((PACK_ROOT / "agents").glob("sf-*.md")):
             actions.append(Action(f".claude/agents/{src.name}", "write",
@@ -400,10 +405,10 @@ def project_claude(root: Path, policy: dict, profile: str) -> list[Action]:
 
 def project_runtime_script(relative: str, content: bytes) -> bytes:
     """Installed helpers must never guess a source-pack fallback in consumer paths."""
-    if relative == "sf-agents/scripts/render_bots.py":
+    if relative in ("sf-agents/scripts/render_bots.py", "sf-evolve/scripts/evolve.py"):
         marker = b"SOURCE_LAYOUT = True  # Canonical projector sets False in every installed payload."
         if content.count(marker) != 1:
-            raise InstallError("canonical bot renderer layout marker missing or ambiguous")
+            raise InstallError("canonical helper layout marker missing or ambiguous")
         content = content.replace(marker, marker.replace(b"True", b"False", 1))
     return content
 
@@ -415,6 +420,27 @@ def bot_assets(prefix: str, host: str | None) -> list[Action]:
     actions.append(Action(f"{prefix}/sf-agents/scripts/install_lifecycle.py", "write",
                           auxiliary_bytes("scripts/install_lifecycle.py"), host))
     return actions
+
+
+def evolve_assets(prefix: str, host: str | None) -> list[Action]:
+    return [Action(f"{prefix}/sf-evolve/schemas/overlay.schema.json", "write",
+                   auxiliary_bytes("schemas/overlay.schema.json"), host),
+            Action(f"{prefix}/sf-evolve/scripts/bmad_install.py", "write",
+                   auxiliary_bytes("scripts/bmad_install.py"), host)]
+
+
+def evolution():
+    """Canonical pure composer; publication remains this install transaction."""
+    path = PACK_ROOT / "skills/sf-evolve/scripts/evolve.py"
+    previous = sys.dont_write_bytecode
+    sys.dont_write_bytecode = True
+    try:
+        spec = importlib.util.spec_from_file_location("sf_install_evolution", path)
+        loaded = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(loaded)
+        return loaded
+    finally:
+        sys.dont_write_bytecode = previous
 
 
 def auxiliary_bytes(relative: str) -> bytes:
@@ -506,6 +532,7 @@ def project_shared_skills(hosts: list[str]) -> list[Action]:
         actions.append(Action(f".agents/skills/sf-help/templates/{name}", "write",
                               auxiliary_bytes(f"templates/{name}"), None))
     actions.extend(bot_assets(".agents/skills", None))
+    actions.extend(evolve_assets(".agents/skills", None))
     if "codex" in hosts:
         codex_policy = load_policy("codex")
         policy_skills = set(codex_policy.get("explicit_only", [])) | set(
@@ -910,7 +937,10 @@ def build_plan(
             continue
         seen_paths[action.path] = action
         unique.append(action)
-    actions = unique
+    try:
+        actions = evolution().overlay_actions(root, unique)
+    except (ValueError, OSError, UnicodeError) as exc:
+        raise InstallError("overlay/configuration composition refused: " + str(exc)) from None
     owned = {}
     if previous:
         for entry in previous.get("files", []):
@@ -941,10 +971,12 @@ def build_plan(
             # user edits elsewhere in the file are preserved, never conflicts.
             status = "noop" if sha256(before) == sha256(after) else action.kind
         if conflict:
-            if rel in allow:
+            if rel in allow and not action.overlay:
                 covered.add(rel)
             else:
                 conflicts.append(
+                    f"{conflict}; overlay targets require reconciliation; overwrite is unsupported"
+                    if action.overlay else
                     f"{conflict}; pass --allow-overwrite {rel} to replace it "
                     "(a private backup is written first)"
                 )
@@ -957,22 +989,6 @@ def build_plan(
 
 
 # -- apply -------------------------------------------------------------------
-
-
-def write_backup(root: Path, install_id: str, item: PlannedFile) -> str:
-    rel_backup = f"{BACKUPS_REL}/{install_id}/{item.action.path}"
-    dest = root / rel_backup
-    dest.parent.mkdir(parents=True, exist_ok=True)
-    atomic_write(dest, item.before or b"", set())
-    os.chmod(dest, 0o600)
-    base = root / BACKUPS_REL
-    walk = dest.parent
-    while True:
-        os.chmod(walk, 0o700)
-        if walk == base:
-            break
-        walk = walk.parent
-    return rel_backup
 
 
 def acquire_lock(root: Path, created_dirs: set[Path]):
@@ -1010,32 +1026,61 @@ def acquire_lock(root: Path, created_dirs: set[Path]):
     return fd, lock_path
 
 
-def rollback(
-    root: Path, applied: list[PlannedFile], created_dirs: set[Path]
-) -> None:
-    """Undo this transaction's writes where the bytes are still ours."""
-    for item in reversed(applied):
-        target = root / item.action.path
-        try:
-            current = target.read_bytes() if target.is_file() else None
-        except OSError:
-            continue
-        if current is None or sha256(current) != item.after_hash:
-            continue  # a concurrent edit; never clobber it
-        if item.backup is not None:
-            backup = root / item.backup
-            if backup.is_file():
-                atomic_write(target, backup.read_bytes(), set())
-        else:
+def verify_composition(root, planned, hosts, profile):
+    """Recheck captured consumer inputs and the exact current generated upstream."""
+    try:
+        sources = {}
+        for item in planned:
+            sources.update(item.action.inputs or {})
+        evolution().revalidate(root, sources)
+        if any(item.action.overlay for item in planned):
+            current, conflicts, _ = build_plan(root, hosts, profile, set())
+            # Target ownership is checked separately: after writes the old ledger
+            # deliberately still names the previous bytes until commit.
+            del conflicts
+            if [(p.action.path, p.after) for p in current] != [(p.action.path, p.after) for p in planned]:
+                raise InstallError("generated upstream changed during overlay installation")
+    except (ValueError, OSError, UnicodeError) as exc:
+        raise InstallError("overlay inputs changed or became unsafe; no composed state committed") from exc
+
+
+def lifecycle_api():
+    spec = importlib.util.spec_from_file_location("sf_install_publication", PACK_ROOT / "scripts/install_lifecycle.py")
+    loaded = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(loaded)
+    return loaded
+
+
+@contextmanager
+def installation_parent(root, root_fd, relative, created_dirs):
+    """Create/open destination ancestors through the already anchored root."""
+    parts = Path(relative).parts
+    descriptors = [os.dup(root_fd)]
+    try:
+        for index, part in enumerate(parts[:-1]):
             try:
-                target.unlink()
-            except OSError:
+                os.mkdir(part, 0o700 if relative.startswith(BACKUPS_REL + "/") and index >= 1 else 0o755,
+                         dir_fd=descriptors[-1])
+                created_dirs.add(root.joinpath(*parts[:index+1]))
+            except FileExistsError:
                 pass
-    for directory in sorted(created_dirs, key=lambda p: -len(p.parts)):
-        try:
-            directory.rmdir()  # only removes directories that are empty
-        except OSError:
-            pass
+            descriptors.append(os.open(part, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW,
+                                       dir_fd=descriptors[-1]))
+        yield descriptors[-1], parts[-1]
+    finally:
+        for descriptor in reversed(descriptors):
+            os.close(descriptor)
+
+
+def check_parent(root, root_fd, relative, descriptor, lifecycle):
+    """A captured directory may move, but cannot redirect a write into a new one."""
+    root_now, opened = os.stat(root, follow_symlinks=False), os.fstat(root_fd)
+    if (root_now.st_dev, root_now.st_ino) != (opened.st_dev, opened.st_ino):
+        raise InstallError("project root changed during installation")
+    with lifecycle.parent_fd(root_fd, relative) as (current, _):
+        before, after = os.fstat(descriptor), os.fstat(current)
+        if (before.st_dev, before.st_ino) != (after.st_dev, after.st_ino):
+            raise InstallError("destination ancestor changed during installation")
 
 
 def apply_plan(
@@ -1046,41 +1091,93 @@ def apply_plan(
     profile: str,
 ) -> None:
     created_dirs: set[Path] = set()
+    lifecycle = lifecycle_api()
     fd, _lock_path = acquire_lock(root, created_dirs)
-    applied: list[PlannedFile] = []
+    root_fd = None
+    applied = []
+    quarantine_fd = None
     try:
+        root_fd = os.open(root, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+        identity = os.fstat(root_fd)
+        for item in planned:
+            if item.action.root_identity is not None and item.action.root_identity != (identity.st_dev, identity.st_ino):
+                raise InstallError("project root identity changed since planning")
+        manifest_before = lifecycle.anchored_read(root_fd, MANIFEST_REL)
         if load_manifest(root) != previous:
             raise InstallError("installation ownership changed while planning; retry")
-        for item in planned:  # re-verify before-hashes under the lock
-            current = read_file(root / item.action.path, item.action.path)
-            current_hash = sha256(current) if current is not None else None
-            if current_hash != item.before_hash:
-                raise InstallError(
-                    f"{item.action.path} changed while installing; retry"
-                )
+        for item in planned:
+            if lifecycle.anchored_read(root_fd, item.action.path) != item.before:
+                raise InstallError("target changed while installing; retry")
+        verify_composition(root, planned, hosts, profile)
         install_id = f"{datetime.now(UTC):%Y%m%dT%H%M%SZ}-{uuid.uuid4().hex[:8]}"
+        recovery = f"{BACKUPS_REL}/{install_id}/.recovery/entry"
+        with installation_parent(root, root_fd, recovery, created_dirs) as (parent, _):
+            quarantine_fd = os.dup(parent)
+            os.fchmod(quarantine_fd, 0o700)
+        def publish(relative, before, after):
+            with installation_parent(root, root_fd, relative, created_dirs) as (parent, name):
+                check_parent(root, root_fd, relative, parent, lifecycle)
+                if lifecycle.read_at(parent, name) != before:
+                    raise InstallError("target changed before publication")
+                info = os.fstat(parent)
+                applied.append((relative, before, after, (info.st_dev, info.st_ino)))
+                lifecycle.publish(parent, name, after, expected=before,
+                                  quarantine=quarantine_fd, relative=relative)
+                check_parent(root, root_fd, relative, parent, lifecycle)
+                if lifecycle.read_at(parent, name) != after:
+                    raise InstallError("published entry changed before verification")
+        def verify_outputs():
+            for item in planned:
+                with lifecycle.parent_fd(root_fd, item.action.path) as (parent, name):
+                    check_parent(root, root_fd, item.action.path, parent, lifecycle)
+                    if lifecycle.read_at(parent, name) != item.after:
+                        raise InstallError("published target changed; inspect retained recovery copies")
         try:
             for item in planned:
                 if item.status == "noop":
                     continue
+                if item.action.overlay:
+                    evolution().revalidate(root, item.action.inputs or {})
                 if item.before is not None:
-                    item.backup = write_backup(root, install_id, item)
-                atomic_write(root / item.action.path, item.after, created_dirs)
-                applied.append(item)
+                    item.backup = f"{BACKUPS_REL}/{install_id}/{item.action.path}"
+                    # Original restoration receipts retain the established path
+                    # layout; final-window edits remain in separate recovery copies.
+                    with installation_parent(root, root_fd, item.backup, created_dirs) as (parent, name):
+                        lifecycle.publish(parent, name, item.before, expected=None,
+                                          quarantine=quarantine_fd, relative=item.backup)
+                publish(item.action.path, item.before, item.after)
+            verify_composition(root, planned, hosts, profile)
+            verify_outputs()
             manifest = build_manifest(planned, previous, hosts, profile, install_id)
-            atomic_write(
-                root / MANIFEST_REL,
-                (json.dumps(manifest, indent=2) + "\n").encode(),
-                created_dirs,
-            )
+            publish(MANIFEST_REL, manifest_before, (json.dumps(manifest, indent=2) + "\n").encode())
+            verify_composition(root, planned, hosts, profile)
+            verify_outputs()
         except BaseException:
-            rollback(root, applied, created_dirs)
+            for relative, before, after, identity in reversed(applied):
+                try:
+                    with lifecycle.parent_fd(root_fd, relative) as (parent, name):
+                        info = os.fstat(parent)
+                        if (info.st_dev, info.st_ino) != identity or lifecycle.read_at(parent, name) != after:
+                            continue
+                        lifecycle.publish(parent, name, before, expected=after,
+                                          quarantine=quarantine_fd, relative=relative)
+                except OSError:
+                    continue  # Retain contested originals and continue independent recovery.
             raise
     finally:
+        if quarantine_fd is not None:
+            os.close(quarantine_fd)
+        if root_fd is not None:
+            os.close(root_fd)
         fcntl.flock(fd, fcntl.LOCK_UN)
         os.close(fd)
-        # Keep a stable inode: unlinking lets a later writer lock a new file
-        # while an already waiting writer still owns the old one.
+        for directory in sorted(created_dirs, key=lambda p: -len(p.parts)):
+            try:
+                directory.rmdir()  # only empty directories from this transaction
+            except OSError:
+                pass
+        # Keep stable lock inode and private recovery evidence, including writes
+        # through descriptors held by an editor before the original was captured.
 
 
 # -- plugin/project stacking ---------------------------------------------------

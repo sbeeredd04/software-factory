@@ -76,3 +76,9 @@ confirmed, defaulted and unknown answers with config digest references in a
 separate setup receipt. Policy fields are input declarations; configuration
 validation does not authenticate owner decisions, start monitors, or execute
 discovery probes.
+
+`extensions` is the declared skill/MCP/overlay registry. Source pins, provenance,
+permissions and consent are metadata to reconcile, never installation or access
+proof. `checkpoints.retro_cadence` governs the existing learning checkpoint.
+Use [sf-evolve](../../sf-evolve/SKILL.md) for metadata completion and reviewed
+persistent customization; its installer integration refuses unsafe/drifted inputs.

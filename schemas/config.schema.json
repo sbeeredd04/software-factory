@@ -585,6 +585,88 @@
               "sha256": {
                 "type": "string",
                 "pattern": "^[a-f0-9]{64}$"
+              },
+              "capabilities": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 2048
+                },
+                "uniqueItems": true,
+                "maxItems": 100
+              },
+              "provenance": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 2048
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "additionalProperties": false
+              },
+              "upstream": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "license": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "triggers": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 2048
+                },
+                "uniqueItems": true,
+                "maxItems": 100
+              },
+              "phases": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "ground",
+                    "plan",
+                    "implement",
+                    "review",
+                    "verify",
+                    "release",
+                    "observe",
+                    "retro"
+                  ]
+                },
+                "uniqueItems": true,
+                "minItems": 1,
+                "maxItems": 8
+              },
+              "permissions": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 2048
+                },
+                "uniqueItems": true,
+                "maxItems": 100
               }
             },
             "required": [
@@ -616,6 +698,71 @@
               },
               "enabled": {
                 "type": "boolean"
+              },
+              "capabilities": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 2048
+                },
+                "uniqueItems": true,
+                "maxItems": 100
+              },
+              "provenance": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 2048
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "additionalProperties": false
+              },
+              "transport": {
+                "enum": [
+                  "stdio",
+                  "streamable-http",
+                  "sse"
+                ]
+              },
+              "consent": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 2048
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "additionalProperties": false
+              },
+              "auth_env": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[A-Z_][A-Z0-9_]*$",
+                  "maxLength": 128
+                },
+                "uniqueItems": true,
+                "maxItems": 100
               }
             },
             "required": [
@@ -649,6 +796,10 @@
                 "maxLength": 2048
               },
               "base_sha256": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              "manifest_sha256": {
                 "type": "string",
                 "pattern": "^[a-f0-9]{64}$"
               }

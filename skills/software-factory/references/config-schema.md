@@ -109,3 +109,22 @@ alongside the config digest and source decision references. It is setup evidence
 not a second live status store. `tracker.options` is unsupported: use the selected
 adapter's documented shape and owner workflow. The schema and validator check
 structure and references; the host still checks actual access and authority.
+
+## Extension metadata and composition
+
+Skill metadata adds `upstream`, `revision`, `license`, `provenance` (`path`,
+`sha256`), `capabilities`, `triggers`, `phases` and `permissions` to `id`, `source`
+and optional `sha256`. MCP adds `transport`, `capabilities`, `provenance`,
+`consent` (both bound path/digest pairs) and `auth_env` names to its legacy fields.
+Overlay entries add `manifest_sha256`; this pin is mandatory for composition.
+Legacy minimal entries remain incomplete declarations. IDs are unique per kind;
+canonical skill/role collisions and duplicate overlay targets fail. All declared
+source/provenance/consent pins are checked when filesystem checks are enabled.
+MCP config contents are never opened by the validator to discover credentials.
+
+Overlay targets cannot alias configured governing documents, context or decision
+stores. The sf-evolve composer further restricts targets to generated Markdown
+skill entries/references with preserved frontmatter. See the
+[registry](../../sf-evolve/references/registry.md) and
+[overlay](../../sf-evolve/references/overlays.md) contracts for exact supported
+fields and provenance limits. Schema validity alone never grants approval.

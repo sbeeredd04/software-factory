@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 import collections
+import hashlib
 import json
 import math
 import os
@@ -318,6 +319,41 @@ def inspect_strings(value, path='$'):
             fail(path, 'permission-bypass flag is forbidden')
 
 
+CANONICAL_IDENTITIES = frozenset((
+    'software-factory', 'sf-agents', 'sf-crawl', 'sf-design', 'sf-eval', 'sf-evolve',
+    'sf-help', 'sf-patterns', 'sf-principles', 'sf-refactor', 'sf-smell-audit',
+    'sf-ai-engineer', 'sf-architect', 'sf-code-reviewer', 'sf-design-reviewer',
+    'sf-engineer', 'sf-evaluator', 'sf-principal-engineer', 'sf-product-manager',
+    'sf-qa-engineer', 'sf-release-engineer', 'sf-security-reviewer',
+))
+
+
+def governing_paths(data):
+    """Configured authority is protected even when outside conventional locations."""
+    docs = data['documents']
+    paths = [*docs['principles'].values(), docs['architecture'], docs['conventions'],
+             *docs.get('extra_context', []), data['tracker']['path'],
+             *data.get('context', {}).values(), '.software-factory/context',
+             'AGENTS.md', 'CLAUDE.md', 'PRINCIPLES.md', 'CONVENTIONS.md', 'ARCHITECTURE.md']
+    decisions = [d['source'] for d in data['autonomy']['standing_delegations']]
+    decisions += [e['write_authority']['source'] for e in data.get('environments', {}).values()
+                  if 'write_authority' in e]
+    if data.get('operations', {}).get('authority_ref'):
+        decisions.append(data['operations']['authority_ref'])
+    for path in decisions:
+        paths.append(path)
+        parent = Path(path).parent.as_posix()
+        if parent != '.':
+            paths.append(parent)
+    return paths
+
+
+def aliases_path(value, paths):
+    parts = Path(value).parts
+    return any(parts[:min(len(parts), len(p))] == p[:min(len(parts), len(p))]
+               for p in (Path(path).parts for path in paths))
+
+
 def validate_data(data, root, schema=None, *, check_paths=True):
     """Validate captured data; never reopen the source configuration.
 
@@ -417,16 +453,38 @@ def validate_data(data, root, schema=None, *, check_paths=True):
             fail('$.review_bots', 'required bot cannot be disabled')
         path_check(bot['config'], '$.review_bots.config')
     for group, entries in data.get('extensions', {}).items():
+        identities, targets = set(), set()
         for entry in entries:
+            identity = entry['id'].casefold().strip()
+            if identity in identities or identity in CANONICAL_IDENTITIES:
+                fail('$.extensions.' + group, 'duplicate or reserved identity')
+            identities.add(identity)
             for key in ('source', 'target', 'config'):
                 if key in entry:
                     path_check(entry[key], '$.extensions.' + group + '.' + key)
-                    normalized = Path(entry[key]).as_posix()
                     stores = (board, '.software-factory/runs', '.software-factory/config.yaml', '.software-factory/active.json', '.software-factory/installation.json', '.software-factory/runtime', '.software-factory/backups')
-                    parts = Path(normalized).parts
-                    protected = [Path(store).parts for store in stores]
-                    if any(parts[:min(len(parts), len(store))] == store[:min(len(parts), len(store))] for store in protected):
+                    if aliases_path(entry[key], stores):
                         fail('$.extensions', 'extension aliases an authority store')
+            if 'target' in entry:
+                normalized = Path(entry['target']).as_posix()
+                if normalized in targets:
+                    fail('$.extensions.overlays', 'duplicate overlay target')
+                targets.add(normalized)
+                if aliases_path(normalized, governing_paths(data)):
+                    fail('$.extensions.overlays', 'target aliases configured governing documents or decisions')
+            bindings = []
+            if 'sha256' in entry and group == 'skills':
+                bindings.append({'path': entry['source'], 'sha256': entry['sha256']})
+            if 'manifest_sha256' in entry:
+                bindings.append({'path': entry['source'], 'sha256': entry['manifest_sha256']})
+            bindings += [entry[key] for key in ('provenance', 'consent') if key in entry]
+            for binding in bindings:
+                path_check(binding['path'], '$.extensions.' + group + '.binding', True)
+                if check_paths:
+                    raw = (read_bytes(root, binding['path']) if isinstance(root, Path)
+                           else (root / binding['path']).read_bytes())
+                    if hashlib.sha256(raw).hexdigest() != binding['sha256']:
+                        fail('$.extensions.' + group, 'declared source digest mismatch')
             if 'recipe' in entry:
                 recipe(entry['recipe'], '$.extensions.recipe')
     operations = data.get('operations', {})
