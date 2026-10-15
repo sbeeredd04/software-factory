@@ -304,6 +304,71 @@
       "limits": [
         "Not integrated primary gate; not remoteCI/livehost/effect/humanacceptance."
       ]
+    },
+    "integrated-primary-proof": {
+      "type": "verification",
+      "status": "pass",
+      "subject_sha": "dc8992c17f37492c615f5155f49d77389c5409c6",
+      "command": "bash scripts/check_all.sh",
+      "exit_code": 0,
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/agents-integrated-gate.log",
+      "artifact_sha256": "e94de785d4e448b6dc4d9e2dad07d11f361978ce7017fed5fb81f903052e42eb",
+      "unit_tests": {
+        "run": 677,
+        "passed": 676,
+        "failed": 0,
+        "skipped": 1,
+        "seconds": 191.788
+      },
+      "eval_artifact": ".software-factory/runs/software-factory-v01/evidence/agents-integrated-eval.json",
+      "eval_artifact_sha256": "90bc5c07dd7378c47c8feeb76f90970a740eee3914b49e3cba4bae0ecd6b4451",
+      "evals": {
+        "failed": 0,
+        "passed": 30,
+        "quarantined": 0,
+        "skipped": 0,
+        "unverified": 0
+      },
+      "summary": "Full integrated gate passes after canonical map refresh:677tests676pass/1optionalexternal-schema-crosscheckskip;30evalpass, realBMad+skillsnetwork andallstaticsteps exit0. Priorisolatedcrawl failures preserved. Separate actualcurrent Draftcrosscheck also passes; notrelabeledasfullgateoptionalpass.",
+      "limits": [
+        "No remoteCI, maintainerintegration, livehost/trust, authenticatedbotstate, stagingequivalence, humanepicacceptance, publication or monitoring proof."
+      ]
+    },
+    "integrated-source-review": {
+      "type": "independent-review",
+      "status": "pass",
+      "subject_sha": "dc8992c17f37492c615f5155f49d77389c5409c6",
+      "author": "host-contracts",
+      "reviewer": "mission-status",
+      "independent": true,
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/agents-dc8992-integrated-source-review.md",
+      "artifact_sha256": "40b65870d90e6f25cb7713c60acb8c9470e818970bd68442f17ee6bd3926fd2c",
+      "probe_artifact": ".software-factory/runs/software-factory-v01/evidence/agents-dc8992-equivalence.json",
+      "probe_sha256": "3edc059ae7190e254d5ca096e2d13583d1369d5adf36286901504a6688a3ee8b",
+      "summary": "Actualintegratedsource review:all29candidateGitblobs byteidenticalacceptedbbda; lifecycleactual/declaredSHA matches; onlyintendedderivedmaps and26/27/28records beyondcomponent; principles/selfsetup/policyunchanged. No tests/probes executed byreviewer; rootfullgate separate.",
+      "limits": [
+        "Integratedlocalsource/equivalence reviewonly; no remoteCI/effects/humanacceptance."
+      ]
+    },
+    "external-config-schema-crosscheck": {
+      "type": "verification",
+      "status": "pass",
+      "subject_sha": "dc8992c17f37492c615f5155f49d77389c5409c6",
+      "command": "SF_CONFIG_JSONSCHEMA_CROSSCHECK=1 PYTHONDONTWRITEBYTECODE=1 uvx --from check-jsonschema python -B -m unittest discover -s tests -p test_config_schema.py -k optional_jsonschema_crosscheck -v",
+      "exit_code": 0,
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/agents-config-external-schema-crosscheck.log",
+      "artifact_sha256": "17795bac7b1687b06da8b7a7e7ee9fe792a994f338e5f99705fc3a8e8e5bb413",
+      "unit_tests": {
+        "run": 1,
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "seconds": 0.091
+      },
+      "summary": "Separateactualcurrentexternal Draft202012 meta/schema andparseablefixturecrosscheck pass; config/authorsadditioncoveredbycurrent schema. Development-only dependency, no shippeddependency.",
+      "limits": [
+        "Doesnotrelabelunrequestedoptionalunitinfullgate aspass; syntax-invalidfixtures excluded bycase design."
+      ]
     }
   },
   "baseline_sha": null,

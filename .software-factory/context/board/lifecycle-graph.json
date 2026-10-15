@@ -581,7 +581,7 @@
           {
             "path": ".software-factory/context/board/stories/27.json",
             "pointer": "/receipts/active-attempt",
-            "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+            "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
           }
         ],
         "reported_status": "assigned",
@@ -598,7 +598,7 @@
           {
             "path": ".software-factory/context/board/stories/27.json",
             "pointer": "/receipts/candidate-089-worker-gate",
-            "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+            "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
           }
         ],
         "reported_status": "fail",
@@ -615,7 +615,7 @@
           {
             "path": ".software-factory/context/board/stories/27.json",
             "pointer": "/receipts/candidate-090-worker-gate",
-            "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+            "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
           }
         ],
         "reported_status": "fail",
@@ -632,12 +632,63 @@
           {
             "path": ".software-factory/context/board/stories/27.json",
             "pointer": "/receipts/candidate-651-worker-gate",
-            "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+            "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
           }
         ],
         "reported_status": "fail",
         "story": 27,
         "subject_sha": "651e9d6a2bfc7a944e342836f6401faa66acce0a",
+        "type": "receipt"
+      },
+      {
+        "artifact_integrity": "matched",
+        "freshness": "stale",
+        "id": "receipt:27:external-config-schema-crosscheck",
+        "label": "external-config-schema-crosscheck",
+        "provenance": [
+          {
+            "path": ".software-factory/context/board/stories/27.json",
+            "pointer": "/receipts/external-config-schema-crosscheck",
+            "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
+          }
+        ],
+        "reported_status": "pass",
+        "story": 27,
+        "subject_sha": "dc8992c17f37492c615f5155f49d77389c5409c6",
+        "type": "receipt"
+      },
+      {
+        "artifact_integrity": "matched",
+        "freshness": "stale",
+        "id": "receipt:27:integrated-primary-proof",
+        "label": "integrated-primary-proof",
+        "provenance": [
+          {
+            "path": ".software-factory/context/board/stories/27.json",
+            "pointer": "/receipts/integrated-primary-proof",
+            "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
+          }
+        ],
+        "reported_status": "pass",
+        "story": 27,
+        "subject_sha": "dc8992c17f37492c615f5155f49d77389c5409c6",
+        "type": "receipt"
+      },
+      {
+        "artifact_integrity": "matched",
+        "freshness": "stale",
+        "id": "receipt:27:integrated-source-review",
+        "label": "integrated-source-review",
+        "provenance": [
+          {
+            "path": ".software-factory/context/board/stories/27.json",
+            "pointer": "/receipts/integrated-source-review",
+            "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
+          }
+        ],
+        "reported_status": "pass",
+        "story": 27,
+        "subject_sha": "dc8992c17f37492c615f5155f49d77389c5409c6",
         "type": "receipt"
       },
       {
@@ -649,7 +700,7 @@
           {
             "path": ".software-factory/context/board/stories/27.json",
             "pointer": "/receipts/rejected-089-review",
-            "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+            "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
           }
         ],
         "reported_status": "fail",
@@ -666,7 +717,7 @@
           {
             "path": ".software-factory/context/board/stories/27.json",
             "pointer": "/receipts/rejected-090-packaging",
-            "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+            "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
           }
         ],
         "reported_status": "finding",
@@ -683,7 +734,7 @@
           {
             "path": ".software-factory/context/board/stories/27.json",
             "pointer": "/receipts/rejected-090-review",
-            "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+            "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
           }
         ],
         "reported_status": "fail",
@@ -700,7 +751,7 @@
           {
             "path": ".software-factory/context/board/stories/27.json",
             "pointer": "/receipts/rejected-651-packaging",
-            "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+            "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
           }
         ],
         "reported_status": "finding",
@@ -717,7 +768,7 @@
           {
             "path": ".software-factory/context/board/stories/27.json",
             "pointer": "/receipts/rejected-651-review",
-            "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+            "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
           }
         ],
         "reported_status": "fail",
@@ -4283,7 +4334,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/candidate-089-worker-gate",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "records",
@@ -4296,7 +4347,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/candidate-090-worker-gate",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "records",
@@ -4309,7 +4360,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/candidate-651-worker-gate",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "records",
@@ -4322,7 +4373,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/candidate-bbda-worker-gate",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "records",
@@ -4335,7 +4386,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/corrected-bbda-packaging",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "records",
@@ -4348,7 +4399,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/corrected-bbda-source-review",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "records",
@@ -4360,8 +4411,47 @@
       "provenance": [
         {
           "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/external-config-schema-crosscheck",
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
+        }
+      ],
+      "relation": "records",
+      "source": "receipt:27:external-config-schema-crosscheck",
+      "target": "surface:.software-factory/runs/software-factory-v01/evidence/agents-config-external-schema-crosscheck.log"
+    },
+    {
+      "basis": "artifact-reference",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/integrated-primary-proof",
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
+        }
+      ],
+      "relation": "records",
+      "source": "receipt:27:integrated-primary-proof",
+      "target": "surface:.software-factory/runs/software-factory-v01/evidence/agents-integrated-gate.log"
+    },
+    {
+      "basis": "artifact-reference",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/integrated-source-review",
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
+        }
+      ],
+      "relation": "records",
+      "source": "receipt:27:integrated-source-review",
+      "target": "surface:.software-factory/runs/software-factory-v01/evidence/agents-dc8992-integrated-source-review.md"
+    },
+    {
+      "basis": "artifact-reference",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/rejected-089-review",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "records",
@@ -4374,7 +4464,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/rejected-090-packaging",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "records",
@@ -4387,7 +4477,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/rejected-090-review",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "records",
@@ -4400,7 +4490,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/rejected-651-packaging",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "records",
@@ -4413,7 +4503,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/rejected-651-review",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "records",
@@ -6792,7 +6882,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/covers/0",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "covers",
@@ -6805,7 +6895,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/covers/1",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "covers",
@@ -6818,7 +6908,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/covers/2",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "covers",
@@ -6831,7 +6921,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/covers/3",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "covers",
@@ -6844,7 +6934,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/covers/4",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "covers",
@@ -6857,7 +6947,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/covers/5",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "covers",
@@ -6870,7 +6960,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/covers/6",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "covers",
@@ -6883,7 +6973,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/covers/7",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "covers",
@@ -22476,7 +22566,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/after/0",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "depends-on",
@@ -22488,7 +22578,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/epic",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "part-of",
@@ -22500,7 +22590,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/active-attempt",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "records",
@@ -22512,7 +22602,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/active-attempt",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "subject",
@@ -22524,7 +22614,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/candidate-089-worker-gate",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "records",
@@ -22536,7 +22626,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/candidate-089-worker-gate",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "subject",
@@ -22548,7 +22638,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/candidate-090-worker-gate",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "records",
@@ -22560,7 +22650,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/candidate-090-worker-gate",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "subject",
@@ -22572,7 +22662,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/candidate-651-worker-gate",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "records",
@@ -22584,7 +22674,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/candidate-651-worker-gate",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "subject",
@@ -22596,7 +22686,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/candidate-bbda-worker-gate",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "records",
@@ -22608,7 +22698,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/candidate-bbda-worker-gate",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "subject",
@@ -22620,7 +22710,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/corrected-bbda-packaging",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "records",
@@ -22632,7 +22722,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/corrected-bbda-packaging",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "subject",
@@ -22644,7 +22734,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/corrected-bbda-source-review",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "records",
@@ -22656,7 +22746,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/corrected-bbda-source-review",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "subject",
@@ -22667,8 +22757,80 @@
       "provenance": [
         {
           "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/external-config-schema-crosscheck",
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
+        }
+      ],
+      "relation": "records",
+      "source": "story:27",
+      "target": "receipt:27:external-config-schema-crosscheck"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/external-config-schema-crosscheck",
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
+        }
+      ],
+      "relation": "subject",
+      "source": "receipt:27:external-config-schema-crosscheck",
+      "target": "commit:dc8992c17f37492c615f5155f49d77389c5409c6"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/integrated-primary-proof",
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
+        }
+      ],
+      "relation": "records",
+      "source": "story:27",
+      "target": "receipt:27:integrated-primary-proof"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/integrated-primary-proof",
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
+        }
+      ],
+      "relation": "subject",
+      "source": "receipt:27:integrated-primary-proof",
+      "target": "commit:dc8992c17f37492c615f5155f49d77389c5409c6"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/integrated-source-review",
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
+        }
+      ],
+      "relation": "records",
+      "source": "story:27",
+      "target": "receipt:27:integrated-source-review"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/integrated-source-review",
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
+        }
+      ],
+      "relation": "subject",
+      "source": "receipt:27:integrated-source-review",
+      "target": "commit:dc8992c17f37492c615f5155f49d77389c5409c6"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/rejected-089-review",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "records",
@@ -22680,7 +22842,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/rejected-089-review",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "subject",
@@ -22692,7 +22854,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/rejected-090-packaging",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "records",
@@ -22704,7 +22866,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/rejected-090-packaging",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "subject",
@@ -22716,7 +22878,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/rejected-090-review",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "records",
@@ -22728,7 +22890,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/rejected-090-review",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "subject",
@@ -22740,7 +22902,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/rejected-651-packaging",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "records",
@@ -22752,7 +22914,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/rejected-651-packaging",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "subject",
@@ -22764,7 +22926,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/rejected-651-review",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "records",
@@ -22776,7 +22938,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/rejected-651-review",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "subject",
@@ -22788,7 +22950,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/worker-handoff",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "records",
@@ -22800,7 +22962,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/worker-handoff",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "relation": "subject",
@@ -24424,7 +24586,7 @@
     {
       "kind": "file",
       "path": ".software-factory/context/board/stories/27.json",
-      "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+      "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
     },
     {
       "kind": "file",
@@ -24740,6 +24902,21 @@
       "kind": "file",
       "path": ".software-factory/runs/software-factory-v01/evidence/agents-bbda-worker-gate.log",
       "sha256": "2311076f1812c130718af1117b05916fd13bfcd313acf4e1ffe3a783951b8d9a"
+    },
+    {
+      "kind": "file",
+      "path": ".software-factory/runs/software-factory-v01/evidence/agents-config-external-schema-crosscheck.log",
+      "sha256": "17795bac7b1687b06da8b7a7e7ee9fe792a994f338e5f99705fc3a8e8e5bb413"
+    },
+    {
+      "kind": "file",
+      "path": ".software-factory/runs/software-factory-v01/evidence/agents-dc8992-integrated-source-review.md",
+      "sha256": "40b65870d90e6f25cb7713c60acb8c9470e818970bd68442f17ee6bd3926fd2c"
+    },
+    {
+      "kind": "file",
+      "path": ".software-factory/runs/software-factory-v01/evidence/agents-integrated-gate.log",
+      "sha256": "e94de785d4e448b6dc4d9e2dad07d11f361978ce7017fed5fb81f903052e42eb"
     },
     {
       "kind": "file",
@@ -25332,12 +25509,12 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/candidate-089-worker-gate/subject_sha",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         },
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/rejected-089-review/subject_sha",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "type": "commit"
@@ -25376,17 +25553,17 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/candidate-090-worker-gate/subject_sha",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         },
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/rejected-090-packaging/subject_sha",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         },
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/rejected-090-review/subject_sha",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "type": "commit"
@@ -25432,7 +25609,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/active-attempt/subject_sha",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "type": "commit"
@@ -25688,17 +25865,17 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/candidate-651-worker-gate/subject_sha",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         },
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/rejected-651-packaging/subject_sha",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         },
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/rejected-651-review/subject_sha",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "type": "commit"
@@ -26006,22 +26183,22 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/candidate-bbda-worker-gate/subject_sha",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         },
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/corrected-bbda-packaging/subject_sha",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         },
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/corrected-bbda-source-review/subject_sha",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         },
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/worker-handoff/subject_sha",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "type": "commit"
@@ -26129,6 +26306,28 @@
           "path": ".software-factory/context/board/stories/8.json",
           "pointer": "/receipts/backfill/subject_sha",
           "sha256": "6aae62fc6fb17fbf70d3930f374b35155bb991456857382d9c59383399e8fa14"
+        }
+      ],
+      "type": "commit"
+    },
+    {
+      "id": "commit:dc8992c17f37492c615f5155f49d77389c5409c6",
+      "label": "dc8992c17f37492c615f5155f49d77389c5409c6",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/external-config-schema-crosscheck/subject_sha",
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
+        },
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/integrated-primary-proof/subject_sha",
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
+        },
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/integrated-source-review/subject_sha",
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "type": "commit"
@@ -45849,7 +46048,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/active-attempt",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "reported_status": "assigned",
@@ -45866,7 +46065,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/candidate-089-worker-gate",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "reported_status": "fail",
@@ -45883,7 +46082,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/candidate-090-worker-gate",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "reported_status": "fail",
@@ -45900,7 +46099,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/candidate-651-worker-gate",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "reported_status": "fail",
@@ -45917,7 +46116,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/candidate-bbda-worker-gate",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "reported_status": "fail",
@@ -45934,7 +46133,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/corrected-bbda-packaging",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "reported_status": "pass-executed-cases",
@@ -45951,12 +46150,63 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/corrected-bbda-source-review",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "reported_status": "pass",
       "story": 27,
       "subject_sha": "bbda559611d0126d1b0a574c9a6c369aa8ac4c3f",
+      "type": "receipt"
+    },
+    {
+      "artifact_integrity": "matched",
+      "freshness": "stale",
+      "id": "receipt:27:external-config-schema-crosscheck",
+      "label": "external-config-schema-crosscheck",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/external-config-schema-crosscheck",
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
+        }
+      ],
+      "reported_status": "pass",
+      "story": 27,
+      "subject_sha": "dc8992c17f37492c615f5155f49d77389c5409c6",
+      "type": "receipt"
+    },
+    {
+      "artifact_integrity": "matched",
+      "freshness": "stale",
+      "id": "receipt:27:integrated-primary-proof",
+      "label": "integrated-primary-proof",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/integrated-primary-proof",
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
+        }
+      ],
+      "reported_status": "pass",
+      "story": 27,
+      "subject_sha": "dc8992c17f37492c615f5155f49d77389c5409c6",
+      "type": "receipt"
+    },
+    {
+      "artifact_integrity": "matched",
+      "freshness": "stale",
+      "id": "receipt:27:integrated-source-review",
+      "label": "integrated-source-review",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/integrated-source-review",
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
+        }
+      ],
+      "reported_status": "pass",
+      "story": 27,
+      "subject_sha": "dc8992c17f37492c615f5155f49d77389c5409c6",
       "type": "receipt"
     },
     {
@@ -45968,7 +46218,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/rejected-089-review",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "reported_status": "fail",
@@ -45985,7 +46235,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/rejected-090-packaging",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "reported_status": "finding",
@@ -46002,7 +46252,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/rejected-090-review",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "reported_status": "fail",
@@ -46019,7 +46269,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/rejected-651-packaging",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "reported_status": "finding",
@@ -46036,7 +46286,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/rejected-651-review",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "reported_status": "fail",
@@ -46053,7 +46303,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/worker-handoff",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "reported_status": "submitted-for-review",
@@ -46641,7 +46891,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/covers/0",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "type": "requirement"
@@ -46653,7 +46903,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/covers/1",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "type": "requirement"
@@ -46665,7 +46915,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/covers/2",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "type": "requirement"
@@ -46677,7 +46927,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/covers/3",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "type": "requirement"
@@ -46689,7 +46939,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/covers/4",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "type": "requirement"
@@ -46701,7 +46951,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/covers/5",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "type": "requirement"
@@ -46713,7 +46963,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/covers/6",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "type": "requirement"
@@ -46725,7 +46975,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/covers/7",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "type": "requirement"
@@ -50170,7 +50420,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "",
-          "sha256": "84ef9e4c2a3af6f6070439b553a0907673685e5ef7da5b364913db2406c3acdd"
+          "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
         }
       ],
       "status": "in-review",
@@ -50691,6 +50941,45 @@
           "path": ".software-factory/runs/software-factory-v01/evidence/agents-bbda-worker-gate.log",
           "pointer": "",
           "sha256": "2311076f1812c130718af1117b05916fd13bfcd313acf4e1ffe3a783951b8d9a"
+        }
+      ],
+      "type": "surface"
+    },
+    {
+      "exists": true,
+      "id": "surface:.software-factory/runs/software-factory-v01/evidence/agents-config-external-schema-crosscheck.log",
+      "label": ".software-factory/runs/software-factory-v01/evidence/agents-config-external-schema-crosscheck.log",
+      "provenance": [
+        {
+          "path": ".software-factory/runs/software-factory-v01/evidence/agents-config-external-schema-crosscheck.log",
+          "pointer": "",
+          "sha256": "17795bac7b1687b06da8b7a7e7ee9fe792a994f338e5f99705fc3a8e8e5bb413"
+        }
+      ],
+      "type": "surface"
+    },
+    {
+      "exists": true,
+      "id": "surface:.software-factory/runs/software-factory-v01/evidence/agents-dc8992-integrated-source-review.md",
+      "label": ".software-factory/runs/software-factory-v01/evidence/agents-dc8992-integrated-source-review.md",
+      "provenance": [
+        {
+          "path": ".software-factory/runs/software-factory-v01/evidence/agents-dc8992-integrated-source-review.md",
+          "pointer": "",
+          "sha256": "40b65870d90e6f25cb7713c60acb8c9470e818970bd68442f17ee6bd3926fd2c"
+        }
+      ],
+      "type": "surface"
+    },
+    {
+      "exists": true,
+      "id": "surface:.software-factory/runs/software-factory-v01/evidence/agents-integrated-gate.log",
+      "label": ".software-factory/runs/software-factory-v01/evidence/agents-integrated-gate.log",
+      "provenance": [
+        {
+          "path": ".software-factory/runs/software-factory-v01/evidence/agents-integrated-gate.log",
+          "pointer": "",
+          "sha256": "e94de785d4e448b6dc4d9e2dad07d11f361978ce7017fed5fb81f903052e42eb"
         }
       ],
       "type": "surface"
@@ -52585,5 +52874,5 @@
     }
   ],
   "schema": "sf-trace/1",
-  "source_fingerprint": "6b886c97d8eee768d9c6f67b4308b8cadc902048023dc2a4266cefee1ed26239"
+  "source_fingerprint": "ed287b82f17837c9b1fd8809072a1e31dc70ab641161e67a6b9abc107285fb3a"
 }
