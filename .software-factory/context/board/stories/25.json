@@ -4,8 +4,8 @@
   "epic": 4,
   "type": "story",
   "title": "Config contract, JSON Schema and tracker adapters",
-  "status": "in-review",
-  "owner": "codex-config-trackers",
+  "status": "in-progress",
+  "owner": "codex-eval-isolation",
   "after": [
     24
   ],
@@ -154,10 +154,21 @@
       "by": "codex-config-trackers",
       "from": "in-progress",
       "to": "in-review"
+    },
+    {
+      "at": "2026-10-15T13:32:56.372792+00:00",
+      "by": "codex-eval-isolation",
+      "from": "in-review",
+      "to": "in-progress"
     }
   ],
-  "findings": [],
+  "findings": [
+    {
+      "at": "2026-10-15T13:32:56.372626+00:00",
+      "by": "codex-eval-isolation",
+      "text": "Private evaluation-proposal validation exposed four blocked gh auth status attempts from the existing BMad diagnostic test. Narrow fixture repair will stub those observations explicitly; no provider/auth execution occurred in the guarded reproduction, and canonical evaluation admission stays pending."
+    }
+  ],
   "source_key": "onboarding-integrations/config-schema-trackers",
-  "review_subject_sha": "e952b0a1d0e73f294157ad0947188367e7f242fb",
   "evidence_contract": 1
 }

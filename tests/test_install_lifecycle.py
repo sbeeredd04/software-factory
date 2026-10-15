@@ -19,6 +19,11 @@ class ConfigLifecycleTests(unittest.TestCase):
         shutil.copytree(support.REPO/'examples/config',self.repo)
         self.env,self.guard,stubs = support.guard_env()
         self.addCleanup(shutil.rmtree,stubs,ignore_errors=True)
+        self.auth_log = self.base / 'fixture-auth.log'
+        self.env['SF_FIXTURE_AUTH_LOG'] = str(self.auth_log)
+        gh = stubs / 'gh'
+        gh.write_text('#!/bin/sh\nprintf \'%s\\n\' "$*" >> "$SF_FIXTURE_AUTH_LOG"\nexit 1\n')
+        gh.chmod(0o755)
         self.env['HOME'] = str(self.base/'home')
         Path(self.env['HOME']).mkdir()
         self.env['PYTHONDONTWRITEBYTECODE'] = '1'
@@ -66,3 +71,4 @@ class ConfigLifecycleTests(unittest.TestCase):
         data['bmad'] = {'status':'failed','manifest_sha256':'0'*64}
         ownership.write_text(json.dumps(data))
         self.assertEqual('warning',observation()['status'])
+        self.assertEqual(['auth status'] * 4, self.auth_log.read_text().splitlines())

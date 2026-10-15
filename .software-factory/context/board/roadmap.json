@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-15T13:22:38.050094+00:00",
-  "revision": 254,
+  "generated_at": "2026-10-15T13:32:56.377467+00:00",
+  "revision": 255,
   "streams": [
     {
       "id": "W-foundation",
@@ -82,8 +82,8 @@
       "counts": {
         "planned": 0,
         "ready": 0,
-        "in-progress": 0,
-        "review": 4,
+        "in-progress": 1,
+        "review": 3,
         "built": 0,
         "done": 0,
         "cancelled": 0
@@ -4149,9 +4149,9 @@
       "stream": "W-onboarding",
       "type": "story",
       "title": "Config contract, JSON Schema and tracker adapters",
-      "status": "in-review",
-      "state": "review",
-      "owner": "codex-config-trackers",
+      "status": "in-progress",
+      "state": "in-progress",
+      "owner": "codex-eval-isolation",
       "after": [
         24
       ],
@@ -4283,7 +4283,12 @@
       "pr": null,
       "merged_sha": null,
       "claim": {
-        "live": false
+        "live": true,
+        "owner": "codex-eval-isolation",
+        "paths": [
+          "tests/test_install_lifecycle.py"
+        ],
+        "claimed_at": "2026-10-15T13:32:56.339920+00:00"
       },
       "blocks": [
         26
@@ -4306,12 +4311,23 @@
           "by": "codex-config-trackers",
           "from": "in-progress",
           "to": "in-review"
+        },
+        {
+          "at": "2026-10-15T13:32:56.372792+00:00",
+          "by": "codex-eval-isolation",
+          "from": "in-review",
+          "to": "in-progress"
         }
       ],
-      "findings": [],
+      "findings": [
+        {
+          "at": "2026-10-15T13:32:56.372626+00:00",
+          "by": "codex-eval-isolation",
+          "text": "Private evaluation-proposal validation exposed four blocked gh auth status attempts from the existing BMad diagnostic test. Narrow fixture repair will stub those observations explicitly; no provider/auth execution occurred in the guarded reproduction, and canonical evaluation admission stays pending."
+        }
+      ],
       "source_key": "onboarding-integrations/config-schema-trackers",
-      "evidence_contract": 1,
-      "review_subject_sha": "e952b0a1d0e73f294157ad0947188367e7f242fb"
+      "evidence_contract": 1
     },
     {
       "id": 26,
