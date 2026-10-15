@@ -4,7 +4,7 @@
   "epic": 5,
   "type": "story",
   "title": "Hand-built showcase site with self-hosted OFL fonts",
-  "status": "in-progress",
+  "status": "in-review",
   "owner": "codex-showcase",
   "after": [
     28
@@ -39,6 +39,82 @@
       "status": "assigned",
       "recorded_at": "2026-10-15T13:44:07.427782+00:00",
       "summary": "Original29 dispatched after reviewed28 and owner22-case admission. Complete bespoke static showcase, local licensed fonts, exact setup-copy prompt, browser/accessibility evidence and manual-only Pages workflow. Isolated reused showcaseworktree; primary sole board/plan/run authority. No realdeploy orlivehost claims."
+    },
+    "worker-handoff": {
+      "subject_sha": "ec0992aedfb661bf0f5f7957ab87fd74d5cd9cc4",
+      "clean": true,
+      "source_fingerprint": "fcad9e74aad6e1c3f51205c8754f967fc291b819371cc38725ab65c6738556da",
+      "changed_paths": 36,
+      "command": "bash scripts/check_all.sh (bundled Python 3.12 and Node 24.19.0 on PATH)",
+      "exit": 1,
+      "unit_tests": {
+        "ran": 724,
+        "passed": 721,
+        "failed": 2,
+        "skipped": 1,
+        "seconds": 300.589,
+        "failures": [
+          "test_premerge_run_is_offline_green_and_guarded",
+          "test_codebase_regeneration_is_stable"
+        ],
+        "skip_reason": "optional jsonschema cross-check not requested"
+      },
+      "evals": {
+        "ran": 48,
+        "passed": 47,
+        "failed": 1,
+        "failed_case": "SKL-CRAWL-002",
+        "reason": "root-owned CODEBASE projection is stale; not changed in this worktree"
+      },
+      "passed_steps": [
+        "compileall",
+        "ruff",
+        "shellcheck",
+        "validate",
+        "scan_public",
+        "check_links",
+        "distribution",
+        "check_mermaid",
+        "check-jsonschema workflows",
+        "check-jsonschema issue forms"
+      ],
+      "agent_skills_validators_passed": 11,
+      "narrow_tests": {
+        "ran": 15,
+        "passed": 15,
+        "exit": 0
+      },
+      "copy_overlap_synthetic_unit": {
+        "cases": 3,
+        "passed": 3,
+        "node": "24.19.0",
+        "exit": 0
+      },
+      "product_source_review": "accepted exact ec0992a; /tmp/sf-showcase-copy-race-final-review.json",
+      "remaining_proof": "Native prefers-reduced-motion emulation remains unverified; original SITE006 is pending root-owned authorized alternative browser proof. Author preliminary UI observations were unbound development evidence, superseded by root-owned exact-subject reviews.",
+      "source_resource_bytes": 427018,
+      "gzip_css_bytes": 4817,
+      "gzip_js_bytes": 1846,
+      "log_sha256": "b20a005689e47d16049837f180024626108e87ca8ece665fd15f346df1095e25",
+      "type": "worker-handoff",
+      "author": "codex-showcase",
+      "status": "source-reviewed-native-media-proof-pending",
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/showcase-worker-handoff.json",
+      "artifact_sha256": "d475c34170679359e29f70be85fb90f5b426fc989669ec1fe46fcc174596fa60",
+      "summary": "Static showcase/canonical prompts implemented and independently reviewed after actual motion/copy/marker regressions and overlap repair. Full worker gate retains only isolated source-map freshness failures. Native reduced-motion emulation pending explicit alternate-browser method approval; original assertion preserved. No built/done/publication/epic acceptance claim."
+    },
+    "independent-review": {
+      "type": "independent-review",
+      "subject_sha": "ec0992aedfb661bf0f5f7957ab87fd74d5cd9cc4",
+      "author": "codex-showcase",
+      "reviewer": "/root/product_expert",
+      "status": "pass",
+      "scope": "Original36path source review chain: f0 product review,2ffd delta,cb rejectedrace,ec final accepted repair. Root actual CUA/source HTTP observations separate and precisely subject-bound.",
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/showcase-final-review.md",
+      "artifact_sha256": "abd18880a66b757ba885c2a58ed0be404e91ea0c96dccf47c9ea5836025365bc",
+      "limitations": [
+        "Source review does not establish native reduced-motion emulation, actual clipboard string read, deployedPages, remoteintegration or owner epic acceptance."
+      ]
     }
   },
   "baseline_sha": null,
@@ -57,8 +133,16 @@
       "by": "codex-showcase",
       "from": "ready-for-dev",
       "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T14:42:58.343305+00:00",
+      "by": "codex-showcase",
+      "from": "in-progress",
+      "to": "in-review"
     }
   ],
   "findings": [],
-  "source_key": "launch-publication/showcase-site"
+  "source_key": "launch-publication/showcase-site",
+  "review_subject_sha": "ec0992aedfb661bf0f5f7957ab87fd74d5cd9cc4",
+  "evidence_contract": 1
 }
