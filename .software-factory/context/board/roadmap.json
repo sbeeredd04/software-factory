@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-15T11:18:03.245331+00:00",
-  "revision": 221,
+  "generated_at": "2026-10-15T11:37:55.264453+00:00",
+  "revision": 226,
   "streams": [
     {
       "id": "W-foundation",
@@ -80,10 +80,10 @@
         4
       ],
       "counts": {
-        "planned": 2,
-        "ready": 0,
-        "in-progress": 1,
-        "review": 1,
+        "planned": 1,
+        "ready": 1,
+        "in-progress": 0,
+        "review": 2,
         "built": 0,
         "done": 0,
         "cancelled": 0
@@ -4319,8 +4319,8 @@
       "stream": "W-onboarding",
       "type": "story",
       "title": "sf-help: discovery, interview and approved setup",
-      "status": "in-progress",
-      "state": "in-progress",
+      "status": "in-review",
+      "state": "review",
       "owner": "codex-onboarding",
       "after": [
         25
@@ -4371,6 +4371,132 @@
           "limits": [
             "Source review and isolated helper probes; no live-host, integration or acceptance proof."
           ]
+        },
+        "candidate-72d1-worker-gate": {
+          "type": "verification",
+          "status": "fail",
+          "subject_sha": "72d1d82f91c98759e9d1e6c8d1dba405a67c20ec",
+          "command": "SF_SKIP_NETWORK=1 bash scripts/check_all.sh",
+          "exit_code": 1,
+          "artifact": ".software-factory/runs/software-factory-v01/evidence/onboarding-72d1-worker-gate.log",
+          "unit_tests": {
+            "run": 626,
+            "passed": 616,
+            "failed": 2,
+            "skipped": 8
+          },
+          "evals": {
+            "passed": 27,
+            "failed": 3,
+            "failed_ids": [
+              "SKL-BOARD-002",
+              "SKL-CRAWL-002",
+              "SKL-HELP-001"
+            ]
+          },
+          "summary": "Isolated gate failed: dogfood eval run includes stale board/crawl and missing interview wording; separate crawl freshness unit also failed. Network-dependent stages unverified; optional schema crosscheck not requested. Independent approval-boundary rejection is separate.",
+          "limits": [
+            "No integrated candidate or external CI/effect/acceptance proof."
+          ]
+        },
+        "candidate-07b7-worker-gate": {
+          "type": "verification",
+          "status": "fail",
+          "subject_sha": "07b7dcd4ba642b7c019a13654551614d80ec2a34",
+          "command": "SF_SKIP_NETWORK=1 bash scripts/check_all.sh",
+          "exit_code": 1,
+          "artifact": ".software-factory/runs/software-factory-v01/evidence/onboarding-07b7-worker-gate.log",
+          "unit_tests": {
+            "run": 632,
+            "passed": 622,
+            "failed": 2,
+            "skipped": 8
+          },
+          "evals": {
+            "passed": 27,
+            "failed": 3,
+            "failed_ids": [
+              "SKL-BOARD-002",
+              "SKL-CRAWL-002",
+              "SKL-HELP-001"
+            ]
+          },
+          "summary": "Source behavior reviewed separately. Gate still failed stale board/crawl and case-sensitive interview wording; latter repaired only in later9dec. Network stages unverified and optional crosscheck not requested."
+        },
+        "source-review-07b7": {
+          "type": "independent-source-review",
+          "status": "pass",
+          "subject_sha": "07b7dcd4ba642b7c019a13654551614d80ec2a34",
+          "author": "product-expert",
+          "reviewer": "mission-status",
+          "independent": true,
+          "artifact": ".software-factory/runs/software-factory-v01/evidence/onboarding-07b7-independent-review.md",
+          "artifact_sha256": "0e2b8ece521f4b4dbcd67b04089f93f43c9654c1ee297d0705b2808228e41460",
+          "summary": "Accepted actual corrected Git source and regression bodies. Four demonstrated approval-boundary defects repaired; custom output pruning, preserved existing monitoring declarations and truthful setup reuse reviewed. Full gate and acceptance remain separate."
+        },
+        "source-review-9dec": {
+          "type": "independent-source-review",
+          "status": "pass",
+          "subject_sha": "9dec801db0328057cc719d5b9d6112e07d30a113",
+          "author": "product-expert",
+          "reviewer": "orchestrator",
+          "independent": true,
+          "prior_independent_review_subject": "07b7dcd4ba642b7c019a13654551614d80ec2a34",
+          "changed_paths": [
+            "skills/sf-help/SKILL.md"
+          ],
+          "summary": "Inspected exact Git delta: only entry heading becomes Ground the interview and propose. No helper, projector, template, test or schema byte changes. Prior independent behavior review and root probes retain their exact prior subjects; actual story-filtered quick run at new subject passes all four selected cases.",
+          "limits": [
+            "Source-delta review and selected eval only; full gate and integration remain separate."
+          ],
+          "same_helper_hashes": {
+            "skills/sf-help/scripts/setup.py": "2072ade60f5b2b90377be36b8c330901698465f7c08e91457b76fb9e4422d553",
+            "skills/sf-help/scripts/discover.py": "fc8ecf1b44979e7224704d9598962cb349d368280ef4377def05aeb2a7fd0ad7"
+          },
+          "eval_receipt": ".software-factory/runs/software-factory-v01/evidence/onboarding-9dec-quick-eval.json",
+          "evals_passed": 4
+        },
+        "forward-use-72d1": {
+          "type": "forward-use",
+          "status": "observed",
+          "subject_sha": "72d1d82f91c98759e9d1e6c8d1dba405a67c20ec",
+          "reviewer": "forward-evaluation",
+          "artifact": ".software-factory/runs/software-factory-v01/evidence/onboarding-72d1-forward-use.json",
+          "summary": "Frozen-source independent TypeScript fixture journey: grounded20answers, simulated fixture consent, apply/config validation/repeat/reuse, preserved README/conventions/CodeRabbit; prepared first behavior with2expectedfails/2regressionpasses. Not a completed feature or actual owner approval.",
+          "limits": [
+            "Evaluator selected doctor and triggered gh auth status; no auth/network isolation claim. No host-agent CLI or external write observed. Regular-file hashes exclude Git and do not audit credentials or home access.",
+            "Older candidate journey evidence; independent source rejection and later repairs remain separate."
+          ]
+        },
+        "worker-handoff": {
+          "type": "worker-handoff",
+          "status": "submitted",
+          "subject_sha": "9dec801db0328057cc719d5b9d6112e07d30a113",
+          "author": "product-expert",
+          "requested_model": "gpt-6-astra",
+          "effective_model": null,
+          "summary": "Completed original26: bounded discovery, exact20decisioncatalog, grounded digest-approved create-only setup/reuse, preservedauthority/partialwork, self-contained projectedtemplates. Independent correctedsource accepted; finalheadingonlydelta accepted separately. Rootregeneration/integratedfullgate pending.",
+          "targeted_tests": {
+            "onboarding_passed": 21,
+            "host_tests_passed": 50
+          },
+          "full_gate": {
+            "exit_code": 1,
+            "tests_run": 632,
+            "passed": 622,
+            "failed": 2,
+            "skipped": 8,
+            "evals_passed": 28,
+            "evals_failed": [
+              "SKL-BOARD-002",
+              "SKL-CRAWL-002"
+            ]
+          },
+          "artifact": ".software-factory/runs/software-factory-v01/evidence/onboarding-9dec-worker-gate.log",
+          "limits": [
+            "Isolated board/crawl projections stale; no successful full-gate claim. Network-dependent stages unverified.",
+            "No actual consumer owner approval, live-host loading, integration or human epic acceptance."
+          ]
         }
       },
       "baseline_sha": null,
@@ -4378,20 +4504,7 @@
       "pr": null,
       "merged_sha": null,
       "claim": {
-        "live": true,
-        "owner": "codex-onboarding",
-        "paths": [
-          "skills/sf-help",
-          "tests/test_onboarding.py",
-          "tests/fixtures/onboarding",
-          "docs/onboarding.md",
-          "hosts/plugins/release-files.json",
-          "install.py",
-          "tests/test_host_claude.py",
-          "tests/test_host_codex.py",
-          "tests/test_host_cursor.py"
-        ],
-        "claimed_at": "2026-10-15T10:55:48.770013+00:00"
+        "live": false
       },
       "blocks": [
         27
@@ -4408,6 +4521,12 @@
           "by": "codex-onboarding",
           "from": "ready-for-dev",
           "to": "in-progress"
+        },
+        {
+          "at": "2026-10-15T11:37:47.357690+00:00",
+          "by": "codex-onboarding",
+          "from": "in-progress",
+          "to": "in-review"
         }
       ],
       "findings": [
@@ -4417,7 +4536,9 @@
           "text": "Candidate72d1 independently rejected: approved-root replacement, JSON type mismatch, stale replay and directory inventory drift reproduced in isolated helper fixtures. Preserve failed evidence; repair before review handoff."
         }
       ],
-      "source_key": "onboarding-integrations/sf-help-skill"
+      "source_key": "onboarding-integrations/sf-help-skill",
+      "evidence_contract": 1,
+      "review_subject_sha": "9dec801db0328057cc719d5b9d6112e07d30a113"
     },
     {
       "id": 27,
@@ -4426,7 +4547,7 @@
       "type": "story",
       "title": "sf-agents: registry, routing, review bots and triage",
       "status": "backlog",
-      "state": "planned",
+      "state": "ready",
       "owner": null,
       "after": [
         26
@@ -5857,17 +5978,17 @@
     }
   ],
   "frontier": {
-    "ready": [],
-    "waiting_on_prereq": [
+    "ready": [
       {
         "id": 27,
         "epic": 4,
         "stream": "W-onboarding",
         "title": "sf-agents: registry, routing, review bots and triage",
-        "missing": [
-          "26 (in-progress)"
-        ]
-      },
+        "why": "after 26 in-review; unclaimed",
+        "claimed": false
+      }
+    ],
+    "waiting_on_prereq": [
       {
         "id": 28,
         "epic": 4,
