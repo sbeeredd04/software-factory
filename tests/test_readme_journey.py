@@ -195,6 +195,30 @@ class ReadmeJourneyTests(unittest.TestCase):
             self.assertIn(term, prompt)
         self.assertNotIn("human epic checkpoint", prompt)
 
+    def test_bootstrap_and_native_routes_keep_distinct_trust_and_namespaces(self):
+        readme = README.read_text()
+        routes = readme.split("## Choose the route that matches your goal\n", 1)[1].split("## The nine workflow maps", 1)[0]
+        rows = {line.split(" | ", 1)[0].removeprefix("| "): line
+                for line in routes.splitlines() if line.startswith("| ")}
+        self.assertIn("Full project installation", rows)
+        self.assertIn("Local bootstrap", rows)
+        self.assertIn("Raw pinned skills acquisition", rows)
+        self.assertIn("Native bundles", rows)
+        self.assertIn('`sh "$SF_PACK/install.sh" --host "$SF_HOST" --project "$SF_PROJECT" --skip-bmad --dry-run`',
+                      rows["Local bootstrap"])
+        self.assertIn("without downloads, even if `--ref`", rows["Local bootstrap"])
+        self.assertIn("docs/distribution.md#bootstrap", routes)
+        self.assertIn("`/software-factory:software-factory`", rows["Native bundles"])
+        self.assertIn("full project setup uses `/software-factory`", rows["Native bundles"])
+        self.assertNotIn("/software-factory:software-factory", rows["Full project installation"])
+        self.assertNotIn("/software-factory:software-factory", rows["Raw pinned skills acquisition"])
+        for term in ("separately downloaded and reviewed", "sf-TAG.tar.gz", "SHA256SUMS",
+                     "explicit `--ref TAG`", "default `v0.1.0`", "never resolves `latest`",
+                     "unpublished targets", "same-origin checksum", "not an independent publisher signature",
+                     "before its archive verification"):
+            self.assertIn(term, routes)
+        self.assertNotRegex(routes, r"curl[^\n]*\|\s*(?:sh|bash)")
+
     def test_comparison_dimensions_and_distinct_platform(self):
         readme = README.read_text()
         comparison = readme.split("## Where this fits\n", 1)[1].split("## One synthetic lap", 1)[0]
