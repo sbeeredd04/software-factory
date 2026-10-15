@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-15T13:32:56.377467+00:00",
-  "revision": 255,
+  "generated_at": "2026-10-15T13:40:44.307070+00:00",
+  "revision": 257,
   "streams": [
     {
       "id": "W-foundation",
@@ -82,8 +82,8 @@
       "counts": {
         "planned": 0,
         "ready": 0,
-        "in-progress": 1,
-        "review": 3,
+        "in-progress": 0,
+        "review": 4,
         "built": 0,
         "done": 0,
         "cancelled": 0
@@ -4149,8 +4149,8 @@
       "stream": "W-onboarding",
       "type": "story",
       "title": "Config contract, JSON Schema and tracker adapters",
-      "status": "in-progress",
-      "state": "in-progress",
+      "status": "in-review",
+      "state": "review",
       "owner": "codex-eval-isolation",
       "after": [
         24
@@ -4276,6 +4276,41 @@
             "Third-party library used only in optional dev crosscheck; shipped validator remains standard-library-only.",
             "Does not establish governing document existence, authority or actual recipe execution."
           ]
+        },
+        "auth-isolation-repair": {
+          "type": "verification",
+          "status": "pass",
+          "subject_sha": "c38380e8623d28fdaa3ad24feb0ba8f9feeadc7c",
+          "command": "bash scripts/check_all.sh",
+          "exit_code": 0,
+          "artifact": ".software-factory/runs/software-factory-v01/evidence/auth-isolation-integrated-gate.log",
+          "artifact_sha256": "d92c072177c6e0732d4c3ae80e55ae36ceb0f34c451ef6e796aea2bf9b1f702f",
+          "unit_tests": {
+            "run": 709,
+            "passed": 708,
+            "failed": 0,
+            "skipped": 1,
+            "seconds": 220.423
+          },
+          "evals": {
+            "passed": 30,
+            "failed": 0,
+            "unverified": 0,
+            "skipped": 0,
+            "quarantined": 0
+          },
+          "summary": "Narrow test-only authfixture isolation repair passes complete integrated gate; actual approved BMad/skills network and allstatic steps exit0. Independentsource+guarded1test confirm4fixture auth observations and0escapedcalls. Private unsigned52draft separately48pass/4future-suite failures,0guardhits; execution was before newadmission and is not canonicalgate or approval.",
+          "review": {
+            "artifact": ".software-factory/runs/software-factory-v01/evidence/auth-isolation-source-review.md",
+            "artifact_sha256": "5f3866776c99240c04ec5c3ec56a20c803ca7168c7519b70517ae07f9c711664"
+          },
+          "probe": {
+            "artifact": ".software-factory/runs/software-factory-v01/evidence/auth-isolation-independent-probe.json",
+            "artifact_sha256": "fa003907a5e02a2a03ab01914097a817944277951a8ac4205b568180eb13a05f"
+          },
+          "limits": [
+            "Product source/criteria/canonical30caseplan unchanged at this tested SHA. Source permission/real provider auth, livehost, production/publication and human epic acceptance not established. Canonical eval supplement needs separate actualowner decision; private red receipt is not a passing gate."
+          ]
         }
       },
       "baseline_sha": null,
@@ -4283,12 +4318,7 @@
       "pr": null,
       "merged_sha": null,
       "claim": {
-        "live": true,
-        "owner": "codex-eval-isolation",
-        "paths": [
-          "tests/test_install_lifecycle.py"
-        ],
-        "claimed_at": "2026-10-15T13:32:56.339920+00:00"
+        "live": false
       },
       "blocks": [
         26
@@ -4317,6 +4347,12 @@
           "by": "codex-eval-isolation",
           "from": "in-review",
           "to": "in-progress"
+        },
+        {
+          "at": "2026-10-15T13:40:44.229624+00:00",
+          "by": "codex-eval-isolation",
+          "from": "in-progress",
+          "to": "in-review"
         }
       ],
       "findings": [
@@ -4324,10 +4360,16 @@
           "at": "2026-10-15T13:32:56.372626+00:00",
           "by": "codex-eval-isolation",
           "text": "Private evaluation-proposal validation exposed four blocked gh auth status attempts from the existing BMad diagnostic test. Narrow fixture repair will stub those observations explicitly; no provider/auth execution occurred in the guarded reproduction, and canonical evaluation admission stays pending."
+        },
+        {
+          "at": "2026-10-15T13:40:44.229448+00:00",
+          "by": "codex-eval-isolation",
+          "text": "Diagnostic fixture isolation repaired and independently verified: four intended fixture auth observations, zero escaped commands. Exactc383 fullgate709tests708pass/1optional skip and30evalpass; private unsigned52draft separately48pass/4expected future-suite failures with0guardhits. Original findings retained."
         }
       ],
       "source_key": "onboarding-integrations/config-schema-trackers",
-      "evidence_contract": 1
+      "evidence_contract": 1,
+      "review_subject_sha": "c38380e8623d28fdaa3ad24feb0ba8f9feeadc7c"
     },
     {
       "id": 26,
