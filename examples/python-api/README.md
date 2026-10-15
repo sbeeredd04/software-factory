@@ -1,6 +1,6 @@
 # Python API example
 
-This standalone standard-library project exposes `POST /format` on loopback. It accepts a JSON object with a nonempty string `name` and returns a JSON greeting. Invalid types and malformed JSON receive a 400 response; unknown paths receive 404. The handler and tests are real application behavior. A healthy HTTP status alone is not the assertion: check the response body and invalid path too.
+This standalone standard-library project exposes `POST /format` on loopback. It accepts a JSON object with a nonempty string `name` and returns a JSON greeting. Invalid types, malformed JSON and incomplete bodies receive a 400 response; a body that exceeds the one-second read deadline receives 408 and closes. Bodies are capped at 4,096 bytes; unknown paths receive 404. The handler and tests are real application behavior. A healthy HTTP status alone is not the assertion: check the response body and invalid path too.
 
 ```sh
 python3 -B -m unittest discover -s tests -v

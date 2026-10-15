@@ -10,5 +10,9 @@
   "rollback_scope": "separate approved local restoration and proof required",
   "assertions": ["named greeting", "default preserved", "non-string rejected", "normal JSON escaping"],
   "same_open_event": "event-invalid-type-001",
+  "open_event_routes": [
+    {"event_id": "event-invalid-type-001", "issue": "bug/type", "action": "open"},
+    {"event_id": "event-invalid-type-001", "issue": "bug/type", "action": "update-existing"}
+  ],
   "recurrence_after_closure": "new linked follow-up, never rewrite terminal record"
 }

@@ -17,7 +17,8 @@ skills-only; missing assets require full setup, never downloading dependencies
 or importing arbitrary consumer modules. Invoke helpers with Python3.11+ `-I -B`
 for isolation from consumer Python modules and bytecode writes.
 
-After a full project install, record bounded local presence without invoking an agent backend:
+After a full project install and the [quickstart helper-path mapping](quickstart.md#preview-and-install),
+record bounded local presence without invoking an agent backend:
 
 ```sh
 "$SF_PYTHON" -I -B "$SF_SKILLS/sf-agents/scripts/agents.py" --project "$SF_PROJECT" discover

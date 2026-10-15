@@ -1,6 +1,6 @@
 # BMad external-module compatibility
 
-> Historical experiment and proposal. [ADR 0025](../../.software-factory/context/decisions/0025-bmad-module-compatibility-pins.md) subsequently resolved the module choice: BMad Method 6.12.0 with tea v1.27.2, bmb v2.2.2 and cis v0.3.2 through the official installer. The [current guide](../bmad.md) describes prerequisites and limits. Preserve the failed TEA3 experiment below as a historical observation; successful provisioning does not prove generated workflow quality or live host loading.
+> Historical experiment and proposal. ADR 0025 (`.software-factory/context/decisions/0025-bmad-module-compatibility-pins.md` in a full source checkout) subsequently resolved the module choice: BMad Method 6.12.0 with tea v1.27.2, bmb v2.2.2 and cis v0.3.2 through the official installer. The [current guide](../bmad.md) describes prerequisites and limits. Preserve the failed TEA3 experiment below as a historical observation; successful provisioning does not prove generated workflow quality or live host loading.
 
 
 Research date: 2026-10-15. These are observed installer results and a proposed

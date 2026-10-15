@@ -1,12 +1,16 @@
 """Documented consumer commands and bounded example contracts, without agent CLIs."""
 from __future__ import annotations
 
+import copy
 import json
 import os
+import posixpath
+import re
 import shlex
 import shutil
 import subprocess
 import sys
+import tarfile
 import tempfile
 import unittest
 import xml.etree.ElementTree as ET
@@ -18,6 +22,32 @@ ROOT = Path(__file__).resolve().parents[1]
 EXAMPLES = ROOT / "examples"
 DOCS = ROOT / "docs"
 PYTHON = sys.executable
+
+
+def check_synthetic_fixture(scenario: dict, files: dict) -> None:
+    """Reject four named teaching-data mistakes; this is not an operation engine."""
+    if scenario.get("observation_scope") != "read bounded local fixture output during this session":
+        raise ValueError("fixture observation scope changed")
+    if scenario.get("repair_scope") != "separate reviewed feature or bug claim required":
+        raise ValueError("observation does not grant repair")
+    if scenario.get("rollback_scope") != "separate approved local restoration and proof required":
+        raise ValueError("observation does not grant rollback")
+    start, end = scenario["window"]["start"], scenario["window"]["end"]
+    if scenario["window"]["maximum_records"] != 3:
+        raise ValueError("fixture observation record bound changed")
+    if any(not start <= item["observed_at"] <= end for item in files.values()):
+        raise ValueError("observation outside authorized window")
+    routes = scenario.get("open_event_routes", [])
+    if routes != [
+        {"event_id": scenario["same_open_event"], "issue": "bug/type", "action": "open"},
+        {"event_id": scenario["same_open_event"], "issue": "bug/type", "action": "update-existing"},
+    ]:
+        raise ValueError("repeat of open signal must update the same issue")
+    no_fix = files["no-fix"]
+    if (no_fix.get("result") != "correct-behavior" or no_fix.get("product_diff_files") != 0
+            or no_fix.get("disposition") != "no-fix investigative closure; no implementation or deploy receipt"
+            or "delivery_receipt" in no_fix or "implementation" in no_fix):
+        raise ValueError("no-fix cannot claim code delivery")
 
 
 def literal_install_command(document: str, variables: dict[str, str]) -> list[str]:
@@ -78,6 +108,54 @@ class DocsJourneyTests(unittest.TestCase):
         self.assertEqual("--dry-run", args[-1])
         with self.assertRaises(ValueError):
             literal_install_command(text.replace("--skip-bmad --dry-run", "--allow-overwrite README.md --dry-run", 1), variables)
+
+    def test_documented_helper_mapping_runs_on_three_hosts(self):
+        quickstart = (DOCS / "quickstart.md").read_text()
+        mapping = re.search(r'```sh\n(case "\$SF_HOST" in\n.*?SF_KERNEL="\$SF_SKILLS/software-factory/scripts")\n```',
+                            quickstart, re.DOTALL)
+        self.assertIsNotNone(mapping, "quickstart must define one literal host mapping")
+        onboarding = (DOCS / "onboarding.md").read_text()
+        discover = '"$SF_PYTHON" -I -B "$SF_SKILLS/sf-help/scripts/discover.py" --project "$SF_PROJECT" --json'
+        self.assertIn(discover, onboarding)
+        for host in ("claude-code", "cursor", "codex"):
+            with self.subTest(host=host):
+                project = self.consumer(suffix="-helper-" + host)
+                install = self.cli(PYTHON, "-I", "-B", ROOT / "install.py", "install", "--host", host,
+                                   "--project", project, "--profile", "full", "--skip-bmad")
+                self.assertEqual(0, install.returncode, install.stderr[-1200:])
+                env = dict(self.env, SF_PYTHON=PYTHON, SF_HOST=host, SF_PROJECT=str(project))
+                command = mapping.group(1) + "\n" + discover + "\n"
+                result = self.cli("/bin/sh", "-eu", "-c", command, env=env)
+                self.assertEqual(0, result.returncode, result.stderr[-1200:])
+                self.assertIn("capabilities", json.loads(result.stdout))
+
+    def test_actual_release_manual_link_and_anchor_closure(self):
+        output = self.base / "release"
+        built = self.cli(PYTHON, "-B", ROOT / "scripts/build_release.py",
+                         "--ref", "v0.1.0", "--out", output)
+        self.assertEqual(0, built.returncode, built.stderr[-1200:])
+        with tarfile.open(output / "sf-v0.1.0.tar.gz", "r:gz") as archive:
+            files = {member.name.removeprefix("sf-v0.1.0/"): archive.extractfile(member).read()
+                     for member in archive if member.isfile()}
+        self.assertTrue("docs/README.md" in files)
+        self.assertTrue("SECURITY.md" in files)
+        self.assertFalse(".software-factory/context/decisions/0025-bmad-module-compatibility-pins.md" in files)
+        for name, raw in files.items():
+            if not name.endswith(".md") or name.startswith("dist/plugins/"):
+                continue
+            content = raw.decode("utf-8")
+            for match in re.finditer(r'!?\[[^\]]*\]\(([^)]+)\)', content):
+                reference = match.group(1)
+                if "://" in reference or reference.startswith("mailto:"):
+                    continue
+                target, _, anchor = reference.partition("#")
+                path = posixpath.normpath(posixpath.join(posixpath.dirname(name), target or posixpath.basename(name)))
+                self.assertTrue(path in files, f"released {name} links to absent {reference}")
+                if anchor:
+                    headings = re.findall(r'^#{1,6}\s+(.+?)\s*#*$', files[path].decode("utf-8"), re.MULTILINE)
+                    slugs = {re.sub(r'[^\w -]', '', heading.replace('`', '').lower()).replace(' ', '-')
+                             for heading in headings}
+                    self.assertIn(anchor, slugs, f"released {name} links to absent anchor {reference}")
 
     def test_documented_full_install_preserves_bytes_on_three_hosts(self):
         document = (DOCS / "quickstart.md").read_text()
@@ -220,6 +298,10 @@ class DocsJourneyTests(unittest.TestCase):
         self.assertNotEqual(scenario["repair_scope"], scenario["rollback_scope"])
         self.assertEqual(3, scenario["window"]["maximum_records"])
         files = {path.stem: json.loads(path.read_text()) for path in (root / "evidence").glob("*.json")}
+        operations = (ROOT / "skills/software-factory/references/operations.md").read_text()
+        self.assertIn("Read access does not authorize repair", operations)
+        self.assertIn("Repeated evidence updates the same open issue", operations)
+        check_synthetic_fixture(scenario, files)
         self.assertEqual(11, len(files))
         self.assertTrue(all(value["synthetic"] and value["origin"] == "invented-teaching-data" for value in files.values()))
         self.assertEqual(files["bug-before"]["event_id"], files["bug-after"]["event_id"])
@@ -228,11 +310,22 @@ class DocsJourneyTests(unittest.TestCase):
         self.assertEqual(0, files["no-fix"]["product_diff_files"])
         self.assertFalse(files["decision-example"]["actual_approval"])
         self.assertFalse(files["review-example"]["actual_review"])
-        for item in files.values():
-            self.assertLessEqual(item["observed_at"], scenario["window"]["end"])
-        altered = dict(scenario, repair_scope=scenario["observation_scope"])
-        self.assertEqual(altered["observation_scope"], altered["repair_scope"])
-        self.assertNotEqual(altered["observation_scope"], altered["rollback_scope"])
+        conflated = dict(scenario, repair_scope=scenario["observation_scope"])
+        with self.assertRaisesRegex(ValueError, "does not grant repair"):
+            check_synthetic_fixture(conflated, files)
+        expired = copy.deepcopy(files)
+        expired["unknown"]["observed_at"] = "2026-01-01T00:06:00Z"
+        with self.assertRaisesRegex(ValueError, "outside authorized window"):
+            check_synthetic_fixture(scenario, expired)
+        duplicate = copy.deepcopy(scenario)
+        duplicate["open_event_routes"][1]["action"] = "new-repair"
+        with self.assertRaisesRegex(ValueError, "update the same issue"):
+            check_synthetic_fixture(duplicate, files)
+        fake_fix = copy.deepcopy(files)
+        fake_fix["no-fix"]["product_diff_files"] = 1
+        fake_fix["no-fix"]["delivery_receipt"] = "invented-merge"
+        with self.assertRaisesRegex(ValueError, "cannot claim code delivery"):
+            check_synthetic_fixture(scenario, fake_fix)
 
     def test_checkpoint_status_and_reconcile_preserve_claim(self):
         project = self.consumer(suffix="-resume")

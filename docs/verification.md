@@ -53,6 +53,45 @@ Where delegated epic acceptance is applicable, its scope and evidence must be
 explicit and distinct from a recorded human decision.
 See the canonical [evidence contract](../skills/software-factory/references/evidence.md).
 
+## Conditional epic acceptance
+
+The orchestrator assesses consequences throughout planning, implementation,
+integration, effect proof and recovery. A material unknown or owner reservation
+escalates the affected dependents while independent authorized work can continue.
+At epic acceptance, `autonomy.mode: risk-adaptive` and
+`checkpoints.manual: false` permit the delegated route only if epic `hitl` is
+false and no applicable story reservation remains. An absent mode or manual
+profile uses the human route. Neither mode nor a completed child list grants
+acceptance by itself.
+
+For an authorized delegated route, the configured standing delegation identifies
+the exact `sf-epic-delegation/1` grant bytes and source: finite named epic IDs,
+`accept-epic`, owner identity, aware time and optional expiry. The separate
+`sf-consequence-assessment/1` binds the current epic scope, config, risk
+principles, grant and review evidence. Its acceptance decision is `proceed` with
+no reservations, unknowns or blocked dependents; permission, effect, recovery
+and risk states are `authorized`, `pass`, `bounded` and `resolved`. The independent
+review bundle binds the consequence assessment digest as well as exact current
+child outcomes. An accepting owner or reviewer cannot be an implementation owner.
+
+With the [quickstart helper paths](quickstart.md#preview-and-install) set, the
+orchestrator first sets `SF_EPIC_ID`, `SF_OWNER`, `SF_GRANT`, `SF_ASSESSMENT` and
+`SF_REVIEW` to actual reviewed values. The last three are workspace-relative
+contained files, not sample approvals. Its protected transition then uses:
+
+```sh
+"$SF_PYTHON" -I -B "$SF_KERNEL/roadmap.py" epic --workspace "$SF_PROJECT" \
+  --epic "$SF_EPIC_ID" --actor orchestrator --status done --owner "$SF_OWNER" \
+  --delegation "$SF_GRANT" --assessment "$SF_ASSESSMENT" --evidence "$SF_REVIEW"
+```
+
+This page supplies no grant or decision. The `--decision` flag is for the
+separate human acceptance path. A delegated record says `by: orchestrator` and
+`mode: delegated`, retaining actor and bindings; it never impersonates a human.
+The [exact delegated evidence contract](../skills/software-factory/references/evidence.md)
+defines the assessment digest rule and refusal cases. Helper validation checks
+structural provenance, not actual owner identity or the truth of an assessment.
+
 ## Describe only the proof performed
 
 Static host/config/resource checks do not prove live host loading, a separately

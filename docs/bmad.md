@@ -2,7 +2,7 @@
 
 BMad skills and structured epics/stories are central to the delivery method.
 The installer uses the official BMad Method **6.12.0** path, with
-**tea=v1.27.2**, **bmb=v2.2.2** and **cis=v0.3.2**. [ADR 0025](../.software-factory/context/decisions/0025-bmad-module-compatibility-pins.md)
+**tea=v1.27.2**, **bmb=v2.2.2** and **cis=v0.3.2**. ADR 0025 (`.software-factory/context/decisions/0025-bmad-module-compatibility-pins.md` in a full source checkout)
 records the decision; [the provisioning reference](../skills/software-factory/references/bmad-provisioning.md)
 and [installer source](../scripts/bmad_install.py) own the exact command sequence.
 

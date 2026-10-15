@@ -3,7 +3,11 @@ from __future__ import annotations
 
 import argparse
 import json
+import time
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+
+BODY_DEADLINE_SECONDS = 1.0
+MAX_BODY_BYTES = 4096
 
 
 def format_payload(value: object) -> dict[str, str]:
@@ -16,20 +20,45 @@ def format_payload(value: object) -> dict[str, str]:
 
 
 class Handler(BaseHTTPRequestHandler):
+    def setup(self) -> None:
+        super().setup()
+        self.connection.settimeout(BODY_DEADLINE_SECONDS)
+
+    def read_body(self, length: int) -> bytes:
+        deadline = time.monotonic() + BODY_DEADLINE_SECONDS
+        chunks = []
+        remaining = length
+        while remaining:
+            wait = deadline - time.monotonic()
+            if wait <= 0:
+                raise TimeoutError("request body deadline exceeded")
+            self.connection.settimeout(wait)
+            chunk = self.rfile.read1(min(remaining, MAX_BODY_BYTES))
+            if not chunk:
+                raise ValueError("incomplete request body")
+            chunks.append(chunk)
+            remaining -= len(chunk)
+        return b"".join(chunks)
+
     def do_POST(self) -> None:
         if self.path != "/format":
             self.send_error(404)
             return
         try:
             length = int(self.headers.get("Content-Length", "0"))
-            if not 0 < length <= 4096:
+            if not 0 < length <= MAX_BODY_BYTES:
                 raise ValueError("invalid body length")
-            value = json.loads(self.rfile.read(length))
+            value = json.loads(self.read_body(length))
             response = format_payload(value)
             status = 200
+        except TimeoutError:
+            response = {"error": "request body timeout"}
+            status = 408
+            self.close_connection = True
         except (TypeError, ValueError, json.JSONDecodeError):
             response = {"error": "name must be a nonempty string"}
             status = 400
+            self.close_connection = True
         encoded = json.dumps(response, separators=(",", ":")).encode()
         self.send_response(status)
         self.send_header("Content-Type", "application/json; charset=utf-8")

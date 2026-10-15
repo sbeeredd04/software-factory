@@ -1,6 +1,6 @@
 # Resume from durable facts
 
-Read status before action. An active run keeps its owner, claims, checkpoint and next action through a host-session reset; claims do not expire automatically. The status command is read-only and does not dispatch or refresh derived views.
+Read status before action. An active run keeps its owner, claims, checkpoint and next action through a host-session reset; claims do not expire automatically. The status command is read-only and does not dispatch or refresh derived views. Reestablish the [quickstart variables and installed helper paths](quickstart.md#preview-and-install) in a new shell before these commands.
 
 ```sh
 "$SF_PYTHON" -I -B "$SF_KERNEL/state.py" status --workspace "$SF_PROJECT"

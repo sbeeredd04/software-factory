@@ -35,6 +35,19 @@ full BMad-planned delivery lap needs observed planner availability and structure
 missing capability stays a readiness gap. See [installation](installation.md)
 for profiles, optional provisioning and preservation.
 
+Set the installed helper paths for the chosen host before following the
+onboarding, configuration, agent, evolution or recovery pages. Keep these
+variables in the same shell as the `SF_PROJECT` and `SF_PYTHON` values above:
+
+```sh
+case "$SF_HOST" in
+  claude-code) SF_SKILLS="$SF_PROJECT/.claude/skills" ;;
+  cursor|codex) SF_SKILLS="$SF_PROJECT/.agents/skills" ;;
+  *) printf '%s\n' 'choose claude-code, cursor or codex' >&2; exit 2 ;;
+esac
+SF_KERNEL="$SF_SKILLS/software-factory/scripts"
+```
+
 Keep the private review directory outside the consumer while comparing proposal
 bytes, observations and decisions. Remove only that directory after its evidence
 retention needs have been reconciled; never remove an unknown path.
@@ -46,7 +59,8 @@ In the actual host UI, invoke `/software-factory` in Claude Code/Cursor or
 [setup prompt](copy-prompt.txt) describes the intended first lap.
 
 The host reads the repository and existing principles, confirms reusable facts,
-and presents a concrete sf-help proposal. Accept safe delegated defaults together;
+and presents a concrete sf-help proposal. Review its proposed BMad planning,
+risk-adaptive local-work profile and still-disabled external actions together;
 resolve only material unknowns. Setup applies missing files bound to the exact
 reviewed digest and preserves prior documents and answers. An existing repository
 may first need the derived sf-crawl artifact. Follow [onboarding](onboarding.md).

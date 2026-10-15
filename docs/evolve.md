@@ -23,7 +23,8 @@ source decision. Third-party metadata never installs a skill or connects MCP.
 BMad inspection is a static preview, not live agent or resolver execution proof.
 The host reviews the real evidence and later authorized behavior before retention.
 
-The installed read-only registry entry is:
+With the [quickstart helper paths](quickstart.md#preview-and-install) set, the
+installed read-only registry entry is:
 
 ```sh
 "$SF_PYTHON" -I -B "$SF_SKILLS/sf-evolve/scripts/evolve.py" registry --root "$SF_PROJECT"
