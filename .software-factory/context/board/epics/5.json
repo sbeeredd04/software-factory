@@ -25,10 +25,17 @@
   "needs": [
     4
   ],
-  "status": "planned",
+  "status": "in-progress",
   "acceptance": null,
   "parked": null,
   "park_proposal": null,
-  "history": [],
+  "history": [
+    {
+      "at": "2026-10-15T13:42:57.393040+00:00",
+      "by": "orchestrator",
+      "from": "planned",
+      "to": "in-progress"
+    }
+  ],
   "source_key": "launch-publication"
 }
