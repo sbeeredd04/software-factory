@@ -5,9 +5,9 @@
 > (`<skill-dir>` is the installed skill directory, e.g. `.claude/skills/sf-crawl`
 > or `.agents/skills/sf-crawl`).
 
-- Source revision: 6db0aabef98b643c8e218ac5372b1c1d7225db46
+- Source revision: a2a8e42541205b1404cd2108d45b2fe9a74f62ea
 - File selection: git-tracked-and-unignored
-- Generated: 2026-10-15T22:58:14Z
+- Generated: 2026-10-15T23:19:05Z
 
 ## Limits
 
@@ -48,7 +48,7 @@
 | `scripts.build_release` | `scripts/build_release.py` | 4 | 0 | 11 |
 | `scripts.check_distribution` | `scripts/check_distribution.py` | 7 | 0 | 7 |
 | `scripts.check_links` | `scripts/check_links.py` | 10 | 0 | 7 |
-| `scripts.check_mermaid` | `scripts/check_mermaid.py` | 6 | 0 | 8 |
+| `scripts.check_mermaid` | `scripts/check_mermaid.py` | 7 | 0 | 8 |
 | `scripts.distribution` | `scripts/distribution.py` | 9 | 0 | 7 |
 | `scripts.install_lifecycle` | `scripts/install_lifecycle.py` | 23 | 0 | 17 |
 | `scripts.render_assets` | `scripts/render_assets.py` | 22 | 0 | 22 |
@@ -104,7 +104,7 @@
 | `tests.test_install_lifecycle` | `tests/test_install_lifecycle.py` | 1 | 0 | 8 |
 | `tests.test_installer` | `tests/test_installer.py` | 13 | 0 | 10 |
 | `tests.test_onboarding` | `tests/test_onboarding.py` | 1 | 0 | 11 |
-| `tests.test_overlays` | `tests/test_overlays.py` | 4 | 0 | 12 |
+| `tests.test_overlays` | `tests/test_overlays.py` | 5 | 0 | 12 |
 | `tests.test_readme_journey` | `tests/test_readme_journey.py` | 5 | 0 | 14 |
 | `tests.test_review_triage` | `tests/test_review_triage.py` | 6 | 0 | 5 |
 | `tests.test_run_audit` | `tests/test_run_audit.py` | 1 | 0 | 11 |
@@ -112,7 +112,7 @@
 | `tests.test_showcase` | `tests/test_showcase.py` | 4 | 0 | 14 |
 | `tests.test_skills_distribution` | `tests/test_skills_distribution.py` | 3 | 0 | 9 |
 | `tests.test_state` | `tests/test_state.py` | 17 | 0 | 16 |
-| `tests.test_tools` | `tests/test_tools.py` | 19 | 0 | 12 |
+| `tests.test_tools` | `tests/test_tools.py` | 20 | 0 | 13 |
 | `tests.test_trace` | `tests/test_trace.py` | 2 | 0 | 13 |
 | `tests.test_trackers` | `tests/test_trackers.py` | 1 | 0 | 5 |
 | `tests.test_uninstall` | `tests/test_uninstall.py` | 1 | 0 | 14 |
@@ -223,7 +223,7 @@ No internal import edges.
 - `scripts.bmad_install.save_record` (line 402) calls `Path` (unconfirmed), `api.InstallError` (unconfirmed), `encode` (unconfirmed), `importlib.util.module_from_spec` (unconfirmed), `importlib.util.spec_from_file_location` (unconfirmed), `json.dumps` (unconfirmed), `json.loads` (unconfirmed), `lifecycle.parent_fd` (unconfirmed), `lifecycle.publish` (unconfirmed), `lifecycle.recovery_directory` (unconfirmed), `os.close` (unconfirmed), `os.open` (unconfirmed), `read_at_bounded` (confirmed: scripts.bmad_install.read_at_bounded), `spec.loader.exec_module` (unconfirmed), `with_name` (unconfirmed)
 - `scripts.bmad_install.provision` (line 425) calls `api.InstallError` (unconfirmed), `api.acquire_lock` (unconfirmed), `api.sha256` (unconfirmed), `attempt` (confirmed: scripts.bmad_install.attempt), `describe` (confirmed: scripts.bmad_install.describe), `fcntl.flock` (unconfirmed), `int` (unconfirmed), `isinstance` (unconfirmed), `load_ownership` (confirmed: scripts.bmad_install.load_ownership), `os.close` (unconfirmed), `previous.get` (unconfirmed), `print` (unconfirmed), `prior_bmad.get` (unconfirmed), `read_payload` (confirmed: scripts.bmad_install.read_payload), `record.update` (unconfirmed), `save_record` (confirmed: scripts.bmad_install.save_record), `set` (unconfirmed)
 - `scripts.build_release.release_files` (line 17) calls `Path` (unconfirmed), `ValueError` (unconfirmed), `all` (unconfirmed), `any` (unconfirmed), `distribution.bundle_files` (unconfirmed), `distribution.load_api` (unconfirmed), `files.items` (unconfirmed), `files.update` (unconfirmed), `is_relative_to` (unconfirmed), `isinstance` (unconfirmed), `items` (unconfirmed), `json.loads` (unconfirmed), `len` (unconfirmed), `name.startswith` (unconfirmed), `p.is_symlink` (unconfirmed), `path.is_file` (unconfirmed), `path.is_symlink` (unconfirmed), `path.parent.mkdir` (unconfirmed), `path.read_bytes` (unconfirmed), `path.resolve` (unconfirmed), `path.write_bytes` (unconfirmed), `read_text` (unconfirmed), `resolve` (unconfirmed), `root.resolve` (unconfirmed), `set` (unconfirmed) … (call cap reached)
-- … 1581 more call rows (cap reached)
+- … 1594 more call rows (cap reached)
 
 ## Entry points
 

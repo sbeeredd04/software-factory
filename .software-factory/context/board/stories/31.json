@@ -5,7 +5,7 @@
   "type": "story",
   "title": "Docs set, examples and the dogfood journey",
   "status": "in-review",
-  "owner": "codex-dogfood",
+  "owner": "codex-ci-recovery",
   "after": [
     30
   ],
@@ -116,6 +116,68 @@
       "limitations": [
         "No current combined full-gate, live host registration, external integration, deployment or publication acceptance."
       ]
+    },
+    "ci-portability-recovery": {
+      "type": "ci-portability-recovery",
+      "subject_sha": "a2a8e42541205b1404cd2108d45b2fe9a74f62ea",
+      "at": "2026-10-15T23:19:04.763446+00:00",
+      "status": "implementation-in-review-remote-ci-required",
+      "summary": "Portable overlay fixture and bounded browser launch diagnostics, including UTF-8 replacement and real subprocess regression. No runner-browser cause or fix inferred.",
+      "authors": [
+        "/root/ci_temp_diagnosis",
+        "/root/ci_mermaid_diagnosis"
+      ],
+      "logical_owner": "codex-ci-recovery",
+      "effective_model": null,
+      "independent_reviewer": "/root/ci_recovery_blind",
+      "review": "Three actionable findings repaired and independently confirmed; preexisting capture memory limitation deferred.",
+      "checks": [
+        {
+          "command": "python3 -m unittest discover -s tests -p test_overlays.py -v",
+          "exit_code": 0,
+          "tests": 22
+        },
+        {
+          "command": "python3 -m unittest discover -s tests -p test_evolve.py -v",
+          "exit_code": 0,
+          "tests": 18
+        },
+        {
+          "command": "python3 -m unittest discover -s tests -p test_tools.py -k CheckMermaidDiagnosticsTest -v",
+          "exit_code": 0,
+          "tests": 9
+        },
+        {
+          "command": "python3 -m unittest discover -s tests -p test_tools.py -k CheckMermaidTest -v",
+          "exit_code": 0,
+          "tests": 4
+        },
+        {
+          "command": "uvx --from ruff==0.17.0 ruff check scripts/check_mermaid.py tests/test_tools.py tests/test_overlays.py",
+          "exit_code": 0,
+          "execution": "two disjoint touched-file commands"
+        }
+      ],
+      "files": {
+        "scripts/check_mermaid.py": "3a0fe568f40f8b18b2f346d8408e17d4156a5172cf2e011b8dfbf62900ae51f7",
+        "tests/test_tools.py": "2eb43a83afeb7b0bec0de98118db4e87fabf3270b266fb270ea199dfd9543f33",
+        "tests/test_overlays.py": "aa67dc1cad2119663f5bb00802abc8530e416df5acdf2c52e2c346d0398742b2"
+      },
+      "external_handoffs": [
+        {
+          "path": "/tmp/sf-ci-temp-recovery-handoff.json",
+          "sha256": "ae2b6ff99caffaac009cc12276cd94b9170d63f7502627b16c04020d2114841c"
+        },
+        {
+          "path": "/tmp/sf-ci-mermaid-implementation-handoff.md",
+          "sha256": "0632bbda65ff372c26657a24458bdfd4f83a3ff294e50739f93865bcb9b04eba"
+        }
+      ],
+      "limits": [
+        "Local macOS3.12 focused proof only; complete frozen gate and actual six-job CI still required.",
+        "No integration, release or protected board completion asserted.",
+        "Displayed output is bounded; existing capture_output still accumulates streams in memory."
+      ]
     }
   },
   "baseline_sha": null,
@@ -152,6 +214,18 @@
       "by": "codex-dogfood",
       "from": "in-progress",
       "to": "in-review"
+    },
+    {
+      "at": "2026-10-15T23:15:24.059759+00:00",
+      "by": "codex-ci-recovery",
+      "from": "in-review",
+      "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T23:19:04.796193+00:00",
+      "by": "codex-ci-recovery",
+      "from": "in-progress",
+      "to": "in-review"
     }
   ],
   "findings": [
@@ -163,5 +237,5 @@
   ],
   "source_key": "launch-publication/docs-examples-dogfood",
   "evidence_contract": 1,
-  "review_subject_sha": "06f812e1c34ead34d942b5f2542f995fbf0be38d"
+  "review_subject_sha": "a2a8e42541205b1404cd2108d45b2fe9a74f62ea"
 }
