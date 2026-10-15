@@ -5,6 +5,7 @@ import json
 import re
 import subprocess
 import sys
+import tempfile
 import unittest
 from html.parser import HTMLParser
 from pathlib import Path
@@ -54,6 +55,20 @@ def audit_html(source, site):
                 if not path.is_relative_to(site.resolve()) or not path.is_file():
                     errors.append("missing or escaping local resource")
     return errors
+
+
+def root_motion_rules(css):
+    """Read declarations from a rule that targets the document root itself."""
+    css = re.sub(r"/\*.*?\*/", "", css, flags=re.DOTALL)
+    result = {}
+    for selectors, declarations in re.findall(r"([^{}]+)\{([^{}]*)\}", css):
+        if "html[data-motion='off']" not in [part.strip() for part in selectors.split(",")]:
+            continue
+        for declaration in declarations.split(";"):
+            if ":" in declaration:
+                key, value = declaration.split(":", 1)
+                result[key.strip()] = value.strip()
+    return result
 
 
 class ShowcaseTests(unittest.TestCase):
@@ -133,6 +148,54 @@ class ShowcaseTests(unittest.TestCase):
             self.assertIn(hook, js)
         self.assertNotIn("innerHTML", js)
         self.assertIn("Copy unavailable", js)
+        failure = js.split("} catch {", 1)[1].split("  });", 1)[0]
+        self.assertIn("copy.textContent = 'Copy setup prompt';", failure)
+
+    def prompt_fixture(self, parent):
+        for relative in ("docs/copy-prompt.txt", "site/hosts.json", "site/scripts/sync_prompt.py"):
+            target = parent / relative
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes((ROOT / relative).read_bytes())
+        (parent / "README.md").write_text("Before\n<!-- setup-prompts:start -->\nold\n<!-- setup-prompts:end -->\nAfter\n")
+        script = parent / "site/scripts/sync_prompt.py"
+        result = subprocess.run([sys.executable, str(script)], capture_output=True, text=True, check=False)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        return script
+
+    def test_prompt_generator_refuses_ambiguous_markers_without_writes(self):
+        start, end = "<!-- setup-prompts:start -->", "<!-- setup-prompts:end -->"
+        for broken in ("Replacement overview.\n", start, end, start + start + end, end + start):
+            with self.subTest(readme=broken), tempfile.TemporaryDirectory(prefix="sf-showcase-prompt-") as temp:
+                parent = Path(temp)
+                script = self.prompt_fixture(parent)
+                (parent / "README.md").write_text(broken)
+                before = {str(p.relative_to(parent)): p.read_bytes() for p in parent.rglob("*") if p.is_file()}
+                for args in (["--check"], []):
+                    result = subprocess.run([sys.executable, str(script), *args], capture_output=True, text=True, check=False)
+                    self.assertNotEqual(result.returncode, 0, result.stdout + result.stderr)
+                    after = {str(p.relative_to(parent)): p.read_bytes() for p in parent.rglob("*") if p.is_file()}
+                    self.assertEqual(after, before)
+
+    def test_prompt_sync_preserves_unowned_readme_and_check_is_read_only(self):
+        with tempfile.TemporaryDirectory(prefix="sf-showcase-prompt-") as temp:
+            parent = Path(temp)
+            script = self.prompt_fixture(parent)
+            readme = (parent / "README.md").read_text()
+            self.assertTrue(readme.startswith("Before\n<!-- setup-prompts:start -->"))
+            self.assertTrue(readme.endswith("<!-- setup-prompts:end -->\nAfter\n"))
+            before = {str(p.relative_to(parent)): p.read_bytes() for p in parent.rglob("*") if p.is_file()}
+            result = subprocess.run([sys.executable, str(script), "--check"], capture_output=True, text=True, check=False)
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            self.assertEqual({str(p.relative_to(parent)): p.read_bytes() for p in parent.rglob("*") if p.is_file()}, before)
+
+    def test_manual_motion_off_stops_root_scroll_and_transitions(self):
+        css = (SITE / "styles/sections.css").read_text()
+        rules = root_motion_rules(css)
+        self.assertEqual(rules.get("scroll-behavior"), "auto !important")
+        self.assertEqual(rules.get("animation"), "none !important")
+        self.assertEqual(rules.get("transition"), "none !important")
+        bad = (ROOT / "tests/fixtures/showcase/descendants-only-motion.css").read_text()
+        self.assertEqual(root_motion_rules(bad), {})
 
     def test_first_view_source_budget(self):
         files = [p for p in SITE.rglob("*") if p.suffix in {".html", ".css", ".js", ".svg", ".woff2"}]

@@ -18,7 +18,10 @@
 .graph-sheet img { width: 100%; margin-block: 17px 13px; animation: graph-intro .75s ease-out both; }
 .graph-sheet figcaption { font-size: 11px; color: var(--muted); padding-top: 13px; border-top: 1px solid var(--line); }
 .motion-control { padding: 8px 0; min-height: 36px; border: 0; background: transparent; color: var(--muted); font: 10px var(--mono); text-decoration: underline; text-underline-offset: 3px; }
-html[data-motion='off'] * { animation: none !important; scroll-behavior: auto; }
+html[data-motion='off'], html[data-motion='off'] *,
+html[data-motion='off'] *::before, html[data-motion='off'] *::after {
+  animation: none !important; transition: none !important; scroll-behavior: auto !important;
+}
 @keyframes graph-intro { from { opacity: .1; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 .proof-strip { display: grid; grid-template-columns: 1fr 1fr 1fr; border-block: 1px solid var(--line); padding-block: 18px; margin-bottom: 0; }
 .proof-strip > div { display: flex; gap: 10px; align-items: baseline; font-size: 12px; color: var(--muted); }

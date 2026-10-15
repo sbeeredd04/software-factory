@@ -45,6 +45,8 @@
   copy.addEventListener('click', async () => {
     const subject = generation;
     const prompt = data[selected].prompt;
+    copy.textContent = 'Copying…';
+    status.textContent = '';
     try {
       if (!navigator.clipboard?.writeText) throw new Error('Clipboard unavailable');
       await navigator.clipboard.writeText(prompt);
@@ -53,6 +55,7 @@
       status.textContent = `${data[selected].label} setup prompt copied.`;
     } catch {
       if (subject !== generation) return;
+      copy.textContent = 'Copy setup prompt';
       details.open = true;
       text.focus();
       text.select();

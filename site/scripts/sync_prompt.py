@@ -20,12 +20,11 @@ def derived_files():
         blocks += [f'#### {host["label"]}', "", "```text", prompt.rstrip(), "```", ""]
     blocks += [END]
     readme = (ROOT / "README.md").read_text()
-    if START in readme and END in readme:
-        before, remaining = readme.split(START, 1)
-        _, after = remaining.split(END, 1)
-        readme = before + "\n".join(blocks) + after
-    else:
-        readme = readme.replace("\n## Community", "\n" + "\n".join(blocks) + "\n\n## Community")
+    if readme.count(START) != 1 or readme.count(END) != 1 or readme.index(START) > readme.index(END):
+        raise ValueError("README setup prompt markers must appear once, in order")
+    before, remaining = readme.split(START, 1)
+    _, after = remaining.split(END, 1)
+    readme = before + "\n".join(blocks) + after
     return {
         ROOT / "site/scripts/setup-data.js": "window.SF_SETUP = " + json.dumps(payload, ensure_ascii=False, indent=2) + ";\n",
         ROOT / "README.md": readme,
@@ -37,8 +36,13 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
+    try:
+        views = derived_files()
+    except (OSError, ValueError, KeyError) as error:
+        print(f"Prompt sync refused: {error}", file=sys.stderr)
+        return 1
     drift = []
-    for path, expected in derived_files().items():
+    for path, expected in views.items():
         if path.exists() and path.read_text() == expected:
             continue
         drift.append(str(path.relative_to(ROOT)))
