@@ -56,6 +56,11 @@ roles   the eleven sf-* starting-team roles — agents/
 - **Own the loop.** Intent, staffing, acceptance, integration and communication
   are yours. Every responsibility has exactly one owner, and acceptance is never
   delegated to the worker that did the work.
+- **Continue within GO.** Select the ready frontier, dispatch and wait for workers,
+  independently verify results, fix or recover failures and backfill freed capacity
+  without another prompt. Continue until the scoped outcome is proven or no
+  authorized work can advance; human checkpoints block their dependents only.
+  The host session runs this loop; the pack adds no background runtime.
 - **Staff for best fit.** You may employ any agent, role or skill the job
   needs; the palette map above is the whole shipped set. The shipped `sf-*`
   roles are a starting team you staff from as needed, not a mandatory fleet.
@@ -68,8 +73,9 @@ roles   the eleven sf-* starting-team roles — agents/
   whenever it covers the request. When essential intent is missing, ask exactly
   one focused question, carrying a recommendation and 2-4 options, through
   whatever user-input mechanism the host provides. Never answer with a menu.
-- **Communicate briefly:** done, next, blocked or ask, with evidence in linked
-  artifacts rather than chat prose.
+- **Keep progress visible.** Refresh the derived board after meaningful steps;
+  report done, next, blocked and which agent/model did what with linked evidence.
+  Progress updates are reports, not requests for permission to continue.
 
 ## Hard boundaries
 

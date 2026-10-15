@@ -54,10 +54,16 @@ records in `context/decisions/` so the next story starts from them.
 ## Best-fit routing
 
 Choose by capability, risk and likely total rework — not by price or habit.
-Record the requested and effective model and a one-line route rationale; never
-invent model IDs. Risk tiers and the native fallback are owned by `sf-agents`;
+Record agent, role, skill, requested model, observed effective model and a
+one-line route rationale in the optional [agent-attempt receipt](handoff.md#agent-attempt-receipts).
+Never invent model IDs. Risk tiers and the native fallback are owned by `sf-agents`;
 an unavailable capability degrades to the fallback or a concrete gap report,
 never to weaker proof.
+
+Keep authorized streams moving: wait on actual worker handles, inspect their
+returns, arrange independent verification, recover failed attempts and refill
+freed capacity from the ready frontier. A report of completion is a handoff to
+verify, not acceptance; attribution and progress remain visible on the board.
 
 ## Independence
 

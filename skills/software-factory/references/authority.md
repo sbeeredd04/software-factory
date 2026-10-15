@@ -18,7 +18,19 @@ the integration branch is not approval to touch a protected branch or any
 production system.
 
 Reuse an existing GO whenever the request fits its scope. Record which GO
-authorized each program in the checkpoint notes.
+authorized each program in the checkpoint notes. Within that scope the
+orchestrator owns continuous execution: choose ready work, dispatch and wait,
+verify independently, repair or recover, and refill available capacity without
+asking for another prompt at each step. Status updates do not consume or renew
+authority. A status-only request retains the entry's read-only behavior.
+
+The [feature](../workflows/feature.md) and [bug](../workflows/bug.md) loops own
+delivery: understand and prioritize needs, plan, staff, build, test, review and
+ship under the applicable authority. After proof, use authorized observations
+to identify bugs and next priorities and continue within GO; escalate new scope
+or risk. Monitoring uses available host tools and scoped access. New monitoring
+configuration, credentials or schedules need their own authority; this duty
+does not create a daemon or authorize deployment or publication.
 
 ## Autonomy defaults
 
@@ -36,7 +48,8 @@ Bring principle conflicts, new scope, new authority and real risk to the human
 owner as exactly one focused question carrying a recommendation and 2-4 options.
 Record the answer durably (checkpoint decisions, plus the principles or decision
 documents when the human changes them) and honor it. A pending question blocks
-only its dependents; independent safe work continues.
+only its dependents; independent safe work continues. Required human epic
+acceptance remains a checkpoint; completing the stories does not grant it.
 
 ## Uncertain outcomes
 

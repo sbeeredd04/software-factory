@@ -136,10 +136,11 @@ crashing, and lists claim/record inconsistencies (in-progress with no live
 claim, a claim with no record, claim paths outside the story scope) without
 auto-repairing any of them.
 
-Checkout and checkin are one protocol: the claim's task id is the story id.
+Checkout and check-in are one protocol: the claim's task id is the story id.
 Checkout = the frontier shows the story ready, then `state.py claim`, then
-the worker writes `in-progress` on its own record. Checkin = receipts on the
-record, then `state.py release`, then `in-review`. The generator mirrors live
+the worker writes `in-progress` on its own record. Check-in = result receipts
+and `in-review` while the worker still holds its claim, then reconcile the
+handoff and `state.py release`. Revision work reacquires ownership. The generator mirrors live
 claims read-only into the projection; no board code ever writes claims or
 the run state.
 
@@ -148,6 +149,17 @@ Regenerate the projections from this skill's directory:
 ```sh
 python3 scripts/roadmap.py build --workspace "<project-root>"
 ```
+
+During execution, refresh after meaningful worker steps, assignments, receipts
+and blockers. With `manual` regeneration, run `build`; `on-write` updates also
+build, but a claim-only change still needs a refresh. Reports link this snapshot
+and state its generation time; unchanged inputs retain their earlier time.
+The board shows recorded progress and [agent attribution](handoff.md#agent-attempt-receipts),
+not live process telemetry. Check actual host handles before calling a worker
+running; a claim, receipt or saved status alone does not establish liveness.
+For a status-only query, read the existing snapshot and explain its age without
+regenerating or dispatching. Continue authorized execution after progress
+reports; route required decisions through [authority](authority.md).
 
 `build` reads the records under the board lock and rewrites `roadmap.json`
 and `dashboard.html` atomically; the revision counter and timestamp change
