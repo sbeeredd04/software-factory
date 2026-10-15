@@ -33,6 +33,7 @@ import argparse
 import dataclasses
 import fcntl
 import hashlib
+import importlib.util
 import json
 import os
 import shlex
@@ -63,6 +64,7 @@ GITIGNORE_ENTRIES = (
     f"{STATE_DIR}/runs/",
     f"{STATE_DIR}/active.json",
     f"{STATE_DIR}/state.lock",
+    LOCK_REL,
     f"{STATE_DIR}/installation.json",
 )
 
@@ -758,12 +760,23 @@ def build_manifest(
         backup = item.backup
         if backup is None:
             backup = prior.get(item.action.path, {}).get("backup")
+        prior_entry = prior.get(item.action.path)
+        # Keep the original user restoration basis independent of rollback
+        # backups from later updates. Legacy manifests cannot prove it.
+        restoration = (prior_entry or {}).get("restore", "unverified")
+        if prior_entry is None:
+            restoration = (
+                {"path": item.backup, "sha256": item.before_hash}
+                if item.backup is not None else
+                None if item.before is None else "unverified"
+            )
         files_by_path[item.action.path] = {
             "path": item.action.path,
             "sha256": item.after_hash,
             "action": item.action.kind,
             "host": item.action.host,
             "backup": backup,
+            **({"restore": restoration} if restoration != "unverified" else {}),
         }
     files = sorted(files_by_path.values(), key=lambda entry: entry["path"])
     installed_hosts = set(hosts) | set((previous or {}).get("hosts", []))
@@ -891,11 +904,23 @@ def write_backup(root: Path, install_id: str, item: PlannedFile) -> str:
 def acquire_lock(root: Path, created_dirs: set[Path]):
     """Take the bounded installation lock; returns the lock fd and path."""
     state_dir = root / STATE_DIR
-    if not state_dir.exists():
-        state_dir.mkdir()
-        created_dirs.add(state_dir)
+    root_fd = os.open(root, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+    try:
+        try:
+            os.mkdir(STATE_DIR, dir_fd=root_fd)
+            created_dirs.add(state_dir)
+        except FileExistsError:
+            pass
+        state_fd = os.open(STATE_DIR, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW,
+                           dir_fd=root_fd)
+        try:
+            fd = os.open(Path(LOCK_REL).name, os.O_CREAT | os.O_RDWR | os.O_NOFOLLOW,
+                         0o600, dir_fd=state_fd)
+        finally:
+            os.close(state_fd)
+    finally:
+        os.close(root_fd)
     lock_path = root / LOCK_REL
-    fd = os.open(lock_path, os.O_CREAT | os.O_RDWR, 0o600)
     deadline = time.monotonic() + LOCK_WAIT_SECONDS
     while True:
         try:
@@ -947,7 +972,7 @@ def apply_plan(
     profile: str,
 ) -> None:
     created_dirs: set[Path] = set()
-    fd, lock_path = acquire_lock(root, created_dirs)
+    fd, _lock_path = acquire_lock(root, created_dirs)
     applied: list[PlannedFile] = []
     try:
         if load_manifest(root) != previous:
@@ -980,10 +1005,8 @@ def apply_plan(
     finally:
         fcntl.flock(fd, fcntl.LOCK_UN)
         os.close(fd)
-        try:
-            lock_path.unlink()
-        except OSError:
-            pass
+        # Keep a stable inode: unlinking lets a later writer lock a new file
+        # while an already waiting writer still owns the old one.
 
 
 # -- plugin/project stacking ---------------------------------------------------
@@ -1210,10 +1233,26 @@ def main(argv: list[str] | None = None) -> int:
     install.add_argument("--profile", choices=("full", "skills-only"),
                          default="full",
                          help="full projection or skills only")
+    uninstall = sub.add_parser("uninstall", help="remove unchanged owned projections")
+    uninstall.add_argument("--project", type=Path, required=True)
+    uninstall.add_argument("--host", default="all", help="selected hosts or all")
+    uninstall.add_argument("--dry-run", action="store_true")
+    doctor = sub.add_parser("doctor", help="read-only installation diagnostics")
+    doctor.add_argument("--project", type=Path, required=True)
+    doctor.add_argument("--json", action="store_true")
     args = parser.parse_args(argv)
     try:
         if args.command == "install":
             return cmd_install(args)
+        # Read-only diagnostics and uninstall dry-runs must not write caches
+        # into the source pack when loading their shared implementation.
+        sys.dont_write_bytecode = True
+        spec = importlib.util.spec_from_file_location(
+            "sf_install_lifecycle", PACK_ROOT / "scripts/install_lifecycle.py"
+        )
+        lifecycle = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(lifecycle)
+        return getattr(lifecycle, args.command)(args, sys.modules[__name__])
     except InstallError as exc:
         print(f"install: {exc}", file=sys.stderr)
         return 1

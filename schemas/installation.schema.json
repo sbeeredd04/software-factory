@@ -75,6 +75,32 @@
           "backup": {
             "type": ["string", "null"],
             "description": "Project-relative backup path under .software-factory/backups/ when this transaction overwrote existing bytes."
+          },
+          "restore": {
+            "description": "Original user content restoration basis, preserved across updates. Null proves the destination was created; absence means legacy provenance is unverified.",
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "properties": {
+                  "path": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  }
+                }
+              }
+            ]
           }
         }
       }

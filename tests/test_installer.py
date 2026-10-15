@@ -33,6 +33,7 @@ GITIGNORE_LINES = (
     ".software-factory/runs/",
     ".software-factory/active.json",
     ".software-factory/state.lock",
+    ".software-factory/.install.lock",
     ".software-factory/installation.json",
 )
 CONTEXT_FILES = {
@@ -114,9 +115,11 @@ class FreshInstallTests(InstallerCase):
             )
 
         # Every created/modified path is listed; nothing unlisted was written.
-        # (The manifest itself and the transient install lock are not owned
+        # (The manifest itself and the persistent install lock are not owned
         # payloads - the manifest cannot hash itself.)
-        created = set(support.tree_hashes(repo)) - {"README.md", MANIFEST}
+        created = set(support.tree_hashes(repo)) - {
+            "README.md", MANIFEST, ".software-factory/.install.lock",
+        }
         self.assertEqual(created, listed)
 
         # Install never creates runtime state pointers.
@@ -196,6 +199,7 @@ class GitignoreTests(InstallerCase):
         for volatile in (
             ".software-factory/active.json",
             ".software-factory/state.lock",
+            ".software-factory/.install.lock",
             ".software-factory/runtime/hook.py",
             ".software-factory/backups/x",
             ".software-factory/runs/demo/run.json",
