@@ -172,13 +172,14 @@ class TomlAgentTests(CodexInstallCase):
         self.assertIn("instructions do not enforce a separate read-only sandbox", pointer)
         self.assertIn("verify an actually read-only parent/session", pointer)
 
-    def test_codex_only_skills_preserve_canonical_bytes(self):
+    def test_codex_only_skills_preserve_bytes_except_explicit_installed_layout(self):
         repo = self.install_fresh()
         for rel in canonical_tree():
-            self.assertEqual(
-                (support.REPO / "skills" / rel).read_bytes(),
-                (repo / ".agents/skills" / rel).read_bytes(), rel,
-            )
+            expected = (support.REPO / "skills" / rel).read_bytes()
+            if rel == 'sf-agents/scripts/render_bots.py':
+                self.assertEqual(1,expected.count(b'SOURCE_LAYOUT = True  #'))
+                expected = expected.replace(b'SOURCE_LAYOUT = True  #',b'SOURCE_LAYOUT = False  #',1)
+            self.assertEqual(expected,(repo / ".agents/skills" / rel).read_bytes(),rel)
 
 
 class OpenaiYamlTests(CodexInstallCase):

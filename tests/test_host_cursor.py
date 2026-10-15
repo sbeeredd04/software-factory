@@ -130,7 +130,11 @@ class FileSetTests(CursorInstallCase):
                     raw = raw.replace("disable-model-invocation: true\n", "", 1)
                 else:
                     self.assertNotIn("disable-model-invocation:", raw)
-                self.assertEqual(canonical, raw.encode(), rel)
+                expected = canonical
+                if rel == 'sf-agents/scripts/render_bots.py':
+                    self.assertEqual(1,canonical.count(b'SOURCE_LAYOUT = True  #'))
+                    expected = canonical.replace(b'SOURCE_LAYOUT = True  #',b'SOURCE_LAYOUT = False  #',1)
+                self.assertEqual(expected, raw.encode(), rel)
                 self.assertEqual(canonical, (support.REPO / "skills" / rel).read_bytes())
 
 

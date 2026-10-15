@@ -86,7 +86,12 @@ byte-identical whole-tree rollback: directories, lock and evidence may remain.
 The bot receipt is written last. Repeating an unchanged plan makes no writes.
 Installed/native helpers require their packaged templates and lifecycle helper;
 missing assets fail closed instead of importing consumer ancestor code. Only
-the canonical source layout uses top-level pack dependencies.
+the canonical source layout uses top-level pack dependencies. The projector
+sets an explicit installed-mode constant; consumer schema/layout markers cannot
+enable source mode. Lifecycle loading verifies a maintained canonical SHA256
+and executes those captured bytes, without reopening the path. A shared-helper
+change requires deliberate digest refresh and its regression; this is local
+version binding, not a signature or proof of a trusted distribution channel.
 
 To inspect a configured Greptile's effective merged rules, its documented command
 is `greptile config [PATH] --json`; dashboard/org settings participate. This is

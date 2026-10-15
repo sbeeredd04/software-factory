@@ -254,6 +254,20 @@ class DistributionTests(unittest.TestCase):
                 fallback.write_text('raise AssertionError("untrusted fallback executed")')
                 with self.assertRaisesRegex(renderer.Error,'installed dependency missing'):
                     renderer.lifecycle()
+                self.assertFalse(renderer.SOURCE_LAYOUT)
+                schema = scripts.parents[1]/'software-factory/schemas/config.schema.json'
+                raw = schema.read_bytes()
+                schema.unlink()
+                spoof = scripts.parents[2]/'schemas/config.schema.json'
+                spoof.parent.mkdir(exist_ok=True)
+                spoof.write_bytes(raw)
+                (scripts.parents[2]/'install.py').write_text('# consumer source marker\n')
+                with self.assertRaisesRegex(renderer.Error,'installed dependency missing'):
+                    renderer.lifecycle()
+                shutil.rmtree(scripts.parent/'templates')
+                shutil.copytree(api.PACK_ROOT/'integrations/bots',scripts.parents[2]/'integrations/bots')
+                with self.assertRaisesRegex(renderer.Error,'installed dependency missing'):
+                    renderer.plan(consumer,['copilot'],'decision:approved')
 
     def test_release_native_payload_excludes_unlisted_local_files(self):
         api = self.release_source()

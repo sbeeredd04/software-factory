@@ -202,4 +202,17 @@ class AgentTests(unittest.TestCase):
             shutil.rmtree(skills/'sf-agents/templates')
             with self.assertRaisesRegex(renderer.Error,'installed dependency missing'):
                 renderer.plan(project,['copilot'],'decision:approved')
+            self.assertFalse(renderer.SOURCE_LAYOUT)
+            schema = skills/'software-factory/schemas/config.schema.json'
+            source_schema = schema.read_bytes()
+            schema.unlink()
+            spoof = skills.parent/'schemas/config.schema.json'
+            spoof.parent.mkdir(exist_ok=True)
+            spoof.write_bytes(source_schema)
+            (skills.parent/'install.py').write_text('# consumer marker\n')
+            shutil.copytree(support.REPO/'integrations/bots',skills.parent/'integrations/bots')
+            with self.assertRaisesRegex(renderer.Error,'installed dependency missing'):
+                renderer.lifecycle()
+            with self.assertRaisesRegex(renderer.Error,'installed dependency missing'):
+                renderer.plan(project,['copilot'],'decision:approved')
         self.assertFalse(guard.exists())

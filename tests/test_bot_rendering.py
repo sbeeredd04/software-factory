@@ -238,3 +238,13 @@ class BotTests(unittest.TestCase):
         tampered['principles_ref'] = 'sf-setup-reuse/1'
         with self.assertRaises(ValueError):
             self.apply(tampered)
+
+    def test_publication_dependency_is_byte_bound_and_capture_is_executed(self):
+        source = support.REPO/'scripts/install_lifecycle.py'
+        raw = source.read_bytes()
+        self.assertEqual(B.LIFECYCLE_SHA256,B.D.digest(raw))
+        with mock.patch.object(B.agents.config,'read_bytes',return_value=b'raise AssertionError("untrusted dependency")'),self.assertRaisesRegex(B.Error,'dependency digest mismatch'):
+            B.lifecycle()
+        # The path is not reopened by an import loader after the bounded capture.
+        with mock.patch.object(B.agents.config,'read_bytes',return_value=raw),mock.patch.object(B.agents,'module',side_effect=AssertionError('reopened path')):
+            self.assertTrue(callable(B.lifecycle().publish))

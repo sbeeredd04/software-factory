@@ -373,7 +373,7 @@ def project_claude(root: Path, policy: dict, profile: str) -> list[Action]:
             if "__pycache__" in src.parts or src.suffix == ".pyc":
                 continue
             rel = src.relative_to(skills_src).as_posix()
-            content = src.read_bytes()
+            content = project_runtime_script(rel, src.read_bytes())
             if src.name == "SKILL.md":
                 content = inject_claude_frontmatter(content, skill_dir.name, policy)
             actions.append(Action(f".claude/skills/{rel}", "write", content,
@@ -396,6 +396,16 @@ def project_claude(root: Path, policy: dict, profile: str) -> list[Action]:
         actions.append(Action("CLAUDE.md", "block", None, "claude-code"))
     actions.append(Action(".gitignore", "gitignore", None, None))
     return actions
+
+
+def project_runtime_script(relative: str, content: bytes) -> bytes:
+    """Installed helpers must never guess a source-pack fallback in consumer paths."""
+    if relative == "sf-agents/scripts/render_bots.py":
+        marker = b"SOURCE_LAYOUT = True  # Canonical projector sets False in every installed payload."
+        if content.count(marker) != 1:
+            raise InstallError("canonical bot renderer layout marker missing or ambiguous")
+        content = content.replace(marker, marker.replace(b"True", b"False", 1))
+    return content
 
 
 def bot_assets(prefix: str, host: str | None) -> list[Action]:
@@ -479,7 +489,7 @@ def project_shared_skills(hosts: list[str]) -> list[Action]:
             if "__pycache__" in src.parts or src.suffix == ".pyc":
                 continue
             rel = src.relative_to(skills_src).as_posix()
-            content = src.read_bytes()
+            content = project_runtime_script(rel, src.read_bytes())
             if src.name == "SKILL.md" and skill_dir.name in cursor_explicit:
                 lines = content.decode("utf-8").split("\n")
                 closing = frontmatter_close(lines, f"skills/{rel}")

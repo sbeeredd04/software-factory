@@ -11,6 +11,7 @@ import stat
 import sys
 from contextlib import contextmanager
 from pathlib import Path
+from types import ModuleType
 
 previous = sys.dont_write_bytecode
 sys.dont_write_bytecode = True
@@ -24,6 +25,8 @@ D = agents.discovery
 Error = agents.Error
 RECEIPT = '.software-factory/bot-receipt.json'
 START, END = 'software-factory:principles:start', 'software-factory:principles:end'
+SOURCE_LAYOUT = True  # Canonical projector sets False in every installed payload.
+LIFECYCLE_SHA256 = '1fbd3a598d12ee31a3649ff53849b9017229b6507ba18d389b6373fe59c69920'
 TARGETS = {
     'greptile': {'.greptile/rules.md':'rules.md.tmpl','.greptile/config.json':'config.json.tmpl','.greptile/files.json':'files.json.tmpl'},
     'coderabbit': {'.coderabbit.yaml':'coderabbit.yaml.tmpl'},
@@ -43,6 +46,8 @@ def reference(value):
 
 def source_root():
     """Only canonical source layout may use top-level pack dependencies."""
+    if not SOURCE_LAYOUT:
+        raise Error('installed dependency missing; restore the full project installation')
     here = Path(__file__).resolve()
     root = here.parents[3]
     if (agents.config.schema_path().resolve() != root/'schemas/config.schema.json'
@@ -215,7 +220,13 @@ def lifecycle():
     path = here.with_name('install_lifecycle.py')
     if not path.exists():
         path = source_root()/'scripts/install_lifecycle.py'
-    helper = agents.module(path,'sf_bot_publication')
+    raw = agents.config.read_bytes(path.parent,path.name)
+    if D.digest(raw) != LIFECYCLE_SHA256:
+        raise Error('publication dependency digest mismatch; restore the matching pack version')
+    # Execute the verified capture, never reopen a mutable pathname after hashing.
+    helper = ModuleType('sf_bot_publication')
+    helper.__file__ = str(path)
+    exec(compile(raw,str(path),'exec'),helper.__dict__)  # noqa: S102 - exact trusted digest verified above
     helper.read_at = read_at  # Bounded capture verification, including contested files.
     return helper
 
