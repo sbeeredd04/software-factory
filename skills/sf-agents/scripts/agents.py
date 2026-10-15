@@ -3,6 +3,8 @@ from __future__ import annotations
 
 import argparse
 import importlib.util
+import json
+import math
 import shutil
 import sys
 from pathlib import Path
@@ -175,10 +177,47 @@ def invocation(root, name, values):
             'effective_model':None,'authority':'host must verify claim, scope and current permission before dispatch'}
 
 
+def parse_artifact(raw):
+    """Strict bounded artifact JSON; config's smaller field limits do not apply."""
+    if len(raw) > config.MAX_BYTES:
+        raise Error('artifact exceeds 1MiB budget')
+    def unique(pairs):
+        value = {}
+        for key,item in pairs:
+            if key in value:
+                raise Error('artifact contains duplicate object keys')
+            value[key] = item
+        return value
+    def invalid_constant(value):
+        raise Error('artifact contains a non-finite number')
+    try:
+        data = json.loads(raw.decode('utf-8'),object_pairs_hook=unique,parse_constant=invalid_constant)
+    except (ValueError,RecursionError) as exc:
+        raise Error('artifact must be bounded strict UTF-8 JSON') from exc
+    if not isinstance(data,dict):
+        raise Error('artifact must be an object')
+    pending, count = [(data,0)],0
+    while pending:
+        value,depth = pending.pop()
+        count += 1
+        if count > config.MAX_NODES or depth > config.MAX_DEPTH:
+            raise Error('artifact exceeds depth or entry budget')
+        if isinstance(value,str) and any((ord(c)<32 and c not in '\n\r\t') or 0xD800<=ord(c)<=0xDFFF for c in value):
+            raise Error('artifact contains unsupported control or surrogate text')
+        if isinstance(value,float) and not math.isfinite(value):
+            raise Error('artifact contains a non-finite number')
+        if isinstance(value,dict):
+            for key,item in value.items():
+                pending.extend(((key,depth+1),(item,depth+1)))
+        elif isinstance(value,list):
+            pending.extend((item,depth+1) for item in value)
+    return data
+
+
 def read_json(path):
     path = Path(path).absolute()
     raw = config.read_bytes(path.parent, path.name)
-    return config.parse(raw.decode())
+    return parse_artifact(raw)
 
 
 def main():

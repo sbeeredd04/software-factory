@@ -2,6 +2,9 @@
 import copy
 import json
 import os
+import shutil
+import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -248,3 +251,57 @@ class BotTests(unittest.TestCase):
         # The path is not reopened by an import loader after the bounded capture.
         with mock.patch.object(B.agents.config,'read_bytes',return_value=raw),mock.patch.object(B.agents,'module',side_effect=AssertionError('reopened path')):
             self.assertTrue(callable(B.lifecycle().publish))
+
+    def test_actual_cli_large_rules_prefix_and_long_source_path_roundtrip(self):
+        env,guard,binary = support.guard_env()
+        self.addCleanup(shutil.rmtree,binary,ignore_errors=True)
+        for mode in ('large-rules','long-prefix','long-path'):
+            root = Path(self.temp.name)/mode
+            data = fixture(root,True)
+            target = root/'.github/copilot-instructions.md'
+            prefix = b''
+            if mode == 'large-rules':
+                for path in data['documents']['principles'].values():
+                    (root/path).write_text('x'*4000+'\n')
+            elif mode == 'long-prefix':
+                target.parent.mkdir()
+                prefix = b'User rules '+b'x'*20000+b'\r\n'
+                target.write_bytes(prefix)
+            else:
+                path = 'principles/'+('nested-source-'*12)+'/product.md'
+                self.assertGreater(len(path),128)
+                (root/path).parent.mkdir(parents=True)
+                (root/'PRODUCT.md').rename(root/path)
+                data['documents']['principles']['product'] = path
+                save(root,data)
+            command = [sys.executable,'-I','-B',str(Path(B.__file__)),'--project',str(root)]
+            prepared = subprocess.run(command+['plan','--bots','copilot','--principles-ref','decision:approved'],env=env,capture_output=True,text=True,check=False)
+            self.assertEqual(0,prepared.returncode,prepared.stderr)
+            proposal = json.loads(prepared.stdout)
+            artifact = Path(self.temp.name)/(mode+'.json')
+            artifact.write_text(prepared.stdout)
+            applied = subprocess.run(command+['apply','--proposal',str(artifact),'--approved-sha',proposal['sha256'],'--decision','decision:reviewed'],env=env,capture_output=True,text=True,check=False)
+            self.assertEqual(0,applied.returncode,applied.stderr)
+            self.assertTrue(target.read_bytes().startswith(prefix))
+            again = subprocess.run(command+['plan','--bots','copilot','--principles-ref','decision:approved'],env=env,capture_output=True,text=True,check=False)
+            self.assertEqual(0,again.returncode,again.stderr)
+            self.assertEqual({},json.loads(again.stdout)['files'])
+        self.assertFalse(guard.exists())
+
+    def test_oversized_encoded_proposal_refuses_before_any_write(self):
+        target = self.root/'.github/copilot-instructions.md'
+        target.parent.mkdir()
+        target.write_text('x'*(B.agents.config.MAX_BYTES-400))
+        before = support.tree_hashes(self.root)
+        with self.assertRaisesRegex(B.Error,'proposal exceeds 1MiB artifact budget'):
+            self.plan(['copilot'])
+        self.assertEqual(before,support.tree_hashes(self.root))
+
+    def test_plan_refuses_preserved_text_outside_artifact_contract(self):
+        target = self.root/'.github/copilot-instructions.md'
+        target.parent.mkdir()
+        target.write_bytes(b'User prefix with a NUL: \x00\n')
+        before = support.tree_hashes(self.root)
+        with self.assertRaisesRegex(B.Error,'unsupported control'):
+            self.plan(['copilot'])
+        self.assertEqual(before,support.tree_hashes(self.root))

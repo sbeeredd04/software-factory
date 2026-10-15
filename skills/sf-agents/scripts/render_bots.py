@@ -122,7 +122,7 @@ def plan(root, selected, principles_ref):
     if len(rules) > 19000:
         raise Error('derived rules exceed supported instruction budget; propose a reviewed scoped split')
     prior_raw = reader.read(RECEIPT)
-    prior = agents.config.parse(prior_raw.decode()) if prior_raw else {}
+    prior = agents.parse_artifact(prior_raw) if prior_raw else {}
     owned = prior.get('sections',{}) if prior.get('schema') == 'sf-bot-receipt/1' else {}
     files, proposals, sections = {}, {}, {}
     for bot in sorted(selected):
@@ -164,6 +164,9 @@ def plan(root, selected, principles_ref):
             'selected':sorted(selected),'principles_ref':principles_ref,'principles':sources,
             'sources':reader.sources,'files':files,'proposals':proposals,'sections':sections}
     body['sha256'] = D.digest(D.encoded(body))
+    if len(D.encoded(body)) > agents.config.MAX_BYTES:
+        raise Error('proposal exceeds 1MiB artifact budget; use smaller selected scope or a reviewed manual merge')
+    agents.parse_artifact(D.encoded(body))  # Every emitted proposal must round-trip through apply's reader.
     return body
 
 
@@ -268,7 +271,7 @@ def apply(root, proposal, approved_sha, decision):
             check()
             verify(root,proposal,{})
             prior_raw = D.Reader(root).read(RECEIPT)
-            prior = agents.config.parse(prior_raw.decode()) if prior_raw else {}
+            prior = agents.parse_artifact(prior_raw) if prior_raw else {}
             receipt = {'schema':'sf-bot-receipt/1','proposal_sha256':approved_sha,'approval_ref':decision,
                        'principles_ref':proposal['principles_ref'],'principles':proposal['principles'],
                        'files':{**prior.get('files',{}),**{p:D.digest(v.encode()) for p,v in proposal['files'].items()}},

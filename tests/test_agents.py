@@ -1,5 +1,6 @@
 """Deterministic observations, permission-aware routing and unexecuted argv."""
 import json
+import os
 import shutil
 import tempfile
 import unittest
@@ -216,3 +217,25 @@ class AgentTests(unittest.TestCase):
             with self.assertRaisesRegex(renderer.Error,'installed dependency missing'):
                 renderer.plan(project,['copilot'],'decision:approved')
         self.assertFalse(guard.exists())
+
+    def test_artifact_json_bounds_do_not_reuse_config_string_or_key_limits(self):
+        value = {'long': 'x'*20000, 'p'*200: 'bounded source path key'}
+        self.assertEqual(value,A.parse_artifact(json.dumps(value).encode()))
+        bad = [b'{"a":1,"a":2}',b'{"a":NaN}',b'{"a":Infinity}',b'{"a":1e999}',b'\xff',
+               b'{"a":"\\u0000"}',b'{"a":"\\ud800"}',b'[]',
+               ('{"a":'+'['*33+'0'+']'*33+'}').encode(),
+               json.dumps({'a':[0]*20001}).encode(),json.dumps({'a':'x'*A.config.MAX_BYTES}).encode()]
+        for raw in bad:
+            with self.subTest(prefix=raw[:24]),self.assertRaises(A.Error):
+                A.parse_artifact(raw)
+        path = self.root/'artifact.json'
+        path.write_text(json.dumps(value))
+        self.assertEqual(value,A.read_json(path))
+        path.unlink()
+        os.mkfifo(path)
+        with self.assertRaises(ValueError):
+            A.read_json(path)
+        path.unlink()
+        path.symlink_to(self.root/'PRODUCT.md')
+        with self.assertRaises(ValueError):
+            A.read_json(path)

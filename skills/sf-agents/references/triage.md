@@ -93,7 +93,8 @@ python3 -I -B scripts/triage.py normalize --project /project --capture /private/
 
 Reject missing connections, nonadvancing cursors, inconsistent states/HEAD,
 GraphQL errors, foreign URLs, conflicting duplicate IDs and exceeded budgets.
-Inputs use the config reader's1MiB file bound; at most1000 pages and10000 records
+Inputs use a strict1MiB artifact reader with depth32 and20,000-entry bounds;
+at most1000 pages and10000 records
 are processed. Limits fail explicitly, never truncate findings or claim absence.
 Null/deleted authors and locations stay unknown. Retain private evidence;
 never put authenticated stderr, tokens or private PR bodies in public fixtures.

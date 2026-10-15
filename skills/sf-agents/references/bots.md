@@ -63,6 +63,11 @@ before writing. Rules are derived text, not a second editable principles format.
 The renderer refuses more than19,000 instruction characters rather than truncating
 rules; CodeRabbit's individual instructions cap is20,000 and Bugbot ignores
 settings files above64KB. Larger projects need a reviewed scoped projection.
+Proposal JSON has a1MiB total limit; plan refuses larger output with a concrete
+smaller-scope/manual-merge gap. Artifact and receipt parsing permits long rule
+strings and configured source-path keys within that budget, while retaining
+duplicate-key, UTF-8, finite-number, depth32 and20,000-entry checks. Configuration
+syntax and its stricter field bounds remain unchanged.
 
 ## Preservation and recovery
 
