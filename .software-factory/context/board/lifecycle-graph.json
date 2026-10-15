@@ -6,15 +6,6 @@
       "waiting": [
         {
           "epic": 5,
-          "id": 31,
-          "missing": [
-            "30 (in-progress)"
-          ],
-          "stream": "W-launch",
-          "title": "Docs set, examples and the dogfood journey"
-        },
-        {
-          "epic": 5,
           "id": 32,
           "missing": [
             "31 (backlog)"
@@ -41,7 +32,16 @@
         "question": "accept epic 1 (Foundation: skeleton, kernel, orchestrator, team, design module, tooling) against its done-when?"
       }
     ],
-    "ready": [],
+    "ready": [
+      {
+        "claimed": false,
+        "epic": 5,
+        "id": 31,
+        "stream": "W-launch",
+        "title": "Docs set, examples and the dogfood journey",
+        "why": "after 30 in-review; unclaimed"
+      }
+    ],
     "shipped": {
       "recorded_deployments": [],
       "recorded_done": [
@@ -1028,6 +1028,74 @@
         "reported_status": "pass",
         "story": 29,
         "subject_sha": "39ee461f133383930f275ca841acc12e41f48386",
+        "type": "receipt"
+      },
+      {
+        "artifact_integrity": "unknown",
+        "freshness": "stale",
+        "id": "receipt:30:active-attempt",
+        "label": "active-attempt",
+        "provenance": [
+          {
+            "path": ".software-factory/context/board/stories/30.json",
+            "pointer": "/receipts/active-attempt",
+            "sha256": "291203c534eaa67d2d4632cc5fbb8ec86d80f381612b030259e190b4c69e0f61"
+          }
+        ],
+        "reported_status": "assigned",
+        "story": 30,
+        "subject_sha": "d2c2a6b29455c1bfdcbd9507bc05405c245318fc",
+        "type": "receipt"
+      },
+      {
+        "artifact_integrity": "unknown",
+        "freshness": "stale",
+        "id": "receipt:30:method-authorization",
+        "label": "method-authorization",
+        "provenance": [
+          {
+            "path": ".software-factory/context/board/stories/30.json",
+            "pointer": "/receipts/method-authorization",
+            "sha256": "291203c534eaa67d2d4632cc5fbb8ec86d80f381612b030259e190b4c69e0f61"
+          }
+        ],
+        "reported_status": null,
+        "story": 30,
+        "subject_sha": "39ee461f133383930f275ca841acc12e41f48386",
+        "type": "receipt"
+      },
+      {
+        "artifact_integrity": "matched",
+        "freshness": "stale",
+        "id": "receipt:30:preparation-review",
+        "label": "preparation-review",
+        "provenance": [
+          {
+            "path": ".software-factory/context/board/stories/30.json",
+            "pointer": "/receipts/preparation-review",
+            "sha256": "291203c534eaa67d2d4632cc5fbb8ec86d80f381612b030259e190b4c69e0f61"
+          }
+        ],
+        "reported_status": "changes-required",
+        "story": 30,
+        "subject_sha": "094b6b84baf00614c8dcf40462b8c1ab1e943b73",
+        "type": "receipt"
+      },
+      {
+        "artifact_integrity": "matched",
+        "freshness": "stale",
+        "id": "receipt:30:source-readiness",
+        "label": "source-readiness",
+        "provenance": [
+          {
+            "path": ".software-factory/context/board/stories/30.json",
+            "pointer": "/receipts/source-readiness",
+            "sha256": "291203c534eaa67d2d4632cc5fbb8ec86d80f381612b030259e190b4c69e0f61"
+          }
+        ],
+        "reported_status": "pass",
+        "story": 30,
+        "subject_sha": "e80b348508d4f4cab6e90cc4737c620fbe265faf",
         "type": "receipt"
       },
       {
@@ -5079,7 +5147,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/preparation-review",
-          "sha256": "e0a4ddf856152e2edbe2ac71ae0eb024ba173de89588802bdcce0ee46ada943a"
+          "sha256": "291203c534eaa67d2d4632cc5fbb8ec86d80f381612b030259e190b4c69e0f61"
         }
       ],
       "relation": "records",
@@ -5092,12 +5160,25 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/source-readiness",
-          "sha256": "e0a4ddf856152e2edbe2ac71ae0eb024ba173de89588802bdcce0ee46ada943a"
+          "sha256": "291203c534eaa67d2d4632cc5fbb8ec86d80f381612b030259e190b4c69e0f61"
         }
       ],
       "relation": "records",
       "source": "receipt:30:source-readiness",
       "target": "surface:.software-factory/runs/software-factory-v01/evidence/assets-source-final-review-e80.md"
+    },
+    {
+      "basis": "artifact-reference",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/30.json",
+          "pointer": "/receipts/worker-handoff",
+          "sha256": "291203c534eaa67d2d4632cc5fbb8ec86d80f381612b030259e190b4c69e0f61"
+        }
+      ],
+      "relation": "records",
+      "source": "receipt:30:worker-handoff",
+      "target": "surface:.software-factory/runs/software-factory-v01/evidence/assets-actual-render-evidence-dbdade0.json"
     },
     {
       "basis": "artifact-reference",
@@ -7926,7 +8007,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/covers/0",
-          "sha256": "e0a4ddf856152e2edbe2ac71ae0eb024ba173de89588802bdcce0ee46ada943a"
+          "sha256": "291203c534eaa67d2d4632cc5fbb8ec86d80f381612b030259e190b4c69e0f61"
         }
       ],
       "relation": "covers",
@@ -7939,7 +8020,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/covers/1",
-          "sha256": "e0a4ddf856152e2edbe2ac71ae0eb024ba173de89588802bdcce0ee46ada943a"
+          "sha256": "291203c534eaa67d2d4632cc5fbb8ec86d80f381612b030259e190b4c69e0f61"
         }
       ],
       "relation": "covers",
@@ -7952,7 +8033,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/covers/2",
-          "sha256": "e0a4ddf856152e2edbe2ac71ae0eb024ba173de89588802bdcce0ee46ada943a"
+          "sha256": "291203c534eaa67d2d4632cc5fbb8ec86d80f381612b030259e190b4c69e0f61"
         }
       ],
       "relation": "covers",
@@ -7965,7 +8046,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/covers/3",
-          "sha256": "e0a4ddf856152e2edbe2ac71ae0eb024ba173de89588802bdcce0ee46ada943a"
+          "sha256": "291203c534eaa67d2d4632cc5fbb8ec86d80f381612b030259e190b4c69e0f61"
         }
       ],
       "relation": "covers",
@@ -7978,7 +8059,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/covers/4",
-          "sha256": "e0a4ddf856152e2edbe2ac71ae0eb024ba173de89588802bdcce0ee46ada943a"
+          "sha256": "291203c534eaa67d2d4632cc5fbb8ec86d80f381612b030259e190b4c69e0f61"
         }
       ],
       "relation": "covers",
@@ -24621,7 +24702,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/after/0",
-          "sha256": "e0a4ddf856152e2edbe2ac71ae0eb024ba173de89588802bdcce0ee46ada943a"
+          "sha256": "291203c534eaa67d2d4632cc5fbb8ec86d80f381612b030259e190b4c69e0f61"
         }
       ],
       "relation": "depends-on",
@@ -24633,7 +24714,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/epic",
-          "sha256": "e0a4ddf856152e2edbe2ac71ae0eb024ba173de89588802bdcce0ee46ada943a"
+          "sha256": "291203c534eaa67d2d4632cc5fbb8ec86d80f381612b030259e190b4c69e0f61"
         }
       ],
       "relation": "part-of",
@@ -24645,7 +24726,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/active-attempt",
-          "sha256": "e0a4ddf856152e2edbe2ac71ae0eb024ba173de89588802bdcce0ee46ada943a"
+          "sha256": "291203c534eaa67d2d4632cc5fbb8ec86d80f381612b030259e190b4c69e0f61"
         }
       ],
       "relation": "records",
@@ -24657,7 +24738,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/active-attempt",
-          "sha256": "e0a4ddf856152e2edbe2ac71ae0eb024ba173de89588802bdcce0ee46ada943a"
+          "sha256": "291203c534eaa67d2d4632cc5fbb8ec86d80f381612b030259e190b4c69e0f61"
         }
       ],
       "relation": "subject",
@@ -24669,7 +24750,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/method-authorization",
-          "sha256": "e0a4ddf856152e2edbe2ac71ae0eb024ba173de89588802bdcce0ee46ada943a"
+          "sha256": "291203c534eaa67d2d4632cc5fbb8ec86d80f381612b030259e190b4c69e0f61"
         }
       ],
       "relation": "records",
@@ -24681,7 +24762,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/method-authorization",
-          "sha256": "e0a4ddf856152e2edbe2ac71ae0eb024ba173de89588802bdcce0ee46ada943a"
+          "sha256": "291203c534eaa67d2d4632cc5fbb8ec86d80f381612b030259e190b4c69e0f61"
         }
       ],
       "relation": "subject",
@@ -24693,7 +24774,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/preparation-review",
-          "sha256": "e0a4ddf856152e2edbe2ac71ae0eb024ba173de89588802bdcce0ee46ada943a"
+          "sha256": "291203c534eaa67d2d4632cc5fbb8ec86d80f381612b030259e190b4c69e0f61"
         }
       ],
       "relation": "records",
@@ -24705,7 +24786,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/preparation-review",
-          "sha256": "e0a4ddf856152e2edbe2ac71ae0eb024ba173de89588802bdcce0ee46ada943a"
+          "sha256": "291203c534eaa67d2d4632cc5fbb8ec86d80f381612b030259e190b4c69e0f61"
         }
       ],
       "relation": "subject",
@@ -24717,7 +24798,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/source-readiness",
-          "sha256": "e0a4ddf856152e2edbe2ac71ae0eb024ba173de89588802bdcce0ee46ada943a"
+          "sha256": "291203c534eaa67d2d4632cc5fbb8ec86d80f381612b030259e190b4c69e0f61"
         }
       ],
       "relation": "records",
@@ -24729,12 +24810,36 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/source-readiness",
-          "sha256": "e0a4ddf856152e2edbe2ac71ae0eb024ba173de89588802bdcce0ee46ada943a"
+          "sha256": "291203c534eaa67d2d4632cc5fbb8ec86d80f381612b030259e190b4c69e0f61"
         }
       ],
       "relation": "subject",
       "source": "receipt:30:source-readiness",
       "target": "commit:e80b348508d4f4cab6e90cc4737c620fbe265faf"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/30.json",
+          "pointer": "/receipts/worker-handoff",
+          "sha256": "291203c534eaa67d2d4632cc5fbb8ec86d80f381612b030259e190b4c69e0f61"
+        }
+      ],
+      "relation": "records",
+      "source": "story:30",
+      "target": "receipt:30:worker-handoff"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/30.json",
+          "pointer": "/receipts/worker-handoff",
+          "sha256": "291203c534eaa67d2d4632cc5fbb8ec86d80f381612b030259e190b4c69e0f61"
+        }
+      ],
+      "relation": "subject",
+      "source": "receipt:30:worker-handoff",
+      "target": "commit:dbdade03590300039b3c308255511453dc7d4097"
     },
     {
       "provenance": [
@@ -26031,18 +26136,6 @@
       "relation": "subject",
       "source": "receipt:9:backfill",
       "target": "commit:67a1cfd9dbb84862d1fc85c885401cbd00622634"
-    },
-    {
-      "provenance": [
-        {
-          "path": ".software-factory/runs/software-factory-v01/run.json",
-          "pointer": "/claims/30",
-          "sha256": "118f3a71d9f75caa92ef09e01c7ac3a475049f6784d9be58fa2b967de392a7cd"
-        }
-      ],
-      "relation": "assigned-to",
-      "source": "claim:30",
-      "target": "story:30"
     }
   ],
   "inputs": [
@@ -26229,7 +26322,7 @@
     {
       "kind": "file",
       "path": ".software-factory/context/board/stories/30.json",
-      "sha256": "e0a4ddf856152e2edbe2ac71ae0eb024ba173de89588802bdcce0ee46ada943a"
+      "sha256": "291203c534eaa67d2d4632cc5fbb8ec86d80f381612b030259e190b4c69e0f61"
     },
     {
       "kind": "file",
@@ -26548,6 +26641,11 @@
     },
     {
       "kind": "file",
+      "path": ".software-factory/runs/software-factory-v01/evidence/assets-actual-render-evidence-dbdade0.json",
+      "sha256": "ca18a44a318f3344673de0a5e38896b4a4184a9d8b891d6b01a199ceb81fee46"
+    },
+    {
+      "kind": "file",
       "path": ".software-factory/runs/software-factory-v01/evidence/assets-preparation-review-094.md",
       "sha256": "117c07214c8ce85123c647a245a2358c21e41a0d73c34538fa06bb5d30ea4720"
     },
@@ -26724,7 +26822,7 @@
     {
       "kind": "file",
       "path": ".software-factory/runs/software-factory-v01/run.json",
-      "sha256": "118f3a71d9f75caa92ef09e01c7ac3a475049f6784d9be58fa2b967de392a7cd"
+      "sha256": "4cd5757dfaa7062dc5128cb1cdbf840a3ee0e16ad7bfcc8b93cab207e8bf2312"
     },
     {
       "kind": "file",
@@ -27203,23 +27301,10 @@
         {
           "path": ".software-factory/runs/software-factory-v01/run.json",
           "pointer": "/checkpoint",
-          "sha256": "118f3a71d9f75caa92ef09e01c7ac3a475049f6784d9be58fa2b967de392a7cd"
+          "sha256": "4cd5757dfaa7062dc5128cb1cdbf840a3ee0e16ad7bfcc8b93cab207e8bf2312"
         }
       ],
       "type": "checkpoint"
-    },
-    {
-      "id": "claim:30",
-      "label": "codex-assets",
-      "liveness": "unknown",
-      "provenance": [
-        {
-          "path": ".software-factory/runs/software-factory-v01/run.json",
-          "pointer": "/claims/30",
-          "sha256": "118f3a71d9f75caa92ef09e01c7ac3a475049f6784d9be58fa2b967de392a7cd"
-        }
-      ],
-      "type": "claim"
     },
     {
       "id": "commit:026deb9860a81a6413f1037a76f7876526896b65",
@@ -27335,7 +27420,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/preparation-review/subject_sha",
-          "sha256": "e0a4ddf856152e2edbe2ac71ae0eb024ba173de89588802bdcce0ee46ada943a"
+          "sha256": "291203c534eaa67d2d4632cc5fbb8ec86d80f381612b030259e190b4c69e0f61"
         }
       ],
       "type": "commit"
@@ -27519,7 +27604,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/method-authorization/subject_sha",
-          "sha256": "e0a4ddf856152e2edbe2ac71ae0eb024ba173de89588802bdcce0ee46ada943a"
+          "sha256": "291203c534eaa67d2d4632cc5fbb8ec86d80f381612b030259e190b4c69e0f61"
         }
       ],
       "type": "commit"
@@ -28174,7 +28259,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/active-attempt/subject_sha",
-          "sha256": "e0a4ddf856152e2edbe2ac71ae0eb024ba173de89588802bdcce0ee46ada943a"
+          "sha256": "291203c534eaa67d2d4632cc5fbb8ec86d80f381612b030259e190b4c69e0f61"
         }
       ],
       "type": "commit"
@@ -28214,6 +28299,18 @@
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/receipts/integrated-source-review/subject_sha",
           "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
+        }
+      ],
+      "type": "commit"
+    },
+    {
+      "id": "commit:dbdade03590300039b3c308255511453dc7d4097",
+      "label": "dbdade03590300039b3c308255511453dc7d4097",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/30.json",
+          "pointer": "/receipts/worker-handoff/subject_sha",
+          "sha256": "291203c534eaa67d2d4632cc5fbb8ec86d80f381612b030259e190b4c69e0f61"
         }
       ],
       "type": "commit"
@@ -28264,7 +28361,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/source-readiness/subject_sha",
-          "sha256": "e0a4ddf856152e2edbe2ac71ae0eb024ba173de89588802bdcce0ee46ada943a"
+          "sha256": "291203c534eaa67d2d4632cc5fbb8ec86d80f381612b030259e190b4c69e0f61"
         }
       ],
       "type": "commit"
@@ -49934,14 +50031,14 @@
     },
     {
       "artifact_integrity": "unknown",
-      "freshness": "unknown",
+      "freshness": "stale",
       "id": "receipt:30:active-attempt",
       "label": "active-attempt",
       "provenance": [
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/active-attempt",
-          "sha256": "e0a4ddf856152e2edbe2ac71ae0eb024ba173de89588802bdcce0ee46ada943a"
+          "sha256": "291203c534eaa67d2d4632cc5fbb8ec86d80f381612b030259e190b4c69e0f61"
         }
       ],
       "reported_status": "assigned",
@@ -49951,14 +50048,14 @@
     },
     {
       "artifact_integrity": "unknown",
-      "freshness": "unknown",
+      "freshness": "stale",
       "id": "receipt:30:method-authorization",
       "label": "method-authorization",
       "provenance": [
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/method-authorization",
-          "sha256": "e0a4ddf856152e2edbe2ac71ae0eb024ba173de89588802bdcce0ee46ada943a"
+          "sha256": "291203c534eaa67d2d4632cc5fbb8ec86d80f381612b030259e190b4c69e0f61"
         }
       ],
       "reported_status": null,
@@ -49968,14 +50065,14 @@
     },
     {
       "artifact_integrity": "matched",
-      "freshness": "unknown",
+      "freshness": "stale",
       "id": "receipt:30:preparation-review",
       "label": "preparation-review",
       "provenance": [
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/preparation-review",
-          "sha256": "e0a4ddf856152e2edbe2ac71ae0eb024ba173de89588802bdcce0ee46ada943a"
+          "sha256": "291203c534eaa67d2d4632cc5fbb8ec86d80f381612b030259e190b4c69e0f61"
         }
       ],
       "reported_status": "changes-required",
@@ -49985,19 +50082,36 @@
     },
     {
       "artifact_integrity": "matched",
-      "freshness": "unknown",
+      "freshness": "stale",
       "id": "receipt:30:source-readiness",
       "label": "source-readiness",
       "provenance": [
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/source-readiness",
-          "sha256": "e0a4ddf856152e2edbe2ac71ae0eb024ba173de89588802bdcce0ee46ada943a"
+          "sha256": "291203c534eaa67d2d4632cc5fbb8ec86d80f381612b030259e190b4c69e0f61"
         }
       ],
       "reported_status": "pass",
       "story": 30,
       "subject_sha": "e80b348508d4f4cab6e90cc4737c620fbe265faf",
+      "type": "receipt"
+    },
+    {
+      "artifact_integrity": "matched",
+      "freshness": "current",
+      "id": "receipt:30:worker-handoff",
+      "label": "worker-handoff",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/30.json",
+          "pointer": "/receipts/worker-handoff",
+          "sha256": "291203c534eaa67d2d4632cc5fbb8ec86d80f381612b030259e190b4c69e0f61"
+        }
+      ],
+      "reported_status": "awaiting-review",
+      "story": 30,
+      "subject_sha": "dbdade03590300039b3c308255511453dc7d4097",
       "type": "receipt"
     },
     {
@@ -50654,7 +50768,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/covers/0",
-          "sha256": "e0a4ddf856152e2edbe2ac71ae0eb024ba173de89588802bdcce0ee46ada943a"
+          "sha256": "291203c534eaa67d2d4632cc5fbb8ec86d80f381612b030259e190b4c69e0f61"
         }
       ],
       "type": "requirement"
@@ -50666,7 +50780,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/covers/1",
-          "sha256": "e0a4ddf856152e2edbe2ac71ae0eb024ba173de89588802bdcce0ee46ada943a"
+          "sha256": "291203c534eaa67d2d4632cc5fbb8ec86d80f381612b030259e190b4c69e0f61"
         }
       ],
       "type": "requirement"
@@ -50678,7 +50792,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/covers/2",
-          "sha256": "e0a4ddf856152e2edbe2ac71ae0eb024ba173de89588802bdcce0ee46ada943a"
+          "sha256": "291203c534eaa67d2d4632cc5fbb8ec86d80f381612b030259e190b4c69e0f61"
         }
       ],
       "type": "requirement"
@@ -50690,7 +50804,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/covers/3",
-          "sha256": "e0a4ddf856152e2edbe2ac71ae0eb024ba173de89588802bdcce0ee46ada943a"
+          "sha256": "291203c534eaa67d2d4632cc5fbb8ec86d80f381612b030259e190b4c69e0f61"
         }
       ],
       "type": "requirement"
@@ -50702,7 +50816,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/covers/4",
-          "sha256": "e0a4ddf856152e2edbe2ac71ae0eb024ba173de89588802bdcce0ee46ada943a"
+          "sha256": "291203c534eaa67d2d4632cc5fbb8ec86d80f381612b030259e190b4c69e0f61"
         }
       ],
       "type": "requirement"
@@ -54127,10 +54241,10 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "",
-          "sha256": "e0a4ddf856152e2edbe2ac71ae0eb024ba173de89588802bdcce0ee46ada943a"
+          "sha256": "291203c534eaa67d2d4632cc5fbb8ec86d80f381612b030259e190b4c69e0f61"
         }
       ],
-      "status": "in-progress",
+      "status": "in-review",
       "type": "story"
     },
     {
@@ -54635,6 +54749,19 @@
           "path": ".software-factory/runs/software-factory-v01/evidence/agents-integrated-gate.log",
           "pointer": "",
           "sha256": "e94de785d4e448b6dc4d9e2dad07d11f361978ce7017fed5fb81f903052e42eb"
+        }
+      ],
+      "type": "surface"
+    },
+    {
+      "exists": true,
+      "id": "surface:.software-factory/runs/software-factory-v01/evidence/assets-actual-render-evidence-dbdade0.json",
+      "label": ".software-factory/runs/software-factory-v01/evidence/assets-actual-render-evidence-dbdade0.json",
+      "provenance": [
+        {
+          "path": ".software-factory/runs/software-factory-v01/evidence/assets-actual-render-evidence-dbdade0.json",
+          "pointer": "",
+          "sha256": "ca18a44a318f3344673de0a5e38896b4a4184a9d8b891d6b01a199ceb81fee46"
         }
       ],
       "type": "surface"
@@ -56871,5 +56998,5 @@
     }
   ],
   "schema": "sf-trace/1",
-  "source_fingerprint": "c08337521082fae9523b463a3ebe2b40b0136b1e36547ccc16c649b05ad4db65"
+  "source_fingerprint": "d7d5fb223dc2f9b4c8b5da066067dea48684abf8f922b2ad722586c73dc24fe3"
 }

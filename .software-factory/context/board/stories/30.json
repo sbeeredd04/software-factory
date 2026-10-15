@@ -4,7 +4,7 @@
   "epic": 5,
   "type": "story",
   "title": "Marketing PNGs rendered reproducibly from HTML templates",
-  "status": "in-progress",
+  "status": "in-review",
   "owner": "codex-assets",
   "after": [
     29
@@ -79,6 +79,25 @@
         "No external publication, existing browser-session access or macOS setting changes.",
         "No epic acceptance or deployment equivalence decision is implied."
       ]
+    },
+    "worker-handoff": {
+      "type": "agent-attempt",
+      "subject_sha": "dbdade03590300039b3c308255511453dc7d4097",
+      "agent": "/root/assets",
+      "role": "sf-principal-engineer",
+      "skill": "software-factory",
+      "requested_model": "gpt-6-astra",
+      "requested_reasoning": "high",
+      "effective_model": null,
+      "phase": "implementation",
+      "status": "awaiting-review",
+      "summary": "Clean final source: seven real PNG masters, three byte-identical aliases and actual receipt. Author64scoped tests and static checks pass; two release builds identical, actual missing-cache refusal preserves11prioroutputs. Run1/2failed before publication; loop overflow repaired, run3/4pass; finalimages match root/reviewer visual hashes. No runtime/map/board writes. Root integrated whole-pack gate pending.",
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/assets-actual-render-evidence-dbdade0.json",
+      "artifact_sha256": "ca18a44a318f3344673de0a5e38896b4a4184a9d8b891d6b01a199ceb81fee46",
+      "limitations": [
+        "Final independent review pending; scoped checks do not replace frozen integrated full gate.",
+        "No publication, deployment, live host loading or human epic acceptance."
+      ]
     }
   },
   "baseline_sha": null,
@@ -97,8 +116,16 @@
       "by": "codex-assets",
       "from": "ready-for-dev",
       "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T18:03:09.131424+00:00",
+      "by": "codex-assets",
+      "from": "in-progress",
+      "to": "in-review"
     }
   ],
   "findings": [],
-  "source_key": "launch-publication/marketing-assets"
+  "source_key": "launch-publication/marketing-assets",
+  "review_subject_sha": "dbdade03590300039b3c308255511453dc7d4097",
+  "evidence_contract": 1
 }

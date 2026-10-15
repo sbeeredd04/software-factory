@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-15T18:00:02.106063+00:00",
-  "revision": 274,
+  "generated_at": "2026-10-15T18:03:09.320020+00:00",
+  "revision": 276,
   "streams": [
     {
       "id": "W-foundation",
@@ -103,10 +103,10 @@
         5
       ],
       "counts": {
-        "planned": 3,
-        "ready": 0,
-        "in-progress": 1,
-        "review": 1,
+        "planned": 2,
+        "ready": 1,
+        "in-progress": 0,
+        "review": 2,
         "built": 0,
         "done": 0,
         "cancelled": 0
@@ -5641,8 +5641,8 @@
       "stream": "W-launch",
       "type": "story",
       "title": "Marketing PNGs rendered reproducibly from HTML templates",
-      "status": "in-progress",
-      "state": "in-progress",
+      "status": "in-review",
+      "state": "review",
       "owner": "codex-assets",
       "after": [
         29
@@ -5717,6 +5717,25 @@
             "No external publication, existing browser-session access or macOS setting changes.",
             "No epic acceptance or deployment equivalence decision is implied."
           ]
+        },
+        "worker-handoff": {
+          "type": "agent-attempt",
+          "subject_sha": "dbdade03590300039b3c308255511453dc7d4097",
+          "agent": "/root/assets",
+          "role": "sf-principal-engineer",
+          "skill": "software-factory",
+          "requested_model": "gpt-6-astra",
+          "requested_reasoning": "high",
+          "effective_model": null,
+          "phase": "implementation",
+          "status": "awaiting-review",
+          "summary": "Clean final source: seven real PNG masters, three byte-identical aliases and actual receipt. Author64scoped tests and static checks pass; two release builds identical, actual missing-cache refusal preserves11prioroutputs. Run1/2failed before publication; loop overflow repaired, run3/4pass; finalimages match root/reviewer visual hashes. No runtime/map/board writes. Root integrated whole-pack gate pending.",
+          "artifact": ".software-factory/runs/software-factory-v01/evidence/assets-actual-render-evidence-dbdade0.json",
+          "artifact_sha256": "ca18a44a318f3344673de0a5e38896b4a4184a9d8b891d6b01a199ceb81fee46",
+          "limitations": [
+            "Final independent review pending; scoped checks do not replace frozen integrated full gate.",
+            "No publication, deployment, live host loading or human epic acceptance."
+          ]
         }
       },
       "baseline_sha": null,
@@ -5724,22 +5743,7 @@
       "pr": null,
       "merged_sha": null,
       "claim": {
-        "live": true,
-        "owner": "codex-assets",
-        "paths": [
-          "assets",
-          "scripts/render_assets.py",
-          "tests/test_assets.py",
-          "tests/fixtures/assets",
-          "docs/launch-assets.md",
-          "README.md",
-          "site/index.html",
-          "site/img",
-          "site/styles/sections.css",
-          "site/README.md",
-          "hosts/plugins/release-files.json"
-        ],
-        "claimed_at": "2026-10-15T14:43:54.135833+00:00"
+        "live": false
       },
       "blocks": [
         31
@@ -5756,10 +5760,18 @@
           "by": "codex-assets",
           "from": "ready-for-dev",
           "to": "in-progress"
+        },
+        {
+          "at": "2026-10-15T18:03:09.131424+00:00",
+          "by": "codex-assets",
+          "from": "in-progress",
+          "to": "in-review"
         }
       ],
       "findings": [],
-      "source_key": "launch-publication/marketing-assets"
+      "source_key": "launch-publication/marketing-assets",
+      "evidence_contract": 1,
+      "review_subject_sha": "dbdade03590300039b3c308255511453dc7d4097"
     },
     {
       "id": 31,
@@ -5768,7 +5780,7 @@
       "type": "story",
       "title": "Docs set, examples and the dogfood journey",
       "status": "backlog",
-      "state": "planned",
+      "state": "ready",
       "owner": null,
       "after": [
         30
@@ -7034,17 +7046,17 @@
     }
   ],
   "frontier": {
-    "ready": [],
-    "waiting_on_prereq": [
+    "ready": [
       {
         "id": 31,
         "epic": 5,
         "stream": "W-launch",
         "title": "Docs set, examples and the dogfood journey",
-        "missing": [
-          "30 (in-progress)"
-        ]
-      },
+        "why": "after 30 in-review; unclaimed",
+        "claimed": false
+      }
+    ],
+    "waiting_on_prereq": [
       {
         "id": 32,
         "epic": 5,
