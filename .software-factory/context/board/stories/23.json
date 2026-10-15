@@ -4,7 +4,7 @@
   "epic": 3,
   "type": "story",
   "title": "Pinned BMad 6.12.0 install through the official installer",
-  "status": "in-review",
+  "status": "in-progress",
   "owner": "codex-bmad-provisioning",
   "after": [
     22
@@ -138,6 +138,18 @@
         "Real official network criterion explicitly skipped in this root run; author's original network failure remains failed.",
         "No owner pin amendment, integration or live host loading established."
       ]
+    },
+    "active-pin-attempt": {
+      "type": "agent-attempt",
+      "subject_sha": "bf22dae072e7ac632e93db65dfa17c27859baf89",
+      "agent": "/root/host_contracts",
+      "role": "sf-principal-engineer",
+      "skill": "software-factory",
+      "requested_model": "gpt-6-astra",
+      "effective_model": null,
+      "phase": "implementation-and-real-installer-proof",
+      "status": "assigned",
+      "summary": "Owner approved all three tested module pins; ADR0025 records authority. Amend exacthelper/test/reference scopes, rerun actual installer in guarded disposable consumers; preserve existing and partial installs, prior failure and exploratory proof."
     }
   },
   "baseline_sha": null,
@@ -162,6 +174,12 @@
       "by": "codex-bmad-provisioning",
       "from": "in-progress",
       "to": "in-review"
+    },
+    {
+      "at": "2026-10-15T10:33:48.522739+00:00",
+      "by": "codex-bmad-provisioning",
+      "from": "in-review",
+      "to": "in-progress"
     }
   ],
   "findings": [
@@ -169,6 +187,11 @@
       "at": "2026-10-15T09:44:45.292195+00:00",
       "by": "orchestrator",
       "text": "Real official installer fixture failed on incompatible TEA stable resolution; independently tested compatible pin alternatives are recorded in a research memo. Exact command amendment awaits owner decision; code review and unrelated work continue."
+    },
+    {
+      "at": "2026-10-15T10:33:48.522539+00:00",
+      "by": "codex-bmad-provisioning",
+      "text": "Owner approved all three tested external-module pins in current conversation; ADR0025 records the command amendment. Reopened exacthelper/test/reference scope, preserving original failed live proof. Actual amended install and independent review remain required."
     }
   ],
   "source_key": "installer-hosts/bmad-install"

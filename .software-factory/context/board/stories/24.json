@@ -4,7 +4,7 @@
   "epic": 3,
   "type": "story",
   "title": "Plugin and marketplace manifests and install.sh bootstrap",
-  "status": "in-review",
+  "status": "in-progress",
   "owner": "codex-distribution",
   "after": [
     23
@@ -129,6 +129,12 @@
       "by": "codex-distribution",
       "from": "in-progress",
       "to": "in-review"
+    },
+    {
+      "at": "2026-10-15T10:34:26.408760+00:00",
+      "by": "codex-distribution",
+      "from": "in-review",
+      "to": "in-progress"
     }
   ],
   "findings": [
@@ -146,6 +152,11 @@
       "at": "2026-10-15T10:13:24.917645+00:00",
       "by": "orchestrator",
       "text": "Independent review requires release allowlist coverage for native payloads and pre-tar parsing decompression/header bounds; source candidate needs repair before integration. Existing source and failed gate receipts retained."
+    },
+    {
+      "at": "2026-10-15T10:34:26.408594+00:00",
+      "by": "codex-distribution",
+      "text": "Independent review accepted captured allowlist and shared bounded header parser repairs; Python startup isolation remains required before verification and hook dispatch. Prior failed candidate reviews retained; repaired source and complete integrated proof pending."
     }
   ],
   "source_key": "installer-hosts/distribution"
