@@ -648,6 +648,25 @@
             "tests/test_board_gate.py",
             "tests/test_gate.py"
           ]
+        },
+        {
+          "key": "authorized-operations-loop",
+          "title": "Connect authorized observations to prioritization and bug delivery",
+          "type": "story",
+          "after": [
+            "continuous-orchestration-contract"
+          ],
+          "covers": [],
+          "risk": "standard",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": false,
+          "scope": [
+            "skills/software-factory/references/operations.md",
+            "skills/software-factory/references/authority.md",
+            "skills/software-factory/workflows/feature.md",
+            "skills/software-factory/workflows/bug.md"
+          ]
         }
       ]
     },

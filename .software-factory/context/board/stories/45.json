@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "id": 45,
+  "epic": 2,
+  "type": "story",
+  "title": "Connect authorized observations to prioritization and bug delivery",
+  "status": "in-progress",
+  "owner": "codex-operations-loop",
+  "after": [
+    40
+  ],
+  "covers": [],
+  "risk": "standard",
+  "hitl": false,
+  "plan_checkpoint": false,
+  "done_checkpoint": false,
+  "blocked": null,
+  "receipts": {},
+  "baseline_sha": null,
+  "branch": null,
+  "pr": null,
+  "merged_sha": null,
+  "history": [
+    {
+      "at": "2026-10-15T09:06:01.118358+00:00",
+      "by": "orchestrator",
+      "from": "backlog",
+      "to": "ready-for-dev"
+    },
+    {
+      "at": "2026-10-15T09:06:01.208763+00:00",
+      "by": "codex-operations-loop",
+      "from": "ready-for-dev",
+      "to": "in-progress"
+    }
+  ],
+  "findings": [
+    {
+      "at": "2026-10-15T09:06:01.118209+00:00",
+      "by": "orchestrator",
+      "text": "Owner explicitly requested monitoring setup, risk-based escalation, prioritization and bug fixes in the autonomous loop. This prose contract uses existing authority, board and receipts; it adds no service or config runtime."
+    }
+  ],
+  "source_key": "expansion/authorized-operations-loop",
+  "scope": [
+    "skills/software-factory/references/operations.md",
+    "skills/software-factory/references/authority.md",
+    "skills/software-factory/workflows/feature.md",
+    "skills/software-factory/workflows/bug.md"
+  ]
+}

@@ -64,6 +64,25 @@
         "pending_decisions": 1
       },
       "meaning": "Fresh source-derived queries and provenance; metadata does not authenticate authority, independent acceptance or external shipping."
+    },
+    "integrated-local-proof": {
+      "type": "local-verification",
+      "subject_sha": "6aa42d1cbbba4fe6d21331085ea518a2846b95b6",
+      "recorded_at": "2026-10-15T09:02:21.252783+00:00",
+      "status": "pass",
+      "full_static_gate": {
+        "exit_code": 0,
+        "unit_tests": 454,
+        "evals": 30,
+        "failed": 0,
+        "unverified": 0,
+        "skipped": 0,
+        "artifact": "trace-integrated-gate.log",
+        "sha256": "15ef4ead776b9ee0d73f0db91ad5b1ac919272c4294d3b9c5a0421675cf6e84f"
+      },
+      "limitations": [
+        "Local verification does not establish provider CI, integration, deployment, live host loading or human acceptance."
+      ]
     }
   },
   "baseline_sha": null,

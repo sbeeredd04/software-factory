@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-15T08:57:31.489089+00:00",
-  "revision": 170,
+  "generated_at": "2026-10-15T09:07:51.849665+00:00",
+  "revision": 174,
   "streams": [
     {
       "id": "W-foundation",
@@ -36,7 +36,7 @@
       "counts": {
         "planned": 1,
         "ready": 0,
-        "in-progress": 0,
+        "in-progress": 1,
         "review": 12,
         "built": 0,
         "done": 8,
@@ -196,7 +196,8 @@
         41,
         42,
         43,
-        44
+        44,
+        45
       ],
       "needs": [
         1
@@ -3142,7 +3143,9 @@
       "claim": {
         "live": false
       },
-      "blocks": [],
+      "blocks": [
+        45
+      ],
       "history": [
         {
           "at": "2026-10-15T08:03:56.271031+00:00",
@@ -3402,6 +3405,25 @@
             "pending_decisions": 1
           },
           "meaning": "Fresh source-derived queries and provenance; metadata does not authenticate authority, independent acceptance or external shipping."
+        },
+        "integrated-local-proof": {
+          "type": "local-verification",
+          "subject_sha": "6aa42d1cbbba4fe6d21331085ea518a2846b95b6",
+          "recorded_at": "2026-10-15T09:02:21.252783+00:00",
+          "status": "pass",
+          "full_static_gate": {
+            "exit_code": 0,
+            "unit_tests": 454,
+            "evals": 30,
+            "failed": 0,
+            "unverified": 0,
+            "skipped": 0,
+            "artifact": "trace-integrated-gate.log",
+            "sha256": "15ef4ead776b9ee0d73f0db91ad5b1ac919272c4294d3b9c5a0421675cf6e84f"
+          },
+          "limitations": [
+            "Local verification does not establish provider CI, integration, deployment, live host loading or human acceptance."
+          ]
         }
       },
       "baseline_sha": null,
@@ -3489,6 +3511,70 @@
         "tests/test_gate.py"
       ],
       "source_key": "expansion/evidence-bound-transitions"
+    },
+    {
+      "id": 45,
+      "epic": 2,
+      "stream": "W-expansion",
+      "type": "story",
+      "title": "Connect authorized observations to prioritization and bug delivery",
+      "status": "in-progress",
+      "state": "in-progress",
+      "owner": "codex-operations-loop",
+      "after": [
+        40
+      ],
+      "covers": [],
+      "risk": "standard",
+      "hitl": false,
+      "plan_checkpoint": false,
+      "done_checkpoint": false,
+      "blocked": null,
+      "receipts": {},
+      "baseline_sha": null,
+      "branch": null,
+      "pr": null,
+      "merged_sha": null,
+      "claim": {
+        "live": true,
+        "owner": "codex-operations-loop",
+        "paths": [
+          "skills/software-factory/references/operations.md",
+          "skills/software-factory/references/authority.md",
+          "skills/software-factory/workflows/feature.md",
+          "skills/software-factory/workflows/bug.md"
+        ],
+        "claimed_at": "2026-10-15T09:06:01.178951+00:00"
+      },
+      "blocks": [],
+      "history": [
+        {
+          "at": "2026-10-15T09:06:01.118358+00:00",
+          "by": "orchestrator",
+          "from": "backlog",
+          "to": "ready-for-dev"
+        },
+        {
+          "at": "2026-10-15T09:06:01.208763+00:00",
+          "by": "codex-operations-loop",
+          "from": "ready-for-dev",
+          "to": "in-progress"
+        }
+      ],
+      "findings": [
+        {
+          "at": "2026-10-15T09:06:01.118209+00:00",
+          "by": "orchestrator",
+          "text": "Owner explicitly requested monitoring setup, risk-based escalation, prioritization and bug fixes in the autonomous loop. This prose contract uses existing authority, board and receipts; it adds no service or config runtime."
+        }
+      ],
+      "scope": [
+        "skills/software-factory/references/operations.md",
+        "skills/software-factory/references/authority.md",
+        "skills/software-factory/workflows/feature.md",
+        "skills/software-factory/workflows/bug.md"
+      ],
+      "source_key": "expansion/authorized-operations-loop"
     }
   ],
   "frontier": {
