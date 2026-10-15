@@ -20,13 +20,7 @@
   "hitl": false,
   "plan_checkpoint": false,
   "done_checkpoint": false,
-  "blocked": {
-    "type": "human-decision",
-    "reason": "Source and fixture review is complete; actual asset capture waits for the explicit pending alternative-browser-method answer required by the browser-control tool instructions.",
-    "since": "2026-10-15T15:29:47.040125+00:00",
-    "owner": "human-owner",
-    "next_action": "Answer the existing isolated headless-check question; then render the frozen public templates and finish actual PNG, native media and full-gate verification."
-  },
+  "blocked": null,
   "receipts": {
     "active-attempt": {
       "type": "agent-attempt",
@@ -73,6 +67,17 @@
         "Real PNGs, aliases and render receipt absent; published-artifact check excluded and not passing.",
         "No separate showcase/asset-capture browser execution; explicit alternative-method answer remains pending.",
         "No final story handoff, integrated asset gate, case50 admission, publication or human epic acceptance."
+      ]
+    },
+    "method-authorization": {
+      "type": "human-method-authorization",
+      "subject_sha": "39ee461f133383930f275ca841acc12e41f48386",
+      "source_ref": "conversation:call_f49cf33eda0c42c3ab2e6d56505b7a53:owner-answer",
+      "answer": "Authorize the isolated headless check (recommended)",
+      "scope": "Temporary isolated headless Chromium check against frozen public local site, native reduced-motion verification and screenshots; existing asset implementation GO continues under the same authorized isolated method.",
+      "limits": [
+        "No external publication, existing browser-session access or macOS setting changes.",
+        "No epic acceptance or deployment equivalence decision is implied."
       ]
     }
   },

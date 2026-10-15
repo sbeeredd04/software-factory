@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-15T15:29:47.051311+00:00",
-  "revision": 271,
+  "generated_at": "2026-10-15T17:58:08.427792+00:00",
+  "revision": 273,
   "streams": [
     {
       "id": "W-foundation",
@@ -5570,6 +5570,19 @@
             "Actual clipboard byte reading was unavailable; observed selectable full prompts/source equality and browser feedback are separately scoped.",
             "No owner epic acceptance, remote integration, live host loading, deployedPages or public release is established."
           ]
+        },
+        "native-media-verification": {
+          "type": "browser-verification",
+          "subject_sha": "39ee461f133383930f275ca841acc12e41f48386",
+          "status": "pass",
+          "scope": "Six native default/reduced-motion cases at three viewport sizes; content parity, four local fonts, hero decoding, all-element/pseudo motion, no overflow or page/resource errors. Second passed run adds actual viewport PNGs; root reviewed five unique viewport captures.",
+          "artifact": ".software-factory/runs/software-factory-v01/evidence/showcase-authorized-native-media-39ee-summary.json",
+          "artifact_sha256": "7238eeff9dd55f8fb1fd0e71328e186e1d6eb92d105c7ca8bee084c229abd6a0",
+          "authorization_source_ref": "conversation:call_f49cf33eda0c42c3ab2e6d56505b7a53:owner-answer",
+          "limitations": [
+            "Independent evidence review pending; original passing static gate remains separately bound to39ee.",
+            "Local isolated Chromium only; no deployed Pages, live host loading or owner epic acceptance."
+          ]
         }
       },
       "baseline_sha": null,
@@ -5630,13 +5643,7 @@
       "hitl": false,
       "plan_checkpoint": false,
       "done_checkpoint": false,
-      "blocked": {
-        "type": "human-decision",
-        "reason": "Source and fixture review is complete; actual asset capture waits for the explicit pending alternative-browser-method answer required by the browser-control tool instructions.",
-        "since": "2026-10-15T15:29:47.040125+00:00",
-        "owner": "human-owner",
-        "next_action": "Answer the existing isolated headless-check question; then render the frozen public templates and finish actual PNG, native media and full-gate verification."
-      },
+      "blocked": null,
       "receipts": {
         "active-attempt": {
           "type": "agent-attempt",
@@ -5683,6 +5690,17 @@
             "Real PNGs, aliases and render receipt absent; published-artifact check excluded and not passing.",
             "No separate showcase/asset-capture browser execution; explicit alternative-method answer remains pending.",
             "No final story handoff, integrated asset gate, case50 admission, publication or human epic acceptance."
+          ]
+        },
+        "method-authorization": {
+          "type": "human-method-authorization",
+          "subject_sha": "39ee461f133383930f275ca841acc12e41f48386",
+          "source_ref": "conversation:call_f49cf33eda0c42c3ab2e6d56505b7a53:owner-answer",
+          "answer": "Authorize the isolated headless check (recommended)",
+          "scope": "Temporary isolated headless Chromium check against frozen public local site, native reduced-motion verification and screenshots; existing asset implementation GO continues under the same authorized isolated method.",
+          "limits": [
+            "No external publication, existing browser-session access or macOS setting changes.",
+            "No epic acceptance or deployment equivalence decision is implied."
           ]
         }
       },
@@ -7032,23 +7050,7 @@
       }
     ]
   },
-  "blockers": [
-    {
-      "id": 30,
-      "epic": 5,
-      "stream": "W-launch",
-      "type": "human-decision",
-      "reason": "Source and fixture review is complete; actual asset capture waits for the explicit pending alternative-browser-method answer required by the browser-control tool instructions.",
-      "owner": "human-owner",
-      "since": "2026-10-15T15:29:47.040125+00:00",
-      "next_action": "Answer the existing isolated headless-check question; then render the frozen public templates and finish actual PNG, native media and full-gate verification.",
-      "stalls": [
-        31,
-        32,
-        33
-      ]
-    }
-  ],
+  "blockers": [],
   "diagnostics": {
     "unpinned_gates": [],
     "undeclared_after": [],
@@ -7056,13 +7058,6 @@
     "inconsistencies": []
   },
   "decision_queue": [
-    {
-      "kind": "blocked",
-      "story": 30,
-      "question": "Source and fixture review is complete; actual asset capture waits for the explicit pending alternative-browser-method answer required by the browser-control tool instructions.",
-      "owner": "human-owner",
-      "next_action": "Answer the existing isolated headless-check question; then render the frozen public templates and finish actual PNG, native media and full-gate verification."
-    },
     {
       "kind": "epic-acceptance",
       "epic": 1,

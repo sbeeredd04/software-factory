@@ -154,6 +154,19 @@
         "Actual clipboard byte reading was unavailable; observed selectable full prompts/source equality and browser feedback are separately scoped.",
         "No owner epic acceptance, remote integration, live host loading, deployedPages or public release is established."
       ]
+    },
+    "native-media-verification": {
+      "type": "browser-verification",
+      "subject_sha": "39ee461f133383930f275ca841acc12e41f48386",
+      "status": "pass",
+      "scope": "Six native default/reduced-motion cases at three viewport sizes; content parity, four local fonts, hero decoding, all-element/pseudo motion, no overflow or page/resource errors. Second passed run adds actual viewport PNGs; root reviewed five unique viewport captures.",
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/showcase-authorized-native-media-39ee-summary.json",
+      "artifact_sha256": "7238eeff9dd55f8fb1fd0e71328e186e1d6eb92d105c7ca8bee084c229abd6a0",
+      "authorization_source_ref": "conversation:call_f49cf33eda0c42c3ab2e6d56505b7a53:owner-answer",
+      "limitations": [
+        "Independent evidence review pending; original passing static gate remains separately bound to39ee.",
+        "Local isolated Chromium only; no deployed Pages, live host loading or owner epic acceptance."
+      ]
     }
   },
   "baseline_sha": null,
