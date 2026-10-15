@@ -142,11 +142,13 @@ def png_size(data):
     """Validate PNG structure, CRCs and the bounded decompressed pixel stream."""
     if len(data) > LIMIT or data[:8] != b"\x89PNG\r\n\x1a\n":
         raise ValueError("invalid PNG signature or size")
-    offset, size, compressed, ended = 8, None, bytearray(), False
+    offset, size, compressed, ended, palette, data_closed = 8, None, bytearray(), False, False, False
     while offset < len(data):
         if len(data) - offset < 12:
             raise ValueError("truncated PNG chunk")
         length, kind = struct.unpack(">I4s", data[offset:offset + 8])
+        if not kind.isalpha() or kind[2:3].islower():
+            raise ValueError("invalid PNG chunk type")
         end = offset + length + 12
         if end > len(data) or length > LIMIT:
             raise ValueError("invalid PNG chunk length")
@@ -160,7 +162,13 @@ def png_size(data):
             if not (0 < width <= 2000 and 0 < height <= 2000) or (depth, comp, filt, interlace) != (8, 0, 0, 0) or color not in (2, 6):
                 raise ValueError("unsupported PNG pixel layout")
             size, channels = (width, height), 3 if color == 2 else 4
+        elif kind == b"PLTE":
+            if not size or palette or compressed or length == 0 or length > 768 or length % 3:
+                raise ValueError("invalid PNG palette")
+            palette = True
         elif kind == b"IDAT" and size:
+            if data_closed:
+                raise ValueError("nonconsecutive PNG image data")
             compressed.extend(payload)
         elif kind == b"IEND":
             if length or end != len(data) or not compressed:
@@ -168,6 +176,8 @@ def png_size(data):
             ended = True
         elif not size or kind[:1].isupper() and kind != b"PLTE":
             raise ValueError("unknown PNG critical chunk")
+        elif compressed:
+            data_closed = True
         offset = end
     if not ended or size is None:
         raise ValueError("incomplete PNG")
@@ -253,7 +263,31 @@ def private_log(folder, name, value):
     return len(data) <= 2 * 1024 * 1024
 
 
+@contextlib.contextmanager
+def termination_guard():
+    """Turn SIGTERM into a handled interruption; restore the caller's disposition."""
+    if threading.current_thread() is not threading.main_thread():
+        raise ValueError("asset rendering must run on the main thread for signal cleanup")
+    previous = signal.getsignal(signal.SIGTERM)
+
+    def interrupted(_signum, _frame):
+        signal.signal(signal.SIGTERM, signal.SIG_IGN)
+        # InterruptedError is swallowed as EINTR by selectors used by communicate().
+        raise RuntimeError("asset rendering interrupted by SIGTERM")
+
+    signal.signal(signal.SIGTERM, interrupted)
+    try:
+        yield
+    finally:
+        signal.signal(signal.SIGTERM, previous)
+
+
 def run_child(argv, env, evidence, *, timeout=300):
+    with termination_guard():
+        return child_process(argv, env, evidence, timeout=timeout)
+
+
+def child_process(argv, env, evidence, *, timeout):
     process = subprocess.Popen(argv, env=env, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                                text=True, start_new_session=True)
     stdout, stderr = "", ""
@@ -352,7 +386,7 @@ def visible_directories(root_fd, root_path, parents):
                 raise ValueError("visible asset parent changed during publication")
 
 
-def publish(root_fd, outputs, root_path=None):
+def publish(root_fd, outputs, root_path=None, recovery=None):
     """Prepare every target first; replace per file, rolling back handled failures."""
     expected = {f"assets/{name}.png" for name in SIZES} | {
         f"site/img/{name}.png" for name in ("loop", "team", "hosts")} | {"assets/render-receipt.json"}
@@ -364,19 +398,34 @@ def publish(root_fd, outputs, root_path=None):
         parents["site/img"] = stack.enter_context(directory(root_fd, ("site", "img")))
         visible_directories(root_fd, root_path, parents)
 
-        def temporary(fd, data):
+        def temporary(fd, data, item, key):
             name = ".sf-asset-" + uuid.uuid4().hex
             file_fd = os.open(name, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o644, dir_fd=fd)
-            try:
-                with os.fdopen(file_fd, "wb") as stream:
-                    stream.write(data)
-                    stream.flush()
-                    os.fsync(stream.fileno())
-                    info = os.fstat(stream.fileno())
-            except BaseException:
-                os.unlink(name, dir_fd=fd)
-                raise
-            return name, (info.st_dev, info.st_ino)
+            info = os.fstat(file_fd)
+            item[key] = name
+            item[key + "_snapshot"] = (data, (info.st_dev, info.st_ino))
+            with os.fdopen(file_fd, "wb") as stream:
+                stream.write(data)
+                stream.flush()
+                os.fsync(stream.fileno())
+
+        def check_temporary(item, key, missing=False):
+            if item[key] is None:
+                return
+            current = snapshot_at(item["fd"], item[key], missing=missing)
+            if missing and current == (None, None):
+                return
+            if current != item[key + "_snapshot"]:
+                raise ValueError("prepared asset temporary ownership is contested")
+
+        def record_recovery():
+            if recovery is not None:
+                recovery({"version": 1, "status": "contested-or-failed-publication",
+                          "files": [{"target": item["path"],
+                                     "new": item["new"], "backup": item["old"],
+                                     "expected_new_sha256": digest(item["after"][0]) if item["after"] else None,
+                                     "expected_prior_sha256": digest(item["before"][0]) if item["before"][0] is not None else None}
+                                    for item in prepared]})
 
         try:
             names = sorted(expected - {"assets/render-receipt.json"}) + ["assets/render-receipt.json"]
@@ -385,14 +434,19 @@ def publish(root_fd, outputs, root_path=None):
                 parent, name = path.rsplit("/", 1)
                 fd = parents[parent]
                 item = {"fd": fd, "name": name, "new": None, "old": None,
-                        "before": (old, identity), "after": None}
+                        "before": (old, identity), "after": None, "path": path}
                 prepared.append(item)
-                item["new"], new_identity = temporary(fd, outputs[path])
-                item["after"] = (outputs[path], new_identity)
+                temporary(fd, outputs[path], item, "new")
+                item["after"] = item["new_snapshot"]
                 if old is not None:
-                    item["old"], _ = temporary(fd, old)
+                    temporary(fd, old, item, "old")
+            for item in prepared:
+                check_temporary(item, "new")
+                check_temporary(item, "old")
             for item in prepared:
                 visible_directories(root_fd, root_path, parents)
+                check_temporary(item, "new")
+                check_temporary(item, "old")
                 if snapshot_at(item["fd"], item["name"], missing=True) != item["before"]:
                     raise ValueError("asset changed during publication preparation")
                 changed.append(item)
@@ -400,6 +454,9 @@ def publish(root_fd, outputs, root_path=None):
             for fd in parents.values():
                 os.fsync(fd)
             visible_directories(root_fd, root_path, parents)
+            for item in prepared:
+                if snapshot_at(item["fd"], item["name"], missing=True) != item["after"]:
+                    raise ValueError("published asset changed before final verification")
         except BaseException as original:
             rollback_errors = []
             for item in reversed(changed):
@@ -413,6 +470,7 @@ def publish(root_fd, outputs, root_path=None):
                     if item["old"] is None:
                         os.unlink(item["name"], dir_fd=item["fd"])
                     else:
+                        check_temporary(item, "old")
                         os.replace(item["old"], item["name"], src_dir_fd=item["fd"], dst_dir_fd=item["fd"])
                 except (OSError, ValueError) as exc:
                     rollback_errors.append(type(exc).__name__)
@@ -422,16 +480,32 @@ def publish(root_fd, outputs, root_path=None):
             raise
         finally:
             if not retained:
-                for item in prepared:
-                    for name in (item["new"], item["old"]):
-                        if name is not None:
-                            try:
-                                os.unlink(name, dir_fd=item["fd"])
-                            except FileNotFoundError:
-                                pass
+                try:
+                    for item in prepared:
+                        for key in ("new", "old"):
+                            check_temporary(item, key, missing=True)
+                    for item in prepared:
+                        for key in ("new", "old"):
+                            if item[key] is not None:
+                                check_temporary(item, key, missing=True)
+                                try:
+                                    os.unlink(item[key], dir_fd=item["fd"])
+                                except FileNotFoundError:
+                                    pass
+                except (OSError, ValueError) as exc:
+                    retained = True
+                    record_recovery()
+                    raise RuntimeError("temporary cleanup is contested; preserve .sf-asset-* recovery files") from exc
+            if retained:
+                record_recovery()
 
 
 def render(root=ROOT, cache=None, evidence=None):
+    with termination_guard():
+        return render_job(root, cache, evidence)
+
+
+def render_job(root, cache, evidence):
     if sys.version_info < (3, 11) or not hasattr(os, "O_NOFOLLOW"):
         raise ValueError("asset rendering requires POSIX Python >=3.11")
     cache = Path(cache or os.environ.get("SF_RENDER_CACHE", ""))
@@ -455,7 +529,8 @@ def render(root=ROOT, cache=None, evidence=None):
                                            "dimensions": list(png_size(data))} for name, data in outputs.items()},
                        "evidence": observations}
             outputs["assets/render-receipt.json"] = encoded(receipt)
-            publish(root_fd, outputs, Path(root).absolute())
+            publish(root_fd, outputs, Path(root).absolute(),
+                    lambda record: private_log(evidence, "publication-recovery.json", encoded(record)))
     finally:
         os.close(root_fd)
     return receipt

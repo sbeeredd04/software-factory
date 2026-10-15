@@ -109,11 +109,19 @@ complete set before replacing individual files and publishes its receipt last.
 File replacement is atomic per file. A handled publication failure rolls back
 only files whose identity and bytes still match this run's published output.
 Foreign edits are preserved and recovery backups are retained for inspection.
+Prepared new files and backups also have their identity and bytes checked before
+moving, restoring or cleaning them. Contention retains a private recovery map
+alongside the launch logs; a final comparison checks the published set.
 Cooperating renderers share a directory lock; it does not lock human editors.
 There is no globally atomic transaction across `assets/` and `site/img/`, nor a
 promise of crash recovery after SIGKILL, power loss or failed rollback I/O.
 If recovery is contested, preserve `.sf-asset-*` files and compare them with the
 receipt before a maintainer reconciles the set. Do not delete unrelated files.
 
-The renderer cleans only its temporary server, child processes and job files.
+SIGTERM enters the bounded cleanup path with private log retention. The outer
+process terminates and reaps its owned child process group; the helper's normal
+unwinding closes its browser and Playwright driver. The ordinary Python fixture
+proves that process-group path only. Detached browser descendants require actual
+run observation; no universal orphan-free cleanup is claimed. SIGKILL cannot run
+the cleanup path. Cleanup is limited to owned server, process and job resources.
 The explicitly prepared developer cache remains available for the next run.

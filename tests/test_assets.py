@@ -7,9 +7,12 @@ import importlib.util
 import json
 import os
 import shutil
+import signal
 import struct
 import subprocess
+import sys
 import tempfile
+import time
 import unittest
 import zlib
 from pathlib import Path
@@ -117,6 +120,12 @@ class AssetTests(unittest.TestCase):
                 render.png_size(bad)
         self.assertEqual(render.png_size(synthetic_png(1280, 640)), (1280, 640))
 
+    def test_png_empty_palette_is_rejected(self):
+        good = synthetic_png()
+        empty_palette = struct.pack(">I", 0) + b"PLTE" + struct.pack(">I", zlib.crc32(b"PLTE") & 0xFFFFFFFF)
+        with self.assertRaisesRegex(ValueError, "palette"):
+            render.png_size(good[:33] + empty_palette + good[33:])
+
     def test_launch_proof_requires_actual_safe_argv(self):
         safe = "pw:browser <launching> browser --headless --user-data-dir=private --remote-debugging-pipe\n"
         proof = render.launch_proof(safe)
@@ -207,6 +216,76 @@ class AssetTests(unittest.TestCase):
             render.publish(self.fd, self.outputs())
         self.assert_outputs(old)
         self.assertEqual(list(self.root.rglob(".sf-asset-*")), [])
+
+    def test_replaced_prepared_new_or_backup_is_never_moved_or_deleted(self):
+        for target_kind in ("new", "backup"):
+            with self.subTest(kind=target_kind):
+                old = self.outputs(old=True)
+                outputs = self.outputs()
+                sought = outputs["assets/hero.png"] if target_kind == "new" else old["assets/hero.png"]
+                original, count, foreign, records = render.os.fsync, 0, [], []
+
+                def fsync(fd, sought=sought, foreign=foreign, original=original):
+                    nonlocal count
+                    count += 1
+                    if count == 22:
+                        path = next(path for path in (self.root / "assets").glob(".sf-asset-*") if path.read_bytes() == sought)
+                        path.unlink()
+                        path.write_bytes(b"foreign replacement of prepared temporary")
+                        foreign.append(path)
+                    return original(fd)
+
+                with (mock.patch.object(render.os, "fsync", side_effect=fsync),
+                      self.assertRaisesRegex(RuntimeError, "contested")):
+                    render.publish(self.fd, outputs, self.root, records.append)
+                self.assert_outputs(old)
+                self.assertEqual(foreign[0].read_bytes(), b"foreign replacement of prepared temporary")
+                self.assertEqual(len(records), 1)
+                self.assertIn(foreign[0].name, json.dumps(records))
+                # These are entirely owned synthetic-test files; prepare the next case.
+                for path in self.root.rglob(".sf-asset-*"):
+                    path.unlink()
+
+    def test_replaced_backup_is_not_restored_over_a_published_file(self):
+        old = self.outputs(old=True)
+        outputs = self.outputs()
+        original, count, foreign, records = render.os.replace, 0, [], []
+
+        def replace(*args, **kwargs):
+            nonlocal count
+            count += 1
+            if count == 3:
+                path = next(path for path in (self.root / "assets").glob(".sf-asset-*") if path.read_bytes() == old["assets/hero.png"])
+                path.unlink()
+                path.write_bytes(b"foreign backup during publication")
+                foreign.append(path)
+                raise OSError("synthetic replacement failure")
+            return original(*args, **kwargs)
+
+        with mock.patch.object(render.os, "replace", side_effect=replace), self.assertRaisesRegex(RuntimeError, "contested"):
+            render.publish(self.fd, outputs, self.root, records.append)
+        self.assertEqual((self.root / "assets/hero.png").read_bytes(), outputs["assets/hero.png"])
+        self.assertEqual(foreign[0].read_bytes(), b"foreign backup during publication")
+        self.assertEqual(len(records), 1)
+
+    def test_cleanup_preserves_foreign_backup_replacement(self):
+        old = self.outputs(old=True)
+        original, count, foreign, records = render.os.fsync, 0, [], []
+
+        def fsync(fd):
+            nonlocal count
+            count += 1
+            if count == 23:
+                path = next(path for path in (self.root / "assets").glob(".sf-asset-*") if path.read_bytes() == old["assets/hero.png"])
+                path.unlink()
+                path.write_bytes(b"foreign backup before cleanup")
+                foreign.append(path)
+            return original(fd)
+
+        with mock.patch.object(render.os, "fsync", side_effect=fsync), self.assertRaisesRegex(RuntimeError, "contested"):
+            render.publish(self.fd, self.outputs(), self.root, records.append)
+        self.assertEqual(foreign[0].read_bytes(), b"foreign backup before cleanup")
+        self.assertEqual(len(records), 1)
 
     def test_handled_replace_failure_rolls_back_previous_outputs(self):
         old = self.outputs(old=True)
@@ -355,6 +434,37 @@ class AssetTests(unittest.TestCase):
         self.assertNotIn("profile detail", str(raised.exception))
         self.assertEqual((self.root / "capture-stderr.log").read_text(), "synthetic private profile detail")
         self.assertEqual((self.root / "capture-stderr.log").stat().st_mode & 0o777, 0o600)
+
+    def test_sigterm_reaps_actual_owned_python_child_and_retains_private_log(self):
+        evidence = self.root / "private-evidence"
+        evidence.mkdir(mode=0o700)
+        pidfile = self.root / "owned-child.pid"
+        process = subprocess.Popen([sys.executable, str(ROOT / "tests/fixtures/assets/sigterm_controller.py"),
+                                    str(render.__file__), str(pidfile), str(evidence)],
+                                   stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        child = None
+        try:
+            deadline = time.monotonic() + 5
+            while not pidfile.exists() and time.monotonic() < deadline and process.poll() is None:
+                time.sleep(0.01)
+            self.assertTrue(pidfile.exists(), "synthetic child failed to start")
+            child = int(pidfile.read_text())
+            process.send_signal(signal.SIGTERM)
+            process.communicate(timeout=5)
+            self.assertNotEqual(process.returncode, -signal.SIGTERM)
+            with self.assertRaises(ProcessLookupError):
+                os.kill(child, 0)
+            self.assertTrue((evidence / "capture-stderr.log").is_file())
+            self.assertEqual((evidence / "capture-stderr.log").stat().st_mode & 0o777, 0o600)
+        finally:
+            if process.poll() is None:
+                process.kill()
+                process.communicate(timeout=5)
+            if child is not None:
+                try:
+                    os.killpg(child, signal.SIGTERM)
+                except ProcessLookupError:
+                    pass
 
     def test_missing_cache_fails_before_capture_or_publication(self):
         old = self.outputs(old=True)

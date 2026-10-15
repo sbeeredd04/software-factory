@@ -6,6 +6,7 @@ import importlib.metadata
 import json
 import os
 import platform
+import signal
 from pathlib import Path
 from urllib.parse import urlsplit
 
@@ -109,7 +110,17 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--job", type=Path, required=True)
     args = parser.parse_args()
-    capture(args.job)
+    previous = signal.getsignal(signal.SIGTERM)
+
+    def interrupted(_signum, _frame):
+        signal.signal(signal.SIGTERM, signal.SIG_IGN)
+        raise RuntimeError("developer capture interrupted by SIGTERM")
+
+    signal.signal(signal.SIGTERM, interrupted)
+    try:
+        capture(args.job)
+    finally:
+        signal.signal(signal.SIGTERM, previous)
     print("asset capture complete")
 
 
