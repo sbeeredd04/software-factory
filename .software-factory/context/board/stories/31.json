@@ -5,7 +5,7 @@
   "type": "story",
   "title": "Docs set, examples and the dogfood journey",
   "status": "in-review",
-  "owner": "codex-docs",
+  "owner": "codex-dogfood",
   "after": [
     30
   ],
@@ -94,6 +94,28 @@
       },
       "artifact": ".software-factory/runs/software-factory-v01/evidence/canonical-launch51-epic-receipt-b532.json",
       "artifact_sha256": "1f6463e00bd4101cf9dc09941b3197ad69a427c0bedb2653cba4659c2e306673"
+    },
+    "actual-dogfood-review": {
+      "type": "independent-review",
+      "subject_sha": "06f812e1c34ead34d942b5f2542f995fbf0be38d",
+      "reviewer": "/root/final_audit",
+      "author": "/root",
+      "status": "pass",
+      "scope": "Actual setup and BMad planning addition only; exact reviewed document bytes committed unchanged. Historical failures/cancellation and current capability limits remain explicit.",
+      "document": "docs/DOGFOOD.md",
+      "document_sha256": "86bcd29f9ad27f4162408d17275a132bcfc5458ee505330da96a1cec67bdbf81",
+      "checks": {
+        "docs_journey": {
+          "run": 14,
+          "passed": 14,
+          "exit_code": 0
+        },
+        "links_exit_code": 0,
+        "public_scan_exit_code": 0
+      },
+      "limitations": [
+        "No current combined full-gate, live host registration, external integration, deployment or publication acceptance."
+      ]
     }
   },
   "baseline_sha": null,
@@ -118,6 +140,18 @@
       "by": "codex-docs",
       "from": "in-progress",
       "to": "in-review"
+    },
+    {
+      "at": "2026-10-15T19:40:45.663797+00:00",
+      "by": "codex-dogfood",
+      "from": "in-review",
+      "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T19:42:48.912643+00:00",
+      "by": "codex-dogfood",
+      "from": "in-progress",
+      "to": "in-review"
     }
   ],
   "findings": [
@@ -128,6 +162,6 @@
     }
   ],
   "source_key": "launch-publication/docs-examples-dogfood",
-  "review_subject_sha": "c21fc14a8d1f4f6e9c2d494068886dc79f1c0445",
-  "evidence_contract": 1
+  "evidence_contract": 1,
+  "review_subject_sha": "06f812e1c34ead34d942b5f2542f995fbf0be38d"
 }

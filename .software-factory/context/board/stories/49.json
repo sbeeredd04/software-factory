@@ -5,7 +5,7 @@
   "epic": 2,
   "type": "bug",
   "title": "Keep installed generated files out of the default project crawl",
-  "status": "in-progress",
+  "status": "in-review",
   "owner": "codex-crawl-repair",
   "after": [
     11
@@ -56,6 +56,119 @@
       },
       "partial_log_sha256": "66113f089e3f58a42f59bb77ccc3b80e37a01f55492a1b2f5d027528c7c72c23",
       "scope": "The partial log records completed checks only; no final unit-count or full 51-case result is asserted."
+    },
+    "worker-handoff": {
+      "story": "49",
+      "owner": "codex-crawl-repair",
+      "subject_sha": "f90acb14c613da17b8e1a32a17695f260fedf9af",
+      "base_sha": "21f4533",
+      "result": "ready-for-independent-review",
+      "files": [
+        "skills/sf-crawl/scripts/crawl.py",
+        "skills/sf-crawl/SKILL.md",
+        "skills/sf-crawl/references/coverage.md",
+        "skills/sf-crawl/references/artifact.md",
+        "tests/test_crawl.py"
+      ],
+      "failure_before": {
+        "baseline": "21f4533",
+        "tests_run": 1,
+        "failures": 1,
+        "errors": 0,
+        "observation": "Ignored generated skill, module and local copies were wrongly selected.",
+        "log_sha256": "0fb5f9edcf2b67ce9b53c8b7496fab35b72614427577b5f7d818443e480349cb"
+      },
+      "checks": [
+        {
+          "command": "python3 -m unittest discover -s tests -p test_crawl.py -v",
+          "exit": 0,
+          "tests_run": 33,
+          "failures": 0,
+          "skips": 0
+        },
+        {
+          "command": "python3 -m unittest discover -s tests -p test_trace.py -v",
+          "exit": 0,
+          "tests_run": 22,
+          "failures": 0,
+          "skips": 0
+        },
+        {
+          "command": "uvx --from ruff==0.17.0 ruff check .",
+          "exit": 0
+        },
+        {
+          "command": "python3 scripts/validate.py",
+          "exit": 0
+        },
+        {
+          "command": "python3 scripts/scan_public.py",
+          "exit": 0,
+          "files_scanned": 487
+        },
+        {
+          "command": "python3 scripts/check_links.py",
+          "exit": 0
+        },
+        {
+          "command": "python3 scripts/check_distribution.py",
+          "exit": 0
+        },
+        {
+          "command": "python3 -m compileall -q skills/sf-crawl tests/test_crawl.py",
+          "exit": 0
+        },
+        {
+          "command": "git diff --check",
+          "exit": 0
+        }
+      ],
+      "limitations": [
+        "Root must independently verify the committed subject and run the integrated full gate.",
+        "No canonical map, trace, live board, claim, run or eval metadata was written by this worker.",
+        "Git inventories stop at submodules and nested repositories; missing tracked paths are reported.",
+        "Unavailable, failed, timed-out or malformed Git inventories fall back explicitly to the static filesystem policy, which can include ignored files.",
+        "Non-UTF-8 Git names cause explicit fallback; the filesystem renderer retains its prior Unicode filename limitations.",
+        "Inventory, parse and manifest observations are static and do not defend against concurrent tree mutation."
+      ]
+    },
+    "independent-review": {
+      "type": "independent-review",
+      "subject_sha": "f90acb14c613da17b8e1a32a17695f260fedf9af",
+      "reviewer": "/root",
+      "author": "/root/crawl_repair",
+      "status": "pass",
+      "scope": "Five claimed canonical crawler/contract/test paths; Git selection and explicit degradation, preservation of tracked ignored/new code, filesystem and packaging boundaries. Actual committed diff inspected.",
+      "checks": {
+        "crawl_tests": {
+          "run": 33,
+          "passed": 33,
+          "failed": 0,
+          "skipped": 0,
+          "exit_code": 0
+        },
+        "trace_tests": {
+          "run": 22,
+          "passed": 22,
+          "failed": 0,
+          "skipped": 0,
+          "exit_code": 0
+        },
+        "actual_installed_primary_probe": {
+          "exit_code": 0,
+          "python_modules": 79,
+          "source_files": 89,
+          "selection": "git-tracked-and-unignored",
+          "index_unchanged": true,
+          "json_bytes": 902975
+        }
+      },
+      "findings": [],
+      "limits": [
+        "The actual-primary probe used candidate crawler f90 against pre-integration source 06f812e; it is not combined-source proof.",
+        "Full gate and native installed-helper refresh remain pending. Filesystem fallback can include ignored material; submodules and nested repositories require separate crawls.",
+        "No eval criteria or grader command was changed."
+      ]
     }
   },
   "baseline_sha": null,
@@ -74,8 +187,15 @@
       "by": "codex-crawl-repair",
       "from": "ready-for-dev",
       "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T19:46:45.525585+00:00",
+      "by": "codex-crawl-repair",
+      "from": "in-progress",
+      "to": "in-review"
     }
   ],
   "findings": [],
-  "source_key": "expansion/crawl-installed-inventory"
+  "source_key": "expansion/crawl-installed-inventory",
+  "review_subject_sha": "f90acb14c613da17b8e1a32a17695f260fedf9af"
 }
