@@ -16,13 +16,21 @@ actual gaps. Missing product outcomes or acceptance criteria benefit from the
 product manager; changed cross-module contracts from the architect; these are
 examples, not compulsory staffing.
 
-When BMad is installed, its planning skills do the heavy lifting: PRD or spec
-work for genuinely missing planning, architecture skills for contract changes,
-and the ticket/sprint artifacts to slice an initiative into epics and stories.
-When BMad is absent, plan natively with the same discipline: outcome, acceptance
-criteria, stories, proof per story. The orchestrator keeps ownership of design
-and acceptance either way. Installation, provenance and partial-effect recovery
-are described in [BMad provisioning](bmad-provisioning.md).
+New setup selects `planning.method: bmad`. Load the actual installed BMad planning
+skills to produce structured epics and stories: outcomes, acceptance criteria,
+real dependencies and proof. Use a compact BMad-compatible story for small work;
+reserve PRDs and architecture exercises for missing product or contract decisions.
+Preserve artifact links and stable `source_key` joins through the tracker adapter.
+BMad planning status is input; the board owns live delivery status.
+
+Missing, partial or unsupported BMad is a real prerequisite gap. Offer the separate
+pinned [provisioning](bmad-provisioning.md) route within installation consent.
+Do not silently choose native or claim a workflow ran from installed files alone.
+Native planning requires explicit `planning.method: native`, a scoped fallback
+decision, or preservation of an existing compatible approved legacy route. Label
+that work native/reused specs and retain equivalent structured acceptance and proof.
+Without that route, planning-dependent dispatch waits; independent authorized work
+continues. Installation does not prove host skill loading or planner execution.
 
 ## What a plan names
 
@@ -72,7 +80,7 @@ phase-scoped resources. Schedule by coupling, current capacity and observed
 rework, not by a global order.
 
 The board makes this mechanical: `roadmap.json`'s frontier is computed from the
-`after` graph (review counts as met for starting, epic gates wait for human
+`after` graph (review counts as met for starting, epic gates wait for valid policy-selected
 acceptance), spans every stream at once, and carries the cross-stream
 diagnostics. Workstreams run in parallel; the frontier offers all unblocked,
 unclaimed candidates rather than one global next story. The readiness rule, the

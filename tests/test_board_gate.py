@@ -566,3 +566,363 @@ class BoardGateTests(unittest.TestCase):
         approval = self.board.root / self.board.epic_approval(1)
         self.refused(lambda: self.close_epic(approval), "cannot be accepted as legacy")
 
+
+
+class RiskAdaptiveTests(unittest.TestCase):
+    setUp = BoardGateTests.setUp
+    raw = BoardGateTests.raw
+    manifest = BoardGateTests.manifest
+    write = BoardGateTests.write
+    accept = BoardGateTests.accept
+    refused = BoardGateTests.refused
+    prepare_epic = BoardGateTests.prepare_epic
+
+    def binding(self, name):
+        return {"artifact": name, "sha256": hashlib.sha256((self.board.root / name).read_bytes()).hexdigest()}
+
+    def prepare(self):
+        self.prepare_epic()
+        (self.board.root / "risk.md").write_text("Synthetic bounded local work; external effects reserved.")
+        (self.board.root / "owner.txt").write_text("Synthetic scoped delegation, not authenticated owner authority.")
+        grant = {"schema": "sf-epic-delegation/1", "decision": "delegate", "actions": ["accept-epic"],
+                 "scope": {"epics": [1]}, "approved_by": "fixture-owner", "approved_at": "2020-01-01T00:00:00Z",
+                 "source": {"kind": "user-conversation", "ref": "fixture:owner", **self.binding("owner.txt")}}
+        self.write(self.board.root / "grant.json", grant)
+        self.config = {"autonomy": {"mode": "risk-adaptive", "standing_delegations": []},
+                       "checkpoints": {"manual": False, "transitions": ["epic-acceptance"]},
+                       "documents": {"principles": {"risk": "risk.md"}}}
+        self.refresh()
+
+    def refresh(self):
+        grant = self.binding("grant.json")
+        self.config["autonomy"]["standing_delegations"] = [
+            {"source": "grant.json", "sha256": grant["sha256"], "scope": "Accept finite epic 1"}]
+        self.write(self.board.root / ".software-factory/config.yaml", self.config)
+        # Reconcile exact scope after legitimate fixture changes, without approving them.
+        self.board.epic_approval(1)
+        scoped, _, _ = roadmap.epic_review_scope(self.board.root, roadmap.board_config(self.board.root), self.board.epic_record(1))
+        assessment = {"schema": "sf-consequence-assessment/1", "scope": {"epic": 1}, "scope_sha256": scoped,
+                      "config_sha256": self.binding(".software-factory/config.yaml")["sha256"],
+                      "risk": self.binding("risk.md"), "delegation": grant, "evidence": self.binding("epic-1-review.json"),
+                      "decision": "proceed", "reservations": [], "unknowns": [], "blocked_dependents": [],
+                      "permission_status": "authorized", "effect_status": "pass", "recovery_status": "bounded", "risk_status": "resolved"}
+        assessment.update({key: "Synthetic bounded local fixture with independent proof." for key in
+                           ("cause", "outcome", "affected", "method", "permissions", "effect", "recovery", "blast_radius", "authority", "rationale")})
+        review = json.loads((self.board.root / "epic-1-review.json").read_text())
+        review["assessment_sha256"] = roadmap.gate_module().consequence_digest(assessment)
+        self.write(self.board.root / "epic-1-review.json", review)
+        assessment["evidence"] = self.binding("epic-1-review.json")
+        self.write(self.board.root / "assessment.json", assessment)
+
+    def close(self, *extra):
+        return self.board.board("epic", "--epic", "1", "--actor", "orchestrator", "--status", "done",
+                                "--owner", "acceptance-owner", "--delegation", "grant.json",
+                                "--assessment", "assessment.json", "--evidence", "epic-1-review.json", *extra)
+
+    def mutate(self, name, change):
+        path = self.board.root / name
+        record = json.loads(path.read_text())
+        change(record)
+        self.write(path, record)
+
+    def test_complete_delegation_records_actual_actor_and_unlocks_epic(self):
+        self.prepare()
+        result = self.close()
+        self.assertEqual(0, result.returncode, result.stderr)
+        epic = self.board.epic_record(1)
+        accepted = epic["acceptance"]
+        self.assertEqual(("orchestrator", "delegated", "acceptance-owner"),
+                         (accepted["by"], accepted["mode"], accepted["actor"]))
+        self.assertEqual("orchestrator", epic["history"][-1]["by"])
+        self.assertNotIn("decision", accepted)
+        self.assertEqual(self.binding("grant.json"), accepted["delegation"])
+        self.assertEqual("done", epic["status"])
+        self.refused(self.close, "frozen")
+
+    def test_supervised_legacy_manual_and_epic_reservations_refuse(self):
+        self.prepare()
+        for mode, manual in ((None, False), ("supervised", False), ("risk-adaptive", True), ("risk-adaptive", 0)):
+            with self.subTest(mode=mode, manual=manual):
+                self.config["autonomy"]["mode"] = mode
+                self.config["checkpoints"]["manual"] = manual
+                self.refresh()
+                self.refused(self.close, "reserved")
+        self.config["autonomy"]["mode"] = "risk-adaptive"
+        self.config["checkpoints"]["manual"] = False
+        self.mutate(self.board.epic_file(1).relative_to(self.board.root), lambda r: r.update(hitl=True))
+        self.refresh()
+        self.refused(self.close, "reserved")
+        # Identical protected child/review proof remains usable by the actual human route.
+        decision = self.board.epic_approval(1)
+        result = self.board.board("epic", "--epic", "1", "--actor", "human", "--status", "done", "--decision", decision)
+        self.assertEqual(0, result.returncode, result.stderr)
+
+    def test_missing_revoked_expired_and_out_of_scope_grants_refuse(self):
+        self.prepare()
+        original = (self.board.root / "grant.json").read_bytes()
+        changes = [lambda r: r.update(until="2020-01-02T00:00:00Z"),
+                   lambda r: r.update(approved_at="2999-01-01T00:00:00Z"),
+                   lambda r: r.update(approved_at="2020-01-01"),
+                   lambda r: r.update(scope={"epics": [2]}), lambda r: r.update(scope={"epics": [True]}),
+                   lambda r: r.update(scope={"epics": [1, 1]}), lambda r: r.update(scope={"epics": ["*"]}),
+                   lambda r: r.update(scope={"epics": list(range(1, 258))}),
+                   lambda r: r.update(actions=["accept-epic", "deploy"]), lambda r: r.update(reservation="ask first"),
+                   lambda r: r["source"].update(kind="agent-summary")]
+        for change in changes:
+            (self.board.root / "grant.json").write_bytes(original)
+            self.mutate("grant.json", change)
+            self.refresh()
+            self.refused(self.close)
+        (self.board.root / "grant.json").write_bytes(original)
+        self.refresh()
+        self.config["autonomy"]["standing_delegations"] = []
+        self.write(self.board.root / ".software-factory/config.yaml", self.config)
+        self.refused(self.close)
+        self.refresh()
+        self.mutate("grant.json", lambda r: r.update(approved_by="changed-owner"))
+        self.refused(self.close)
+        self.refresh()
+        (self.board.root / "owner.txt").write_text("replaced owner source")
+        self.refused(self.close)
+
+    def test_stale_policy_risk_scope_and_unknown_consequences_refuse(self):
+        self.prepare()
+        for name in ("risk.md", ".software-factory/config.yaml", "epic-1-review.json", "assessment.json"):
+            path = self.board.root / name
+            original = path.read_bytes()
+            path.write_bytes(original + b" ")
+            # Assessment bytes themselves need no prior approval; change a required fact instead.
+            if name == "assessment.json":
+                self.mutate(name, lambda r: r.update(decision="escalate"))
+            self.refused(self.close)
+            path.write_bytes(original)
+        self.board.write_story(1, title="Changed accepted subject")
+        self.refused(self.close)
+
+    def test_each_unknown_or_missing_fact_refuses_even_with_current_bindings(self):
+        self.prepare()
+        path = self.board.root / "assessment.json"
+        original = path.read_bytes()
+        changes = {"permission_status": "unknown", "effect_status": "fail", "recovery_status": "unbounded",
+                   "risk_status": "unknown", "reservations": ["production"], "unknowns": ["authority"],
+                   "blocked_dependents": [1], "method": "", "scope": {"epic": True}, "rationale": "x" * 4097}
+        for key, value in changes.items():
+            path.write_bytes(original)
+            self.mutate("assessment.json", lambda r, k=key, v=value: r.update({k: v}))
+            self.refused(self.close)
+        path.write_bytes(original)
+        self.mutate("assessment.json", lambda r: r.pop("cause"))
+        self.refused(self.close)
+
+    def test_no_self_acceptance_or_review_or_human_label_laundering(self):
+        self.prepare()
+        self.refused(lambda: self.close("--owner", "worker"), "owns child implementation")
+        self.refused(lambda: self.close("--decision", "epic-1-approval.json"))
+        self.mutate("epic-1-review.json", lambda r: r.update(reviewer="worker"))
+        self.mutate("assessment.json", lambda r: r.update(evidence=self.binding("epic-1-review.json")))
+        self.refused(self.close, "owns child implementation")
+
+    def test_legacy_needs_explicit_grant_and_never_backfills_history(self):
+        self.prepare()
+        self.mutate(self.board.story_file(1).relative_to(self.board.root),
+                    lambda r: (r.pop("accepted_gates"), r.pop("evidence_contract")))
+        original = self.board.story_file(1).read_bytes()
+        self.refresh()
+        self.refused(self.close, "delegation")
+        self.mutate("grant.json", lambda r: r.update(legacy_children=[1]))
+        self.refresh()
+        result = self.close()
+        self.assertEqual(0, result.returncode, result.stderr)
+        self.assertEqual(original, self.board.story_file(1).read_bytes())
+
+    def test_new_protected_child_cannot_use_delegated_legacy_authority(self):
+        self.prepare()
+        self.mutate(self.board.story_file(1).relative_to(self.board.root), lambda r: r.pop("accepted_gates"))
+        self.mutate("grant.json", lambda r: r.update(legacy_children=[1]))
+        self.refresh()
+        self.refused(self.close, "cannot be accepted as legacy")
+
+    def test_protected_snapshot_catches_replaced_source_ancestor_and_new_child(self):
+        self.prepare()
+        gate = roadmap.gate_module()
+        real_review = gate.review_bundle
+        args = types.SimpleNamespace(command="epic", epic="1", actor="orchestrator", status="done",
+                                     owner="acceptance-owner", decision=None, delegation="grant.json",
+                                     assessment="assessment.json", evidence="epic-1-review.json")
+        before = self.board.board_snapshot()
+        def swap(*a, **kw):
+            result = real_review(*a, **kw)
+            source = self.board.root / "owner.txt"
+            content = source.read_bytes()
+            source.rename(self.board.root / "old-owner.txt")
+            source.write_bytes(content)
+            return result
+        with (mock.patch.object(gate, "review_bundle", side_effect=swap),
+              self.assertRaisesRegex(roadmap.BoardError, "source changed")):
+            roadmap.epic_update(self.board.root, args)
+        self.assertEqual(before, self.board.board_snapshot())
+        # Same bytes through a replaced ancestor must fail, too.
+        directory = self.board.root / "proof"
+        def ancestor(*a, **kw):
+            result = real_review(*a, **kw)
+            directory.rename(self.board.root / "old-proof")
+            directory.mkdir()
+            for path in (self.board.root / "old-proof").iterdir():
+                (directory / path.name).write_bytes(path.read_bytes())
+            return result
+        with (mock.patch.object(gate, "review_bundle", side_effect=ancestor),
+              self.assertRaisesRegex(roadmap.BoardError, "source changed")):
+            roadmap.epic_update(self.board.root, args)
+        self.assertEqual(before, self.board.board_snapshot())
+
+    def test_symlink_and_ambiguous_grant_inputs_are_zero_write_refusals(self):
+        self.prepare()
+        path = self.board.root / "grant.json"
+        original = path.read_bytes()
+        path.write_bytes(original[:-1] + b',"decision":"delegate"}')
+        self.refused(self.close)
+        path.write_bytes(original)
+        path.rename(self.board.root / "real-grant.json")
+        path.symlink_to(self.board.root / "real-grant.json")
+        self.refused(self.close)
+
+    def test_derive_preserves_epic_reservation_when_source_omits_it(self):
+        self.board.derive()
+        self.mutate(self.board.epic_file(1).relative_to(self.board.root), lambda r: r.update(hitl=True))
+        self.board.derive()
+        self.assertIs(True, self.board.epic_record(1)["hitl"])
+
+
+    def test_independent_review_must_cover_actual_consequence_assertions(self):
+        self.prepare()
+        self.mutate("assessment.json", lambda r: r.update(method="Different actual operation"))
+        self.refused(self.close, "current consequence assessment")
+
+    def test_new_child_during_review_is_detected_before_acceptance_publication(self):
+        self.prepare()
+        gate = roadmap.gate_module()
+        real_review = gate.review_bundle
+        args = types.SimpleNamespace(command="epic", epic="1", actor="orchestrator", status="done",
+                                     owner="acceptance-owner", decision=None, delegation="grant.json",
+                                     assessment="assessment.json", evidence="epic-1-review.json")
+        stable = {p: p.read_bytes() for p in (self.board.epic_file(1), self.board.roadmap_file(), self.board.dashboard_file())}
+        def add_child(*a, **kw):
+            result = real_review(*a, **kw)
+            child = roadmap.new_story(99, 1, "kernel", {"key": "extra", "title": "Unreviewed descendant"})
+            self.write(self.board.story_file(99), child)
+            return result
+        with (mock.patch.object(gate, "review_bundle", side_effect=add_child),
+              self.assertRaisesRegex(roadmap.BoardError, "source changed")):
+            roadmap.epic_update(self.board.root, args)
+        for path, original in stable.items():
+            self.assertEqual(original, path.read_bytes())
+
+    def test_post_review_config_grant_risk_and_assessment_changes_refuse(self):
+        self.prepare()
+        gate = roadmap.gate_module()
+        real_review = gate.review_bundle
+        args = types.SimpleNamespace(command="epic", epic="1", actor="orchestrator", status="done",
+                                     owner="acceptance-owner", decision=None, delegation="grant.json",
+                                     assessment="assessment.json", evidence="epic-1-review.json")
+        for name in (".software-factory/config.yaml", "grant.json", "risk.md", "assessment.json"):
+            path = self.board.root / name
+            original = path.read_bytes()
+            before = self.board.board_snapshot()
+            def mutate(*a, path=path, original=original, **kw):
+                result = real_review(*a, **kw)
+                path.write_bytes(original + b" ")
+                return result
+            with (mock.patch.object(gate, "review_bundle", side_effect=mutate),
+                  self.assertRaisesRegex(roadmap.BoardError, "source changed")):
+                roadmap.epic_update(self.board.root, args)
+            self.assertEqual(before, self.board.board_snapshot())
+            path.write_bytes(original)
+
+    def test_child_effect_and_required_human_checkpoint_are_not_waived(self):
+        self.prepare()
+        child = self.board.story(1)
+        manifest = child['accepted_gates']['complete']['path']
+        path = self.board.root / manifest
+        original = path.read_bytes()
+        self.mutate(manifest, lambda r: r['checks']['deploy'].update(status='unknown'))
+        self.refused(self.close)
+        path.write_bytes(original)
+        self.board.write_story(1, done_checkpoint=True)
+        self.refresh()
+        self.refused(self.close)
+
+    def test_delegation_expiring_during_review_refuses_before_publication(self):
+        self.prepare()
+        self.mutate("grant.json", lambda r: r.update(until="2026-01-01T00:00:00Z"))
+        self.refresh()
+        gate = roadmap.gate_module()
+        real_datetime = gate.datetime
+        class Clock(real_datetime):
+            calls = 0
+
+            @classmethod
+            def now(cls, tz=None):
+                cls.calls += 1
+                return real_datetime.fromisoformat("2025-01-01T00:00:00Z" if cls.calls == 1 else "2027-01-01T00:00:00Z")
+        args = types.SimpleNamespace(command="epic", epic="1", actor="orchestrator", status="done",
+                                     owner="acceptance-owner", decision=None, delegation="grant.json",
+                                     assessment="assessment.json", evidence="epic-1-review.json")
+        before = self.board.board_snapshot()
+        with mock.patch.object(gate, "datetime", Clock), self.assertRaisesRegex(roadmap.BoardError, "expired"):
+            roadmap.epic_update(self.board.root, args)
+        self.assertEqual(before, self.board.board_snapshot())
+
+    def test_human_route_also_rejects_configuration_appearing_during_review(self):
+        approval = self.prepare_epic()
+        configuration = self.board.root / ".software-factory/config.yaml"
+        configuration.unlink(missing_ok=True)
+        gate = roadmap.gate_module()
+        real_review = gate.review_bundle
+        args = types.SimpleNamespace(command="epic", epic="1", actor="human", status="done",
+                                     decision=approval.name, evidence=None)
+        before = self.board.board_snapshot()
+        def add_config(*a, **kw):
+            result = real_review(*a, **kw)
+            self.write(configuration, {"verification": {"required_checks": ["new-check"]}})
+            return result
+        with (mock.patch.object(gate, "review_bundle", side_effect=add_config),
+              self.assertRaisesRegex(roadmap.BoardError, "source changed")):
+            roadmap.epic_update(self.board.root, args)
+        self.assertEqual(before, self.board.board_snapshot())
+
+    def test_ordinary_derive_cannot_remove_existing_epic_or_story_reservations(self):
+        for kind, flag in (("epic", "hitl"), ("story", "hitl"),
+                           ("story", "plan_checkpoint"), ("story", "done_checkpoint")):
+            with self.subTest(kind=kind, flag=flag):
+                self.board = Board(self)
+                self.board.derive()
+                target = self.board.epic_file(1) if kind == "epic" else self.board.story_file(1)
+                self.mutate(target.relative_to(self.board.root), lambda r, flag=flag: r.update({flag: True}))
+                source = planning_source()
+                planned = source["epics"][0] if kind == "epic" else source["epics"][0]["stories"][0]
+                planned[flag] = False
+                source["epics"][0]["stories"].append({"key": "new", "title": "New planned child"})
+                before = self.board.board_snapshot()
+                result = self.board.derive_raw(source)
+                self.assertEqual(2, result.returncode, result.stderr)
+                self.assertIn("reservation", result.stderr)
+                self.assertEqual(before, self.board.board_snapshot(), "refusal changed board, IDs or projections")
+
+    def test_derive_can_add_reservations_and_preserves_them_when_omitted(self):
+        source = planning_source()
+        source["epics"][0]["hitl"] = True
+        source["epics"][0]["stories"][0].update(hitl=True, plan_checkpoint=True, done_checkpoint=True)
+        self.board.derive(source)
+        self.board.derive()
+        self.assertIs(True, self.board.epic_record(1)["hitl"])
+        for flag in ("hitl", "plan_checkpoint", "done_checkpoint"):
+            self.assertIs(True, self.board.story(1)[flag])
+
+    def test_derive_refuses_nonboolean_reservation_values_without_writes(self):
+        for kind in ("epic", "story"):
+            for value in (None, 0, "false"):
+                with self.subTest(kind=kind, value=value):
+                    source = planning_source()
+                    planned = source["epics"][0] if kind == "epic" else source["epics"][0]["stories"][0]
+                    planned["hitl"] = value
+                    self.refused(lambda source=source: self.board.derive_raw(source), "must be a boolean")

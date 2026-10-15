@@ -21,7 +21,7 @@ changes. The normative record contract is the shipped
 Ownership is enforced in code: workers self-serve `in-progress` / `in-review`
 / `blocked` and receipts on the story they hold a live claim for; the
 orchestrator owns `ready-for-dev`, `built`, `done` and structural edits;
-humans confirm cancellations and accept epics; `done` and `cancelled`
+humans confirm cancellations; epic acceptance follows current scoped authority; `done` and `cancelled`
 records are frozen history. Standard library only; never calls a model, an
 agent CLI, Git or the network.
 """
@@ -126,7 +126,7 @@ def protected_configuration(workspace):
 def transition_config(workspace, args):
     protected = (args.command == "update" and args.actor == "orchestrator"
                  and args.status in ("ready-for-dev", "built", "done")) or (
-                     args.command == "epic" and args.actor == "human" and args.status == "done")
+                     args.command == "epic" and args.actor in ("human", "orchestrator") and args.status == "done")
     if not protected:
         return board_config(workspace)
     data = protected_configuration(workspace)
@@ -310,7 +310,7 @@ def epic_review_scope(workspace, config, record):
     if len(record["order"]) != len(children) or set(record["order"]) != {story["id"] for story in children}:
         raise BoardError("epic child membership changed; reconcile the explicit order before acceptance")
     scope = {"epic": {key: record.get(key) for key in (
-        "id", "title", "outcome", "done_when", "covers", "order", "needs", "source_key",
+        "id", "title", "outcome", "done_when", "covers", "order", "needs", "source_key", "hitl",
     )}, "children": [], "providers": []}
     measured = 0
     for kind, records in (("children", children), ("providers", [epics.get(i) for i in record["needs"]])):
@@ -392,26 +392,53 @@ def accept_epic(workspace, config, record, args):
                 if child.get("evidence_contract") == 1:
                     raise ValueError("new protected child cannot be accepted as legacy evidence")
                 legacy.append(child["id"])
-        content = gate.bound_read(workspace, args.decision)
-        decision_digest = gate.digest(content)
-        approval = gate.decision(workspace, args.decision, decision_digest,
-                                 scope={"epic": record["id"]}, phase="epic", scope_digest=scoped)
-        if (approval.get("legacy_children", []) != legacy
-                or any(type(value) is not int for value in approval.get("legacy_children", []))):
-            raise ValueError("legacy descendants need explicit independent reconciliation")
-        evidence = approval.get("evidence")
-        if args.evidence and (not isinstance(evidence, dict) or evidence.get("artifact") != args.evidence):
-            raise ValueError("supplied epic evidence differs from the owner's reviewed bundle")
+        delegated = args.actor == "orchestrator"
+        authority = {}
+        if delegated:
+            data = args._strict_config_data or {}
+            checkpoints = data.get("checkpoints", {})
+            if (data.get("autonomy", {}).get("mode") != "risk-adaptive"
+                    or record.get("hitl", False) or checkpoints.get("manual") is not False):
+                raise ValueError("epic acceptance is reserved for the human by the current profile")
+            if not isinstance(args.owner, str) or not args.owner.strip():
+                raise ValueError("delegated acceptance needs an accountable --owner")
+            if args.owner in {child.get("owner") for child in children}:
+                raise ValueError("acceptance owner also owns child implementation")
+            if args.decision:
+                raise ValueError("delegated acceptance uses --delegation and --assessment, not a human decision")
+            grant, delegation = gate.epic_delegation(workspace, args.delegation, data, record["id"], legacy)
+            evidence_bytes = gate.bound_read(workspace, args.evidence)
+            evidence = {"artifact": args.evidence, "sha256": gate.digest(evidence_bytes)}
+            config_bytes = gate.bound_read(workspace, CONFIG_FILE)
+            if gate.strict_json(config_bytes) != data:
+                raise ValueError("configuration changed during acceptance")
+            assessment, risk, assessment_subject = gate.consequence_assessment(workspace, args.assessment, data, config_bytes,
+                                                           record["id"], scoped, delegation, evidence)
+            authority = {"mode": "delegated", "actor": args.owner, "approved_by": grant["approved_by"],
+                         "delegation": delegation, "assessment": assessment,
+                         "config_sha256": gate.digest(config_bytes), "risk": risk}
+        else:
+            content = gate.bound_read(workspace, args.decision)
+            decision_digest = gate.digest(content)
+            approval = gate.decision(workspace, args.decision, decision_digest,
+                                     scope={"epic": record["id"]}, phase="epic", scope_digest=scoped)
+            if (approval.get("legacy_children", []) != legacy
+                    or any(type(value) is not int for value in approval.get("legacy_children", []))):
+                raise ValueError("legacy descendants need explicit independent reconciliation")
+            evidence = approval.get("evidence")
+            if args.evidence and (not isinstance(evidence, dict) or evidence.get("artifact") != args.evidence):
+                raise ValueError("supplied epic evidence differs from the owner's reviewed bundle")
+            authority = {"approved_by": approval["approved_by"], "decision": args.decision,
+                         "decision_sha256": decision_digest}
         reconciliation = gate.review_bundle(workspace, evidence, scoped, legacy)
+        if delegated and reconciliation.get("assessment_sha256") != assessment_subject:
+            raise ValueError("independent reconciliation does not bind the current consequence assessment")
         if reconciliation["reviewer"] in {child.get("owner") for child in children}:
             raise ValueError("epic reconciliation reviewer also owns child implementation")
         if record.get("acceptance"):
             record.setdefault("acceptance_history", []).append(record["acceptance"])
-        record["acceptance"] = {"by": "human", "approved_by": approval["approved_by"],
-                                "at": now(), "decision": args.decision,
-                                "decision_sha256": decision_digest, "scope_sha256": scoped,
-                                "evidence": evidence, "legacy_children": legacy,
-                                "provenance_only": True}
+        record["acceptance"] = {"by": args.actor, **authority, "at": now(), "scope_sha256": scoped,
+                                "evidence": evidence, "legacy_children": legacy, "provenance_only": True}
     except (OSError, ValueError, TypeError, AttributeError, KeyError, RecursionError) as exc:
         raise BoardError(f"epic acceptance refused: {exc}") from exc
 
@@ -616,6 +643,8 @@ def validate_epic(record):
     status = record.get("status")
     if status not in EPIC_STATUSES:
         return f"unknown epic status {status!r}"
+    if "hitl" in record and type(record["hitl"]) is not bool:
+        return "epic hitl must be a boolean"
     if not isinstance(record.get("history", []), list):
         return "history must be an array"
     return None
@@ -782,6 +811,19 @@ def new_epic(epic_id, source):
     }
 
 
+def refresh_reservations(record, source, keys):
+    """Planning updates cannot revoke a recorded human decision boundary."""
+    for key in keys:
+        if key not in source:
+            continue
+        if type(source[key]) is not bool:
+            raise BoardError(f"{key} reservation must be a boolean")
+        if record.get(key) is True and source[key] is False:
+            raise BoardError(f"{key} human reservation cannot be removed by ordinary derive; "
+                             "an explicit owner amendment is required")
+        record[key] = source[key]
+
+
 def refresh_story(record, source, epic_id, after):
     """Update structure fields only; status, receipts and history are live data."""
     record["epic"] = epic_id
@@ -790,9 +832,7 @@ def refresh_story(record, source, epic_id, after):
     record["after"] = after
     record["covers"] = list(source.get("covers", []))
     record["risk"] = source.get("risk", record.get("risk", ""))
-    for key in ("hitl", "plan_checkpoint", "done_checkpoint"):
-        if key in source:
-            record[key] = bool(source[key])
+    refresh_reservations(record, source, ("hitl", "plan_checkpoint", "done_checkpoint"))
     for key in ("sprint", "scope"):
         if key in source:
             record[key] = source[key]
@@ -912,6 +952,7 @@ def derive(workspace: Path, source_path: Path):
             epic["title"] = epic_source.get("title", epic["title"])
             if "outcome" in epic_source:
                 epic["outcome"] = epic_source["outcome"]
+            refresh_reservations(epic, epic_source, ("hitl",))
             for key in ("done_when", "covers"):
                 if key in epic_source:
                     epic[key] = list(epic_source[key])
@@ -1278,6 +1319,14 @@ def update_story(workspace: Path, args):
 
 
 def epic_update(workspace: Path, args):
+    try:
+        with gate_module().read_snapshot(workspace) as revalidate:
+            return _epic_update(workspace, args, revalidate)
+    except (OSError, ValueError, TypeError) as exc:
+        raise BoardError(f"epic transition sources changed or are unsafe: {exc}") from exc
+
+
+def _epic_update(workspace: Path, args, revalidate):
     config = transition_config(workspace, args)
     protected = hasattr(args, "_validated_config")
     directory = workspace / config["dir"] if protected else board_dir(workspace, config)
@@ -1299,7 +1348,13 @@ def epic_update(workspace: Path, args):
                 f"epic {epic_id} is {current}; terminal epic records are frozen history"
             )
         if args.actor == "orchestrator":
-            if args.status == "in-progress":
+            if args.status == "done":
+                if current != "awaiting-acceptance":
+                    raise BoardError("epic needs awaiting-acceptance after the closure check")
+                accept_epic(workspace, config, record, args)
+                history_row(record, "orchestrator", "done")
+                record["status"] = "done"
+            elif args.status == "in-progress":
                 if current not in ("planned", "parked"):
                     raise BoardError(f"epic {epic_id} is {current}")
                 history_row(record, "orchestrator", "in-progress")
@@ -1328,7 +1383,7 @@ def epic_update(workspace: Path, args):
             else:
                 raise BoardError(
                     "the orchestrator moves epics to in-progress or awaiting-acceptance "
-                    "and proposes parks; humans accept, park and cancel"
+                    "and proposes parks, or accepts under current delegated authority; humans park and cancel"
                 )
         elif args.actor == "human":
             if args.status == "done":
@@ -1372,6 +1427,11 @@ def epic_update(workspace: Path, args):
                 raise BoardError("humans accept (done), confirm parked, or cancel epics")
         else:
             raise BoardError("epic transitions are written by the orchestrator or a human")
+        if protected:
+            revalidate()
+            if args.actor == "orchestrator":
+                gate_module().epic_delegation(workspace, args.delegation, args._strict_config_data,
+                                              record["id"], record["acceptance"]["legacy_children"])
         write_record(path, record)
     return record
 
@@ -1697,7 +1757,9 @@ def compute_roadmap(workspace: Path, config, directory: Path, *, loaded_board=No
             decision_queue.append({
                 "kind": "epic-acceptance", "epic": epic_id,
                 "question": f"accept epic {epic_id} ({epic['title']}) against its done-when?",
-                "next_action": "run the epic checkpoint and confirm",
+                "next_action": "reconcile current evidence and authority; use delegated acceptance only when eligible",
+                "epic_hitl": epic.get("hitl", False),
+                "reason": "human-reservation" if epic.get("hitl", False) else "acceptance-evidence-and-authority",
             })
         proposal = epic.get("park_proposal")
         if isinstance(proposal, dict):
@@ -1885,6 +1947,8 @@ def main():
     parser.add_argument("--next-action")
     parser.add_argument("--finding")
     parser.add_argument("--decision")
+    parser.add_argument("--delegation")
+    parser.add_argument("--assessment")
     parser.add_argument("--resume")
     args = parser.parse_args()
     root = args.workspace.resolve()

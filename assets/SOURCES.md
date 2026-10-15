@@ -38,3 +38,9 @@ The official package resolves Chromium headless shell revision 1248, version
 these templates use no WebGL. Actual launch arguments are inspected for sandbox
 bypasses. The helper and its dependency are excluded from consumer release
 payloads; `scripts/render_assets.py` itself imports only the standard library.
+
+The cycle illustration has one canonical editable source at
+`site/img/delivery-graph.svg`. Local SVG `use` references share it between the
+showcase and marketing compositions. Its cycle covers BMad planning, development,
+review, verified delivery and feedback, with conditional human decisions outside
+the primary ring. All wording and geometry are original to this pack.

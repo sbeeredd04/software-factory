@@ -101,3 +101,50 @@ em { font-style: normal; color: var(--rust); }
 .loop .step { padding: 14px; }
 .loop .step .label { margin-bottom: 8px; }
 .loop .return { padding-block: 12px; }
+
+/* Continuous factory cycle: one shared SVG, with generous label space. */
+.pitch-label { margin-bottom: 22px; color: var(--green); }
+.authority-note { margin-top: 22px; color: var(--green); font: 400 16px/1.5 var(--body); }
+.hero .canvas { padding: 52px 66px; }
+.hero .masthead { margin-bottom: 20px; }
+.hero .split { grid-template-columns: 1fr 1fr; gap: 60px; padding-bottom: 20px; }
+.hero .split h1 { font-size: 88px; }
+.hero .diagram { padding: 12px 24px; box-shadow: none; border: 0; background: transparent; }
+.hero .diagram svg { height: 595px; }
+.hero .diagram .caption { text-align: center; font-size: 13px; margin-top: 4px; }
+.hero .stats { margin-top: 25px; }
+.hero .stats strong { font-size: 36px; }
+.hero .stats div { font-size: 15px; }
+.hero .authority-note { font-size: 19px; }
+.diagram .factory-cycle { width: 100%; }
+.social-preview .diagram, .launch-landscape .diagram, .launch-portrait .diagram, .loop .diagram { padding: 0; border: 0; box-shadow: none; background: transparent; }
+.social-preview .diagram svg { height: 370px; }
+.social-preview .split { grid-template-columns: 1.1fr 1fr; gap: 30px; padding-bottom: 12px; }
+.social-preview .split h1 { font-size: 60px; }
+.social-preview .pitch-label { font-size: 10px; }
+.social-preview .lede { font-size: 19px; }
+.launch-landscape .diagram svg { height: 425px; }
+.launch-landscape .diagram .caption { font-size: 10px; text-align: center; margin-top: 5px; }
+.launch-landscape .split { padding-bottom: 16px; gap: 28px; }
+.launch-landscape .pitch-label { font-size: 10px; margin-bottom: 15px; }
+.launch-landscape .stats { margin-top: 22px; }
+.launch-landscape .split h1 { font-size: 64px; }
+.launch-portrait .canvas { padding: 55px 65px; }
+.launch-portrait .masthead { margin-bottom: 30px; }
+.launch-portrait h1 { font-size: 80px; max-width: none; }
+.launch-portrait .lede { font-size: 24px; margin-top: 20px; }
+.launch-portrait .diagram { margin-top: 24px; }
+.launch-portrait .diagram svg { height: 610px; }
+.launch-portrait .diagram .caption { text-align: center; font-size: 13px; }
+.portrait-summary { font: 400 19px/1.5 var(--body); color: var(--muted); margin-top: 20px; }
+.loop .section-head h1 { font-size: 44px; line-height: 1.12; }
+.loop .section-head { margin-bottom: 12px; }
+.cycle-detail { display: grid; grid-template-columns: 1fr 1fr; gap: 42px; padding-bottom: 18px; }
+.loop .diagram svg { height: 450px; }
+.cycle-notes h2 { font-size: 25px; line-height: 1.12; margin-top: 18px; }
+.cycle-notes h2:first-child { margin-top: 10px; }
+.cycle-notes p { font: 400 16px/1.5 var(--body); color: var(--muted); margin-top: 8px; }
+.cycle-notes .cycle-boundary { border-top: 1px solid var(--line); padding-top: 16px; margin-top: 18px; color: var(--rust); font-size: 14px; }
+.launch-landscape .masthead { margin-bottom: 12px; }
+.launch-landscape .footer { padding-top: 12px; }
+.launch-landscape .split { padding-bottom: 10px; }

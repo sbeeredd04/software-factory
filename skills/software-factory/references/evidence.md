@@ -156,7 +156,7 @@ inspectable. Failed gates leave the story and generated projections unchanged.
 
 ## Epic acceptance and preserved history
 
-New human epic acceptance rechecks current child closure, exact explicit
+Both human and delegated orchestrator epic acceptance recheck current child closure, exact explicit
 child membership/order, accepted providers, protected child gates and required
 checkpoint references. It binds the declared epic outcome and exact current
 child/provider record bytes with `roadmap.epic_review_scope(...)`. Scope reads
@@ -191,3 +191,46 @@ preserves terminal source bytes, but changed terminal fields, child additions,
 order or stream membership are refused before publishing any records or projections. Route
 changed accepted scope to new work and an explicit decision. Historical
 terminal records remain readable without a schema/version migration.
+
+
+## Delegated epic evidence
+
+Use `roadmap.py epic --epic ID --actor orchestrator --status done --owner IDENTITY
+--delegation GRANT --assessment ASSESSMENT --evidence REVIEW` with workspace-relative
+paths. `--decision` stays exclusively the source-bound human route. Adaptive mode,
+manual false and no epic HITL reservation are prerequisites, never sufficient proof.
+
+The current `autonomy.standing_delegations` must cite the grant's exact `source`
+and `sha256` once, with a human-readable scope. The JSON grant has:
+`schema: sf-epic-delegation/1`, `decision: delegate`, `actions: [accept-epic]`,
+`scope: {epics: [IDs]}`, actual `approved_by`, aware `approved_at`, optional aware
+`until`, and `source: {kind, ref, artifact, sha256}`. Source kinds remain
+`user-conversation` or `approval-surface`, pointing to nonempty current bytes.
+Epic IDs are 1–256 unique positive integers, no wildcard; optional `legacy_children`
+explicitly enumerates any authorized historical reconciliation. Removed, changed,
+expired or out-of-scope grants refuse. Registry prose cannot widen typed scope.
+
+The JSON assessment has `schema: sf-consequence-assessment/1`, `scope: {epic: ID}`,
+exact `scope_sha256`, `config_sha256`, and `risk`, `delegation`, `evidence` bindings
+(each `{artifact, sha256}`). Risk points to the configured risk-principles document.
+Required bounded text fields (1–4096 characters each): `cause`, `outcome`, `affected`,
+`method`, `permissions`, `effect`, `recovery`, `blast_radius`, `authority`, `rationale`.
+For delegated acceptance, `decision` is `proceed`; `reservations`, `unknowns` and
+`blocked_dependents` are empty arrays; `permission_status: authorized`,
+`effect_status: pass`, `recovery_status: bounded`, `risk_status: resolved` are explicit.
+Other phase assessments can record review/escalate and blockers; those do not
+permit delegated acceptance. Independent review must inspect these assertions.
+The bundle's `assessment_sha256` binds SHA256 of UTF-8 `json.dumps` on the assessment
+with only `evidence` omitted, `sort_keys=True`, `separators=(",", ":")` (default
+ASCII escaping). Draft the assessment, review that subject, then bind the final
+bundle in `assessment.evidence`. This reciprocal binding avoids a digest cycle
+and prevents reusing a scope-only review for different consequence assertions.
+
+The helper records `by: orchestrator`, `mode: delegated`, actual `actor`, owner
+`approved_by`, current grant/assessment/config/risk/evidence bindings and scope.
+It checks assertions and provenance, not real identity, authority or reasoning.
+Both actors capture and recheck protected source bytes, file/directory identities
+and board membership under the board lock before publication. Writers ignoring
+that lock after the final check are outside the helper's coordination guarantee.
+Failure publishes no acceptance or regenerated projections. Frozen history stays
+readable and unchanged; no profile grants an evidence waiver.

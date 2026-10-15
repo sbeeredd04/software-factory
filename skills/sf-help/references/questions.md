@@ -14,8 +14,8 @@ key. Qualitative policy lives in referenced documents, not duplicate config fiel
 
 ### Q01 — How should the factory carry approved work forward?
 Why: The continuing loop needs clear scope and material decision boundaries.
-Default: Autonomous local progress within approved intent; dry run the first unfamiliar lap.
-Keys: autonomy.local_edits, autonomy.commits, autonomy.standing_delegations
+Default: Risk-adaptive continuous delivery; local edits and commits within approved intent, with source-linked scoped acceptance authority.
+Keys: autonomy.mode, autonomy.local_edits, autonomy.commits, autonomy.standing_delegations
 
 ### Q02 — Where may proven changes integrate?
 Why: Branch selection is an authority boundary.
@@ -107,15 +107,15 @@ Keys: reporting.style, checkpoints.transitions, operations.notifications, operat
 
 ### Q18 — How much planning does this outcome need?
 Why: Small work can stay small while preserving risk and proof floors.
-Default: Adaptive planning and a concrete minimal spec; use the selected tracker owner, not tracker.options.
-Keys: planning.depth, tracker.adapter, tracker.path
+Default: BMad planning with structured epics/stories and adaptive depth; native requires an explicit choice or preserved approved legacy route.
+Keys: planning.method, planning.depth, tracker.adapter, tracker.path
 
 ### Q19 — Reuse BMad or request the pinned optional provisioning?
 Why: Existing planning must survive setup and network installers need separate consent.
-Default: Preserve any detected artifacts; absent BMad, native planning works with equivalent proof or offer pinned provisioning.
+Default: Preserve detected artifacts; report missing BMad and offer separately authorized pinned provisioning. No silent native fallback.
 Keys: bmad.install_version, bmad.modules, bmad.custom_root, bmad.automatic_updates, tracker.adapter, tracker.path
 
 ### Q20 — Where should context, retros and redaction policy live?
 Why: Recovery needs durable facts without retaining credentials or raw source payloads.
-Default: Committed context and decisions, bounded ignored run evidence, a short epic retro; source-linked retention policy.
+Default: Durable transition checkpoints with manual false; honor explicit human reservations and consequence-driven escalation. Bounded evidence, epic retros and source-linked retention.
 Keys: checkpoints.transitions, checkpoints.manual, checkpoints.before_reset, checkpoints.before_external_write, checkpoints.retro_cadence, context.retention, context.redaction, extensions, operations.sources

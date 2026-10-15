@@ -12,10 +12,10 @@
 .hero-intro { font-size: 17px; line-height: 1.65; max-width: 44ch; margin-top: 25px; color: var(--muted); }
 .actions { display: flex; flex-wrap: wrap; gap: 13px; margin-top: 29px; align-items: center; }
 .hero-note { font-size: 11px; margin-top: 23px; color: var(--muted); }
-.graph-sheet { background: var(--surface); border: 1px solid var(--line); padding: 20px 20px 18px; position: relative; transform: rotate(.5deg); }
+.graph-sheet { background: var(--surface); border: 1px solid var(--line); padding: 20px 20px 18px; position: relative; }
 .graph-sheet::after { content: ''; position: absolute; inset: 8px -8px -8px 8px; border: 1px solid var(--line); z-index: -1; }
 .graph-label { display: flex; align-items: center; justify-content: space-between; font: 10px var(--mono); color: var(--muted); border-bottom: 1px solid var(--line); padding-bottom: 14px; }
-.graph-sheet img { width: 100%; margin-block: 17px 13px; animation: graph-intro .75s ease-out both; }
+.graph-sheet .factory-cycle { width: 100%; margin-block: 17px 13px; animation: graph-intro .75s ease-out both; }
 .graph-sheet figcaption { font-size: 11px; color: var(--muted); padding-top: 13px; border-top: 1px solid var(--line); }
 .motion-control { padding: 8px 0; min-height: 36px; border: 0; background: transparent; color: var(--muted); font: 10px var(--mono); text-decoration: underline; text-underline-offset: 3px; }
 html[data-motion='off'], html[data-motion='off'] *,

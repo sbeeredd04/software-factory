@@ -9,7 +9,7 @@ itself). To *use* the factory in your own project, install the pack and talk to 
 Software Factory is an MIT-licensed skill pack - Markdown plus standard-library Python - that
 turns a coding agent (Claude Code, Cursor, or Codex) into an autonomous software factory: one
 orchestrator owns the loop from grounded intent to planned work, evidence-gated merge, deploy
-proof, and a human checkpoint per epic. "BMad plans, the factory ships." BMad Method v6 is
+proof, and risk-adaptive human escalation guided by the owner's requested autonomy. "BMad plans, the factory ships." BMad Method v6 is
 installed separately through its own pinned installer; this repository never vendors it.
 
 ## Repository map

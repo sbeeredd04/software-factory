@@ -5,8 +5,8 @@
 > (`<skill-dir>` is the installed skill directory, e.g. `.claude/skills/sf-crawl`
 > or `.agents/skills/sf-crawl`).
 
-- Source revision: 026deb9860a81a6413f1037a76f7876526896b65
-- Generated: 2026-10-15T14:54:24Z
+- Source revision: ae143e2c0eae81b4574b2384d5d232fcdb182e6a
+- Generated: 2026-10-15T18:38:26Z
 
 ## Limits
 
@@ -36,6 +36,7 @@
 | Module | File | Definitions | Internal imports | Import fan-out |
 | --- | --- | --- | --- | --- |
 | `adapters.trackers` | `adapters/trackers.py` | 10 | 0 | 8 |
+| `assets.tools.capture` | `assets/tools/capture.py` | 6 | 0 | 11 |
 | `hosts.plugins.dispatch` | `hosts/plugins/dispatch.py` | 1 | 0 | 5 |
 | `install` | `install.py` | 54 | 0 | 19 |
 | `scripts.bmad_install` | `scripts/bmad_install.py` | 17 | 0 | 14 |
@@ -45,6 +46,7 @@
 | `scripts.check_mermaid` | `scripts/check_mermaid.py` | 6 | 0 | 8 |
 | `scripts.distribution` | `scripts/distribution.py` | 9 | 0 | 7 |
 | `scripts.install_lifecycle` | `scripts/install_lifecycle.py` | 23 | 0 | 17 |
+| `scripts.render_assets` | `scripts/render_assets.py` | 22 | 0 | 20 |
 | `scripts.scan_public` | `scripts/scan_public.py` | 10 | 0 | 7 |
 | `scripts.validate` | `scripts/validate.py` | 9 | 0 | 6 |
 | `site.scripts.sync_prompt` | `site/scripts/sync_prompt.py` | 2 | 0 | 4 |
@@ -63,12 +65,14 @@
 | `skills.software-factory.scripts.roadmap` | `skills/software-factory/scripts/roadmap.py` | 54 | 0 | 9 |
 | `skills.software-factory.scripts.state` | `skills/software-factory/scripts/state.py` | 33 | 0 | 16 |
 | `skills.software-factory.scripts.trace` | `skills/software-factory/scripts/trace.py` | 21 | 0 | 15 |
+| `tests.fixtures.assets.sigterm_controller` | `tests/fixtures/assets/sigterm_controller.py` | 0 | 0 | 4 |
 | `tests.fixtures.repos.python-cli.fixture_cli` | `tests/fixtures/repos/python-cli/fixture_cli/__init__.py` | 0 | 0 | 0 |
 | `tests.fixtures.repos.python-cli.fixture_cli.__main__` | `tests/fixtures/repos/python-cli/fixture_cli/__main__.py` | 0 | 0 | 1 |
 | `tests.fixtures.repos.python-cli.fixture_cli.cli` | `tests/fixtures/repos/python-cli/fixture_cli/cli.py` | 1 | 0 | 1 |
 | `tests.fixtures.repos.python-cli.fixture_cli.core` | `tests/fixtures/repos/python-cli/fixture_cli/core.py` | 2 | 0 | 1 |
 | `tests.support` | `tests/support.py` | 13 | 0 | 10 |
 | `tests.test_agents` | `tests/test_agents.py` | 5 | 0 | 10 |
+| `tests.test_assets` | `tests/test_assets.py` | 4 | 0 | 18 |
 | `tests.test_bmad_install` | `tests/test_bmad_install.py` | 2 | 0 | 14 |
 | `tests.test_board` | `tests/test_board.py` | 10 | 0 | 8 |
 | `tests.test_board_consistency` | `tests/test_board_consistency.py` | 1 | 0 | 9 |
@@ -98,7 +102,7 @@
 | `tests.test_review_triage` | `tests/test_review_triage.py` | 6 | 0 | 5 |
 | `tests.test_run_audit` | `tests/test_run_audit.py` | 1 | 0 | 11 |
 | `tests.test_sf_eval` | `tests/test_sf_eval.py` | 22 | 0 | 13 |
-| `tests.test_showcase` | `tests/test_showcase.py` | 4 | 0 | 12 |
+| `tests.test_showcase` | `tests/test_showcase.py` | 4 | 0 | 13 |
 | `tests.test_skills_distribution` | `tests/test_skills_distribution.py` | 1 | 0 | 7 |
 | `tests.test_state` | `tests/test_state.py` | 17 | 0 | 16 |
 | `tests.test_tools` | `tests/test_tools.py` | 18 | 0 | 8 |
@@ -121,6 +125,12 @@ No internal import edges.
 - `adapters.trackers.read` (line 168) calls `Path` (unconfirmed), `TrackerError` (confirmed: adapters.trackers.TrackerError), `absolute` (unconfirmed), `content.decode` (unconfirmed), `enumerate` (unconfirmed), `fds.append` (unconfirmed), `identity` (unconfirmed), `len` (unconfirmed), `min` (unconfirmed), `os.close` (unconfirmed), `os.fstat` (unconfirmed), `os.open` (unconfirmed), `os.read` (unconfirmed), `os.stat` (unconfirmed), `reversed` (unconfirmed), `stat.S_ISREG` (unconfirmed)
 - `adapters.trackers.detect` (line 209) calls `Path` (unconfirmed), `TrackerError` (confirmed: adapters.trackers.TrackerError), `is_file` (unconfirmed), `len` (unconfirmed)
 - `adapters.trackers.main` (line 222) calls `argparse.ArgumentParser` (unconfirmed), `json.dumps` (unconfirmed), `observe` (confirmed: adapters.trackers.observe), `parser.add_argument` (unconfirmed), `parser.exit` (unconfirmed), `parser.parse_args` (unconfirmed), `print` (unconfirmed), `read` (confirmed: adapters.trackers.read)
+- `assets.tools.capture.walk_nodes` (line 24) calls `node.get` (unconfirmed), `walk_nodes` (confirmed: assets.tools.capture.walk_nodes)
+- `assets.tools.capture.cycle_evidence` (line 31) calls `ValueError` (unconfirmed), `any` (unconfirmed), `child.get` (unconfirmed), `client.detach` (unconfirmed), `client.send` (unconfirmed), `evaluate` (unconfirmed), `get` (unconfirmed), `join` (unconfirmed), `len` (unconfirmed), `node.get` (unconfirmed), `observations.append` (unconfirmed), `page.context.new_cdp_session` (unconfirmed), `page.locator` (unconfirmed), `walk_nodes` (confirmed: assets.tools.capture.walk_nodes)
+- `assets.tools.capture.read_job` (line 62) calls `ValueError` (unconfirmed), `json.loads` (unconfirmed), `len` (unconfirmed), `os.getuid` (unconfirmed), `parent.is_symlink` (unconfirmed), `parent.stat` (unconfirmed), `path.is_absolute` (unconfirmed), `path.is_file` (unconfirmed), `path.is_symlink` (unconfirmed), `path.read_text` (unconfirmed), `path.stat` (unconfirmed), `set` (unconfirmed), `urlsplit` (unconfirmed)
+- `assets.tools.capture.capture_page` (line 82) calls `ValueError` (unconfirmed), `browser.new_context` (unconfirmed), `context.close` (unconfirmed), `context.new_page` (unconfirmed), `context.on` (unconfirmed), `context.route` (unconfirmed), `cycle_evidence` (confirmed: assets.tools.capture.cycle_evidence), `errors.append` (unconfirmed), `isinstance` (unconfirmed), `json.dumps` (unconfirmed), `page.evaluate` (unconfirmed), `page.goto` (unconfirmed), `page.on` (unconfirmed), `page.screenshot` (unconfirmed), `page.wait_for_selector` (unconfirmed), `print` (unconfirmed), `ready.get` (unconfirmed), `requests.append` (unconfirmed), `route.abort` (unconfirmed), `route.continue_` (unconfirmed), `str` (unconfirmed), `urlsplit` (unconfirmed)
+- `assets.tools.capture.capture` (line 135) calls `ValueError` (unconfirmed), `append` (unconfirmed), `browser.close` (unconfirmed), `capture_page` (confirmed: assets.tools.capture.capture_page), `importlib.metadata.version` (unconfirmed), `json.dumps` (unconfirmed), `platform.python_version` (unconfirmed), `platform.system` (unconfirmed), `playwright.chromium.launch` (unconfirmed), `read_job` (confirmed: assets.tools.capture.read_job), `str` (unconfirmed), `sync_playwright` (unconfirmed), `write_text` (unconfirmed)
+- `assets.tools.capture.main` (line 162) calls `RuntimeError` (unconfirmed), `argparse.ArgumentParser` (unconfirmed), `capture` (confirmed: assets.tools.capture.capture), `parser.add_argument` (unconfirmed), `parser.parse_args` (unconfirmed), `print` (unconfirmed), `signal.getsignal` (unconfirmed), `signal.signal` (unconfirmed)
 - `hosts.plugins.dispatch.main` (line 9) calls `Path` (unconfirmed), `TypeError` (unconfirmed), `ValueError` (unconfirmed), `hook.main` (unconfirmed), `importlib.util.module_from_spec` (unconfirmed), `importlib.util.spec_from_file_location` (unconfirmed), `io.StringIO` (unconfirmed), `is_absolute` (unconfirmed), `is_dir` (unconfirmed), `isinstance` (unconfirmed), `json.loads` (unconfirmed), `len` (unconfirmed), `payload.get` (unconfirmed), `print` (unconfirmed), `spec.loader.exec_module` (unconfirmed), `sys.argv.extend` (unconfirmed), `sys.argv.index` (unconfirmed), `sys.stdin.read` (unconfirmed), `with_name` (unconfirmed)
 - `install.PlannedFile.before_hash` (line 159) calls `sha256` (confirmed: install.sha256)
 - `install.PlannedFile.after_hash` (line 163) calls `sha256` (confirmed: install.sha256)
@@ -206,18 +216,13 @@ No internal import edges.
 - `scripts.check_links.tracked_files` (line 30) calls `endswith` (unconfirmed), `line.strip` (unconfirmed), `result.stdout.splitlines` (unconfirmed), `str` (unconfirmed), `subprocess.run` (unconfirmed)
 - `scripts.check_links.walk_files` (line 49) calls `found.append` (unconfirmed), `path.is_file` (unconfirmed), `path.name.endswith` (unconfirmed), `path.relative_to` (unconfirmed), `root.rglob` (unconfirmed), `set` (unconfirmed), `sorted` (unconfirmed)
 - `scripts.check_links.scope_files` (line 60) calls `path.is_file` (unconfirmed), `sorted` (unconfirmed), `tracked_files` (confirmed: scripts.check_links.tracked_files), `walk_files` (confirmed: scripts.check_links.walk_files)
-- `scripts.check_links.outside_fences` (line 67) calls `FENCE_RE.match` (unconfirmed), `enumerate` (unconfirmed), `out.append` (unconfirmed)
-- `scripts.check_links.slugify` (line 79) calls `heading.strip` (unconfirmed), `lower` (unconfirmed), `re.sub` (unconfirmed), `text.replace` (unconfirmed)
-- `scripts.check_links.anchors_of` (line 86) calls `HEADING_RE.match` (unconfirmed), `match.group` (unconfirmed), `outside_fences` (confirmed: scripts.check_links.outside_fences), `path.read_text` (unconfirmed), `set` (unconfirmed), `slugify` (confirmed: scripts.check_links.slugify), `slugs.add` (unconfirmed), `splitlines` (unconfirmed)
-- `scripts.check_links.check_markdown` (line 99) calls `INLINE_LINK_RE.finditer` (unconfirmed), `REFERENCE_DEF_RE.match` (unconfirmed), `anchors_of` (confirmed: scripts.check_links.anchors_of), `match.group` (unconfirmed), `md.read_text` (unconfirmed), `md.relative_to` (unconfirmed), `outside_fences` (confirmed: scripts.check_links.outside_fences), `problems.append` (unconfirmed), `ref.group` (unconfirmed), `resolve` (unconfirmed), `resolved.exists` (unconfirmed), `scope_files` (confirmed: scripts.check_links.scope_files), `splitlines` (unconfirmed), `startswith` (unconfirmed), `str` (unconfirmed), `strip` (unconfirmed), `target.partition` (unconfirmed), `target.startswith` (unconfirmed), `target_file.is_file` (unconfirmed), `target_file.relative_to` (unconfirmed), `targets.append` (unconfirmed), `targets.extend` (unconfirmed)
-- `scripts.check_links.check_json` (line 152) calls `base.relative_to` (unconfirmed), `isinstance` (unconfirmed), `js.read_text` (unconfirmed), `json.loads` (unconfirmed), `node.startswith` (unconfirmed), `node.values` (unconfirmed), `problems.append` (unconfirmed), `resolve` (unconfirmed), `resolved.exists` (unconfirmed), `scope_files` (confirmed: scripts.check_links.scope_files), `startswith` (unconfirmed), `str` (unconfirmed), `walk` (unconfirmed)
-- `scripts.check_links.main` (line 181) calls `Path.cwd` (unconfirmed), `_check_single` (confirmed: scripts.check_links._check_single), `argparse.ArgumentParser` (unconfirmed), `args.root.resolve` (unconfirmed), `check_json` (confirmed: scripts.check_links.check_json), `check_markdown` (confirmed: scripts.check_links.check_markdown), `given.append` (unconfirmed), `given.extend` (unconfirmed), `item.is_dir` (unconfirmed), `item.is_file` (unconfirmed), `item.resolve` (unconfirmed), `len` (unconfirmed), `parser.add_argument` (unconfirmed), `parser.parse_args` (unconfirmed), `print` (unconfirmed), `problems.append` (unconfirmed), `root.is_dir` (unconfirmed), `set` (unconfirmed), `sorted` (unconfirmed), `walk_files` (confirmed: scripts.check_links.walk_files)
-- … 1362 more call rows (cap reached)
+- … 1433 more call rows (cap reached)
 
 ## Entry points
 
 - module execution — confirmed: `tests/fixtures/repos/python-cli/fixture_cli/__main__.py`
 - `__main__` guard — confirmed: `adapters/trackers.py`
+- `__main__` guard — confirmed: `assets/tools/capture.py`
 - `__main__` guard — confirmed: `hosts/plugins/dispatch.py`
 - `__main__` guard — confirmed: `install.py`
 - `__main__` guard — confirmed: `scripts/build_release.py`
@@ -225,6 +230,7 @@ No internal import edges.
 - `__main__` guard — confirmed: `scripts/check_links.py`
 - `__main__` guard — confirmed: `scripts/check_mermaid.py`
 - `__main__` guard — confirmed: `scripts/distribution.py`
+- `__main__` guard — confirmed: `scripts/render_assets.py`
 - `__main__` guard — confirmed: `scripts/scan_public.py`
 - `__main__` guard — confirmed: `scripts/validate.py`
 - `__main__` guard — confirmed: `site/scripts/sync_prompt.py`
@@ -244,6 +250,7 @@ No internal import edges.
 - `__main__` guard — confirmed: `skills/software-factory/scripts/state.py`
 - `__main__` guard — confirmed: `skills/software-factory/scripts/trace.py`
 - `__main__` guard — confirmed: `tests/fixtures/repos/python-cli/fixture_cli/cli.py`
+- `__main__` guard — confirmed: `tests/test_assets.py`
 - `__main__` guard — confirmed: `tests/test_board.py`
 - `__main__` guard — confirmed: `tests/test_board_consistency.py`
 - `__main__` guard — confirmed: `tests/test_bootstrap.py`
@@ -280,8 +287,10 @@ resolved to files.
 | `tests/fixtures/repos/typescript-web/src/cli.ts` | `./index` | — |
 | `tests/fixtures/repos/typescript-web/src/greet.ts` | — | `greet` |
 | `tests/fixtures/repos/typescript-web/src/index.ts` | `./greet` | `main` |
+| `assets/templates/ready.js` | — | — |
 | `site/scripts/main.js` | — | — |
 | `site/scripts/setup-data.js` | — | — |
+| `tests/fixtures/assets/readiness.cjs` | — | — |
 | `tests/fixtures/showcase/copy-overlap.cjs` | — | — |
 
 ## Files not parsed
@@ -295,4 +304,4 @@ Everything parsed cleanly.
 
 ## File census
 
-283 file(s) crawled. Counts by extension: `.md` 111, `.py` 70, `.json` 27, `.yaml` 14, `.txt` 9, `.yml` 8, `.html` 7, `.tmpl` 7, `.css` 4, `.toml` 4, `.woff2` 4, `(no extension)` 3, `.mdc` 3, `.sh` 3, `.ts` 3, … 6 more file(s) (cap reached).
+312 file(s) crawled. Counts by extension: `.md` 113, `.py` 74, `.json` 30, `.html` 14, `.yaml` 14, `.png` 10, `.txt` 9, `.yml` 8, `.tmpl` 7, `.css` 5, `.toml` 4, `.woff2` 4, `(no extension)` 3, `.js` 3, `.mdc` 3, … 11 more file(s) (cap reached).

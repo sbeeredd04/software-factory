@@ -8,6 +8,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+import xml.etree.ElementTree as ET
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlsplit
@@ -55,6 +56,13 @@ def audit_html(source, site):
                 path = (site / parsed.path).resolve()
                 if not path.is_relative_to(site.resolve()) or not path.is_file():
                     errors.append("missing or escaping local resource")
+                elif tag == "use":
+                    try:
+                        targets = {node.get("id") for node in ET.fromstring(path.read_text()).iter()}
+                        if not parsed.fragment or parsed.fragment not in targets:
+                            errors.append("missing SVG fragment")
+                    except ET.ParseError:
+                        errors.append("invalid SVG resource")
     return errors
 
 
@@ -81,6 +89,17 @@ class ShowcaseTests(unittest.TestCase):
             self.assertTrue((SITE / name).is_dir(), name)
         self.assertEqual(audit_html(self.source(), SITE), [])
         self.assertFalse((SITE / "package.json").exists())
+
+    def test_shared_cycle_and_risk_adaptive_factory_copy(self):
+        source = self.source()
+        self.assertEqual(source.count('href="img/delivery-graph.svg#factory-cycle"'), 1)
+        for phrase in ("Your whole", "continuously shipped improvements", "BMad epics", "agreed autonomy",
+                       "Reserved", "proof gates", "active coding host", "resume the affected step"):
+            self.assertIn(phrase.lower(), source.lower())
+        for stale in ("Each epic has a real acceptance checkpoint", "Human epic acceptance", "Human epic checkpoint"):
+            self.assertNotIn(stale, source)
+        self.assertIn("missing SVG fragment", audit_html(
+            source.replace('href="img/delivery-graph.svg#factory-cycle"', 'href="img/delivery-graph.svg#absent-cycle"'), SITE))
 
     def test_substantive_sections_and_palette(self):
         page = Page(self.source())

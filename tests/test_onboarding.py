@@ -51,6 +51,26 @@ class OnboardingTests(unittest.TestCase):
     def approve(self,p):
         return setup.apply(self.root,p,p['sha256'],'owner-decision:setup-fixture')
 
+    def test_new_defaults_are_adaptive_bmad_and_existing_profile_is_preserved(self):
+        proposal = self.proposal()
+        self.assertEqual('risk-adaptive', proposal['config']['autonomy']['mode'])
+        self.assertTrue(proposal['config']['autonomy']['commits'])
+        self.assertFalse(proposal['config']['checkpoints']['manual'])
+        self.assertEqual('bmad', proposal['config']['planning']['method'])
+        for action in ('push', 'open_pr', 'merge_integration', 'deploy'):
+            self.assertFalse(proposal['config']['autonomy'][action])
+        self.assertEqual(20, len(proposal['answers']))
+        self.assertEqual('unknown', proposal['answers'][18]['state'])
+        proposal['config']['planning']['method'] = 'native'
+        proposal['config']['autonomy'].pop('mode')
+        proposal['config']['checkpoints']['manual'] = True
+        draft = setup.propose(self.root, draft=proposal['config'])
+        self.approve(draft)
+        original = (self.root / discover.CONFIG).read_bytes()
+        reused = self.proposal()
+        self.assertEqual('sf-setup-reuse/1', reused['schema'])
+        self.assertEqual(original, (self.root / discover.CONFIG).read_bytes())
+
     def test_exact_twenty_catalog_groups_and_all_keys_exist(self):
         rows = setup.catalog()
         self.assertEqual(list(range(1,21)),[q['id'] for q in rows])

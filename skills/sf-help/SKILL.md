@@ -51,7 +51,8 @@ prior answers without overwriting files or silently widening authority.
 
 Review-bot generation routes to `sf-agents` under its own approved write scope.
 Existing BMad is preserved. Provisioning is optional, separately disclosed and
-approved through the project installer; native planning retains equivalent proof.
+approved through the project installer. New setup prefers BMad; an explicitly
+selected native or preserved approved legacy route retains equivalent proof.
 Full project setup uses the installer, including generated template/schema assets;
 raw portable discovery is a skills-only route.
 
@@ -64,7 +65,7 @@ clone or dry run for the first lap in an unfamiliar repository.
 
 On the user's existing GO, hand off to `software-factory`: prioritize eligible
 work, staff workers and independent reviewers, test, repair, integrate, verify
-shipping effects and ask for manual epic acceptance. Do not wait for phase prompts
+shipping effects and complete policy-selected epic acceptance. Do not wait for phase prompts
 when scope and authority are already clear. A blocked material decision stops its
 dependent work; continue demonstrably independent approved work.
 

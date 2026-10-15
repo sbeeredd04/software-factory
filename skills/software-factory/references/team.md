@@ -16,8 +16,8 @@ ones not shipped here.
 
 | Role | Focus |
 | --- | --- |
-| `sf-product-manager` | Outcomes and acceptance criteria; uses BMad PM/PRD skills when installed |
-| `sf-architect` | Cross-module contracts and boundaries; uses BMad architecture skills when installed |
+| `sf-product-manager` | Outcomes and acceptance criteria; uses the selected BMad PM/PRD planning route |
+| `sf-architect` | Cross-module contracts and boundaries; uses the selected BMad architecture planning route |
 | `sf-design-reviewer` | Applies the four `sf-` design skills as the anti-bloat bar on plans and diffs |
 | `sf-engineer` | Standard implementation plus tests; smallest complete change including error/recovery and obsolete paths |
 | `sf-principal-engineer` | High-risk or complex work: auth, money, state machines, migrations, concurrency |

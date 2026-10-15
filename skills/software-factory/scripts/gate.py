@@ -14,7 +14,9 @@ import math
 import os
 import re
 import stat
-from datetime import datetime
+from contextlib import contextmanager
+from contextvars import ContextVar
+from datetime import UTC, datetime
 from pathlib import Path
 
 SHA1 = re.compile(r"[0-9a-f]{40}")
@@ -121,12 +123,18 @@ def bound_directory(root, relative):
             or any(part in ("", ".", "..") for part in relative.split("/"))):
         raise ValueError("evidence path must be a contained relative file")
     descriptor = os.open(root, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+    traversed = []
     try:
+        info = os.fstat(descriptor)
+        remember_identity("directory", ".", (info.st_dev, info.st_ino))
         for part in Path(relative).parts:
             child = os.open(part, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW,
                             dir_fd=descriptor)
             os.close(descriptor)
             descriptor = child
+            traversed.append(part)
+            info = os.fstat(descriptor)
+            remember_identity("directory", "/".join(traversed), (info.st_dev, info.st_ino))
         return descriptor
     except BaseException:
         os.close(descriptor)
@@ -144,7 +152,12 @@ def bound_names(root, relative, limit=4096):
                     raise ValueError("board directory exceeds its entry budget")
                 if entry.name.endswith(".json"):
                     names.append(entry.name)
-        return sorted(names)
+        result = sorted(names)
+        remember_identity("names", relative, tuple(result))
+        snapshot = _READ_SNAPSHOT.get()
+        if snapshot is not None:
+            snapshot["names"][relative] = limit
+        return result
     finally:
         os.close(descriptor)
 
@@ -161,6 +174,9 @@ def bound_read(root, relative, limit=MAX_EVIDENCE_BYTES):
     else:
         descriptor = bound_directory(root, "/".join(parts[:-1]))
     try:
+        if len(parts) == 1:
+            info = os.fstat(descriptor)
+            remember_identity("directory", ".", (info.st_dev, info.st_ino))
         child = os.open(parts[-1], os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK,
                         dir_fd=descriptor)
         with os.fdopen(child, "rb") as stream:
@@ -172,13 +188,145 @@ def bound_read(root, relative, limit=MAX_EVIDENCE_BYTES):
             if (len(content) > limit or (before.st_size, before.st_mtime_ns, before.st_ctime_ns)
                     != (after.st_size, after.st_mtime_ns, after.st_ctime_ns)):
                 raise ValueError("evidence changed or exceeded its read budget")
+            remember_identity("file", relative, (after.st_dev, after.st_ino, digest(content)))
+            snapshot = _READ_SNAPSHOT.get()
+            if snapshot is not None:
+                if relative not in snapshot["reads"]:
+                    snapshot["bytes"] += len(content)
+                    if snapshot["bytes"] > 32 * MAX_EVIDENCE_BYTES:
+                        raise ValueError("protected acceptance sources exceed their aggregate byte budget")
+                snapshot["reads"][relative] = limit
             return content
+    except FileNotFoundError:
+        remember_identity("file", relative, None)
+        snapshot = _READ_SNAPSHOT.get()
+        if snapshot is not None:
+            snapshot["missing"].add(relative)
+        raise
     finally:
         os.close(descriptor)
 
 
 def digest(content):
     return hashlib.sha256(content).hexdigest()
+
+
+_READ_SNAPSHOT = ContextVar("sf_gate_read_snapshot", default=None)
+
+
+def remember_identity(kind, path, value):
+    snapshot = _READ_SNAPSHOT.get()
+    if snapshot is not None:
+        key = (kind, path)
+        if key in snapshot["identities"] and snapshot["identities"][key] != value:
+            raise ValueError("protected source changed during acceptance")
+        snapshot["identities"][key] = value
+
+
+@contextmanager
+def read_snapshot(root):
+    """Recheck captured bytes and directory/file identities before publication.
+
+    This detects stale evidence and replaced ancestors; it is not a security
+    boundary against writers ignoring the board lock after the final check.
+    """
+    snapshot = {"identities": {}, "reads": {}, "names": {}, "bytes": 0, "missing": set()}
+    token = _READ_SNAPSHOT.set(snapshot)
+    def revalidate():
+        for relative in list(snapshot["missing"]):
+            try:
+                bound_read(root, relative)
+            except FileNotFoundError:
+                pass
+        for relative, limit in list(snapshot["names"].items()):
+            bound_names(root, relative, limit=limit)
+        for relative, limit in list(snapshot["reads"].items()):
+            bound_read(root, relative, limit=limit)
+    try:
+        yield revalidate
+    finally:
+        _READ_SNAPSHOT.reset(token)
+
+
+def finite_ids(values, *, empty=False):
+    return (isinstance(values, list) and (empty or bool(values)) and len(values) <= 256
+            and all(type(value) is int and value > 0 for value in values)
+            and len(set(values)) == len(values))
+
+
+def epic_delegation(root, relative, config, epic_id, legacy_children):
+    """Check a finite owner grant; provenance never authenticates the caller."""
+    entries = config.get("autonomy", {}).get("standing_delegations", [])
+    matches = [entry for entry in entries if isinstance(entry, dict) and entry.get("source") == relative]
+    if (len(matches) != 1 or not isinstance(matches[0].get("scope"), str)
+            or not matches[0]["scope"].strip()):
+        raise ValueError("epic delegation must have one current standing registry entry")
+    content = bound_read(root, relative)
+    expected = matches[0].get("sha256")
+    if not isinstance(expected, str) or not SHA256.fullmatch(expected) or digest(content) != expected:
+        raise ValueError("epic delegation changed or was revoked")
+    grant = strict_json(content)
+    if (not isinstance(grant, dict)
+            or set(grant) - {"schema", "decision", "actions", "scope", "approved_by", "approved_at", "until", "source", "legacy_children"}
+            or grant.get("schema") != "sf-epic-delegation/1"
+            or grant.get("decision") != "delegate" or grant.get("actions") != ["accept-epic"]
+            or not isinstance(grant.get("scope"), dict) or set(grant["scope"]) != {"epics"}
+            or not finite_ids(grant["scope"]["epics"]) or epic_id not in grant["scope"]["epics"]
+            or not isinstance(grant.get("approved_by"), str) or not grant["approved_by"].strip()
+            or not finite_ids(grant.get("legacy_children", []), empty=True)
+            or not set(legacy_children).issubset(grant.get("legacy_children", []))):
+        raise ValueError("missing, out-of-scope or unbounded epic delegation")
+    approved = datetime.fromisoformat(grant.get("approved_at", ""))
+    current = datetime.now(UTC)
+    if approved.tzinfo is None or approved > current:
+        raise ValueError("delegation approval time must be aware and not in the future")
+    if "until" in grant:
+        until = datetime.fromisoformat(grant["until"])
+        if until.tzinfo is None or until <= current or until <= approved:
+            raise ValueError("epic delegation expired or has an invalid expiry")
+    source = grant.get("source")
+    if (not isinstance(source, dict) or source.get("kind") not in ("user-conversation", "approval-surface")
+            or not isinstance(source.get("ref"), str) or not source["ref"].strip()
+            or not isinstance(source.get("sha256"), str) or not SHA256.fullmatch(source["sha256"])):
+        raise ValueError("delegation needs trusted owner source provenance")
+    proof = bound_read(root, source.get("artifact"))
+    if not proof.strip() or digest(proof) != source["sha256"]:
+        raise ValueError("delegation owner source is empty or changed")
+    return grant, {"artifact": relative, "sha256": expected}
+
+
+def consequence_digest(assessment):
+    """Review binds every assessment field except its reciprocal evidence link."""
+    return digest(json.dumps({key: value for key, value in assessment.items() if key != "evidence"},
+                             sort_keys=True, separators=(",", ":")).encode())
+
+
+def consequence_assessment(root, relative, config, config_bytes, epic_id, scoped, delegation, evidence):
+    """Validate bounded consequence assertions and bindings, never their truth."""
+    content = bound_read(root, relative)
+    assessment = strict_json(content)
+    if (not isinstance(assessment, dict) or assessment.get("schema") != "sf-consequence-assessment/1"
+            or not valid_scope(assessment.get("scope")) or assessment["scope"] != {"epic": epic_id}
+            or assessment.get("scope_sha256") != scoped
+            or assessment.get("config_sha256") != digest(config_bytes)
+            or assessment.get("delegation") != delegation or assessment.get("evidence") != evidence
+            or assessment.get("decision") != "proceed"
+            or any(assessment.get(key) != [] for key in ("reservations", "unknowns", "blocked_dependents"))):
+        raise ValueError("epic assessment is stale, reserved, unknown or not authorized to proceed")
+    for key, expected in (("permission_status", "authorized"), ("effect_status", "pass"),
+                          ("recovery_status", "bounded"), ("risk_status", "resolved")):
+        if assessment.get(key) != expected:
+            raise ValueError("assessment has unresolved " + key)
+    for key in ("cause", "outcome", "affected", "method", "permissions", "effect", "recovery",
+                "blast_radius", "authority", "rationale"):
+        if not isinstance(assessment.get(key), str) or not 1 <= len(assessment[key].strip()) <= 4096:
+            raise ValueError("assessment needs bounded consequence detail: " + key)
+    risk = config.get("documents", {}).get("principles", {}).get("risk")
+    risk_bytes = bound_read(root, risk)
+    binding = {"artifact": risk, "sha256": digest(risk_bytes)}
+    if not risk_bytes.strip() or assessment.get("risk") != binding:
+        raise ValueError("assessment risk principles are missing or stale")
+    return {"artifact": relative, "sha256": digest(content)}, binding, consequence_digest(assessment)
 
 
 def decision(root, relative, expected_digest, *, scope, phase, sha=None, scope_digest=None, artifact_digest=None):

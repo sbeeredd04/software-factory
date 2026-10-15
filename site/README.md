@@ -76,3 +76,13 @@ on 2026-10-15. Complete pinned commit IDs are in `.github/workflows/pages.yml`.
 The workflow uploads only `site/`; it does not enable Pages or publish on push.
 Font source revisions, byte counts, hashes and notices are in
 [font sources](fonts/SOURCES.md).
+
+## Shared delivery cycle
+
+`img/delivery-graph.svg` is the single editable cycle source. The site and marketing
+templates use its local `factory-cycle` group through SVG `use`, so the page's
+loaded Inter faces render its text. Six clockwise stages include BMad epics and
+stories; human decisions branch from any phase according to risk, affected assets
+and agreed autonomy. Reserved checkpoints and actual permissions stay binding.
+The asset capture checks resolved SVG geometry and the actual custom fonts used
+for every cloned text node, in addition to named document font readiness.

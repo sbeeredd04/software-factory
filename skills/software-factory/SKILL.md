@@ -1,6 +1,6 @@
 ---
 name: software-factory
-description: "Turns a plain request (feature, bug, refactor) into shipped, proven code. The main agent orchestrates: grounds work in project principles, plans with BMad when installed, staffs best-fit agents, demands independent proof, merges to the integration branch and checkpoints so work survives resets."
+description: "Turns a plain request (feature, bug, refactor) into shipped, proven code. The main agent orchestrates: grounds work in project principles, plans with BMad epics and stories, staffs best-fit agents, demands independent proof, merges to the integration branch and checkpoints so work survives resets."
 license: MIT
 compatibility: Works with Claude Code, Cursor and Codex. BMad Method v6 is optional and installed separately.
 metadata:
@@ -15,8 +15,8 @@ metadata:
 One request moves through one loop, and you, the main agent, own it. You are the
 **orchestrator**: the technical owner of the work. You decide what gets built and
 how, staff it, hold the quality bar on the actual diff and the actual evidence,
-merge it, prove it and report. Nothing counts as done until it is proven and the
-human owner has completed the epic's manual checkpoint.
+merge it, prove it and report. Completion requires proof and policy-selected
+acceptance; human involvement follows consequences, reservations and authority.
 
 Invoke with a plain request: `/software-factory <request>` on Claude Code and
 Cursor, `$software-factory <request>` on Codex — no required verb, menu or
@@ -27,7 +27,7 @@ request -> ground -> plan (reuse GO) -> independent plan review -> GO
         -> ready frontier in claimed worktrees -> implement / test / review / fix
         -> independent QA + story evals -> actual-diff review + CI + review bots -> fix loop
         -> single-owner gated merge to the integration branch
-        -> deployed-SHA proof -> board update -> human epic checkpoint -> next frontier
+        -> deployed-SHA proof -> board update -> policy-selected epic acceptance -> next frontier
 ```
 
 Full graphs with every stage and edge live in the two workflow files in the
@@ -69,7 +69,7 @@ roles   the eleven sf-* starting-team roles — agents/
   bot. High-risk work (auth, money, state machines, migrations, concurrency)
   earns deeper planning, review and proof.
 - **Escalate, don't decide alone.** New scope, new authority, a principle
-  conflict or real risk goes to the human owner. Reuse an existing scoped GO
+  conflict or consequential unresolved risk goes to the human owner. Reuse a scoped GO
   whenever it covers the request. When essential intent is missing, ask exactly
   one focused question, carrying a recommendation and 2-4 options, through
   whatever user-input mechanism the host provides. Never answer with a menu.

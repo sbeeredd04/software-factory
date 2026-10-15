@@ -116,7 +116,8 @@ what — stated here only, enforced by `scripts/roadmap.py`:
 | set/clear `blocked` | worker (own story) or orchestrator | stored blockers are `human-decision`, `external`, `resource-contention` or `design`; dependency waiting is derived from `after`, never stored |
 | `any → cancelled` | orchestrator proposes, human confirms | terminal; needs a recorded decision reference; a cancelled story still blocks its dependents until each is repointed |
 | epic → `in-progress` / `awaiting-acceptance` | orchestrator | awaiting-acceptance only after every story is done or cancelled — closing children never closes the parent |
-| epic → `done` / `parked` / `cancelled` | human | acceptance is the human checkpoint; parking carries a resume pointer; cancelling cancels the descendants |
+| epic → `done` | human or delegated orchestrator | current scope, child/effect gates and independent reconciliation; adaptive delegation additionally requires current grant and consequence assessment |
+| epic → `parked` / `cancelled` | human | parking carries a resume pointer; cancelling cancels the descendants |
 
 Corollaries: no actor moves a story past `built` except the merge step; no
 agent self-declares done; `done` and `cancelled` records are frozen — a
@@ -125,7 +126,7 @@ findings append dated blocks to the record and never change status.
 
 Readiness is computed from the dependency graph, never from list position or
 titles: a story is ready when every `after` prerequisite is done or in
-review, every epic gate it rides on is human-done, and it is unclaimed,
+review, every epic gate it rides on has valid acceptance, and it is unclaimed,
 unblocked and not cancelled. The ready frontier is global across streams —
 every unblocked, unclaimed candidate is offered, ordered inside an epic by
 its `order` array. Generation also reports the cross-stream diagnostics (an
@@ -214,3 +215,15 @@ canonical role. `state.py audit` reports usage against these budgets and
 flags violations (exit 1) without altering any run artifact; the installer
 keeps `runs/` out of version control while `config.yaml` and `context/` stay
 tracked.
+
+
+On resume, refresh the consequence assessment against actual config, risk policy,
+source grants and effects before relying on delegated acceptance. Expired grants,
+changed evidence or unknown effects block their dependents; they are never repaired
+by relabeling an agent action as human approval. Continue independent work under
+the owner's blocked-work preference. See [authority](authority.md).
+
+Ordinary planning derivation can add human reservations but cannot remove an
+existing epic `hitl` or story `hitl`, `plan_checkpoint` or `done_checkpoint`, even
+when a regenerated plan explicitly supplies false. Removal requires an explicit
+owner amendment outside ordinary derivation; omission preserves the reservation.
