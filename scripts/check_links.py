@@ -7,7 +7,8 @@ reference-style definitions outside code fences are resolved against the
 repository; fragment anchors are checked against GitHub-style heading
 slugs. External ``https?://`` links are advisory only: they are counted
 and never fail the run. JSON string values that start with ``./`` or
-``../`` are treated as repository-relative paths and must resolve.
+``../`` resolve from their file directory, or the owning root for known
+native manifests, and must stay within the repository.
 """
 
 from __future__ import annotations
@@ -126,7 +127,7 @@ def check_markdown(root: Path, problems: list[str]) -> tuple[int, int]:
             if path_part:
                 resolved = (md.parent / path_part).resolve()
                 label = md.relative_to(root)
-                if not str(resolved).startswith(str(root)):
+                if not resolved.is_relative_to(root.resolve()):
                     problems.append(f"{label}:{line_no}: '{target}' escapes the root")
                     continue
                 if not resolved.exists():
@@ -158,20 +159,35 @@ def check_json(root: Path, problems: list[str]) -> int:
         except (json.JSONDecodeError, UnicodeDecodeError):
             continue  # not a link problem; the validator owns parse errors
 
-        def walk(node: object, base: Path = js) -> None:
+        base = js.parent
+        native = False
+        if js.name in {"plugin.json", "marketplace.json"} and base.name in {
+            ".claude-plugin", ".cursor-plugin"
+        }:
+            base = base.parent
+            native = True
+        elif (js.name == "marketplace.json" and base.name == "plugins"
+              and base.parent.name == ".agents"):
+            base = base.parent.parent
+            native = True
+
+        def walk(node: object, base: Path = base, source: Path = js,
+                 native: bool = native) -> None:
             if isinstance(node, dict):
                 for value in node.values():
-                    walk(value, base)
+                    walk(value, base, source, native)
             elif isinstance(node, list):
                 for value in node:
-                    walk(value, base)
+                    walk(value, base, source, native)
             elif isinstance(node, str) and node.startswith(("./", "../")):
-                resolved = (base.parent / node).resolve()
-                if not str(resolved).startswith(str(root)):
-                    problems.append(f"{base.relative_to(root)}: '{node}' escapes the root")
+                resolved = (base / node).resolve()
+                if not resolved.is_relative_to(root.resolve()):
+                    problems.append(f"{source.relative_to(root)}: '{node}' escapes the root")
+                elif native and not resolved.is_relative_to(base.resolve()):
+                    problems.append(f"{source.relative_to(root)}: '{node}' escapes its manifest root")
                 elif not resolved.exists():
                     problems.append(
-                        f"{base.relative_to(root)}: target '{node}' does not exist"
+                        f"{source.relative_to(root)}: target '{node}' does not exist"
                     )
 
         walk(data)

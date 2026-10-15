@@ -12,6 +12,9 @@ CATALOGS = {'claude-code': '.claude-plugin/marketplace.json',
             'cursor': '.cursor-plugin/marketplace.json',
             'codex': '.agents/plugins/marketplace.json'}
 PLUGIN = 'plugins/software-factory'
+ATTRIBUTION_FILES = ('LICENSE', 'NOTICE.md', 'site/fonts/SOURCES.md',
+                     'site/fonts/bricolage/OFL.txt', 'site/fonts/inter/OFL.txt',
+                     'site/fonts/jetbrains-mono/OFL.txt')
 
 
 def load_api(root=None):
@@ -82,8 +85,13 @@ def bundle_files(api, host):
             files['scripts/' + Path(path).name] = action.content
     for name in ('hook.sh', 'dispatch.py'):
         files['scripts/' + name] = (api.PACK_ROOT / 'hosts/plugins' / name).read_bytes()
-    for name in ('LICENSE', 'NOTICE.md'):
-        files[name] = (api.PACK_ROOT / name).read_bytes()
+    for name in ATTRIBUTION_FILES:
+        source = api.PACK_ROOT / name
+        if (not source.is_file() or source.is_symlink()
+                or any(parent.is_symlink() for parent in source.parents)
+                or not source.resolve().is_relative_to(api.PACK_ROOT.resolve())):
+            raise ValueError('invalid canonical attribution source')
+        files[name] = source.read_bytes()
     files['hooks/hooks.json'] = encoded(hook_config(api, host))
     metadata = json.loads((api.PACK_ROOT / 'plugin.json').read_text())
     metadata['version'] = api.PACK_VERSION

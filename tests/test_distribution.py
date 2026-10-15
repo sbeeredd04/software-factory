@@ -20,6 +20,9 @@ import distribution as dist
 
 
 class DistributionTests(unittest.TestCase):
+    ATTRIBUTION = ('site/fonts/SOURCES.md', 'site/fonts/bricolage/OFL.txt',
+                   'site/fonts/inter/OFL.txt', 'site/fonts/jetbrains-mono/OFL.txt')
+
     @classmethod
     def setUpClass(cls):
         cls.api = dist.load_api()
@@ -310,6 +313,77 @@ class DistributionTests(unittest.TestCase):
         self.assertTrue(all('dist/plugins/'+h+'/'+dist.CATALOGS[h] in files for h in dist.HOSTS))
         with self.assertRaises(ValueError):
             build_release.build(self.api, self.root/'bad', 'v999.0.0')
+
+    def test_native_notice_resources_are_exact_text_only_closure(self):
+        for host in dist.HOSTS:
+            plugin = self.bundle(host, 'notice-'+host)/dist.PLUGIN
+            for name in self.ATTRIBUTION:
+                with self.subTest(host=host, resource=name):
+                    self.assertEqual((REPO/name).read_bytes(), (plugin/name).read_bytes())
+            self.assertEqual([], list((plugin/'site/fonts').rglob('*.woff2')))
+            self.assertFalse((plugin/'site/fonts/manifest.json').exists())
+
+    def test_missing_or_symlink_attribution_source_refuses_without_output(self):
+        api = self.release_source()
+        for index, name in enumerate(self.ATTRIBUTION):
+            source = api.PACK_ROOT/name
+            original = source.read_bytes()
+            source.unlink()
+            output = self.root/('missing-attribution-'+str(index))
+            with self.assertRaises(ValueError):
+                dist.project(api, 'all', output)
+            self.assertFalse(output.exists())
+            source.symlink_to(REPO/name)
+            with self.assertRaises(ValueError):
+                dist.project(api, 'all', output)
+            self.assertFalse(output.exists())
+            source.unlink()
+            source.write_bytes(original)
+        # A selected source behind a symlinked family directory also refuses.
+        family = api.PACK_ROOT/'site/fonts/inter'
+        moved = family.with_name('inter-original')
+        family.rename(moved)
+        family.symlink_to(moved, target_is_directory=True)
+        with self.assertRaises(ValueError):
+            dist.project(api, 'all', self.root/'linked-family')
+        self.assertFalse((self.root/'linked-family').exists())
+
+    def test_extracted_release_links_and_missing_notice_resource(self):
+        built = build_release.build(self.api, self.root/'closure-release',
+                                    'v'+self.api.PACK_VERSION)
+        extracted = self.root/'extracted'
+        extracted.mkdir()
+        with tarfile.open(built/('sf-v'+self.api.PACK_VERSION+'.tar.gz'), 'r:gz') as archive:
+            for member in archive:
+                if member.isfile():
+                    path = extracted/member.name
+                    self.assertTrue(path.resolve().is_relative_to(extracted))
+                    path.parent.mkdir(parents=True, exist_ok=True)
+                    path.write_bytes(archive.extractfile(member).read())
+        payload = extracted/('sf-v'+self.api.PACK_VERSION)
+        result = subprocess.run([sys.executable, '-B', str(REPO/'scripts/check_links.py'),
+                                 '--root', str(payload)], capture_output=True,
+                                text=True, check=False, timeout=90)
+        self.assertEqual(0, result.returncode, result.stdout+result.stderr)
+        plugin = payload/'dist/plugins/claude-code'/dist.PLUGIN
+        source = plugin/'site/fonts/SOURCES.md'
+        source.unlink()
+        result = subprocess.run([sys.executable, '-B', str(REPO/'scripts/check_links.py'),
+                                 '--root', str(payload)], capture_output=True,
+                                text=True, check=False, timeout=90)
+        self.assertEqual(1, result.returncode, result.stdout+result.stderr)
+        self.assertIn('site/fonts/SOURCES.md', result.stdout)
+        # Native canonical byte checking covers every required attribution file.
+        for host in dist.HOSTS:
+            bundle = self.bundle(host, 'missing-notice-'+host)
+            for name in self.ATTRIBUTION:
+                target = bundle/dist.PLUGIN/name
+                data = target.read_bytes()
+                target.unlink()
+                with self.assertRaises(ValueError):
+                    checks.check(bundle, host, self.api)
+                target.write_bytes(data)
+                self.assertTrue(checks.check(bundle, host, self.api))
 
 
 if __name__ == '__main__':

@@ -873,6 +873,104 @@ class CheckLinksTest(unittest.TestCase):
         result = self.check(root)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 
+    def native_tree(self, host):
+        hidden = ".claude-plugin" if host == "claude-code" else ".cursor-plugin"
+        market = "dist/" + host
+        plugin = market + "/plugins/sample"
+        catalog = market + ("/.agents/plugins/marketplace.json" if host == "codex"
+                            else "/" + hidden + "/marketplace.json")
+        source = ({"source": "local", "path": "./plugins/sample"}
+                  if host == "codex" else "./plugins/sample")
+        manifest = plugin + ("/plugin.json" if host == "codex"
+                             else "/" + hidden + "/plugin.json")
+        data = ({"name": "sample"} if host == "codex" else
+                {"skills": ["./skills/"], "agents": ["./agents/role.md"]})
+        root = self.make_tree({catalog: json.dumps({"plugins": [{"source": source}]}),
+                               manifest: json.dumps(data),
+                               plugin + "/skills/entry/SKILL.md": "# Skill\n",
+                               plugin + "/agents/role.md": "# Role\n"})
+        return root, root / market, root / plugin, root / catalog, root / manifest
+
+    def test_native_manifest_and_catalog_bases(self):
+        for host in ("claude-code", "cursor", "codex"):
+            with self.subTest(host=host):
+                root, _, _, _, _ = self.native_tree(host)
+                result = self.check(root)
+                self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+
+    def test_native_missing_targets_still_fail(self):
+        for host in ("claude-code", "cursor", "codex"):
+            with self.subTest(host=host):
+                root, _, _, catalog, _ = self.native_tree(host)
+                catalog.write_text(json.dumps({"source": "./plugins/missing"}))
+                result = self.check(root)
+                self.assertEqual(1, result.returncode, result.stdout + result.stderr)
+                self.assertIn("./plugins/missing", result.stdout)
+
+    def test_native_owner_escape_and_symlink_fail(self):
+        for host in ("claude-code", "cursor", "codex"):
+            with self.subTest(host=host):
+                root, market, _, catalog, _ = self.native_tree(host)
+                outside = market.parent / "outside"
+                outside.mkdir(exist_ok=True)
+                catalog.write_text(json.dumps({"source": "../outside"}))
+                result = self.check(root)
+                self.assertEqual(1, result.returncode, result.stdout + result.stderr)
+                self.assertIn("escapes its manifest root", result.stdout)
+                (market / "linked").symlink_to(outside, target_is_directory=True)
+                catalog.write_text(json.dumps({"source": "./linked"}))
+                result = self.check(root)
+                self.assertEqual(1, result.returncode, result.stdout + result.stderr)
+                self.assertIn("escapes its manifest root", result.stdout)
+
+    def test_native_component_escape_fails(self):
+        for host in ("claude-code", "cursor"):
+            with self.subTest(host=host):
+                root, _, plugin, _, manifest = self.native_tree(host)
+                (plugin.parent / "outside.md").write_text("# Outside plugin\n")
+                manifest.write_text(json.dumps({"agents": ["../outside.md"]}))
+                result = self.check(root)
+                self.assertEqual(1, result.returncode, result.stdout + result.stderr)
+                self.assertIn("escapes its manifest root", result.stdout)
+
+    def test_generic_json_keeps_parent_relative_semantics(self):
+        root = self.make_tree({"assets/a.md": "# A\n",
+                               "custom/plugin.json": '{"asset":"../assets/a.md"}',
+                               "custom/deep/data.json": '{"asset":"../../assets/a.md"}',
+                               "custom/.claude-plugin/settings.json": '{"asset":"./local.md"}',
+                               "custom/.claude-plugin/local.md": "# Local\n"})
+        result = self.check(root)
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        (root / "assets/a.md").unlink()
+        self.assertEqual(1, self.check(root).returncode)
+
+    def test_existing_sibling_prefix_escape_is_rejected(self):
+        for kind in ("markdown", "json"):
+            with self.subTest(kind=kind):
+                root = self.make_tree({"a.md": "# A\n"})
+                sibling = root.with_name(root.name + "-extra")
+                sibling.mkdir()
+                self.addCleanup(shutil.rmtree, sibling)
+                (sibling / "outside.md").write_text("# Outside\n")
+                target = "../" + sibling.name + "/outside.md"
+                if kind == "markdown":
+                    (root / "a.md").write_text(f"# A\n[Outside]({target})\n")
+                else:
+                    (root / "data.json").write_text(json.dumps({"path": target}))
+                result = self.check(root)
+                self.assertEqual(1, result.returncode, result.stdout + result.stderr)
+                self.assertIn("escapes the root", result.stdout)
+
+    def test_scope_and_parse_ownership_are_unchanged(self):
+        root = self.make_tree({"a.md": "# A\n", "broken.json": "{broken"})
+        self.assertEqual(0, self.check(root).returncode)
+        git(root, "init", "-q", "-b", "main")
+        git(root, "add", "-A")
+        (root / "untracked.json").write_text('{"path":"./missing"}')
+        self.assertEqual(0, self.check(root).returncode)
+        git(root, "add", "untracked.json")
+        self.assertEqual(1, self.check(root).returncode)
+
 
 class CheckMermaidTest(unittest.TestCase):
     def make_tree(self, files):
