@@ -96,7 +96,7 @@ class FileSetTests(CursorInstallCase):
             for path in sorted(skills_dir.rglob("*"))
             if path.is_file()
         }
-        self.assertEqual(canonical_tree(), projected)
+        self.assertEqual(canonical_tree() | {"software-factory/schemas/config.schema.json", "software-factory/scripts/trackers.py"}, projected)
         # Eleven role agents, hooks v1, the rule pointer, runtime helpers.
         agents = sorted(p.name for p in (repo / ".cursor/agents").glob("sf-*.md"))
         self.assertEqual([f"{n}.md" for n in sorted(validate.AGENTS)], agents)
@@ -105,7 +105,7 @@ class FileSetTests(CursorInstallCase):
         runtime = sorted(
             p.name for p in (repo / ".software-factory/runtime").glob("*.py")
         )
-        self.assertEqual(["config.py", "gate.py", "hook.py", "state.py"], runtime)
+        self.assertEqual(["config.py", "gate.py", "hook.py", "state.py", "trackers.py"], runtime)
         # No foreign-host artifacts, no managed-block pointers.
         for absent in (".claude", ".codex", "CLAUDE.md", "AGENTS.md"):
             self.assertFalse((repo / absent).exists(), absent)

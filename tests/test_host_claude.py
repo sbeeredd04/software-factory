@@ -100,7 +100,7 @@ class FileSetTests(ClaudeInstallCase):
         for path in sorted(skills_dir.rglob("*")):
             if path.is_file():
                 projected.add(path.relative_to(skills_dir).as_posix())
-        self.assertEqual(canonical_tree(), projected)
+        self.assertEqual(canonical_tree() | {"software-factory/schemas/config.schema.json", "software-factory/scripts/trackers.py"}, projected)
 
     def test_exact_agent_set(self):
         agents = sorted(p.name for p in (self.repo / ".claude/agents").glob("*.md"))
@@ -123,9 +123,9 @@ class FileSetTests(ClaudeInstallCase):
     def test_runtime_helper_set_and_pointer_block(self):
         runtime = self.repo / ".software-factory/runtime"
         names = sorted(p.name for p in runtime.glob("*.py"))
-        self.assertEqual(["config.py", "gate.py", "hook.py", "state.py"], names)
+        self.assertEqual(["config.py", "gate.py", "hook.py", "state.py", "trackers.py"], names)
         for name in names:
-            canonical = support.SCRIPTS / name
+            canonical = support.REPO / "adapters/trackers.py" if name == "trackers.py" else support.SCRIPTS / name
             self.assertEqual(canonical.read_bytes(), (runtime / name).read_bytes())
         content = (self.repo / "CLAUDE.md").read_text()
         self.assertEqual(1, content.count("<!-- software-factory:begin -->"))

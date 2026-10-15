@@ -755,19 +755,41 @@ def doctor(args, api):
     if (root / ".claude/skills").is_dir() and (root / ".agents/skills").is_dir():
         add("ambient-skill-sources", "warning", "duplicate ambient sources at .claude/skills and .agents/skills; review host discovery")
     add("global-plugin-state", "unverified", "global plugin configuration was not observed; project checks cannot establish absence of duplicates")
-    config_rel = ".software-factory/config.yaml"
+    validator = trusted_module("config", api)
     try:
-        path = safe_path(root, config_rel, api)
+        path = safe_path(root, ".software-factory/config.yaml", api)
         if not path.is_file():
             add("config-syntax", "unverified", "config.yaml is absent; complete project configuration")
+            add("config-semantics", "unverified", "setup required; no configuration policy established")
         else:
-            config = json.loads(path.read_text())
-            if not isinstance(config, dict):
-                raise ValueError("expected object")
-            add("config-syntax", "pass", "config.yaml parses as a JSON object in the JSON-compatible YAML subset")
+            validator.load(path)
+            add("config-syntax", "pass", "config.yaml parses in the JSON-compatible YAML subset")
+            try:
+                validator.validate_file(path, root=root)
+                add("config-semantics", "pass", "schema and semantic references validated; declarations do not establish live authority")
+            except validator.ConfigError as exc:
+                add("config-semantics", "blocked", str(exc))
     except (api.InstallError, OSError, ValueError):
         add("config-syntax", "blocked", "config.yaml is outside the supported JSON-compatible YAML subset or unreadable; no partial interpretation")
-    add("config-semantics", "unverified", "schema and semantic configuration validation are pending the configuration story")
+        add("config-semantics", "unverified", "syntax must be repaired before semantic validation")
+    sys.dont_write_bytecode = True
+    spec = importlib.util.spec_from_file_location("sf_doctor_bmad", api.PACK_ROOT / "scripts/bmad_install.py")
+    bmad = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(bmad)
+    observed, parsed = bmad.observe(root)
+    previous = data.get("bmad", {}) if data else {}
+    if not isinstance(previous, dict):
+        previous = {}
+    if parsed:
+        expected = previous.get("manifest_sha256")
+        changed = (expected is not None and expected != observed["manifest_sha256"]) or previous.get("status") == "failed"
+        add("bmad", "warning" if changed else "pass",
+            "BMad identity changed or prior attempt failed; reconcile preserved installation; no repair performed" if changed else
+            "BMad manifest observed with digest; installed declarations do not prove workflow compatibility")
+    elif bmad.discovered(root) or previous.get("status") in ("failed", "installed", "existing"):
+        add("bmad", "warning", "BMad artifacts are partial or unreadable; preserve and reconcile manually; native planning remains available")
+    else:
+        add("bmad", "unverified", "optional BMad is absent; native planning remains available; no provisioning attempted")
     gh = shutil.which("gh")
     if not gh:
         add("github-auth", "warning", "gh is unavailable; install and authenticate it for integration checks")

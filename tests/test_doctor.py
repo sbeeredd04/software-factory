@@ -63,14 +63,20 @@ class DoctorTests(unittest.TestCase):
 
     def test_healthy_install_exercises_hooks_and_reports_truthful_limits(self):
         self.install()
-        (self.repo / ".software-factory/config.yaml").write_text('{}\n')
+        example = support.REPO / "examples/config"
+        for item in example.iterdir():
+            if item.name != "config.yaml":
+                shutil.copy2(item, self.repo / item.name)
+        config = json.loads((example / "config.yaml").read_text())
+        config["project"]["root"] = ".."
+        (self.repo / ".software-factory/config.yaml").write_text(json.dumps(config))
         code, checks = self.checks()
         self.assertEqual(0, code)
         for host in ("claude-code", "cursor", "codex"):
             self.assertEqual("pass", checks[f"hooks:{host}"]["status"])
             self.assertIn("disposable", checks[f"hooks:{host}"]["detail"])
         self.assertEqual("pass", checks["config-syntax"]["status"])
-        self.assertEqual("unverified", checks["config-semantics"]["status"])
+        self.assertEqual("pass", checks["config-semantics"]["status"])
         self.assertEqual("unverified", checks["codex-hook-trust"]["status"])
         self.assertIn("/hooks", checks["codex-hook-trust"]["detail"])
         self.assertIn("user-confirmation-required", checks["codex-hook-trust"]["detail"])
@@ -165,6 +171,8 @@ class DoctorTests(unittest.TestCase):
         self.assertEqual(1, code)
         self.assertEqual("blocked", after["config-syntax"]["status"])
         self.assertIn("JSON-compatible YAML", after["config-syntax"]["detail"])
+        before.pop("config-semantics")
+        after.pop("config-semantics")
         before.pop("config-syntax")
         after.pop("config-syntax")
         # Board path interpretation also depends on a fully parsed config.

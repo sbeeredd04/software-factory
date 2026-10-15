@@ -38,6 +38,7 @@ import json
 import os
 import shlex
 import shutil
+import stat
 import sys
 import tempfile
 import time
@@ -377,6 +378,10 @@ def project_claude(root: Path, policy: dict, profile: str) -> list[Action]:
                 content = inject_claude_frontmatter(content, skill_dir.name, policy)
             actions.append(Action(f".claude/skills/{rel}", "write", content,
                                   "claude-code"))
+    actions.append(Action(".claude/skills/software-factory/schemas/config.schema.json", "write",
+                          auxiliary_bytes("schemas/config.schema.json"), "claude-code"))
+    actions.append(Action(".claude/skills/software-factory/scripts/trackers.py", "write",
+                          auxiliary_bytes("adapters/trackers.py"), "claude-code"))
     if profile == "full":
         for src in sorted((PACK_ROOT / "agents").glob("sf-*.md")):
             actions.append(Action(f".claude/agents/{src.name}", "write",
@@ -389,6 +394,41 @@ def project_claude(root: Path, policy: dict, profile: str) -> list[Action]:
     return actions
 
 
+def auxiliary_bytes(relative: str) -> bytes:
+    """Read canonical schema/adapter assets without following source symlinks."""
+    descriptors = []
+    try:
+        fd = os.open(PACK_ROOT, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+        descriptors.append(fd)
+        parts = Path(relative).parts
+        for part in parts[:-1]:
+            fd = os.open(part, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=fd)
+            descriptors.append(fd)
+        leaf = os.open(parts[-1], os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK, dir_fd=fd)
+        descriptors.append(leaf)
+        before = os.fstat(leaf)
+        if not stat.S_ISREG(before.st_mode) or before.st_size > 1024 * 1024:
+            raise InstallError("canonical auxiliary asset is not a bounded regular file")
+        content = bytearray()
+        while len(content) <= 1024 * 1024:
+            chunk = os.read(leaf, min(65536, 1024 * 1024 + 1 - len(content)))
+            if not chunk:
+                break
+            content.extend(chunk)
+        after = os.fstat(leaf)
+        current = os.stat(parts[-1], dir_fd=fd, follow_symlinks=False)
+        def identity(info):
+            return (info.st_dev, info.st_ino, info.st_size, info.st_mtime_ns, info.st_ctime_ns)
+        if len(content) > 1024 * 1024 or identity(before) != identity(after) or identity(after) != identity(current):
+            raise InstallError("canonical auxiliary asset changed during read")
+        return bytes(content)
+    except OSError as exc:
+        raise InstallError("canonical auxiliary asset missing or unsafe") from exc
+    finally:
+        for descriptor in reversed(descriptors):
+            os.close(descriptor)
+
+
 def runtime_actions() -> list[Action]:
     """The host-neutral kernel helper copies under .software-factory/runtime/."""
     return [
@@ -399,7 +439,9 @@ def runtime_actions() -> list[Action]:
             None,
         )
         for helper in RUNTIME_HELPERS
-    ]
+    ] + [Action(f"{RUNTIME_REL}/config.schema.json", "write",
+                auxiliary_bytes("schemas/config.schema.json"), None),
+         Action(f"{RUNTIME_REL}/trackers.py", "write", auxiliary_bytes("adapters/trackers.py"), None)]
 
 
 def project_shared_skills(hosts: list[str]) -> list[Action]:
@@ -433,6 +475,10 @@ def project_shared_skills(hosts: list[str]) -> list[Action]:
             actions.append(
                 Action(f".agents/skills/{rel}", "write", content, None)
             )
+    actions.append(Action(".agents/skills/software-factory/schemas/config.schema.json", "write",
+                          auxiliary_bytes("schemas/config.schema.json"), None))
+    actions.append(Action(".agents/skills/software-factory/scripts/trackers.py", "write",
+                          auxiliary_bytes("adapters/trackers.py"), None))
     if "codex" in hosts:
         codex_policy = load_policy("codex")
         policy_skills = set(codex_policy.get("explicit_only", [])) | set(
