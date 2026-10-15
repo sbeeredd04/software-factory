@@ -15,6 +15,7 @@ import subprocess
 import sys
 import tarfile
 import tempfile
+import textwrap
 import unittest
 from pathlib import Path
 from unittest import mock
@@ -1134,6 +1135,136 @@ class CheckMermaidTest(unittest.TestCase):
     def test_repository_diagrams_render(self):
         result = run_tool("check_mermaid.py", timeout=600)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+
+class LinuxRunnerChromeTest(unittest.TestCase):
+    SELECT = "Select runner Chrome for sandboxed Mermaid rendering"
+    SMOKE = "Smoke-test sandboxed Mermaid rendering"
+
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory(prefix="sf runner chrome ")
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name).resolve()
+        self.bash = shutil.which("bash")
+        self.assertIsNotNone(self.bash)
+        self.workflow = (REPO / ".github/workflows/ci.yml").read_text()
+        self.env_file = self.root / "github env"
+        self.env_file.write_text("")
+        self.env = dict(os.environ, PATH=str(self.root), GITHUB_ENV=str(self.env_file),
+                        RUNNER_TEMP=str(self.root))
+
+    def step(self, name):
+        # Extract only these two literal workflow blocks, not arbitrary YAML.
+        block = self.workflow.split(f"      - name: {name}\n", 1)[1].split("      - name:", 1)[0]
+        body = textwrap.dedent(block.split("        run: |\n", 1)[1])
+        return block, body
+
+    def run_step(self, name):
+        return subprocess.run(
+            [self.bash, "-e", "-u", "-o", "pipefail", "-c", self.step(name)[1]],
+            env=self.env, capture_output=True, text=True, check=False,
+        )
+
+    def write_stub(self, name, code, *, executable=True):
+        path = self.root / name
+        path.write_text(f"#!{sys.executable}\n" + code)
+        path.chmod(0o755 if executable else 0o644)
+        return path
+
+    def test_linux_conditions_order_and_existing_gate_are_preserved(self):
+        for name in (self.SELECT, self.SMOKE):
+            block, _ = self.step(name)
+            self.assertIn("        if: runner.os == 'Linux'\n", block)
+            self.assertIn("        shell: bash\n", block)
+        self.assertLess(self.workflow.index(self.SELECT), self.workflow.index(self.SMOKE))
+        self.assertLess(self.workflow.index(self.SMOKE), self.workflow.index("      - name: Unit tests"))
+        for expected in (
+            "os: [ubuntu-latest, macos-latest]",
+            "python-version: ['3.11', '3.12', '3.13']",
+            "run: python3 -m unittest discover -s tests -v",
+            "run: bash scripts/check_all.sh",
+        ):
+            self.assertIn(expected, self.workflow)
+        for forbidden in ("--no-sandbox", "--disable-setuid-sandbox", "PUPPETEER_DANGEROUS_NO_SANDBOX"):
+            self.assertNotIn(forbidden, self.workflow)
+        job = self.workflow.split("  ci:\n", 1)[1].split("    steps:\n", 1)[0]
+        self.assertNotIn("continue-on-error:", job)
+        for name in ("Unit tests", "Static gate"):
+            block = self.workflow.split(f"      - name: {name}\n", 1)[1].split("      - name:", 1)[0]
+            self.assertNotIn("if:", block)
+            self.assertNotIn("continue-on-error:", block)
+
+    def test_selection_exports_observed_executable_and_version_with_space_path(self):
+        chrome = self.write_stub(
+            "google-chrome", "import sys\nassert sys.argv[1:] == ['--version']\nprint('Google Chrome fixture')\n",
+        )
+        result = self.run_step(self.SELECT)
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertIn(f"Mermaid browser: {chrome}", result.stdout)
+        self.assertIn("Google Chrome fixture", result.stdout)
+        self.assertEqual(f"PUPPETEER_EXECUTABLE_PATH={chrome}\n", self.env_file.read_text())
+
+    def test_missing_nonexecutable_or_failing_browser_never_exports_path(self):
+        for kind in ("missing", "nonexecutable", "failing-version"):
+            with self.subTest(kind=kind):
+                chrome = self.root / "google-chrome"
+                chrome.unlink(missing_ok=True)
+                self.env_file.write_text("")
+                if kind != "missing":
+                    self.write_stub("google-chrome", "raise SystemExit(7)\n", executable=kind != "nonexecutable")
+                result = self.run_step(self.SELECT)
+                self.assertNotEqual(0, result.returncode, result.stdout + result.stderr)
+                self.assertEqual("", self.env_file.read_text())
+                if kind != "failing-version":
+                    self.assertIn("Linux runner requires an executable google-chrome", result.stderr)
+                else:
+                    self.assertEqual(7, result.returncode)
+
+    def test_selected_browser_handoff_reaches_actual_smoke_body(self):
+        chrome = self.write_stub("google-chrome", "print('Google Chrome fixture')\n")
+        selected = self.run_step(self.SELECT)
+        self.assertEqual(0, selected.returncode, selected.stdout + selected.stderr)
+        lines = self.env_file.read_text().splitlines()
+        self.assertEqual([f"PUPPETEER_EXECUTABLE_PATH={chrome}"], lines)
+        key, value = lines[0].split("=", 1)
+        self.env[key] = value
+        self.write_stub(
+            "python3",
+            "import os, sys\nfrom pathlib import Path\n"
+            "assert sys.argv[1] == 'scripts/check_mermaid.py'\n"
+            "assert len(sys.argv) == 3\n"
+            "root = Path(os.environ['RUNNER_TEMP'])\n"
+            "assert Path(os.environ['PUPPETEER_EXECUTABLE_PATH']) == root / 'google-chrome'\n"
+            "assert Path(sys.argv[2]) == root / 'sf-mermaid-smoke.mmd'\n"
+            "assert Path(sys.argv[2]).read_text() == 'flowchart TD\\n  A --> B\\n'\n",
+        )
+        smoked = self.run_step(self.SMOKE)
+        self.assertEqual(0, smoked.returncode, smoked.stdout + smoked.stderr)
+
+    def test_smoke_creates_exact_fixture_and_propagates_checker_failure(self):
+        for exit_code in (0, 9):
+            with self.subTest(exit_code=exit_code):
+                self.write_stub(
+                    "python3",
+                    "import os, sys\nfrom pathlib import Path\n"
+                    "assert sys.argv[1] == 'scripts/check_mermaid.py'\n"
+                    "assert len(sys.argv) == 3\n"
+                    "assert Path(sys.argv[2]) == Path(os.environ['RUNNER_TEMP']) / 'sf-mermaid-smoke.mmd'\n"
+                    "assert Path(sys.argv[2]).read_text() == 'flowchart TD\\n  A --> B\\n'\n"
+                    "assert os.environ['PUPPETEER_EXECUTABLE_PATH'] == 'observed fixture path'\n"
+                    f"raise SystemExit({exit_code})\n",
+                )
+                self.env["PUPPETEER_EXECUTABLE_PATH"] = "observed fixture path"
+                result = self.run_step(self.SMOKE)
+                self.assertEqual(exit_code, result.returncode, result.stdout + result.stderr)
+
+    def test_workflow_shell_bodies_are_valid_bash(self):
+        for name in (self.SELECT, self.SMOKE):
+            with self.subTest(step=name):
+                result = subprocess.run(
+                    [self.bash, "-n"], input=self.step(name)[1], capture_output=True, text=True, check=False,
+                )
+                self.assertEqual(0, result.returncode, result.stderr)
 
 
 class CheckAllShTest(unittest.TestCase):

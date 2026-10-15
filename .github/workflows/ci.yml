@@ -36,6 +36,23 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install uv (the static gate uses uvx-based checks)
         run: python3 -m pip install uv
+      - name: Select runner Chrome for sandboxed Mermaid rendering
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          if ! chrome_path="$(command -v google-chrome)" || ! test -x "$chrome_path"; then
+            printf 'error: Linux runner requires an executable google-chrome for Mermaid rendering\n' >&2
+            exit 1
+          fi
+          printf 'Mermaid browser: %s\n' "$chrome_path"
+          "$chrome_path" --version
+          printf 'PUPPETEER_EXECUTABLE_PATH=%s\n' "$chrome_path" >> "$GITHUB_ENV"
+      - name: Smoke-test sandboxed Mermaid rendering
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          printf 'flowchart TD\n  A --> B\n' > "$RUNNER_TEMP/sf-mermaid-smoke.mmd"
+          python3 scripts/check_mermaid.py "$RUNNER_TEMP/sf-mermaid-smoke.mmd"
       - name: Byte-compile shipped Python
         run: python3 -m compileall -q install.py scripts skills tests
       - name: Unit tests
