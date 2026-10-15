@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-15T20:52:06.454243+00:00",
-  "revision": 344,
+  "generated_at": "2026-10-15T21:17:29.211380+00:00",
+  "revision": 347,
   "streams": [
     {
       "id": "W-foundation",
@@ -108,7 +108,7 @@
       "counts": {
         "planned": 0,
         "ready": 1,
-        "in-progress": 0,
+        "in-progress": 1,
         "review": 6,
         "built": 0,
         "done": 0,
@@ -294,6 +294,7 @@
         "VAL-CROSS"
       ],
       "order": [
+        54,
         29,
         30,
         31,
@@ -8372,7 +8373,9 @@
       "claim": {
         "live": false
       },
-      "blocks": [],
+      "blocks": [
+        54
+      ],
       "history": [
         {
           "at": "2026-10-15T18:16:52.213152+00:00",
@@ -9238,6 +9241,67 @@
       "source_key": "launch-publication/readme-asset-provenance",
       "evidence_contract": 1,
       "review_subject_sha": "1da4efcfcf90a937d57ab5b677b5570d69964ec4"
+    },
+    {
+      "id": 54,
+      "epic": 5,
+      "stream": "W-launch",
+      "type": "story",
+      "title": "Explain the complete factory through orchestration and delivery graphs",
+      "status": "in-progress",
+      "state": "in-progress",
+      "owner": "codex-lifecycle",
+      "after": [
+        47
+      ],
+      "covers": [
+        "VAL-FACTORY-CYCLE",
+        "VAL-ASSET-001",
+        "VAL-SITE-006"
+      ],
+      "risk": "standard",
+      "hitl": false,
+      "plan_checkpoint": false,
+      "done_checkpoint": false,
+      "blocked": null,
+      "receipts": {},
+      "baseline_sha": null,
+      "branch": null,
+      "pr": null,
+      "merged_sha": null,
+      "claim": {
+        "live": true,
+        "owner": "codex-lifecycle",
+        "paths": [
+          "site/img/delivery-graph.svg",
+          "site/index.html",
+          "site/styles",
+          "assets",
+          "scripts/render_assets.py",
+          "tests/test_assets.py",
+          "tests/test_showcase.py",
+          "docs/launch-assets.md"
+        ],
+        "claimed_at": "2026-10-15T21:17:29.171036+00:00"
+      },
+      "blocks": [],
+      "history": [
+        {
+          "at": "2026-10-15T21:17:29.107974+00:00",
+          "by": "orchestrator",
+          "from": "backlog",
+          "to": "ready-for-dev"
+        },
+        {
+          "at": "2026-10-15T21:17:29.205969+00:00",
+          "by": "codex-lifecycle",
+          "from": "ready-for-dev",
+          "to": "in-progress"
+        }
+      ],
+      "findings": [],
+      "source_key": "launch-publication/lifecycle-system-map",
+      "evidence_contract": 1
     }
   ],
   "frontier": {
@@ -9257,7 +9321,14 @@
   "diagnostics": {
     "unpinned_gates": [],
     "undeclared_after": [],
-    "order_conflicts": [],
+    "order_conflicts": [
+      {
+        "epic": 5,
+        "story": 54,
+        "prerequisite": 47,
+        "detail": "epic 5 order places story 54 before its prerequisite 47"
+      }
+    ],
     "inconsistencies": []
   },
   "decision_queue": [
