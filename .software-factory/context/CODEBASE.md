@@ -5,8 +5,8 @@
 > (`<skill-dir>` is the installed skill directory, e.g. `.claude/skills/sf-crawl`
 > or `.agents/skills/sf-crawl`).
 
-- Source revision: 7e89368574c49ac2a5845476aebc5aa8440bb2f4
-- Generated: 2026-10-15T13:33:47Z
+- Source revision: fd7c0f0067d8657cb248b9acf595dcdfe07ff5cf
+- Generated: 2026-10-15T14:00:14Z
 
 ## Limits
 
@@ -288,4 +288,4 @@ Everything parsed cleanly.
 
 ## File census
 
-247 file(s) crawled. Counts by extension: `.md` 109, `.py` 68, `.json` 22, `.yaml` 14, `.tmpl` 7, `.yml` 7, `.toml` 4, `(no extension)` 3, `.mdc` 3, `.sh` 3, `.ts` 3, `.txt` 3, `.sha256` 1.
+249 file(s) crawled. Counts by extension: `.md` 109, `.py` 68, `.json` 24, `.yaml` 14, `.tmpl` 7, `.yml` 7, `.toml` 4, `(no extension)` 3, `.mdc` 3, `.sh` 3, `.ts` 3, `.txt` 3, `.sha256` 1.

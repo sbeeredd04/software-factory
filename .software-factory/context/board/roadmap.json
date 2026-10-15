@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-15T13:44:07.475925+00:00",
-  "revision": 261,
+  "generated_at": "2026-10-15T14:00:14.323289+00:00",
+  "revision": 262,
   "streams": [
     {
       "id": "W-foundation",
@@ -4310,6 +4310,48 @@
           },
           "limits": [
             "Product source/criteria/canonical30caseplan unchanged at this tested SHA. Source permission/real provider auth, livehost, production/publication and human epic acceptance not established. Canonical eval supplement needs separate actualowner decision; private red receipt is not a passing gate."
+          ]
+        },
+        "eval-admission-first-gate": {
+          "type": "verification",
+          "status": "fail",
+          "subject_sha": "fd7c0f0067d8657cb248b9acf595dcdfe07ff5cf",
+          "command": "bash scripts/check_all.sh",
+          "exit_code": 1,
+          "artifact": ".software-factory/runs/software-factory-v01/evidence/eval-admission-first-gate.log",
+          "artifact_sha256": "6e2ebd9f64748a561d506042d773ea0ee4b77b31899ef0b0ca60efe5a174bd8f",
+          "unit_tests": {
+            "run": 709,
+            "passed": 706,
+            "failed": 2,
+            "skipped": 1,
+            "seconds": 408.737
+          },
+          "evals": {
+            "passed": 47,
+            "failed": 1,
+            "unverified": 0,
+            "quarantined": 0,
+            "skipped": 0
+          },
+          "failed_cases": [
+            "SKL-CRAWL-002"
+          ],
+          "summary": "First approved48-case gate fails only generated crawl freshness and enclosing dogfood expectation: root omitted two newly tracked evaluation admission/history JSONfiles from CODEBASE total (247vs249). Root will refresh and repeat fullgate; all other static/network steps passed. No pass asserted for this subject.",
+          "limits": [
+            "Source acceptance and genuine owner check-contract approval do not replace passing gate evidence. No production/publication/human epic acceptance established."
+          ]
+        },
+        "eval-admission-source-review": {
+          "type": "source-review",
+          "status": "accepted",
+          "subject_sha": "fd7c0f0067d8657cb248b9acf595dcdfe07ff5cf",
+          "reviewer": "mission-status",
+          "artifact": ".software-factory/runs/software-factory-v01/evidence/eval-admission-source-review.md",
+          "artifact_sha256": "df2896c20a2f3bc73a18a40e01eab2979110d4c19b239e978c5b35f31496d9b2",
+          "summary": "16 independent source checks confirm exact22 approvedcaseobjects/order, original30prefix and rawsignedhistory, current48payload8ed... and full52contract6de...; fourfuturecontracts remain approved/deferred. Chat authority comes from actualparent ownerreply, not source authentication.",
+          "limits": [
+            "No tests executed by reviewer; first rootfullgate independentlyfailed stale generatedfilecount."
           ]
         }
       },
