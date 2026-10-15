@@ -63,18 +63,34 @@ Every output PNG is validated before any committed output is replaced.
 
 ## Output inventory
 
-The editable delivery-cycle graphic is `site/img/delivery-graph.svg` in the
-full source checkout. It is a developer source, not an installer requirement.
-The public site and asset templates reference that one local SVG through `<use>`
-clones; edit the source graphic, then regenerate and review the affected PNGs. The
-renderer must resolve each clone's geometry and verify actual custom Inter
-glyph use for every cloned SVG text node through CDP. A font query on the
-outer host element alone is insufficient: it previously missed the cloned
-text. The committed render receipt records 17 cycle text nodes in each of its
-five cycle-bearing captures, with positive custom Inter Regular or Semibold
-glyph counts. The earlier focused 16-node observation preceded the final
-source. Missing geometry or glyph proof is a capture failure and should preserve
-the prior published images.
+The editable lifecycle graphic is `site/img/delivery-graph.svg` in the full
+source checkout. Its `factory-cycle` group is the compact layered overview
+(viewBox `0 0 1000 600`, 26 text nodes). Its `factory-system` group is the
+expanded system map (viewBox `0 660 1440 1080`, 52 text nodes), selected by the
+standalone `system-map` view fragment. The showcase displays both through local
+SVG `use` clones; below 961px, a linked prose guide supplies the expanded map's
+readable equivalent. The five graphic-bearing PNG compositions use the overview.
+
+The renderer resolves each displayed clone's exact view and reference, compares
+every cloned label with the captured canonical source, and verifies actual custom
+Inter Regular or SemiBold glyphs through CDP. It also rejects non-finite,
+unresolved or clipped geometry and overlapping label bounds. A font query on the
+outer host element alone is insufficient. Negative fixtures exercise both SVG
+variants; the committed render receipt contains the 26 observed overview labels
+in each of five captures. The expanded showcase view needs its own actual
+browser and visual review; PNG capture does not prove that view. Standalone SVG
+font rendering is separate from HTML-clone font evidence.
+
+The overview shows ongoing orchestration, concurrent story work, independent
+per-story proof, serialized integration and authorized feedback. The detailed
+view adds experiment/no-fix bug branches, delivery reconciliation, interrupted
+session recovery and reviewed improvement proposals. They illustrate canonical
+workflows; they are not live status or runtime proof. Human involvement is a
+conditional branch, and observation is scoped and off by default.
+
+Edit the canonical source, then regenerate and independently inspect every PNG
+at its real size. Preserve the exact view/count/reference and glyph checks when
+changing labels or geometry. Missing proof fails capture before replacement.
 
 The SVG is an editable source and does not change the seven PNG master
 dimensions or the three served PNG alias identities below.

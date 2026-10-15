@@ -4,10 +4,12 @@ from __future__ import annotations
 import argparse
 import importlib.metadata
 import json
+import math
 import os
 import platform
 import signal
 import sys
+import xml.etree.ElementTree as ET
 from pathlib import Path
 from urllib.parse import urlsplit
 
@@ -28,33 +30,79 @@ def walk_nodes(node):
             yield from walk_nodes(child)
 
 
+SVG_VIEWS = {"factory-cycle": ([0, 0, 1000, 600], 26),
+             "factory-system": ([0, 660, 1440, 1080], 52)}
+
+
 def cycle_evidence(page):
-    """Observe external-use geometry and actual custom-font glyphs, not CSS intent."""
-    geometry = page.locator("svg.factory-cycle use").evaluate(
+    return svg_evidence(page)
+
+
+def svg_evidence(page, selector="svg.factory-cycle", fragment="factory-cycle",
+                 reference="../../site/img/delivery-graph.svg#factory-cycle"):
+    """Inspect the actual clone: exact view, source text, geometry and custom glyphs."""
+    if fragment not in SVG_VIEWS or reference.rsplit("#", 1)[-1] != fragment:
+        raise ValueError("unexpected shared SVG variant")
+    viewbox, count = SVG_VIEWS[fragment]
+    observed = page.locator(selector).evaluate("element => { const b = element.getBoundingClientRect(); return {viewbox: [element.viewBox.baseVal.x, element.viewBox.baseVal.y, element.viewBox.baseVal.width, element.viewBox.baseVal.height], bounds: [b.left,b.top,b.right,b.bottom]}; }")
+    geometry = page.locator(selector + " use").evaluate(
         "element => { const b = element.getBBox(); return [b.x, b.y, b.width, b.height]; }")
-    if len(geometry) != 4 or geometry[2] < 500 or geometry[3] < 600:
-        raise ValueError("shared cycle SVG did not resolve its geometry")
+    if (observed.get("viewbox") != viewbox or len(geometry) != 4
+            or any(not isinstance(v, (int, float)) or not math.isfinite(v) for v in geometry)
+            or geometry[2] < viewbox[2] * .9 or geometry[3] < viewbox[3] * .9
+            or geometry[0] < viewbox[0] or geometry[1] < viewbox[1]
+            or geometry[0] + geometry[2] > viewbox[0] + viewbox[2]
+            or geometry[1] + geometry[3] > viewbox[1] + viewbox[3]):
+        raise ValueError("shared SVG did not resolve its reviewed view and geometry")
+    response = page.request.get(page.url.split("/assets/", 1)[0] + "/site/img/delivery-graph.svg")
+    data = response.body()
+    if response.status != 200 or len(data) > 100000:
+        raise ValueError("missing shared SVG source")
+    root = ET.fromstring(data)
+    group = next(node for node in root.iter() if node.get("id") == fragment)
+    expected = ["".join(node.itertext()) for node in group.iter("{http://www.w3.org/2000/svg}text")]
+    if len(expected) != count:
+        raise ValueError("unexpected shared SVG source text count")
     client = page.context.new_cdp_session(page)
     try:
         client.send("DOM.enable")
         client.send("CSS.enable")
         document = client.send("DOM.getDocument", {"depth": -1, "pierce": True})
         uses = [node for node in walk_nodes(document["root"]) if node.get("localName") == "use"]
-        if len(uses) != 1 or uses[0].get("attributes") != ["href", "../../site/img/delivery-graph.svg#factory-cycle"]:
-            raise ValueError("unexpected shared cycle SVG reference")
-        texts = [node for node in walk_nodes(uses[0]) if node.get("localName") == "text"]
-        if len(texts) != 17:
-            raise ValueError("shared cycle SVG text did not resolve")
+        selected = [node for node in uses if node.get("attributes") == ["href", reference]]
+        if len(selected) != 1 or (selector == "svg.factory-cycle" and len(uses) != 1):
+            raise ValueError("unexpected shared SVG reference")
+        texts = [node for node in walk_nodes(selected[0]) if node.get("localName") == "text"]
+        if len(texts) != count:
+            raise ValueError("shared SVG text did not resolve")
         observations = []
-        for node in texts:
+        for node, label in zip(texts, expected, strict=True):
+            actual = "".join(child.get("nodeValue", "") for child in node.get("children", []))
+            if not actual or actual != label:
+                raise ValueError("shared SVG text differs from its source")
             fonts = client.send("CSS.getPlatformFontsForNode", {"nodeId": node["nodeId"]})["fonts"]
             if not fonts or any(not font["isCustomFont"] or font["glyphCount"] <= 0
                                 or font["postScriptName"] not in {"Inter-Regular", "Inter-SemiBold"}
                                 for font in fonts):
-                raise ValueError("shared cycle SVG used a missing or fallback font")
-            observations.append({"text": "".join(child.get("nodeValue", "") for child in node.get("children", [])),
-                                 "fonts": fonts})
-        return {"geometry": geometry, "text_fonts": observations}
+                raise ValueError("shared SVG used a missing or fallback font")
+            object_id = client.send("DOM.resolveNode", {"nodeId": node["nodeId"]})["object"]["objectId"]
+            bounds = client.send("Runtime.callFunctionOn", {"objectId": object_id,
+                "functionDeclaration": "function() {const b=this.getBoundingClientRect(); return [b.left,b.top,b.right,b.bottom];}",
+                "returnByValue": True})["result"]["value"]
+            client.send("Runtime.releaseObject", {"objectId": object_id})
+            limit = observed["bounds"]
+            if (len(bounds) != 4 or any(not isinstance(v, (int, float)) or not math.isfinite(v) for v in bounds)
+                    or bounds[2] <= bounds[0] or bounds[3] <= bounds[1]
+                    or bounds[0] < limit[0] - .5 or bounds[1] < limit[1] - .5
+                    or bounds[2] > limit[2] + .5 or bounds[3] > limit[3] + .5):
+                raise ValueError("shared SVG text is unresolved or clipped")
+            for previous in observations:
+                other = previous["bounds"]
+                if min(bounds[2], other[2]) - max(bounds[0], other[0]) > .5 and min(bounds[3], other[3]) - max(bounds[1], other[1]) > .5:
+                    raise ValueError("shared SVG labels overlap: " + previous["text"] + " / " + actual)
+            observations.append({"text": actual, "fonts": fonts, "bounds": bounds})
+        return {"reference": reference, "viewbox": viewbox, "geometry": geometry,
+                "bounds": observed["bounds"], "text_fonts": observations}
     finally:
         client.detach()
 

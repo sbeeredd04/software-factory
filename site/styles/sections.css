@@ -41,12 +41,6 @@ html[data-motion='off'] *::before, html[data-motion='off'] *::after {
 .prompt-details { margin-top: 14px; font-size: 12px; }
 .prompt-details summary { min-height: 44px; display: list-item; cursor: pointer; padding-block: 10px; }
 #prompt-text { width: 100%; height: 255px; padding: 15px; resize: vertical; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: 12px/1.65 var(--mono); }
-.flow-steps { display: grid; grid-template-columns: repeat(4,1fr); padding: 0; list-style: none; gap: 0; counter-reset: step; }
-.flow-steps li { border-top: 1px solid var(--ink); padding: 20px 24px 28px 0; min-width: 0; counter-increment: step; }
-.flow-steps li::before { content: '0' counter(step); font: 11px var(--mono); color: var(--rust); }
-.flow-steps h3 { font-size: 23px; margin-block: 19px 10px; }
-.flow-steps p { font-size: 13px; color: var(--muted); }
-.flow-steps .owner { display: block; margin-top: 15px; font: 10px var(--mono); color: var(--green); }
 .checkpoint { padding: 25px 29px; background: var(--green-soft); border-left: 3px solid var(--green); display: grid; grid-template-columns: 1fr 1.8fr; gap: 30px; margin-top: 8px; }
 .checkpoint h3 { font-size: 23px; }
 .checkpoint p { font-size: 13px; color: var(--green); }
@@ -133,7 +127,6 @@ footer > p { color: var(--muted); font-size: 10px; margin-top: 24px; max-width: 
   .hero .eyebrow { font-size: 9px; }
   .graph-sheet { padding: 15px; }
   .quick-setup { gap: 30px; }
-  .flow-steps { grid-template-columns: repeat(2,1fr); }
   .evidence-layout { gap: 35px; }
   .skill-grid,.team-grid { grid-template-columns: repeat(2,1fr); }
 }
@@ -153,8 +146,6 @@ footer > p { color: var(--muted); font-size: 10px; margin-top: 24px; max-width: 
   .quick-setup,.loop-pair,.evidence-layout,.setup-interview,.faq-layout { grid-template-columns: 1fr; gap: 32px; }
   .host-tabs { gap: 22px; }
   .quick-setup { padding-block: 30px 45px; }
-  .flow-steps li { padding-right: 20px; }
-  .flow-steps h3 { font-size: 22px; }
   .checkpoint { grid-template-columns: 1fr; gap: 12px; padding: 23px; }
   .loop-card { padding: 24px; }
   .skill-grid,.team-grid { grid-template-columns: 1fr; }
@@ -194,3 +185,43 @@ footer > p { color: var(--muted); font-size: 10px; margin-top: 24px; max-width: 
 .asset-card img { width: 100%; height: auto; border: 1px solid var(--line); }
 .asset-card figcaption { margin-top: 10px; font-size: 14px; color: var(--muted); }
 .asset-card figcaption a { display: inline-flex; align-items: center; min-height: 44px; }
+
+/* The overview introduces the system; the expanded map has a readable prose companion. */
+.hero { grid-template-columns: 1fr; gap: 36px; }
+.hero > div { display: grid; grid-template-columns: 1fr 1fr; gap: 0 60px; align-items: start; }
+.hero .eyebrow, .hero h1 { grid-column: 1; }
+.hero-intro { grid-column: 2; grid-row: 2; margin-top: 0; max-width: 48ch; }
+.hero .actions { grid-column: 2; grid-row: 3; margin-top: 22px; }
+.hero-note { grid-column: 1; grid-row: 3; }
+.hero .graph-sheet { width: 100%; max-width: none; }
+.graph-sheet .factory-cycle { max-width: 1000px; margin-inline: auto; }
+.system-map { padding: 20px; background: var(--surface); border: 1px solid var(--line); }
+.system-map svg { width: 100%; }
+.system-map figcaption { font-size: 14px; color: var(--muted); margin-top: 14px; }
+.system-map figcaption a { display: inline-flex; align-items: center; min-height: 44px; }
+.map-narrow-note { display: none; }
+.system-guide { display: flex; flex-wrap: wrap; gap: 6px 24px; border-bottom: 1px solid var(--line); padding-block: 18px; margin-bottom: 30px; }
+.system-guide a { min-height: 44px; display: inline-flex; align-items: center; font-size: 14px; color: var(--green); }
+.system-explanations { display: grid; grid-template-columns: 1fr 1fr; gap: 30px 48px; margin-bottom: 36px; }
+.system-explanations article { min-width: 0; border-top: 1px solid var(--line); padding-top: 20px; scroll-margin-top: 24px; }
+.system-explanations .eyebrow { font-size: 10px; margin-bottom: 14px; }
+.system-explanations h3 { font-size: 25px; margin-bottom: 16px; }
+.system-explanations p:not(.eyebrow) { font-size: 16px; color: var(--muted); }
+.system-explanations article:last-child { grid-column: 1 / -1; max-width: 88ch; }
+@media (max-width: 960px) {
+  .system-map .factory-system, .map-wide-note { display: none; }
+  .map-narrow-note { display: inline; }
+  .system-map { padding: 14px 20px; }
+  .system-map figcaption { margin-top: 0; }
+  .hero > div { display: block; }
+  .hero-intro { margin-top: 25px; }
+  .hero-note { margin-top: 20px; }
+}
+@media (max-width: 760px) {
+  .system-explanations { grid-template-columns: 1fr; gap: 26px; }
+  .graph-sheet { padding: 12px; }
+  .graph-label { font-size: 8px; }
+}
+
+.system-share { margin-top: 24px; }
+.system-share summary { min-height: 44px; cursor: pointer; padding-block: 10px; font-size: 14px; }

@@ -224,61 +224,93 @@ class AssetTests(unittest.TestCase):
         helper = capture_helper()
         svg = ET.fromstring((ROOT / "site/img/delivery-graph.svg").read_text())
         text = " ".join(svg.itertext())
-        for label in ("Discover", "BMad epics", "+ stories", "Build", "Review", "+ test",
-                      "Ship", "+ verify", "Observe", "+ improve", "ANY PHASE",
-                      "Human decision, when needed", "Decide, then resume the affected step."):
+        for label in ("BMad stories", "Parallel work", "Independent", "Per story", "One merge owner",
+                      "SHA + behavior", "Human decision", "agreed autonomy", "repair or replan",
+                      "separating experiment", "independent disposition review", "Checkpoint"):
             self.assertIn(label, text)
-        self.assertEqual(len(svg.findall('.//{http://www.w3.org/2000/svg}text')), 17)
+        for fragment, (viewbox, count) in helper.SVG_VIEWS.items():
+            group = next(node for node in svg.iter() if node.get("id") == fragment)
+            self.assertEqual(len(group.findall('.//{http://www.w3.org/2000/svg}text')), count)
+            self.assertEqual(len(viewbox), 4)
+        view = next(node for node in svg.iter() if node.get("id") == "system-map")
+        self.assertEqual(view.get("viewBox"), "0 660 1440 1080")
         self.assertIn("site/img/delivery-graph.svg", render.INPUTS)
         for name in render.SIZES:
             source = (ROOT / f"assets/templates/{name}.html").read_text()
             self.assertEqual(source.count('href="../../site/img/delivery-graph.svg#factory-cycle"'),
                              int(name in helper.CYCLE_ASSETS))
+            if name in helper.CYCLE_ASSETS:
+                self.assertIn('viewBox="0 0 1000 600"', source)
             self.assertNotIn("<path", source)
             self.assertNotIn("Human epic checkpoint", source)
 
-    def test_cycle_capture_requires_resolved_geometry_and_actual_custom_glyph_fonts(self):
+    def svg_fixture(self, fragment="factory-cycle", fault=None):
         helper = capture_helper()
-        for fault in (None, "geometry", "missing_text", "wrong_reference", "missing_font", "fallback", "wrong_font", "no_glyphs"):
-            with self.subTest(fault=fault):
-                page = mock.Mock()
-                page.locator.return_value.evaluate.return_value = [46, 18, 572, 654] if fault != "geometry" else [0, 0, 0, 0]
-                texts = [{"localName": "text", "nodeId": i + 10,
-                          "children": [{"nodeValue": f"label {i}"}]} for i in range(17)]
-                if fault == "missing_text":
-                    texts.pop()
-                use = {"localName": "use", "attributes": ["href", "../../site/img/delivery-graph.svg#factory-cycle"],
-                       "shadowRoots": [{"children": texts}]}
-                if fault == "wrong_reference":
-                    use["attributes"][1] = "foreign.svg#factory-cycle"
-                font = {"postScriptName": "Inter-Regular", "isCustomFont": True, "glyphCount": 8}
-                if fault == "fallback":
-                    font["isCustomFont"] = False
-                if fault == "wrong_font":
-                    font["postScriptName"] = "Arial"
-                if fault == "no_glyphs":
-                    font["glyphCount"] = 0
-                client = page.context.new_cdp_session.return_value
+        source = (ROOT / "site/img/delivery-graph.svg").read_bytes()
+        group = next(node for node in ET.fromstring(source).iter() if node.get("id") == fragment)
+        labels = ["".join(node.itertext()) for node in group.iter("{http://www.w3.org/2000/svg}text")]
+        page = mock.Mock()
+        page.url = "http://127.0.0.1:1234/assets/templates/loop.html"
+        response = page.request.get.return_value
+        response.status, response.body.return_value = 200, source
+        viewbox = helper.SVG_VIEWS[fragment][0]
+        observed = {"viewbox": viewbox if fault != "viewbox" else [0, 0, 1, 1], "bounds": [0, 0, 1440, 1080]}
+        geometry = [8, 12, 985, 586] if fragment == "factory-cycle" else [10, 676, 1420, 1059]
+        if fault == "geometry":
+            geometry = [0, 0, 0, 0]
+        if fault == "nan":
+            geometry = [0, 0, float("nan"), 600]
+        page.locator.side_effect = lambda selector: mock.Mock(evaluate=mock.Mock(return_value=geometry if selector.endswith(" use") else observed))
+        texts = [{"localName": "text", "nodeId": i + 10,
+                  "children": [{"nodeValue": label}]} for i, label in enumerate(labels)]
+        if fault == "missing_text":
+            texts.pop()
+        if fault == "wrong_text":
+            texts[0]["children"][0]["nodeValue"] = "different text with same count"
+        reference = "../../site/img/delivery-graph.svg#" + fragment
+        use = {"localName": "use", "attributes": ["href", reference], "shadowRoots": [{"children": texts}]}
+        if fault == "wrong_reference":
+            use["attributes"][1] = "foreign.svg#" + fragment
+        font = {"postScriptName": "Inter-Regular", "isCustomFont": fault != "fallback", "glyphCount": 0 if fault == "no_glyphs" else 8}
+        if fault == "wrong_font":
+            font["postScriptName"] = "Arial"
+        client = page.context.new_cdp_session.return_value
 
-                def response(method, _args=None, *, use=use, fault=fault, font=font):
-                    if method == "DOM.getDocument":
-                        return {"root": {"children": [use]}}
-                    if method == "CSS.getPlatformFontsForNode":
-                        return {"fonts": [] if fault == "missing_font" else [font]}
-                    return {}
+        def response(method, args=None):
+            if method == "DOM.getDocument":
+                return {"root": {"children": [use]}}
+            if method == "CSS.getPlatformFontsForNode":
+                return {"fonts": [] if fault == "missing_font" else [font]}
+            if method == "DOM.resolveNode":
+                return {"object": {"objectId": str(args["nodeId"] - 10)}}
+            if method == "Runtime.callFunctionOn":
+                index = int(args["objectId"])
+                y = 10 + (0 if fault == "overlap" else index * 15)
+                return {"result": {"value": [10, y, 0 if fault == "clipped" else 210, y + 12]}}
+            return {}
 
-                client.send.side_effect = response
-                if fault:
-                    with self.assertRaises(ValueError):
-                        helper.cycle_evidence(page)
-                else:
-                    evidence = helper.cycle_evidence(page)
-                    self.assertEqual(len(evidence["text_fonts"]), 17)
-                if fault != "geometry":
-                    client.detach.assert_called_once()
+        client.send.side_effect = response
+        return helper, page, client, reference, labels
+
+    def test_cycle_capture_requires_resolved_geometry_and_actual_custom_glyph_fonts(self):
+        for fragment in ("factory-cycle", "factory-system"):
+            for fault in (None, "geometry", "nan", "viewbox", "missing_text", "wrong_text", "wrong_reference",
+                          "missing_font", "fallback", "wrong_font", "no_glyphs", "clipped", "overlap"):
+                with self.subTest(fragment=fragment, fault=fault):
+                    helper, page, client, reference, labels = self.svg_fixture(fragment, fault)
+                    if fault:
+                        with self.assertRaises(ValueError):
+                            helper.svg_evidence(page, "svg." + fragment, fragment, reference)
+                    else:
+                        evidence = helper.svg_evidence(page, "svg." + fragment, fragment, reference)
+                        self.assertEqual([item["text"] for item in evidence["text_fonts"]], labels)
+                    if fault not in {"geometry", "nan", "viewbox"}:
+                        client.detach.assert_called_once()
 
     def test_receipt_validation_rejects_missing_or_fallback_cycle_proof(self):
         manifest = self.sources()
+        helper, page, _, _, _ = self.svg_fixture()
+        evidence = helper.cycle_evidence(page)
         report = {"packages": render.VERSIONS, "browser_version": "156.0.8078.4",
                   "settings": {"sandbox": True, "scale": 1, "locale": "en-US", "timezone": "UTC",
                                "color_scheme": "light", "service_workers": "block", "permissions": []},
@@ -288,14 +320,16 @@ class AssetTests(unittest.TestCase):
                 "ready": {"viewport": [entry["width"], entry["height"]],
                           "fonts": ["Bricolage:700", "Inter:400", "Inter:600", "JetBrains Mono:400"],
                           "overflow": [], "failed": [], "images_decoded": True},
-                "requests": [{"path": "/site/img/delivery-graph.svg"}],
-                "cycle": {"geometry": [46, 18, 572, 654], "text_fonts": [
-                    {"text": "synthetic label", "fonts": [{"isCustomFont": True,
-                     "glyphCount": 5, "postScriptName": "Inter-Regular"}]} for _ in range(17)]}})
+                "requests": [{"path": "/site/img/delivery-graph.svg"}], "cycle": copy.deepcopy(evidence)})
         render.validate_report(report, manifest)
         for mutation in (lambda c: c.pop("cycle"), lambda c: c.update(requests=[{"path": "/other.svg"}]),
                          lambda c: c["cycle"].update(geometry=[0, 0, 0, 0]),
+                         lambda c: c["cycle"].update(viewbox=[0, 0, 640, 680]),
+                         lambda c: c["cycle"].update(reference="foreign.svg#factory-cycle"),
                          lambda c: c["cycle"]["text_fonts"].pop(),
+                         lambda c: c["cycle"]["text_fonts"][0].update(text="wrong label"),
+                         lambda c: c["cycle"]["text_fonts"][0].update(bounds=[0, 0, 2000, 2000]),
+                         lambda c: c["cycle"]["text_fonts"][0].update(bounds=c["cycle"]["text_fonts"][1]["bounds"]),
                          lambda c: c["cycle"]["text_fonts"][0]["fonts"][0].update(isCustomFont=False)):
             invalid = copy.deepcopy(report)
             mutation(invalid["captures"][0])

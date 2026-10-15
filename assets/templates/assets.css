@@ -20,45 +20,24 @@ em { font-style: normal; color: var(--rust); }
 .split { display: grid; grid-template-columns: 1.03fr 1fr; gap: 38px; align-items: center; flex: 1; padding-bottom: 32px; }
 .split h1 { font-size: 65px; }
 .split .lede { font-size: 18px; max-width: 440px; }
-.stamp { display: inline-block; margin-top: 26px; padding: 9px 13px; background: var(--green-soft); border: 1px solid var(--line); font: 400 12px var(--mono); color: var(--green); }
-.diagram { background: var(--surface); border: 1px solid var(--line); padding: 25px; box-shadow: 7px 7px 0 #e5e6dc; }
+.diagram { background: var(--surface); border: 1px solid var(--line); padding: 25px; box-shadow: 7px 7px 0 #e5e6dc; min-width: 0; }
 .diagram svg { width: 100%; height: auto; }
-.diagram text { font-family: var(--body); font-size: 14px; fill: var(--ink); }
-.diagram .small { font-family: var(--mono); font-size: 9px; fill: var(--muted); }
-.diagram rect { fill: var(--paper); stroke: var(--line); }
-.diagram .proof { fill: var(--green-soft); stroke: var(--green); }
-.diagram .human { fill: var(--rust-soft); stroke: var(--rust); }
-.diagram .edge { fill: none; stroke: var(--muted); stroke-width: 1.6; }
-.diagram .repair { fill: none; stroke: var(--rust); stroke-width: 1.6; stroke-dasharray: 4 4; }
 .diagram .caption { margin-top: 13px; font: 400 11px/1.5 var(--mono); color: var(--muted); }
 .stats { display: flex; gap: 30px; margin-top: 30px; }
 .stats div { max-width: 130px; font: 400 13px/1.4 var(--body); color: var(--muted); }
 .stats strong { display: block; color: var(--ink); font: 700 35px/1 var(--display); margin-bottom: 6px; }
 .hero .canvas { padding: 64px 76px; }
-.hero .split { gap: 70px; }
-.hero .split h1 { font-size: 88px; }
-.hero .split .lede { font-size: 24px; max-width: 580px; }
+.hero .split .lede { font-size: 23px; max-width: 580px; }
 .hero .brand { font-size: 27px; }
 .hero .label, .hero .footer { font-size: 14px; }
-.hero .diagram { padding: 33px; }
 .hero .stats { gap: 42px; }
 .hero .stats strong { font-size: 46px; }
 .hero .stats div { font-size: 17px; max-width: 170px; }
-.hero .stamp { font-size: 16px; }
 .hero .diagram .caption { font-size: 14px; }
 .section-head { display: block; margin-bottom: 26px; }
 .section-head .label { margin-bottom: 12px; }
 .section-head h1 { font-size: 52px; }
 .section-head .lede { margin-top: 14px; max-width: 990px; font-size: 18px; }
-.steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 6px; }
-.step { background: var(--surface); border: 1px solid var(--line); padding: 18px; min-height: 130px; }
-.step .label { color: var(--green); margin-bottom: 11px; }
-.step h2 { font-size: 27px; }
-.step p { margin-top: 9px; font-size: 14px; color: var(--muted); }
-.step.prove { background: var(--green-soft); border-color: var(--green); }
-.step.human { background: var(--rust-soft); border-color: var(--rust); }
-.return { margin-top: 18px; padding: 15px 20px; border-left: 3px solid var(--rust); font: 400 15px/1.5 var(--body); }
-.return strong { font-weight: 600; color: var(--rust); }
 .teams { display: grid; grid-template-columns: 1fr 1fr 1.08fr; gap: 18px; }
 .team-group { padding: 23px; background: var(--surface); border: 1px solid var(--line); }
 .team-group .label { margin-bottom: 18px; color: var(--green); }
@@ -75,22 +54,16 @@ em { font-style: normal; color: var(--rust); }
 .route.recommended { background: var(--green-soft); }
 .routes { border-bottom: 1px solid var(--line); }
 .host-note { font: 400 12px/1.5 var(--mono); margin-top: 17px; color: var(--rust); }
-.launch-landscape .split h1 { font-size: 62px; }
-.launch-landscape .stats { margin-top: 26px; }
 .launch-portrait .canvas { padding: 65px; }
 .launch-portrait .masthead { margin-bottom: 50px; }
 .launch-portrait h1 { font-size: 86px; max-width: 850px; }
 .launch-portrait .lede { font-size: 25px; max-width: 820px; margin-top: 27px; }
-.launch-portrait .diagram { margin-top: 36px; padding: 23px; }
-.launch-portrait .diagram svg { height: 340px; }
 .launch-portrait .stats { margin-top: 30px; gap: 65px; }
 .launch-portrait .stats div { max-width: 200px; font-size: 18px; }
 .launch-portrait .stats strong { font-size: 48px; }
 .launch-portrait .footer { font-size: 14px; }
-.social-preview .canvas { padding: 64px; }
+.social-preview .canvas { padding: 42px 48px; padding-block: 26px; }
 .social-preview .masthead { margin-bottom: 20px; }
-.social-preview .split { padding-bottom: 20px; gap: 34px; }
-.social-preview .split h1 { font-size: 57px; }
 .social-preview .stats, .social-preview .diagram .caption { display: none; }
 .social-preview .diagram { padding: 20px; }
 .social-preview .diagram svg { height: 280px; }
@@ -98,19 +71,16 @@ em { font-style: normal; color: var(--rust); }
 .launch-landscape .diagram svg { height: 280px; }
 .loop .masthead { margin-bottom: 24px; }
 .loop .section-head { margin-bottom: 20px; }
-.loop .step { padding: 14px; }
-.loop .step .label { margin-bottom: 8px; }
-.loop .return { padding-block: 12px; }
 
 /* Continuous factory cycle: one shared SVG, with generous label space. */
 .pitch-label { margin-bottom: 22px; color: var(--green); }
 .authority-note { margin-top: 22px; color: var(--green); font: 400 16px/1.5 var(--body); }
 .hero .canvas { padding: 52px 66px; }
 .hero .masthead { margin-bottom: 20px; }
-.hero .split { grid-template-columns: 1fr 1fr; gap: 60px; padding-bottom: 20px; }
-.hero .split h1 { font-size: 88px; }
-.hero .diagram { padding: 12px 24px; box-shadow: none; border: 0; background: transparent; }
-.hero .diagram svg { height: 595px; }
+.hero .split { gap: 36px; grid-template-columns: .72fr 1.28fr; padding-bottom: 20px; }
+.hero .split h1 { font-size: 82px; }
+.hero .diagram { padding: 0; box-shadow: none; border: 0; background: transparent; }
+.hero .diagram svg { height: auto; }
 .hero .diagram .caption { text-align: center; font-size: 13px; margin-top: 4px; }
 .hero .stats { margin-top: 25px; }
 .hero .stats strong { font-size: 36px; }
@@ -119,32 +89,39 @@ em { font-style: normal; color: var(--rust); }
 .diagram .factory-cycle { width: 100%; }
 .social-preview .diagram, .launch-landscape .diagram, .launch-portrait .diagram, .loop .diagram { padding: 0; border: 0; box-shadow: none; background: transparent; }
 .social-preview .diagram svg { height: 370px; }
-.social-preview .split { grid-template-columns: 1.1fr 1fr; gap: 30px; padding-bottom: 12px; }
-.social-preview .split h1 { font-size: 60px; }
+.social-preview .split { padding-bottom: 12px; gap: 26px; grid-template-columns: .72fr 1.28fr; }
+.social-preview .split h1 { font-size: 57px; }
 .social-preview .pitch-label { font-size: 10px; }
-.social-preview .lede { font-size: 19px; }
+.social-preview .lede { font-size: 17px; }
 .launch-landscape .diagram svg { height: 425px; }
 .launch-landscape .diagram .caption { font-size: 10px; text-align: center; margin-top: 5px; }
-.launch-landscape .split { padding-bottom: 16px; gap: 28px; }
 .launch-landscape .pitch-label { font-size: 10px; margin-bottom: 15px; }
-.launch-landscape .stats { margin-top: 22px; }
-.launch-landscape .split h1 { font-size: 64px; }
+.launch-landscape .stats { margin-top: 18px; gap: 24px; }
+.launch-landscape .split h1 { font-size: 57px; }
 .launch-portrait .canvas { padding: 55px 65px; }
 .launch-portrait .masthead { margin-bottom: 30px; }
 .launch-portrait h1 { font-size: 80px; max-width: none; }
 .launch-portrait .lede { font-size: 24px; margin-top: 20px; }
-.launch-portrait .diagram { margin-top: 24px; }
-.launch-portrait .diagram svg { height: 610px; }
+.launch-portrait .diagram { margin-top: 60px; padding: 23px; }
+.launch-portrait .diagram svg { height: auto; }
 .launch-portrait .diagram .caption { text-align: center; font-size: 13px; }
 .portrait-summary { font: 400 19px/1.5 var(--body); color: var(--muted); margin-top: 20px; }
 .loop .section-head h1 { font-size: 44px; line-height: 1.12; }
 .loop .section-head { margin-bottom: 12px; }
 .cycle-detail { display: grid; grid-template-columns: 1fr 1fr; gap: 42px; padding-bottom: 18px; }
-.loop .diagram svg { height: 450px; }
+.loop .diagram svg { height: auto; }
 .cycle-notes h2 { font-size: 25px; line-height: 1.12; margin-top: 18px; }
 .cycle-notes h2:first-child { margin-top: 10px; }
 .cycle-notes p { font: 400 16px/1.5 var(--body); color: var(--muted); margin-top: 8px; }
 .cycle-notes .cycle-boundary { border-top: 1px solid var(--line); padding-top: 16px; margin-top: 18px; color: var(--rust); font-size: 14px; }
 .launch-landscape .masthead { margin-bottom: 12px; }
 .launch-landscape .footer { padding-top: 12px; }
-.launch-landscape .split { padding-bottom: 10px; }
+.launch-landscape .split { padding-bottom: 10px; gap: 26px; grid-template-columns: .7fr 1.3fr; }
+
+.social-preview .diagram svg, .launch-landscape .diagram svg { height: auto; }
+.launch-landscape .canvas { padding: 36px 42px; }
+.launch-landscape .lede { font-size: 17px; }
+.loop .cycle-detail { grid-template-columns: 1.42fr 1fr; gap: 28px; align-items: center; }
+.loop .cycle-notes h2 { font-size: 23px; margin-top: 16px; }
+.loop .cycle-notes p { font-size: 15px; line-height: 1.45; }
+.loop .cycle-notes .cycle-boundary { font-size: 13px; }

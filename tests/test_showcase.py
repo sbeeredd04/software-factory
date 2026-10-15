@@ -102,6 +102,30 @@ class ShowcaseTests(unittest.TestCase):
         self.assertIn("missing SVG fragment", audit_html(
             source.replace('href="img/delivery-graph.svg#factory-cycle"', 'href="img/delivery-graph.svg#absent-cycle"'), SITE))
 
+    def test_system_map_semantics_and_mobile_reading_equivalent(self):
+        source = self.source()
+        self.assertEqual(source.count('href="img/delivery-graph.svg#factory-system"'), 1)
+        self.assertIn('viewBox="0 660 1440 1080"', source)
+        self.assertIn('href="img/delivery-graph.svg#system-map"', source)
+        for phrase in ("risk-sized BMad", "independent plan reviewer", "dependency evidence", "agents and models",
+                       "budgets", "conflicting paths", "Each worker implements", "One proven story can advance",
+                       "no global all-workers barrier", "combined result", "approved authority", "artifact identity",
+                       "unknown delivery proof", "separating experiments", "independent disposition review",
+                       "off by default", "provider outcomes", "holds its dependents only", "evidence navigation",
+                       "never dispatch agents", "canaries", "rollback"):
+            self.assertIn(phrase.lower(), source.lower())
+        tags = Page(source).tags
+        for name in ("plan", "work", "proof", "deliver", "feedback", "recovery", "context"):
+            self.assertIn(("article", {"id": "system-" + name}), tags)
+            self.assertIn('href="#system-' + name + '"', source)
+        css = (SITE / "styles/sections.css").read_text()
+        mobile = css.split("@media (max-width: 960px)")[-1]
+        self.assertIn(".system-map .factory-system", mobile)
+        self.assertIn("display: none", mobile)
+        self.assertIn(".map-narrow-note { display: inline; }", mobile)
+        self.assertNotRegex(css, r"\.system-explanations[^{}]*\{[^{}]*display:\s*none")
+        self.assertIn("grid-template-columns: 1fr", mobile)
+
     def test_substantive_sections_and_palette(self):
         page = Page(self.source())
         ids = {a.get("id") for _, a in page.tags}

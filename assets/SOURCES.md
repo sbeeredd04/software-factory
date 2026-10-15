@@ -1,6 +1,6 @@
 # Marketing asset sources
 
-The seven HTML templates, inline SVG delivery diagrams and their PNG renderings
+The seven HTML templates, shared SVG system diagrams and their PNG renderings
 are original Software Factory artwork, distributed under the project's MIT
 license. The project mark is the original `site/img/mark.svg`. Host names are
 plain text; no vendor logo or endorsement is used. Product names belong to their
@@ -39,8 +39,20 @@ these templates use no WebGL. Actual launch arguments are inspected for sandbox
 bypasses. The helper and its dependency are excluded from consumer release
 payloads; `scripts/render_assets.py` itself imports only the standard library.
 
-The cycle illustration has one canonical editable source at
-`site/img/delivery-graph.svg`. Local SVG `use` references share it between the
-showcase and marketing compositions. Its cycle covers BMad planning, development,
-review, verified delivery and feedback, with conditional human decisions outside
-the primary ring. All wording and geometry are original to this pack.
+The lifecycle illustration has one canonical editable source at
+`site/img/delivery-graph.svg`. Its overview (`factory-cycle`, 1000 × 600,
+26 labels) is shared by five marketing compositions and the showcase hero.
+Its expanded map (`factory-system`, 1440 × 1080, 52 labels, translated 660
+units down the source canvas) is shared by the showcase lifecycle section;
+the `system-map` view fragment opens that map directly. The site's prose guide
+provides a readable equivalent at narrow widths.
+
+Both views explain relationships in the canonical feature and bug workflows:
+ongoing orchestration, dependency readiness, parallel stories, independent proof,
+repair, sequential integration, approved delivery, authorized feedback and
+conditional human decisions. The expanded view includes separating experiments,
+independently reviewed no-fix closure, recovery and reviewed improvements.
+They assert no live activity or always-on monitoring. Text and geometry are
+original to this pack. Actual PNG capture records exact cloned text identities,
+visible geometry and custom Inter glyphs; separate browser review establishes
+the site's expanded presentation.

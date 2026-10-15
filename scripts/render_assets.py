@@ -7,6 +7,7 @@ import fcntl
 import hashlib
 import http.server
 import json
+import math
 import os
 import re
 import signal
@@ -17,6 +18,7 @@ import sys
 import tempfile
 import threading
 import uuid
+import xml.etree.ElementTree as ET
 import zlib
 from pathlib import Path, PurePosixPath
 from urllib.parse import unquote, urlsplit
@@ -322,7 +324,12 @@ def child_process(argv, env, evidence, *, timeout):
     return stderr
 
 
-def validate_report(report, manifest):
+def validate_report(report, manifest, svg_source=None):
+    svg = ET.fromstring(svg_source if svg_source is not None else (ROOT / "site/img/delivery-graph.svg").read_bytes())
+    group = next(node for node in svg.iter() if node.get("id") == "factory-cycle")
+    labels = ["".join(node.itertext()) for node in group.iter("{http://www.w3.org/2000/svg}text")]
+    if len(labels) != 26:
+        raise ValueError("unexpected overview source text count")
     if (report.get("packages") != VERSIONS or report.get("browser_version") != "156.0.8078.4"
             or report.get("settings") != {"sandbox": True, "scale": 1, "locale": "en-US",
                                           "timezone": "UTC", "color_scheme": "light",
@@ -343,10 +350,27 @@ def validate_report(report, manifest):
         if entry["id"] not in {"team", "hosts"}:
             cycle = capture.get("cycle") or {}
             geometry, texts = cycle.get("geometry", []), cycle.get("text_fonts", [])
-            if (len(geometry) != 4 or geometry[2] < 500 or geometry[3] < 600 or len(texts) != 17
+            if (len(geometry) != 4 or any(not isinstance(v, (int, float)) or not math.isfinite(v) for v in geometry)
+                    or geometry[0] < 0 or geometry[1] < 0 or geometry[2] < 900 or geometry[3] < 540
+                    or geometry[0] + geometry[2] > 1000 or geometry[1] + geometry[3] > 600
+                    or cycle.get("reference") != "../../site/img/delivery-graph.svg#factory-cycle"
+                    or cycle.get("viewbox") != [0, 0, 1000, 600]
+                    or [item.get("text") for item in texts] != labels
                     or not any(request.get("path") == "/site/img/delivery-graph.svg" for request in capture["requests"])):
                 raise ValueError("shared cycle SVG evidence is incomplete")
+            bounds = cycle.get("bounds", [])
+            if len(bounds) != 4 or any(not isinstance(v, (int, float)) or not math.isfinite(v) for v in bounds) or bounds[2] <= bounds[0] or bounds[3] <= bounds[1]:
+                raise ValueError("shared SVG viewport bounds are missing")
+            seen_bounds = []
             for text in texts:
+                box = text.get("bounds", [])
+                if (len(box) != 4 or any(not isinstance(v, (int, float)) or not math.isfinite(v) for v in box)
+                        or box[2] <= box[0] or box[3] <= box[1]
+                        or box[0] < bounds[0] - .5 or box[1] < bounds[1] - .5
+                        or box[2] > bounds[2] + .5 or box[3] > bounds[3] + .5
+                        or any(min(box[2], b[2]) - max(box[0], b[0]) > .5 and min(box[3], b[3]) - max(box[1], b[1]) > .5 for b in seen_bounds)):
+                    raise ValueError("shared SVG text geometry is clipped or overlapping")
+                seen_bounds.append(box)
                 fonts = text.get("fonts", [])
                 if not text.get("text") or not fonts or any(
                         font.get("isCustomFont") is not True or font.get("glyphCount", 0) <= 0
@@ -373,7 +397,7 @@ def capture(manifest, sources, stage, cache, evidence):
             report = json.loads(read_at(stage_fd, "browser-report.json"))
         finally:
             os.close(stage_fd)
-        validate_report(report, manifest)
+        validate_report(report, manifest, sources["site/img/delivery-graph.svg"])
         if any(item["status"] != 200 for item in requests):
             raise ValueError("staged input request failed")
     outputs = {}
