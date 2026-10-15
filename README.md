@@ -6,6 +6,8 @@ An active Claude Code, Cursor or Codex session supplies the model, workers and t
 
 ![Illustrated Software Factory delivery loop](assets/hero.png)
 
+[Hero asset provenance and regeneration](docs/launch-assets.md).
+
 [![CI workflow configured](https://img.shields.io/badge/CI-workflow%20configured-informational)](docs/verification.md) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE) [![Release: pre-release](https://img.shields.io/badge/release-pre--release-orange)](CHANGELOG.md)
 
 > **Pre-release, targeting v0.1.0.** A local checkout is the available setup route described here. The release and public bootstrap endpoints are configured targets, not verified published artifacts. This project is non-affiliated with Anthropic, Anysphere, OpenAI, GitHub, BMad Method and Factory. See [Notice](NOTICE.md).
