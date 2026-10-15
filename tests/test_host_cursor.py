@@ -1,7 +1,7 @@
 """Tests for the Cursor host projection.
 
 Encodes VAL-HOST-005..008: the exact Cursor file set (shared .agents/skills
-payload with canonical frontmatter, .cursor/agents/sf-*.md, .cursor/hooks.json
+payload with explicit invocation frontmatter, .cursor/agents/sf-*.md, .cursor/hooks.json
 v1, .cursor/rules/software-factory.mdc, the runtime helper set) with no
 foreign-host artifacts, the hooks.json v1 non-destructive merge, the readonly
 agent matrix from hosts/cursor/agent-policy.json, and the short always-applied
@@ -29,6 +29,9 @@ validate = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(validate)
 
 GOLDENS = support.REPO / "tests" / "goldens" / "cursor"
+EXPLICIT_ONLY = {
+    "software-factory", "sf-help", "sf-agents", "sf-evolve", "sf-eval", "sf-principles",
+}
 READONLY_ROLES = {
     "sf-code-reviewer",
     "sf-design-reviewer",
@@ -109,18 +112,26 @@ class FileSetTests(CursorInstallCase):
         # A Cursor-only install carries no Codex skill policy files.
         self.assertEqual([], list(skills_dir.rglob("openai.yaml")))
 
-    def test_skills_payload_is_byte_identical_to_canonical(self):
+    def test_only_entry_admin_skills_gain_explicit_invocation_frontmatter(self):
+        sources = {
+            rel: (support.REPO / "skills" / rel).read_bytes()
+            for rel in canonical_tree()
+        }
         repo = self.install_fresh()
-        for rel in sorted(canonical_tree()):
-            canonical = support.REPO / "skills" / rel
-            projected = repo / ".agents/skills" / rel
-            self.assertEqual(
-                canonical.read_bytes(), projected.read_bytes(), rel
-            )
-        for path in (repo / ".agents/skills").rglob("SKILL.md"):
-            raw = path.read_text()
-            self.assertNotIn("argument-hint", raw, path)
-            self.assertNotIn("disable-model-invocation", raw, path)
+        for rel, canonical in sorted(sources.items()):
+            with self.subTest(path=rel):
+                projected = repo / ".agents/skills" / rel
+                raw = projected.read_text()
+                self.assertNotIn("argument-hint:", raw)
+                if Path(rel).name == "SKILL.md" and Path(rel).parts[0] in EXPLICIT_ONLY:
+                    meta = validate.parse_frontmatter(raw, projected)
+                    self.assertEqual("true", meta["disable-model-invocation"])
+                    self.assertEqual(1, raw.count("disable-model-invocation: true\n"))
+                    raw = raw.replace("disable-model-invocation: true\n", "", 1)
+                else:
+                    self.assertNotIn("disable-model-invocation:", raw)
+                self.assertEqual(canonical, raw.encode(), rel)
+                self.assertEqual(canonical, (support.REPO / "skills" / rel).read_bytes())
 
 
 class HookMergeTests(CursorInstallCase):

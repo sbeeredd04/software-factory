@@ -1,8 +1,8 @@
 # Generated from agents/sf-engineer.md by the Software Factory installer;
 # regenerate with install.py instead of editing by hand.
+# Permissions inherit the parent session; role instructions do not enforce isolation.
 name = "sf-engineer"
 description = "Use for standard implementation work with tests. Builds the smallest complete change, including error and recovery paths and obsolete-path removal, proven with the project's own commands."
-sandbox_mode = "workspace-write"
 developer_instructions = '''
 # Engineer
 

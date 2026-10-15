@@ -90,6 +90,10 @@ CODEX_BLOCK = (
     "`.software-factory/` and is ignored except for the committed\n"
     "`context/` home. Codex hooks run only after a one-time trust\n"
     "review: run `/hooks` and trust the factory hooks.\n"
+    "Custom agents inherit the parent session permissions; reviewer\n"
+    "instructions do not enforce a separate read-only sandbox. When enforced\n"
+    "read-only review is required, verify an actually read-only parent/session\n"
+    "or supported restriction before proceeding with dependent work.\n"
 )
 BLOCKS = {"CLAUDE.md": CLAUDE_BLOCK, "AGENTS.md": CODEX_BLOCK}
 
@@ -304,26 +308,21 @@ def parse_agent_frontmatter(path: Path) -> tuple[str, str, str]:
     return name, description, body
 
 
-def codex_agent_toml(path: Path, policy: dict) -> bytes:
-    """Convert a canonical role agent to the Codex TOML config layer.
+def codex_agent_toml(path: Path) -> bytes:
+    """Project canonical role intent; model and permissions inherit the parent.
 
-    Codex inheritance means omitting ``model`` entirely, never
-    ``model = "inherit"``; sandbox_mode carries the reviewer/evaluator
-    read-only matrix from hosts/codex/agent-policy.json.
+    Custom-agent sandbox_mode cannot override parent permissions. Preserve
+    reviewer instructions without claiming they create an enforced sandbox.
     """
     name, description, body = parse_agent_frontmatter(path)
     if "'''" in body:
         raise InstallError(f"agents/{path.name}: body cannot embed in TOML")
-    if name in set(policy.get("read_only", [])):
-        sandbox = "read-only"
-    else:
-        sandbox = "workspace-write"
     text = (
         f"# Generated from agents/{name}.md by the Software Factory installer;\n"
         "# regenerate with install.py instead of editing by hand.\n"
+        "# Permissions inherit the parent session; role instructions do not enforce isolation.\n"
         f"name = {json.dumps(name)}\n"
         f"description = {json.dumps(description)}\n"
-        f"sandbox_mode = {json.dumps(sandbox)}\n"
         "developer_instructions = '''\n"
         f"{body}"
         "'''\n"
@@ -403,12 +402,15 @@ def runtime_actions() -> list[Action]:
 def project_shared_skills(hosts: list[str]) -> list[Action]:
     """The one shared .agents/skills payload for Cursor and Codex.
 
-    Canonical bytes only: Claude-only frontmatter fields never appear here
-    (VAL-HOST-003/013). The Codex ``agents/openai.yaml`` policy files are
-    added when Codex is among the selected hosts; a Cursor-only install
-    stays free of Codex-specific files.
+    Apply each installed host's invocation policy to canonical sources.
+    Cursor needs its explicit-only frontmatter flag; Codex needs openai.yaml.
+    Combined Codex frontmatter tolerance and live host loading are unverified.
     """
     actions: list[Action] = []
+    cursor_explicit = (
+        set(load_policy("cursor").get("explicit_only", []))
+        if "cursor" in hosts else set()
+    )
     skills_src = PACK_ROOT / "skills"
     for skill_dir in sorted(skills_src.iterdir()):
         if not (skill_dir / "SKILL.md").is_file():
@@ -419,8 +421,14 @@ def project_shared_skills(hosts: list[str]) -> list[Action]:
             if "__pycache__" in src.parts or src.suffix == ".pyc":
                 continue
             rel = src.relative_to(skills_src).as_posix()
+            content = src.read_bytes()
+            if src.name == "SKILL.md" and skill_dir.name in cursor_explicit:
+                lines = content.decode("utf-8").split("\n")
+                closing = frontmatter_close(lines, f"skills/{rel}")
+                lines[closing:closing] = ["disable-model-invocation: true"]
+                content = "\n".join(lines).encode()
             actions.append(
-                Action(f".agents/skills/{rel}", "write", src.read_bytes(), None)
+                Action(f".agents/skills/{rel}", "write", content, None)
             )
     if "codex" in hosts:
         codex_policy = load_policy("codex")
@@ -472,11 +480,10 @@ def project_codex(root: Path, policy: dict, profile: str) -> list[Action]:
     del root, policy
     actions: list[Action] = []
     if profile == "full":
-        agent_policy = load_agent_policy("codex")
         for src in sorted((PACK_ROOT / "agents").glob("sf-*.md")):
             actions.append(Action(
                 f".codex/agents/{src.stem}.toml", "write",
-                codex_agent_toml(src, agent_policy), "codex"))
+                codex_agent_toml(src), "codex"))
         actions.extend(runtime_actions())
         actions.append(Action(".codex/hooks.json", "merge", None, "codex"))
         actions.append(Action("AGENTS.md", "block", None, "codex"))
@@ -776,11 +783,13 @@ def build_plan(
     allow: set[str],
 ) -> tuple[list[PlannedFile], list[str], dict | None]:
     """Build the full plan; merge-kind refusals raise before any write."""
+    previous = load_manifest(root)
+    installed_hosts = set(hosts) | set((previous or {}).get("hosts", []))
     actions: list[Action] = []
     for host in hosts:
         actions.extend(PROJECTORS[host](root, load_policy(host), profile))
     if any(host in ("cursor", "codex") for host in hosts):
-        actions.extend(project_shared_skills(hosts))
+        actions.extend(project_shared_skills(sorted(installed_hosts)))
     # Collapse duplicate destinations (runtime helpers, .gitignore) emitted
     # by more than one projector; identical content is shared, divergent
     # content is an internal error.
@@ -800,7 +809,6 @@ def build_plan(
         seen_paths[action.path] = action
         unique.append(action)
     actions = unique
-    previous = load_manifest(root)
     owned = {}
     if previous:
         for entry in previous.get("files", []):
@@ -1123,6 +1131,15 @@ def cmd_install(args: argparse.Namespace) -> int:
         for conflict in conflicts:
             print(f"install: conflict: {conflict}", file=sys.stderr)
         return 1
+    installed_hosts = set(hosts) | set((previous or {}).get("hosts", []))
+    if "codex" in installed_hosts:
+        print("install: Codex custom agents inherit parent permissions; "
+              "role instructions do not enforce a separate read-only sandbox. "
+              "Live custom-agent loading is unverified.")
+    if {"cursor", "codex"} <= installed_hosts:
+        print("install: shared Cursor/Codex skills carry both invocation policies; "
+              "Codex tolerance of Cursor frontmatter and combined live host "
+              "loading are unverified.")
     if args.dry_run:
         print(f"install plan (dry-run): host {', '.join(hosts)}, "
               f"profile {args.profile}")

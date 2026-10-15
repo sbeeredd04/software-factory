@@ -17,5 +17,9 @@
       "display_name": "SF Crawl"
     }
   },
-  "agent_policy": "agent-policy.json"
+  "notes": "Custom agents inherit parent permissions and model. Canonical role instructions preserve review intent without enforcing a separate read-only sandbox; sandbox_mode and model are omitted. Live custom-agent loading is unverified. With Cursor installed, shared skills retain its explicit-only frontmatter; Codex tolerance of that field and combined live host loading are unverified.",
+  "sources": [
+    "https://learn.chatgpt.com/docs/build-skills",
+    "https://learn.chatgpt.com/docs/agent-configuration/subagents"
+  ]
 }

@@ -40,13 +40,6 @@ EXPLICIT_ONLY = {
     "sf-principles",
 }
 WORKING_WITH_POLICY = {"sf-crawl"}
-READONLY_ROLES = {
-    "sf-code-reviewer",
-    "sf-design-reviewer",
-    "sf-evaluator",
-    "sf-security-reviewer",
-}
-WRITABLE_ROLES = {"sf-engineer", "sf-principal-engineer", "sf-qa-engineer"}
 
 
 def canonical_tree():
@@ -144,14 +137,8 @@ class FileSetTests(CodexInstallCase):
 
 
 class TomlAgentTests(CodexInstallCase):
-    def test_toml_agents_parse_with_required_keys_and_no_model(self):
+    def test_toml_agents_preserve_intent_and_inherit_permissions_and_model(self):
         repo = self.install_fresh()
-        policy = json.loads(
-            (support.REPO / "hosts/codex/agent-policy.json").read_text()
-        )
-        read_only = set(policy["read_only"])
-        self.assertTrue(READONLY_ROLES <= read_only)
-        self.assertFalse(read_only & WRITABLE_ROLES)
         for name in sorted(validate.AGENTS):
             with self.subTest(agent=name):
                 path = repo / ".codex/agents" / f"{name}.toml"
@@ -159,12 +146,14 @@ class TomlAgentTests(CodexInstallCase):
                 self.assertEqual(name, data["name"])
                 self.assertTrue(data["description"].strip())
                 self.assertTrue(data["developer_instructions"].strip())
-                # Codex inheritance means omitting model entirely.
-                self.assertNotIn("model", data)
-                expected = (
-                    "read-only" if name in read_only else "workspace-write"
+                # Only supported identity/instruction fields are emitted.
+                # TOML parsing is format proof, never isolation/runtime proof.
+                self.assertEqual(
+                    {"name", "description", "developer_instructions"}, set(data)
                 )
-                self.assertEqual(expected, data["sandbox_mode"])
+                self.assertNotIn("sandbox_mode", data)
+                self.assertNotIn("model", data)
+                self.assertIn("Permissions inherit the parent session", path.read_text())
                 # The instructions are the canonical role body verbatim.
                 self.assertEqual(
                     canonical_agent_body(name), data["developer_instructions"]
@@ -173,6 +162,23 @@ class TomlAgentTests(CodexInstallCase):
                 self.assertIsNone(
                     re.search(r"(?m)^model", path.read_text()), name
                 )
+
+    def test_installer_reports_inheritance_without_claiming_live_loading(self):
+        repo = support.fresh_repo(self.temp)
+        result = self.install(repo, "--skip-bmad")
+        self.assertIn("inherit parent permissions", result.stdout)
+        self.assertIn("Live custom-agent loading is unverified", result.stdout)
+        pointer = (repo / "AGENTS.md").read_text()
+        self.assertIn("instructions do not enforce a separate read-only sandbox", pointer)
+        self.assertIn("verify an actually read-only parent/session", pointer)
+
+    def test_codex_only_skills_preserve_canonical_bytes(self):
+        repo = self.install_fresh()
+        for rel in canonical_tree():
+            self.assertEqual(
+                (support.REPO / "skills" / rel).read_bytes(),
+                (repo / ".agents/skills" / rel).read_bytes(), rel,
+            )
 
 
 class OpenaiYamlTests(CodexInstallCase):

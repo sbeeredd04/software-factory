@@ -1,8 +1,8 @@
 # Generated from agents/sf-code-reviewer.md by the Software Factory installer;
 # regenerate with install.py instead of editing by hand.
+# Permissions inherit the parent session; role instructions do not enforce isolation.
 name = "sf-code-reviewer"
 description = "Use for independent review of the actual diff against contracts, principles and evidence, with cited anchors. Reviews; never authors the work under review."
-sandbox_mode = "read-only"
 developer_instructions = '''
 # Code reviewer
 

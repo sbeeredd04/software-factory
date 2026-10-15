@@ -9,6 +9,7 @@ VAL-INSTALL-018 (sequential per-host installs converge to the all tree).
 from __future__ import annotations
 
 import importlib.util
+import itertools
 import json
 import os
 import shutil
@@ -216,12 +217,15 @@ class AllHostsTests(SelectionCase):
         self.assertEqual(
             [f"{name}/SKILL.md" for name in sorted(validate.SKILLS)], skill_mds
         )
-        # No Claude-only keys anywhere in the shared payload.
+        # Cursor invocation policy accompanies Codex policy in one shared tree.
         for path in (repo / ".agents/skills").rglob("*"):
             if path.is_file():
                 raw = path.read_text()
                 self.assertNotIn("argument-hint", raw, path)
-                self.assertNotIn("disable-model-invocation", raw, path)
+                if path.name == "SKILL.md":
+                    meta = validate.parse_frontmatter(raw, path)
+                    expected = "true" if path.parent.name in EXPLICIT_ONLY else None
+                    self.assertEqual(expected, meta.get("disable-model-invocation"))
         # The Codex policy files ride along once.
         for skill in sorted(EXPLICIT_ONLY | {"sf-crawl"}):
             self.assertTrue(
@@ -324,7 +328,7 @@ class ConvergenceTests(SelectionCase):
         self.assertEqual(0, again.returncode, again.stderr)
         self.assertEqual(before, support.tree_hashes(repo))
 
-    def test_shared_skills_host_addition_records_host_without_payload_changes(self):
+    def test_shared_skills_host_addition_changes_only_cursor_invocation_fields(self):
         env, _, _ = support.guard_env()
         repo = support.fresh_repo(self.temp)
         first = self.install(
@@ -336,7 +340,12 @@ class ConvergenceTests(SelectionCase):
             repo, "--host", "cursor", "--profile", "skills-only", env=env
         )
         self.assertEqual(0, addition.returncode, addition.stderr)
-        self.assertEqual(before, projection_hashes(repo))
+        after = projection_hashes(repo)
+        changed = {rel for rel in before if before[rel] != after[rel]}
+        self.assertEqual(
+            {f".agents/skills/{skill}/SKILL.md" for skill in EXPLICIT_ONLY}, changed
+        )
+        self.assertIn("combined live host loading are unverified", addition.stdout)
         manifest = json.loads((repo / MANIFEST).read_text())
         self.assertEqual(["cursor", "codex"], manifest["hosts"])
         self.assertEqual("skills-only", manifest["profile"])
@@ -347,27 +356,110 @@ class ConvergenceTests(SelectionCase):
         self.assertEqual(0, again.returncode, again.stderr)
         self.assertEqual(snapshot, support.tree_hashes(repo))
 
-    def test_sequential_installs_converge_to_the_all_tree(self):
-        # Same path for both runs so embedded absolute hook paths match:
-        # sequential first, then the tree is rebuilt fresh for --host all.
+    def test_all_host_orders_and_profiles_converge_with_semantic_ownership(self):
+        # Reuse a path so generated hook commands have the same project root.
+        env, guard_log, _ = support.guard_env()
+        repo = support.fresh_repo(self.temp)
+        hosts = ("claude-code", "cursor", "codex")
+        for profile in ("full", "skills-only"):
+            shutil.rmtree(repo)
+            repo = support.fresh_repo(self.temp)
+            result = self.install(repo, "--host", "all", "--profile", profile, env=env)
+            self.assertEqual(0, result.returncode, result.stderr)
+            combined = projection_hashes(repo)
+            manifest = json.loads((repo / MANIFEST).read_text())
+            expected_ownership = self.semantic_ownership(manifest)
+            for order in itertools.permutations(hosts):
+                with self.subTest(profile=profile, order=order):
+                    shutil.rmtree(repo)
+                    repo = support.fresh_repo(self.temp)
+                    for host in order:
+                        result = self.install(
+                            repo, "--host", host, "--profile", profile, env=env
+                        )
+                        self.assertEqual(0, result.returncode, result.stderr)
+                    self.assertEqual(combined, projection_hashes(repo))
+                    actual = json.loads((repo / MANIFEST).read_text())
+                    self.assertEqual(expected_ownership, self.semantic_ownership(actual))
+                    # Backups describe actual history, unlike current ownership:
+                    # adding Cursor after Codex backs up the unextended skill bytes.
+                    for entry in actual["files"]:
+                        if entry["backup"]:
+                            self.assertTrue((repo / entry["backup"]).is_file())
+                    snapshot = support.tree_hashes(repo)
+                    for host in ("all", *hosts):
+                        result = self.install(
+                            repo, "--host", host, "--profile", profile, env=env
+                        )
+                        self.assertEqual(0, result.returncode, result.stderr)
+                        self.assertIn("0 changes", result.stdout)
+                        self.assertEqual(snapshot, support.tree_hashes(repo))
+        self.assertFalse(guard_log.exists() and guard_log.read_text().strip())
+
+    @staticmethod
+    def semantic_ownership(manifest):
+        return {
+            "pack": manifest["pack"], "version": manifest["version"],
+            "hosts": manifest["hosts"], "profile": manifest["profile"],
+            "files": [
+                {key: value for key, value in entry.items() if key != "backup"}
+                for entry in manifest["files"]
+            ],
+        }
+
+    def test_shared_host_additions_preserve_mixed_profile_scope(self):
         env, _, _ = support.guard_env()
         repo = support.fresh_repo(self.temp)
-        for host in ("claude-code", "cursor", "codex"):
-            result = self.install(repo, "--host", host, env=env)
-            self.assertEqual(0, result.returncode, f"{host}: {result.stderr}")
-        sequential = projection_hashes(repo)
-        shutil.rmtree(repo)
+        orders = (("cursor", "codex"), ("codex", "cursor"))
+        profiles = (("full", "skills-only"), ("skills-only", "full"))
+        for (first, second), (first_profile, second_profile) in itertools.product(orders, profiles):
+            with self.subTest(first=first, first_profile=first_profile):
+                shutil.rmtree(repo)
+                repo = support.fresh_repo(self.temp)
+                for host, profile in ((first, first_profile), (second, second_profile)):
+                    result = self.install(
+                        repo, "--host", host, "--profile", profile, env=env
+                    )
+                    self.assertEqual(0, result.returncode, result.stderr)
+                manifest = json.loads((repo / MANIFEST).read_text())
+                self.assertEqual("full", manifest["profile"])
+                full_host = first if first_profile == "full" else second
+                skills_host = second if first_profile == "full" else first
+                self.assertTrue((repo / f".{full_host}/agents").is_dir())
+                self.assertFalse((repo / f".{skills_host}/agents").exists())
+                self.assertFalse((repo / f".{skills_host}/hooks.json").exists())
+                snapshot = support.tree_hashes(repo)
+                for host, profile in ((first, first_profile), (second, second_profile)):
+                    result = self.install(
+                        repo, "--host", host, "--profile", profile, env=env
+                    )
+                    self.assertEqual(0, result.returncode, result.stderr)
+                    self.assertEqual(snapshot, support.tree_hashes(repo))
+
+    def test_shared_policy_transition_retains_backups_and_rejects_local_edits(self):
+        env, _, _ = support.guard_env()
         repo = support.fresh_repo(self.temp)
-        result = self.install(repo, "--host", "all", env=env)
+        first = self.install(repo, "--host", "codex", "--profile", "skills-only", env=env)
+        self.assertEqual(0, first.returncode, first.stderr)
+        rel = ".agents/skills/software-factory/SKILL.md"
+        target = repo / rel
+        original = target.read_bytes()
+        target.write_text("local skill edit\n")
+        before = support.tree_hashes(repo)
+        refused = self.install(repo, "--host", "cursor", env=env)
+        self.assertEqual(1, refused.returncode)
+        self.assertIn("modified locally", refused.stderr)
+        self.assertEqual(before, support.tree_hashes(repo))
+        target.write_bytes(original)
+        result = self.install(repo, "--host", "cursor", env=env)
         self.assertEqual(0, result.returncode, result.stderr)
-        combined = projection_hashes(repo)
-        self.assertEqual(sorted(sequential), sorted(combined))
-        self.assertEqual(sequential, combined)
-        # The shared payload exists exactly once (no per-host duplication).
-        count = sum(
-            1 for rel in combined if rel.endswith("skills/software-factory/SKILL.md")
-        )
-        self.assertEqual(2, count)  # .claude/skills + shared .agents/skills
+        manifest = json.loads((repo / MANIFEST).read_text())
+        entry = next(item for item in manifest["files"] if item["path"] == rel)
+        self.assertEqual(original, (repo / entry["backup"]).read_bytes())
+        snapshot = support.tree_hashes(repo)
+        result = self.install(repo, "--host", "codex", "--profile", "skills-only", env=env)
+        self.assertEqual(0, result.returncode, result.stderr)
+        self.assertEqual(snapshot, support.tree_hashes(repo))
 
 
 if __name__ == "__main__":

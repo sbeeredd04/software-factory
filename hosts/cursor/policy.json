@@ -13,5 +13,8 @@
     "sf-principles"
   ],
   "agent_policy": "agent-policy.json",
-  "notes": "The shared .agents/skills payload stays canonical (no Cursor frontmatter injection): the validation contract forbids disable-model-invocation outside the Claude projection, so explicit-only intent is documented by the .mdc pointer and this policy."
+  "notes": "The shared .agents/skills payload adds disable-model-invocation: true for entry/admin skills whenever Cursor is installed. Working skills retain canonical frontmatter. Combined Codex frontmatter tolerance and live host loading are unverified.",
+  "sources": [
+    "https://cursor.com/docs/skills"
+  ]
 }
