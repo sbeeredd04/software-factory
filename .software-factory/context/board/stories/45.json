@@ -40,6 +40,26 @@
         "instruction_defects": 0,
         "limitations": "Decision exercise, no real monitoring, scheduling, source access or deployment effects."
       }
+    },
+    "integrated-local-proof": {
+      "type": "local-verification",
+      "subject_sha": "c94554e9da7670c21b505efb5a63f623581b6cb0",
+      "recorded_at": "2026-10-15T09:22:14.602201+00:00",
+      "status": "pass",
+      "full_static_gate": {
+        "exit_code": 0,
+        "unit_tests": 487,
+        "evals": 30,
+        "failed": 0,
+        "unverified": 0,
+        "skipped": 0,
+        "artifact": "lifecycle-operations-gate.log",
+        "sha256": "22783c02319ccfecd30431efb21e1ee1c670ad2da8a9d1182f0fce4f6549b94f",
+        "not_present": "shellcheck has no target until install.sh is implemented in story24"
+      },
+      "limitations": [
+        "Local verification does not establish provider CI, integration, deployment, live host loading or human acceptance."
+      ]
     }
   },
   "baseline_sha": null,

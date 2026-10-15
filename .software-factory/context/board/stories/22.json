@@ -64,6 +64,41 @@
         "Author checks are reported results; integrated full gate has not yet run.",
         "No live host loading or human epic acceptance established."
       ]
+    },
+    "integrated-local-proof": {
+      "type": "local-verification",
+      "subject_sha": "c94554e9da7670c21b505efb5a63f623581b6cb0",
+      "recorded_at": "2026-10-15T09:22:14.602201+00:00",
+      "status": "pass",
+      "full_static_gate": {
+        "exit_code": 0,
+        "unit_tests": 487,
+        "evals": 30,
+        "failed": 0,
+        "unverified": 0,
+        "skipped": 0,
+        "artifact": "lifecycle-operations-gate.log",
+        "sha256": "22783c02319ccfecd30431efb21e1ee1c670ad2da8a9d1182f0fce4f6549b94f",
+        "not_present": "shellcheck has no target until install.sh is implemented in story24"
+      },
+      "limitations": [
+        "Local verification does not establish provider CI, integration, deployment, live host loading or human acceptance."
+      ]
+    },
+    "independent-consumer-proof": {
+      "type": "independent-disposable-consumer-proof",
+      "subject_sha": "089bb4e2f1c731c4ba4bb7f3b20b3a792e89bae5",
+      "status": "pass",
+      "reviewer": "/root/mission_status",
+      "commands": 10,
+      "observations": 76,
+      "executable_bytes_match_primary": "c94554e9da7670c21b505efb5a63f623581b6cb0",
+      "artifact": "integrated-lifecycle-proof.json",
+      "sha256": "3abbe48b20f45af014d0a8f6dfa1b389beae123e9c5f8c03d1dc905ef82b7a69",
+      "scope": "All-host install, read-only diagnostics, selective/full uninstall, edit preservation, exact original restoration, retained user state and repeat idempotency.",
+      "limitations": [
+        "Fixture proof only; live host loading, trust and real authentication remain unverified."
+      ]
     }
   },
   "baseline_sha": null,
