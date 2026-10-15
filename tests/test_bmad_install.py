@@ -32,15 +32,17 @@ modules:
   - name: bmm
     version: 6.12.0
   - name: bmb
-    version: v2.4.1
+    version: v2.2.2
     source: external
-    channel: stable
+    channel: pinned
     sha: abc123
   - name: cis
-    version: v0.8.0
+    version: v0.3.2
+    channel: pinned
     sha: null
   - name: tea
-    version: null
+    version: v1.27.2
+    channel: pinned
 ides:
   - claude-code
   - cursor
@@ -172,6 +174,7 @@ class BmadTests(unittest.TestCase):
                 self.assertEqual([
                     "-y", "bmad-method@6.12.0", "install", "--directory", str(self.repo),
                     "--tools", tools, "--modules", "bmm,bmb,cis,tea", "--yes",
+                    "--pin", "tea=v1.27.2", "--pin", "bmb=v2.2.2", "--pin", "cis=v0.3.2",
                 ], calls[-1]["argv"])
                 self.assertEqual(str(self.repo), calls[-1]["cwd"])
                 self.assertEqual("", calls[-1]["stdin"])
@@ -180,6 +183,13 @@ class BmadTests(unittest.TestCase):
                 self.assertEqual({"node": "v20.12.0", "npm": "10.8.2"}, record["runtime_versions"])
                 self.assertEqual(bmad.parse_manifest(MANIFEST.encode())["modules"], record["modules"])
                 self.assert_factory()
+
+    def test_wrong_pin_or_channel_cannot_claim_completion(self):
+        for old, new in (("v1.27.2", "v3.0.2"), ("channel: pinned", "channel: stable")):
+            with self.subTest(replacement=new):
+                record = bmad.parse_manifest(MANIFEST.replace(old, new).encode())
+                with mock.patch.object(bmad, "read_payload", side_effect=AssertionError("read outputs")):
+                    self.assertFalse(bmad.complete(self.repo, ["codex"], record))
 
     def test_output_verification_has_skill_count_and_aggregate_budgets(self):
         record = bmad.parse_manifest(MANIFEST.encode())
@@ -213,7 +223,7 @@ class BmadTests(unittest.TestCase):
         path.write_text(MANIFEST.replace("6.12.0", "5.9.0"))
         before = support.tree_hashes(self.repo / "_bmad")
         result = self.install()
-        for term in ("5.9.0", "core=5.9.0", "bmb=v2.4.1", "claude-code", "cursor", "codex"):
+        for term in ("5.9.0", "core=5.9.0", "bmb=v2.2.2", "claude-code", "cursor", "codex"):
             self.assertIn(term, result.stdout)
         self.assertEqual(before, support.tree_hashes(self.repo / "_bmad"))
         self.assertEqual([], self.calls())
@@ -423,6 +433,22 @@ class OfficialInstallerTest(unittest.TestCase):
             self.assertTrue(parsed)
             self.assertEqual(actual["modules"], saved["modules"])
             self.assertEqual("6.12.0", saved["version"])
+            self.assertEqual("bmad-method@6.12.0", saved["package"])
+            self.assertEqual(["claude-code", "cursor", "codex"], saved["tools"])
+            self.assertEqual({"claude-code", "cursor", "codex"}, set(saved["ides"]))
+            modules = {module["name"]: module for module in saved["modules"]}
+            self.assertEqual({"core", "bmm", "tea", "bmb", "cis"}, set(modules))
+            for name, version in {"core": "6.12.0", "bmm": "6.12.0", "tea": "v1.27.2",
+                                  "bmb": "v2.2.2", "cis": "v0.3.2"}.items():
+                self.assertEqual(version, modules[name]["version"])
+                if name in {"tea", "bmb", "cis"}:
+                    self.assertEqual("pinned", modules[name]["channel"])
+                    self.assertRegex(modules[name]["sha"], r"^[0-9a-f]{40}$")
+            # Emit only validated identifiers for durable network-test evidence.
+            print("BMad network proof: " + json.dumps({name: {
+                key: modules[name][key] for key in ("version", "channel", "sha")
+                if key in modules[name]
+            } for name in ("tea", "bmb", "cis")}))
             # Separately observe BMad-only effects before factory directories exist.
             bmad_only = support.fresh_repo(base, "bmad-only")
             with mock.patch.dict(os.environ, env, clear=True):

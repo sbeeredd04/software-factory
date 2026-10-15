@@ -22,6 +22,7 @@ from pathlib import Path
 
 VERSION = "6.12.0"
 PACKAGE = f"bmad-method@{VERSION}"
+MODULE_PINS = {"tea": "v1.27.2", "bmb": "v2.2.2", "cis": "v0.3.2"}
 MANIFEST = "_bmad/_config/manifest.yaml"
 MODULES = ("core", "bmm", "bmb", "cis", "tea")
 PREREQUISITES = ("node", "npm", "npx", "uv", "git")
@@ -261,7 +262,8 @@ def observe(root):
 
 def command(root, hosts):
     return ["npx", "-y", PACKAGE, "install", "--directory", str(root),
-            "--tools", ",".join(hosts), "--modules", "bmm,bmb,cis,tea", "--yes"]
+            "--tools", ",".join(hosts), "--modules", "bmm,bmb,cis,tea", "--yes",
+            *[part for name, version in MODULE_PINS.items() for part in ("--pin", f"{name}={version}")]]
 
 
 def prerequisites():
@@ -310,6 +312,8 @@ def complete(root, hosts, record):
     modules = {m["name"]: m for m in record["modules"]}
     if (record["version"] != VERSION or not set(MODULES) <= modules.keys()
             or any(modules[name]["version"] != VERSION for name in ("core", "bmm"))
+            or any(modules[name]["version"] != version or modules[name].get("channel") != "pinned"
+                   for name, version in MODULE_PINS.items())
             or not set(hosts) <= set(record["ides"])):
         return False
     try:
@@ -388,7 +392,7 @@ def attempt(root, hosts, before_invoke=None):
     record.update(observed)
     record.update(exit_code=code)
     if not timeout and code == 0 and parsed and complete(root, hosts, record):
-        record.update(status="installed", reason="manifest and per-module host skill presence verified; external modules and npm dependencies may float; live use unverified")
+        record.update(status="installed", reason="manifest and per-module host skill presence verified; module tags may move and npm dependencies may float; live use unverified")
     else:
         reason = "timed out" if timeout else f"exited {code} or produced incomplete output"
         record.update(status="failed", reason=f"upstream {reason}; partial effects retained; inspect BMad files before any manual recovery; no automatic retry")

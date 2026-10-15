@@ -11,7 +11,7 @@ with native planning and an explicit degraded report.
 Fresh provisioning invokes this argument vector without a shell, with stdin closed:
 
 ```text
-npx -y bmad-method@6.12.0 install --directory ABSOLUTE_PROJECT_PATH --tools HOST_IDS --modules bmm,bmb,cis,tea --yes
+npx -y bmad-method@6.12.0 install --directory ABSOLUTE_PROJECT_PATH --tools HOST_IDS --modules bmm,bmb,cis,tea --yes --pin tea=v1.27.2 --pin bmb=v2.2.2 --pin cis=v0.3.2
 ```
 
 Host IDs are `claude-code`, `cursor`, and `codex`; multiple selections use a
@@ -21,8 +21,10 @@ a pack preflight requirement, not a requirement established by BMad's package
 metadata. Missing executables cause no version probes. An unsupported Node
 version stops before npx. Nothing installs these prerequisites automatically.
 
-The package pin fixes the BMad CLI/core version. External modules and npm
-transitive dependencies can resolve newer versions. Installation metadata records
+The package pin fixes the BMad CLI/core version. Explicit module tags select
+TEA v1.27.2, BMB v2.2.2 and CIS v0.3.2. Fresh completion requires those versions
+and pinned channels in the observed manifest. Tags can move and npm transitive
+dependencies can resolve newer versions; these pins are not a cryptographic lock. Installation metadata records
 observed versions, module provenance, tool IDs and the manifest hash; unknown
 values remain unknown. The bounded reader supports the pinned manifest writer's
 YAML subset and legacy module names, not arbitrary YAML. Unsupported syntax is
@@ -31,6 +33,12 @@ at most 1,024 inventoried skills, 4 MiB per skill, and 64 MiB in aggregate acros
 the inventory and selected host copies. These limits leave room above the pinned
 installation while bounding observation of untrusted upstream output. Exceeding
 a limit leaves completion unverified and reports the attempt as failed.
+
+The earlier command without module pins failed when TEA resolved to v3.0.2,
+which lacks the module definition expected by BMad 6.12.0. The approved pins
+address that compatibility failure; existing or partial installations are still
+preserved without an update or implicit retry. Observed commit SHAs are evidence,
+not enforced source locks or proof that upstream code was safe to execute.
 
 The official CLI may check for a newer release; the factory does not act on that
 suggestion or switch package versions. npm can use its cache, and upstream defaults
