@@ -57,6 +57,12 @@
       "to": "in-progress"
     }
   ],
-  "findings": [],
+  "findings": [
+    {
+      "at": "2026-10-15T10:04:45.100153+00:00",
+      "by": "orchestrator",
+      "text": "Worker reports real skills CLI1.7.2 three-host discovery/install succeeded with eleven exact canonical skill copies and no host guard calls; initial11 distribution and10 bootstrap tests passed. Source and security review remain pending; install.py glue uses the serialized claimed phase."
+    }
+  ],
   "source_key": "installer-hosts/distribution"
 }

@@ -53,6 +53,11 @@
       "at": "2026-10-15T09:23:56.988416+00:00",
       "by": "orchestrator",
       "text": "Owner explicitly approved both recommended decisions in the current conversation; ADR0023 records the final instruction and supersedes the initial guidance-only reply."
+    },
+    {
+      "at": "2026-10-15T10:04:45.042579+00:00",
+      "by": "orchestrator",
+      "text": "Independent source review found receipt-format, saved-obligation, initial-config-read, typed-scope and epic-provenance gaps; repairs and regression checks are running. Derive also preserves terminal record bytes and scope. Isolated full gates retain known board/CODEBASE freshness failures; integrated proof is pending."
     }
   ],
   "source_key": "expansion/evidence-bound-transitions",

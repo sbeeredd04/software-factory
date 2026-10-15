@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-15T09:56:41.495335+00:00",
-  "revision": 194,
+  "generated_at": "2026-10-15T10:04:45.103817+00:00",
+  "revision": 196,
   "streams": [
     {
       "id": "W-foundation",
@@ -2479,6 +2479,7 @@
         "live": true,
         "owner": "codex-distribution",
         "paths": [
+          "install.py",
           "install.sh",
           "scripts/distribution.py",
           "scripts/build_release.py",
@@ -2492,7 +2493,7 @@
           "docs/distribution.md",
           "scripts/check_all.sh"
         ],
-        "claimed_at": "2026-10-15T09:51:55.436089+00:00"
+        "claimed_at": "2026-10-15T10:00:10.005298+00:00"
       },
       "blocks": [
         25
@@ -2511,7 +2512,13 @@
           "to": "in-progress"
         }
       ],
-      "findings": [],
+      "findings": [
+        {
+          "at": "2026-10-15T10:04:45.100153+00:00",
+          "by": "orchestrator",
+          "text": "Worker reports real skills CLI1.7.2 three-host discovery/install succeeded with eleven exact canonical skill copies and no host guard calls; initial11 distribution and10 bootstrap tests passed. Source and security review remain pending; install.py glue uses the serialized claimed phase."
+        }
+      ],
       "source_key": "installer-hosts/distribution"
     },
     {
@@ -3778,6 +3785,11 @@
           "at": "2026-10-15T09:23:56.988416+00:00",
           "by": "orchestrator",
           "text": "Owner explicitly approved both recommended decisions in the current conversation; ADR0023 records the final instruction and supersedes the initial guidance-only reply."
+        },
+        {
+          "at": "2026-10-15T10:04:45.042579+00:00",
+          "by": "orchestrator",
+          "text": "Independent source review found receipt-format, saved-obligation, initial-config-read, typed-scope and epic-provenance gaps; repairs and regression checks are running. Derive also preserves terminal record bytes and scope. Isolated full gates retain known board/CODEBASE freshness failures; integrated proof is pending."
         }
       ],
       "scope": [

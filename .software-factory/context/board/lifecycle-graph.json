@@ -504,7 +504,7 @@
         {
           "path": ".software-factory/context/board/stories/44.json",
           "pointer": "",
-          "sha256": "fe1b68d6d8cd4fb8243a23906ac2dbc1e703c8e42cfb6fc0635f73ba68a81a30"
+          "sha256": "15d999df3baa171ea58973c1983fb2afdd74b0384c614b111cdad6dfd3db5af0"
         }
       ]
     },
@@ -5154,7 +5154,7 @@
         {
           "path": ".software-factory/context/board/stories/24.json",
           "pointer": "/covers/0",
-          "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
+          "sha256": "f8702fc8db13316dc43d8cb3dfab856bc6520ec078de5ad2c9e9f3927e66a00a"
         }
       ],
       "relation": "covers",
@@ -5167,7 +5167,7 @@
         {
           "path": ".software-factory/context/board/stories/24.json",
           "pointer": "/covers/1",
-          "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
+          "sha256": "f8702fc8db13316dc43d8cb3dfab856bc6520ec078de5ad2c9e9f3927e66a00a"
         }
       ],
       "relation": "covers",
@@ -5180,7 +5180,7 @@
         {
           "path": ".software-factory/context/board/stories/24.json",
           "pointer": "/covers/2",
-          "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
+          "sha256": "f8702fc8db13316dc43d8cb3dfab856bc6520ec078de5ad2c9e9f3927e66a00a"
         }
       ],
       "relation": "covers",
@@ -5193,7 +5193,7 @@
         {
           "path": ".software-factory/context/board/stories/24.json",
           "pointer": "/covers/3",
-          "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
+          "sha256": "f8702fc8db13316dc43d8cb3dfab856bc6520ec078de5ad2c9e9f3927e66a00a"
         }
       ],
       "relation": "covers",
@@ -5206,7 +5206,7 @@
         {
           "path": ".software-factory/context/board/stories/24.json",
           "pointer": "/covers/4",
-          "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
+          "sha256": "f8702fc8db13316dc43d8cb3dfab856bc6520ec078de5ad2c9e9f3927e66a00a"
         }
       ],
       "relation": "covers",
@@ -5219,7 +5219,7 @@
         {
           "path": ".software-factory/context/board/stories/24.json",
           "pointer": "/covers/5",
-          "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
+          "sha256": "f8702fc8db13316dc43d8cb3dfab856bc6520ec078de5ad2c9e9f3927e66a00a"
         }
       ],
       "relation": "covers",
@@ -5232,7 +5232,7 @@
         {
           "path": ".software-factory/context/board/stories/24.json",
           "pointer": "/covers/6",
-          "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
+          "sha256": "f8702fc8db13316dc43d8cb3dfab856bc6520ec078de5ad2c9e9f3927e66a00a"
         }
       ],
       "relation": "covers",
@@ -5245,7 +5245,7 @@
         {
           "path": ".software-factory/context/board/stories/24.json",
           "pointer": "/covers/7",
-          "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
+          "sha256": "f8702fc8db13316dc43d8cb3dfab856bc6520ec078de5ad2c9e9f3927e66a00a"
         }
       ],
       "relation": "covers",
@@ -7325,7 +7325,7 @@
         {
           "path": ".software-factory/context/board/stories/44.json",
           "pointer": "/scope/0",
-          "sha256": "fe1b68d6d8cd4fb8243a23906ac2dbc1e703c8e42cfb6fc0635f73ba68a81a30"
+          "sha256": "15d999df3baa171ea58973c1983fb2afdd74b0384c614b111cdad6dfd3db5af0"
         }
       ],
       "relation": "scope",
@@ -7338,7 +7338,7 @@
         {
           "path": ".software-factory/context/board/stories/44.json",
           "pointer": "/scope/1",
-          "sha256": "fe1b68d6d8cd4fb8243a23906ac2dbc1e703c8e42cfb6fc0635f73ba68a81a30"
+          "sha256": "15d999df3baa171ea58973c1983fb2afdd74b0384c614b111cdad6dfd3db5af0"
         }
       ],
       "relation": "scope",
@@ -7351,7 +7351,7 @@
         {
           "path": ".software-factory/context/board/stories/44.json",
           "pointer": "/scope/2",
-          "sha256": "fe1b68d6d8cd4fb8243a23906ac2dbc1e703c8e42cfb6fc0635f73ba68a81a30"
+          "sha256": "15d999df3baa171ea58973c1983fb2afdd74b0384c614b111cdad6dfd3db5af0"
         }
       ],
       "relation": "scope",
@@ -7364,7 +7364,7 @@
         {
           "path": ".software-factory/context/board/stories/44.json",
           "pointer": "/scope/3",
-          "sha256": "fe1b68d6d8cd4fb8243a23906ac2dbc1e703c8e42cfb6fc0635f73ba68a81a30"
+          "sha256": "15d999df3baa171ea58973c1983fb2afdd74b0384c614b111cdad6dfd3db5af0"
         }
       ],
       "relation": "scope",
@@ -7377,7 +7377,7 @@
         {
           "path": ".software-factory/context/board/stories/44.json",
           "pointer": "/scope/4",
-          "sha256": "fe1b68d6d8cd4fb8243a23906ac2dbc1e703c8e42cfb6fc0635f73ba68a81a30"
+          "sha256": "15d999df3baa171ea58973c1983fb2afdd74b0384c614b111cdad6dfd3db5af0"
         }
       ],
       "relation": "scope",
@@ -17447,7 +17447,7 @@
         {
           "path": ".software-factory/context/board/stories/24.json",
           "pointer": "/after/0",
-          "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
+          "sha256": "f8702fc8db13316dc43d8cb3dfab856bc6520ec078de5ad2c9e9f3927e66a00a"
         }
       ],
       "relation": "depends-on",
@@ -17459,7 +17459,7 @@
         {
           "path": ".software-factory/context/board/stories/24.json",
           "pointer": "/epic",
-          "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
+          "sha256": "f8702fc8db13316dc43d8cb3dfab856bc6520ec078de5ad2c9e9f3927e66a00a"
         }
       ],
       "relation": "part-of",
@@ -17470,8 +17470,20 @@
       "provenance": [
         {
           "path": ".software-factory/context/board/stories/24.json",
+          "pointer": "/findings/0",
+          "sha256": "f8702fc8db13316dc43d8cb3dfab856bc6520ec078de5ad2c9e9f3927e66a00a"
+        }
+      ],
+      "relation": "records",
+      "source": "story:24",
+      "target": "finding:24:0"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/24.json",
           "pointer": "/receipts/active-attempt",
-          "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
+          "sha256": "f8702fc8db13316dc43d8cb3dfab856bc6520ec078de5ad2c9e9f3927e66a00a"
         }
       ],
       "relation": "records",
@@ -17483,7 +17495,7 @@
         {
           "path": ".software-factory/context/board/stories/24.json",
           "pointer": "/receipts/active-attempt",
-          "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
+          "sha256": "f8702fc8db13316dc43d8cb3dfab856bc6520ec078de5ad2c9e9f3927e66a00a"
         }
       ],
       "relation": "subject",
@@ -18431,7 +18443,7 @@
         {
           "path": ".software-factory/context/board/stories/44.json",
           "pointer": "/after/0",
-          "sha256": "fe1b68d6d8cd4fb8243a23906ac2dbc1e703c8e42cfb6fc0635f73ba68a81a30"
+          "sha256": "15d999df3baa171ea58973c1983fb2afdd74b0384c614b111cdad6dfd3db5af0"
         }
       ],
       "relation": "depends-on",
@@ -18443,7 +18455,7 @@
         {
           "path": ".software-factory/context/board/stories/44.json",
           "pointer": "/epic",
-          "sha256": "fe1b68d6d8cd4fb8243a23906ac2dbc1e703c8e42cfb6fc0635f73ba68a81a30"
+          "sha256": "15d999df3baa171ea58973c1983fb2afdd74b0384c614b111cdad6dfd3db5af0"
         }
       ],
       "relation": "part-of",
@@ -18455,7 +18467,7 @@
         {
           "path": ".software-factory/context/board/stories/44.json",
           "pointer": "/findings/0",
-          "sha256": "fe1b68d6d8cd4fb8243a23906ac2dbc1e703c8e42cfb6fc0635f73ba68a81a30"
+          "sha256": "15d999df3baa171ea58973c1983fb2afdd74b0384c614b111cdad6dfd3db5af0"
         }
       ],
       "relation": "records",
@@ -18466,8 +18478,20 @@
       "provenance": [
         {
           "path": ".software-factory/context/board/stories/44.json",
+          "pointer": "/findings/1",
+          "sha256": "15d999df3baa171ea58973c1983fb2afdd74b0384c614b111cdad6dfd3db5af0"
+        }
+      ],
+      "relation": "records",
+      "source": "story:44",
+      "target": "finding:44:1"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/44.json",
           "pointer": "/receipts/active-attempt",
-          "sha256": "fe1b68d6d8cd4fb8243a23906ac2dbc1e703c8e42cfb6fc0635f73ba68a81a30"
+          "sha256": "15d999df3baa171ea58973c1983fb2afdd74b0384c614b111cdad6dfd3db5af0"
         }
       ],
       "relation": "records",
@@ -18479,7 +18503,7 @@
         {
           "path": ".software-factory/context/board/stories/44.json",
           "pointer": "/receipts/active-attempt",
-          "sha256": "fe1b68d6d8cd4fb8243a23906ac2dbc1e703c8e42cfb6fc0635f73ba68a81a30"
+          "sha256": "15d999df3baa171ea58973c1983fb2afdd74b0384c614b111cdad6dfd3db5af0"
         }
       ],
       "relation": "subject",
@@ -18815,7 +18839,7 @@
         {
           "path": ".software-factory/runs/software-factory-v01/run.json",
           "pointer": "/claims/24",
-          "sha256": "4741881b59e33c70096418d92f057d3bb80d7ccb67138a38df37757fcf503a95"
+          "sha256": "5cc4f8e6a9547d8651a7738c50d16814b51c1c6c8dec129589d053b0b6527942"
         }
       ],
       "relation": "assigned-to",
@@ -18827,7 +18851,7 @@
         {
           "path": ".software-factory/runs/software-factory-v01/run.json",
           "pointer": "/claims/44",
-          "sha256": "4741881b59e33c70096418d92f057d3bb80d7ccb67138a38df37757fcf503a95"
+          "sha256": "5cc4f8e6a9547d8651a7738c50d16814b51c1c6c8dec129589d053b0b6527942"
         }
       ],
       "relation": "assigned-to",
@@ -18984,7 +19008,7 @@
     {
       "kind": "file",
       "path": ".software-factory/context/board/stories/24.json",
-      "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
+      "sha256": "f8702fc8db13316dc43d8cb3dfab856bc6520ec078de5ad2c9e9f3927e66a00a"
     },
     {
       "kind": "file",
@@ -19094,7 +19118,7 @@
     {
       "kind": "file",
       "path": ".software-factory/context/board/stories/44.json",
-      "sha256": "fe1b68d6d8cd4fb8243a23906ac2dbc1e703c8e42cfb6fc0635f73ba68a81a30"
+      "sha256": "15d999df3baa171ea58973c1983fb2afdd74b0384c614b111cdad6dfd3db5af0"
     },
     {
       "kind": "file",
@@ -19264,7 +19288,7 @@
     {
       "kind": "file",
       "path": ".software-factory/runs/software-factory-v01/run.json",
-      "sha256": "4741881b59e33c70096418d92f057d3bb80d7ccb67138a38df37757fcf503a95"
+      "sha256": "5cc4f8e6a9547d8651a7738c50d16814b51c1c6c8dec129589d053b0b6527942"
     },
     {
       "kind": "file",
@@ -19603,7 +19627,7 @@
         {
           "path": ".software-factory/runs/software-factory-v01/run.json",
           "pointer": "/checkpoint",
-          "sha256": "4741881b59e33c70096418d92f057d3bb80d7ccb67138a38df37757fcf503a95"
+          "sha256": "5cc4f8e6a9547d8651a7738c50d16814b51c1c6c8dec129589d053b0b6527942"
         }
       ],
       "type": "checkpoint"
@@ -19616,7 +19640,7 @@
         {
           "path": ".software-factory/runs/software-factory-v01/run.json",
           "pointer": "/claims/24",
-          "sha256": "4741881b59e33c70096418d92f057d3bb80d7ccb67138a38df37757fcf503a95"
+          "sha256": "5cc4f8e6a9547d8651a7738c50d16814b51c1c6c8dec129589d053b0b6527942"
         }
       ],
       "type": "claim"
@@ -19629,7 +19653,7 @@
         {
           "path": ".software-factory/runs/software-factory-v01/run.json",
           "pointer": "/claims/44",
-          "sha256": "4741881b59e33c70096418d92f057d3bb80d7ccb67138a38df37757fcf503a95"
+          "sha256": "5cc4f8e6a9547d8651a7738c50d16814b51c1c6c8dec129589d053b0b6527942"
         }
       ],
       "type": "claim"
@@ -20089,7 +20113,7 @@
         {
           "path": ".software-factory/context/board/stories/24.json",
           "pointer": "/receipts/active-attempt/subject_sha",
-          "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
+          "sha256": "f8702fc8db13316dc43d8cb3dfab856bc6520ec078de5ad2c9e9f3927e66a00a"
         }
       ],
       "type": "commit"
@@ -20203,7 +20227,7 @@
         {
           "path": ".software-factory/context/board/stories/44.json",
           "pointer": "/receipts/active-attempt/subject_sha",
-          "sha256": "fe1b68d6d8cd4fb8243a23906ac2dbc1e703c8e42cfb6fc0635f73ba68a81a30"
+          "sha256": "15d999df3baa171ea58973c1983fb2afdd74b0384c614b111cdad6dfd3db5af0"
         }
       ],
       "type": "commit"
@@ -20699,6 +20723,18 @@
       "type": "finding"
     },
     {
+      "id": "finding:24:0",
+      "label": "Worker reports real skills CLI1.7.2 three-host discovery/install succeeded with eleven exact canonical skill copies and no host guard calls; initial11 distribution and10 bootstrap tests passed. Source and security review remain pending; install.py glue uses the serialized claimed phase.",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/24.json",
+          "pointer": "/findings/0",
+          "sha256": "f8702fc8db13316dc43d8cb3dfab856bc6520ec078de5ad2c9e9f3927e66a00a"
+        }
+      ],
+      "type": "finding"
+    },
+    {
       "id": "finding:38:0",
       "label": "Public-source research and the delivery proposal received independent source review. Proposed policy changes remain unapproved; no implementation or epic acceptance is claimed.",
       "provenance": [
@@ -20729,7 +20765,19 @@
         {
           "path": ".software-factory/context/board/stories/44.json",
           "pointer": "/findings/0",
-          "sha256": "fe1b68d6d8cd4fb8243a23906ac2dbc1e703c8e42cfb6fc0635f73ba68a81a30"
+          "sha256": "15d999df3baa171ea58973c1983fb2afdd74b0384c614b111cdad6dfd3db5af0"
+        }
+      ],
+      "type": "finding"
+    },
+    {
+      "id": "finding:44:1",
+      "label": "Independent source review found receipt-format, saved-obligation, initial-config-read, typed-scope and epic-provenance gaps; repairs and regression checks are running. Derive also preserves terminal record bytes and scope. Isolated full gates retain known board/CODEBASE freshness failures; integrated proof is pending.",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/44.json",
+          "pointer": "/findings/1",
+          "sha256": "15d999df3baa171ea58973c1983fb2afdd74b0384c614b111cdad6dfd3db5af0"
         }
       ],
       "type": "finding"
@@ -34228,7 +34276,7 @@
         {
           "path": ".software-factory/context/board/stories/24.json",
           "pointer": "/receipts/active-attempt",
-          "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
+          "sha256": "f8702fc8db13316dc43d8cb3dfab856bc6520ec078de5ad2c9e9f3927e66a00a"
         }
       ],
       "reported_status": "assigned",
@@ -34534,7 +34582,7 @@
         {
           "path": ".software-factory/context/board/stories/44.json",
           "pointer": "/receipts/active-attempt",
-          "sha256": "fe1b68d6d8cd4fb8243a23906ac2dbc1e703c8e42cfb6fc0635f73ba68a81a30"
+          "sha256": "15d999df3baa171ea58973c1983fb2afdd74b0384c614b111cdad6dfd3db5af0"
         }
       ],
       "reported_status": "assigned",
@@ -35499,7 +35547,7 @@
         {
           "path": ".software-factory/context/board/stories/24.json",
           "pointer": "/covers/0",
-          "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
+          "sha256": "f8702fc8db13316dc43d8cb3dfab856bc6520ec078de5ad2c9e9f3927e66a00a"
         }
       ],
       "type": "requirement"
@@ -35511,7 +35559,7 @@
         {
           "path": ".software-factory/context/board/stories/24.json",
           "pointer": "/covers/1",
-          "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
+          "sha256": "f8702fc8db13316dc43d8cb3dfab856bc6520ec078de5ad2c9e9f3927e66a00a"
         }
       ],
       "type": "requirement"
@@ -35523,7 +35571,7 @@
         {
           "path": ".software-factory/context/board/stories/24.json",
           "pointer": "/covers/2",
-          "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
+          "sha256": "f8702fc8db13316dc43d8cb3dfab856bc6520ec078de5ad2c9e9f3927e66a00a"
         }
       ],
       "type": "requirement"
@@ -35535,7 +35583,7 @@
         {
           "path": ".software-factory/context/board/stories/24.json",
           "pointer": "/covers/3",
-          "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
+          "sha256": "f8702fc8db13316dc43d8cb3dfab856bc6520ec078de5ad2c9e9f3927e66a00a"
         }
       ],
       "type": "requirement"
@@ -35547,7 +35595,7 @@
         {
           "path": ".software-factory/context/board/stories/24.json",
           "pointer": "/covers/4",
-          "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
+          "sha256": "f8702fc8db13316dc43d8cb3dfab856bc6520ec078de5ad2c9e9f3927e66a00a"
         }
       ],
       "type": "requirement"
@@ -35559,7 +35607,7 @@
         {
           "path": ".software-factory/context/board/stories/24.json",
           "pointer": "/covers/5",
-          "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
+          "sha256": "f8702fc8db13316dc43d8cb3dfab856bc6520ec078de5ad2c9e9f3927e66a00a"
         }
       ],
       "type": "requirement"
@@ -35571,7 +35619,7 @@
         {
           "path": ".software-factory/context/board/stories/24.json",
           "pointer": "/covers/6",
-          "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
+          "sha256": "f8702fc8db13316dc43d8cb3dfab856bc6520ec078de5ad2c9e9f3927e66a00a"
         }
       ],
       "type": "requirement"
@@ -35583,7 +35631,7 @@
         {
           "path": ".software-factory/context/board/stories/24.json",
           "pointer": "/covers/7",
-          "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
+          "sha256": "f8702fc8db13316dc43d8cb3dfab856bc6520ec078de5ad2c9e9f3927e66a00a"
         }
       ],
       "type": "requirement"
@@ -38187,7 +38235,7 @@
         {
           "path": ".software-factory/context/board/stories/24.json",
           "pointer": "",
-          "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
+          "sha256": "f8702fc8db13316dc43d8cb3dfab856bc6520ec078de5ad2c9e9f3927e66a00a"
         }
       ],
       "status": "in-progress",
@@ -38473,7 +38521,7 @@
         {
           "path": ".software-factory/context/board/stories/44.json",
           "pointer": "",
-          "sha256": "fe1b68d6d8cd4fb8243a23906ac2dbc1e703c8e42cfb6fc0635f73ba68a81a30"
+          "sha256": "15d999df3baa171ea58973c1983fb2afdd74b0384c614b111cdad6dfd3db5af0"
         }
       ],
       "status": "in-progress",
@@ -39082,7 +39130,7 @@
         {
           "path": ".software-factory/context/board/stories/44.json",
           "pointer": "/scope/2",
-          "sha256": "fe1b68d6d8cd4fb8243a23906ac2dbc1e703c8e42cfb6fc0635f73ba68a81a30"
+          "sha256": "15d999df3baa171ea58973c1983fb2afdd74b0384c614b111cdad6dfd3db5af0"
         }
       ],
       "type": "surface"
@@ -39144,7 +39192,7 @@
         {
           "path": ".software-factory/context/board/stories/44.json",
           "pointer": "/scope/1",
-          "sha256": "fe1b68d6d8cd4fb8243a23906ac2dbc1e703c8e42cfb6fc0635f73ba68a81a30"
+          "sha256": "15d999df3baa171ea58973c1983fb2afdd74b0384c614b111cdad6dfd3db5af0"
         },
         {
           "path": ".software-factory/runs/software-factory-v01/evidence/code-map.json",
@@ -39197,7 +39245,7 @@
         {
           "path": ".software-factory/context/board/stories/44.json",
           "pointer": "/scope/0",
-          "sha256": "fe1b68d6d8cd4fb8243a23906ac2dbc1e703c8e42cfb6fc0635f73ba68a81a30"
+          "sha256": "15d999df3baa171ea58973c1983fb2afdd74b0384c614b111cdad6dfd3db5af0"
         },
         {
           "path": ".software-factory/runs/software-factory-v01/evidence/code-map.json",
@@ -39447,7 +39495,7 @@
         {
           "path": ".software-factory/context/board/stories/44.json",
           "pointer": "/scope/3",
-          "sha256": "fe1b68d6d8cd4fb8243a23906ac2dbc1e703c8e42cfb6fc0635f73ba68a81a30"
+          "sha256": "15d999df3baa171ea58973c1983fb2afdd74b0384c614b111cdad6dfd3db5af0"
         }
       ],
       "type": "surface"
@@ -39576,7 +39624,7 @@
         {
           "path": ".software-factory/context/board/stories/44.json",
           "pointer": "/scope/4",
-          "sha256": "fe1b68d6d8cd4fb8243a23906ac2dbc1e703c8e42cfb6fc0635f73ba68a81a30"
+          "sha256": "15d999df3baa171ea58973c1983fb2afdd74b0384c614b111cdad6dfd3db5af0"
         },
         {
           "path": ".software-factory/runs/software-factory-v01/evidence/code-map.json",
@@ -39855,5 +39903,5 @@
     }
   ],
   "schema": "sf-trace/1",
-  "source_fingerprint": "861edbda2d2c10ba85f217ffaebb24c06677e14086fafa4352e4f90ee15b4c5f"
+  "source_fingerprint": "e3e1c91b241472175bffb113a6982832a55de371e67002a8b6064f22b467b0bf"
 }
