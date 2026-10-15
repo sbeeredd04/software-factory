@@ -4,7 +4,7 @@
   "epic": 3,
   "type": "story",
   "title": "Cursor and Codex projections",
-  "status": "in-progress",
+  "status": "in-review",
   "owner": "worker-cursor-codex-projections",
   "after": [
     19
@@ -63,6 +63,19 @@
         "Codex inherited-permissions contract correction",
         "Independent acceptance and remaining story criteria"
       ]
+    },
+    "implementation-attempt": {
+      "type": "agent-attempt",
+      "subject_sha": "7242f8e9df247cb2d0aa61d4253bb72cf1bfa31c",
+      "agent": "/root/host_contracts",
+      "role": "sf-engineer",
+      "skill": "software-factory",
+      "requested_model": "gpt-6-astra",
+      "effective_model": null,
+      "phase": "implementation",
+      "status": "awaiting-review",
+      "recorded_at": "2026-10-15T08:18:30.247845+00:00",
+      "summary": "Current host contracts corrected; independent source review accepted. 50 host tests and 20 installer tests passed. Actual host loading remains unverified."
     }
   },
   "baseline_sha": null,
@@ -81,6 +94,12 @@
       "by": "worker-cursor-codex-projections",
       "from": "ready-for-dev",
       "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T08:18:30.274435+00:00",
+      "by": "codex-host-contract",
+      "from": "in-progress",
+      "to": "in-review"
     }
   ],
   "findings": [

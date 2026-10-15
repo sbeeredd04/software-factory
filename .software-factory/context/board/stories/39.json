@@ -4,7 +4,7 @@
   "epic": 2,
   "type": "story",
   "title": "Expose milestone progress, agent attempts and the activity log",
-  "status": "in-progress",
+  "status": "in-review",
   "owner": "codex-status-view",
   "after": [
     16
@@ -15,7 +15,21 @@
   "plan_checkpoint": false,
   "done_checkpoint": false,
   "blocked": null,
-  "receipts": {},
+  "receipts": {
+    "implementation-attempt": {
+      "type": "agent-attempt",
+      "subject_sha": "696b8b5c1f1774264c2415920bedc47e82a13611",
+      "agent": "/root/mission_status",
+      "role": "sf-engineer",
+      "skill": "software-factory",
+      "requested_model": "inherit",
+      "effective_model": null,
+      "phase": "implementation",
+      "status": "awaiting-review",
+      "recorded_at": "2026-10-15T08:18:42.887671+00:00",
+      "summary": "Progress overview, ordered milestone checklist, factual agent reports and bounded activity log implemented. Independent source re-review accepted after two fixes. 14 dashboard and 48 board tests passed in author worktree; no claim of live process tracking."
+    }
+  },
   "baseline_sha": null,
   "branch": null,
   "pr": null,
@@ -32,6 +46,12 @@
       "by": "codex-status-view",
       "from": "ready-for-dev",
       "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T08:18:42.913952+00:00",
+      "by": "codex-status-view",
+      "from": "in-progress",
+      "to": "in-review"
     }
   ],
   "findings": [],

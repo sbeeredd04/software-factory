@@ -4,7 +4,7 @@
   "epic": 2,
   "type": "story",
   "title": "Clarify continuous orchestration within an approved outcome",
-  "status": "in-progress",
+  "status": "in-review",
   "owner": "codex-autonomy-contract",
   "after": [
     16
@@ -15,7 +15,21 @@
   "plan_checkpoint": false,
   "done_checkpoint": false,
   "blocked": null,
-  "receipts": {},
+  "receipts": {
+    "implementation-attempt": {
+      "type": "agent-attempt",
+      "subject_sha": "7242f8e9df247cb2d0aa61d4253bb72cf1bfa31c",
+      "agent": "/root/autonomy_contract",
+      "role": "sf-engineer",
+      "skill": "software-factory",
+      "requested_model": "inherit",
+      "effective_model": null,
+      "phase": "implementation",
+      "status": "awaiting-review",
+      "recorded_at": "2026-10-15T08:18:30.307794+00:00",
+      "summary": "Continuous approved-scope orchestration and factual progress receipts implemented. Independent source review and four bounded forward-use exercises completed; these do not establish live execution."
+    }
+  },
   "baseline_sha": null,
   "branch": null,
   "pr": null,
@@ -32,6 +46,12 @@
       "by": "codex-autonomy-contract",
       "from": "ready-for-dev",
       "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T08:18:30.333617+00:00",
+      "by": "codex-autonomy-contract",
+      "from": "in-progress",
+      "to": "in-review"
     }
   ],
   "findings": [],
