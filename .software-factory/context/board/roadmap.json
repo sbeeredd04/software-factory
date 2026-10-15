@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-15T21:41:45.641426+00:00",
-  "revision": 352,
+  "generated_at": "2026-10-15T22:59:07.724943+00:00",
+  "revision": 355,
   "streams": [
     {
       "id": "W-foundation",
@@ -6762,6 +6762,57 @@
           "limits": [
             "Combined local feature candidate, not maintainer integration, deployment, live host registration or final full-gate proof."
           ]
+        },
+        "readme-format-repair": {
+          "type": "mechanical-format-repair-handoff",
+          "subject_sha": "6db0aabef98b643c8e218ac5372b1c1d7225db46",
+          "status": "in-review",
+          "implementation_agent": "/root/readme_format_repair",
+          "implementation_owner": "codex-readme",
+          "reviewer": "/root/publication_authority_audit",
+          "coordinator": "/root",
+          "model_requested": "inherited native host model",
+          "effective_model": null,
+          "scope": "Existing story32: escape acquisition shellguard pipes in the GFM table so the complete command/explanation render; preserve actual rendered shell command bytes. No new product/architecture/skill/evaluation scope.",
+          "workflow": "Mechanical formatting-only maintenance; installed BMadBuild explicitly excludes this class. Existing story re-entered in-progress under exact live32claim; no new approval or test/eval case count.",
+          "checks": {
+            "existing_readme_tests": {
+              "run": 12,
+              "passed": 12,
+              "failed": 0,
+              "exit_code": 0
+            },
+            "pinned_ruff": {
+              "version": "0.17.0",
+              "exit_code": 0
+            },
+            "github_gfm": {
+              "before": "reproduced missing command/explanation",
+              "after": "3cells and exact decoded shellguard/fullcommand restored",
+              "exit_code": 0
+            },
+            "independent_review": "accepted"
+          },
+          "artifacts": [
+            {
+              "artifact": ".software-factory/runs/software-factory-v01/evidence/sf-readme-format-independent-review.md",
+              "sha256": "31eeb40eb80c721d7e08c6a7df09f1bc6f8079dfba9dec7b725ac3249d5c32df"
+            },
+            {
+              "artifact": ".software-factory/runs/software-factory-v01/evidence/sf-readme-gfm-verification.json",
+              "sha256": "ccdcf836f65592c912dbc24cb435de9e0717b2f74503a7e3ce1825509fc45e77"
+            },
+            {
+              "artifact": ".software-factory/runs/software-factory-v01/evidence/sf-readme-table-format-repair-handoff.json",
+              "sha256": "02fc2615e9327896fbd93c3047726b232807bf54785456e5f2c1de7eff481f1b"
+            }
+          ],
+          "limits": [
+            "Full frozen gate and current-subject remoteCI remain required.",
+            "Public browser result on the pushed repair must still be observed.",
+            "Prior ac587 gate/CI do not become proof of this new subject.",
+            "No protected story/epic closure, integration or deployment is asserted."
+          ]
         }
       },
       "baseline_sha": null,
@@ -6793,12 +6844,24 @@
           "by": "codex-readme",
           "from": "in-progress",
           "to": "in-review"
+        },
+        {
+          "at": "2026-10-15T22:55:44.566783+00:00",
+          "by": "codex-readme",
+          "from": "in-review",
+          "to": "in-progress"
+        },
+        {
+          "at": "2026-10-15T22:59:07.539227+00:00",
+          "by": "codex-readme",
+          "from": "in-progress",
+          "to": "in-review"
         }
       ],
       "findings": [],
       "source_key": "launch-publication/readme",
       "evidence_contract": 1,
-      "review_subject_sha": "374eea011296d790a15fcf861b499835ee02f26b"
+      "review_subject_sha": "6db0aabef98b643c8e218ac5372b1c1d7225db46"
     },
     {
       "id": 33,
