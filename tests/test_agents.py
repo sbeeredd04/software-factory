@@ -157,6 +157,24 @@ class AgentTests(unittest.TestCase):
         with self.assertRaises(A.Error):
             A.invocation(self.root,'cursor',{'{workspace}':str(self.root),'{task_file}':'brief.md'})
 
+    def test_ambiguous_scope_options_and_option_substitutions_refused(self):
+        self.external()
+        agent = self.data['agents']['cursor']
+        for extra in ('--sandbox=workspace-write','--cd=/outside','-C/outside','-sworkspace-write','-csetting=value','--full-auto','--add-dir=/outside'):
+            agent['invoke'] = {'argv':['codex','exec','--sandbox','read-only','--cd','{workspace}','{task_file}',extra],'cwd':'.','operation':'observe'}
+            save(self.root,self.data)
+            with self.subTest(extra=extra),self.assertRaises(A.Error):
+                A.invocation(self.root,'cursor',{'{workspace}':str(self.root),'{task_file}':'brief.md'})
+        for extra in ('--sandbox=disabled','--mode=agent','--workspace=/outside'):
+            agent['invoke'] = {'argv':['cursor-agent','--workspace','{workspace}','--mode','ask','{task_file}',extra],'cwd':'.','operation':'observe'}
+            save(self.root,self.data)
+            with self.subTest(extra=extra),self.assertRaises(A.Error):
+                A.invocation(self.root,'cursor',{'{workspace}':str(self.root),'{task_file}':'brief.md'})
+        agent['invoke']['argv'].pop()
+        save(self.root,self.data)
+        with self.assertRaises(A.Error):
+            A.invocation(self.root,'cursor',{'{workspace}':str(self.root),'{task_file}':'--force'})
+
     def test_installed_only_helpers_with_host_guards_and_hostile_modules(self):
         import subprocess
         import sys
@@ -174,4 +192,14 @@ class AgentTests(unittest.TestCase):
                     cwd=project,env=env,capture_output=True,text=True,check=False)
                 self.assertEqual(0,result.returncode,result.stderr)
             self.assertTrue((skills/'sf-agents/scripts/install_lifecycle.py').is_file())
+            renderer = load_module(skills/'sf-agents/scripts/render_bots.py','installed_missing_'+host)
+            (skills/'sf-agents/scripts/install_lifecycle.py').unlink()
+            fallback = skills.parent/'scripts/install_lifecycle.py'
+            fallback.parent.mkdir(exist_ok=True)
+            fallback.write_text('raise AssertionError("consumer fallback executed")')
+            with self.assertRaisesRegex(renderer.Error,'installed dependency missing'):
+                renderer.lifecycle()
+            shutil.rmtree(skills/'sf-agents/templates')
+            with self.assertRaisesRegex(renderer.Error,'installed dependency missing'):
+                renderer.plan(project,['copilot'],'decision:approved')
         self.assertFalse(guard.exists())

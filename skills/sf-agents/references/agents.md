@@ -52,6 +52,10 @@ whole tokens: workspace, task_file, output_file, model and branch. Values are
 literal argv, not shell interpolation. The workspace/cwd must identify the exact
 claimed worktree; a missing requested model remains missing, never guessed.
 Environment values remain `env:NAME` references and are not read or printed.
+Known scope flags use the documented separated form exactly once; alternate
+equals/attached scope options are refused rather than guessed. Substitutions
+cannot start with a dash and become additional CLI options. These conservative
+checks do not claim to emulate any installed CLI parser.
 
 Pass `discover --inventory FILE` for host observations `{ "native": true }`.
 An absent inventory leaves presence unknown. A native fallback can mean the

@@ -134,9 +134,15 @@ def invocation(root, name, values):
     host = Path(recipe['argv'][0]).name
     tokens = recipe['argv']
     def option(flag):
-        if tokens.count(flag) != 1 or tokens.index(flag)+1 >= len(tokens):
+        if any(t.startswith(flag+'=') for t in tokens) or tokens.count(flag) != 1 or tokens.index(flag)+1 >= len(tokens):
             return None
         return tokens[tokens.index(flag)+1]
+    if host in ('codex','cursor-agent','agent'):
+        protected = ('--sandbox','--cd','--workspace','--mode','--config','--profile')
+        if (any(t.startswith(tuple(flag+'=' for flag in protected)) for t in tokens)
+                or any(tokens.count(flag)>1 for flag in protected)
+                or host == 'codex' and any(t == '--full-auto' or t.startswith(('-C','-s','-c','-p','--add-dir')) for t in tokens[1:])):
+            raise Error('ambiguous or alternate scope options require recipe reconciliation')
     if host == 'codex':
         expected = 'read-only' if recipe['operation'] == 'observe' else 'workspace-write'
         if (len(tokens) < 2 or tokens[1] != 'exec' or option('--sandbox') != expected
@@ -148,7 +154,7 @@ def invocation(root, name, values):
         raise Error('Cursor recipe must preserve analysis mode and claimed workspace')
     if weakening(recipe['argv']):
         raise Error('permission-weakening recipe is not rendered as dispatch-ready')
-    if set(values) - config.PLACEHOLDERS or any(not isinstance(v,str) or not v or '\x00' in v or '\n' in v for v in values.values()):
+    if set(values) - config.PLACEHOLDERS or any(not isinstance(v,str) or not v or v.startswith('-') or '\x00' in v or '\n' in v for v in values.values()):
         raise Error('invalid invocation substitutions')
     workspace = values.get('{workspace}')
     if workspace is None or Path(workspace).resolve() != Path(root).resolve():

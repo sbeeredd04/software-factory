@@ -31,6 +31,14 @@ def envelope(rows):
     return result
 
 
+def rest_pages(kind, rows):
+    values = envelope(rows)
+    endpoint = 'repos/example/project/'+('issues/1/comments' if kind == 'issues' else f'pulls/1/{kind}')
+    for value in values:
+        value['endpoint'] = endpoint
+    return values
+
+
 def capture(thread_count=1,comment_count=1):
     threads = [thread(i) for i in range(thread_count)]
     outer = envelope(threads)
@@ -43,9 +51,11 @@ def capture(thread_count=1,comment_count=1):
         for page in values:
             page['response'] = {'data':{'node':dict(t,comments={'nodes':page['response'],'pageInfo':{'hasNextPage':page['next'] is not None,'endCursor':page['next']}})}}
         comments[t['id']] = values
-    review = {'id':1,'user':{'login':'fixture-review[bot]'},'body':'Review report','commit_id':HEAD,'state':'COMMENTED'}
+    review = {'id':1,'user':{'login':'fixture-review[bot]'},'body':'Review report','commit_id':HEAD,'state':'COMMENTED',
+              'html_url':'https://github.com/example/project/pull/1#pullrequestreview-1',
+              'pull_request_url':'https://api.github.com/repos/example/project/pulls/1'}
     return {'owner':'example','repo':'project','number':1,'host':'github.com','head_before':HEAD,'head_after':HEAD,
-            'threads':outer,'comments':comments,'rest':{'comments':envelope([]),'reviews':envelope([review]),'issues':envelope([])}}
+            'threads':outer,'comments':comments,'rest':{'comments':rest_pages('comments',[]),'reviews':rest_pages('reviews',[review]),'issues':rest_pages('issues',[])}}
 
 
 class TriageTests(unittest.TestCase):
@@ -106,7 +116,7 @@ class TriageTests(unittest.TestCase):
 
     def test_resolved_not_inferred_from_rest_and_outdated_stays_unresolved(self):
         data = capture()
-        data['rest']['comments'] = envelope([{'id':1,'user':None,'body':'resolved'}])
+        data['rest']['comments'] = rest_pages('comments',[{'id':1,'user':None,'body':'resolved','html_url':'https://github.com/example/project/pull/1#discussion-1'}])
         data['threads'][0]['response']['data']['repository']['pullRequest']['reviewThreads']['nodes'][0]['isOutdated'] = True
         data['comments']['T0'][0]['response']['data']['node']['isOutdated'] = True
         result = T.normalize(self.root,data)
@@ -179,3 +189,36 @@ class TriageTests(unittest.TestCase):
         result = T.normalize(self.root,copy.deepcopy(capture()))
         self.assertIn('not authenticated',result['trust'])
         self.assertEqual('needs evidence',result['threads'][0]['disposition'])
+
+    def test_rest_endpoint_and_row_scope_required_even_for_same_head_and_author(self):
+        self.data['review_bots']['copilot']['required'] = True
+        save(self.root,self.data)
+        for field,value in (('endpoint',None),('endpoint','repos/other/project/pulls/1/reviews'),
+                            ('html_url',None),('html_url','https://github.com/other/project/pull/1#pullrequestreview-1'),
+                            ('html_url','https://github.com/example/project/pull/2#pullrequestreview-1'),
+                            ('pull_request_url','https://api.github.com/repos/other/project/pulls/1')):
+            data = capture()
+            page = data['rest']['reviews'][0]
+            target = page if field == 'endpoint' else page['response'][0]
+            if value is None:
+                del target[field]
+            else:
+                target[field] = value
+            with self.subTest(field=field,value=value),self.assertRaises(T.Error):
+                T.normalize(self.root,data)
+        data = capture()
+        del data['rest']['issues'][0]['endpoint']
+        with self.assertRaises(T.Error):
+            T.normalize(self.root,data)
+
+    def test_immediately_nonadvancing_rest_and_graphql_cursor_refused(self):
+        data = capture()
+        page = data['rest']['issues'][0]
+        data['rest']['issues'] = [dict(page,cursor=None,next='A'),dict(page,cursor='A',next='A'),dict(page,cursor='A',next=None)]
+        with self.assertRaises(T.Error):
+            T.normalize(self.root,data)
+        data = capture(201)
+        data['threads'][1]['response']['data']['repository']['pullRequest']['reviewThreads']['pageInfo']['endCursor'] = '100'
+        data['threads'][2]['cursor'] = '100'
+        with self.assertRaises(T.Error):
+            T.normalize(self.root,data)

@@ -68,8 +68,10 @@ settings files above64KB. Larger projects need a reviewed scoped projection.
 
 Markdown prefixes/suffixes are byte-preserved. A managed section updates only
 when its digest matches the prior receipt. Ambiguous/edited markers produce a
-proposal. Existing user YAML receives a proposed diff unless the exact managed
-section is owned; user tone/path instructions remain untouched. Complex Greptile
+proposal. YAML refresh requires the entire non-whitespace document to be the
+owned managed section; unmanaged surrounding YAML makes it proposal-only to
+avoid duplicate keys or changed topology. User tone/path instructions remain
+untouched. Complex Greptile
 JSON receives a proposed diff, not an applied reserialization. Only selected
 bots can change. Settings-only JSON provenance is kept in the receipt; rule
 surfaces carry four-source provenance directly.
@@ -82,6 +84,9 @@ On failure it restores independent unchanged publications, retains contested
 files/recovery copies, and reports manual reconciliation. Do not claim a
 byte-identical whole-tree rollback: directories, lock and evidence may remain.
 The bot receipt is written last. Repeating an unchanged plan makes no writes.
+Installed/native helpers require their packaged templates and lifecycle helper;
+missing assets fail closed instead of importing consumer ancestor code. Only
+the canonical source layout uses top-level pack dependencies.
 
 To inspect a configured Greptile's effective merged rules, its documented command
 is `greptile config [PATH] --json`; dashboard/org settings participate. This is

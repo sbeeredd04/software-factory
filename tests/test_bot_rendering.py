@@ -97,6 +97,24 @@ class BotTests(unittest.TestCase):
             self.assertEqual('proposal-only',self.apply(proposal)['status'])
             self.assertEqual(raw,target.read_text())
 
+    def test_owned_yaml_with_new_unmanaged_keys_is_proposal_only(self):
+        self.apply(self.plan(['coderabbit','bugbot']))
+        targets = {'.coderabbit.yaml':'reviews:\n  tone_instructions: User tone\n',
+                   '.cursor/config/bugbot.yaml':'version: 1\n'}
+        originals = {}
+        for path,prefix in targets.items():
+            target = self.root/path
+            originals[path] = prefix.encode()+target.read_bytes()
+            target.write_bytes(originals[path])
+        (self.root/'PRODUCT.md').write_text('Changed approved product principle\n')
+        proposal = self.plan(['coderabbit','bugbot'])
+        for path in targets:
+            self.assertNotIn(path,proposal['files'])
+            self.assertIn('unmanaged YAML',proposal['proposals'][path]['reason'])
+        self.apply(proposal)
+        for path,raw in originals.items():
+            self.assertEqual(raw,(self.root/path).read_bytes())
+
     def test_missing_empty_unsafe_or_unapproved_principles_refuse(self):
         for value in ('', 'sf-setup-reuse/1'):
             with self.assertRaises(ValueError):

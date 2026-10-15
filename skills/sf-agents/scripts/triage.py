@@ -61,7 +61,7 @@ def pages(values, connection, counter):
         if next_cursor is None:
             if index != len(values)-1:
                 raise Error('unexpected pages after terminal cursor')
-        elif not isinstance(next_cursor,str) or not next_cursor or next_cursor in seen or index == len(values)-1:
+        elif not isinstance(next_cursor,str) or not next_cursor or next_cursor == cursor or next_cursor in seen or index == len(values)-1:
             raise Error('truncated or repeated pagination cursor')
         seen.add(cursor)
         cursor = next_cursor
@@ -163,7 +163,12 @@ def normalize(root, capture):
         raise Error('all three REST collections are required')
     for kind, values in rest.items():
         seen = {}
-        for rows in pages(values,rest_connection,counter):
+        endpoint = f'repos/{owner}/{repo}/'+(f'issues/{number}/comments' if kind == 'issues' else f'pulls/{number}/{kind}')
+        def scoped_rest(payload, page, endpoint=endpoint):
+            if page.get('endpoint') != endpoint:
+                raise Error('missing or foreign REST endpoint provenance')
+            return rest_connection(payload,page)
+        for rows in pages(values,scoped_rest,counter):
             for row in rows:
                 count += 1
                 if count > MAX_COMMENTS:
@@ -176,11 +181,23 @@ def normalize(root, capture):
                         raise Error('conflicting REST duplicate')
                     continue
                 seen[rid] = row
+                url = text(row.get('html_url'),2048)
+                parsed = urlsplit(url)
+                paths = [f'/{owner}/{repo}/pull/{number}']
+                if kind == 'issues':
+                    paths.append(f'/{owner}/{repo}/issues/{number}')
+                if parsed.scheme != 'https' or parsed.netloc != host or parsed.path not in paths or parsed.query:
+                    raise Error('missing or foreign REST row PR scope')
+                if 'pull_request_url' in row:
+                    api_host = 'api.github.com' if host == 'github.com' else host
+                    api_prefix = '' if host == 'github.com' else '/api/v3'
+                    if row['pull_request_url'] != f'https://{api_host}{api_prefix}/repos/{owner}/{repo}/pulls/{number}':
+                        raise Error('foreign REST pull request reference')
                 user = row.get('user') or {}
                 login = text(user.get('login'),128,True)
                 reports.append({'collection':kind,'id':rid,'author':login,'body':text(row.get('body') or ''),
                                 'commit_id':row.get('commit_id'),'state':row.get('state'),
-                                'url':row.get('html_url'),'path':row.get('path'),'line':row.get('line'),
+                                'url':url,'endpoint':endpoint,'path':row.get('path'),'line':row.get('line'),
                                 'bots':[name for name,bot in bots.items() if login in bot.get('authors',[])]})
     gaps = [name for name,bot in bots.items() if bot['required'] and not any(
         name in r['bots'] and r['collection']=='reviews' and r['commit_id']==head and r['state'] in ('APPROVED','COMMENTED','CHANGES_REQUESTED') for r in reports)]

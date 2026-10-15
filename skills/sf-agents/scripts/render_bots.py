@@ -41,13 +41,25 @@ def reference(value):
     return value
 
 
+def source_root():
+    """Only canonical source layout may use top-level pack dependencies."""
+    here = Path(__file__).resolve()
+    root = here.parents[3]
+    if (agents.config.schema_path().resolve() != root/'schemas/config.schema.json'
+            or not (root/'install.py').is_file()
+            or here != root/'skills/sf-agents/scripts/render_bots.py'):
+        raise Error('installed dependency missing; restore the full project installation')
+    return root
+
+
 def asset(bot, name):
     here = Path(__file__).absolute()
-    for base in (here.parents[1]/'templates', here.parents[3]/'integrations/bots'):
-        if base.is_dir():
-            raw = agents.config.read_bytes(base, bot+'/'+name, required=False)
-            if raw is not None:
-                return raw.decode()
+    base = here.parents[1]/'templates'
+    if not base.is_dir():
+        base = source_root()/'integrations/bots'
+    raw = agents.config.read_bytes(base, bot+'/'+name, required=False)
+    if raw is not None:
+        return raw.decode()
     raise Error('canonical bot templates missing; use full project installation')
 
 
@@ -71,6 +83,8 @@ def splice(old, generated, ownership, markdown):
         end += len(end_marker)
         if ownership != D.digest(old[start:end].encode()):
             return None, 'managed content changed or lacks ownership receipt'
+        if not markdown and (old[:start].strip() or old[end:].strip()):
+            return None, 'unmanaged YAML surrounds managed section; review topology manually'
         return old[:start] + generated + old[end:], None
     if markdown:
         return old + ('\n' if old.endswith('\n') else '\n\n') + generated, None
@@ -200,7 +214,7 @@ def lifecycle():
     here = Path(__file__).absolute()
     path = here.with_name('install_lifecycle.py')
     if not path.exists():
-        path = here.parents[3]/'scripts/install_lifecycle.py'
+        path = source_root()/'scripts/install_lifecycle.py'
     helper = agents.module(path,'sf_bot_publication')
     helper.read_at = read_at  # Bounded capture verification, including contested files.
     return helper

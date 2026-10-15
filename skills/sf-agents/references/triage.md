@@ -64,9 +64,9 @@ The host records the observed responses in a private JSON object:
   "threads":[{"cursor":null,"exit_code":0,"response":{"data":{}}}],
   "comments":{"THREAD_ID":[{"cursor":null,"exit_code":0,"response":{"data":{}}}]},
   "rest":{
-    "comments":[{"cursor":null,"next":null,"exit_code":0,"response":[]}],
-    "reviews":[{"cursor":null,"next":null,"exit_code":0,"response":[]}],
-    "issues":[{"cursor":null,"next":null,"exit_code":0,"response":[]}]
+    "comments":[{"endpoint":"repos/example/project/pulls/1/comments","cursor":null,"next":null,"exit_code":0,"response":[]}],
+    "reviews":[{"endpoint":"repos/example/project/pulls/1/reviews","cursor":null,"next":null,"exit_code":0,"response":[]}],
+    "issues":[{"endpoint":"repos/example/project/issues/1/comments","cursor":null,"next":null,"exit_code":0,"response":[]}]
   }
 }
 ```
@@ -80,6 +80,12 @@ Every next page must consume the previous token. Keep endpoints/query provenance
 and raw command results beside the capture; these caller-supplied fields are
 not authenticated live proof. An empty legitimate collection still has one
 successful terminal page.
+
+Every REST page must name its exact canonical endpoint, excluding query options,
+including empty pages. Every row must carry an `html_url` scoped to this host,
+repository and PR number; issue comments may use the equivalent issue URL.
+When present, `pull_request_url` must also match this PR's API reference. Missing
+or foreign scope is rejected even if author and commit SHA otherwise match.
 
 ```sh
 python3 -I -B scripts/triage.py normalize --project /project --capture /private/capture.json

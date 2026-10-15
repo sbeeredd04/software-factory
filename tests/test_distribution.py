@@ -248,6 +248,12 @@ class DistributionTests(unittest.TestCase):
                 self.assertEqual('applied',result['status'])
                 self.assertIn('SHA256:',(consumer/'.github/copilot-instructions.md').read_text())
                 self.assertTrue((scripts/'install_lifecycle.py').is_file())
+                (scripts/'install_lifecycle.py').unlink()
+                fallback = scripts.parents[2]/'scripts/install_lifecycle.py'
+                fallback.parent.mkdir(exist_ok=True)
+                fallback.write_text('raise AssertionError("untrusted fallback executed")')
+                with self.assertRaisesRegex(renderer.Error,'installed dependency missing'):
+                    renderer.lifecycle()
 
     def test_release_native_payload_excludes_unlisted_local_files(self):
         api = self.release_source()
