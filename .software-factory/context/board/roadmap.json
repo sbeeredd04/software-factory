@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-15T14:44:48.832429+00:00",
-  "revision": 268,
+  "generated_at": "2026-10-15T14:54:23.627569+00:00",
+  "revision": 269,
   "streams": [
     {
       "id": "W-foundation",
@@ -5530,6 +5530,45 @@
           "artifact_sha256": "abd18880a66b757ba885c2a58ed0be404e91ea0c96dccf47c9ea5836025365bc",
           "limitations": [
             "Source review does not establish native reduced-motion emulation, actual clipboard string read, deployedPages, remoteintegration or owner epic acceptance."
+          ]
+        },
+        "combined-primary-proof": {
+          "type": "verification",
+          "subject_sha": "026deb9860a81a6413f1037a76f7876526896b65",
+          "status": "pass",
+          "command": "bash scripts/check_all.sh",
+          "exit_code": 0,
+          "artifact": ".software-factory/runs/software-factory-v01/evidence/showcase-integrated-49-gate.log",
+          "artifact_sha256": "b66e66bb36b9bc5b4b2af560100577c945c42ea9054eccec84a78bcfc5f78b07",
+          "unit_tests": {
+            "run": 724,
+            "passed": 723,
+            "failed": 0,
+            "skipped": 1,
+            "seconds": 303.024,
+            "skip_reason": "optional jsonschema crosscheck not requested"
+          },
+          "evals": {
+            "failed": 0,
+            "passed": 49,
+            "quarantined": 0,
+            "skipped": 0,
+            "unverified": 0
+          },
+          "eval_run": "r-20261015T145006Z-premerge",
+          "eval_receipt_sha256": "5c73acc2b8a2b2fce9b3265d7033efdb9eb692dad3bfac670bbc0166a47e21bf",
+          "source_equivalence": {
+            "worker_subject": "ec0992aedfb661bf0f5f7957ab87fd74d5cd9cc4",
+            "exact_files": 36,
+            "reviewer": "/root/mission_status",
+            "artifact": ".software-factory/runs/software-factory-v01/evidence/showcase-integrated-source-review.md",
+            "artifact_sha256": "2cdabf9e760296bcbf13e2c5c686f6df2491bc83eb4d2cf5421a983daf1f17c9"
+          },
+          "summary": "Integrated showcase source and exact approved49-case admission pass all gates after root-owned map refresh. Actual approved BMad/skills network checks and21 other static steps pass. Old isolated red gates retained; strict new source/admission review accepted.",
+          "limitations": [
+            "Native SITE006 reduced-motion emulation remains pending separately requested browser-method authorization. No headless browser has launched.",
+            "Actual clipboard byte reading was unavailable; observed selectable full prompts/source equality and browser feedback are separately scoped.",
+            "No owner epic acceptance, remote integration, live host loading, deployedPages or public release is established."
           ]
         }
       },
