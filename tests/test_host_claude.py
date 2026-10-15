@@ -100,7 +100,7 @@ class FileSetTests(ClaudeInstallCase):
         for path in sorted(skills_dir.rglob("*")):
             if path.is_file():
                 projected.add(path.relative_to(skills_dir).as_posix())
-        self.assertEqual(canonical_tree() | {"software-factory/schemas/config.schema.json", "software-factory/scripts/trackers.py"}, projected)
+        self.assertEqual(canonical_tree() | {"software-factory/schemas/config.schema.json", "software-factory/scripts/trackers.py", *{f"sf-help/templates/{name}" for name in ("PRINCIPLES.md", "ARCHITECTURE.md", "CONVENTIONS.md")}}, projected)
 
     def test_exact_agent_set(self):
         agents = sorted(p.name for p in (self.repo / ".claude/agents").glob("*.md"))

@@ -382,6 +382,9 @@ def project_claude(root: Path, policy: dict, profile: str) -> list[Action]:
                           auxiliary_bytes("schemas/config.schema.json"), "claude-code"))
     actions.append(Action(".claude/skills/software-factory/scripts/trackers.py", "write",
                           auxiliary_bytes("adapters/trackers.py"), "claude-code"))
+    for name in ("PRINCIPLES.md", "ARCHITECTURE.md", "CONVENTIONS.md"):
+        actions.append(Action(f".claude/skills/sf-help/templates/{name}", "write",
+                              auxiliary_bytes(f"templates/{name}"), "claude-code"))
     if profile == "full":
         for src in sorted((PACK_ROOT / "agents").glob("sf-*.md")):
             actions.append(Action(f".claude/agents/{src.name}", "write",
@@ -479,6 +482,9 @@ def project_shared_skills(hosts: list[str]) -> list[Action]:
                           auxiliary_bytes("schemas/config.schema.json"), None))
     actions.append(Action(".agents/skills/software-factory/scripts/trackers.py", "write",
                           auxiliary_bytes("adapters/trackers.py"), None))
+    for name in ("PRINCIPLES.md", "ARCHITECTURE.md", "CONVENTIONS.md"):
+        actions.append(Action(f".agents/skills/sf-help/templates/{name}", "write",
+                              auxiliary_bytes(f"templates/{name}"), None))
     if "codex" in hosts:
         codex_policy = load_policy("codex")
         policy_skills = set(codex_policy.get("explicit_only", [])) | set(
