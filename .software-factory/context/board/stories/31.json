@@ -77,6 +77,23 @@
         "No passing51case canonical run claimed before execution.",
         "README52 remains approved future contract."
       ]
+    },
+    "canonical-launch-epic-evals": {
+      "type": "canonical-epic-evaluation",
+      "subject_sha": "b532758b731897cf06b67798171817a8afd91066",
+      "status": "pass",
+      "scope": "40selectedlaunch+regressioncases under51caseplan; notall51premerge.",
+      "run_id": "r-20261015T191832Z-epic",
+      "mode": "epic",
+      "totals": {
+        "failed": 0,
+        "passed": 40,
+        "quarantined": 0,
+        "skipped": 0,
+        "unverified": 0
+      },
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/canonical-launch51-epic-receipt-b532.json",
+      "artifact_sha256": "1f6463e00bd4101cf9dc09941b3197ad69a427c0bedb2653cba4659c2e306673"
     }
   },
   "baseline_sha": null,

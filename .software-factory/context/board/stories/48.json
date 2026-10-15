@@ -60,6 +60,66 @@
       "limitations": [
         "Actualrootsetupretry/fullgate andupstreamBMadnativeworkflow effects remainseparate."
       ]
+    },
+    "actual-project-setup": {
+      "type": "actual-project-setup",
+      "subject_sha": "e58ca899d0786b93730a865f27779e158073b077",
+      "status": "pass",
+      "scope": "Actual fullCodex project file installation, byte-preserving repeat and bounded doctor checks; not live host registration/trust or complete SDLC acceptance.",
+      "apply_exit_code": 0,
+      "apply_expected_tracked_changes": [
+        ".gitignore",
+        "AGENTS.md"
+      ],
+      "repeat_exit_code": 0,
+      "repeat_tracked_changes": [],
+      "manifest_owned_files": 116,
+      "manifest_owned_hashes_match": true,
+      "manifest_sha256": "05f84b9621d4cf5d585c57ab4349e4b002cbf7721f0cc3d9ab3519934e1c04cf",
+      "bmad": "Existing separately pinned install preserved; no update invoked.",
+      "doctor_exit_code": 0,
+      "doctor_status_counts": {
+        "pass": 12,
+        "warning": 1,
+        "blocked": 0,
+        "unverified": 4
+      },
+      "doctor_nonpass": [
+        "codex-hook-trust",
+        "codex-agent-permissions",
+        "codex-agent-loading",
+        "recovery-state",
+        "global-plugin-state"
+      ],
+      "forbidden_host_calls": 0,
+      "artifacts": {
+        "apply": ".software-factory/runs/software-factory-v01/evidence/actual-codex-setup-apply-e58.json",
+        "repeat": ".software-factory/runs/software-factory-v01/evidence/actual-codex-setup-repeat-e58.json",
+        "doctor": ".software-factory/runs/software-factory-v01/evidence/actual-codex-setup-doctor-e58.json"
+      },
+      "artifact_sha256": {
+        "apply": "d3cea29abc180f057898302d543cd1ffb9cdc570d327b3aa22317bdef9e52d07",
+        "repeat": "08354f6e4c08828b1e3176764abcfd699d6334f5f2ebd1cafcb9afc00894d1cb",
+        "doctor": "1b7529f24a7124b5659f5c660461438807e9eb7f22182b12a4c422c3ec695958"
+      },
+      "limitations": [
+        "Codex hook trust needs actual user review through /hooks; live custom-agent loading/global plugin state unobserved.",
+        "Custom agents inherit parent permissions; role prompts do not enforce read-only isolation.",
+        "Doctor recovery fixture behavior differs from native host event execution; no universal all-ready claim.",
+        "Generated native project files and BMad remain untracked; only expected managed AGENTS pointer and lock ignore are tracked changes."
+      ]
+    },
+    "actual-setup-independent-review": {
+      "type": "independent-review",
+      "subject_sha": "e58ca899d0786b93730a865f27779e158073b077",
+      "reviewer": "/root/launch_copy",
+      "status": "pass",
+      "scope": "Actual116fileCodexinstallation/repeat0changes/doctor12pass1warning4unverified0blocked; currentmanifesthashes/actualreceipts/expectedAGENTS+ignore preserved. EarlierBMad4c16 source distinct from laterinstaller48source. No livehosttrust/loading claim.",
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/sf-actual-setup-independent-review.json",
+      "artifact_sha256": "ce207eb09337d174e1dbc88bbb09112343ff54388c731a0568bfd1c38ad07941",
+      "limitations": [
+        "Independent selectedfile/setupscope only; global51/52fullgate andcompleteSDLC/publication remainseparate."
+      ]
     }
   },
   "baseline_sha": null,
