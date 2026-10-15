@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-15T21:17:29.211380+00:00",
-  "revision": 347,
+  "generated_at": "2026-10-15T21:36:45.360048+00:00",
+  "revision": 349,
   "streams": [
     {
       "id": "W-foundation",
@@ -108,8 +108,8 @@
       "counts": {
         "planned": 0,
         "ready": 1,
-        "in-progress": 1,
-        "review": 6,
+        "in-progress": 0,
+        "review": 7,
         "built": 0,
         "done": 0,
         "cancelled": 0
@@ -294,14 +294,14 @@
         "VAL-CROSS"
       ],
       "order": [
-        54,
         29,
         30,
         31,
         32,
         33,
         47,
-        53
+        53,
+        54
       ],
       "needs": [
         4
@@ -9248,8 +9248,8 @@
       "stream": "W-launch",
       "type": "story",
       "title": "Explain the complete factory through orchestration and delivery graphs",
-      "status": "in-progress",
-      "state": "in-progress",
+      "status": "in-review",
+      "state": "review",
       "owner": "codex-lifecycle",
       "after": [
         47
@@ -9264,25 +9264,42 @@
       "plan_checkpoint": false,
       "done_checkpoint": false,
       "blocked": null,
-      "receipts": {},
+      "receipts": {
+        "worker-handoff": {
+          "type": "agent-attempt",
+          "subject_sha": "f2369bab60f5baac0a6e2171cf4122215812a162",
+          "agent": "/root/lifecycle_design",
+          "role": "lifecycle visual implementation",
+          "skill": "bmad-build",
+          "effective_model": null,
+          "status": "awaiting-review",
+          "scope": "Two-level illustrative factory architecture, parallel per-story delivery, BMad planning, independent proof and repair, sequential integration, authorized feedback, recovery, conditional human escalation; no policy/runtime changes.",
+          "checks": {
+            "assets_tests_passed": 36,
+            "showcase_tests_passed": 18,
+            "focused_exit_code": 0,
+            "pinned_actual_render_exit_code": 0,
+            "masters_captured": 7,
+            "byte_equal_aliases": 3,
+            "expanded_custom_inter_labels": 52,
+            "standalone_custom_inter_labels": 52,
+            "owning_card_failures": 0
+          },
+          "evidence": ".software-factory/runs/software-factory-v01/evidence/lifecycle54-author-expanded-visual.json",
+          "evidence_sha256": "1f1cd13a01ac26b2384d6eb20a8eb7025038b81d13d0c1c1fe45163439f30301",
+          "limits": [
+            "Author-focused verification only; root exact-source native browser verification and full gate pending.",
+            "Review findings corrected in f236; first c955 browser run remains failed and is not relabeled.",
+            "No built/done, remote CI, external integration, publication or live-host execution claim."
+          ]
+        }
+      },
       "baseline_sha": null,
       "branch": null,
       "pr": null,
       "merged_sha": null,
       "claim": {
-        "live": true,
-        "owner": "codex-lifecycle",
-        "paths": [
-          "site/img/delivery-graph.svg",
-          "site/index.html",
-          "site/styles",
-          "assets",
-          "scripts/render_assets.py",
-          "tests/test_assets.py",
-          "tests/test_showcase.py",
-          "docs/launch-assets.md"
-        ],
-        "claimed_at": "2026-10-15T21:17:29.171036+00:00"
+        "live": false
       },
       "blocks": [],
       "history": [
@@ -9297,11 +9314,18 @@
           "by": "codex-lifecycle",
           "from": "ready-for-dev",
           "to": "in-progress"
+        },
+        {
+          "at": "2026-10-15T21:36:45.279546+00:00",
+          "by": "codex-lifecycle",
+          "from": "in-progress",
+          "to": "in-review"
         }
       ],
       "findings": [],
       "source_key": "launch-publication/lifecycle-system-map",
-      "evidence_contract": 1
+      "evidence_contract": 1,
+      "review_subject_sha": "f2369bab60f5baac0a6e2171cf4122215812a162"
     }
   ],
   "frontier": {
@@ -9321,14 +9345,7 @@
   "diagnostics": {
     "unpinned_gates": [],
     "undeclared_after": [],
-    "order_conflicts": [
-      {
-        "epic": 5,
-        "story": 54,
-        "prerequisite": 47,
-        "detail": "epic 5 order places story 54 before its prerequisite 47"
-      }
-    ],
+    "order_conflicts": [],
     "inconsistencies": []
   },
   "decision_queue": [
