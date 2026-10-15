@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-15T11:03:47.634714+00:00",
-  "revision": 220,
+  "generated_at": "2026-10-15T11:18:03.245331+00:00",
+  "revision": 221,
   "streams": [
     {
       "id": "W-foundation",
@@ -4355,6 +4355,22 @@
           "status": "assigned",
           "recorded_at": "2026-10-15T10:56:32.027239+00:00",
           "summary": "Original26 starts from integrated reviewed25source through review-counts-as-met readiness. Complete exact20questioncatalog, grounded readonlydiscovery and approved idempotentsetup with actualschema mappings and self-contained generatedtemplates; combinedprimarygatepending."
+        },
+        "rejected-72d1-review": {
+          "type": "independent-review",
+          "status": "fail",
+          "subject_sha": "72d1d82f91c98759e9d1e6c8d1dba405a67c20ec",
+          "author": "product-expert",
+          "reviewer": "mission-status",
+          "independent": true,
+          "artifact": ".software-factory/runs/software-factory-v01/evidence/onboarding-72d1-independent-review.md",
+          "artifact_sha256": "482ec9c201202d4e1eb11265f9be8df3734c0f6213e7c510372a85a4383b6cab",
+          "executed_probe_artifact": ".software-factory/runs/software-factory-v01/evidence/onboarding-72d1-root-repros.json",
+          "probe_sha256": "d26ee7979e100ed08fc01289235e02fcd23a512b5b698a5db8cee1489ca0c642",
+          "summary": "Changes required: approved-root replacement, JSON boolean/number config mismatch, stale replay and mid-apply directory inventory drift. Root independently reproduced all four against the actual helper in isolated fixtures.",
+          "limits": [
+            "Source review and isolated helper probes; no live-host, integration or acceptance proof."
+          ]
         }
       },
       "baseline_sha": null,
@@ -4394,7 +4410,13 @@
           "to": "in-progress"
         }
       ],
-      "findings": [],
+      "findings": [
+        {
+          "at": "2026-10-15T11:18:03.233669+00:00",
+          "by": "orchestrator",
+          "text": "Candidate72d1 independently rejected: approved-root replacement, JSON type mismatch, stale replay and directory inventory drift reproduced in isolated helper fixtures. Preserve failed evidence; repair before review handoff."
+        }
+      ],
       "source_key": "onboarding-integrations/sf-help-skill"
     },
     {
