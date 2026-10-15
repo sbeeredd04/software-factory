@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-15T12:31:26.434133+00:00",
-  "revision": 241,
+  "generated_at": "2026-10-15T12:33:12.623939+00:00",
+  "revision": 243,
   "streams": [
     {
       "id": "W-foundation",
@@ -80,10 +80,10 @@
         4
       ],
       "counts": {
-        "planned": 1,
-        "ready": 0,
-        "in-progress": 1,
-        "review": 2,
+        "planned": 0,
+        "ready": 1,
+        "in-progress": 0,
+        "review": 3,
         "built": 0,
         "done": 0,
         "cancelled": 0
@@ -4629,8 +4629,8 @@
       "stream": "W-onboarding",
       "type": "story",
       "title": "sf-agents: registry, routing, review bots and triage",
-      "status": "in-progress",
-      "state": "in-progress",
+      "status": "in-review",
+      "state": "review",
       "owner": "codex-agent-routing",
       "after": [
         26
@@ -4880,6 +4880,56 @@
           "limits": [
             "Not integrated primary gate; not livehost/remoteCI/effects/humanacceptance proof."
           ]
+        },
+        "worker-handoff": {
+          "type": "worker-handoff",
+          "status": "submitted-for-review",
+          "subject_sha": "bbda559611d0126d1b0a574c9a6c369aa8ac4c3f",
+          "author": "host-contracts",
+          "scope": "Original27 agentpresence/routing/invocation-only, fourbotprojection and offlinegh reviewtriage",
+          "summary": "Clean exactcandidate; source independently accepted after five boundaryrepairs and artifactroundtripfix.155targetedtests pass with1optional skip;43focusedpass; fullisolated677 has2crawl-freshness failures and1optionalskip, standalone29/30. Root13CLI and independent214CLI/235obs packagingpass onexactcandidate; priorrejections retained. Root mustrefreshderivedmapsandrunfullintegratedgate.",
+          "limits": [
+            "Isolated CODEBASE.md is intentionally not regenerated; root owns integrated projection freshness.",
+            "No live host, model, bot service, or GitHub action was invoked or verified.",
+            "GitHub observations are caller-supplied lower-trust data; output actions remain proposals.",
+            "Publication dependency digest is local version binding and requires deliberate refresh on canonical helper edits."
+          ]
+        },
+        "candidate-bbda-worker-gate": {
+          "type": "verification",
+          "status": "fail",
+          "subject_sha": "bbda559611d0126d1b0a574c9a6c369aa8ac4c3f",
+          "command": "bash scripts/check_all.sh",
+          "exit_code": 1,
+          "artifact": ".software-factory/runs/software-factory-v01/evidence/agents-bbda-worker-gate.log",
+          "artifact_sha256": "2311076f1812c130718af1117b05916fd13bfcd313acf4e1ffe3a783951b8d9a",
+          "unit_tests": {
+            "run": 677,
+            "passed": 674,
+            "failed": 2,
+            "skipped": 1,
+            "seconds": 193.252
+          },
+          "evals": {
+            "passed": 29,
+            "failed": 1,
+            "failed_ids": [
+              "SKL-CRAWL-002"
+            ]
+          },
+          "failed_test_names": [
+            "test_premerge_run_is_offline_green_and_guarded (test_dogfood.EvalRunTest.test_premerge_run_is_offline_green_and_guarded)",
+            "test_codebase_regeneration_is_stable (test_dogfood.ProjectionFreshnessTest.test_codebase_regeneration_is_stable)"
+          ],
+          "eval_runs": [
+            "r-20261015T122821Z-premerge",
+            "r-20261015T123019Z-premerge"
+          ],
+          "frozen_source_files_root_verified": 29,
+          "summary": "Final isolated worker fullgate failed only on stale CODEBASE projection (two unit tests and standalone SKL-CRAWL-002). All other stages including real BMad/skills network passed. Root independently matched all29candidate changedfiles to committedblobs and cleanworktree. Integratedrefresh/fullgate pending.",
+          "limits": [
+            "Not integrated primary gate; not remoteCI/livehost/effect/humanacceptance."
+          ]
         }
       },
       "baseline_sha": null,
@@ -4887,33 +4937,7 @@
       "pr": null,
       "merged_sha": null,
       "claim": {
-        "live": true,
-        "owner": "codex-agent-routing",
-        "paths": [
-          "skills/sf-agents",
-          "integrations/bots",
-          "schemas/config.schema.json",
-          "skills/software-factory/scripts/config.py",
-          "skills/software-factory/references/configuration.md",
-          "install.py",
-          "hosts/plugins/release-files.json",
-          "tests/test_agents.py",
-          "tests/test_bot_rendering.py",
-          "tests/test_review_triage.py",
-          "tests/fixtures/agents",
-          "tests/fixtures/bots",
-          "tests/fixtures/triage",
-          "tests/test_config_schema.py",
-          "tests/fixtures/config",
-          "tests/test_host_claude.py",
-          "tests/test_host_codex.py",
-          "tests/test_host_cursor.py",
-          "tests/test_distribution.py",
-          "docs/agents.md",
-          "docs/bots.md",
-          "examples/config/config.yaml"
-        ],
-        "claimed_at": "2026-10-15T11:38:36.688713+00:00"
+        "live": false
       },
       "blocks": [
         28
@@ -4930,10 +4954,18 @@
           "by": "codex-agent-routing",
           "from": "ready-for-dev",
           "to": "in-progress"
+        },
+        {
+          "at": "2026-10-15T12:33:12.524743+00:00",
+          "by": "codex-agent-routing",
+          "from": "in-progress",
+          "to": "in-review"
         }
       ],
       "findings": [],
-      "source_key": "onboarding-integrations/sf-agents-skill"
+      "source_key": "onboarding-integrations/sf-agents-skill",
+      "evidence_contract": 1,
+      "review_subject_sha": "bbda559611d0126d1b0a574c9a6c369aa8ac4c3f"
     },
     {
       "id": 28,
@@ -4942,7 +4974,7 @@
       "type": "story",
       "title": "sf-evolve: fold-in registry, overlays and retro pipeline",
       "status": "backlog",
-      "state": "planned",
+      "state": "ready",
       "owner": null,
       "after": [
         27
@@ -6331,17 +6363,17 @@
     }
   ],
   "frontier": {
-    "ready": [],
-    "waiting_on_prereq": [
+    "ready": [
       {
         "id": 28,
         "epic": 4,
         "stream": "W-onboarding",
         "title": "sf-evolve: fold-in registry, overlays and retro pipeline",
-        "missing": [
-          "27 (in-progress)"
-        ]
-      },
+        "why": "after 27 in-review; unclaimed",
+        "claimed": false
+      }
+    ],
+    "waiting_on_prereq": [
       {
         "id": 29,
         "epic": 5,
