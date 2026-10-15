@@ -15,8 +15,10 @@ An active Claude Code, Cursor or Codex session supplies the model, workers and t
 From a trusted pack checkout, set `SF_PACK` to its physical path and `SF_PROJECT` to the physical path of an existing Git consumer. Choose `SF_HOST=claude-code`, `cursor` or `codex`; use Python 3.11+ on a POSIX system. The one-line preview below changes no consumer files:
 
 ```sh
-cd '/absolute/path/to/consumer-project'; SF_PROJECT="$(pwd -P)"
-cd '/absolute/path/to/trusted/software-factory'; SF_PACK="$(pwd -P)"
+cd '/absolute/path/to/consumer-project' || exit 1
+SF_PROJECT="$(pwd -P)"
+cd '/absolute/path/to/trusted/software-factory' || exit 1
+SF_PACK="$(pwd -P)"
 SF_HOST='codex'; SF_PYTHON='python3'
 "$SF_PYTHON" -I -B "$SF_PACK/install.py" install --host "$SF_HOST" --project "$SF_PROJECT" --profile full --skip-bmad --dry-run
 ```
@@ -36,7 +38,7 @@ The complete prompts below match the showcase's host selector.
 Set up Software Factory in this Git project for Claude Code from this trusted local checkout. Read the pack README, AGENTS.md, installer help, and the project's existing instructions. Python 3.11+ and POSIX filesystem APIs are required; native Windows execution is unverified. Use physical paths (pwd -P), keep the pack and consumer distinct, and preserve user files and host settings.
 
 From the pack checkout, preview the full project profile:
-python3 -I -B install.py install --host claude-code --skip-bmad --project <this-project> --profile full --dry-run
+python3 -I -B install.py install --host claude-code --skip-bmad --project "<this-project>" --profile full --dry-run
 Replace <this-project> with the physical consumer path. Inspect the destinations and conflicts; apply the same command without --dry-run only under the applicable local GO. This --skip-bmad route checks local project installation. Separately review and consent to the pinned official BMad 6.12.0 provisioning path before using it; observe actual BMad planner availability and structured epics/stories before claiming planning readiness. Missing capability is a named gap, not an invented plan.
 
 Invoke /software-factory in the host UI. Use sf-help to read existing project context, prefill and reuse the twenty catalog decision slots in five groups, and ask only about material unknowns. Show the exact create-only setup proposal, digest, source decision and unknowns; reconcile the owner's setup GO before applying it. Preserve existing answers, documents and settings. Confirm actual host permissions, model/worker availability and any required Codex hook trust separately; installation alone grants none of these.
@@ -50,7 +52,7 @@ Ground one small real story in project facts and accepted BMad planning sources.
 Set up Software Factory in this Git project for Cursor from this trusted local checkout. Read the pack README, AGENTS.md, installer help, and the project's existing instructions. Python 3.11+ and POSIX filesystem APIs are required; native Windows execution is unverified. Use physical paths (pwd -P), keep the pack and consumer distinct, and preserve user files and host settings.
 
 From the pack checkout, preview the full project profile:
-python3 -I -B install.py install --host cursor --skip-bmad --project <this-project> --profile full --dry-run
+python3 -I -B install.py install --host cursor --skip-bmad --project "<this-project>" --profile full --dry-run
 Replace <this-project> with the physical consumer path. Inspect the destinations and conflicts; apply the same command without --dry-run only under the applicable local GO. This --skip-bmad route checks local project installation. Separately review and consent to the pinned official BMad 6.12.0 provisioning path before using it; observe actual BMad planner availability and structured epics/stories before claiming planning readiness. Missing capability is a named gap, not an invented plan.
 
 Invoke /software-factory in the host UI. Use sf-help to read existing project context, prefill and reuse the twenty catalog decision slots in five groups, and ask only about material unknowns. Show the exact create-only setup proposal, digest, source decision and unknowns; reconcile the owner's setup GO before applying it. Preserve existing answers, documents and settings. Confirm actual host permissions, model/worker availability and any required Codex hook trust separately; installation alone grants none of these.
@@ -64,7 +66,7 @@ Ground one small real story in project facts and accepted BMad planning sources.
 Set up Software Factory in this Git project for Codex from this trusted local checkout. Read the pack README, AGENTS.md, installer help, and the project's existing instructions. Python 3.11+ and POSIX filesystem APIs are required; native Windows execution is unverified. Use physical paths (pwd -P), keep the pack and consumer distinct, and preserve user files and host settings.
 
 From the pack checkout, preview the full project profile:
-python3 -I -B install.py install --host codex --skip-bmad --project <this-project> --profile full --dry-run
+python3 -I -B install.py install --host codex --skip-bmad --project "<this-project>" --profile full --dry-run
 Replace <this-project> with the physical consumer path. Inspect the destinations and conflicts; apply the same command without --dry-run only under the applicable local GO. This --skip-bmad route checks local project installation. Separately review and consent to the pinned official BMad 6.12.0 provisioning path before using it; observe actual BMad planner availability and structured epics/stories before claiming planning readiness. Missing capability is a named gap, not an invented plan.
 
 Invoke $software-factory in the host UI. Use sf-help to read existing project context, prefill and reuse the twenty catalog decision slots in five groups, and ask only about material unknowns. Show the exact create-only setup proposal, digest, source decision and unknowns; reconcile the owner's setup GO before applying it. Preserve existing answers, documents and settings. Confirm actual host permissions, model/worker availability and any required Codex hook trust separately; installation alone grants none of these.
@@ -77,7 +79,7 @@ Ground one small real story in project facts and accepted BMad planning sources.
 ## Quickstart
 
 1. Start the chosen host in the consumer project. Invoke `/software-factory` in Claude Code or Cursor, or `$software-factory` in Codex. These are host UI prompts, not shell commands. Paste the matching setup prompt above.
-2. Inspect the proposed missing documents, setup digest and reused answers. The twenty catalog slots are grouped decision aids, not twenty mandatory new questions. Give setup GO for the exact proposal; the installer and setup helper preserve existing bytes. [Onboarding](docs/onboarding.md) explains the create-only apply.
+2. Inspect the proposed missing documents, setup digest and reused answers. The twenty catalog slots are grouped decision aids, not twenty mandatory new questions. Give setup GO for the exact proposal. The installer preserves user content while making reviewed managed changes to host settings and instruction blocks; create-only onboarding preserves existing document bytes. [Onboarding](docs/onboarding.md) explains the create-only apply.
 3. Provision [BMad Method v6.12.0](docs/bmad.md) through its separate pinned route with consent, then observe real planner execution and structured epics/stories. Record a readiness gap if unavailable. Bind a first small story and its eval signoff to actual project authority.
 4. Let the host staff, build, verify, review and integrate within its real permissions. Check resulting-artifact behavior before calling it delivered. Continue routine authorized priorities; escalate material risk, unclear authority or reserved decisions whenever they arise. [The local lap](docs/quickstart.md) gives executable helper commands.
 
@@ -86,7 +88,7 @@ Ground one small real story in project facts and accepted BMad planning sources.
 | Route | Exact local command or location | What it supplies and what remains to do |
 | --- | --- | --- |
 | Full project installation | The `install.py install --host "$SF_HOST" --project "$SF_PROJECT" --profile full --skip-bmad` command above, after preview | Owned skills, schemas/templates, roles, host rules/hooks and runtime helpers in one Git consumer. `claude-code` uses `.claude/skills` and `.claude/agents`; `cursor` and `codex` use shared `.agents/skills` with `.cursor/agents` or `.codex/agents`. Check the manifest and host trust separately. |
-| Raw pinned skills acquisition | `DISABLE_TELEMETRY=1 DO_NOT_TRACK=1 npx -y skills@1.7.2 add /absolute/path/to/software-factory -a claude-code -a cursor -a codex -y` | Portable canonical skills and a CLI lockfile; no project runtime, native roles, host hooks or full setup. Review the network-capable CLI and its output before use. [Distribution](docs/distribution.md#canonical-skills-cli-route) records the bounded fixture. |
+| Raw pinned skills acquisition | From the physical consumer root: `cd "$SF_PROJECT" || exit 1`, then `DISABLE_TELEMETRY=1 DO_NOT_TRACK=1 npx -y skills@1.7.2 add "$SF_PACK" -a claude-code -a cursor -a codex -y` | Portable canonical skills and a CLI lockfile; no project runtime, native roles, host hooks or full setup. Review the network-capable CLI and its output before use. [Distribution](docs/distribution.md#canonical-skills-cli-route) records the bounded fixture. |
 | Native bundles | `python3 install.py project --host all --out /existing/parent/new-bundles` from the pack checkout | Generates one marketplace root per host in a new path. Claude/Cursor bundle native role prompts; Codex role TOMLs are references and live custom-agent registration is unverified. Manually load or register in the host; generation proves only files. [Distribution](docs/distribution.md#generate-native-marketplace-roots) has bundle and hook details. |
 
 The project installer uses host-specific invocation names. Portable acquisition may expose skills in a different namespace; use the actual host listing to confirm its invocation. Native bundle loading, Codex hook trust, provider authentication and model/worker availability require separate observation. Do not stack project and plugin hooks for the same host without reconciling duplicate recovery. The configured release bootstrap URL is unpublished at this stage; work from a trusted local checkout.

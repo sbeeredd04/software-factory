@@ -1,7 +1,7 @@
 Set up Software Factory in this Git project for {label} from this trusted local checkout. Read the pack README, AGENTS.md, installer help, and the project's existing instructions. Python 3.11+ and POSIX filesystem APIs are required; native Windows execution is unverified. Use physical paths (pwd -P), keep the pack and consumer distinct, and preserve user files and host settings.
 
 From the pack checkout, preview the full project profile:
-python3 -I -B install.py install {install_args} --project <this-project> --profile full --dry-run
+python3 -I -B install.py install {install_args} --project "<this-project>" --profile full --dry-run
 Replace <this-project> with the physical consumer path. Inspect the destinations and conflicts; apply the same command without --dry-run only under the applicable local GO. This --skip-bmad route checks local project installation. Separately review and consent to the pinned official BMad 6.12.0 provisioning path before using it; observe actual BMad planner availability and structured epics/stories before claiming planning readiness. Missing capability is a named gap, not an invented plan.
 
 Invoke {invocation} in the host UI. Use sf-help to read existing project context, prefill and reuse the twenty catalog decision slots in five groups, and ask only about material unknowns. Show the exact create-only setup proposal, digest, source decision and unknowns; reconcile the owner's setup GO before applying it. Preserve existing answers, documents and settings. Confirm actual host permissions, model/worker availability and any required Codex hook trust separately; installation alone grants none of these.

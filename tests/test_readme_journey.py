@@ -55,13 +55,47 @@ def diagram_contract(document: str) -> None:
                 raise ValueError(f"{name} alternative missing")
 
 
+def controlled_doctor_log(contents: str, gh: Path) -> None:
+    """The one permitted provider probe is exactly gh auth status."""
+    if contents.splitlines() != [f"{gh} auth status"]:
+        raise ValueError("unexpected provider or host command")
+
+
+def release_link_errors(document: str, files: dict[str, bytes]) -> list[str]:
+    """Check README links and standalone images against actual archive members."""
+    references = re.findall(r"!?\[[^\]]*\]\(([^)]+)\)", document)
+    references += re.findall(r"\[(?:!\[[^\]]*\]\([^)]*\)|[^\]]*)\]\(([^)]+)\)", document)
+    errors = []
+    for reference in references:
+        if "://" in reference or reference.startswith("mailto:"):
+            continue
+        target, _, anchor = reference.partition("#")
+        path = posixpath.normpath(target or "README.md")
+        if path not in files:
+            errors.append(f"released README links to absent {reference}")
+            continue
+        if anchor:
+            headings = re.findall(r"^#{1,6}\s+(.+?)\s*#*$", files[path].decode("utf-8"), re.MULTILINE)
+            slugs = {re.sub(r"[^\w -]", "", heading.replace("`", "").lower()).replace(" ", "-")
+                     for heading in headings}
+            if anchor not in slugs:
+                errors.append(f"released README links to absent anchor {reference}")
+    return errors
+
+
 class ReadmeJourneyTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory(prefix="sf-readme-")
         self.addCleanup(self.temp.cleanup)
         self.base = Path(self.temp.name).resolve()
-        self.env, self.guard, self.stubs = support.guard_env()
+        self.env, self.records, self.guard = support.recorder_env()
+        self.stubs = self.guard.parent
+        self.addCleanup(shutil.rmtree, self.records, ignore_errors=True)
         self.addCleanup(shutil.rmtree, self.stubs, ignore_errors=True)
+        self.home, self.home_snapshot = support.home_sentinel(self.base)
+        self.env["HOME"] = str(self.home)
+        self.env["CODEX_HOME"] = str(self.home / ".codex")
+        self.home_before = self.home_snapshot()
         self.env["PYTHONDONTWRITEBYTECODE"] = "1"
         for name in ("claude-code", "agent", "droid", "gh"):
             stub = self.stubs / name
@@ -70,6 +104,8 @@ class ReadmeJourneyTests(unittest.TestCase):
 
     def tearDown(self):
         self.assertFalse(self.guard.exists(), "forbidden host/provider CLI invoked")
+        self.assertEqual([], list(self.records.iterdir()), "package/download tool invoked")
+        self.assertEqual(self.home_before, self.home_snapshot(), "isolated global settings changed")
 
     def run_cli(self, *args, cwd=None):
         return subprocess.run([str(arg) for arg in args], cwd=cwd or ROOT, env=self.env,
@@ -95,6 +131,37 @@ class ReadmeJourneyTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             literal_argv(readme, "unknown", ROOT, project)
 
+    def test_readme_directory_selection_stops_on_failed_cd(self):
+        readme = README.read_text()
+        block = readme.split("## Install locally\n", 1)[1].split("```sh\n", 1)[1].split("\n```", 1)[0]
+        self.assertIn("cd '/absolute/path/to/consumer-project' || exit 1", block)
+        self.assertIn("cd '/absolute/path/to/trusted/software-factory' || exit 1", block)
+        project = self.consumer("consumer with spaces")
+        pack = self.base / "trusted pack with spaces"
+        pack.mkdir()
+        recorder = self.base / "python-argv.txt"
+        stub = self.stubs / "python3"
+        stub.write_text('#!/bin/sh\nprintf "%s\\n" "$@" > "$SF_INSTALL_LOG"\n')
+        stub.chmod(0o755)
+        env = dict(self.env, SF_INSTALL_LOG=str(recorder))
+        for bad_project, bad_pack in ((self.base / "missing consumer", pack),
+                                      (project, self.base / "missing pack")):
+            script = block.replace("'/absolute/path/to/consumer-project'", shlex.quote(str(bad_project)))
+            script = script.replace("'/absolute/path/to/trusted/software-factory'", shlex.quote(str(bad_pack)))
+            failed = subprocess.run(["/bin/sh", "-c", script], cwd=ROOT, env=env,
+                                    capture_output=True, text=True, check=False)
+            self.assertNotEqual(0, failed.returncode)
+            self.assertFalse(recorder.exists(), "installer ran after failed directory selection")
+        script = block.replace("'/absolute/path/to/consumer-project'", shlex.quote(str(project)))
+        script = script.replace("'/absolute/path/to/trusted/software-factory'", shlex.quote(str(pack)))
+        selected = subprocess.run(["/bin/sh", "-c", script], cwd=ROOT, env=env,
+                                  capture_output=True, text=True, check=False)
+        self.assertEqual(0, selected.returncode, selected.stderr)
+        self.assertIn(str(project), recorder.read_text().splitlines())
+        self.assertIn(str(pack / "install.py"), recorder.read_text().splitlines())
+        self.assertIn('cd "$SF_PROJECT" || exit 1', readme)
+        self.assertIn('skills@1.7.2 add "$SF_PACK"', readme)
+
     def test_nine_canonical_diagrams_and_alternatives(self):
         readme = README.read_text()
         diagram_contract(readme)
@@ -118,6 +185,7 @@ class ReadmeJourneyTests(unittest.TestCase):
         for host in json.loads((ROOT / "site/hosts.json").read_text()):
             self.assertIn(payload[host]["prompt"].rstrip(), readme)
             self.assertIn(payload[host]["command"], payload[host]["prompt"])
+            self.assertIn('--project "<this-project>"', payload[host]["command"])
             self.assertEqual(
                 ["python3", "-I", "-B", "install.py", "install", "--host", host,
                  "--skip-bmad", "--project", "<this-project>", "--profile", "full", "--dry-run"],
@@ -155,19 +223,12 @@ class ReadmeJourneyTests(unittest.TestCase):
                      for member in archive if member.isfile()}
         self.assertNotIn(".software-factory/context/board/roadmap.json", files)
         document = files["README.md"].decode("utf-8")
-        # Match normal links and badge links whose label contains an image.
-        for match in re.finditer(r"\[(?:!\[[^\]]*\]\([^)]*\)|[^\]]*)\]\(([^)]+)\)", document):
-            reference = match.group(1)
-            if "://" in reference or reference.startswith("mailto:"):
-                continue
-            target, _, anchor = reference.partition("#")
-            path = posixpath.normpath(target or "README.md")
-            self.assertIn(path, files, f"released README links to absent {reference}")
-            if anchor:
-                headings = re.findall(r"^#{1,6}\s+(.+?)\s*#*$", files[path].decode("utf-8"), re.MULTILINE)
-                slugs = {re.sub(r"[^\w -]", "", heading.replace("`", "").lower()).replace(" ", "-")
-                         for heading in headings}
-                self.assertIn(anchor, slugs, f"released README links to absent anchor {reference}")
+        self.assertEqual([], release_link_errors(document, files))
+        self.assertIn("assets/hero.png", files)
+        without_hero = dict(files)
+        without_hero.pop("assets/hero.png")
+        self.assertIn("released README links to absent assets/hero.png",
+                      release_link_errors(document, without_hero))
 
     def test_three_fresh_consumers_preserve_bytes_and_repeat(self):
         readme = README.read_text()
@@ -175,7 +236,7 @@ class ReadmeJourneyTests(unittest.TestCase):
                                   ("cursor", ".agents/skills", ".cursor/agents"),
                                   ("codex", ".agents/skills", ".codex/agents")):
             with self.subTest(host=host):
-                project = self.consumer(host)
+                project = self.consumer(host + " consumer with spaces")
                 settings = {"claude-code": (".claude/settings.json", b'{"env":{"USER_CHOICE":"keep"}}\n'),
                             "cursor": (".cursor/hooks.json", b'{"version":1,"hooks":{"beforeShellExecution":[{"type":"command","command":"echo user"}]}}\n'),
                             "codex": (".codex/hooks.json", b'{"hooks":{"SessionStart":[{"matcher":"startup","hooks":[{"type":"command","command":"echo user"}]}]}}\n')}
@@ -220,7 +281,9 @@ class ReadmeJourneyTests(unittest.TestCase):
         self.assertIsInstance(report, dict)
         self.assertEqual(before, support.tree_hashes(project))
         self.assertTrue(self.guard.exists(), "controlled gh stub should be consulted")
-        self.assertIn("gh auth status", self.guard.read_text())
+        controlled_doctor_log(self.guard.read_text(), self.stubs / "gh")
+        with self.assertRaises(ValueError):
+            controlled_doctor_log(self.guard.read_text() + f"{self.stubs / 'claude'} --version\n", self.stubs / "gh")
         self.guard.unlink()
 
     def test_foreign_and_edited_owned_refusals(self):

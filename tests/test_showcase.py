@@ -145,7 +145,7 @@ class ShowcaseTests(unittest.TestCase):
             expected = template.format(**host)
             self.assertEqual(payload[key]["prompt"], expected)
             self.assertIn(expected.rstrip(), (ROOT / "README.md").read_text())
-            self.assertEqual(payload[key]["command"], f'python3 -I -B install.py install --host {host["host"]} --skip-bmad --project <this-project> --profile full --dry-run')
+            self.assertEqual(payload[key]["command"], f'python3 -I -B install.py install --host {host["host"]} --skip-bmad --project "<this-project>" --profile full --dry-run')
             self.assertIn(payload[key]["command"], payload[key]["prompt"])
 
     def test_font_hashes_licenses_and_local_css(self):
