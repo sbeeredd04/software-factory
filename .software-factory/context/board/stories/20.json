@@ -27,8 +27,50 @@
   "hitl": false,
   "plan_checkpoint": false,
   "done_checkpoint": false,
-  "blocked": null,
-  "receipts": {},
+  "blocked": {
+    "type": "human-decision",
+    "reason": "Current host invocation and permission contracts need owner resolution against official documentation.",
+    "since": "2026-10-15T07:55:12.141640+00:00",
+    "owner": "orchestrator",
+    "next_action": "Review docs/plans/host-contract-correction.md and approve the supported host contract."
+  },
+  "receipts": {
+    "ownership-repair": {
+      "type": "partial-implementation-evidence",
+      "subject_sha": "fea0fca035b863632ba6d98d43fa83cdd2dd2980",
+      "author": "codex-host-projection-recovery",
+      "reviewer": "codex-orchestrator",
+      "status": "partial",
+      "implemented": [
+        "retain earlier host ownership and backup hashes",
+        "persist installed-host union and metadata-only additions",
+        "refuse stale manifest plans under the existing transaction lock",
+        "repair lint and regenerate codebase map"
+      ],
+      "verification": {
+        "targeted_host_installer_tests": {
+          "count": 65,
+          "exit_code": 0
+        },
+        "stale_plan_regression": {
+          "count": 1,
+          "exit_code": 0
+        },
+        "isolated_full_gate": {
+          "unit_tests": 372,
+          "failed_tests": 1,
+          "exit_code": 1,
+          "reason": "runtime-sensitive board freshness; primary claim state absent from isolated worktree"
+        }
+      },
+      "remaining": [
+        "Primary workspace full gate after board reconciliation",
+        "Current Cursor explicit-only projection correction",
+        "Codex inherited-permissions contract correction",
+        "Independent acceptance and remaining story criteria"
+      ]
+    }
+  },
   "baseline_sha": null,
   "branch": null,
   "pr": null,
@@ -47,6 +89,12 @@
       "to": "in-progress"
     }
   ],
-  "findings": [],
+  "findings": [
+    {
+      "at": "2026-10-15T07:55:12.141887+00:00",
+      "by": "orchestrator",
+      "text": "Recovered a stopped worker and integrated the independently inspected ownership repair. Story remains in progress; current host policy requirements are unresolved, and no completion is claimed."
+    }
+  ],
   "source_key": "installer-hosts/cursor-codex-projections"
 }

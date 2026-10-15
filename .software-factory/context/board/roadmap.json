@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-12T10:10:38.587814+00:00",
-  "revision": 123,
+  "generated_at": "2026-10-15T07:55:12.144637+00:00",
+  "revision": 128,
   "streams": [
     {
       "id": "W-foundation",
@@ -36,7 +36,7 @@
       "counts": {
         "planned": 0,
         "ready": 0,
-        "in-progress": 0,
+        "in-progress": 1,
         "review": 6,
         "built": 0,
         "done": 8,
@@ -189,7 +189,8 @@
         34,
         35,
         36,
-        37
+        37,
+        38
       ],
       "needs": [
         1
@@ -1589,7 +1590,8 @@
         "live": false
       },
       "blocks": [
-        17
+        17,
+        38
       ],
       "history": [
         {
@@ -1877,22 +1879,65 @@
       "hitl": false,
       "plan_checkpoint": false,
       "done_checkpoint": false,
-      "blocked": null,
-      "receipts": {},
+      "blocked": {
+        "type": "human-decision",
+        "reason": "Current host invocation and permission contracts need owner resolution against official documentation.",
+        "since": "2026-10-15T07:55:12.141640+00:00",
+        "owner": "orchestrator",
+        "next_action": "Review docs/plans/host-contract-correction.md and approve the supported host contract."
+      },
+      "receipts": {
+        "ownership-repair": {
+          "type": "partial-implementation-evidence",
+          "subject_sha": "fea0fca035b863632ba6d98d43fa83cdd2dd2980",
+          "author": "codex-host-projection-recovery",
+          "reviewer": "codex-orchestrator",
+          "status": "partial",
+          "implemented": [
+            "retain earlier host ownership and backup hashes",
+            "persist installed-host union and metadata-only additions",
+            "refuse stale manifest plans under the existing transaction lock",
+            "repair lint and regenerate codebase map"
+          ],
+          "verification": {
+            "targeted_host_installer_tests": {
+              "count": 65,
+              "exit_code": 0
+            },
+            "stale_plan_regression": {
+              "count": 1,
+              "exit_code": 0
+            },
+            "isolated_full_gate": {
+              "unit_tests": 372,
+              "failed_tests": 1,
+              "exit_code": 1,
+              "reason": "runtime-sensitive board freshness; primary claim state absent from isolated worktree"
+            }
+          },
+          "remaining": [
+            "Primary workspace full gate after board reconciliation",
+            "Current Cursor explicit-only projection correction",
+            "Codex inherited-permissions contract correction",
+            "Independent acceptance and remaining story criteria"
+          ]
+        }
+      },
       "baseline_sha": null,
       "branch": null,
       "pr": null,
       "merged_sha": null,
       "claim": {
         "live": true,
-        "owner": "worker-cursor-codex-projections",
+        "owner": "codex-orchestrator",
         "paths": [
           "install.py",
           "hosts",
           "tests",
-          ".software-factory/context"
+          ".software-factory/context/CODEBASE.md",
+          ".software-factory/context/board/stories/20.json"
         ],
-        "claimed_at": "2026-10-12T10:10:38.520745+00:00"
+        "claimed_at": "2026-10-15T07:54:27.772903+00:00"
       },
       "blocks": [
         21
@@ -1911,7 +1956,13 @@
           "to": "in-progress"
         }
       ],
-      "findings": [],
+      "findings": [
+        {
+          "at": "2026-10-15T07:55:12.141887+00:00",
+          "by": "orchestrator",
+          "text": "Recovered a stopped worker and integrated the independently inspected ownership repair. Story remains in progress; current host policy requirements are unresolved, and no completion is claimed."
+        }
+      ],
       "source_key": "installer-hosts/cursor-codex-projections"
     },
     {
@@ -2744,6 +2795,60 @@
         ".software-factory/context/"
       ],
       "source_key": "expansion/principles-empty-file-guard"
+    },
+    {
+      "id": 38,
+      "epic": 2,
+      "stream": "W-expansion",
+      "type": "spike",
+      "title": "Research Factory and review the full SDLC delivery proposal",
+      "status": "in-progress",
+      "state": "in-progress",
+      "owner": "codex-product-grounding",
+      "after": [
+        16
+      ],
+      "covers": [],
+      "risk": "low",
+      "hitl": false,
+      "plan_checkpoint": false,
+      "done_checkpoint": false,
+      "blocked": null,
+      "receipts": {},
+      "baseline_sha": null,
+      "branch": null,
+      "pr": null,
+      "merged_sha": null,
+      "claim": {
+        "live": true,
+        "owner": "codex-product-grounding",
+        "paths": [
+          "docs/research",
+          "docs/plans"
+        ],
+        "claimed_at": "2026-10-15T07:54:27.875412+00:00"
+      },
+      "blocks": [],
+      "history": [
+        {
+          "at": "2026-10-15T07:54:27.810641+00:00",
+          "by": "orchestrator",
+          "from": "backlog",
+          "to": "ready-for-dev"
+        },
+        {
+          "at": "2026-10-15T07:54:27.913392+00:00",
+          "by": "codex-product-grounding",
+          "from": "ready-for-dev",
+          "to": "in-progress"
+        }
+      ],
+      "findings": [],
+      "scope": [
+        "docs/research",
+        "docs/plans"
+      ],
+      "source_key": "expansion/factory-product-grounding"
     }
   ],
   "frontier": {
@@ -2868,7 +2973,33 @@
       }
     ]
   },
-  "blockers": [],
+  "blockers": [
+    {
+      "id": 20,
+      "epic": 3,
+      "stream": "W-installer",
+      "type": "human-decision",
+      "reason": "Current host invocation and permission contracts need owner resolution against official documentation.",
+      "owner": "orchestrator",
+      "since": "2026-10-15T07:55:12.141640+00:00",
+      "next_action": "Review docs/plans/host-contract-correction.md and approve the supported host contract.",
+      "stalls": [
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33
+      ]
+    }
+  ],
   "diagnostics": {
     "unpinned_gates": [],
     "undeclared_after": [],
@@ -2876,6 +3007,13 @@
     "inconsistencies": []
   },
   "decision_queue": [
+    {
+      "kind": "blocked",
+      "story": 20,
+      "question": "Current host invocation and permission contracts need owner resolution against official documentation.",
+      "owner": "orchestrator",
+      "next_action": "Review docs/plans/host-contract-correction.md and approve the supported host contract."
+    },
     {
       "kind": "epic-acceptance",
       "epic": 1,

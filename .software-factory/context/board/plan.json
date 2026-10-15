@@ -518,6 +518,23 @@
             "tests/test_state.py",
             ".software-factory/context/"
           ]
+        },
+        {
+          "key": "factory-product-grounding",
+          "title": "Research Factory and review the full SDLC delivery proposal",
+          "type": "spike",
+          "after": [
+            "lean-down"
+          ],
+          "covers": [],
+          "risk": "low",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": false,
+          "scope": [
+            "docs/research",
+            "docs/plans"
+          ]
         }
       ]
     },
