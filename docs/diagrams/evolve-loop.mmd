@@ -1,0 +1,29 @@
+flowchart TD
+  A[Observed rework or bounded improvement opportunity] --> B[Read principles, source revision and applicable GO]
+  B --> C{Smallest useful path?}
+  C -->|capability| D[Inspect local metadata, license, digest and permission needs]
+  D -->|unknown| E[Defer adoption; native work can continue]
+  C -->|BMad| F[Inspect actual pinned customization and callback recursion]
+  C -->|Markdown customization| G[Capture exact base, payload and evidence]
+  F --> H[Bounded proposal; protected governing policy stays owned]
+  G --> H
+  D -->|adequate facts| H
+  H --> I[Independent review plus regression and canary artifacts]
+  I -->|failed or unknown| H
+  I --> J{Standing GO sufficient?}
+  J -->|material trust, policy or external effect| K[Human source decision]
+  K --> L[Host reconciles real authority and evidence]
+  J -->|routine and covered| L
+  L --> R{Approved change kind?}
+  R -->|Markdown overlay| M[Installer owns overlay composition and publication]
+  R -->|capability or MCP| S[Actual scoped host or tool adoption; registry never installs or connects]
+  S -->|unavailable or unproved| E
+  R -->|BMad customization| T[Host applies scoped customization through its actual supported method]
+  M -->|drift or edited target| H
+  M --> N[Inspect actual result and applicable ownership; observe authorized later run]
+  S -->|actually adopted| N
+  T --> N
+  N --> O{Affected behavior improved?}
+  O -->|yes| P[Retain with evidence and next retro]
+  O -->|no or unknown| Q[Propose scoped rollback; prove restored behavior]
+  Q --> H

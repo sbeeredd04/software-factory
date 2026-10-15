@@ -1,6 +1,6 @@
 # Host contract correction proposal
 
-Status: source corrections implemented and independently reviewed; live host loading remains unverified. Sources checked 2026-10-15. [ADR 0022](../../.software-factory/context/decisions/0022-documented-host-contracts.md) records the current contract and evidence boundary. The recommendations below describe the design that was implemented; doctor observations remain part of the installer lifecycle work.
+Status: source corrections implemented and independently reviewed; live host loading remains unverified. Sources checked 2026-10-15. ADR 0022 (`.software-factory/context/decisions/0022-documented-host-contracts.md` in a full source checkout) records the current contract and evidence boundary. The recommendations below describe the design that was implemented; doctor observations remain part of the installer lifecycle work.
 
 ## Shared Cursor and Codex skills
 

@@ -1,0 +1,18 @@
+flowchart TD
+  A[Inspect consumer intent and existing documents] --> B{Existing repo without grounded crawl?}
+  B -->|yes| C[Bounded read-only crawl; save derived map]
+  B -->|no| D[Read-only setup discovery]
+  C --> D
+  D --> E[Twenty catalog slots; reuse confirmed facts and answers]
+  E --> F{Material unknown remains?}
+  F -->|yes| G[One targeted owner decision; keep independent work moving]
+  G --> E
+  F -->|no| H[One action for safe defaults; propose exact missing drafts]
+  H --> I[Inspect config, document paths, unknowns and source digest]
+  I --> J[Host reconciles actual GO and approval source]
+  J --> K[Apply exact approved proposal; create only]
+  K -->|stale, collision, unsafe root or partial state| L[Refuse or preserve partial bytes; report exact next action]
+  K --> M[Validate actual config and retained documents]
+  M --> N[Re-onboard reuses answers; no new approval claim]
+  M --> O[Real consumer eval signoff before queue]
+  O --> P[Host continues scoped delivery; optional access stays unknown]

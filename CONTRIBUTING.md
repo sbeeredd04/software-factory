@@ -8,8 +8,9 @@ Questions and proposals: open an issue using one of the forms under `.github/ISS
 
 ## Setup
 
-You need Python >= 3.11 and git. That is the complete list: no sudo, no global installs, no
-virtual environment, no dependencies. Everything the pack ships is standard-library Python.
+You need Python >= 3.11 and git. Local filesystem helpers also require POSIX
+descriptor/no-follow and locking APIs. Shipped Python uses the standard library;
+no sudo, global install or virtual environment is required.
 
 ```bash
 git clone https://github.com/sbeeredd04/software-factory.git
@@ -18,9 +19,10 @@ python3 -m unittest discover -s tests -v
 ```
 
 Development and validation tools (ruff, check-jsonschema, shellcheck, the Mermaid renderer, the
-Agent Skills validator) run on demand through `uvx` and `npx`; they are never installed into
-your environment. Node.js >= 20 is needed only for the npx-based checks, and only when you run
-them.
+Agent Skills validator) run on demand through `uvx` and `npx`; they may download into
+developer caches but are not global shipped dependencies. Node.js >= 20 is needed for
+npx-based checks when run. Optional BMad provisioning has its own Node >=20.12
+and official package boundary; the local `--skip-bmad` path stays available.
 
 ## The verification gate
 
@@ -115,8 +117,10 @@ a per-record writing discipline, not a reference-file cap, and it is enforced se
   absolute user paths, credentials, or private product decisions in any file or commit
   message. Generalize private experience; never paste it. `scripts/scan_public.py` enforces a
   denylist.
-- **Shipped code.** Standard-library Python (>= 3.11) only, with `unittest` tests under
-  `tests/`. No third-party imports, no model calls, no network calls in shipped code.
+- **Shipped code.** Local kernel/admin helpers use standard-library Python (>= 3.11),
+  with `unittest` tests under `tests/`; they make no model calls. The bootstrap can
+  download a checked release and consented BMad provisioning can invoke the official
+  installer. Doctor can observe available `gh auth status`. See [security](docs/security.md).
 - **Honesty.** Documentation claims only behavior that was verified, and states limitations
   plainly. Report the commands you ran and their real results.
 - **Style.** Skills and role prompts are agent-first: direction, focus, context, and evidence
@@ -126,10 +130,11 @@ a per-record writing discipline, not a reference-file cap, and it is enforced se
 
 There are two fold-in paths:
 
-**At runtime (your project).** Install the pack and use the `sf-evolve` skill. It registers the
-skill in `.software-factory/config.yaml`, writes an overlay that survives reinstalls, and runs
-the retro -> proposed patch -> independent review -> tested apply pipeline. Your factory
-improves without hand-patching.
+**At runtime (your project).** Install the pack and use `sf-evolve` to inspect a
+source-pinned capability or propose a persistent reviewed Markdown overlay. Its
+helper does not install, connect or publish automatically. The host reconciles
+authority, independent review and canaries; the installer owns authorized overlay
+publication. See [evolution](docs/evolve.md).
 
 **In this repository (for everyone).**
 

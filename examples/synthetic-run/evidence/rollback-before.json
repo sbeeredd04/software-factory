@@ -1,0 +1,12 @@
+{
+  "artifact": "synthetic-revision-B",
+  "behavior": "named greeting present",
+  "environment": "disposable-local-fixture",
+  "observed_at": "2026-01-01T00:04:10Z",
+  "origin": "invented-teaching-data",
+  "result": "proposed",
+  "scope": "separate local rollback decision required",
+  "source": "formatter-run-001",
+  "synthetic": true,
+  "window_end": "2026-01-01T00:05:00Z"
+}

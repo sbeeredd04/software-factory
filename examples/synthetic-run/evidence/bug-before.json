@@ -1,0 +1,14 @@
+{
+  "artifact": "synthetic-revision-A",
+  "assertion": "non-string rejected",
+  "environment": "disposable-local-fixture",
+  "event_id": "event-invalid-type-001",
+  "observation": "null accepted by fictional formatter",
+  "observed_at": "2026-01-01T00:02:30Z",
+  "origin": "invented-teaching-data",
+  "result": "failed",
+  "source": "formatter-run-001",
+  "story": "bug/type",
+  "synthetic": true,
+  "window_end": "2026-01-01T00:05:00Z"
+}

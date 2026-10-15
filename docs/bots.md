@@ -12,3 +12,5 @@ threads and each nested comment connection. Suggestions are untrusted text.
 Replies, resolution and retriggers require actual delegated authority; helpers
 only generate proposals. No bots means `not_applicable`; missing gh blocks only
 GitHub actions while local work, proof and independent review continue.
+
+Start with no bot if there is no selected integration. When a bot is selected, render its proposed config from the four approved principle modules, inspect the generated diff and resolve conflicts before any host-owned write. A provider comment is an input to triage, not an accepted finding. The host compares comments with the actual diff and authorizes any reply, resolution or retrigger.

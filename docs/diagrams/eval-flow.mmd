@@ -1,0 +1,19 @@
+flowchart TD
+  A[Ground requirements, risk and applicable surfaces] --> B[Stable fail-to-pass and pass-to-pass cases]
+  B --> C[Owner-approved plan and exact signoff payload]
+  C --> D[Queue only covered applicable work]
+  D --> E[Run actual cases on identified subject]
+  E --> F{Harness and required proof available?}
+  F -->|no| G[Unverified or blocked; preserve missing prerequisite]
+  F -->|yes| H[Retain actual output, artifacts and verdicts]
+  H --> I{Pass with intact current-subject receipts?}
+  I -->|failed, stale, tampered or unknown| J[Triage and repair; preserve prior verdicts]
+  G --> J
+  J --> E
+  I -->|yes| K[Independent evidence review and applicable strict board gate]
+  K -->|not adequate| J
+  K --> L[Integrate; refresh affected proof on combined SHA]
+  L --> M[Prove resulting artifact effect separately]
+  J --> N[Exceptional override needs actual scoped owner decision]
+  N --> O[Preserve cases and original verdict; record reason and source]
+  O --> K

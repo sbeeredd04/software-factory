@@ -1,0 +1,7 @@
+# Architecture
+
+The active coding host is the executor: it reads canonical skills, chooses workers, owns permissions and performs approved effects. Canonical Markdown in `skills/` and `agents/` is projected into Claude Code, Cursor and Codex layouts by the installer. Standard-library helpers parse/validate config, capture claims/checkpoints, enforce board transitions, evaluate cases and derive dashboard/graph views. The release builder selects a reviewed allowlist and generates self-contained native bundles. [Architecture decisions](../adr/README.md) describe the settled boundaries.
+
+Per-story records are the live story status source; the roadmap, dashboard and trace graph are derived. Claims prevent cooperative duplicate path ownership, not process liveness. The evidence gate checks current subject, scope, artifact integrity, independent assertions and required checkpoint provenance. It cannot authenticate a caller or observe an external effect by reading a label. Human decisions and actual provider states stay distinct.
+
+The pack has no daemon, model client, scheduler, credential service or telemetry. BMad Method v6 is separately provisioned as the central structured planning route. Missing capability is an explicit readiness gap; a scoped alternative must not be described as BMad execution. Bootstrap/download and provider diagnostics are explicit edges. The [security](../security.md) and [recovery](../recovery.md) guides explain their operational limits.

@@ -1,0 +1,13 @@
+{
+  "artifact": "synthetic-revision-B",
+  "environment": "disposable-local-fixture",
+  "event_id": "event-empty-001",
+  "observed_at": "2026-01-01T00:04:00Z",
+  "origin": "invented-teaching-data",
+  "reason": "empty or partial input cannot prove health",
+  "records": [],
+  "result": "unknown",
+  "source": "formatter-run-001",
+  "synthetic": true,
+  "window_end": "2026-01-01T00:05:00Z"
+}

@@ -1,5 +1,8 @@
 # Software Factory: public product research
 
+> Historical gap analysis. The placeholder skills identified below have since become [sf-help](../../skills/sf-help/SKILL.md), [sf-agents](../../skills/sf-agents/SKILL.md) and [sf-evolve](../../skills/sf-evolve/SKILL.md). The derived [trace graph](../../skills/software-factory/scripts/trace.py) answers provenance questions without a second status store. ADR 0024 (`.software-factory/context/decisions/0024-generated-native-distribution.md` in a full source checkout) settled the portable/native boundary; ADR 0025 (`.software-factory/context/decisions/0025-bmad-module-compatibility-pins.md` in a full source checkout) settled BMad pins. Twenty onboarding slots now reuse facts and ask only for material unknowns. The [manual](../README.md) describes present behavior. Staging applicability, reserved human decisions and publication still require their actual authority. ADR 0027 (source-only path `.software-factory/context/decisions/0027-risk-adaptive-continuous-delivery.md`) superseded any unconditional per-epic human stop.
+
+
 Research date: 2026-10-15. Sources are public Factory documentation, public Factory research/product pages, and its official public GitHub repository. The factory.ai and docs.factory.ai URLs inspected redirect to factory.com and docs.factory.com; current canonical URLs are cited below. This is an original synthesis, not a reconstruction of proprietary internals. Local observations come from repository instructions, product principles, canonical skill entries and orchestration references; implementation completeness still needs the engineering audit.
 
 ## Product conclusion

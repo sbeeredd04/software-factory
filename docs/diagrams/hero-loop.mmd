@@ -1,0 +1,13 @@
+flowchart LR
+  A[Ground intent and existing facts] --> B[Plan with BMad skills and review under scoped GO]
+  B --> C[Host staffs claimed work]
+  C --> D[Implement and independently verify]
+  D -->|failed or unknown| C
+  D --> E[One owner integrates and checks combined SHA]
+  E --> F[Prove affected behavior on resulting artifact]
+  F -->|failed or unknown| C
+  F --> G{Material risk or reserved owner decision?}
+  G -->|yes| I[Owner decides within actual scope]
+  I --> H[Record acceptance provenance and next eligible priority]
+  G -->|no| H
+  H --> A
