@@ -137,6 +137,7 @@ in configuration. They preserve facts; you own the judgment.
 - [Dispatch and isolation](references/dispatch.md) — worktrees, claims, shared resources
 - [Verification](references/verification.md) — the evidence ladder, the eval gate and the quality bar
 - [Integration](references/integration.md) — one owner, gated merges, deploy proof
+- [Operations](references/operations.md) — authorized observations, priorities, bug follow-up and continuity
 - [Recovery](references/recovery.md) — checkpoints, state helper, resume reconciliation
 - [Configuration](references/configuration.md) — the config.yaml contract
 - [Authority](references/authority.md) — delegated scope, GO, escalation
