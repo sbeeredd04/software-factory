@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-15T14:42:58.544757+00:00",
-  "revision": 265,
+  "generated_at": "2026-10-15T14:44:48.832429+00:00",
+  "revision": 268,
   "streams": [
     {
       "id": "W-foundation",
@@ -104,8 +104,8 @@
       ],
       "counts": {
         "planned": 3,
-        "ready": 1,
-        "in-progress": 0,
+        "ready": 0,
+        "in-progress": 1,
         "review": 1,
         "built": 0,
         "done": 0,
@@ -5574,9 +5574,9 @@
       "stream": "W-launch",
       "type": "story",
       "title": "Marketing PNGs rendered reproducibly from HTML templates",
-      "status": "backlog",
-      "state": "ready",
-      "owner": null,
+      "status": "in-progress",
+      "state": "in-progress",
+      "owner": "codex-assets",
       "after": [
         29
       ],
@@ -5592,18 +5592,60 @@
       "plan_checkpoint": false,
       "done_checkpoint": false,
       "blocked": null,
-      "receipts": {},
+      "receipts": {
+        "active-attempt": {
+          "type": "agent-attempt",
+          "subject_sha": "d2c2a6b29455c1bfdcbd9507bc05405c245318fc",
+          "agent": "/root/assets",
+          "role": "sf-principal-engineer",
+          "skill": "software-factory",
+          "requested_model": "gpt-6-astra",
+          "requested_reasoning": "high",
+          "effective_model": null,
+          "phase": "implementation",
+          "status": "assigned",
+          "summary": "Story30 follows reviewed29 via existing readiness. Isolated source implementation and fixture tests authorized; browser rendering waits explicit alternative-method approval. Root owns primary state/integration. Developer-only Playwright helper excluded consumer release; no runtime dependency/daemon change."
+        }
+      },
       "baseline_sha": null,
       "branch": null,
       "pr": null,
       "merged_sha": null,
       "claim": {
-        "live": false
+        "live": true,
+        "owner": "codex-assets",
+        "paths": [
+          "assets",
+          "scripts/render_assets.py",
+          "tests/test_assets.py",
+          "tests/fixtures/assets",
+          "docs/launch-assets.md",
+          "README.md",
+          "site/index.html",
+          "site/img",
+          "site/styles/sections.css",
+          "site/README.md",
+          "hosts/plugins/release-files.json"
+        ],
+        "claimed_at": "2026-10-15T14:43:54.135833+00:00"
       },
       "blocks": [
         31
       ],
-      "history": [],
+      "history": [
+        {
+          "at": "2026-10-15T14:43:54.013606+00:00",
+          "by": "orchestrator",
+          "from": "backlog",
+          "to": "ready-for-dev"
+        },
+        {
+          "at": "2026-10-15T14:43:54.230648+00:00",
+          "by": "codex-assets",
+          "from": "ready-for-dev",
+          "to": "in-progress"
+        }
+      ],
       "findings": [],
       "source_key": "launch-publication/marketing-assets"
     },
@@ -6880,16 +6922,7 @@
     }
   ],
   "frontier": {
-    "ready": [
-      {
-        "id": 30,
-        "epic": 5,
-        "stream": "W-launch",
-        "title": "Marketing PNGs rendered reproducibly from HTML templates",
-        "why": "after 29 in-review; unclaimed",
-        "claimed": false
-      }
-    ],
+    "ready": [],
     "waiting_on_prereq": [
       {
         "id": 31,
@@ -6897,7 +6930,7 @@
         "stream": "W-launch",
         "title": "Docs set, examples and the dogfood journey",
         "missing": [
-          "30 (backlog)"
+          "30 (in-progress)"
         ]
       },
       {

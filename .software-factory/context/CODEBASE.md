@@ -5,8 +5,8 @@
 > (`<skill-dir>` is the installed skill directory, e.g. `.claude/skills/sf-crawl`
 > or `.agents/skills/sf-crawl`).
 
-- Source revision: a70773df0c09f218602cc3a29fa16476a1de8485
-- Generated: 2026-10-15T14:12:48Z
+- Source revision: d2c2a6b29455c1bfdcbd9507bc05405c245318fc
+- Generated: 2026-10-15T14:44:49Z
 
 ## Limits
 
@@ -47,6 +47,7 @@
 | `scripts.install_lifecycle` | `scripts/install_lifecycle.py` | 23 | 0 | 17 |
 | `scripts.scan_public` | `scripts/scan_public.py` | 10 | 0 | 7 |
 | `scripts.validate` | `scripts/validate.py` | 9 | 0 | 6 |
+| `site.scripts.sync_prompt` | `site/scripts/sync_prompt.py` | 2 | 0 | 4 |
 | `skills.sf-agents.scripts.agents` | `skills/sf-agents/scripts/agents.py` | 9 | 0 | 8 |
 | `skills.sf-agents.scripts.render_bots` | `skills/sf-agents/scripts/render_bots.py` | 12 | 0 | 12 |
 | `skills.sf-agents.scripts.triage` | `skills/sf-agents/scripts/triage.py` | 10 | 0 | 7 |
@@ -97,6 +98,7 @@
 | `tests.test_review_triage` | `tests/test_review_triage.py` | 6 | 0 | 5 |
 | `tests.test_run_audit` | `tests/test_run_audit.py` | 1 | 0 | 11 |
 | `tests.test_sf_eval` | `tests/test_sf_eval.py` | 22 | 0 | 13 |
+| `tests.test_showcase` | `tests/test_showcase.py` | 4 | 0 | 12 |
 | `tests.test_skills_distribution` | `tests/test_skills_distribution.py` | 1 | 0 | 7 |
 | `tests.test_state` | `tests/test_state.py` | 17 | 0 | 16 |
 | `tests.test_tools` | `tests/test_tools.py` | 18 | 0 | 8 |
@@ -210,7 +212,7 @@ No internal import edges.
 - `scripts.check_links.check_markdown` (line 99) calls `INLINE_LINK_RE.finditer` (unconfirmed), `REFERENCE_DEF_RE.match` (unconfirmed), `anchors_of` (confirmed: scripts.check_links.anchors_of), `match.group` (unconfirmed), `md.read_text` (unconfirmed), `md.relative_to` (unconfirmed), `outside_fences` (confirmed: scripts.check_links.outside_fences), `problems.append` (unconfirmed), `ref.group` (unconfirmed), `resolve` (unconfirmed), `resolved.exists` (unconfirmed), `scope_files` (confirmed: scripts.check_links.scope_files), `splitlines` (unconfirmed), `startswith` (unconfirmed), `str` (unconfirmed), `strip` (unconfirmed), `target.partition` (unconfirmed), `target.startswith` (unconfirmed), `target_file.is_file` (unconfirmed), `target_file.relative_to` (unconfirmed), `targets.append` (unconfirmed), `targets.extend` (unconfirmed)
 - `scripts.check_links.check_json` (line 152) calls `base.relative_to` (unconfirmed), `isinstance` (unconfirmed), `js.read_text` (unconfirmed), `json.loads` (unconfirmed), `node.startswith` (unconfirmed), `node.values` (unconfirmed), `problems.append` (unconfirmed), `resolve` (unconfirmed), `resolved.exists` (unconfirmed), `scope_files` (confirmed: scripts.check_links.scope_files), `startswith` (unconfirmed), `str` (unconfirmed), `walk` (unconfirmed)
 - `scripts.check_links.main` (line 181) calls `Path.cwd` (unconfirmed), `_check_single` (confirmed: scripts.check_links._check_single), `argparse.ArgumentParser` (unconfirmed), `args.root.resolve` (unconfirmed), `check_json` (confirmed: scripts.check_links.check_json), `check_markdown` (confirmed: scripts.check_links.check_markdown), `given.append` (unconfirmed), `given.extend` (unconfirmed), `item.is_dir` (unconfirmed), `item.is_file` (unconfirmed), `item.resolve` (unconfirmed), `len` (unconfirmed), `parser.add_argument` (unconfirmed), `parser.parse_args` (unconfirmed), `print` (unconfirmed), `problems.append` (unconfirmed), `root.is_dir` (unconfirmed), `set` (unconfirmed), `sorted` (unconfirmed), `walk_files` (confirmed: scripts.check_links.walk_files)
-- … 1339 more call rows (cap reached)
+- … 1362 more call rows (cap reached)
 
 ## Entry points
 
@@ -225,6 +227,7 @@ No internal import edges.
 - `__main__` guard — confirmed: `scripts/distribution.py`
 - `__main__` guard — confirmed: `scripts/scan_public.py`
 - `__main__` guard — confirmed: `scripts/validate.py`
+- `__main__` guard — confirmed: `site/scripts/sync_prompt.py`
 - `__main__` guard — confirmed: `skills/sf-agents/scripts/agents.py`
 - `__main__` guard — confirmed: `skills/sf-agents/scripts/render_bots.py`
 - `__main__` guard — confirmed: `skills/sf-agents/scripts/triage.py`
@@ -260,6 +263,7 @@ No internal import edges.
 - `__main__` guard — confirmed: `tests/test_installer.py`
 - `__main__` guard — confirmed: `tests/test_run_audit.py`
 - `__main__` guard — confirmed: `tests/test_sf_eval.py`
+- `__main__` guard — confirmed: `tests/test_showcase.py`
 - `__main__` guard — confirmed: `tests/test_skills_distribution.py`
 - `__main__` guard — confirmed: `tests/test_state.py`
 - `__main__` guard — confirmed: `tests/test_tools.py`
@@ -276,6 +280,9 @@ resolved to files.
 | `tests/fixtures/repos/typescript-web/src/cli.ts` | `./index` | — |
 | `tests/fixtures/repos/typescript-web/src/greet.ts` | — | `greet` |
 | `tests/fixtures/repos/typescript-web/src/index.ts` | `./greet` | `main` |
+| `site/scripts/main.js` | — | — |
+| `site/scripts/setup-data.js` | — | — |
+| `tests/fixtures/showcase/copy-overlap.cjs` | — | — |
 
 ## Files not parsed
 
@@ -288,4 +295,4 @@ Everything parsed cleanly.
 
 ## File census
 
-249 file(s) crawled. Counts by extension: `.md` 109, `.py` 68, `.json` 24, `.yaml` 14, `.tmpl` 7, `.yml` 7, `.toml` 4, `(no extension)` 3, `.mdc` 3, `.sh` 3, `.ts` 3, `.txt` 3, `.sha256` 1.
+283 file(s) crawled. Counts by extension: `.md` 111, `.py` 70, `.json` 27, `.yaml` 14, `.txt` 9, `.yml` 8, `.html` 7, `.tmpl` 7, `.css` 4, `.toml` 4, `.woff2` 4, `(no extension)` 3, `.mdc` 3, `.sh` 3, `.ts` 3, … 6 more file(s) (cap reached).
