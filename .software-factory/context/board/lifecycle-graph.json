@@ -785,12 +785,29 @@
           {
             "path": ".software-factory/context/board/stories/28.json",
             "pointer": "/receipts/active-attempt",
-            "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+            "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
           }
         ],
         "reported_status": "assigned",
         "story": 28,
         "subject_sha": "6747cb9be598c8985acfb998a4f3bc397bd7696a",
+        "type": "receipt"
+      },
+      {
+        "artifact_integrity": "unknown",
+        "freshness": "stale",
+        "id": "receipt:28:external-schema-crosschecks",
+        "label": "external-schema-crosschecks",
+        "provenance": [
+          {
+            "path": ".software-factory/context/board/stories/28.json",
+            "pointer": "/receipts/external-schema-crosschecks",
+            "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
+          }
+        ],
+        "reported_status": "pass",
+        "story": 28,
+        "subject_sha": "d896d12bcfd6e9efc4405d43239540ed9783c031",
         "type": "receipt"
       },
       {
@@ -802,12 +819,46 @@
           {
             "path": ".software-factory/context/board/stories/28.json",
             "pointer": "/receipts/installer-baseline-race",
-            "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+            "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
           }
         ],
         "reported_status": "finding",
         "story": 28,
         "subject_sha": "6747cb9be598c8985acfb998a4f3bc397bd7696a",
+        "type": "receipt"
+      },
+      {
+        "artifact_integrity": "matched",
+        "freshness": "stale",
+        "id": "receipt:28:integrated-primary-proof",
+        "label": "integrated-primary-proof",
+        "provenance": [
+          {
+            "path": ".software-factory/context/board/stories/28.json",
+            "pointer": "/receipts/integrated-primary-proof",
+            "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
+          }
+        ],
+        "reported_status": "pass",
+        "story": 28,
+        "subject_sha": "d896d12bcfd6e9efc4405d43239540ed9783c031",
+        "type": "receipt"
+      },
+      {
+        "artifact_integrity": "matched",
+        "freshness": "stale",
+        "id": "receipt:28:integrated-source-review",
+        "label": "integrated-source-review",
+        "provenance": [
+          {
+            "path": ".software-factory/context/board/stories/28.json",
+            "pointer": "/receipts/integrated-source-review",
+            "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
+          }
+        ],
+        "reported_status": "accepted",
+        "story": 28,
+        "subject_sha": "d896d12bcfd6e9efc4405d43239540ed9783c031",
         "type": "receipt"
       },
       {
@@ -819,7 +870,7 @@
           {
             "path": ".software-factory/context/board/stories/28.json",
             "pointer": "/receipts/source-review-3d5",
-            "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+            "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
           }
         ],
         "reported_status": "changes-required",
@@ -836,7 +887,7 @@
           {
             "path": ".software-factory/context/board/stories/28.json",
             "pointer": "/receipts/worker-gate-3d5",
-            "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+            "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
           }
         ],
         "reported_status": "fail",
@@ -4639,7 +4690,7 @@
         {
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/receipts/corrected-source-review",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         }
       ],
       "relation": "records",
@@ -4652,7 +4703,7 @@
         {
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/receipts/installer-baseline-race",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         }
       ],
       "relation": "records",
@@ -4664,8 +4715,47 @@
       "provenance": [
         {
           "path": ".software-factory/context/board/stories/28.json",
+          "pointer": "/receipts/integrated-primary-proof",
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
+        }
+      ],
+      "relation": "records",
+      "source": "receipt:28:integrated-primary-proof",
+      "target": "surface:.software-factory/runs/software-factory-v01/evidence/evolution-integrated-gate.log"
+    },
+    {
+      "basis": "artifact-reference",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/28.json",
+          "pointer": "/receipts/integrated-source-review",
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
+        }
+      ],
+      "relation": "records",
+      "source": "receipt:28:integrated-source-review",
+      "target": "surface:.software-factory/runs/software-factory-v01/evidence/evolution-d896-source-review.md"
+    },
+    {
+      "basis": "artifact-reference",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/28.json",
+          "pointer": "/receipts/six-context-packaging",
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
+        }
+      ],
+      "relation": "records",
+      "source": "receipt:28:six-context-packaging",
+      "target": "surface:.software-factory/runs/software-factory-v01/evidence/evolution-c8ec-packaging-proof.json"
+    },
+    {
+      "basis": "artifact-reference",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/receipts/source-review-3d5",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         }
       ],
       "relation": "records",
@@ -4678,7 +4768,7 @@
         {
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/receipts/worker-gate-3d5",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         }
       ],
       "relation": "records",
@@ -4691,7 +4781,7 @@
         {
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/receipts/worker-handoff",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         }
       ],
       "relation": "records",
@@ -7174,7 +7264,7 @@
         {
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/covers/0",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         }
       ],
       "relation": "covers",
@@ -7187,7 +7277,7 @@
         {
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/covers/1",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         }
       ],
       "relation": "covers",
@@ -7200,7 +7290,7 @@
         {
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/covers/2",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         }
       ],
       "relation": "covers",
@@ -7213,7 +7303,7 @@
         {
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/covers/3",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         }
       ],
       "relation": "covers",
@@ -7226,7 +7316,7 @@
         {
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/covers/4",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         }
       ],
       "relation": "covers",
@@ -7239,7 +7329,7 @@
         {
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/covers/5",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         }
       ],
       "relation": "covers",
@@ -23540,7 +23630,7 @@
         {
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/after/0",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         }
       ],
       "relation": "depends-on",
@@ -23552,7 +23642,7 @@
         {
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/epic",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         }
       ],
       "relation": "part-of",
@@ -23564,7 +23654,7 @@
         {
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/findings/0",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         }
       ],
       "relation": "records",
@@ -23576,7 +23666,7 @@
         {
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/findings/1",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         }
       ],
       "relation": "records",
@@ -23588,7 +23678,7 @@
         {
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/receipts/active-attempt",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         }
       ],
       "relation": "records",
@@ -23600,7 +23690,7 @@
         {
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/receipts/active-attempt",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         }
       ],
       "relation": "subject",
@@ -23612,7 +23702,7 @@
         {
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/receipts/corrected-source-review",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         }
       ],
       "relation": "records",
@@ -23624,7 +23714,7 @@
         {
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/receipts/corrected-source-review",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         }
       ],
       "relation": "subject",
@@ -23635,8 +23725,32 @@
       "provenance": [
         {
           "path": ".software-factory/context/board/stories/28.json",
+          "pointer": "/receipts/external-schema-crosschecks",
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
+        }
+      ],
+      "relation": "records",
+      "source": "story:28",
+      "target": "receipt:28:external-schema-crosschecks"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/28.json",
+          "pointer": "/receipts/external-schema-crosschecks",
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
+        }
+      ],
+      "relation": "subject",
+      "source": "receipt:28:external-schema-crosschecks",
+      "target": "commit:d896d12bcfd6e9efc4405d43239540ed9783c031"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/receipts/installer-baseline-race",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         }
       ],
       "relation": "records",
@@ -23648,7 +23762,7 @@
         {
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/receipts/installer-baseline-race",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         }
       ],
       "relation": "subject",
@@ -23659,8 +23773,80 @@
       "provenance": [
         {
           "path": ".software-factory/context/board/stories/28.json",
+          "pointer": "/receipts/integrated-primary-proof",
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
+        }
+      ],
+      "relation": "records",
+      "source": "story:28",
+      "target": "receipt:28:integrated-primary-proof"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/28.json",
+          "pointer": "/receipts/integrated-primary-proof",
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
+        }
+      ],
+      "relation": "subject",
+      "source": "receipt:28:integrated-primary-proof",
+      "target": "commit:d896d12bcfd6e9efc4405d43239540ed9783c031"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/28.json",
+          "pointer": "/receipts/integrated-source-review",
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
+        }
+      ],
+      "relation": "records",
+      "source": "story:28",
+      "target": "receipt:28:integrated-source-review"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/28.json",
+          "pointer": "/receipts/integrated-source-review",
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
+        }
+      ],
+      "relation": "subject",
+      "source": "receipt:28:integrated-source-review",
+      "target": "commit:d896d12bcfd6e9efc4405d43239540ed9783c031"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/28.json",
+          "pointer": "/receipts/six-context-packaging",
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
+        }
+      ],
+      "relation": "records",
+      "source": "story:28",
+      "target": "receipt:28:six-context-packaging"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/28.json",
+          "pointer": "/receipts/six-context-packaging",
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
+        }
+      ],
+      "relation": "subject",
+      "source": "receipt:28:six-context-packaging",
+      "target": "commit:c8ec5ca67e339ccefa0a8a3cb6c018105bbb64c5"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/receipts/source-review-3d5",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         }
       ],
       "relation": "records",
@@ -23672,7 +23858,7 @@
         {
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/receipts/source-review-3d5",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         }
       ],
       "relation": "subject",
@@ -23684,7 +23870,7 @@
         {
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/receipts/worker-gate-3d5",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         }
       ],
       "relation": "records",
@@ -23696,7 +23882,7 @@
         {
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/receipts/worker-gate-3d5",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         }
       ],
       "relation": "subject",
@@ -23708,7 +23894,7 @@
         {
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/receipts/worker-handoff",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         }
       ],
       "relation": "records",
@@ -23720,7 +23906,7 @@
         {
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/receipts/worker-handoff",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         }
       ],
       "relation": "subject",
@@ -25289,7 +25475,7 @@
     {
       "kind": "file",
       "path": ".software-factory/context/board/stories/28.json",
-      "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+      "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
     },
     {
       "kind": "file",
@@ -25648,6 +25834,11 @@
     },
     {
       "kind": "file",
+      "path": ".software-factory/runs/software-factory-v01/evidence/evolution-c8ec-packaging-proof.json",
+      "sha256": "c9ca551eb9f31647c94194f986d9a3541aa62065d14f93e4560dcf63b1431f21"
+    },
+    {
+      "kind": "file",
       "path": ".software-factory/runs/software-factory-v01/evidence/evolution-c8ec-source-review.md",
       "sha256": "e937910d0783172d3a05a25a61d7a1b437845d0dbb8c93b0038e5a9f7aab4769"
     },
@@ -25658,8 +25849,18 @@
     },
     {
       "kind": "file",
+      "path": ".software-factory/runs/software-factory-v01/evidence/evolution-d896-source-review.md",
+      "sha256": "6f511b02f62023c9fbfb236d27c61547d3ed180544b2e9edbf060ddcbe580b64"
+    },
+    {
+      "kind": "file",
       "path": ".software-factory/runs/software-factory-v01/evidence/evolution-installer-baseline-race.json",
       "sha256": "b809843ce081a6ae12a9f5d6ea7783a5e2516a82bf754588947adf5daedf8395"
+    },
+    {
+      "kind": "file",
+      "path": ".software-factory/runs/software-factory-v01/evidence/evolution-integrated-gate.log",
+      "sha256": "5682b47df5f67d2ab46ecb6d2e395c264cbe577888e78503c684d589133342d1"
     },
     {
       "kind": "file",
@@ -26450,12 +26651,12 @@
         {
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/receipts/source-review-3d5/subject_sha",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         },
         {
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/receipts/worker-gate-3d5/subject_sha",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         }
       ],
       "type": "commit"
@@ -26629,12 +26830,12 @@
         {
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/receipts/active-attempt/subject_sha",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         },
         {
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/receipts/installer-baseline-race/subject_sha",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         }
       ],
       "type": "commit"
@@ -27030,12 +27231,17 @@
         {
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/receipts/corrected-source-review/subject_sha",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
+        },
+        {
+          "path": ".software-factory/context/board/stories/28.json",
+          "pointer": "/receipts/six-context-packaging/subject_sha",
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         },
         {
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/receipts/worker-handoff/subject_sha",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         }
       ],
       "type": "commit"
@@ -27070,6 +27276,28 @@
           "path": ".software-factory/context/board/stories/8.json",
           "pointer": "/receipts/backfill/subject_sha",
           "sha256": "6aae62fc6fb17fbf70d3930f374b35155bb991456857382d9c59383399e8fa14"
+        }
+      ],
+      "type": "commit"
+    },
+    {
+      "id": "commit:d896d12bcfd6e9efc4405d43239540ed9783c031",
+      "label": "d896d12bcfd6e9efc4405d43239540ed9783c031",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/28.json",
+          "pointer": "/receipts/external-schema-crosschecks/subject_sha",
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
+        },
+        {
+          "path": ".software-factory/context/board/stories/28.json",
+          "pointer": "/receipts/integrated-primary-proof/subject_sha",
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
+        },
+        {
+          "path": ".software-factory/context/board/stories/28.json",
+          "pointer": "/receipts/integrated-source-review/subject_sha",
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         }
       ],
       "type": "commit"
@@ -27810,7 +28038,7 @@
         {
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/findings/0",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         }
       ],
       "type": "finding"
@@ -27822,7 +28050,7 @@
         {
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/findings/1",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         }
       ],
       "type": "finding"
@@ -48057,7 +48285,7 @@
         {
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/receipts/active-attempt",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         }
       ],
       "reported_status": "assigned",
@@ -48074,12 +48302,29 @@
         {
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/receipts/corrected-source-review",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         }
       ],
       "reported_status": "accepted",
       "story": 28,
       "subject_sha": "c8ec5ca67e339ccefa0a8a3cb6c018105bbb64c5",
+      "type": "receipt"
+    },
+    {
+      "artifact_integrity": "unknown",
+      "freshness": "stale",
+      "id": "receipt:28:external-schema-crosschecks",
+      "label": "external-schema-crosschecks",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/28.json",
+          "pointer": "/receipts/external-schema-crosschecks",
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
+        }
+      ],
+      "reported_status": "pass",
+      "story": 28,
+      "subject_sha": "d896d12bcfd6e9efc4405d43239540ed9783c031",
       "type": "receipt"
     },
     {
@@ -48091,12 +48336,63 @@
         {
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/receipts/installer-baseline-race",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         }
       ],
       "reported_status": "finding",
       "story": 28,
       "subject_sha": "6747cb9be598c8985acfb998a4f3bc397bd7696a",
+      "type": "receipt"
+    },
+    {
+      "artifact_integrity": "matched",
+      "freshness": "stale",
+      "id": "receipt:28:integrated-primary-proof",
+      "label": "integrated-primary-proof",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/28.json",
+          "pointer": "/receipts/integrated-primary-proof",
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
+        }
+      ],
+      "reported_status": "pass",
+      "story": 28,
+      "subject_sha": "d896d12bcfd6e9efc4405d43239540ed9783c031",
+      "type": "receipt"
+    },
+    {
+      "artifact_integrity": "matched",
+      "freshness": "stale",
+      "id": "receipt:28:integrated-source-review",
+      "label": "integrated-source-review",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/28.json",
+          "pointer": "/receipts/integrated-source-review",
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
+        }
+      ],
+      "reported_status": "accepted",
+      "story": 28,
+      "subject_sha": "d896d12bcfd6e9efc4405d43239540ed9783c031",
+      "type": "receipt"
+    },
+    {
+      "artifact_integrity": "matched",
+      "freshness": "current",
+      "id": "receipt:28:six-context-packaging",
+      "label": "six-context-packaging",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/28.json",
+          "pointer": "/receipts/six-context-packaging",
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
+        }
+      ],
+      "reported_status": "pass-executed-cases",
+      "story": 28,
+      "subject_sha": "c8ec5ca67e339ccefa0a8a3cb6c018105bbb64c5",
       "type": "receipt"
     },
     {
@@ -48108,7 +48404,7 @@
         {
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/receipts/source-review-3d5",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         }
       ],
       "reported_status": "changes-required",
@@ -48125,7 +48421,7 @@
         {
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/receipts/worker-gate-3d5",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         }
       ],
       "reported_status": "fail",
@@ -48142,7 +48438,7 @@
         {
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/receipts/worker-handoff",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         }
       ],
       "reported_status": "implementation-complete-review-pending",
@@ -49887,7 +50183,7 @@
         {
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/covers/0",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         }
       ],
       "type": "requirement"
@@ -49899,7 +50195,7 @@
         {
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/covers/1",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         }
       ],
       "type": "requirement"
@@ -49911,7 +50207,7 @@
         {
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/covers/2",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         }
       ],
       "type": "requirement"
@@ -49923,7 +50219,7 @@
         {
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/covers/3",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         }
       ],
       "type": "requirement"
@@ -49935,7 +50231,7 @@
         {
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/covers/4",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         }
       ],
       "type": "requirement"
@@ -49947,7 +50243,7 @@
         {
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/covers/5",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         }
       ],
       "type": "requirement"
@@ -52255,7 +52551,7 @@
         {
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "",
-          "sha256": "d4824575a0344ad4030a5e9d21fe215e90f490f557ec69c75e7fab5085ecec55"
+          "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
         }
       ],
       "status": "in-review",
@@ -52873,6 +53169,19 @@
     },
     {
       "exists": true,
+      "id": "surface:.software-factory/runs/software-factory-v01/evidence/evolution-c8ec-packaging-proof.json",
+      "label": ".software-factory/runs/software-factory-v01/evidence/evolution-c8ec-packaging-proof.json",
+      "provenance": [
+        {
+          "path": ".software-factory/runs/software-factory-v01/evidence/evolution-c8ec-packaging-proof.json",
+          "pointer": "",
+          "sha256": "c9ca551eb9f31647c94194f986d9a3541aa62065d14f93e4560dcf63b1431f21"
+        }
+      ],
+      "type": "surface"
+    },
+    {
+      "exists": true,
       "id": "surface:.software-factory/runs/software-factory-v01/evidence/evolution-c8ec-source-review.md",
       "label": ".software-factory/runs/software-factory-v01/evidence/evolution-c8ec-source-review.md",
       "provenance": [
@@ -52899,6 +53208,19 @@
     },
     {
       "exists": true,
+      "id": "surface:.software-factory/runs/software-factory-v01/evidence/evolution-d896-source-review.md",
+      "label": ".software-factory/runs/software-factory-v01/evidence/evolution-d896-source-review.md",
+      "provenance": [
+        {
+          "path": ".software-factory/runs/software-factory-v01/evidence/evolution-d896-source-review.md",
+          "pointer": "",
+          "sha256": "6f511b02f62023c9fbfb236d27c61547d3ed180544b2e9edbf060ddcbe580b64"
+        }
+      ],
+      "type": "surface"
+    },
+    {
+      "exists": true,
       "id": "surface:.software-factory/runs/software-factory-v01/evidence/evolution-installer-baseline-race.json",
       "label": ".software-factory/runs/software-factory-v01/evidence/evolution-installer-baseline-race.json",
       "provenance": [
@@ -52906,6 +53228,19 @@
           "path": ".software-factory/runs/software-factory-v01/evidence/evolution-installer-baseline-race.json",
           "pointer": "",
           "sha256": "b809843ce081a6ae12a9f5d6ea7783a5e2516a82bf754588947adf5daedf8395"
+        }
+      ],
+      "type": "surface"
+    },
+    {
+      "exists": true,
+      "id": "surface:.software-factory/runs/software-factory-v01/evidence/evolution-integrated-gate.log",
+      "label": ".software-factory/runs/software-factory-v01/evidence/evolution-integrated-gate.log",
+      "provenance": [
+        {
+          "path": ".software-factory/runs/software-factory-v01/evidence/evolution-integrated-gate.log",
+          "pointer": "",
+          "sha256": "5682b47df5f67d2ab46ecb6d2e395c264cbe577888e78503c684d589133342d1"
         }
       ],
       "type": "surface"
@@ -54818,5 +55153,5 @@
     }
   ],
   "schema": "sf-trace/1",
-  "source_fingerprint": "03d0741672e3f9b7679b7e94a717bd74409ec97122755d76c0bf094fd26ddb9f"
+  "source_fingerprint": "f422d24a3df305a3bcd73be6c28d9e672fd33bcd9fdfdb903ed80e62797fc509"
 }
