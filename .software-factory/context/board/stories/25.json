@@ -4,7 +4,7 @@
   "epic": 4,
   "type": "story",
   "title": "Config contract, JSON Schema and tracker adapters",
-  "status": "in-progress",
+  "status": "in-review",
   "owner": "codex-config-trackers",
   "after": [
     24
@@ -40,6 +40,53 @@
       "status": "assigned",
       "recorded_at": "2026-10-15T10:12:26.162190+00:00",
       "summary": "Original25 config/schema/trackers begins from submitted24 candidate through existing review-counts-met readiness; independent24 review and BMad module pin decision remain open. Root owns primary runtime and integration."
+    },
+    "worker-handoff": {
+      "type": "worker-handoff",
+      "subject_sha": "e952b0a1d0e73f294157ad0947188367e7f242fb",
+      "author": "codex-config-trackers",
+      "status": "source-reviewed-integration-proof-pending",
+      "full_gate": {
+        "exit_code": 1,
+        "tests": 564,
+        "passed": 554,
+        "failed": 2,
+        "skipped": 8,
+        "eval_passed": 28,
+        "eval_total": 30,
+        "failed_eval_ids": [
+          "SKL-BOARD-002",
+          "SKL-CRAWL-002"
+        ]
+      },
+      "other_executed_steps": "pass",
+      "limitations": [
+        "Isolated freshness failures retained.",
+        "Network and optional unavailable schema crosscheck explicitly skipped.",
+        "Full combined primary gate and consumer evidence remain required."
+      ],
+      "recorded_at": "2026-10-15T10:54:02.909204+00:00"
+    },
+    "independent-review": {
+      "type": "independent-review",
+      "subject_sha": "e952b0a1d0e73f294157ad0947188367e7f242fb",
+      "author": "codex-config-trackers",
+      "reviewer": "/root/mission_status",
+      "status": "pass",
+      "scope": "44-file source diff vs0d0a641; exact commit",
+      "reviewed": [
+        "Tracker root/ancestor identity and deterministic swap regression",
+        "Runner-compatible golden and nested JSON assertion fields",
+        "Recursive numeric/bool equality, pinned Cursor force recipe and authority path overlap",
+        "Readonly config/tracker validation and owner-mediated patch proposals",
+        "Genuine doctor semantics, schema/tracker installed/native dependencies and Apache license allowlist",
+        "Optional owner ceiling and honest fixture/example/monitoring authority documentation"
+      ],
+      "limitations": [
+        "Reviewer ran no product tests or host CLI.",
+        "Does not establish authenticated authority, live monitoring/models/host loading or eval readiness."
+      ],
+      "recorded_at": "2026-10-15T10:54:02.909204+00:00"
     }
   },
   "baseline_sha": null,
@@ -58,8 +105,16 @@
       "by": "codex-config-trackers",
       "from": "ready-for-dev",
       "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T10:54:03.007214+00:00",
+      "by": "codex-config-trackers",
+      "from": "in-progress",
+      "to": "in-review"
     }
   ],
   "findings": [],
-  "source_key": "onboarding-integrations/config-schema-trackers"
+  "source_key": "onboarding-integrations/config-schema-trackers",
+  "review_subject_sha": "e952b0a1d0e73f294157ad0947188367e7f242fb",
+  "evidence_contract": 1
 }

@@ -4,8 +4,8 @@
   "epic": 4,
   "type": "story",
   "title": "sf-help: discovery, interview and approved setup",
-  "status": "backlog",
-  "owner": null,
+  "status": "in-progress",
+  "owner": "codex-onboarding",
   "after": [
     25
   ],
@@ -26,12 +26,39 @@
   "plan_checkpoint": false,
   "done_checkpoint": false,
   "blocked": null,
-  "receipts": {},
+  "receipts": {
+    "active-attempt": {
+      "type": "agent-attempt",
+      "subject_sha": "c7af8b0aede1011076498beff1ba908be9ec34fa",
+      "agent": "/root/product_expert",
+      "role": "sf-principal-engineer",
+      "skill": "sf-help",
+      "requested_model": "gpt-6-astra",
+      "effective_model": null,
+      "phase": "implementation",
+      "status": "assigned",
+      "recorded_at": "2026-10-15T10:56:32.027239+00:00",
+      "summary": "Original26 starts from integrated reviewed25source through review-counts-as-met readiness. Complete exact20questioncatalog, grounded readonlydiscovery and approved idempotentsetup with actualschema mappings and self-contained generatedtemplates; combinedprimarygatepending."
+    }
+  },
   "baseline_sha": null,
   "branch": null,
   "pr": null,
   "merged_sha": null,
-  "history": [],
+  "history": [
+    {
+      "at": "2026-10-15T10:54:03.090456+00:00",
+      "by": "orchestrator",
+      "from": "backlog",
+      "to": "ready-for-dev"
+    },
+    {
+      "at": "2026-10-15T10:54:03.207840+00:00",
+      "by": "codex-onboarding",
+      "from": "ready-for-dev",
+      "to": "in-progress"
+    }
+  ],
   "findings": [],
   "source_key": "onboarding-integrations/sf-help-skill"
 }
