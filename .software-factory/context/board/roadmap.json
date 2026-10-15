@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-15T18:57:51.347285+00:00",
-  "revision": 298,
+  "generated_at": "2026-10-15T19:09:59.578775+00:00",
+  "revision": 303,
   "streams": [
     {
       "id": "W-foundation",
@@ -58,8 +58,8 @@
       "counts": {
         "planned": 0,
         "ready": 0,
-        "in-progress": 1,
-        "review": 6,
+        "in-progress": 0,
+        "review": 7,
         "built": 0,
         "done": 0,
         "cancelled": 0
@@ -2495,6 +2495,35 @@
           "recorded_at": "2026-10-15T11:03:47.462473+00:00",
           "limitations": [
             "No owner epic acceptance, live host loading, public release delivery, production monitoring or deployment established."
+          ]
+        },
+        "actual-project-bmad": {
+          "type": "actual-bmad-provision",
+          "subject_sha": "4c16cb6f6e7bd16de3a143d8100d8ea973c1d13f",
+          "status": "pass",
+          "exit_code": 0,
+          "scope": "Actual separately pinned BMad install and54 per-module Codex skill files; unchanged3installer/helper files verified. No whole-tree frozen-subject or host-registration claim.",
+          "versions": {
+            "core": "6.12.0",
+            "bmm": "6.12.0",
+            "bmb": "v2.2.2",
+            "cis": "v0.3.2",
+            "tea": "v1.27.2"
+          },
+          "observed_module_shas": {
+            "bmb": "4a1422274a2acb0fb0ec0511753da6263948f072",
+            "cis": "97298b22fee1c7e482710d3a8414adb5cfccccd9",
+            "tea": "d99ad29c62697c152e3393351406686d5bcd323c"
+          },
+          "manifest": "_bmad/_config/manifest.yaml",
+          "manifest_sha256": "2a80f9be6051c5e9c39bf7790c1bb394577d7deae59e94daaace6354f810346a",
+          "artifact": ".software-factory/runs/software-factory-v01/evidence/actual-bmad-provision-observation.json",
+          "artifact_sha256": "3d7bdadc6796924df5c835663f1d36c5f7c69e1f219287373455e75a66b1e29f",
+          "forbidden_host_calls": 0,
+          "tracked_file_changes": 0,
+          "limitations": [
+            "Selected BMM planning execution is recorded separately; full factory installation still pending48 repair.",
+            "Raw private receipt retains actual command/environment and snapshot reconciliation; only this public-safe summary belongs on the board."
           ]
         }
       },
@@ -6404,6 +6433,21 @@
           "limitations": [
             "Root configuredselfinstall failure unresolved; no livehost/BMadexecution/fullgate/publication fact inferred."
           ]
+        },
+        "approved-journey-admission": {
+          "type": "approved-eval-admission",
+          "subject_sha": "4c16cb6f6e7bd16de3a143d8100d8ea973c1d13f",
+          "status": "admitted-not-yet-canonical-run",
+          "case_id": "TLS-JOURNEY-001",
+          "count": 51,
+          "payload_sha256": "00e82fb573dcbb61a2b023e2b0bf8d5dd78609233094ce52a7be08cafc5897bb",
+          "approval": "ADR0026 exact approved addition21; full22 sourcecontract unchanged",
+          "implementation_subject": "c21fc14a8d1f4f6e9c2d494068886dc79f1c0445",
+          "independent_review": ".software-factory/runs/software-factory-v01/evidence/sf-docs-final-independent-review.json",
+          "limits": [
+            "No passing51case canonical run claimed before execution.",
+            "README52 remains approved future contract."
+          ]
         }
       },
       "baseline_sha": null,
@@ -6411,21 +6455,7 @@
       "pr": null,
       "merged_sha": null,
       "claim": {
-        "live": true,
-        "owner": "codex-docs",
-        "paths": [
-          "docs",
-          "examples",
-          "tests/test_docs_journey.py",
-          "tests/fixtures/docs",
-          "scripts/check_mermaid.py",
-          "scripts/sync_diagrams.py",
-          "CONTRIBUTING.md",
-          "SECURITY.md",
-          "hosts/plugins/release-files.json",
-          ".gitignore"
-        ],
-        "claimed_at": "2026-10-15T18:05:02.662748+00:00"
+        "live": false
       },
       "blocks": [
         32
@@ -6492,13 +6522,31 @@
       "plan_checkpoint": false,
       "done_checkpoint": false,
       "blocked": null,
-      "receipts": {},
+      "receipts": {
+        "planning-attempt": {
+          "type": "agent-attempt",
+          "subject_sha": "1ebe84907207df2350df2fea5080bbdeb5ec59f9",
+          "agent": "/root/mission_status",
+          "role": "sf-product-manager",
+          "skill": "bmad-create-epics-and-stories",
+          "requested_model": "native host agent default",
+          "effective_model": null,
+          "phase": "planning",
+          "status": "assigned",
+          "summary": "Actually installedBMad6.12.0 sequentialepics/storiesworkflow forremaininglaunchscope32/33; reusableexistingepic5/requirements/ADR27. DirectownerautonomyGO coversroutinecontinuation, no fabricatedhumanCanswers. Writeonlyclaimedignoredplanningartifacts, rootreviewsbeforeimplementation."
+        }
+      },
       "baseline_sha": null,
       "branch": null,
       "pr": null,
       "merged_sha": null,
       "claim": {
-        "live": false
+        "live": true,
+        "owner": "codex-bmad-planning",
+        "paths": [
+          "_bmad-output/planning-artifacts"
+        ],
+        "claimed_at": "2026-10-15T19:02:21.586995+00:00"
       },
       "blocks": [
         33
@@ -8123,8 +8171,8 @@
       "stream": "W-installer",
       "type": "story",
       "title": "Install safely when configured context includes managed project files",
-      "status": "in-progress",
-      "state": "in-progress",
+      "status": "in-review",
+      "state": "review",
       "owner": "codex-install-repair",
       "after": [
         24
@@ -8153,6 +8201,32 @@
           "phase": "implementation",
           "status": "assigned",
           "summary": "Actual configuredselfinstall safelyrefused due captured managedAGENTS input overlap; realfailedreceipt retained. Reproduce/fix narrow transactional postwrite expectedcontent validation, preserve races/overlays/rollback. Rootowns actualretry/BMad/runtime/board."
+        },
+        "worker-handoff": {
+          "type": "agent-attempt",
+          "subject_sha": "5599912b46b3086d4d335d418e62043df38ef723",
+          "agent": "/root/adaptive_core",
+          "role": "sf-principal-engineer",
+          "skill": "software-factory",
+          "requested_model": "gpt-6-astra",
+          "effective_model": null,
+          "phase": "implementation",
+          "status": "awaiting-review",
+          "summary": "Configuredinstallfix exactcompletedplannedinputhashes; allotherinputs/overlays/rollbackguardspreserved. Author62tests andnew7pass. Independent62tests+4probe methods pass; actualsameCodexfixturebasefailure/candidate116write success. Rootactualretryseparate.",
+          "artifact": ".software-factory/runs/software-factory-v01/evidence/configured-install-independent-review-559.json",
+          "artifact_sha256": "fb9026856a2d2f0c7f3c4b28b17543056b93feae7210b7a6215507096093bfe3"
+        },
+        "independent-review": {
+          "type": "independent-review",
+          "subject_sha": "5599912b46b3086d4d335d418e62043df38ef723",
+          "reviewer": "/root/launch_copy",
+          "status": "pass",
+          "artifact": ".software-factory/runs/software-factory-v01/evidence/configured-install-independent-review-559.json",
+          "artifact_sha256": "fb9026856a2d2f0c7f3c4b28b17543056b93feae7210b7a6215507096093bfe3",
+          "scope": "Actual4a75failure\u2192559success sameconfiguredCodexconsumer;62repo tests+4independentmethods pass; preimage/afterimage binding andmetadata/root/overlay/tamperingrefusalreviewed.",
+          "limitations": [
+            "Actualrootsetupretry/fullgate andupstreamBMadnativeworkflow effects remainseparate."
+          ]
         }
       },
       "baseline_sha": null,
@@ -8184,24 +8258,22 @@
           "by": "codex-install-repair",
           "from": "ready-for-dev",
           "to": "in-progress"
+        },
+        {
+          "at": "2026-10-15T19:09:59.573892+00:00",
+          "by": "codex-install-repair",
+          "from": "in-progress",
+          "to": "in-review"
         }
       ],
       "findings": [],
       "source_key": "installer-hosts/configured-install-input-overlap",
-      "evidence_contract": 1
+      "evidence_contract": 1,
+      "review_subject_sha": "5599912b46b3086d4d335d418e62043df38ef723"
     }
   ],
   "frontier": {
-    "ready": [
-      {
-        "id": 32,
-        "epic": 5,
-        "stream": "W-launch",
-        "title": "Viral-quality README with diagrams and quickstart",
-        "why": "after 31 in-review; unclaimed",
-        "claimed": false
-      }
-    ],
+    "ready": [],
     "waiting_on_prereq": [
       {
         "id": 33,

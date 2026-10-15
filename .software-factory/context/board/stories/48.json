@@ -5,7 +5,7 @@
   "epic": 3,
   "type": "story",
   "title": "Install safely when configured context includes managed project files",
-  "status": "in-progress",
+  "status": "in-review",
   "owner": "codex-install-repair",
   "after": [
     24
@@ -34,6 +34,32 @@
       "phase": "implementation",
       "status": "assigned",
       "summary": "Actual configuredselfinstall safelyrefused due captured managedAGENTS input overlap; realfailedreceipt retained. Reproduce/fix narrow transactional postwrite expectedcontent validation, preserve races/overlays/rollback. Rootowns actualretry/BMad/runtime/board."
+    },
+    "worker-handoff": {
+      "type": "agent-attempt",
+      "subject_sha": "5599912b46b3086d4d335d418e62043df38ef723",
+      "agent": "/root/adaptive_core",
+      "role": "sf-principal-engineer",
+      "skill": "software-factory",
+      "requested_model": "gpt-6-astra",
+      "effective_model": null,
+      "phase": "implementation",
+      "status": "awaiting-review",
+      "summary": "Configuredinstallfix exactcompletedplannedinputhashes; allotherinputs/overlays/rollbackguardspreserved. Author62tests andnew7pass. Independent62tests+4probe methods pass; actualsameCodexfixturebasefailure/candidate116write success. Rootactualretryseparate.",
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/configured-install-independent-review-559.json",
+      "artifact_sha256": "fb9026856a2d2f0c7f3c4b28b17543056b93feae7210b7a6215507096093bfe3"
+    },
+    "independent-review": {
+      "type": "independent-review",
+      "subject_sha": "5599912b46b3086d4d335d418e62043df38ef723",
+      "reviewer": "/root/launch_copy",
+      "status": "pass",
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/configured-install-independent-review-559.json",
+      "artifact_sha256": "fb9026856a2d2f0c7f3c4b28b17543056b93feae7210b7a6215507096093bfe3",
+      "scope": "Actual4a75failure\u2192559success sameconfiguredCodexconsumer;62repo tests+4independentmethods pass; preimage/afterimage binding andmetadata/root/overlay/tamperingrefusalreviewed.",
+      "limitations": [
+        "Actualrootsetupretry/fullgate andupstreamBMadnativeworkflow effects remainseparate."
+      ]
     }
   },
   "baseline_sha": null,
@@ -52,8 +78,15 @@
       "by": "codex-install-repair",
       "from": "ready-for-dev",
       "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T19:09:59.573892+00:00",
+      "by": "codex-install-repair",
+      "from": "in-progress",
+      "to": "in-review"
     }
   ],
   "findings": [],
-  "source_key": "installer-hosts/configured-install-input-overlap"
+  "source_key": "installer-hosts/configured-install-input-overlap",
+  "review_subject_sha": "5599912b46b3086d4d335d418e62043df38ef723"
 }

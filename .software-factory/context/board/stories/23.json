@@ -241,6 +241,35 @@
       "limitations": [
         "No owner epic acceptance, live host loading, public release delivery, production monitoring or deployment established."
       ]
+    },
+    "actual-project-bmad": {
+      "type": "actual-bmad-provision",
+      "subject_sha": "4c16cb6f6e7bd16de3a143d8100d8ea973c1d13f",
+      "status": "pass",
+      "exit_code": 0,
+      "scope": "Actual separately pinned BMad install and54 per-module Codex skill files; unchanged3installer/helper files verified. No whole-tree frozen-subject or host-registration claim.",
+      "versions": {
+        "core": "6.12.0",
+        "bmm": "6.12.0",
+        "bmb": "v2.2.2",
+        "cis": "v0.3.2",
+        "tea": "v1.27.2"
+      },
+      "observed_module_shas": {
+        "bmb": "4a1422274a2acb0fb0ec0511753da6263948f072",
+        "cis": "97298b22fee1c7e482710d3a8414adb5cfccccd9",
+        "tea": "d99ad29c62697c152e3393351406686d5bcd323c"
+      },
+      "manifest": "_bmad/_config/manifest.yaml",
+      "manifest_sha256": "2a80f9be6051c5e9c39bf7790c1bb394577d7deae59e94daaace6354f810346a",
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/actual-bmad-provision-observation.json",
+      "artifact_sha256": "3d7bdadc6796924df5c835663f1d36c5f7c69e1f219287373455e75a66b1e29f",
+      "forbidden_host_calls": 0,
+      "tracked_file_changes": 0,
+      "limitations": [
+        "Selected BMM planning execution is recorded separately; full factory installation still pending48 repair.",
+        "Raw private receipt retains actual command/environment and snapshot reconciliation; only this public-safe summary belongs on the board."
+      ]
     }
   },
   "baseline_sha": null,

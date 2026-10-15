@@ -62,6 +62,21 @@
       "limitations": [
         "Root configuredselfinstall failure unresolved; no livehost/BMadexecution/fullgate/publication fact inferred."
       ]
+    },
+    "approved-journey-admission": {
+      "type": "approved-eval-admission",
+      "subject_sha": "4c16cb6f6e7bd16de3a143d8100d8ea973c1d13f",
+      "status": "admitted-not-yet-canonical-run",
+      "case_id": "TLS-JOURNEY-001",
+      "count": 51,
+      "payload_sha256": "00e82fb573dcbb61a2b023e2b0bf8d5dd78609233094ce52a7be08cafc5897bb",
+      "approval": "ADR0026 exact approved addition21; full22 sourcecontract unchanged",
+      "implementation_subject": "c21fc14a8d1f4f6e9c2d494068886dc79f1c0445",
+      "independent_review": ".software-factory/runs/software-factory-v01/evidence/sf-docs-final-independent-review.json",
+      "limits": [
+        "No passing51case canonical run claimed before execution.",
+        "README52 remains approved future contract."
+      ]
     }
   },
   "baseline_sha": null,
