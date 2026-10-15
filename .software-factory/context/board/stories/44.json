@@ -95,6 +95,25 @@
       "limitations": [
         "Targeted suite only; integrated full gate remains pending."
       ]
+    },
+    "integrated-first-gate": {
+      "type": "full-static-gate",
+      "subject_sha": "6ccd3b99916fe1cbe89a8fb2527940e75db25d52",
+      "status": "fail",
+      "exit_code": 1,
+      "unit_tests": 528,
+      "unit_failures": 1,
+      "failed_case": "ContextHomeTest.test_decision_records_follow_the_record_contract",
+      "reason": "ADR0023 missing required Drivers section; ADR0024 uses same incomplete template and also needs formatting repair.",
+      "evals_passed": 30,
+      "evals_total": 30,
+      "other_steps": "pass",
+      "skipped": [
+        "shellcheck: install.sh absent before story24 integration"
+      ],
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/integrated-evidence-first-gate.log",
+      "artifact_sha256": "a8a887828d9fa271973fa4c4da24b6618b844b59a4b5792447cefc7cea62ae66",
+      "recorded_at": "2026-10-15T10:28:45.642810+00:00"
     }
   },
   "baseline_sha": null,
@@ -131,6 +150,11 @@
       "at": "2026-10-15T10:04:45.042579+00:00",
       "by": "orchestrator",
       "text": "Independent source review found receipt-format, saved-obligation, initial-config-read, typed-scope and epic-provenance gaps; repairs and regression checks are running. Derive also preserves terminal record bytes and scope. Isolated full gates retain known board/CODEBASE freshness failures; integrated proof is pending."
+    },
+    {
+      "at": "2026-10-15T10:29:25.006059+00:00",
+      "by": "orchestrator",
+      "text": "First integrated gate at6ccd3b9:528tests, one root-authored ADR template failure;30evals passed, all other checks passed, shellcheck absent before24. Reformatted ADR0023/24 to required sections without changing decisions; focused ADR contract test passes. Full rerun pending."
     }
   ],
   "source_key": "expansion/evidence-bound-transitions",
