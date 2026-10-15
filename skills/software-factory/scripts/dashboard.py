@@ -22,6 +22,7 @@ from pathlib import Path
 COLUMNS = ["ready", "in-progress", "review", "built", "done"]
 ALL_STATES = ["planned", *COLUMNS, "cancelled"]
 ACTIVITY_LIMIT = 40
+REPORT_TEXT_LIMIT = 500
 ATTEMPT_PHASES = {"dispatch", "implementation", "verification", "review", "recovery"}
 ATTEMPT_STATUSES = {"assigned", "reported-complete", "failed", "cancelled", "awaiting-review"}
 
@@ -192,7 +193,13 @@ def render_overview(roadmap):
 def render_milestones(roadmap):
     out = ['<section id="milestones"><h2>Milestones and features</h2>']
     for epic in roadmap["epics"]:
-        stories = [s for s in roadmap["stories"] if s["epic"] == epic["id"]]
+        members = {s["id"]: s for s in roadmap["stories"] if s["epic"] == epic["id"]}
+        ordered = []
+        for story_id in epic.get("order", []):
+            if type(story_id) is int and story_id in members and story_id not in ordered:
+                ordered.append(story_id)
+        ordered.extend(sorted(set(members) - set(ordered)))
+        stories = [members[story_id] for story_id in ordered]
         done = sum(s["state"] == "done" for s in stories)
         out.append(
             f'<h3>Epic {esc(epic["id"])} — {esc(epic["title"])} '
@@ -221,22 +228,31 @@ def render_milestones(roadmap):
     return "".join(out)
 
 
+def _report_text(value):
+    """Bound descriptive strings without stringifying arbitrary optional objects."""
+    if not isinstance(value, str) or not value.strip():
+        return "unknown"
+    normalized = " ".join(value.split())
+    return normalized if len(normalized) <= REPORT_TEXT_LIMIT else normalized[:REPORT_TEXT_LIMIT] + "…"
+
+
 def _agent_attempt(receipt):
-    """Optional reports extend receipts; malformed metadata proves nothing."""
+    """Retain known attribution independently of absent or malformed optional fields."""
     if not isinstance(receipt, dict) or receipt.get("type") != "agent-attempt":
         return None
-    required = ("agent", "role", "skill", "requested_model", "phase", "status",
-                "recorded_at", "summary", "subject_sha")
-    if not all(isinstance(receipt.get(key), str) and receipt[key].strip() for key in required):
+    subject = receipt.get("subject_sha")
+    if not isinstance(subject, str) or not subject.strip():
         return None
-    if receipt["phase"] not in ATTEMPT_PHASES or receipt["status"] not in ATTEMPT_STATUSES:
-        return None
-    effective = receipt.get("effective_model")
-    if effective is not None and (not isinstance(effective, str) or not effective.strip()):
-        return None
-    if _timestamp(receipt["recorded_at"]) is None:
-        return None
-    return receipt
+    fields = ("agent", "role", "skill", "requested_model", "effective_model", "phase", "status",
+              "recorded_at", "summary", "subject_sha")
+    attempt = {key: _report_text(receipt.get(key)) for key in fields}
+    if attempt["phase"] not in ATTEMPT_PHASES:
+        attempt["phase"] = "unknown"
+    if attempt["status"] not in ATTEMPT_STATUSES:
+        attempt["status"] = "unknown"
+    if _timestamp(attempt["recorded_at"]) is None:
+        attempt["recorded_at"] = None
+    return attempt
 
 
 def _event_order(event):
@@ -265,7 +281,8 @@ def recorded_activity(roadmap):
                 f'{attempt["agent"]} · {attempt["phase"]} · {attempt["status"]}: {attempt["summary"]}'
                 if attempt else str(receipt.get("result") or receipt.get("verdict") or "recorded")
             )
-            events.append({"at": receipt.get("recorded_at") or receipt.get("at"),
+            recorded_at = attempt["recorded_at"] if attempt else receipt.get("recorded_at") or receipt.get("at")
+            events.append({"at": recorded_at,
                            "story": story["id"], "kind": "receipt", "key": name,
                            "text": f'{name}: {summary} (subject {receipt.get("subject_sha", "unknown")})'})
     return sorted(events, key=_event_order)
@@ -302,7 +319,8 @@ def render_attempts(roadmap):
         '<p class="small">Recorded reports, not verified runtime telemetry. Requested models '
         'are distinct from reported effective models; missing effective models are unknown. '
         'Claims describe assignments and do not prove a process is running. '
-        'Malformed optional attempt metadata is omitted.</p>' + body + "</section>"
+        'Absent or malformed optional fields are unknown; known attribution is retained.</p>'
+        + body + "</section>"
     )
 
 

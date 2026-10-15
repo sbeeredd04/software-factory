@@ -92,6 +92,17 @@ class MissionDashboardTests(unittest.TestCase):
         self.assertIn("× #7 Feature 7", rendered)
         self.assertIn("no features recorded", rendered)
 
+    def test_milestone_uses_declared_order_and_appends_all_unlisted_members(self):
+        stories = [story(number) for number in (4, 2, 1, 3)] + [story(5, epic=2)]
+        plan = roadmap(stories, [epic(order=[3, 1, 3, 5, 99]), epic(2, order=[5])])
+        rendered = dashboard.render_milestones(plan)
+        positions = [rendered.index(f"#{number} Feature {number}") for number in (3, 1, 2, 4, 5)]
+        self.assertEqual(positions, sorted(positions))
+        for number in range(1, 6):
+            self.assertEqual(rendered.count(f"#{number} Feature {number}"), 1)
+        plan["stories"].reverse()
+        self.assertEqual(rendered, dashboard.render_milestones(plan))
+
     def test_legacy_records_do_not_invent_attempts_models_or_acceptance(self):
         plan = roadmap([story(receipts={"tests": {"subject_sha": SHA, "result": "pass"}})],
                        [epic(status="done")])
@@ -144,14 +155,41 @@ class MissionDashboardTests(unittest.TestCase):
             {"phase": ["review"]}, {"status": "done"}, {"agent": {"name": "worker"}},
             {"recorded_at": "yesterday"}, {"recorded_at": "2026-01-01T00:00:00"},
             {"effective_model": ["model"]}, {"summary": None}, {"requested_model": ""},
-            {"type": "other"}, {"subject_sha": ""},
         ]
         for metadata in malformed:
             with self.subTest(metadata=metadata):
                 plan = roadmap([story(receipts={"attempt-1": attempt(**metadata)})])
-                rendered = dashboard.render_html(plan)
-                self.assertIn("no valid agent-attempt metadata recorded", rendered)
-                self.assertNotIn("<td>worker-1 ·", rendered)
+                normalized = dashboard._agent_attempt(plan["stories"][0]["receipts"]["attempt-1"])
+                for field in metadata:
+                    self.assertEqual(normalized[field], None if field == "recorded_at" else "unknown")
+                rendered = dashboard.render_attempts(plan)
+                self.assertIn("sf-engineer · software-factory", rendered)
+                self.assertIn(SHA, rendered)
+                self.assertNotIn("no valid agent-attempt metadata recorded", rendered)
+
+    def test_partial_attempts_keep_known_attribution_and_undated_rows_sort_last(self):
+        partial = {"type": "agent-attempt", "subject_sha": SHA,
+                   "agent": "worker-1", "role": "sf-engineer"}
+        plan = roadmap([story(receipts={"partial": partial, "dated": attempt(agent="worker-2")})])
+        rendered = dashboard.render_attempts(plan)
+        self.assertIn("worker-1 · sf-engineer · unknown", rendered)
+        self.assertIn("<td>unknown</td><td>unknown</td><td>unknown / unknown</td>", rendered)
+        self.assertIn("time unknown", rendered)
+        self.assertLess(rendered.index("worker-2"), rendered.index("worker-1"))
+        events = dashboard.recorded_activity(plan)
+        self.assertEqual([event["key"] for event in events], ["dated", "partial"])
+        self.assertIn("worker-1", events[-1]["text"])
+        self.assertIsNone(events[-1]["at"])
+
+    def test_attempt_text_is_normalized_bounded_and_invalid_receipt_identity_is_omitted(self):
+        receipt = attempt(agent="  worker-1\n\t helper  ", summary="a" * 900)
+        normalized = dashboard._agent_attempt(receipt)
+        self.assertEqual(normalized["agent"], "worker-1 helper")
+        self.assertEqual(normalized["summary"], "a" * dashboard.REPORT_TEXT_LIMIT + "…")
+        for metadata in ({"type": "other"}, {"subject_sha": ""}, {"subject_sha": None},
+                         {"subject_sha": [SHA]}):
+            with self.subTest(metadata=metadata):
+                self.assertIsNone(dashboard._agent_attempt(attempt(**metadata)))
 
     def test_activity_orders_timezone_offsets_chronologically_with_stable_ties(self):
         plan = roadmap([
