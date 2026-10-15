@@ -4,7 +4,7 @@
   "epic": 3,
   "type": "story",
   "title": "Plugin and marketplace manifests and install.sh bootstrap",
-  "status": "in-progress",
+  "status": "in-review",
   "owner": "codex-distribution",
   "after": [
     23
@@ -37,6 +37,74 @@
       "status": "assigned",
       "recorded_at": "2026-10-15T09:53:03.464449+00:00",
       "summary": "Original24 starts from independently reviewed23 local source through existing review-counts-as-met readiness. Implement disjoint distribution/bootstrap/release files under approved ADR0024. install.py glue is serialized later; live BMad criterion remains open."
+    },
+    "worker-handoff": {
+      "type": "worker-handoff",
+      "subject_sha": "e8cc96869e58c600d3845428afa76d2ce2a14b99",
+      "agent": "/root/distribution",
+      "owner": "codex-distribution",
+      "status": "source-ready-review-pending",
+      "recorded_at": "2026-10-15T10:11:26.196354+00:00",
+      "checks": {
+        "distribution": {
+          "passed": 12
+        },
+        "bootstrap": {
+          "passed": 12
+        },
+        "skills_cli_network": {
+          "status": "pass",
+          "version": "1.7.2",
+          "host_agent_calls": 0
+        },
+        "ruff": {
+          "exit_code": 0
+        },
+        "shellcheck": {
+          "exit_code": 0
+        },
+        "public_scan": {
+          "exit_code": 0
+        },
+        "full_offline_gate": {
+          "exit_code": 1,
+          "tests": 532,
+          "failures": 2,
+          "skipped": 7,
+          "limitations": [
+            "stale isolated crawl and dependent evaluation",
+            "initial import-order finding repaired; ruff rerun passed"
+          ]
+        }
+      },
+      "independent_review": "pending",
+      "limitations": [
+        "No live host loading proved",
+        "No publication performed",
+        "Source23 module pin decision pending; integration gate not yet run"
+      ]
+    },
+    "independent-review": {
+      "type": "independent-review",
+      "subject_sha": "e8cc96869e58c600d3845428afa76d2ce2a14b99",
+      "author": "codex-distribution",
+      "reviewer": "/root/mission_status",
+      "status": "fail",
+      "recorded_at": "2026-10-15T10:13:24.883116+00:00",
+      "findings": [
+        {
+          "id": "DIST-R1",
+          "summary": "Native bundles bypass reviewed release allowlist by recursively projecting unlisted skill files."
+        },
+        {
+          "id": "DIST-R2",
+          "summary": "tarfile consumes hidden extension headers before logical member limits, allowing expanded/count budget bypass."
+        }
+      ],
+      "limitations": [
+        "Source review only; no tests executed by reviewer",
+        "Additional source review ongoing"
+      ]
     }
   },
   "baseline_sha": null,
@@ -55,6 +123,12 @@
       "by": "codex-distribution",
       "from": "ready-for-dev",
       "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T10:11:26.234602+00:00",
+      "by": "codex-distribution",
+      "from": "in-progress",
+      "to": "in-review"
     }
   ],
   "findings": [
@@ -62,6 +136,16 @@
       "at": "2026-10-15T10:04:45.100153+00:00",
       "by": "orchestrator",
       "text": "Worker reports real skills CLI1.7.2 three-host discovery/install succeeded with eleven exact canonical skill copies and no host guard calls; initial11 distribution and10 bootstrap tests passed. Source and security review remain pending; install.py glue uses the serialized claimed phase."
+    },
+    {
+      "at": "2026-10-15T10:12:26.249192+00:00",
+      "by": "orchestrator",
+      "text": "Committed candidate e8cc96869e58c600d3845428afa76d2ce2a14b99 submitted to independent source/security review;12 distribution and12 bootstrap cases pass; full isolated offline gate failed on stale crawl/dependent evaluation, not integrated proof. Generated release/native artifacts remain uncommitted."
+    },
+    {
+      "at": "2026-10-15T10:13:24.917645+00:00",
+      "by": "orchestrator",
+      "text": "Independent review requires release allowlist coverage for native payloads and pre-tar parsing decompression/header bounds; source candidate needs repair before integration. Existing source and failed gate receipts retained."
     }
   ],
   "source_key": "installer-hosts/distribution"
