@@ -1,0 +1,14 @@
+{
+  "synthetic": true,
+  "scenario": "fictional-local-formatter",
+  "source": {"kind": "fixture-test-output", "identity": "formatter-run-001", "origin": "invented-teaching-data"},
+  "environment": "disposable-local-fixture",
+  "artifact": {"before": "synthetic-revision-A", "after": "synthetic-revision-B"},
+  "window": {"start": "2026-01-01T00:00:00Z", "end": "2026-01-01T00:05:00Z", "maximum_records": 3},
+  "observation_scope": "read bounded local fixture output during this session",
+  "repair_scope": "separate reviewed feature or bug claim required",
+  "rollback_scope": "separate approved local restoration and proof required",
+  "assertions": ["named greeting", "default preserved", "non-string rejected", "normal JSON escaping"],
+  "same_open_event": "event-invalid-type-001",
+  "recurrence_after_closure": "new linked follow-up, never rewrite terminal record"
+}

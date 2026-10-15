@@ -1,0 +1,20 @@
+flowchart TD
+  A[Planning source with stable source keys] --> B[Owner derives immutable story and epic identities]
+  B --> C[Per-story records are the only live story-status authority]
+  C --> D[Readiness from dependency edges and applicable accepted epic gates]
+  D --> E[In-review, built or done providers may unlock start; explicit order ranks]
+  E --> F[Claim exact paths; worker sets in-progress]
+  F --> G[Receipts and in-review while claim is held]
+  G --> H[Reconcile handoff; release ownership]
+  H --> I[All providers done and strict premerge gate to built]
+  I --> J[Actual merge and merge-subject evidence to done]
+  J --> K[All children done or cancelled: awaiting acceptance]
+  K --> L[Evidence-bound delegated or reserved human epic decision]
+  C --> M[Owner regenerates roadmap, dashboard and graph]
+  N[Kernel claims and checkpoints: execution and recovery facts] --> M
+  M --> O[Timestamped derived views and read-only graph questions]
+  O --> P[Recorded attribution is not proof of live workers or effects]
+  C --> Q[Blocked overlay retains status and exact next action]
+  Q --> D
+  C --> R[Scoped confirmed cancellation is terminal]
+  R --> S[Cancelled prerequisites still block until explicit reconciliation]

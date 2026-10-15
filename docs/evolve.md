@@ -22,3 +22,11 @@ security, trust, credentials, money and external changes need a named human
 source decision. Third-party metadata never installs a skill or connects MCP.
 BMad inspection is a static preview, not live agent or resolver execution proof.
 The host reviews the real evidence and later authorized behavior before retention.
+
+The installed read-only registry entry is:
+
+```sh
+"$SF_PYTHON" -I -B "$SF_SKILLS/sf-evolve/scripts/evolve.py" registry --root "$SF_PROJECT"
+```
+
+An empty registry is a valid result. A real overlay proposal needs its reviewed manifest and captured generated base; `evolve.py propose --root PROJECT --manifest RELATIVE --base RELATIVE` compares them without publishing. The host checks source, canary and review, then the installer owns any authorized overlay transaction.

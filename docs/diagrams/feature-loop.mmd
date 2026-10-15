@@ -1,0 +1,28 @@
+flowchart TD
+  A[Ground repo, principles and desired outcome] --> B[Plan with observed BMad skills and structured stories]
+  B --> X{Planning capability and source observed?}
+  X -->|missing| Y[Record readiness gap; reconcile scoped alternative]
+  Y -->|approved equivalent path| C[Independent plan review]
+  X -->|yes| C
+  C -->|material finding| B
+  C --> D{Applicable GO and required decisions?}
+  D -->|missing material decision| E[Ask its owner; block dependents only]
+  E --> D
+  D -->|yes| F[Select eligible frontier; claim exact paths]
+  F --> G[Worker implements, tests and self-reviews]
+  G --> H[Independent QA on actual HEAD and eval cases]
+  H -->|failed or unknown| G
+  H --> I[Actual-diff review and applicable CI or bot proof]
+  I -->|confirmed finding| G
+  I --> J[Check in review receipts while claim is held]
+  J --> K[Reconcile handoff; release claim]
+  K --> L[One integration owner; providers done; strict gate]
+  L -->|repair needed| F
+  L --> M[Integrate within GO; check combined SHA]
+  M --> N[Authorized staging or approved local-equivalent effect proof]
+  N -->|failed or unknown| F
+  N --> O[Record story and resulting-artifact evidence]
+  O --> P{Material risk or reserved owner decision?}
+  P -->|yes| Q[Owner decision with source and scope]
+  P -->|no| R[Evidence-bound acceptance and next eligible work]
+  Q --> R

@@ -11,8 +11,9 @@ configuration, principles and planning remain intact.
 
 The host presents exact missing-file drafts and their proposal digest before any
 consumer write. Approval applies that concrete local setup. Optional BMad, review
-bots, external access and monitoring have separate scoped decisions. Native
-planning remains available when BMad is declined or unavailable.
+bots, external access and monitoring have separate scoped decisions. BMad skills and structured epics/stories are the primary planning route.
+If unavailable, the host records a readiness gap and reconciles a scoped
+alternative before claiming a completed planning phase.
 
 The deterministic helpers provide bounded read-only discovery, proposal creation
 and create-only approved application. They do not establish model availability,
@@ -23,3 +24,11 @@ authority. Partial or stale setup stops for reconciliation rather than overwriti
 After setup, the host proposes one small real story and continues the approved
 build/test/review/repair/ship loop. Monitoring uses actual authorized host tools;
 this Markdown and standard-library pack does not supply a background service.
+
+With the [quickstart variables](quickstart.md) established, discover first:
+
+```sh
+"$SF_PYTHON" -I -B "$SF_SKILLS/sf-help/scripts/discover.py" --project "$SF_PROJECT" --json
+```
+
+For an existing unconfigured repository, [the smoke walkthrough](smoke-test.md) shows the derived crawl and `setup.py propose` commands. Inspect exact drafts and digest before the host applies a real source-linked decision. `setup.py apply --approve-sha` checks reviewed bytes and current root; the digest is provenance, not authentication.

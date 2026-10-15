@@ -22,7 +22,7 @@ from pathlib import Path
 FENCE_OPEN_RE = re.compile(r"^\s*```mermaid\s*$")
 FENCE_CLOSE_RE = re.compile(r"^\s*```\s*$")
 
-MERMAID_PACKAGE = "@mermaid-js/mermaid-cli@latest"
+MERMAID_PACKAGE = "@mermaid-js/mermaid-cli@11.17.0"
 RENDER_TIMEOUT = 300
 
 SKIP_DIRS = {".git", "__pycache__", "node_modules", ".ruff_cache", ".venv"}

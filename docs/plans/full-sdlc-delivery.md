@@ -1,5 +1,8 @@
 # Software Factory v0.1 delivery proposal
 
+> Historical planning record. Its proposed and pending language below describes the state when drafted. [ADR 0023](../../.software-factory/context/decisions/0023-evidence-bound-transitions.md) has since authorized protected built/done and source-linked checkpoint checks, implemented in `roadmap.py` and `gate.py`; the [verification guide](../verification.md) states their present limits. The three administration skills and derived `trace.py` graph are implemented, and setup reuses confirmed facts across twenty catalog slots without twenty fresh questions. The [dogfood account](../DOGFOOD.md) records later real work. Exact staging applicability, human acceptance and publication remain separate decisions. Do not use this historical plan as the live board.
+
+
 Delivery plan, updated after the owner's clarification. [ADR 0021](../../.software-factory/context/decisions/0021-continuous-host-orchestration.md) records the portable, continuous host-owned loop with visible progress; the owner also explicitly requested the derived SDLC graph. The plan preserves the full remaining v0.1 outcome: an installable, documented eleven-skill and eleven-role pack that takes a grounded request through implementation, independent proof, integration, release evidence and a human checkpoint. The implementation remains Markdown and standard-library Python. Protected state-transition enforcement and final release authority retain their separate decisions below.
 
 ## Approval and evidence baseline

@@ -1,0 +1,24 @@
+flowchart TD
+  A[Report, failed eval or authorized signal] --> B[Durable bug identity and primary evidence]
+  B --> C[Safe reproduction; mechanism distinct from hypothesis]
+  C --> D{What does evidence support?}
+  D -->|unknown| E[Separating experiment or targeted clarification]
+  E --> B
+  D -->|correct or already handled| U[Independent reproduction and disposition review]
+  U -->|supported| F[No-fix investigative closure; zero code change]
+  U -->|unconfirmed or disputed| B
+  F --> G[Retain reproduction and disposition]
+  D -->|confirmed in-scope defect| H[Risk-sized plan and regression or eval cases]
+  H --> I[Independent plan review; claim work]
+  I --> J[Implement, test and independently verify actual HEAD]
+  J -->|failed or unknown| I
+  J --> K[Actual-diff review and applicable checks]
+  K -->|confirmed finding| I
+  K --> L[Single-owner gated integration under GO]
+  L --> M[Original reproduction on resulting artifact]
+  M -->|failed or unknown| I
+  M --> N[Durable closure; assess applicable acceptance and escalation]
+  G --> O[Authorized re-observation within source and window]
+  N --> O
+  O -->|recurs after closure| P[Linked follow-up; preserve terminal record]
+  O -->|new authority needed| Q[Owner decision; independent approved work continues]

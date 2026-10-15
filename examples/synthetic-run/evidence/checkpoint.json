@@ -1,0 +1,24 @@
+{
+  "artifact": "synthetic-revision-B",
+  "claim_retained": true,
+  "environment": "disposable-local-fixture",
+  "notes": {
+    "completed": [
+      "feature candidate reviewed"
+    ],
+    "decisions": [
+      "observation scope ends at 00:05 UTC"
+    ],
+    "next": "reconcile actual owner, subject and effects before dispatch",
+    "objective": "finish bounded formatter lap",
+    "open_questions": [
+      "actual owner acceptance absent"
+    ]
+  },
+  "observed_at": "2026-01-01T00:04:20Z",
+  "origin": "invented-teaching-data",
+  "owner": "fictional-claim-owner",
+  "source": "formatter-run-001",
+  "synthetic": true,
+  "window_end": "2026-01-01T00:05:00Z"
+}

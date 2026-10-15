@@ -1,0 +1,13 @@
+{
+  "artifact": "synthetic-revision-A",
+  "assertion": "named greeting",
+  "environment": "disposable-local-fixture",
+  "observation": "--name Ada rejected; default greeting still works",
+  "observed_at": "2026-01-01T00:01:00Z",
+  "origin": "invented-teaching-data",
+  "result": "failed",
+  "source": "formatter-run-001",
+  "story": "feature/name",
+  "synthetic": true,
+  "window_end": "2026-01-01T00:05:00Z"
+}

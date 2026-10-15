@@ -63,6 +63,20 @@ Every output PNG is validated before any committed output is replaced.
 
 ## Output inventory
 
+The editable delivery-cycle graphic is `site/img/delivery-graph.svg`. The public
+site and asset templates reference that one local SVG through `<use>` clones;
+edit the source graphic, then regenerate and review the affected PNGs. The
+renderer must resolve each clone's geometry and verify actual custom Inter
+glyph use for every cloned SVG text node through CDP. A font query on the
+outer host element alone is insufficient: it previously missed the cloned
+text. A focused observation saw positive glyph counts for 16 text nodes using
+Inter Regular or Semibold. Keep that observation separate from a final
+render run's exact source/output receipt. Missing geometry or glyph proof is a
+capture failure and should preserve the prior published images.
+
+The SVG is an editable source and does not change the seven PNG master
+dimensions or the three served PNG alias identities below.
+
 - `assets/social-preview.png` — 1280 × 640, manual repository social preview.
 - `assets/hero.png` — 1600 × 900, README overview.
 - `assets/loop.png` — 1200 × 800, delivery loop and repair path.

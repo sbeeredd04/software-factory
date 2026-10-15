@@ -1,0 +1,15 @@
+{
+  "artifact": "synthetic-revision-B",
+  "disposition": "no-fix investigative closure; no implementation or deploy receipt",
+  "environment": "disposable-local-fixture",
+  "independent_reproduction": "illustrative reviewer inspected the fictional contract",
+  "observation": "quote characters are escaped by normal JSON encoding",
+  "observed_at": "2026-01-01T00:03:30Z",
+  "origin": "invented-teaching-data",
+  "product_diff_files": 0,
+  "report": "report/escaping",
+  "result": "correct-behavior",
+  "source": "formatter-run-001",
+  "synthetic": true,
+  "window_end": "2026-01-01T00:05:00Z"
+}

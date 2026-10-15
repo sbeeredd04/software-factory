@@ -54,8 +54,9 @@ Out of scope:
 
 ## How the pack is designed to fail safe
 
-- Shipped Python is standard-library-only (Python >= 3.11) with no model calls, no network
-  calls, and no telemetry.
+- Local kernel/admin helpers are standard-library Python (>= 3.11) with no model
+  calls or telemetry. Explicit bootstrap release acquisition and consented BMad
+  provisioning have network boundaries; doctor may invoke available `gh auth status`.
 - The installer never uses sudo, never touches your home-directory host configurations, backs
   up before every overwrite, and uninstalls only files it owns that are unchanged.
 - Hooks are inert without an active run pointer and never interpolate request text into
