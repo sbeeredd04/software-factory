@@ -591,6 +591,25 @@
             "skills/software-factory/scripts/state.py",
             "tests/test_run_audit.py"
           ]
+        },
+        {
+          "key": "board-write-consistency",
+          "title": "Serialize story updates and refuse unknown ownership readiness",
+          "type": "bug",
+          "after": [
+            "kernel-hardening"
+          ],
+          "covers": [
+            "VAL-ROADMAP-004"
+          ],
+          "risk": "standard",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": false,
+          "scope": [
+            "skills/software-factory/scripts/roadmap.py",
+            "tests/test_board_consistency.py"
+          ]
         }
       ]
     },

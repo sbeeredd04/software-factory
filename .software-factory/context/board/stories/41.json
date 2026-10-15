@@ -4,7 +4,7 @@
   "epic": 2,
   "type": "bug",
   "title": "Audit real eval runs without dropping invalid-entry storage",
-  "status": "in-progress",
+  "status": "in-review",
   "owner": "codex-run-audit",
   "after": [
     9
@@ -17,7 +17,21 @@
   "plan_checkpoint": false,
   "done_checkpoint": false,
   "blocked": null,
-  "receipts": {},
+  "receipts": {
+    "implementation-attempt": {
+      "type": "agent-attempt",
+      "subject_sha": "613c6aa51ee6012528120e5a1497d5ba594f5121",
+      "agent": "/root/run_audit",
+      "role": "sf-engineer",
+      "skill": "software-factory",
+      "requested_model": "inherit",
+      "effective_model": null,
+      "phase": "implementation",
+      "status": "awaiting-review",
+      "recorded_at": "2026-10-15T08:20:36.337897+00:00",
+      "summary": "Evaluation run audit repair integrated after independent source review; 19 new and 56 state tests passed. Actual primary audit exits 0 and measures 412479 bytes in 673 files; no evidence renamed or deleted."
+    }
+  },
   "baseline_sha": null,
   "branch": null,
   "pr": null,
@@ -34,6 +48,12 @@
       "by": "codex-run-audit",
       "from": "ready-for-dev",
       "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T08:20:36.368231+00:00",
+      "by": "codex-run-audit",
+      "from": "in-progress",
+      "to": "in-review"
     }
   ],
   "findings": [],

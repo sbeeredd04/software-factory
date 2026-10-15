@@ -5,8 +5,8 @@
 > (`<skill-dir>` is the installed skill directory, e.g. `.claude/skills/sf-crawl`
 > or `.agents/skills/sf-crawl`).
 
-- Source revision: 696b8b5c1f1774264c2415920bedc47e82a13611
-- Generated: 2026-10-15T08:20:11Z
+- Source revision: 613c6aa51ee6012528120e5a1497d5ba594f5121
+- Generated: 2026-10-15T08:20:56Z
 
 ## Limits
 
@@ -47,7 +47,7 @@
 | `skills.software-factory.scripts.gate` | `skills/software-factory/scripts/gate.py` | 3 | 0 | 5 |
 | `skills.software-factory.scripts.hook` | `skills/software-factory/scripts/hook.py` | 8 | 0 | 7 |
 | `skills.software-factory.scripts.roadmap` | `skills/software-factory/scripts/roadmap.py` | 42 | 0 | 9 |
-| `skills.software-factory.scripts.state` | `skills/software-factory/scripts/state.py` | 33 | 0 | 15 |
+| `skills.software-factory.scripts.state` | `skills/software-factory/scripts/state.py` | 33 | 0 | 16 |
 | `tests.fixtures.repos.python-cli.fixture_cli` | `tests/fixtures/repos/python-cli/fixture_cli/__init__.py` | 0 | 0 | 0 |
 | `tests.fixtures.repos.python-cli.fixture_cli.__main__` | `tests/fixtures/repos/python-cli/fixture_cli/__main__.py` | 0 | 0 | 1 |
 | `tests.fixtures.repos.python-cli.fixture_cli.cli` | `tests/fixtures/repos/python-cli/fixture_cli/cli.py` | 1 | 0 | 1 |
@@ -65,6 +65,7 @@
 | `tests.test_host_cursor` | `tests/test_host_cursor.py` | 8 | 0 | 7 |
 | `tests.test_host_selection` | `tests/test_host_selection.py` | 7 | 0 | 9 |
 | `tests.test_installer` | `tests/test_installer.py` | 13 | 0 | 10 |
+| `tests.test_run_audit` | `tests/test_run_audit.py` | 1 | 0 | 11 |
 | `tests.test_sf_eval` | `tests/test_sf_eval.py` | 22 | 0 | 13 |
 | `tests.test_state` | `tests/test_state.py` | 17 | 0 | 16 |
 | `tests.test_tools` | `tests/test_tools.py` | 18 | 0 | 8 |
@@ -175,7 +176,7 @@ No internal import edges.
 - `skills.sf-crawl.scripts.crawl.pyproject_entry_points` (line 305) calls `data.get` (unconfirmed), `entries.items` (unconfirmed), `found.append` (unconfirmed), `isinstance` (unconfirmed), `path.is_file` (unconfirmed), `path.read_text` (unconfirmed), `problems.append` (unconfirmed), `project.get` (unconfirmed), `sorted` (unconfirmed), `tomllib.loads` (unconfirmed), `type` (unconfirmed)
 - `skills.sf-crawl.scripts.crawl.package_json_entry_points` (line 340) calls `bins.items` (unconfirmed), `data.get` (unconfirmed), `found.append` (unconfirmed), `isinstance` (unconfirmed), `json.loads` (unconfirmed), `path.is_file` (unconfirmed), `path.read_text` (unconfirmed), `problems.append` (unconfirmed), `sorted` (unconfirmed), `type` (unconfirmed)
 - `skills.sf-crawl.scripts.crawl.crawl` (line 384) calls `Path` (unconfirmed), `analyze_python` (confirmed: skills.sf-crawl.scripts.crawl.analyze_python), `analyze_script` (confirmed: skills.sf-crawl.scripts.crawl.analyze_script), `as_posix` (unconfirmed), `candidates.append` (unconfirmed), `candidates.sort` (unconfirmed), `census.get` (unconfirmed), `census.items` (unconfirmed), `dict` (unconfirmed), `e.get` (unconfirmed), `endswith` (unconfirmed), `entry_points.append` (unconfirmed), `entry_points.sort` (unconfirmed), `eprint` (confirmed: skills.sf-crawl.scripts.crawl.eprint), `is_file` (unconfirmed), `is_symlink` (unconfirmed), `join` (unconfirmed), `js_files.append` (unconfirmed), `js_files.sort` (unconfirmed), `len` (unconfirmed), `module_name` (confirmed: skills.sf-crawl.scripts.crawl.module_name), `module_names.add` (unconfirmed), `os.path.relpath` (unconfirmed), `os.walk` (unconfirmed), `oversized.append` (unconfirmed) … (call cap reached)
-- … 688 more call rows (cap reached)
+- … 712 more call rows (cap reached)
 
 ## Entry points
 
@@ -206,6 +207,7 @@ No internal import edges.
 - `__main__` guard — confirmed: `tests/test_host_cursor.py`
 - `__main__` guard — confirmed: `tests/test_host_selection.py`
 - `__main__` guard — confirmed: `tests/test_installer.py`
+- `__main__` guard — confirmed: `tests/test_run_audit.py`
 - `__main__` guard — confirmed: `tests/test_sf_eval.py`
 - `__main__` guard — confirmed: `tests/test_state.py`
 - `__main__` guard — confirmed: `tests/test_tools.py`
@@ -232,4 +234,4 @@ Everything parsed cleanly.
 
 ## File census
 
-132 file(s) crawled. Counts by extension: `.md` 70, `.py` 33, `.json` 10, `.yml` 5, `.toml` 3, `.ts` 3, `(no extension)` 2, `.mdc` 2, `.yaml` 2, `.sh` 1, `.sha256` 1.
+133 file(s) crawled. Counts by extension: `.md` 70, `.py` 34, `.json` 10, `.yml` 5, `.toml` 3, `.ts` 3, `(no extension)` 2, `.mdc` 2, `.yaml` 2, `.sh` 1, `.sha256` 1.

@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-15T08:18:55.762795+00:00",
-  "revision": 146,
+  "generated_at": "2026-10-15T08:20:36.565523+00:00",
+  "revision": 150,
   "streams": [
     {
       "id": "W-foundation",
@@ -37,7 +37,7 @@
         "planned": 0,
         "ready": 0,
         "in-progress": 1,
-        "review": 9,
+        "review": 10,
         "built": 0,
         "done": 8,
         "cancelled": 0
@@ -193,7 +193,8 @@
         38,
         39,
         40,
-        41
+        41,
+        42
       ],
       "needs": [
         1
@@ -1014,7 +1015,8 @@
       "blocks": [
         10,
         37,
-        41
+        41,
+        42
       ],
       "history": [
         {
@@ -3060,8 +3062,8 @@
       "stream": "W-expansion",
       "type": "bug",
       "title": "Audit real eval runs without dropping invalid-entry storage",
-      "status": "in-progress",
-      "state": "in-progress",
+      "status": "in-review",
+      "state": "review",
       "owner": "codex-run-audit",
       "after": [
         9
@@ -3074,19 +3076,27 @@
       "plan_checkpoint": false,
       "done_checkpoint": false,
       "blocked": null,
-      "receipts": {},
+      "receipts": {
+        "implementation-attempt": {
+          "type": "agent-attempt",
+          "subject_sha": "613c6aa51ee6012528120e5a1497d5ba594f5121",
+          "agent": "/root/run_audit",
+          "role": "sf-engineer",
+          "skill": "software-factory",
+          "requested_model": "inherit",
+          "effective_model": null,
+          "phase": "implementation",
+          "status": "awaiting-review",
+          "recorded_at": "2026-10-15T08:20:36.337897+00:00",
+          "summary": "Evaluation run audit repair integrated after independent source review; 19 new and 56 state tests passed. Actual primary audit exits 0 and measures 412479 bytes in 673 files; no evidence renamed or deleted."
+        }
+      },
       "baseline_sha": null,
       "branch": null,
       "pr": null,
       "merged_sha": null,
       "claim": {
-        "live": true,
-        "owner": "codex-run-audit",
-        "paths": [
-          "skills/software-factory/scripts/state.py",
-          "tests/test_run_audit.py"
-        ],
-        "claimed_at": "2026-10-15T08:11:22.371861+00:00"
+        "live": false
       },
       "blocks": [],
       "history": [
@@ -3101,6 +3111,12 @@
           "by": "codex-run-audit",
           "from": "ready-for-dev",
           "to": "in-progress"
+        },
+        {
+          "at": "2026-10-15T08:20:36.368231+00:00",
+          "by": "codex-run-audit",
+          "from": "in-progress",
+          "to": "in-review"
         }
       ],
       "findings": [],
@@ -3109,6 +3125,62 @@
         "tests/test_run_audit.py"
       ],
       "source_key": "expansion/audit-eval-run-layout"
+    },
+    {
+      "id": 42,
+      "epic": 2,
+      "stream": "W-expansion",
+      "type": "bug",
+      "title": "Serialize story updates and refuse unknown ownership readiness",
+      "status": "in-progress",
+      "state": "in-progress",
+      "owner": "codex-board-consistency",
+      "after": [
+        9
+      ],
+      "covers": [
+        "VAL-ROADMAP-004"
+      ],
+      "risk": "standard",
+      "hitl": false,
+      "plan_checkpoint": false,
+      "done_checkpoint": false,
+      "blocked": null,
+      "receipts": {},
+      "baseline_sha": null,
+      "branch": null,
+      "pr": null,
+      "merged_sha": null,
+      "claim": {
+        "live": true,
+        "owner": "codex-board-consistency",
+        "paths": [
+          "skills/software-factory/scripts/roadmap.py",
+          "tests/test_board_consistency.py"
+        ],
+        "claimed_at": "2026-10-15T08:20:36.532588+00:00"
+      },
+      "blocks": [],
+      "history": [
+        {
+          "at": "2026-10-15T08:20:36.478014+00:00",
+          "by": "orchestrator",
+          "from": "backlog",
+          "to": "ready-for-dev"
+        },
+        {
+          "at": "2026-10-15T08:20:36.563065+00:00",
+          "by": "codex-board-consistency",
+          "from": "ready-for-dev",
+          "to": "in-progress"
+        }
+      ],
+      "findings": [],
+      "scope": [
+        "skills/software-factory/scripts/roadmap.py",
+        "tests/test_board_consistency.py"
+      ],
+      "source_key": "expansion/board-write-consistency"
     }
   ],
   "frontier": {
