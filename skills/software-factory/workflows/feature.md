@@ -30,6 +30,8 @@ flowchart TD
   C -->|no| K[Durable receipts, decisions, planning-source and board-record update, short retro]
   E --> K
   K -->|next frontier| O
+  K --> OP[Authorized observation and signal triage: operations reference]
+  OP -->|eligible priorities within GO| O
 ```
 
 ## The flow in prose
@@ -97,3 +99,9 @@ parallel live store; `roadmap.json` and the dashboard are locked, regenerable
 derived projections; `state.py` claims remain the path-exclusivity system of
 record; the checkpoint is recovery context. There is no second live status
 store. Then select the next ready frontier.
+
+**Observe and reprioritize.** [Operations](../references/operations.md) owns
+authorized observation, source attribution, deduplication and signal routing.
+Use it to feed confirmed bugs and grounded priorities back into delivery while
+independent approved work continues; observation access alone grants no repair
+or deployment authority.

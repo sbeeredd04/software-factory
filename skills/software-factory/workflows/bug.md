@@ -5,7 +5,7 @@ owns every node. The entry's hard boundaries apply to every edge below.
 
 ```mermaid
 flowchart TD
-  X[Bug report or eval failure] --> A[Acknowledge: durable bug ID and ledger entry]
+  X[Bug report, eval failure or authorized operational signal] --> A[Acknowledge: durable bug ID and ledger entry]
   A --> E[Primary evidence: live logs, telemetry, error body, persisted state, plus a safe reproduction]
   E --> R[Analysis: confirmed mechanism at a source anchor, labeled vs hypothesis]
   R --> D{Fix needed?}
@@ -25,6 +25,7 @@ flowchart TD
   S -->|fails or unknown: loop reopens| O
   S --> H[Applicable epic manual checkpoint with the human owner]
   H --> K[Durable evidence: bug, planning-source and board-record closure, follow-ups recorded]
+  K --> OP[Authorized re-observation and next priorities: operations reference]
 ```
 
 ## The flow in prose
@@ -76,3 +77,10 @@ and the story's own board record closed (`.software-factory/context/board/`),
 no-fix evidence kept where relevant, and unresolved obligations recorded as
 follow-ups. The same single-status rule as [the feature loop](feature.md)
 applies: the board record is the only live story-status store.
+
+**Observe and continue.** [Operations](../references/operations.md) owns signal
+deduplication, observation boundaries and recurrence handling. Recheck affected
+behavior on the resulting artifact within authorized access/window, preserve
+unknown or failed observations, and select the next eligible approved priority
+without waiting for another prompt. New risk or authority follows the existing
+human gate; it blocks only dependent work.

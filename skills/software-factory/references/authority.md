@@ -26,11 +26,10 @@ authority. A status-only request retains the entry's read-only behavior.
 
 The [feature](../workflows/feature.md) and [bug](../workflows/bug.md) loops own
 delivery: understand and prioritize needs, plan, staff, build, test, review and
-ship under the applicable authority. After proof, use authorized observations
-to identify bugs and next priorities and continue within GO; escalate new scope
-or risk. Monitoring uses available host tools and scoped access. New monitoring
-configuration, credentials or schedules need their own authority; this duty
-does not create a daemon or authorize deployment or publication.
+ship under the applicable authority. [Operations](operations.md) owns authorized
+observation, signal triage and continued priorities within GO, including the
+source/access/window boundary. New monitoring configuration, credentials or
+schedules require their own scoped authority.
 
 ## Autonomy defaults
 
