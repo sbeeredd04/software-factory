@@ -100,7 +100,7 @@ class FileSetTests(ClaudeInstallCase):
         for path in sorted(skills_dir.rglob("*")):
             if path.is_file():
                 projected.add(path.relative_to(skills_dir).as_posix())
-        self.assertEqual(canonical_tree() | {"software-factory/schemas/config.schema.json", "software-factory/scripts/trackers.py", "sf-agents/scripts/install_lifecycle.py", *{"sf-agents/templates/" + p.relative_to(support.REPO / "integrations/bots").as_posix() for p in (support.REPO / "integrations/bots").rglob("*.tmpl")}, *{f"sf-help/templates/{name}" for name in ("PRINCIPLES.md", "ARCHITECTURE.md", "CONVENTIONS.md")}}, projected)
+        self.assertEqual(canonical_tree() | {"software-factory/schemas/config.schema.json", "software-factory/scripts/trackers.py", "sf-agents/scripts/install_lifecycle.py", "sf-evolve/schemas/overlay.schema.json", "sf-evolve/scripts/bmad_install.py", *{"sf-agents/templates/" + p.relative_to(support.REPO / "integrations/bots").as_posix() for p in (support.REPO / "integrations/bots").rglob("*.tmpl")}, *{f"sf-help/templates/{name}" for name in ("PRINCIPLES.md", "ARCHITECTURE.md", "CONVENTIONS.md")}}, projected)
 
     def test_exact_agent_set(self):
         agents = sorted(p.name for p in (self.repo / ".claude/agents").glob("*.md"))
@@ -185,7 +185,7 @@ class SkillFrontmatterTests(ClaudeInstallCase):
             canonical = support.REPO / "skills" / rel
             projected = self.repo / ".claude/skills" / rel
             expected = canonical.read_bytes()
-            if rel == 'sf-agents/scripts/render_bots.py':
+            if rel in ('sf-agents/scripts/render_bots.py', 'sf-evolve/scripts/evolve.py'):
                 self.assertEqual(1,expected.count(b'SOURCE_LAYOUT = True  #'))
                 expected = expected.replace(b'SOURCE_LAYOUT = True  #',b'SOURCE_LAYOUT = False  #',1)
             self.assertEqual(expected, projected.read_bytes(), rel)

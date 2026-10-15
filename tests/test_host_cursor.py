@@ -96,7 +96,7 @@ class FileSetTests(CursorInstallCase):
             for path in sorted(skills_dir.rglob("*"))
             if path.is_file()
         }
-        self.assertEqual(canonical_tree() | {"software-factory/schemas/config.schema.json", "software-factory/scripts/trackers.py", "sf-agents/scripts/install_lifecycle.py", *{"sf-agents/templates/" + p.relative_to(support.REPO / "integrations/bots").as_posix() for p in (support.REPO / "integrations/bots").rglob("*.tmpl")}, *{f"sf-help/templates/{name}" for name in ("PRINCIPLES.md", "ARCHITECTURE.md", "CONVENTIONS.md")}}, projected)
+        self.assertEqual(canonical_tree() | {"software-factory/schemas/config.schema.json", "software-factory/scripts/trackers.py", "sf-agents/scripts/install_lifecycle.py", "sf-evolve/schemas/overlay.schema.json", "sf-evolve/scripts/bmad_install.py", *{"sf-agents/templates/" + p.relative_to(support.REPO / "integrations/bots").as_posix() for p in (support.REPO / "integrations/bots").rglob("*.tmpl")}, *{f"sf-help/templates/{name}" for name in ("PRINCIPLES.md", "ARCHITECTURE.md", "CONVENTIONS.md")}}, projected)
         # Eleven role agents, hooks v1, the rule pointer, runtime helpers.
         agents = sorted(p.name for p in (repo / ".cursor/agents").glob("sf-*.md"))
         self.assertEqual([f"{n}.md" for n in sorted(validate.AGENTS)], agents)
@@ -131,7 +131,7 @@ class FileSetTests(CursorInstallCase):
                 else:
                     self.assertNotIn("disable-model-invocation:", raw)
                 expected = canonical
-                if rel == 'sf-agents/scripts/render_bots.py':
+                if rel in ('sf-agents/scripts/render_bots.py', 'sf-evolve/scripts/evolve.py'):
                     self.assertEqual(1,canonical.count(b'SOURCE_LAYOUT = True  #'))
                     expected = canonical.replace(b'SOURCE_LAYOUT = True  #',b'SOURCE_LAYOUT = False  #',1)
                 self.assertEqual(expected, raw.encode(), rel)

@@ -406,3 +406,24 @@ class OverlayPublicationTests(OverlayCase):
         with mock.patch.object(api,'project_shared_skills',side_effect=changed),self.assertRaises(api.InstallError):
             api.apply_plan(self.root,plan,previous,['codex'],'skills-only')
         self.assertFalse((self.root/TARGET).exists())
+
+    def test_case_alias_and_declared_mcp_config_are_protected_targets(self):
+        self.manifest()
+        self.apply()
+        self.data['documents']['principles']['risk'] = TARGET.replace('.agents','.AGENTS',1)
+        self.write_config()
+        # Declaration-only semantics also catch aliases on case-sensitive hosts.
+        with self.assertRaises(config.ConfigError):
+            config.validate_data(self.data,self.root,check_paths=False)
+        lifecycle = api.lifecycle_api()
+        before = (self.root/TARGET).read_bytes()
+        with (mock.patch.object(api,'lifecycle_api',return_value=lifecycle),
+              mock.patch.object(lifecycle,'publish',side_effect=AssertionError('governing target publication attempted')),
+              self.assertRaises(api.InstallError)):
+            self.plan()
+        self.assertEqual(before,(self.root/TARGET).read_bytes())
+        self.data['documents']['principles']['risk'] = 'RISK.md'
+        self.data['extensions']['mcp'] = [{'id':'sample','config':TARGET,'enabled':False}]
+        self.write_config()
+        with self.assertRaises(api.InstallError):
+            self.plan()

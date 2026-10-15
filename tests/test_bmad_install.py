@@ -260,7 +260,13 @@ class BmadTests(unittest.TestCase):
         api = runpy.run_path(str(support.INSTALLER))
         options = types.SimpleNamespace(project=self.repo, host="all", allow_overwrite=[],
                                         profile="full", dry_run=True, skip_bmad=False)
-        with (mock.patch("importlib.util.spec_from_file_location", side_effect=AssertionError("BMad module loaded")),
+        original_import = importlib.util.spec_from_file_location
+        def reject_bmad(name, location, *args, **kwargs):
+            if Path(location).name == "bmad_install.py":
+                raise AssertionError("BMad module loaded")
+            return original_import(name, location, *args, **kwargs)
+        with (mock.patch("importlib.util.spec_from_file_location", side_effect=reject_bmad),
+              mock.patch("subprocess.run", side_effect=AssertionError("process launched")),
               redirect_stdout(io.StringIO())):
             before = support.tree_hashes(self.repo)
             self.assertEqual(0, api["cmd_install"](options))

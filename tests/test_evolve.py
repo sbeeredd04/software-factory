@@ -51,7 +51,7 @@ class RegistryTests(OverlayCase):
         self.assertNotIn('private configuration', json.dumps(result))
 
     def test_unknown_license_permissions_and_empty_capabilities_block_adoption(self):
-        for key, value in (('license','unknown'),('license','NOASSERTION'),('permissions',['unknown']),('capabilities',[])):
+        for key, value in (('license','unknown'),('license','Unknown'),('license','NOASSERTION'),('permissions',['unknown']),('capabilities',[])):
             with self.subTest(key=key, value=value):
                 skill = self.skill()
                 skill[key] = value

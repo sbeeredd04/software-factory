@@ -98,11 +98,13 @@ def registry(root):
     required = {'skills': ('upstream','revision','sha256','license','provenance','capabilities','triggers','phases','permissions'),
                 'mcp': ('transport','capabilities','consent','provenance','auth_env'),
                 'overlays': ('manifest_sha256',)}
+    def unknown(value):
+        return (value is None or (isinstance(value, str) and value.strip().casefold() in ('', 'unknown', 'noassertion', 'none'))
+                or (isinstance(value, list) and any(unknown(item) for item in value)))
     for kind, entries in (data or {}).get('extensions', {}).items():
         for entry in entries:
             missing = [key for key in required[kind] if key not in entry
-                       or entry[key] in (None, '', 'unknown', 'NOASSERTION')
-                       or (isinstance(entry[key], list) and 'unknown' in entry[key])
+                       or unknown(entry[key])
                        or (key in ('capabilities','triggers','phases') and not entry[key])]
             # Metadata inspection never emits full skill instructions or reads MCP config.
             results[kind].append({'id': entry['id'], 'status': 'incomplete' if missing else 'declared',

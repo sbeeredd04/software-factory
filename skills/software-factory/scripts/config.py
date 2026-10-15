@@ -338,6 +338,12 @@ def governing_paths(data):
     decisions = [d['source'] for d in data['autonomy']['standing_delegations']]
     decisions += [e['write_authority']['source'] for e in data.get('environments', {}).values()
                   if 'write_authority' in e]
+    paths += [source['data_policy_ref'] for source in data.get('operations', {}).get('sources', [])]
+    paths += [bot['config'] for bot in data.get('review_bots', {}).values()]
+    for entry in data.get('extensions', {}).get('mcp', []):
+        paths.append(entry['config'])
+        if 'consent' in entry:
+            decisions.append(entry['consent']['path'])
     if data.get('operations', {}).get('authority_ref'):
         decisions.append(data['operations']['authority_ref'])
     for path in decisions:
@@ -349,9 +355,10 @@ def governing_paths(data):
 
 
 def aliases_path(value, paths):
-    parts = Path(value).parts
+    # Conservatively refuse case aliases on every host, including APFS/NTFS.
+    parts = tuple(part.casefold() for part in Path(value).parts)
     return any(parts[:min(len(parts), len(p))] == p[:min(len(parts), len(p))]
-               for p in (Path(path).parts for path in paths))
+               for p in (tuple(part.casefold() for part in Path(path).parts) for path in paths))
 
 
 def validate_data(data, root, schema=None, *, check_paths=True):
@@ -467,9 +474,9 @@ def validate_data(data, root, schema=None, *, check_paths=True):
                         fail('$.extensions', 'extension aliases an authority store')
             if 'target' in entry:
                 normalized = Path(entry['target']).as_posix()
-                if normalized in targets:
+                if normalized.casefold() in targets:
                     fail('$.extensions.overlays', 'duplicate overlay target')
-                targets.add(normalized)
+                targets.add(normalized.casefold())
                 if aliases_path(normalized, governing_paths(data)):
                     fail('$.extensions.overlays', 'target aliases configured governing documents or decisions')
             bindings = []

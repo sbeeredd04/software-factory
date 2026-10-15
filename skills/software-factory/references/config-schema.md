@@ -123,7 +123,8 @@ source/provenance/consent pins are checked when filesystem checks are enabled.
 MCP config contents are never opened by the validator to discover credentials.
 
 Overlay targets cannot alias configured governing documents, context or decision
-stores. The sf-evolve composer further restricts targets to generated Markdown
+stores, MCP/bot configuration, or operations data-policy documents. Comparisons
+conservatively reject case aliases on every platform. The sf-evolve composer further restricts targets to generated Markdown
 skill entries/references with preserved frontmatter. See the
 [registry](../../sf-evolve/references/registry.md) and
 [overlay](../../sf-evolve/references/overlays.md) contracts for exact supported

@@ -62,6 +62,13 @@ class UninstallTests(unittest.TestCase):
             path = self.repo / rel
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text("user-owned fixture\n")
+        # Registered overlays require validated config before composition. Keep
+        # real user-owned config bytes rather than a malformed placeholder.
+        configuration = json.loads((support.REPO / "examples/config/config.yaml").read_text())
+        configuration["project"]["root"] = ".."
+        for name in ("PRODUCT.md", "CONVENTIONS.md", "RISK.md", "EVALS.md", "ARCHITECTURE.md", "TASKS.md"):
+            shutil.copyfile(support.REPO / "examples/config" / name, self.repo / name)
+        (self.repo / ".software-factory/config.yaml").write_text(json.dumps(configuration))
         self.install()
         before = support.tree_hashes(self.repo)
         dry = self.uninstall("all", "--dry-run")
