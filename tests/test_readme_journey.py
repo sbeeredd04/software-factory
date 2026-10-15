@@ -159,7 +159,7 @@ class ReadmeJourneyTests(unittest.TestCase):
         self.assertEqual(0, selected.returncode, selected.stderr)
         self.assertIn(str(project), recorder.read_text().splitlines())
         self.assertIn(str(pack / "install.py"), recorder.read_text().splitlines())
-        self.assertIn('cd "$SF_PROJECT" || exit 1', readme)
+        self.assertIn('cd "$SF_PROJECT" || exit 1', readme.replace(r"\|", "|"))
         self.assertIn('skills@1.7.2 add "$SF_PACK/skills"', readme)
 
     def test_nine_canonical_diagrams_and_alternatives(self):
@@ -200,6 +200,10 @@ class ReadmeJourneyTests(unittest.TestCase):
         routes = readme.split("## Choose the route that matches your goal\n", 1)[1].split("## The nine workflow maps", 1)[0]
         rows = {line.split(" | ", 1)[0].removeprefix("| "): line
                 for line in routes.splitlines() if line.startswith("| ")}
+        for row in rows.values():
+            # GFM treats unescaped pipes as separators, even inside inline code.
+            cells = re.split(r"(?<!\\)\|", row.strip("|"))
+            self.assertEqual(3, len(cells), row)
         self.assertIn("Full project installation", rows)
         self.assertIn("Local bootstrap", rows)
         self.assertIn("Raw pinned skills acquisition", rows)
@@ -208,7 +212,7 @@ class ReadmeJourneyTests(unittest.TestCase):
                       rows["Local bootstrap"])
         self.assertIn("without downloads, even if `--ref`", rows["Local bootstrap"])
         self.assertIn("docs/distribution.md#bootstrap", routes)
-        self.assertIn('`cd "$SF_PROJECT" || exit 1`', rows["Raw pinned skills acquisition"])
+        self.assertIn(r'`cd "$SF_PROJECT" \|\| exit 1`', rows["Raw pinned skills acquisition"])
         self.assertIn('`DISABLE_TELEMETRY=1 DO_NOT_TRACK=1 npx -y skills@1.7.2 add "$SF_PACK/skills" -a claude-code -a cursor -a codex -y`',
                       rows["Raw pinned skills acquisition"])
         self.assertIn("avoid discovering locally installed extras", rows["Raw pinned skills acquisition"])
