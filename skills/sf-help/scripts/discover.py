@@ -69,6 +69,7 @@ class Reader:
         self.identity = [info.st_dev,info.st_ino]
         self.sources = {}
         self.directories = {}
+        self.directory_entries = {}
 
     def check_root(self):
         info = self.root.lstat()
@@ -112,15 +113,18 @@ class Reader:
                     raise SetupError('directory changed during observation')
             self.check_root()
             names.sort()
-            fingerprint = digest(encoded(names))
+            entry_hashes = sorted(digest(name.encode()) for name in names)
+            fingerprint = digest(encoded(entry_hashes))
             if relative in self.directories and self.directories[relative] != fingerprint:
                 raise SetupError('directory changed during observation')
             self.directories[relative] = fingerprint
+            self.directory_entries[relative] = entry_hashes
             return names
         except FileNotFoundError:
             if relative in self.directories and self.directories[relative] is not None:
                 raise SetupError('directory disappeared during observation') from None
             self.directories[relative] = None
+            self.directory_entries[relative] = None
             return []
         except OSError:
             raise SetupError('unsafe observation directory') from None
@@ -218,6 +222,7 @@ def discover(root, *, path=None):
     reader.finish()
     result['sources'] = reader.sources
     result['directories'] = reader.directories
+    result['directory_entries'] = reader.directory_entries
     return result
 
 

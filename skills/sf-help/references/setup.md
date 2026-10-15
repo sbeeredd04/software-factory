@@ -28,9 +28,15 @@ Use this to replace generic scaffolds before approval; existing documents are
 preserved. These are inputs,
 not permission. The proposal contains exact output bytes, input digests, directory
 identity, all twenty answers, outstanding slots and its own SHA-256 digest.
+Use canonical physical paths for helpers and input artifacts: resolve temporary
+directory aliases first. The config reader deliberately rejects symlink traversal;
+do not weaken that policy to accommodate an aliased temporary path.
 Prefilled answers include actual config paths and observed commands/bot/document
 facts. Answer prose does not change configuration automatically: the host maps
 changed answers into the explicit config/document draft and reviews both together.
+With a custom config, only its selected missing canonical document paths are
+proposed. Unreferenced generic conventions, tracker and eval scaffolds are omitted;
+existing linked principles and eval plans remain the selected sources.
 
 Defaults include native fallback, alarm budgets, optional owner ceiling omitted,
 empty bots/environments, disabled monitoring and external writes. These are setup
@@ -59,21 +65,29 @@ python3 scripts/setup.py apply --project PROJECT --proposal REVIEWED_JSON \
 
 The host verifies the real source-linked owner decision. CLI flags provide
 structural integrity and provenance only; they cannot authenticate a human.
-Application creates missing approved files only, with exclusive publication and
+Application validates the actual config bytes and creates missing approved files
+only, with exclusive publication and
 no overwrite. Each file is individually atomic; the whole set is not a filesystem
 transaction. The bounded `.software-factory/setup-receipt.json` is written last,
 recording twenty answers, config path/digest, discovery sources, outstanding slots,
 written file hashes and approval reference. It is setup evidence, not live status.
 No active program pointer, tracker status or board record is created here.
+Root identity and input file/directory inventories are rechecked through publication
+and final validation, allowing exact setup-owned additions only.
 
 Changed inputs, unsafe paths, output collisions and partial prior applications
 are rejected. Preserve partial bytes; compare against the proposal, reconcile
 manually under a specific decision, then prepare a new proposal. Do not delete or
-retry blindly. The same complete approved proposal is an unchanged no-op.
+retry blindly. The same complete approved proposal is an unchanged no-op only
+while other inputs still match. A final concurrent change can leave a receipt
+requiring reconciliation; an error or stale receipt is not current setup proof.
 Re-onboarding preserves existing config/docs/confirmed answers. A changed config
 or changed prior answers needs an explicitly reviewed amendment; this create-only
 helper does not overwrite setup history. Existing valid configuration without a
 receipt can adopt an approved evidence receipt without rewriting the config.
+Existing enabled monitoring declarations are preserved byte-for-byte; they do not
+prove live access or grant new authority. Re-onboarding returns prior answers and
+fresh discovery separately, without presenting old approval as current permission.
 
 ## Optional integrations
 

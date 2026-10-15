@@ -102,7 +102,7 @@ def validate_candidate(reader, files, data):
     config.validate_data(data,View(reader,files))
     if data['project']['root'] != '..':
         raise Error('setup uses the conventional config-relative project root')
-    if data.get('operations',{}).get('enabled'):
+    if discover.CONFIG in files and data.get('operations',{}).get('enabled'):
         raise Error('initial setup keeps monitoring disabled; review source access and authority separately')
 
 
@@ -128,6 +128,8 @@ def prefilled_answers(data, observation):
 
 
 def propose(root, answers=None, draft=None, draft_documents=None):
+    if draft is not None:
+        config.validate_schema(draft,config.load(config.schema_path()))
     observation = discover.discover(root)
     if not observation['greenfield'] and observation['crawl']['status'] != 'observed' and not observation['config_present']:
         raise Error('existing repository needs the sf-crawl artifact first; discovery does not recrawl')
@@ -170,6 +172,14 @@ def propose(root, answers=None, draft=None, draft_documents=None):
     else:
         data = draft if draft is not None else default_config(document_paths)
         files[discover.CONFIG] = discover.encoded(data).decode()
+        if draft is not None:
+            documents = data.get('documents',{})
+            references = set(documents.get('principles',{}).values())
+            references.update(documents.get('extra_context',[]))
+            references.update(documents.get(key) for key in ('architecture','conventions'))
+            references.add(data.get('tracker',{}).get('path'))
+            # The chosen config owns its sources; omit competing scaffolds.
+            files = {path:body for path,body in files.items() if path == discover.CONFIG or path in references}
     if draft_documents is not None:
         if not isinstance(draft_documents,dict) or any(path not in files or not path.endswith('.md') or not isinstance(body,str) for path,body in draft_documents.items()):
             raise Error('document drafts may replace only proposed missing Markdown files')
@@ -184,13 +194,15 @@ def propose(root, answers=None, draft=None, draft_documents=None):
         if answers is not None and answers != receipt['answers']:
             raise Error('confirmed setup history is immutable; review an explicit amendment')
         reader.finish()
-        return {'schema':'sf-setup-current/1','changes':[], 'answers':receipt['answers'],'receipt':discover.RECEIPT,'config_sha256':receipt['config_sha256']}
+        return {'schema':'sf-setup-reuse/1','changes':[], 'answers':receipt['answers'],'receipt':discover.RECEIPT,
+                'config_sha256':receipt['config_sha256'],'discovery':observation,
+                'provenance':'prior answers preserved; current authority and approval freshness not established'}
     if answers is None:
         answers = prefilled_answers(data,observation)
     validate_answers(answers)
     reader.finish()
-    identity = reader.root.stat()
-    proposal = {'schema':'sf-setup-proposal/1','root_identity':[identity.st_dev,identity.st_ino],
+    reader.check_root()
+    proposal = {'schema':'sf-setup-proposal/1','root_identity':reader.identity,
                 'sources':reader.sources,'discovery':observation,'files':files,'config':data,'answers':answers,
                 'outstanding':[a['id'] for a in answers if a['state']=='unknown'],
                 'first_lap':{'kind':'proposal','recommendation':'scratch-clone dry run before an unfamiliar delivery lap', 'scope':'Build one minimal behavior with one meaningful test and independent review; confirm the actual user outcome before GO.'}}
@@ -211,8 +223,7 @@ def check_proposal(proposal, root, approved_sha, decision):
         raise Error('source-linked approval reference required; host verifies owner authority')
     config.inspect_strings(decision)
     reader = discover.Reader(root)
-    identity = reader.root.stat()
-    if proposal['root_identity'] != [identity.st_dev,identity.st_ino]:
+    if proposal['root_identity'] != reader.identity:
         raise Error('proposal belongs to a different project directory')
     files = proposal['files']
     if not isinstance(files,dict) or not set(files) <= OUTPUTS or any(not isinstance(v,str) for v in files.values()):
@@ -225,12 +236,13 @@ def check_proposal(proposal, root, approved_sha, decision):
     if proposal['outstanding'] != [a['id'] for a in proposal['answers'] if a['state']=='unknown']:
         raise Error('outstanding questions differ from answer states')
     validate_candidate(reader,files,proposal['config'])
-    if discover.CONFIG in files and config.parse(files[discover.CONFIG]) != proposal['config']:
-        raise Error('config content differs from reviewed candidate')
-    if discover.CONFIG not in files:
-        existing = reader.read(discover.CONFIG)
-        if existing is None or config.parse(existing.decode()) != proposal['config']:
-            raise Error('preserved config differs from reviewed candidate')
+    actual = files[discover.CONFIG].encode() if discover.CONFIG in files else reader.read(discover.CONFIG)
+    if actual is None:
+        raise Error('preserved config is missing')
+    actual_data = config.parse(actual.decode())
+    validate_candidate(reader,files,actual_data)
+    if discover.encoded(actual_data) != discover.encoded(proposal['config']):
+        raise Error('actual config bytes differ from reviewed candidate')
     sources = proposal['sources']
     if not isinstance(sources,dict) or len(sources) > discover.MAX_FILES or not set(files) <= set(sources) or discover.RECEIPT not in sources or discover.CONFIG not in sources:
         raise Error('proposal lacks source preconditions')
@@ -241,49 +253,81 @@ def check_proposal(proposal, root, approved_sha, decision):
     return reader, files, receipt
 
 
+def verify_state(root, proposal, pending, written):
+    """Recheck approved inputs, allowing only exact setup-owned publications."""
+    reader = discover.Reader(root)
+    if reader.identity != proposal['root_identity']:
+        raise Error('approved project root was replaced')
+    for path, expected in proposal['sources'].items():
+        raw = reader.read(path)
+        wanted = discover.digest(pending[path].encode()) if path in written else expected
+        if (None if raw is None else discover.digest(raw)) != wanted:
+            raise Error('approved proposal is stale; source changed')
+    inventories = proposal['discovery']['directory_entries']
+    fingerprints = proposal['discovery']['directories']
+    if not isinstance(inventories,dict) or set(inventories) != set(fingerprints):
+        raise Error('incomplete discovery inventory')
+    for relative, entries in inventories.items():
+        if entries is not None and (not isinstance(entries,list) or len(entries)>discover.MAX_FILES or any(not isinstance(e,str) or not re.fullmatch(r'[0-9a-f]{64}',e) for e in entries) or entries != sorted(set(entries))):
+            raise Error('invalid bounded discovery inventory')
+        original = None if entries is None else discover.digest(discover.encoded(entries))
+        if fingerprints[relative] != original:
+            raise Error('inventory digest mismatch')
+        expected_entries = set(entries or [])
+        base = Path(relative).parts
+        for published in written:
+            parts = Path(published).parts
+            if parts[:len(base)] == base and len(parts)>len(base):
+                expected_entries.add(discover.digest(parts[len(base)].encode()))
+        expected = None if entries is None and not expected_entries else discover.digest(discover.encoded(sorted(expected_entries)))
+        reader.names(relative)
+        if reader.directories[relative] != expected:
+            raise Error('approved proposal is stale; discovery directory changed')
+    reader.finish()
+
+
 def apply(root, proposal, approved_sha, decision):
     reader,files,receipt = check_proposal(proposal,root,approved_sha,decision)
     existing_receipt = reader.read(discover.RECEIPT)
     expected_receipt = discover.encoded(receipt)
+    pending = {**files,discover.RECEIPT:expected_receipt.decode()}
     present = {path:reader.read(path) for path in files}
     if existing_receipt == expected_receipt and all(present[p] == content.encode() for p,content in files.items()):
+        verify_state(root,proposal,pending,list(pending))
         return {'status':'unchanged','written':[], 'receipt':discover.RECEIPT}
     if existing_receipt is not None or any(raw is not None for raw in present.values()):
         raise Error('collision or partial prior setup; preserve files and reconcile before a fresh proposal')
-    for path,expected in proposal['sources'].items():
-        raw = reader.read(path)
-        if (None if raw is None else discover.digest(raw)) != expected:
-            raise Error('approved proposal is stale; rediscover and approve a new proposal')
-    for relative,expected in proposal['discovery']['directories'].items():
-        reader.names(relative)
-        if reader.directories[relative] != expected:
-            raise Error('discovery directory changed; approve a fresh proposal')
-    # Receipt is last. A crash never promotes a partial apply to completed setup.
-    pending = {**files,discover.RECEIPT:expected_receipt.decode()}
+    verify_state(root,proposal,pending,[])
+    # Receipt is last; every publication and final outcome rechecks the inputs.
     written = []
     try:
         for relative,content in pending.items():
-            current = discover.Reader(root)
-            for path,expected in proposal['sources'].items():
-                raw = current.read(path)
-                wanted = discover.digest(pending[path].encode()) if path in written else expected
-                if (None if raw is None else discover.digest(raw)) != wanted:
-                    raise Error('input changed during apply')
-            publish(reader.root,relative,content.encode())
+            verify_state(root,proposal,pending,written)
+            publish(reader.root,relative,content.encode(),proposal['root_identity'])
             written.append(relative)
+        verify_state(root,proposal,pending,written)
     except (OSError,Error):
-        raise Error('setup apply incomplete; preserve partial files and reconcile; completed paths: '+', '.join(written)) from None
+        raise Error('setup apply incomplete or changed concurrently; preserve partial files and reconcile; completed paths: '+', '.join(written)) from None
     return {'status':'applied','written':written,'receipt':discover.RECEIPT}
 
 
-def publish(root, relative, content):
+def publish(root, relative, content, approved_identity):
     path = discover.safe_path(relative)
     fds = []
     temp = None
     try:
         fd = os.open(root,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW)
         fds.append(fd)
+        opened_root = os.fstat(fd)
+        if [opened_root.st_dev,opened_root.st_ino] != approved_identity:
+            raise Error('publication target is not the approved root')
+        def root_check():
+            current = os.stat(root,follow_symlinks=False)
+            if [current.st_dev,current.st_ino] != approved_identity:
+                raise Error('approved root changed during publication')
+        root_check()
         for part in path.parts[:-1]:
+            root_check()
             try:
                 os.mkdir(part,mode=0o755,dir_fd=fd)
             except FileExistsError:

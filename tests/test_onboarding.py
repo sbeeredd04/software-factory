@@ -196,11 +196,11 @@ class OnboardingTests(unittest.TestCase):
         p = self.proposal()
         original = setup.publish
         calls = []
-        def fail_after_one(root,path,content):
+        def fail_after_one(root,path,content,identity):
             if calls:
                 raise OSError('injected publication failure')
             calls.append(path)
-            original(root,path,content)
+            original(root,path,content,identity)
         with mock.patch.object(setup,'publish',side_effect=fail_after_one), self.assertRaisesRegex(setup.Error,'incomplete'):
             self.approve(p)
         self.assertTrue((self.root/calls[0]).is_file())
@@ -242,7 +242,117 @@ class OnboardingTests(unittest.TestCase):
         data = copy.deepcopy(p['config'])
         data['operations']['enabled'] = True
         with self.assertRaises((setup.Error,discover.config.ConfigError)):
-            setup.validate_candidate(discover.Reader(self.root),{},data)
+            setup.validate_candidate(discover.Reader(self.root),{discover.CONFIG:json.dumps(data)},data)
+
+    def test_actual_config_json_types_validated_for_new_and_preserved_bytes(self):
+        p = self.proposal()
+        actual = json.loads(p['files'][discover.CONFIG])
+        actual['autonomy']['commits'] = 0
+        p['files'][discover.CONFIG] = json.dumps(actual)
+        p['sha256'] = discover.digest(discover.encoded({k:v for k,v in p.items() if k!='sha256'}))
+        before = support.tree_hashes(self.root)
+        with self.assertRaises(discover.config.ConfigError):
+            self.approve(p)
+        self.assertEqual(before,support.tree_hashes(self.root))
+        p = self.proposal()
+        self.approve(p)
+        (self.root/discover.RECEIPT).unlink()
+        adopt = self.proposal()
+        actual = json.loads((self.root/discover.CONFIG).read_text())
+        actual['autonomy']['commits'] = 0
+        (self.root/discover.CONFIG).write_text(json.dumps(actual))
+        with self.assertRaises(discover.config.ConfigError):
+            self.approve(adopt)
+        self.assertFalse((self.root/discover.RECEIPT).exists())
+
+    def test_apply_root_swap_at_actual_publication_never_targets_replacement(self):
+        p = self.proposal()
+        real = setup.publish
+        def replace(root,path,content,identity):
+            self.root.rename(self.base/'approved-original')
+            self.root.mkdir()
+            real(root,path,content,identity)
+        with mock.patch.object(setup,'publish',side_effect=replace), self.assertRaisesRegex(setup.Error,'incomplete'):
+            self.approve(p)
+        self.assertEqual([],list(self.root.iterdir()))
+        self.assertEqual([],list((self.base/'approved-original').iterdir()))
+
+    def test_replay_rejects_changed_source_and_directory_preserving_user_bytes(self):
+        for change in ('file','inventory'):
+            p = self.proposal()
+            self.approve(p)
+            if change == 'file':
+                (self.root/'README.md').write_text('changed source')
+            else:
+                target = self.root/'.github/workflows/new.yml'
+                target.parent.mkdir(parents=True)
+                target.write_text('new workflow')
+            before = support.tree_hashes(self.root)
+            with self.assertRaisesRegex(setup.Error,'stale'):
+                self.approve(p)
+            self.assertEqual(before,support.tree_hashes(self.root))
+            shutil.rmtree(self.root)
+            self.root.mkdir()
+
+    def test_mid_apply_inventory_change_and_final_receipt_race_fail_closed(self):
+        for changed_path, at_receipt in (('.github/workflows/new.yml',False),('_bmad/new.md',False),('README.md',True)):
+            p = self.proposal()
+            real = setup.publish
+            def change(root,path,content,identity,real=real,at_receipt=at_receipt,changed_path=changed_path):
+                real(root,path,content,identity)
+                if not at_receipt or path == discover.RECEIPT:
+                    target = self.root/changed_path
+                    target.parent.mkdir(parents=True,exist_ok=True)
+                    target.write_text('preserved concurrent input')
+            with mock.patch.object(setup,'publish',side_effect=change), self.assertRaisesRegex(setup.Error,'incomplete'):
+                self.approve(p)
+            self.assertEqual('preserved concurrent input',(self.root/changed_path).read_text())
+            if not at_receipt:
+                self.assertFalse((self.root/discover.RECEIPT).exists())
+            else:
+                with self.assertRaisesRegex(setup.Error,'stale'):
+                    self.approve(p)
+            shutil.rmtree(self.root)
+            self.root.mkdir()
+
+    def test_preserved_enabled_monitoring_declaration_does_not_grant_access(self):
+        p = self.proposal()
+        self.approve(p)
+        (self.root/discover.RECEIPT).unlink()
+        data = discover.config.load(self.root/discover.CONFIG)
+        policy = setup.HOME+'principles/risk.md'
+        data['environments'] = {'local':{'kind':'local','expected_host':'local','shared_resources':[]}}
+        data['operations'] = {'enabled':True,'authority_ref':policy,'until':'end of approved session','sources':[{'id':'health','environment':'local','kind':'health','locator':'local-status','read_scope':'read-only snapshot','data_policy_ref':policy,'trigger_refs':[policy],'dedup_keys':['source','condition']}]}
+        (self.root/discover.CONFIG).write_bytes(discover.encoded(data))
+        original = (self.root/discover.CONFIG).read_bytes()
+        adopted = self.proposal()
+        self.assertEqual('unknown',adopted['discovery']['capabilities']['monitoring'])
+        self.approve(adopted)
+        self.assertEqual(original,(self.root/discover.CONFIG).read_bytes())
+
+    def test_custom_config_reuses_chosen_documents_without_competing_drafts(self):
+        original = self.proposal()
+        data = copy.deepcopy(original['config'])
+        with self.assertRaises(discover.config.ConfigError):
+            setup.propose(self.root,draft={**data,'documents':None})
+        for name in data['documents']['principles'].values():
+            path = self.root/name
+            path.parent.mkdir(parents=True,exist_ok=True)
+            path.write_text('# Existing approved source\nPreserve these bytes.\n')
+        data['documents']['conventions'] = data['documents']['principles']['conventions']
+        for relative in (data['documents']['architecture'],data['tracker']['path'],'evals/actual-plan.json'):
+            path = self.root/relative
+            path.parent.mkdir(parents=True,exist_ok=True)
+            path.write_text('{}\n' if relative.endswith('.json') else '# Existing source\n')
+        data['documents']['extra_context'] = ['evals/actual-plan.json']
+        self.crawl_fixture()
+        before = support.tree_hashes(self.root)
+        proposal = setup.propose(self.root,draft=data)
+        self.assertEqual({discover.CONFIG},set(proposal['files']))
+        self.assertEqual(before,support.tree_hashes(self.root))
+        self.approve(proposal)
+        self.assertFalse((self.root/(setup.HOME+'CONVENTIONS.md')).exists())
+        self.assertFalse((self.root/(setup.HOME+'evals-draft.json')).exists())
 
     def test_installed_templates_and_self_contained_setup_without_source_checkout(self):
         self.crawl_fixture()
@@ -294,8 +404,8 @@ class OnboardingTests(unittest.TestCase):
     def test_changed_source_mid_apply_never_publishes_receipt(self):
         p = self.proposal()
         real = setup.publish
-        def change_source(root,path,content):
-            real(root,path,content)
+        def change_source(root,path,content,identity):
+            real(root,path,content,identity)
             (self.root/'README.md').write_text('concurrent user change')
         with mock.patch.object(setup,'publish',side_effect=change_source), self.assertRaisesRegex(setup.Error,'incomplete'):
             self.approve(p)
