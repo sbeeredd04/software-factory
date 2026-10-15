@@ -5017,6 +5017,19 @@
       "basis": "artifact-reference",
       "provenance": [
         {
+          "path": ".software-factory/context/board/stories/30.json",
+          "pointer": "/receipts/preparation-review",
+          "sha256": "a4b0aeb5926b45aa821da163fe8ef0531b31a7ae7eb9c65b054165b5a16c9c69"
+        }
+      ],
+      "relation": "records",
+      "source": "receipt:30:preparation-review",
+      "target": "surface:.software-factory/runs/software-factory-v01/evidence/assets-preparation-review-094.md"
+    },
+    {
+      "basis": "artifact-reference",
+      "provenance": [
+        {
           "path": ".software-factory/context/board/stories/44.json",
           "pointer": "/receipts/combined-primary-proof",
           "sha256": "39902773599de5ef3847e169d863833d33fa388aeff0f789a45112346aae443b"
@@ -7840,7 +7853,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/covers/0",
-          "sha256": "9f4d42869cb91f62a9c779e2e993e083b6f08cfee381807c3d6efd64b33fabf8"
+          "sha256": "a4b0aeb5926b45aa821da163fe8ef0531b31a7ae7eb9c65b054165b5a16c9c69"
         }
       ],
       "relation": "covers",
@@ -7853,7 +7866,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/covers/1",
-          "sha256": "9f4d42869cb91f62a9c779e2e993e083b6f08cfee381807c3d6efd64b33fabf8"
+          "sha256": "a4b0aeb5926b45aa821da163fe8ef0531b31a7ae7eb9c65b054165b5a16c9c69"
         }
       ],
       "relation": "covers",
@@ -7866,7 +7879,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/covers/2",
-          "sha256": "9f4d42869cb91f62a9c779e2e993e083b6f08cfee381807c3d6efd64b33fabf8"
+          "sha256": "a4b0aeb5926b45aa821da163fe8ef0531b31a7ae7eb9c65b054165b5a16c9c69"
         }
       ],
       "relation": "covers",
@@ -7879,7 +7892,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/covers/3",
-          "sha256": "9f4d42869cb91f62a9c779e2e993e083b6f08cfee381807c3d6efd64b33fabf8"
+          "sha256": "a4b0aeb5926b45aa821da163fe8ef0531b31a7ae7eb9c65b054165b5a16c9c69"
         }
       ],
       "relation": "covers",
@@ -7892,7 +7905,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/covers/4",
-          "sha256": "9f4d42869cb91f62a9c779e2e993e083b6f08cfee381807c3d6efd64b33fabf8"
+          "sha256": "a4b0aeb5926b45aa821da163fe8ef0531b31a7ae7eb9c65b054165b5a16c9c69"
         }
       ],
       "relation": "covers",
@@ -24487,7 +24500,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/after/0",
-          "sha256": "9f4d42869cb91f62a9c779e2e993e083b6f08cfee381807c3d6efd64b33fabf8"
+          "sha256": "a4b0aeb5926b45aa821da163fe8ef0531b31a7ae7eb9c65b054165b5a16c9c69"
         }
       ],
       "relation": "depends-on",
@@ -24499,7 +24512,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/epic",
-          "sha256": "9f4d42869cb91f62a9c779e2e993e083b6f08cfee381807c3d6efd64b33fabf8"
+          "sha256": "a4b0aeb5926b45aa821da163fe8ef0531b31a7ae7eb9c65b054165b5a16c9c69"
         }
       ],
       "relation": "part-of",
@@ -24511,7 +24524,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/active-attempt",
-          "sha256": "9f4d42869cb91f62a9c779e2e993e083b6f08cfee381807c3d6efd64b33fabf8"
+          "sha256": "a4b0aeb5926b45aa821da163fe8ef0531b31a7ae7eb9c65b054165b5a16c9c69"
         }
       ],
       "relation": "records",
@@ -24523,12 +24536,36 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/active-attempt",
-          "sha256": "9f4d42869cb91f62a9c779e2e993e083b6f08cfee381807c3d6efd64b33fabf8"
+          "sha256": "a4b0aeb5926b45aa821da163fe8ef0531b31a7ae7eb9c65b054165b5a16c9c69"
         }
       ],
       "relation": "subject",
       "source": "receipt:30:active-attempt",
       "target": "commit:d2c2a6b29455c1bfdcbd9507bc05405c245318fc"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/30.json",
+          "pointer": "/receipts/preparation-review",
+          "sha256": "a4b0aeb5926b45aa821da163fe8ef0531b31a7ae7eb9c65b054165b5a16c9c69"
+        }
+      ],
+      "relation": "records",
+      "source": "story:30",
+      "target": "receipt:30:preparation-review"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/30.json",
+          "pointer": "/receipts/preparation-review",
+          "sha256": "a4b0aeb5926b45aa821da163fe8ef0531b31a7ae7eb9c65b054165b5a16c9c69"
+        }
+      ],
+      "relation": "subject",
+      "source": "receipt:30:preparation-review",
+      "target": "commit:094b6b84baf00614c8dcf40462b8c1ab1e943b73"
     },
     {
       "provenance": [
@@ -25831,7 +25868,7 @@
         {
           "path": ".software-factory/runs/software-factory-v01/run.json",
           "pointer": "/claims/30",
-          "sha256": "7d5a3096352714f2d7f8e945a8352884db2b47342ff8075876b75df9bc29c68f"
+          "sha256": "f7e9c279f47091a3b79d6bdead28b8f74e43f0b27e6de7b02b800ce58f8b6caf"
         }
       ],
       "relation": "assigned-to",
@@ -26023,7 +26060,7 @@
     {
       "kind": "file",
       "path": ".software-factory/context/board/stories/30.json",
-      "sha256": "9f4d42869cb91f62a9c779e2e993e083b6f08cfee381807c3d6efd64b33fabf8"
+      "sha256": "a4b0aeb5926b45aa821da163fe8ef0531b31a7ae7eb9c65b054165b5a16c9c69"
     },
     {
       "kind": "file",
@@ -26342,6 +26379,11 @@
     },
     {
       "kind": "file",
+      "path": ".software-factory/runs/software-factory-v01/evidence/assets-preparation-review-094.md",
+      "sha256": "117c07214c8ce85123c647a245a2358c21e41a0d73c34538fa06bb5d30ea4720"
+    },
+    {
+      "kind": "file",
       "path": ".software-factory/runs/software-factory-v01/evidence/auth-isolation-integrated-gate.log",
       "sha256": "d92c072177c6e0732d4c3ae80e55ae36ceb0f34c451ef6e796aea2bf9b1f702f"
     },
@@ -26498,7 +26540,7 @@
     {
       "kind": "file",
       "path": ".software-factory/runs/software-factory-v01/run.json",
-      "sha256": "7d5a3096352714f2d7f8e945a8352884db2b47342ff8075876b75df9bc29c68f"
+      "sha256": "f7e9c279f47091a3b79d6bdead28b8f74e43f0b27e6de7b02b800ce58f8b6caf"
     },
     {
       "kind": "file",
@@ -26977,7 +27019,7 @@
         {
           "path": ".software-factory/runs/software-factory-v01/run.json",
           "pointer": "/checkpoint",
-          "sha256": "7d5a3096352714f2d7f8e945a8352884db2b47342ff8075876b75df9bc29c68f"
+          "sha256": "f7e9c279f47091a3b79d6bdead28b8f74e43f0b27e6de7b02b800ce58f8b6caf"
         }
       ],
       "type": "checkpoint"
@@ -26990,7 +27032,7 @@
         {
           "path": ".software-factory/runs/software-factory-v01/run.json",
           "pointer": "/claims/30",
-          "sha256": "7d5a3096352714f2d7f8e945a8352884db2b47342ff8075876b75df9bc29c68f"
+          "sha256": "f7e9c279f47091a3b79d6bdead28b8f74e43f0b27e6de7b02b800ce58f8b6caf"
         }
       ],
       "type": "claim"
@@ -27098,6 +27140,18 @@
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/rejected-090-review/subject_sha",
           "sha256": "7b2589f3129ae496d68a6a2845754cc7cdf5b62ee141df65190fa96ca940db9c"
+        }
+      ],
+      "type": "commit"
+    },
+    {
+      "id": "commit:094b6b84baf00614c8dcf40462b8c1ab1e943b73",
+      "label": "094b6b84baf00614c8dcf40462b8c1ab1e943b73",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/30.json",
+          "pointer": "/receipts/preparation-review/subject_sha",
+          "sha256": "a4b0aeb5926b45aa821da163fe8ef0531b31a7ae7eb9c65b054165b5a16c9c69"
         }
       ],
       "type": "commit"
@@ -27914,7 +27968,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/active-attempt/subject_sha",
-          "sha256": "9f4d42869cb91f62a9c779e2e993e083b6f08cfee381807c3d6efd64b33fabf8"
+          "sha256": "a4b0aeb5926b45aa821da163fe8ef0531b31a7ae7eb9c65b054165b5a16c9c69"
         }
       ],
       "type": "commit"
@@ -49635,12 +49689,29 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/active-attempt",
-          "sha256": "9f4d42869cb91f62a9c779e2e993e083b6f08cfee381807c3d6efd64b33fabf8"
+          "sha256": "a4b0aeb5926b45aa821da163fe8ef0531b31a7ae7eb9c65b054165b5a16c9c69"
         }
       ],
       "reported_status": "assigned",
       "story": 30,
       "subject_sha": "d2c2a6b29455c1bfdcbd9507bc05405c245318fc",
+      "type": "receipt"
+    },
+    {
+      "artifact_integrity": "matched",
+      "freshness": "unknown",
+      "id": "receipt:30:preparation-review",
+      "label": "preparation-review",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/30.json",
+          "pointer": "/receipts/preparation-review",
+          "sha256": "a4b0aeb5926b45aa821da163fe8ef0531b31a7ae7eb9c65b054165b5a16c9c69"
+        }
+      ],
+      "reported_status": "changes-required",
+      "story": 30,
+      "subject_sha": "094b6b84baf00614c8dcf40462b8c1ab1e943b73",
       "type": "receipt"
     },
     {
@@ -50297,7 +50368,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/covers/0",
-          "sha256": "9f4d42869cb91f62a9c779e2e993e083b6f08cfee381807c3d6efd64b33fabf8"
+          "sha256": "a4b0aeb5926b45aa821da163fe8ef0531b31a7ae7eb9c65b054165b5a16c9c69"
         }
       ],
       "type": "requirement"
@@ -50309,7 +50380,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/covers/1",
-          "sha256": "9f4d42869cb91f62a9c779e2e993e083b6f08cfee381807c3d6efd64b33fabf8"
+          "sha256": "a4b0aeb5926b45aa821da163fe8ef0531b31a7ae7eb9c65b054165b5a16c9c69"
         }
       ],
       "type": "requirement"
@@ -50321,7 +50392,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/covers/2",
-          "sha256": "9f4d42869cb91f62a9c779e2e993e083b6f08cfee381807c3d6efd64b33fabf8"
+          "sha256": "a4b0aeb5926b45aa821da163fe8ef0531b31a7ae7eb9c65b054165b5a16c9c69"
         }
       ],
       "type": "requirement"
@@ -50333,7 +50404,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/covers/3",
-          "sha256": "9f4d42869cb91f62a9c779e2e993e083b6f08cfee381807c3d6efd64b33fabf8"
+          "sha256": "a4b0aeb5926b45aa821da163fe8ef0531b31a7ae7eb9c65b054165b5a16c9c69"
         }
       ],
       "type": "requirement"
@@ -50345,7 +50416,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/covers/4",
-          "sha256": "9f4d42869cb91f62a9c779e2e993e083b6f08cfee381807c3d6efd64b33fabf8"
+          "sha256": "a4b0aeb5926b45aa821da163fe8ef0531b31a7ae7eb9c65b054165b5a16c9c69"
         }
       ],
       "type": "requirement"
@@ -53770,7 +53841,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "",
-          "sha256": "9f4d42869cb91f62a9c779e2e993e083b6f08cfee381807c3d6efd64b33fabf8"
+          "sha256": "a4b0aeb5926b45aa821da163fe8ef0531b31a7ae7eb9c65b054165b5a16c9c69"
         }
       ],
       "status": "in-progress",
@@ -54278,6 +54349,19 @@
           "path": ".software-factory/runs/software-factory-v01/evidence/agents-integrated-gate.log",
           "pointer": "",
           "sha256": "e94de785d4e448b6dc4d9e2dad07d11f361978ce7017fed5fb81f903052e42eb"
+        }
+      ],
+      "type": "surface"
+    },
+    {
+      "exists": true,
+      "id": "surface:.software-factory/runs/software-factory-v01/evidence/assets-preparation-review-094.md",
+      "label": ".software-factory/runs/software-factory-v01/evidence/assets-preparation-review-094.md",
+      "provenance": [
+        {
+          "path": ".software-factory/runs/software-factory-v01/evidence/assets-preparation-review-094.md",
+          "pointer": "",
+          "sha256": "117c07214c8ce85123c647a245a2358c21e41a0d73c34538fa06bb5d30ea4720"
         }
       ],
       "type": "surface"
@@ -56462,5 +56546,5 @@
     }
   ],
   "schema": "sf-trace/1",
-  "source_fingerprint": "05f145557d2841f57329d34a2262ad2d1cd556540f8897d7737480ca3ccd512e"
+  "source_fingerprint": "a588a880d45de787b48b46028ab051f7829980c305df7a022c030feaaeba9686"
 }

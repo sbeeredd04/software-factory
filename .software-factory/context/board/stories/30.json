@@ -34,6 +34,23 @@
       "phase": "implementation",
       "status": "assigned",
       "summary": "Story30 follows reviewed29 via existing readiness. Isolated source implementation and fixture tests authorized; browser rendering waits explicit alternative-method approval. Root owns primary state/integration. Developer-only Playwright helper excluded consumer release; no runtime dependency/daemon change."
+    },
+    "preparation-review": {
+      "type": "independent-review",
+      "subject_sha": "094b6b84baf00614c8dcf40462b8c1ab1e943b73",
+      "author": "codex-assets",
+      "reviewer": "/root/launch_copy",
+      "requested_model": "gpt-6.1-sol",
+      "effective_model": null,
+      "status": "changes-required",
+      "scope": "Preparatory source only;22 independent fixture checks pass. Separate actual stdlib probes reproduce prepared-temp foreign replacement/cleanup and SIGTERM orphan defects; malformed palette validation also needs repair. Worker retains ownership and repairs; final PNGs and render receipt remain absent.",
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/assets-preparation-review-094.md",
+      "artifact_sha256": "117c07214c8ce85123c647a245a2358c21e41a0d73c34538fa06bb5d30ea4720",
+      "limitations": [
+        "No browser or renderer execution; published-artifact test excluded and not passing.",
+        "Normal in-app-browser CSP event also reproduces on a minimal control page with browser-comments DOM; isolated render result remains unverified.",
+        "Headless-method owner answer, final visual review, integrated verification and human/publication acceptance remain separate."
+      ]
     }
   },
   "baseline_sha": null,
