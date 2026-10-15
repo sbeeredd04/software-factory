@@ -160,7 +160,7 @@ class ReadmeJourneyTests(unittest.TestCase):
         self.assertIn(str(project), recorder.read_text().splitlines())
         self.assertIn(str(pack / "install.py"), recorder.read_text().splitlines())
         self.assertIn('cd "$SF_PROJECT" || exit 1', readme)
-        self.assertIn('skills@1.7.2 add "$SF_PACK"', readme)
+        self.assertIn('skills@1.7.2 add "$SF_PACK/skills"', readme)
 
     def test_nine_canonical_diagrams_and_alternatives(self):
         readme = README.read_text()
@@ -208,6 +208,11 @@ class ReadmeJourneyTests(unittest.TestCase):
                       rows["Local bootstrap"])
         self.assertIn("without downloads, even if `--ref`", rows["Local bootstrap"])
         self.assertIn("docs/distribution.md#bootstrap", routes)
+        self.assertIn('`cd "$SF_PROJECT" || exit 1`', rows["Raw pinned skills acquisition"])
+        self.assertIn('`DISABLE_TELEMETRY=1 DO_NOT_TRACK=1 npx -y skills@1.7.2 add "$SF_PACK/skills" -a claude-code -a cursor -a codex -y`',
+                      rows["Raw pinned skills acquisition"])
+        self.assertIn("avoid discovering locally installed extras", rows["Raw pinned skills acquisition"])
+        self.assertIn("BMad provisioning remains separate", rows["Raw pinned skills acquisition"])
         self.assertIn("`/software-factory:software-factory`", rows["Native bundles"])
         self.assertIn("full project setup uses `/software-factory`", rows["Native bundles"])
         self.assertNotIn("/software-factory:software-factory", rows["Full project installation"])
