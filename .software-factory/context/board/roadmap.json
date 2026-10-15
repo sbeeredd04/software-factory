@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-15T10:56:32.069433+00:00",
-  "revision": 216,
+  "generated_at": "2026-10-15T11:03:47.634714+00:00",
+  "revision": 220,
   "streams": [
     {
       "id": "W-foundation",
@@ -2465,6 +2465,32 @@
             "Source review only; combined primary gate remains pending."
           ],
           "recorded_at": "2026-10-15T10:44:39.920114+00:00"
+        },
+        "combined-primary-proof": {
+          "type": "full-static-gate",
+          "subject_sha": "8d18eb4578c19b6ccc4e83323aa3e5637433d549",
+          "status": "pass",
+          "exit_code": 0,
+          "unit_tests": 611,
+          "unit_passed": 610,
+          "unit_skipped": 1,
+          "unit_skip_reason": "optional jsonschema crosscheck not requested in full suite",
+          "unit_seconds": 191.89,
+          "evals_passed": 30,
+          "evals_failed": 0,
+          "evals_unverified": 0,
+          "evals_skipped": 0,
+          "real_network_tests": [
+            "BMad6.12.0all3approvedmodulepins",
+            "skills CLI1.7.2 all3hosts canonical copies"
+          ],
+          "other_steps": "pass including shellcheck4.1.0, distribution, Mermaid,11skills-refvalidators, workflow and issueform schemas",
+          "artifact": ".software-factory/runs/software-factory-v01/evidence/combined-install-config-gate.log",
+          "artifact_sha256": "a2f3c400b4a6d94ffcb8c8c6208e2fdc6afe5f7ab45b9231156ef36d29a25610",
+          "recorded_at": "2026-10-15T11:03:47.462473+00:00",
+          "limitations": [
+            "No owner epic acceptance, live host loading, public release delivery, production monitoring or deployment established."
+          ]
         }
       },
       "baseline_sha": null,
@@ -4016,6 +4042,32 @@
           "scope": "Local integrated release, native-format, relocated-hook and standalone-bootstrap fixture observations only",
           "status": "pass-executed-cases",
           "subject_sha": "481ff7c5596ef2c28bc16e156246dbeb4b0f9fd4"
+        },
+        "combined-primary-proof": {
+          "type": "full-static-gate",
+          "subject_sha": "8d18eb4578c19b6ccc4e83323aa3e5637433d549",
+          "status": "pass",
+          "exit_code": 0,
+          "unit_tests": 611,
+          "unit_passed": 610,
+          "unit_skipped": 1,
+          "unit_skip_reason": "optional jsonschema crosscheck not requested in full suite",
+          "unit_seconds": 191.89,
+          "evals_passed": 30,
+          "evals_failed": 0,
+          "evals_unverified": 0,
+          "evals_skipped": 0,
+          "real_network_tests": [
+            "BMad6.12.0all3approvedmodulepins",
+            "skills CLI1.7.2 all3hosts canonical copies"
+          ],
+          "other_steps": "pass including shellcheck4.1.0, distribution, Mermaid,11skills-refvalidators, workflow and issueform schemas",
+          "artifact": ".software-factory/runs/software-factory-v01/evidence/combined-install-config-gate.log",
+          "artifact_sha256": "a2f3c400b4a6d94ffcb8c8c6208e2fdc6afe5f7ab45b9231156ef36d29a25610",
+          "recorded_at": "2026-10-15T11:03:47.462473+00:00",
+          "limitations": [
+            "No owner epic acceptance, live host loading, public release delivery, production monitoring or deployment established."
+          ]
         }
       },
       "baseline_sha": null,
@@ -4181,6 +4233,49 @@
             "Does not establish authenticated authority, live monitoring/models/host loading or eval readiness."
           ],
           "recorded_at": "2026-10-15T10:54:02.909204+00:00"
+        },
+        "combined-primary-proof": {
+          "type": "full-static-gate",
+          "subject_sha": "8d18eb4578c19b6ccc4e83323aa3e5637433d549",
+          "status": "pass",
+          "exit_code": 0,
+          "unit_tests": 611,
+          "unit_passed": 610,
+          "unit_skipped": 1,
+          "unit_skip_reason": "optional jsonschema crosscheck not requested in full suite",
+          "unit_seconds": 191.89,
+          "evals_passed": 30,
+          "evals_failed": 0,
+          "evals_unverified": 0,
+          "evals_skipped": 0,
+          "real_network_tests": [
+            "BMad6.12.0all3approvedmodulepins",
+            "skills CLI1.7.2 all3hosts canonical copies"
+          ],
+          "other_steps": "pass including shellcheck4.1.0, distribution, Mermaid,11skills-refvalidators, workflow and issueform schemas",
+          "artifact": ".software-factory/runs/software-factory-v01/evidence/combined-install-config-gate.log",
+          "artifact_sha256": "a2f3c400b4a6d94ffcb8c8c6208e2fdc6afe5f7ab45b9231156ef36d29a25610",
+          "recorded_at": "2026-10-15T11:03:47.462473+00:00",
+          "limitations": [
+            "No owner epic acceptance, live host loading, public release delivery, production monitoring or deployment established."
+          ]
+        },
+        "external-schema-crosscheck": {
+          "type": "supplemental-schema-crosscheck",
+          "subject_sha": "8d18eb4578c19b6ccc4e83323aa3e5637433d549",
+          "status": "pass",
+          "exit_code": 0,
+          "tests": 1,
+          "seconds": 0.089,
+          "command": "SF_CONFIG_JSONSCHEMA_CROSSCHECK=1 PYTHONDONTWRITEBYTECODE=1 uvx --from check-jsonschema python -B -m unittest discover -s tests -p test_config_schema.py -k optional_jsonschema_crosscheck -v",
+          "coverage": "Draft202012 schema metaschema and all parseable labeled config fixtures; syntax-invalid fixture excluded by test design",
+          "artifact": ".software-factory/runs/software-factory-v01/evidence/config-external-schema-crosscheck.log",
+          "artifact_sha256": "9f71372e89e0d2954f19c68c9f985065f75b534ec923b4ebb8a46fc91e73dcb5",
+          "recorded_at": "2026-10-15T11:03:47.462473+00:00",
+          "limitations": [
+            "Third-party library used only in optional dev crosscheck; shipped validator remains standard-library-only.",
+            "Does not establish governing document existence, authority or actual recipe execution."
+          ]
         }
       },
       "baseline_sha": null,
@@ -5542,6 +5637,32 @@
           "limitations": [
             "Subject predates BMad provisioning and distribution integration.",
             "No story/epic acceptance or external effects established."
+          ]
+        },
+        "combined-primary-proof": {
+          "type": "full-static-gate",
+          "subject_sha": "8d18eb4578c19b6ccc4e83323aa3e5637433d549",
+          "status": "pass",
+          "exit_code": 0,
+          "unit_tests": 611,
+          "unit_passed": 610,
+          "unit_skipped": 1,
+          "unit_skip_reason": "optional jsonschema crosscheck not requested in full suite",
+          "unit_seconds": 191.89,
+          "evals_passed": 30,
+          "evals_failed": 0,
+          "evals_unverified": 0,
+          "evals_skipped": 0,
+          "real_network_tests": [
+            "BMad6.12.0all3approvedmodulepins",
+            "skills CLI1.7.2 all3hosts canonical copies"
+          ],
+          "other_steps": "pass including shellcheck4.1.0, distribution, Mermaid,11skills-refvalidators, workflow and issueform schemas",
+          "artifact": ".software-factory/runs/software-factory-v01/evidence/combined-install-config-gate.log",
+          "artifact_sha256": "a2f3c400b4a6d94ffcb8c8c6208e2fdc6afe5f7ab45b9231156ef36d29a25610",
+          "recorded_at": "2026-10-15T11:03:47.462473+00:00",
+          "limitations": [
+            "No owner epic acceptance, live host loading, public release delivery, production monitoring or deployment established."
           ]
         }
       },
