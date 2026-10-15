@@ -33,7 +33,7 @@ class BootstrapTests(unittest.TestCase):
         self.log = self.root/'urls.jsonl'
         self.executed = self.root/'executed.json'
         curl = self.bins/'curl'
-        curl.write_text('#!'+sys.executable+'\n'+
+        curl.write_text('#!'+sys.executable+' -I\n'+
                         'import json,os,sys,shutil\nfrom pathlib import Path\n'
                         'with open(os.environ["URL_LOG"],"a") as f: f.write(json.dumps(sys.argv[1:])+"\\n")\n'
                         'if os.environ.get("FAIL_CURL"): sys.exit(22)\n'
@@ -79,6 +79,40 @@ class BootstrapTests(unittest.TestCase):
             urls = [json.loads(line)[-1] for line in self.log.read_text().splitlines()][-2:]
             self.assertEqual(urls, [f'https://github.com/sbeeredd04/software-factory/releases/download/{ref}/'+name
                                     for name in ('sf-'+ref+'.tar.gz','SHA256SUMS')])
+
+    def test_python_startup_isolated_from_consumer_and_environment(self):
+        marker = self.root/'untrusted-import-executed'
+        hostile = self.root/'untrusted-python-path'
+        hostile.mkdir()
+        for directory in (self.consumer, hostile):
+            for name in ('sitecustomize.py', 'hashlib.py', 'json.py', 'tarfile.py'):
+                (directory/name).write_text(f"open({str(marker)!r}, 'a').write('executed')\n"
+                                            "raise RuntimeError('untrusted import executed')\n")
+        env = dict(self.env, PYTHONPATH=str(hostile), PYTHONHOME=str(self.root/'invalid-python-home'))
+        before = tree_hashes(self.consumer)
+        archive = self.fixture()
+        archive.write_bytes(archive.read_bytes() + b'tampered')
+        result = self.run_bootstrap('--dry-run', env=env)
+        self.assertEqual(result.returncode, 1)
+        self.assertIn('checksum mismatch', result.stderr)
+        self.assertFalse(marker.exists())
+        self.assertFalse(self.executed.exists())
+        self.fixture()
+        result = self.run_bootstrap('--dry-run', env=env)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertTrue(self.executed.exists())
+        self.executed.unlink()
+        # The sibling installer must also run in isolation, independently of
+        # whether the bootstrap selected its local or downloaded route.
+        (self.pack/'install.py').write_text('import json,os,sys\nfrom pathlib import Path\n'
+                                          'Path(os.environ["EXECUTED"]).write_text(json.dumps(sys.argv[1:]))\n')
+        result = self.run_bootstrap('--dry-run', env=env)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertTrue(self.executed.exists())
+        self.assertFalse(marker.exists())
+        self.assertEqual(before, tree_hashes(self.consumer))
+        self.assertFalse(list(self.consumer.rglob('__pycache__')))
+        self.assertFalse(list(self.pack.rglob('__pycache__')))
 
     def test_tamper_stops_before_installer(self):
         path = self.fixture()

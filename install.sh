@@ -5,7 +5,7 @@ if ! command -v python3 >/dev/null 2>&1; then
   printf '%s\n' 'Software Factory requires Python 3.11 or newer; install it, then retry.' >&2
   exit 1
 fi
-exec python3 - "$0" "$@" <<'PY'
+exec python3 -I -B - "$0" "$@" <<'PY'
 import sys
 if sys.version_info < (3, 11):
     sys.exit('Software Factory requires Python 3.11 or newer; install it, then retry.')
@@ -133,9 +133,9 @@ def main():
     if not any(a == '--project' or a.startswith('--project=') for a in forwarded):
         forwarded.extend(['--project', str(Path.cwd())])
     local = Path(sys.argv[1]).resolve().with_name('install.py')
-    env = dict(os.environ, PYTHONDONTWRITEBYTECODE='1')
+    env = dict(os.environ)
     if local.is_file():
-        return subprocess.call([sys.executable, str(local), 'install', *forwarded], env=env)
+        return subprocess.call([sys.executable, '-I', '-B', str(local), 'install', *forwarded], env=env)
     if not shutil.which('curl'):
         raise ValueError('curl is required to download a release; use a local checkout offline')
     with tempfile.TemporaryDirectory(prefix='sf-bootstrap-') as temporary:
@@ -167,7 +167,7 @@ def main():
         if digest != matches[0]:
             raise ValueError('archive checksum mismatch')
         installer = extract(archive, stage / 'unpacked', ref)
-        return subprocess.call([sys.executable, str(installer), 'install', *forwarded], env=env)
+        return subprocess.call([sys.executable, '-I', '-B', str(installer), 'install', *forwarded], env=env)
 
 
 try:

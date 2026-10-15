@@ -37,7 +37,9 @@ invokes extension-payload processing. Downloads
 use HTTPS, bounded transfer size/time and disposable private staging cleaned on
 normal completion or handled failure. Forced process termination can leave OS
 temporary files. Checksums from the same origin provide integrity checking,
-not an independent publisher signature. No runtime is installed automatically.
+not an independent publisher signature. Python launches use `-I -B` to ignore consumer module paths/startup overrides
+and suppress bytecode writes, including child installer and hook processes.
+No runtime is installed automatically.
 
 ## Generate native marketplace roots
 

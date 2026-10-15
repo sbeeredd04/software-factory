@@ -170,6 +170,31 @@ class DistributionTests(unittest.TestCase):
                 self.assertEqual(result.returncode, 0)
                 self.assertIn('Python 3.11', result.stdout)
 
+    def test_plugin_python_startup_ignores_consumer_shadow_modules(self):
+        workspace = Workspace()
+        self.addCleanup(workspace.cleanup)
+        marker = self.root/'untrusted-hook-import'
+        hostile = self.root/'untrusted-python-path'
+        hostile.mkdir()
+        for directory in (workspace.root, hostile):
+            for name in ('sitecustomize.py', 'json.py', 'hashlib.py', 'argparse.py'):
+                (directory/name).write_text(f"open({str(marker)!r}, 'a').write('executed')\n"
+                                            "raise RuntimeError('untrusted import executed')\n")
+        for host in dist.HOSTS:
+            plugin = self.bundle(host, host)/dist.PLUGIN
+            env = dict(os.environ, PATH=str(Path(sys.executable).parent)+os.pathsep+os.environ['PATH'],
+                       PYTHONPATH=str(hostile), PYTHONHOME=str(self.root/'invalid-python-home'))
+            payload = {'workspace_roots':[str(workspace.root)]} if host == 'cursor' else {'cwd':str(workspace.root)}
+            before = tree_hashes(plugin)
+            result = subprocess.run(['/bin/sh',str(plugin/'scripts/hook.sh'),'--host',host,'--event','session-start'],
+                                    input=json.dumps(payload), cwd=workspace.root, env=env,
+                                    text=True, check=False, capture_output=True)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertIn('recovery pointer', result.stdout)
+            self.assertFalse(marker.exists())
+            self.assertEqual(before, tree_hashes(plugin))
+            self.assertFalse(list(plugin.rglob('__pycache__')))
+
     def test_cli_fresh_source_writes_only_output(self):
         source = self.root/'fresh source'
         source.mkdir()
