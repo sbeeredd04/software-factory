@@ -73,13 +73,16 @@ readable equivalent. The five graphic-bearing PNG compositions use the overview.
 
 The renderer resolves each displayed clone's exact view and reference, compares
 every cloned label with the captured canonical source, and verifies actual custom
-Inter Regular or SemiBold glyphs through CDP. It also rejects non-finite,
-unresolved or clipped geometry and overlapping label bounds. A font query on the
-outer host element alone is insufficient. Negative fixtures exercise both SVG
+Inter Regular or SemiBold glyphs through CDP. It also requires finite resolved
+geometry within the viewBox, an SVG frame inside the screenshot viewport,
+label bounds inside that frame, and label bounding boxes that do not overlap.
+A font query on the outer host element alone is insufficient. Negative fixtures exercise both SVG
 variants; the committed render receipt contains the 26 observed overview labels
 in each of five captures. The expanded showcase view needs its own actual
-browser and visual review; PNG capture does not prove that view. Standalone SVG
-font rendering is separate from HTML-clone font evidence.
+browser and visual review; PNG capture does not prove that view. The standalone
+SVG links the existing same-origin base stylesheet through XML stylesheet
+metadata so its Inter faces are available; its actual glyphs and pixels require
+separate browser inspection.
 
 The overview shows ongoing orchestration, concurrent story work, independent
 per-story proof, serialized integration and authorized feedback. The detailed
@@ -91,6 +94,9 @@ conditional branch, and observation is scoped and off by default.
 Edit the canonical source, then regenerate and independently inspect every PNG
 at its real size. Preserve the exact view/count/reference and glyph checks when
 changing labels or geometry. Missing proof fails capture before replacement.
+These rectangular bounds checks do not detect every clip path, occluding
+element, connector crossing or label escaping its owning card. Actual pixel
+inspection remains required for those visual relationships.
 
 The SVG is an editable source and does not change the seven PNG master
 dimensions or the three served PNG alias identities below.

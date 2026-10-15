@@ -126,6 +126,13 @@ class ShowcaseTests(unittest.TestCase):
         self.assertNotRegex(css, r"\.system-explanations[^{}]*\{[^{}]*display:\s*none")
         self.assertIn("grid-template-columns: 1fr", mobile)
 
+    def test_bug_no_fix_branch_terminates_before_confirmed_fix_steps(self):
+        bug = self.source().split('<p class="eyebrow">B / Bug loop</p>', 1)[1].split('</article>', 1)[0]
+        self.assertIn("close that branch here", bug)
+        self.assertIn("For confirmed fixes only:", bug)
+        self.assertIn("For those fixes, prove", bug)
+        self.assertIn("Close confirmed fixes with receipts", bug)
+
     def test_substantive_sections_and_palette(self):
         page = Page(self.source())
         ids = {a.get("id") for _, a in page.tags}

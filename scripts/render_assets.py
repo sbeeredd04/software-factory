@@ -359,8 +359,10 @@ def validate_report(report, manifest, svg_source=None):
                     or not any(request.get("path") == "/site/img/delivery-graph.svg" for request in capture["requests"])):
                 raise ValueError("shared cycle SVG evidence is incomplete")
             bounds = cycle.get("bounds", [])
-            if len(bounds) != 4 or any(not isinstance(v, (int, float)) or not math.isfinite(v) for v in bounds) or bounds[2] <= bounds[0] or bounds[3] <= bounds[1]:
-                raise ValueError("shared SVG viewport bounds are missing")
+            if (len(bounds) != 4 or any(not isinstance(v, (int, float)) or not math.isfinite(v) for v in bounds)
+                    or bounds[2] <= bounds[0] or bounds[3] <= bounds[1] or bounds[0] < -.5 or bounds[1] < -.5
+                    or bounds[2] > entry["width"] + .5 or bounds[3] > entry["height"] + .5):
+                raise ValueError("shared SVG frame bounds are unresolved or outside the capture viewport")
             seen_bounds = []
             for text in texts:
                 box = text.get("bounds", [])
@@ -369,7 +371,7 @@ def validate_report(report, manifest, svg_source=None):
                         or box[0] < bounds[0] - .5 or box[1] < bounds[1] - .5
                         or box[2] > bounds[2] + .5 or box[3] > bounds[3] + .5
                         or any(min(box[2], b[2]) - max(box[0], b[0]) > .5 and min(box[3], b[3]) - max(box[1], b[1]) > .5 for b in seen_bounds)):
-                    raise ValueError("shared SVG text geometry is clipped or overlapping")
+                    raise ValueError("shared SVG label bounds extend outside its frame or overlap another label")
                 seen_bounds.append(box)
                 fonts = text.get("fonts", [])
                 if not text.get("text") or not fonts or any(

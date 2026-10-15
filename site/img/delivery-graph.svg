@@ -1,6 +1,7 @@
+<?xml-stylesheet type="text/css" href="../styles/base.css"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="1000" height="600" viewBox="0 0 1000 600" role="img" aria-labelledby="cycle-title cycle-desc">
-  <title id="cycle-title">Software Factory: orchestration, parallel delivery and feedback</title>
-  <desc id="cycle-desc">An illustrative system, executed by the active coding host. An orchestrator spans planning, concurrent story work, independent proof and single-owner delivery. Failed or unknown proof returns to repair or replanning. Authorized feedback returns to triage. Human decisions are conditional at any phase. Shared records preserve context and evidence. The system-map fragment expands bug, recovery and improvement routes.</desc>
+  <title id="cycle-title">Software Factory overview and complete lifecycle system map</title>
+  <desc id="cycle-desc">Two illustrative views explain the system executed by the active coding host. The overview shows ongoing orchestration, grounded planning, parallel story work, independent per-story proof, single-owner integration and authorized delivery, with repair and feedback returns. Human decisions are conditional at any phase; they hold affected dependents only. The expanded system-map view adds bug triage: preserve primary evidence and reproduce, plan confirmed fixes, investigate unknown mechanisms with separating experiments, and independently review evidence-backed no-fix closure without fabricated code or deployment. After interruption or uncertain external effects, checkpoint and reconcile Git, claims, workers and actual provider outcomes before resuming authorized affected work. Reviewed improvement proposals use canaries and later observation to support retention or rollback. Shared project records preserve context and proof; derived evidence views never dispatch agents.</desc>
   <defs>
     <marker id="green-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="#365a40" stroke-width="1.6"/></marker>
     <marker id="rust-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="#a13f23" stroke-width="1.6"/></marker>
@@ -73,29 +74,29 @@
     <path d="M692 362H733" fill="none" stroke="#365a40" stroke-width="2" marker-end="url(#green-arrow)"/>
     <path d="M1050 362H1091" fill="none" stroke="#365a40" stroke-width="2" marker-end="url(#green-arrow)"/>
     <text x="44" y="278" font-size="26" font-weight="600" fill="#252820">01 / Ground + plan</text>
-    <text x="44" y="318" font-size="19" fill="#252820">Reuse requirements + architecture</text>
-    <text x="44" y="348" font-size="19" fill="#252820">Risk-sized BMad epics + stories</text>
-    <text x="44" y="378" font-size="19" fill="#252820">Acceptance criteria + dependencies</text>
+    <text x="44" y="318" font-size="19" fill="#252820">Requirements + architecture</text>
+    <text x="44" y="348" font-size="18" fill="#252820">BMad epics + stories · risk-sized</text>
+    <text x="44" y="378" font-size="19" fill="#252820">Acceptance + dependencies</text>
     <text x="44" y="408" font-size="21" fill="#252820">Independent plan review ↺</text>
-    <text x="44" y="466" font-size="19" fill="#252820">Evidence selects the ready frontier</text>
-    <text x="402" y="278" font-size="25" font-weight="600" fill="#252820">02 / Parallel story work</text>
+    <text x="44" y="466" font-size="19" fill="#252820">Ready frontier from evidence</text>
+    <text x="402" y="278" font-size="25" font-weight="600" fill="#252820">02 / Parallel stories</text>
     <rect x="398" y="303" width="278" height="42" rx="8" fill="#f4f1e9" stroke="#b1b7a4"/>
-    <text x="411" y="331" font-size="20" fill="#252820">Story A → build · test · repair</text>
+    <text x="411" y="331" font-size="20" fill="#252820">A → build · test · repair</text>
     <rect x="398" y="358" width="278" height="42" rx="8" fill="#f4f1e9" stroke="#b1b7a4"/>
-    <text x="411" y="386" font-size="20" fill="#252820">Story B → build · test · repair</text>
-    <text x="402" y="433" font-size="19" fill="#252820">Claim paths · staff agents as needed</text>
-    <text x="402" y="466" font-size="19" fill="#252820">Serialize only conflicting resources</text>
+    <text x="411" y="386" font-size="20" fill="#252820">B → build · test · repair</text>
+    <text x="402" y="433" font-size="19" fill="#252820">Staff agents · claim paths</text>
+    <text x="402" y="466" font-size="19" fill="#252820">Serialize conflicting resources</text>
     <text x="760" y="278" font-size="25" font-weight="600" fill="#252820">03 / Independent proof</text>
-    <text x="760" y="318" font-size="20" fill="#252820">QA + actual effects + story evals</text>
+    <text x="760" y="318" font-size="19" fill="#252820">QA · actual effects · story evals</text>
     <text x="760" y="348" font-size="20" fill="#252820">Actual-diff review + CI</text>
-    <text x="760" y="378" font-size="20" fill="#252820">Configured review dispositions</text>
-    <text x="760" y="426" font-size="20" fill="#252820">Each proven story can advance</text>
-    <text x="760" y="466" font-size="19" fill="#252820">Other stories may still be repairing</text>
+    <text x="760" y="378" font-size="18" fill="#252820">Configured review dispositions</text>
+    <text x="760" y="426" font-size="20" fill="#252820">Each proven story advances</text>
+    <text x="760" y="466" font-size="19" fill="#252820">Others may still be repairing</text>
     <text x="1118" y="278" font-size="25" font-weight="600" fill="#252820">04 / Integrate + deliver</text>
-    <text x="1118" y="318" font-size="20" fill="#252820">Single owner · sequential merges</text>
-    <text x="1118" y="348" font-size="20" fill="#252820">Dependencies + combined proof</text>
-    <text x="1118" y="378" font-size="19" fill="#252820">Approved release / deploy / staging</text>
-    <text x="1118" y="426" font-size="20" fill="#252820">Exact artifact SHA + behavior</text>
+    <text x="1118" y="318" font-size="19" fill="#252820">One owner · ordered merges</text>
+    <text x="1118" y="348" font-size="18" fill="#252820">Dependencies + combined proof</text>
+    <text x="1118" y="378" font-size="20" fill="#252820">Approved delivery / staging</text>
+    <text x="1118" y="426" font-size="20" fill="#252820">Artifact SHA + behavior</text>
     <text x="1118" y="466" font-size="20" fill="#252820">Policy-selected acceptance</text>
     <path d="M895 494V529H537V498" fill="none" stroke="#a13f23" stroke-width="2" marker-end="url(#rust-arrow)"/>
     <text x="565" y="554" font-size="21" fill="#a13f23">Failed / missing / unknown proof → repair + fresh proof or replan</text>
@@ -105,28 +106,28 @@
     <rect x="500" y="668" width="438" height="236" rx="8" fill="#faf8f2" stroke="#b1b7a4"/>
     <rect x="976" y="668" width="440" height="236" rx="8" fill="#faf8f2" stroke="#b1b7a4"/>
     <text x="44" y="701" font-size="25" font-weight="600" fill="#252820">Feedback + bug triage</text>
-    <text x="44" y="738" font-size="19" fill="#252820">Authorized signals → deduplicate + reproduce</text>
+    <text x="44" y="738" font-size="18" fill="#252820">Authorized signals → reproduce + dedupe</text>
     <text x="44" y="770" font-size="19" fill="#252820">Confirmed mechanism → plan a fix ↑</text>
     <text x="44" y="802" font-size="19" fill="#252820">Unknown → separating experiment ↺</text>
     <text x="44" y="834" font-size="19" fill="#252820">No fix → independent disposition review</text>
     <text x="44" y="875" font-size="19" fill="#252820">No fabricated code, merge or deploy closure</text>
     <path d="M24 785H10V220H179V241" fill="none" stroke="#365a40" stroke-width="2" marker-end="url(#green-arrow)"/>
-    <text x="44" y="642" font-size="19" font-weight="600" fill="#365a40">New needs / confirmed bugs → grounded planning</text>
-    <path d="M1416 418H1430V640H243V662" fill="none" stroke="#365a40" stroke-width="2" marker-end="url(#green-arrow)"/>
-    <text x="520" y="701" font-size="25" font-weight="600" fill="#252820">Interruption + uncertain effects</text>
+    <text x="44" y="653" font-size="19" font-weight="600" fill="#365a40">New needs / bugs → planning</text>
+    <path d="M1416 418H1430V625H440V662" fill="none" stroke="#365a40" stroke-width="2" marker-end="url(#green-arrow)"/>
+    <text x="520" y="701" font-size="24" font-weight="600" fill="#252820">Interruption + uncertain effects</text>
     <text x="520" y="738" font-size="19" fill="#252820">Checkpoint objective, facts and next action</text>
     <text x="520" y="770" font-size="19" fill="#252820">Reconcile Git, claims, workers and provider</text>
     <text x="520" y="802" font-size="19" fill="#252820">Inspect actual external outcome before retry</text>
     <text x="520" y="834" font-size="19" fill="#252820">Resume authorized affected work ↑</text>
     <text x="520" y="875" font-size="19" fill="#252820">Checkpoint context grants no new authority</text>
-    <path d="M719 668V640H537V618" fill="none" stroke="#a13f23" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#rust-arrow)"/>
+    <path d="M500 834H480V518H537V494" fill="none" stroke="#a13f23" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#rust-arrow)"/>
     <text x="996" y="701" font-size="25" font-weight="600" fill="#252820">Improve from observed rework</text>
     <text x="996" y="738" font-size="19" fill="#252820">Evidence → bounded improvement proposal</text>
     <text x="996" y="770" font-size="19" fill="#252820">Independent review + canary</text>
     <text x="996" y="802" font-size="19" fill="#252820">Apply within approved authority</text>
     <text x="996" y="834" font-size="19" fill="#252820">Observe → retain or roll back</text>
     <text x="996" y="875" font-size="19" fill="#252820">Return through ordinary planning + proof</text>
-    <path d="M1196 668V652H958V220H337V260" fill="none" stroke="#365a40" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#green-arrow)"/>
+    <path d="M1196 668V656H1420V232H350V300H334" fill="none" stroke="#365a40" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#green-arrow)"/>
     <rect x="24" y="932" width="1392" height="91" rx="8" fill="#f4f1e9" stroke="#b1b7a4"/>
     <text x="44" y="965" font-size="23" font-weight="600" fill="#252820">DURABLE PROJECT CONTEXT / SHARED THROUGHOUT</text>
     <text x="44" y="997" font-size="20" fill="#252820">Principles · architecture · BMad sources · board records · claims · Git subjects · receipts · decisions · checkpoints</text>

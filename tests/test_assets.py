@@ -234,6 +234,10 @@ class AssetTests(unittest.TestCase):
             self.assertEqual(len(viewbox), 4)
         view = next(node for node in svg.iter() if node.get("id") == "system-map")
         self.assertEqual(view.get("viewBox"), "0 660 1440 1080")
+        self.assertIn('<?xml-stylesheet type="text/css" href="../styles/base.css"?>', (ROOT / "site/img/delivery-graph.svg").read_text())
+        description = svg.find('{http://www.w3.org/2000/svg}desc').text
+        for phrase in ("separating experiments", "no-fix closure", "actual provider outcomes", "canaries"):
+            self.assertIn(phrase, description)
         self.assertIn("site/img/delivery-graph.svg", render.INPUTS)
         for name in render.SIZES:
             source = (ROOT / f"assets/templates/{name}.html").read_text()
@@ -254,7 +258,13 @@ class AssetTests(unittest.TestCase):
         response = page.request.get.return_value
         response.status, response.body.return_value = 200, source
         viewbox = helper.SVG_VIEWS[fragment][0]
-        observed = {"viewbox": viewbox if fault != "viewbox" else [0, 0, 1, 1], "bounds": [0, 0, 1440, 1080]}
+        frame = [0, 0, 1000, 600] if fragment == "factory-cycle" else [0, 0, 1440, 1080]
+        viewport = [1280, 640] if fragment == "factory-cycle" else [1440, 1080]
+        if fault == "shifted_frame":
+            frame = [viewport[0] - 10, 0, viewport[0] + 990, 600]
+        if fault == "clipped_frame":
+            frame = [0, -15, frame[2], frame[3] - 15]
+        observed = {"viewbox": viewbox if fault != "viewbox" else [0, 0, 1, 1], "bounds": frame, "viewport": viewport}
         geometry = [8, 12, 985, 586] if fragment == "factory-cycle" else [10, 676, 1420, 1059]
         if fault == "geometry":
             geometry = [0, 0, 0, 0]
@@ -295,7 +305,8 @@ class AssetTests(unittest.TestCase):
     def test_cycle_capture_requires_resolved_geometry_and_actual_custom_glyph_fonts(self):
         for fragment in ("factory-cycle", "factory-system"):
             for fault in (None, "geometry", "nan", "viewbox", "missing_text", "wrong_text", "wrong_reference",
-                          "missing_font", "fallback", "wrong_font", "no_glyphs", "clipped", "overlap"):
+                          "missing_font", "fallback", "wrong_font", "no_glyphs", "clipped", "overlap",
+                          "shifted_frame", "clipped_frame"):
                 with self.subTest(fragment=fragment, fault=fault):
                     helper, page, client, reference, labels = self.svg_fixture(fragment, fault)
                     if fault:
@@ -304,8 +315,36 @@ class AssetTests(unittest.TestCase):
                     else:
                         evidence = helper.svg_evidence(page, "svg." + fragment, fragment, reference)
                         self.assertEqual([item["text"] for item in evidence["text_fonts"]], labels)
-                    if fault not in {"geometry", "nan", "viewbox"}:
+                    if fault not in {"geometry", "nan", "viewbox", "shifted_frame", "clipped_frame"}:
                         client.detach.assert_called_once()
+
+    def test_svg_source_resolves_explicit_reference_in_asset_and_site_pages(self):
+        for page_url, reference, expected in (
+                ("http://127.0.0.1:1234/assets/templates/hero.html", "../../site/img/delivery-graph.svg#factory-cycle", "http://127.0.0.1:1234/site/img/delivery-graph.svg"),
+                ("http://127.0.0.1:1234/site/index.html", "img/delivery-graph.svg#factory-cycle", "http://127.0.0.1:1234/site/img/delivery-graph.svg"),
+                ("http://127.0.0.1:1234/index.html", "img/delivery-graph.svg#factory-cycle", "http://127.0.0.1:1234/img/delivery-graph.svg")):
+            with self.subTest(page=page_url):
+                helper, page, client, _, _ = self.svg_fixture()
+                page.url = page_url
+                prior = client.send.side_effect
+
+                def response(method, args=None, *, reference=reference, prior=prior):
+                    result = prior(method, args)
+                    if method == "DOM.getDocument":
+                        use = result["root"]["children"][0]
+                        use["attributes"] = ["href", reference]
+                        if not reference.startswith("../../"):
+                            result["root"]["children"].append({"localName": "use", "attributes": ["href", "img/delivery-graph.svg#factory-system"]})
+                    return result
+
+                client.send.side_effect = response
+                helper.svg_evidence(page, reference=reference)
+                page.request.get.assert_called_once_with(expected)
+        helper, page, _, _, _ = self.svg_fixture()
+        for reference in ("https://example.invalid/img/delivery-graph.svg#factory-cycle", "other.svg#factory-cycle"):
+            with self.subTest(reference=reference), self.assertRaises(ValueError):
+                helper.svg_evidence(page, reference=reference)
+        page.request.get.assert_not_called()
 
     def test_receipt_validation_rejects_missing_or_fallback_cycle_proof(self):
         manifest = self.sources()
@@ -325,6 +364,8 @@ class AssetTests(unittest.TestCase):
         for mutation in (lambda c: c.pop("cycle"), lambda c: c.update(requests=[{"path": "/other.svg"}]),
                          lambda c: c["cycle"].update(geometry=[0, 0, 0, 0]),
                          lambda c: c["cycle"].update(viewbox=[0, 0, 640, 680]),
+                         lambda c: c["cycle"].update(bounds=[1400, 0, 2400, 600]),
+                         lambda c: c["cycle"].update(bounds=[0, -10, 1000, 590]),
                          lambda c: c["cycle"].update(reference="foreign.svg#factory-cycle"),
                          lambda c: c["cycle"]["text_fonts"].pop(),
                          lambda c: c["cycle"]["text_fonts"][0].update(text="wrong label"),

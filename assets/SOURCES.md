@@ -54,5 +54,10 @@ conditional human decisions. The expanded view includes separating experiments,
 independently reviewed no-fix closure, recovery and reviewed improvements.
 They assert no live activity or always-on monitoring. Text and geometry are
 original to this pack. Actual PNG capture records exact cloned text identities,
-visible geometry and custom Inter glyphs; separate browser review establishes
-the site's expanded presentation.
+finite in-frame SVG geometry, label bounds inside the SVG frame, label
+bounding-box separation and custom Inter glyphs. These checks do not establish
+visibility through clip paths or occluding elements, connector clearance or
+containment inside each card. Actual pixel inspection establishes those
+relationships and the site's expanded presentation. The standalone SVG links
+the same-origin base stylesheet through XML stylesheet metadata; its actual
+font use is inspected separately from cloned HTML glyphs.

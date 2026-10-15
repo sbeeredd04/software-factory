@@ -11,7 +11,7 @@ import signal
 import sys
 import xml.etree.ElementTree as ET
 from pathlib import Path
-from urllib.parse import urlsplit
+from urllib.parse import urljoin, urlsplit, urlunsplit
 
 from playwright.sync_api import Error as PlaywrightError
 from playwright.sync_api import sync_playwright
@@ -41,10 +41,18 @@ def cycle_evidence(page):
 def svg_evidence(page, selector="svg.factory-cycle", fragment="factory-cycle",
                  reference="../../site/img/delivery-graph.svg#factory-cycle"):
     """Inspect the actual clone: exact view, source text, geometry and custom glyphs."""
-    if fragment not in SVG_VIEWS or reference.rsplit("#", 1)[-1] != fragment:
+    if (fragment not in SVG_VIEWS or reference.rsplit("#", 1)[-1] != fragment
+            or reference.rsplit("#", 1)[0] not in {"../../site/img/delivery-graph.svg", "img/delivery-graph.svg"}):
         raise ValueError("unexpected shared SVG variant")
     viewbox, count = SVG_VIEWS[fragment]
-    observed = page.locator(selector).evaluate("element => { const b = element.getBoundingClientRect(); return {viewbox: [element.viewBox.baseVal.x, element.viewBox.baseVal.y, element.viewBox.baseVal.width, element.viewBox.baseVal.height], bounds: [b.left,b.top,b.right,b.bottom]}; }")
+    observed = page.locator(selector).evaluate("element => { const b = element.getBoundingClientRect(); return {viewbox: [element.viewBox.baseVal.x, element.viewBox.baseVal.y, element.viewBox.baseVal.width, element.viewBox.baseVal.height], bounds: [b.left,b.top,b.right,b.bottom], viewport: [innerWidth,innerHeight]}; }")
+    frame, viewport = observed.get("bounds", []), observed.get("viewport", [])
+    if (len(frame) != 4 or len(viewport) != 2
+            or any(not isinstance(v, (int, float)) or not math.isfinite(v) for v in [*frame, *viewport])
+            or frame[2] <= frame[0] or frame[3] <= frame[1]
+            or frame[0] < -.5 or frame[1] < -.5
+            or frame[2] > viewport[0] + .5 or frame[3] > viewport[1] + .5):
+        raise ValueError("shared SVG frame bounds extend outside the capture viewport")
     geometry = page.locator(selector + " use").evaluate(
         "element => { const b = element.getBBox(); return [b.x, b.y, b.width, b.height]; }")
     if (observed.get("viewbox") != viewbox or len(geometry) != 4
@@ -53,8 +61,12 @@ def svg_evidence(page, selector="svg.factory-cycle", fragment="factory-cycle",
             or geometry[0] < viewbox[0] or geometry[1] < viewbox[1]
             or geometry[0] + geometry[2] > viewbox[0] + viewbox[2]
             or geometry[1] + geometry[3] > viewbox[1] + viewbox[3]):
-        raise ValueError("shared SVG did not resolve its reviewed view and geometry")
-    response = page.request.get(page.url.split("/assets/", 1)[0] + "/site/img/delivery-graph.svg")
+        raise ValueError("shared SVG geometry is unresolved or extends outside the reviewed viewBox")
+    source = urlsplit(urljoin(page.url, reference))
+    current = urlsplit(page.url)
+    if (source.scheme, source.netloc) != (current.scheme, current.netloc) or source.query:
+        raise ValueError("shared SVG source is not the explicit same-origin reference")
+    response = page.request.get(urlunsplit((source.scheme, source.netloc, source.path, "", "")))
     data = response.body()
     if response.status != 200 or len(data) > 100000:
         raise ValueError("missing shared SVG source")
@@ -70,7 +82,7 @@ def svg_evidence(page, selector="svg.factory-cycle", fragment="factory-cycle",
         document = client.send("DOM.getDocument", {"depth": -1, "pierce": True})
         uses = [node for node in walk_nodes(document["root"]) if node.get("localName") == "use"]
         selected = [node for node in uses if node.get("attributes") == ["href", reference]]
-        if len(selected) != 1 or (selector == "svg.factory-cycle" and len(uses) != 1):
+        if len(selected) != 1 or (reference.startswith("../../site/") and len(uses) != 1):
             raise ValueError("unexpected shared SVG reference")
         texts = [node for node in walk_nodes(selected[0]) if node.get("localName") == "text"]
         if len(texts) != count:
@@ -95,7 +107,7 @@ def svg_evidence(page, selector="svg.factory-cycle", fragment="factory-cycle",
                     or bounds[2] <= bounds[0] or bounds[3] <= bounds[1]
                     or bounds[0] < limit[0] - .5 or bounds[1] < limit[1] - .5
                     or bounds[2] > limit[2] + .5 or bounds[3] > limit[3] + .5):
-                raise ValueError("shared SVG text is unresolved or clipped")
+                raise ValueError("shared SVG label bounds are unresolved or extend outside its frame")
             for previous in observations:
                 other = previous["bounds"]
                 if min(bounds[2], other[2]) - max(bounds[0], other[0]) > .5 and min(bounds[3], other[3]) - max(bounds[1], other[1]) > .5:

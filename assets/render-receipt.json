@@ -486,12 +486,12 @@
               "/site/styles/tokens.css",
               "/site/styles/base.css",
               "/assets/templates/assets.css",
-              "/assets/templates/ready.js",
               "/site/img/mark.svg",
+              "/assets/templates/ready.js",
               "/site/img/delivery-graph.svg",
+              "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
               "/site/fonts/inter/Inter-SemiBold.woff2",
               "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
-              "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
               "/site/fonts/inter/Inter-Regular.woff2"
             ],
             "viewport": [
@@ -1032,9 +1032,9 @@
               "/site/img/mark.svg",
               "/assets/templates/ready.js",
               "/site/img/delivery-graph.svg",
-              "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
               "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
               "/site/fonts/inter/Inter-SemiBold.woff2",
+              "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
               "/site/fonts/inter/Inter-Regular.woff2"
             ],
             "viewport": [
@@ -1651,11 +1651,11 @@
               "/site/styles/tokens.css",
               "/site/styles/base.css",
               "/assets/templates/assets.css",
-              "/assets/templates/ready.js",
               "/site/img/mark.svg",
+              "/assets/templates/ready.js",
               "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
-              "/site/fonts/inter/Inter-SemiBold.woff2",
               "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
+              "/site/fonts/inter/Inter-SemiBold.woff2",
               "/site/fonts/inter/Inter-Regular.woff2"
             ],
             "viewport": [
@@ -1728,8 +1728,8 @@
               "/site/img/mark.svg",
               "/assets/templates/ready.js",
               "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
-              "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
               "/site/fonts/inter/Inter-SemiBold.woff2",
+              "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
               "/site/fonts/inter/Inter-Regular.woff2"
             ],
             "viewport": [
@@ -2266,9 +2266,9 @@
               "/site/img/mark.svg",
               "/assets/templates/ready.js",
               "/site/img/delivery-graph.svg",
-              "/site/fonts/inter/Inter-SemiBold.woff2",
               "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
               "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+              "/site/fonts/inter/Inter-SemiBold.woff2",
               "/site/fonts/inter/Inter-Regular.woff2"
             ],
             "viewport": [
@@ -2932,7 +2932,7 @@
         "--remote-debugging-pipe",
         "--no-startup-window"
       ],
-      "log_sha256": "9fc74f62731ecc0374a43b668394986e13ccc48595b47a84025f81fceb544f4c"
+      "log_sha256": "6c2546577b279ae0660aa2142b7e0f26566a9fca1f50ee8a89a70ce179d514df"
     },
     "server_requests": [
       {
@@ -3304,11 +3304,11 @@
         "status": 200
       },
       {
-        "path": "/site/styles/base.css",
+        "path": "/site/styles/tokens.css",
         "status": 200
       },
       {
-        "path": "/site/styles/tokens.css",
+        "path": "/site/styles/base.css",
         "status": 200
       },
       {
@@ -3329,13 +3329,13 @@
     "assets/templates/social-preview.html": "2b13d4ee6bc3179b5a25b4a1e84fdcda5c9c8e273f1e52e1bc75740b57bbfbce",
     "assets/templates/team.html": "d403cf7225c19a1d60948d195f32a17ab9b4de64471f48adefa306223e8f1a38",
     "assets/toolchain.json": "1cfea5c01d5dccac4dcfbf6ac420a264f1f40ed9dd29ff219614a9817f88e9f8",
-    "assets/tools/capture.py": "9e8e55bf7d4a03aef1757d3e0ef1fdd9a249ca880015cedca606839efcd1518d",
-    "scripts/render_assets.py": "a37f4b0c8f50e926a1415d25ab4c27562b7d669aabb1cc3c3c5a7a71470d6f51",
+    "assets/tools/capture.py": "8b2adaab866a170c5853b628185a771ce5a348d5e9da5792d2b98436ce29a7be",
+    "scripts/render_assets.py": "238f90f1a60070b4b981f4c7b0293b57867a0c7122f165b8f0dcdb39c15ee26f",
     "site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2": "908de7414bcad8649c2127a27e9aec08159059fca39b42bf724b4327a6780961",
     "site/fonts/inter/Inter-Regular.woff2": "e06f6b1bc553aaea4e4668023ed0ab0a147129c3107f511bc7d03d361b0ae085",
     "site/fonts/inter/Inter-SemiBold.woff2": "5cb7103e4e605989afebc03d989c79201e54b21b5183db33981f70db9178a301",
     "site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2": "a9cb1cd82332b23a47e3a1239d25d13c86d16c4220695e34b243effa999f45f2",
-    "site/img/delivery-graph.svg": "c1341592bbf0f0430629f4a3d876b03e538a9fdd34f82f2acadc7c786b4914ab",
+    "site/img/delivery-graph.svg": "8fbfba36c93c2c73014291cdf2bca728a2936cdc90cf717ea29c2e640a77f03f",
     "site/img/mark.svg": "a9afdfd07235005a4fc3c0a3d7450935b6f97808b0214e7fcc536a6396d0cec1",
     "site/styles/base.css": "6fec0a26fefa5c80a96e18f4c547eeca1590b637becc7178540522e66e202e33",
     "site/styles/tokens.css": "c5d5e88aa4bf77a283d1e7c5d1d3d7b2175e2fa6980f55399208f32eb747abec"
