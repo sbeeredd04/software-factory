@@ -4,8 +4,8 @@
   "epic": 4,
   "type": "story",
   "title": "sf-evolve: fold-in registry, overlays and retro pipeline",
-  "status": "backlog",
-  "owner": null,
+  "status": "in-progress",
+  "owner": "codex-evolution",
   "after": [
     27
   ],
@@ -22,12 +22,39 @@
   "plan_checkpoint": false,
   "done_checkpoint": true,
   "blocked": null,
-  "receipts": {},
+  "receipts": {
+    "active-attempt": {
+      "type": "agent-attempt",
+      "subject_sha": "6747cb9be598c8985acfb998a4f3bc397bd7696a",
+      "agent": "/root/evolution",
+      "role": "sf-principal-engineer",
+      "skill": "sf-evolve",
+      "requested_model": "gpt-6-astra",
+      "effective_model": null,
+      "phase": "implementation",
+      "status": "assigned",
+      "recorded_at": "2026-10-15T12:35:58.114064+00:00",
+      "summary": "Original28 begins after independently reviewed27in-review through existing readiness. Source-pinned registry, composed installer overlays, BMad customization/recursion and reviewed retro loop; one canonical ownership transaction. Isolated reusedworktree baseline6747cb9, primary combined677-testgate pending."
+    }
+  },
   "baseline_sha": null,
   "branch": null,
   "pr": null,
   "merged_sha": null,
-  "history": [],
+  "history": [
+    {
+      "at": "2026-10-15T12:35:11.961323+00:00",
+      "by": "orchestrator",
+      "from": "backlog",
+      "to": "ready-for-dev"
+    },
+    {
+      "at": "2026-10-15T12:35:12.086442+00:00",
+      "by": "codex-evolution",
+      "from": "ready-for-dev",
+      "to": "in-progress"
+    }
+  ],
   "findings": [],
   "source_key": "onboarding-integrations/sf-evolve-skill"
 }
