@@ -1105,6 +1105,28 @@
         }
       },
       "nondeterministic": false
+    },
+    {
+      "id": "TLS-SITE-001",
+      "story": "launch-publication/showcase-site",
+      "epic": "launch-publication",
+      "suite": "story",
+      "kind": "fail_to_pass",
+      "criterion": "The static showcase supplies required sections, self-hosted licensed font assets, declared accessibility/reduced-motion hooks and local resource references.",
+      "surface": "tools",
+      "tier": [
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "command",
+        "run": "SF_SKIP_NETWORK=1 python3 -m unittest discover -s tests -p 'test_showcase.py'",
+        "expect": {
+          "exit": 0,
+          "output_matches": "Ran [1-9][0-9]* tests?"
+        }
+      },
+      "nondeterministic": false
     }
   ],
   "modes": {
@@ -1174,7 +1196,7 @@
     "status": "approved",
     "approved_by": "Repository owner (current conversation)",
     "approved_at": "2026-10-15",
-    "plan_sha256": "8edbe42a4d59fff6a1cee564c33f0dc7ae065384f8da83b193bc3b3b7292e7a6",
+    "plan_sha256": "144f2496adba8650722864158366e8441879dcb9244fad351c23bfc1e0a0e248",
     "digest_rule": "sha256 over the plan serialized as UTF-8 JSON with sorted keys and compact separators, the signoff object excluded"
   }
 }
