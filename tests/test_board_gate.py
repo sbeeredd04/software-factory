@@ -889,3 +889,40 @@ class RiskAdaptiveTests(unittest.TestCase):
               self.assertRaisesRegex(roadmap.BoardError, "source changed")):
             roadmap.epic_update(self.board.root, args)
         self.assertEqual(before, self.board.board_snapshot())
+
+    def test_ordinary_derive_cannot_remove_existing_epic_or_story_reservations(self):
+        for kind, flag in (("epic", "hitl"), ("story", "hitl"),
+                           ("story", "plan_checkpoint"), ("story", "done_checkpoint")):
+            with self.subTest(kind=kind, flag=flag):
+                self.board = Board(self)
+                self.board.derive()
+                target = self.board.epic_file(1) if kind == "epic" else self.board.story_file(1)
+                self.mutate(target.relative_to(self.board.root), lambda r, flag=flag: r.update({flag: True}))
+                source = planning_source()
+                planned = source["epics"][0] if kind == "epic" else source["epics"][0]["stories"][0]
+                planned[flag] = False
+                source["epics"][0]["stories"].append({"key": "new", "title": "New planned child"})
+                before = self.board.board_snapshot()
+                result = self.board.derive_raw(source)
+                self.assertEqual(2, result.returncode, result.stderr)
+                self.assertIn("reservation", result.stderr)
+                self.assertEqual(before, self.board.board_snapshot(), "refusal changed board, IDs or projections")
+
+    def test_derive_can_add_reservations_and_preserves_them_when_omitted(self):
+        source = planning_source()
+        source["epics"][0]["hitl"] = True
+        source["epics"][0]["stories"][0].update(hitl=True, plan_checkpoint=True, done_checkpoint=True)
+        self.board.derive(source)
+        self.board.derive()
+        self.assertIs(True, self.board.epic_record(1)["hitl"])
+        for flag in ("hitl", "plan_checkpoint", "done_checkpoint"):
+            self.assertIs(True, self.board.story(1)[flag])
+
+    def test_derive_refuses_nonboolean_reservation_values_without_writes(self):
+        for kind in ("epic", "story"):
+            for value in (None, 0, "false"):
+                with self.subTest(kind=kind, value=value):
+                    source = planning_source()
+                    planned = source["epics"][0] if kind == "epic" else source["epics"][0]["stories"][0]
+                    planned["hitl"] = value
+                    self.refused(lambda source=source: self.board.derive_raw(source), "must be a boolean")

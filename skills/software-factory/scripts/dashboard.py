@@ -467,9 +467,13 @@ def render_acceptance(roadmap):
             if _human_accepted(epic) else "human acceptance not recorded"
         )
         if _delegated_accepted(epic):
+            delegation = acceptance.get("delegation")
+            source = delegation.get("artifact") if isinstance(delegation, dict) else None
+            if not isinstance(source, str) or not source.strip():
+                source = "source unknown"
             human = (f'delegated acceptance by {esc(acceptance["actor"])} recorded at '
                      f'{esc(_time_label(acceptance.get("at")))}; grant '
-                     f'{esc(acceptance.get("delegation", {}).get("artifact", "source unknown"))}')
+                     f'{esc(source)}')
         out.append(
             f"<h3>Epic {esc(epic['id'])} — {esc(epic['title'])} {badge(epic['status'])}</h3>"
             f'<div class="small">stream {esc(epic["stream"])} · outcome: {esc(epic["outcome"])}</div>'

@@ -222,3 +222,8 @@ source grants and effects before relying on delegated acceptance. Expired grants
 changed evidence or unknown effects block their dependents; they are never repaired
 by relabeling an agent action as human approval. Continue independent work under
 the owner's blocked-work preference. See [authority](authority.md).
+
+Ordinary planning derivation can add human reservations but cannot remove an
+existing epic `hitl` or story `hitl`, `plan_checkpoint` or `done_checkpoint`, even
+when a regenerated plan explicitly supplies false. Removal requires an explicit
+owner amendment outside ordinary derivation; omission preserves the reservation.

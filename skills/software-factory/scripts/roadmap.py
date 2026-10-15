@@ -811,6 +811,19 @@ def new_epic(epic_id, source):
     }
 
 
+def refresh_reservations(record, source, keys):
+    """Planning updates cannot revoke a recorded human decision boundary."""
+    for key in keys:
+        if key not in source:
+            continue
+        if type(source[key]) is not bool:
+            raise BoardError(f"{key} reservation must be a boolean")
+        if record.get(key) is True and source[key] is False:
+            raise BoardError(f"{key} human reservation cannot be removed by ordinary derive; "
+                             "an explicit owner amendment is required")
+        record[key] = source[key]
+
+
 def refresh_story(record, source, epic_id, after):
     """Update structure fields only; status, receipts and history are live data."""
     record["epic"] = epic_id
@@ -819,9 +832,7 @@ def refresh_story(record, source, epic_id, after):
     record["after"] = after
     record["covers"] = list(source.get("covers", []))
     record["risk"] = source.get("risk", record.get("risk", ""))
-    for key in ("hitl", "plan_checkpoint", "done_checkpoint"):
-        if key in source:
-            record[key] = bool(source[key])
+    refresh_reservations(record, source, ("hitl", "plan_checkpoint", "done_checkpoint"))
     for key in ("sprint", "scope"):
         if key in source:
             record[key] = source[key]
@@ -941,10 +952,7 @@ def derive(workspace: Path, source_path: Path):
             epic["title"] = epic_source.get("title", epic["title"])
             if "outcome" in epic_source:
                 epic["outcome"] = epic_source["outcome"]
-            if "hitl" in epic_source:
-                if type(epic_source["hitl"]) is not bool:
-                    raise BoardError("epic hitl must be a boolean")
-                epic["hitl"] = epic_source["hitl"]
+            refresh_reservations(epic, epic_source, ("hitl",))
             for key in ("done_when", "covers"):
                 if key in epic_source:
                     epic[key] = list(epic_source[key])

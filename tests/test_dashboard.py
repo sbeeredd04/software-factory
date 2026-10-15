@@ -136,6 +136,18 @@ class MissionDashboardTests(unittest.TestCase):
         self.assertIn("delegated acceptance by release-owner", rendered)
         self.assertIn("grant.json", rendered)
 
+    def test_delegated_acceptance_tolerates_malformed_optional_bindings(self):
+        for binding in (None, "legacy-binding", [], {"artifact": None}, {"artifact": 42}, {"artifact": ""}):
+            with self.subTest(binding=binding):
+                accepted = {"by": "orchestrator", "mode": "delegated", "actor": "release-owner",
+                            "at": "2026-01-01T00:00:00Z", "delegation": binding,
+                            "assessment": binding, "evidence": binding}
+                rendered = dashboard.render_html(roadmap([story(state="done")], [epic(status="done", acceptance=accepted)]))
+                self.assertIn("delegated acceptance by release-owner", rendered)
+                self.assertIn("grant source unknown", rendered)
+                self.assertIn("1 with recorded delegated acceptance", rendered)
+                self.assertIn("0/1 epics with recorded human acceptance", rendered)
+
     def test_requested_model_does_not_replace_reported_effective_model(self):
         plan = roadmap([story(receipts={"attempt-1": attempt()})])
         rendered = dashboard.render_attempts(plan)
