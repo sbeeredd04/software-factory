@@ -5,8 +5,9 @@
 > (`<skill-dir>` is the installed skill directory, e.g. `.claude/skills/sf-crawl`
 > or `.agents/skills/sf-crawl`).
 
-- Source revision: b532758b731897cf06b67798171817a8afd91066
-- Generated: 2026-10-15T19:35:05Z
+- Source revision: b0695b11bf5b557b178bcb436cb98ef1f80c4b6a
+- File selection: git-tracked-and-unignored
+- Generated: 2026-10-15T19:49:06Z
 
 ## Limits
 
@@ -57,7 +58,7 @@
 | `skills.sf-agents.scripts.agents` | `skills/sf-agents/scripts/agents.py` | 9 | 0 | 8 |
 | `skills.sf-agents.scripts.render_bots` | `skills/sf-agents/scripts/render_bots.py` | 12 | 0 | 12 |
 | `skills.sf-agents.scripts.triage` | `skills/sf-agents/scripts/triage.py` | 10 | 0 | 7 |
-| `skills.sf-crawl.scripts.crawl` | `skills/sf-crawl/scripts/crawl.py` | 17 | 0 | 12 |
+| `skills.sf-crawl.scripts.crawl` | `skills/sf-crawl/scripts/crawl.py` | 18 | 0 | 13 |
 | `skills.sf-eval.scripts.sf_eval` | `skills/sf-eval/scripts/sf_eval.py` | 36 | 0 | 16 |
 | `skills.sf-evolve.scripts.evolve` | `skills/sf-evolve/scripts/evolve.py` | 19 | 0 | 10 |
 | `skills.sf-help.scripts.discover` | `skills/sf-help/scripts/discover.py` | 9 | 0 | 11 |
@@ -86,7 +87,7 @@
 | `tests.test_config` | `tests/test_config.py` | 1 | 0 | 7 |
 | `tests.test_config_kernel` | `tests/test_config_kernel.py` | 4 | 0 | 6 |
 | `tests.test_config_schema` | `tests/test_config_schema.py` | 1 | 0 | 5 |
-| `tests.test_crawl` | `tests/test_crawl.py` | 9 | 0 | 11 |
+| `tests.test_crawl` | `tests/test_crawl.py` | 11 | 0 | 12 |
 | `tests.test_dashboard` | `tests/test_dashboard.py` | 6 | 0 | 5 |
 | `tests.test_distribution` | `tests/test_distribution.py` | 1 | 0 | 16 |
 | `tests.test_docs_journey` | `tests/test_docs_journey.py` | 3 | 0 | 16 |
@@ -221,7 +222,7 @@ No internal import edges.
 - `scripts.bmad_install.provision` (line 425) calls `api.InstallError` (unconfirmed), `api.acquire_lock` (unconfirmed), `api.sha256` (unconfirmed), `attempt` (confirmed: scripts.bmad_install.attempt), `describe` (confirmed: scripts.bmad_install.describe), `fcntl.flock` (unconfirmed), `int` (unconfirmed), `isinstance` (unconfirmed), `load_ownership` (confirmed: scripts.bmad_install.load_ownership), `os.close` (unconfirmed), `previous.get` (unconfirmed), `print` (unconfirmed), `prior_bmad.get` (unconfirmed), `read_payload` (confirmed: scripts.bmad_install.read_payload), `record.update` (unconfirmed), `save_record` (confirmed: scripts.bmad_install.save_record), `set` (unconfirmed)
 - `scripts.build_release.release_files` (line 17) calls `Path` (unconfirmed), `ValueError` (unconfirmed), `all` (unconfirmed), `any` (unconfirmed), `distribution.bundle_files` (unconfirmed), `distribution.load_api` (unconfirmed), `files.items` (unconfirmed), `files.update` (unconfirmed), `is_relative_to` (unconfirmed), `isinstance` (unconfirmed), `items` (unconfirmed), `json.loads` (unconfirmed), `len` (unconfirmed), `name.startswith` (unconfirmed), `p.is_symlink` (unconfirmed), `path.is_file` (unconfirmed), `path.is_symlink` (unconfirmed), `path.parent.mkdir` (unconfirmed), `path.read_bytes` (unconfirmed), `path.resolve` (unconfirmed), `path.write_bytes` (unconfirmed), `read_text` (unconfirmed), `resolve` (unconfirmed), `root.resolve` (unconfirmed), `set` (unconfirmed) … (call cap reached)
 - `scripts.build_release.archive_bytes` (line 47) calls `archive.addfile` (unconfirmed), `files.items` (unconfirmed), `gzip.GzipFile` (unconfirmed), `io.BytesIO` (unconfirmed), `len` (unconfirmed), `name.endswith` (unconfirmed), `result.getvalue` (unconfirmed), `sorted` (unconfirmed), `tarfile.TarInfo` (unconfirmed), `tarfile.open` (unconfirmed)
-- … 1511 more call rows (cap reached)
+- … 1529 more call rows (cap reached)
 
 ## Entry points
 
@@ -309,8 +310,8 @@ Everything parsed cleanly.
 
 ## Not determined
 
-- no pyproject.toml found: packaging-declared Python entry points are not determinable.
-- no package.json found: script entry points are not determinable.
+- no selected readable pyproject.toml: packaging-declared Python entry points are not determinable.
+- no selected readable package.json: script entry points are not determinable.
 
 ## File census
 

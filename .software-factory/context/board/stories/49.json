@@ -169,6 +169,34 @@
         "Full gate and native installed-helper refresh remain pending. Filesystem fallback can include ignored material; submodules and nested repositories require separate crawls.",
         "No eval criteria or grader command was changed."
       ]
+    },
+    "actual-installed-native-proof": {
+      "type": "installed-helper-observation",
+      "subject_sha": "b0695b11bf5b557b178bcb436cb98ef1f80c4b6a",
+      "status": "pass",
+      "helper": "Installed sf-crawl after normal safe project refresh",
+      "exit_code": 0,
+      "owned_files_verified": 116,
+      "inventory": {
+        "cap_reached": false,
+        "max_files": 5000,
+        "revision": "b0695b11bf5b557b178bcb436cb98ef1f80c4b6a",
+        "root": ".",
+        "selection": "git-tracked-and-unignored",
+        "source_files_found": 89,
+        "source_files_parsed": 89
+      },
+      "python_modules": 79,
+      "json_bytes": 911843,
+      "json_sha256": "f65404cd37d25c17f84ae96e776532960e09ae67dc333e6e2ff1aee110e4b7ac",
+      "canonical_helper_matches_installed": true,
+      "limits": [
+        "No snapshot workaround; actual installed project was crawled natively. Combined full gate and live host loading remain separate."
+      ],
+      "unchanged_case": {
+        "exit_code": 0,
+        "criteria_or_command_changed": false
+      }
     }
   },
   "baseline_sha": null,
