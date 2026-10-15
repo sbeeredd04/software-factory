@@ -362,20 +362,19 @@ def write_record(path: Path, record):
 def live_claims(workspace: Path):
     """Read live claims from the run state; never writes, never expires them."""
     state = state_module()
-    pointer = state.pointer_path(workspace)
-    if not pointer.is_file():
-        return {}
     try:
-        reference = state.read_json(pointer)
-        run = state.within(workspace, workspace / reference.get("run", ""))
-        data = state.read_run(run)
+        pointer = state.pointer_path(workspace)
+        try:
+            pointer.lstat()
+        except FileNotFoundError:
+            return {}  # No active program is valid; a broken existing pointer is not.
+        _, data = state.load(workspace)
     except (state.StateError, OSError) as exc:
         raise BoardError(
             "the claims state exists but is unreadable; reconcile it with "
             "state.py repair before worker board updates"
         ) from exc
-    claims = data.get("claims")
-    return claims if isinstance(claims, dict) else {}
+    return data["claims"]
 
 
 def claims_or_empty(workspace: Path):
@@ -865,25 +864,26 @@ def update_story(workspace: Path, args):
         raise BoardError("story id must be a positive integer") from exc
     if story_id < 1:
         raise BoardError("story id must be a positive integer")
-    path, record = story_path(workspace, config, story_id)
-    if record["status"] in TERMINAL and not (
-        args.actor == "human" and args.status == "cancelled" and record["status"] == "cancelled"
-    ):
-        require_frozen_check(record)
-    if args.actor == "worker":
-        if not args.owner:
-            raise BoardError("worker updates need --owner matching the live claim owner")
-        worker_update(record, args, live_claims(workspace))
-    elif args.actor == "orchestrator":
-        orchestrator_update(workspace, config, record, args)
-    elif args.actor == "human":
-        human_update(record, args)
-    else:
-        raise BoardError("actor must be worker, orchestrator or human")
-    invalid = validate_story(record)
-    if invalid:
-        raise BoardError(f"the update would leave story {story_id} invalid: {invalid}")
-    write_record(path, record)
+    with board_locked(workspace):
+        path, record = story_path(workspace, config, story_id)
+        if record["status"] in TERMINAL and not (
+            args.actor == "human" and args.status == "cancelled" and record["status"] == "cancelled"
+        ):
+            require_frozen_check(record)
+        if args.actor == "worker":
+            if not args.owner:
+                raise BoardError("worker updates need --owner matching the live claim owner")
+            worker_update(record, args, live_claims(workspace))
+        elif args.actor == "orchestrator":
+            orchestrator_update(workspace, config, record, args)
+        elif args.actor == "human":
+            human_update(record, args)
+        else:
+            raise BoardError("actor must be worker, orchestrator or human")
+        invalid = validate_story(record)
+        if invalid:
+            raise BoardError(f"the update would leave story {story_id} invalid: {invalid}")
+        write_record(path, record)
     return record
 
 
@@ -1200,7 +1200,7 @@ def compute_roadmap(workspace: Path, config, directory: Path):
         deps_met = not missing
         claim = claims.get(str(story_id))
         if status in ("backlog", "ready-for-dev"):
-            state = "ready" if deps_met and not story.get("blocked") else "planned"
+            state = "ready" if deps_met and not story.get("blocked") and not claims_problem else "planned"
         else:
             state = {
                 "in-progress": "in-progress", "in-review": "review",
@@ -1212,7 +1212,7 @@ def compute_roadmap(workspace: Path, config, directory: Path):
                 waiting.append({"id": story_id, "epic": story["epic"],
                                 "stream": stream_of[story_id], "title": story["title"],
                                 "missing": missing})
-            elif not story.get("blocked") and claim is None:
+            elif not story.get("blocked") and claim is None and not claims_problem:
                 why = "; ".join([*(f"after {part}" for part in met_parts)] or ["no prerequisites"])
                 frontier_ready.append({"id": story_id, "epic": story["epic"],
                                        "stream": stream_of[story_id], "title": story["title"],
