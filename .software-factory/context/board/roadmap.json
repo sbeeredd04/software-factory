@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-15T20:34:55.202593+00:00",
-  "revision": 339,
+  "generated_at": "2026-10-15T20:52:06.454243+00:00",
+  "revision": 344,
   "streams": [
     {
       "id": "W-foundation",
@@ -109,7 +109,7 @@
         "planned": 0,
         "ready": 1,
         "in-progress": 0,
-        "review": 5,
+        "review": 6,
         "built": 0,
         "done": 0,
         "cancelled": 0
@@ -299,7 +299,8 @@
         31,
         32,
         33,
-        47
+        47,
+        53
       ],
       "needs": [
         4
@@ -6349,7 +6350,8 @@
       },
       "blocks": [
         31,
-        47
+        47,
+        53
       ],
       "history": [
         {
@@ -6769,7 +6771,8 @@
         "live": false
       },
       "blocks": [
-        33
+        33,
+        53
       ],
       "history": [
         {
@@ -9114,6 +9117,127 @@
       "source_key": "installer-hosts/native-link-resource-closure",
       "evidence_contract": 1,
       "review_subject_sha": "0d8998abb006fe5a8e38e9ed9721f51a4b9cd7a8"
+    },
+    {
+      "id": 53,
+      "epic": 5,
+      "stream": "W-launch",
+      "type": "bug",
+      "title": "Restore README navigation to asset provenance and regeneration",
+      "status": "in-review",
+      "state": "review",
+      "owner": "codex-readme",
+      "after": [
+        32,
+        30
+      ],
+      "covers": [
+        "TLS-ASSET-001",
+        "VAL-README-002"
+      ],
+      "risk": "standard",
+      "hitl": false,
+      "plan_checkpoint": false,
+      "done_checkpoint": false,
+      "blocked": null,
+      "receipts": {
+        "reproduction": {
+          "type": "verification-observation",
+          "subject_sha": "cac657bc86fa19b2a39cf5c68baad4c22c09fcd5",
+          "status": "failed",
+          "full_gate_exit_code": 1,
+          "full_gate_pass": false,
+          "unit_tests": {
+            "run": 850,
+            "passed": 847,
+            "failed": 2,
+            "skipped": 1,
+            "seconds": 485.268
+          },
+          "evals": {
+            "run_id": "r-20261015T204339Z-premerge",
+            "passed": 51,
+            "failed": 1,
+            "unverified": 0,
+            "skipped": 0,
+            "nonpassing": {
+              "TLS-ASSET-001": "fail"
+            }
+          },
+          "failure": "README rewrite omitted meaningful navigation to the existing released asset provenance/regeneration guide; asset test and nested self-eval fail the same unchanged contract.",
+          "all_other_full_gate_steps_passed": true,
+          "all_507_frozen_source_hashes_unchanged": true,
+          "separate_preflight": {
+            "commands_passed": 34,
+            "release_reproducible": true,
+            "three_host_extracted_installs_and_repeat_pass": true
+          },
+          "separate_ui": {
+            "cases_passed": 6,
+            "host_setup_checks_passed": 18
+          },
+          "limits": [
+            "Independent package/UI/setup passes do not turn the failed full gate green. Restore source navigation and rerun exact complete52 contract."
+          ],
+          "gate_log_sha256": "96f7d643424f59cf219929f73a9665c1a8c8b2f0d8ed222b02cf42114e2278ad"
+        },
+        "independent-review": {
+          "type": "independent-review",
+          "subject_sha": "1da4efcfcf90a937d57ab5b677b5570d69964ec4",
+          "author": "/root/docs_impl/readme_implement",
+          "reviewer": "/root/skills_route_review",
+          "test_reviewer": "/root",
+          "status": "pass",
+          "scope": "Exact README-only two-line repair restores meaningful asset provenance/regeneration navigation adjacent to hero. Target exists in released allowlist; test/eval contract, prompts, routes and all other source bytes unchanged.",
+          "checks": {
+            "assets_tests_run": 35,
+            "assets_tests_passed": 35,
+            "assets_seconds": 0.332,
+            "readme_tests_run": 12,
+            "readme_tests_passed": 12,
+            "readme_seconds": 3.054,
+            "exit_code": 0,
+            "skipped": 0,
+            "clean_start_end_head_and_source_hashes_unchanged": true
+          },
+          "findings": [],
+          "limits": [
+            "Focused and semantic review only; failed full850-unit/51-of52-eval candidate preserved. Combined full52 rerun required."
+          ]
+        }
+      },
+      "baseline_sha": null,
+      "branch": null,
+      "pr": null,
+      "merged_sha": null,
+      "claim": {
+        "live": false
+      },
+      "blocks": [],
+      "history": [
+        {
+          "at": "2026-10-15T20:48:00.351085+00:00",
+          "by": "orchestrator",
+          "from": "backlog",
+          "to": "ready-for-dev"
+        },
+        {
+          "at": "2026-10-15T20:48:00.449984+00:00",
+          "by": "codex-readme",
+          "from": "ready-for-dev",
+          "to": "in-progress"
+        },
+        {
+          "at": "2026-10-15T20:52:06.379944+00:00",
+          "by": "codex-readme",
+          "from": "in-progress",
+          "to": "in-review"
+        }
+      ],
+      "findings": [],
+      "source_key": "launch-publication/readme-asset-provenance",
+      "evidence_contract": 1,
+      "review_subject_sha": "1da4efcfcf90a937d57ab5b677b5570d69964ec4"
     }
   ],
   "frontier": {

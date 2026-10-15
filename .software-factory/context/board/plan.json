@@ -1203,6 +1203,23 @@
           "hitl": false,
           "plan_checkpoint": false,
           "done_checkpoint": false
+        },
+        {
+          "key": "readme-asset-provenance",
+          "title": "Restore README navigation to asset provenance and regeneration",
+          "type": "bug",
+          "after": [
+            "readme",
+            "marketing-assets"
+          ],
+          "covers": [
+            "TLS-ASSET-001",
+            "VAL-README-002"
+          ],
+          "risk": "standard",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": false
         }
       ]
     }
