@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-15T12:07:42.674202+00:00",
-  "revision": 234,
+  "generated_at": "2026-10-15T12:31:26.434133+00:00",
+  "revision": 241,
   "streams": [
     {
       "id": "W-foundation",
@@ -4678,6 +4678,207 @@
           "summary": "Changes required: foreign REST PR scope, ambiguous invocation flag forms, managed YAML topology, nonadvancing cursors and missing-installed-dependency fallback. Actual isolated frozen probes; no provider/host execution.",
           "limits": [
             "Synthetic source review/probes only; no integrated acceptance."
+          ]
+        },
+        "rejected-651-review": {
+          "type": "independent-review",
+          "status": "fail",
+          "subject_sha": "651e9d6a2bfc7a944e342836f6401faa66acce0a",
+          "author": "host-contracts",
+          "reviewer": "mission-status",
+          "independent": true,
+          "artifact": ".software-factory/runs/software-factory-v01/evidence/agents-651-independent-review.md",
+          "artifact_sha256": "4c968fbe5d376a7538d7613fe570edc955cc4900ed893a947f37a7d5ce6a5cd6",
+          "probe_artifact": ".software-factory/runs/software-factory-v01/evidence/agents-651-independent-probes.json",
+          "probe_sha256": "309c14049a553d2205418188a9ccb431dd370fa3f9ec0db37a3b45b989da9222",
+          "summary": "Four repairs accepted; changes still required for compound missing-installed-schema/helper source-layout spoof. Frozen synthetic probe actually loaded harmless consumer sentinel. No host/provider/network execution.",
+          "limits": [
+            "Local isolated source/probe evidence only; not integrated acceptance."
+          ]
+        },
+        "rejected-651-packaging": {
+          "type": "forward-use",
+          "status": "finding",
+          "subject_sha": "651e9d6a2bfc7a944e342836f6401faa66acce0a",
+          "artifact": ".software-factory/runs/software-factory-v01/evidence/agents-651-packaging-finding.json",
+          "artifact_sha256": "a3fd8e0f167830e41aab9ea640e1a2f0b93b24eec8bb0cdefff0f2ca8c003398",
+          "summary": "Independent packaging:137 actualCLI/145observations,101exit0+36expectedrefusal/probeexit1,zeroguards. Compoundmissing-schema/helper imports disposable ancestor sentinel in all6installed/nativecontexts; candidate notaccepted. Two identical458memberreleases; scoped ordinarycasespassed.",
+          "limits": [
+            "Syntheticconsent/providerdata, no livehost/integration/acceptance. HOMEvariablesunchanged is not realhomeaudit."
+          ]
+        },
+        "rejected-090-packaging": {
+          "type": "forward-use",
+          "status": "finding",
+          "subject_sha": "090c28fe8c347b85230ca68629994bd986c1b033",
+          "artifact": ".software-factory/runs/software-factory-v01/evidence/agents-090-packaging-finding.json",
+          "artifact_sha256": "d5c25b5aaa142a959b3c46259161d926c604026c154b2c2096c0749781b1ce82",
+          "summary": "All6 installed/native dependency-spoof checks and canonical captured-byte checks pass. Two actualCLIlargeproposal cases fail unexpectedly atapply despite valid generatedplan:four4000-characterprinciples and17000-characterpreservedprefix. Consumer snapshots unchanged. 152commands167observations,107exit0+43expectedrefusals+2unexpectedexit1;zeroguards.",
+          "limits": [
+            "Syntheticfixtures only; candidate notaccepted. No livehost/provider/integration/acceptance."
+          ]
+        },
+        "rejected-090-review": {
+          "type": "independent-review",
+          "status": "fail",
+          "subject_sha": "090c28fe8c347b85230ca68629994bd986c1b033",
+          "author": "host-contracts",
+          "reviewer": "mission-status",
+          "independent": true,
+          "artifact": ".software-factory/runs/software-factory-v01/evidence/agents-090-independent-review.md",
+          "artifact_sha256": "cfd531f5252368f020057093c233c0117d348146f4c911dfae5968c0df8556f4",
+          "proofs": {
+            "agents-090-independent-review.md": {
+              "path": ".software-factory/runs/software-factory-v01/evidence/agents-090-independent-review.md",
+              "sha256": "cfd531f5252368f020057093c233c0117d348146f4c911dfae5968c0df8556f4"
+            },
+            "agents-090-independent-probes.json": {
+              "path": ".software-factory/runs/software-factory-v01/evidence/agents-090-independent-probes.json",
+              "sha256": "fbb3d5ea9263ae68c0b0892344a9fb24ab420ee6b504d31fb4082aea92df7370"
+            },
+            "agents-090-independent-parser-repro.json": {
+              "path": ".software-factory/runs/software-factory-v01/evidence/agents-090-independent-parser-repro.json",
+              "sha256": "9fb75e23a9ea94d8726fe236f62a1302dede1b33961ada1460ee07e731334a6d"
+            }
+          },
+          "summary": "Dependency repair independently passes34actualisolatedcases includingall6installed/nativecontexts andall12compoundmissinghelper/template paths. Overall changesrequired: CLIcannotreaditsownlegitimate>16384char generatedproposal. Newartifactparserrepairpending.",
+          "limits": [
+            "Source/fixtureproofonly, no livehost/provider/integration/acceptance. No unit/fullgateclaim; correctedreviewerharnesscatch recorded."
+          ]
+        },
+        "corrected-bbda-packaging": {
+          "type": "forward-use",
+          "status": "pass-executed-cases",
+          "subject_sha": "bbda559611d0126d1b0a574c9a6c369aa8ac4c3f",
+          "artifact": ".software-factory/runs/software-factory-v01/evidence/agents-bbda-packaging-proof.json",
+          "artifact_sha256": "c0793b73168d6f9a2738863697ad8280709bfcf75e06a69c8acafd253ba07b56",
+          "summary": "Independent actual214CLI/235observations:159exit0+55expectedrefusal exit1,guards0. All6installed/nativecontexts aftersourcerelocation; bothcompounddependencies, largevalidrules/prefix/path roundtrips and zero-writecontrol/oversize refusals passed. Canonicalsource captured-byte/hashchecks pass. Two identical458-member999221-byte releases.",
+          "limits": [
+            "Scoped isolated fixtures and staticnativeformats only, syntheticconsent/providercaptures; no livehost, remoteCI/integration/humanacceptance/publication. Inheritedhomevariables unchanged is not realhomeaudit."
+          ]
+        },
+        "corrected-bbda-source-review": {
+          "type": "independent-review",
+          "status": "pass",
+          "subject_sha": "bbda559611d0126d1b0a574c9a6c369aa8ac4c3f",
+          "author": "host-contracts",
+          "reviewer": "mission-status",
+          "independent": true,
+          "artifact": ".software-factory/runs/software-factory-v01/evidence/agents-bbda-independent-review.md",
+          "artifact_sha256": "929fa61f0a7f6d9de2358e301780ab6d23a2a2bd56d1f2440e76a01f86b41f26",
+          "probe_artifact": ".software-factory/runs/software-factory-v01/evidence/agents-bbda-independent-probes.json",
+          "probe_sha256": "d93c1cfa4f41f3669ac7f906283549fd89471b6d6907a598a8bba6f8a4364334",
+          "summary": "Reviewed fullcandidate using original source review and unchanged resolved deltas plus currentartifactreaderrepair.24actualfrozenAPI observations pass; old34dependencycases remainat090 andarenotrelabeled. No sourceblocker remains. Root13CLI +independent214CLIpackaging are separate exactbbda proofs.",
+          "limits": [
+            "Localsource acceptanceonly; integratedfullgate/remoteCI/effects/humanacceptance separate."
+          ]
+        },
+        "candidate-089-worker-gate": {
+          "type": "verification",
+          "status": "fail",
+          "subject_sha": "0890441902427aa1d4196dd4b503e971d280ef8e",
+          "command": "bash scripts/check_all.sh",
+          "exit_code": 1,
+          "artifact": ".software-factory/runs/software-factory-v01/evidence/agents-0890441-worker-gate.log",
+          "artifact_sha256": "6e9f763ba7e8fbb157181a83719c34d0dc8f2def60ea15a175a63f6cedd1bb4f",
+          "unit_tests": {
+            "run": 668,
+            "passed": 665,
+            "failed": 2,
+            "skipped": 1,
+            "seconds": 198.927
+          },
+          "failed_test_names": [
+            "test_premerge_run_is_offline_green_and_guarded (test_dogfood.EvalRunTest.test_premerge_run_is_offline_green_and_guarded)",
+            "test_codebase_regeneration_is_stable (test_dogfood.ProjectionFreshnessTest.test_codebase_regeneration_is_stable)"
+          ],
+          "evals": {
+            "passed": 29,
+            "failed": 1,
+            "failed_ids": [
+              "SKL-CRAWL-002"
+            ]
+          },
+          "eval_runs": [
+            "r-20261015T120210Z-premerge",
+            "r-20261015T120413Z-premerge"
+          ],
+          "frozen_source_hashes_matched": 29,
+          "summary": "Isolated full gate failed on stale canonical crawl projection: two unit failures and SKL-CRAWL-002. All other executed gate steps passed; optional external schema crosscheck skipped. Source review rejection and actual packaging findings are separate retained evidence.",
+          "limits": [
+            "Not integrated primary gate; not livehost/remoteCI/effects/humanacceptance proof."
+          ]
+        },
+        "candidate-651-worker-gate": {
+          "type": "verification",
+          "status": "fail",
+          "subject_sha": "651e9d6a2bfc7a944e342836f6401faa66acce0a",
+          "command": "bash scripts/check_all.sh",
+          "exit_code": 1,
+          "artifact": ".software-factory/runs/software-factory-v01/evidence/agents-651e9d6-worker-gate.log",
+          "artifact_sha256": "cc2e0c4072fc0f1b87462a1e3143a2ee04bce78650ad2ddb1c091043ab0bce3c",
+          "unit_tests": {
+            "run": 672,
+            "passed": 669,
+            "failed": 2,
+            "skipped": 1,
+            "seconds": 188.455
+          },
+          "failed_test_names": [
+            "test_premerge_run_is_offline_green_and_guarded (test_dogfood.EvalRunTest.test_premerge_run_is_offline_green_and_guarded)",
+            "test_codebase_regeneration_is_stable (test_dogfood.ProjectionFreshnessTest.test_codebase_regeneration_is_stable)"
+          ],
+          "evals": {
+            "passed": 29,
+            "failed": 1,
+            "failed_ids": [
+              "SKL-CRAWL-002"
+            ]
+          },
+          "eval_runs": [
+            "r-20261015T121123Z-premerge",
+            "r-20261015T121319Z-premerge"
+          ],
+          "frozen_source_hashes_matched": 29,
+          "summary": "Isolated full gate failed on stale canonical crawl projection: two unit failures and SKL-CRAWL-002. All other executed gate steps passed; optional external schema crosscheck skipped. Source review rejection and actual packaging findings are separate retained evidence.",
+          "limits": [
+            "Not integrated primary gate; not livehost/remoteCI/effects/humanacceptance proof."
+          ]
+        },
+        "candidate-090-worker-gate": {
+          "type": "verification",
+          "status": "fail",
+          "subject_sha": "090c28fe8c347b85230ca68629994bd986c1b033",
+          "command": "bash scripts/check_all.sh",
+          "exit_code": 1,
+          "artifact": ".software-factory/runs/software-factory-v01/evidence/agents-090c28f-worker-gate.log",
+          "artifact_sha256": "3d0c1e8fa8cf1bb9db8772dd09a6653291e483ebe0440a3f1b1a42b014aa2445",
+          "unit_tests": {
+            "run": 673,
+            "passed": 670,
+            "failed": 2,
+            "skipped": 1,
+            "seconds": 190.097
+          },
+          "failed_test_names": [
+            "test_premerge_run_is_offline_green_and_guarded (test_dogfood.EvalRunTest.test_premerge_run_is_offline_green_and_guarded)",
+            "test_codebase_regeneration_is_stable (test_dogfood.ProjectionFreshnessTest.test_codebase_regeneration_is_stable)"
+          ],
+          "evals": {
+            "passed": 29,
+            "failed": 1,
+            "failed_ids": [
+              "SKL-CRAWL-002"
+            ]
+          },
+          "eval_runs": [
+            "r-20261015T122001Z-premerge",
+            "r-20261015T122158Z-premerge"
+          ],
+          "frozen_source_hashes_matched": 29,
+          "summary": "Isolated full gate failed on stale canonical crawl projection: two unit failures and SKL-CRAWL-002. All other executed gate steps passed; optional external schema crosscheck skipped. Source review rejection and actual packaging findings are separate retained evidence.",
+          "limits": [
+            "Not integrated primary gate; not livehost/remoteCI/effects/humanacceptance proof."
           ]
         }
       },

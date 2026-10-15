@@ -4116,13 +4116,130 @@
       "provenance": [
         {
           "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/candidate-089-worker-gate",
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
+        }
+      ],
+      "relation": "records",
+      "source": "receipt:27:candidate-089-worker-gate",
+      "target": "surface:.software-factory/runs/software-factory-v01/evidence/agents-0890441-worker-gate.log"
+    },
+    {
+      "basis": "artifact-reference",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/candidate-090-worker-gate",
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
+        }
+      ],
+      "relation": "records",
+      "source": "receipt:27:candidate-090-worker-gate",
+      "target": "surface:.software-factory/runs/software-factory-v01/evidence/agents-090c28f-worker-gate.log"
+    },
+    {
+      "basis": "artifact-reference",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/candidate-651-worker-gate",
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
+        }
+      ],
+      "relation": "records",
+      "source": "receipt:27:candidate-651-worker-gate",
+      "target": "surface:.software-factory/runs/software-factory-v01/evidence/agents-651e9d6-worker-gate.log"
+    },
+    {
+      "basis": "artifact-reference",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/corrected-bbda-packaging",
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
+        }
+      ],
+      "relation": "records",
+      "source": "receipt:27:corrected-bbda-packaging",
+      "target": "surface:.software-factory/runs/software-factory-v01/evidence/agents-bbda-packaging-proof.json"
+    },
+    {
+      "basis": "artifact-reference",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/corrected-bbda-source-review",
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
+        }
+      ],
+      "relation": "records",
+      "source": "receipt:27:corrected-bbda-source-review",
+      "target": "surface:.software-factory/runs/software-factory-v01/evidence/agents-bbda-independent-review.md"
+    },
+    {
+      "basis": "artifact-reference",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/rejected-089-review",
-          "sha256": "7fedaf9006ea6a99edeec013b14007dbc1e6af0a2cb6b2dbbf53ec7797b9857c"
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
         }
       ],
       "relation": "records",
       "source": "receipt:27:rejected-089-review",
       "target": "surface:.software-factory/runs/software-factory-v01/evidence/agents-089-independent-review.md"
+    },
+    {
+      "basis": "artifact-reference",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/rejected-090-packaging",
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
+        }
+      ],
+      "relation": "records",
+      "source": "receipt:27:rejected-090-packaging",
+      "target": "surface:.software-factory/runs/software-factory-v01/evidence/agents-090-packaging-finding.json"
+    },
+    {
+      "basis": "artifact-reference",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/rejected-090-review",
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
+        }
+      ],
+      "relation": "records",
+      "source": "receipt:27:rejected-090-review",
+      "target": "surface:.software-factory/runs/software-factory-v01/evidence/agents-090-independent-review.md"
+    },
+    {
+      "basis": "artifact-reference",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/rejected-651-packaging",
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
+        }
+      ],
+      "relation": "records",
+      "source": "receipt:27:rejected-651-packaging",
+      "target": "surface:.software-factory/runs/software-factory-v01/evidence/agents-651-packaging-finding.json"
+    },
+    {
+      "basis": "artifact-reference",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/rejected-651-review",
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
+        }
+      ],
+      "relation": "records",
+      "source": "receipt:27:rejected-651-review",
+      "target": "surface:.software-factory/runs/software-factory-v01/evidence/agents-651-independent-review.md"
     },
     {
       "basis": "artifact-reference",
@@ -6496,7 +6613,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/covers/0",
-          "sha256": "7fedaf9006ea6a99edeec013b14007dbc1e6af0a2cb6b2dbbf53ec7797b9857c"
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
         }
       ],
       "relation": "covers",
@@ -6509,7 +6626,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/covers/1",
-          "sha256": "7fedaf9006ea6a99edeec013b14007dbc1e6af0a2cb6b2dbbf53ec7797b9857c"
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
         }
       ],
       "relation": "covers",
@@ -6522,7 +6639,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/covers/2",
-          "sha256": "7fedaf9006ea6a99edeec013b14007dbc1e6af0a2cb6b2dbbf53ec7797b9857c"
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
         }
       ],
       "relation": "covers",
@@ -6535,7 +6652,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/covers/3",
-          "sha256": "7fedaf9006ea6a99edeec013b14007dbc1e6af0a2cb6b2dbbf53ec7797b9857c"
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
         }
       ],
       "relation": "covers",
@@ -6548,7 +6665,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/covers/4",
-          "sha256": "7fedaf9006ea6a99edeec013b14007dbc1e6af0a2cb6b2dbbf53ec7797b9857c"
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
         }
       ],
       "relation": "covers",
@@ -6561,7 +6678,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/covers/5",
-          "sha256": "7fedaf9006ea6a99edeec013b14007dbc1e6af0a2cb6b2dbbf53ec7797b9857c"
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
         }
       ],
       "relation": "covers",
@@ -6574,7 +6691,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/covers/6",
-          "sha256": "7fedaf9006ea6a99edeec013b14007dbc1e6af0a2cb6b2dbbf53ec7797b9857c"
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
         }
       ],
       "relation": "covers",
@@ -6587,7 +6704,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/covers/7",
-          "sha256": "7fedaf9006ea6a99edeec013b14007dbc1e6af0a2cb6b2dbbf53ec7797b9857c"
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
         }
       ],
       "relation": "covers",
@@ -21312,7 +21429,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/after/0",
-          "sha256": "7fedaf9006ea6a99edeec013b14007dbc1e6af0a2cb6b2dbbf53ec7797b9857c"
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
         }
       ],
       "relation": "depends-on",
@@ -21324,7 +21441,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/epic",
-          "sha256": "7fedaf9006ea6a99edeec013b14007dbc1e6af0a2cb6b2dbbf53ec7797b9857c"
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
         }
       ],
       "relation": "part-of",
@@ -21336,7 +21453,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/active-attempt",
-          "sha256": "7fedaf9006ea6a99edeec013b14007dbc1e6af0a2cb6b2dbbf53ec7797b9857c"
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
         }
       ],
       "relation": "records",
@@ -21348,7 +21465,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/active-attempt",
-          "sha256": "7fedaf9006ea6a99edeec013b14007dbc1e6af0a2cb6b2dbbf53ec7797b9857c"
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
         }
       ],
       "relation": "subject",
@@ -21359,8 +21476,128 @@
       "provenance": [
         {
           "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/candidate-089-worker-gate",
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
+        }
+      ],
+      "relation": "records",
+      "source": "story:27",
+      "target": "receipt:27:candidate-089-worker-gate"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/candidate-089-worker-gate",
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
+        }
+      ],
+      "relation": "subject",
+      "source": "receipt:27:candidate-089-worker-gate",
+      "target": "commit:0890441902427aa1d4196dd4b503e971d280ef8e"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/candidate-090-worker-gate",
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
+        }
+      ],
+      "relation": "records",
+      "source": "story:27",
+      "target": "receipt:27:candidate-090-worker-gate"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/candidate-090-worker-gate",
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
+        }
+      ],
+      "relation": "subject",
+      "source": "receipt:27:candidate-090-worker-gate",
+      "target": "commit:090c28fe8c347b85230ca68629994bd986c1b033"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/candidate-651-worker-gate",
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
+        }
+      ],
+      "relation": "records",
+      "source": "story:27",
+      "target": "receipt:27:candidate-651-worker-gate"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/candidate-651-worker-gate",
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
+        }
+      ],
+      "relation": "subject",
+      "source": "receipt:27:candidate-651-worker-gate",
+      "target": "commit:651e9d6a2bfc7a944e342836f6401faa66acce0a"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/corrected-bbda-packaging",
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
+        }
+      ],
+      "relation": "records",
+      "source": "story:27",
+      "target": "receipt:27:corrected-bbda-packaging"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/corrected-bbda-packaging",
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
+        }
+      ],
+      "relation": "subject",
+      "source": "receipt:27:corrected-bbda-packaging",
+      "target": "commit:bbda559611d0126d1b0a574c9a6c369aa8ac4c3f"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/corrected-bbda-source-review",
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
+        }
+      ],
+      "relation": "records",
+      "source": "story:27",
+      "target": "receipt:27:corrected-bbda-source-review"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/corrected-bbda-source-review",
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
+        }
+      ],
+      "relation": "subject",
+      "source": "receipt:27:corrected-bbda-source-review",
+      "target": "commit:bbda559611d0126d1b0a574c9a6c369aa8ac4c3f"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/rejected-089-review",
-          "sha256": "7fedaf9006ea6a99edeec013b14007dbc1e6af0a2cb6b2dbbf53ec7797b9857c"
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
         }
       ],
       "relation": "records",
@@ -21372,12 +21609,108 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/rejected-089-review",
-          "sha256": "7fedaf9006ea6a99edeec013b14007dbc1e6af0a2cb6b2dbbf53ec7797b9857c"
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
         }
       ],
       "relation": "subject",
       "source": "receipt:27:rejected-089-review",
       "target": "commit:0890441902427aa1d4196dd4b503e971d280ef8e"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/rejected-090-packaging",
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
+        }
+      ],
+      "relation": "records",
+      "source": "story:27",
+      "target": "receipt:27:rejected-090-packaging"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/rejected-090-packaging",
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
+        }
+      ],
+      "relation": "subject",
+      "source": "receipt:27:rejected-090-packaging",
+      "target": "commit:090c28fe8c347b85230ca68629994bd986c1b033"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/rejected-090-review",
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
+        }
+      ],
+      "relation": "records",
+      "source": "story:27",
+      "target": "receipt:27:rejected-090-review"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/rejected-090-review",
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
+        }
+      ],
+      "relation": "subject",
+      "source": "receipt:27:rejected-090-review",
+      "target": "commit:090c28fe8c347b85230ca68629994bd986c1b033"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/rejected-651-packaging",
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
+        }
+      ],
+      "relation": "records",
+      "source": "story:27",
+      "target": "receipt:27:rejected-651-packaging"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/rejected-651-packaging",
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
+        }
+      ],
+      "relation": "subject",
+      "source": "receipt:27:rejected-651-packaging",
+      "target": "commit:651e9d6a2bfc7a944e342836f6401faa66acce0a"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/rejected-651-review",
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
+        }
+      ],
+      "relation": "records",
+      "source": "story:27",
+      "target": "receipt:27:rejected-651-review"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/rejected-651-review",
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
+        }
+      ],
+      "relation": "subject",
+      "source": "receipt:27:rejected-651-review",
+      "target": "commit:651e9d6a2bfc7a944e342836f6401faa66acce0a"
     },
     {
       "provenance": [
@@ -22972,7 +23305,7 @@
     {
       "kind": "file",
       "path": ".software-factory/context/board/stories/27.json",
-      "sha256": "7fedaf9006ea6a99edeec013b14007dbc1e6af0a2cb6b2dbbf53ec7797b9857c"
+      "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
     },
     {
       "kind": "file",
@@ -23238,6 +23571,51 @@
       "kind": "file",
       "path": ".software-factory/runs/software-factory-v01/evidence/agents-089-independent-review.md",
       "sha256": "b2682a60ea4b70baec9623acc39db07ea0b940dd3f7e362e6699572ce4145715"
+    },
+    {
+      "kind": "file",
+      "path": ".software-factory/runs/software-factory-v01/evidence/agents-0890441-worker-gate.log",
+      "sha256": "6e9f763ba7e8fbb157181a83719c34d0dc8f2def60ea15a175a63f6cedd1bb4f"
+    },
+    {
+      "kind": "file",
+      "path": ".software-factory/runs/software-factory-v01/evidence/agents-090-independent-review.md",
+      "sha256": "cfd531f5252368f020057093c233c0117d348146f4c911dfae5968c0df8556f4"
+    },
+    {
+      "kind": "file",
+      "path": ".software-factory/runs/software-factory-v01/evidence/agents-090-packaging-finding.json",
+      "sha256": "d5c25b5aaa142a959b3c46259161d926c604026c154b2c2096c0749781b1ce82"
+    },
+    {
+      "kind": "file",
+      "path": ".software-factory/runs/software-factory-v01/evidence/agents-090c28f-worker-gate.log",
+      "sha256": "3d0c1e8fa8cf1bb9db8772dd09a6653291e483ebe0440a3f1b1a42b014aa2445"
+    },
+    {
+      "kind": "file",
+      "path": ".software-factory/runs/software-factory-v01/evidence/agents-651-independent-review.md",
+      "sha256": "4c968fbe5d376a7538d7613fe570edc955cc4900ed893a947f37a7d5ce6a5cd6"
+    },
+    {
+      "kind": "file",
+      "path": ".software-factory/runs/software-factory-v01/evidence/agents-651-packaging-finding.json",
+      "sha256": "a3fd8e0f167830e41aab9ea640e1a2f0b93b24eec8bb0cdefff0f2ca8c003398"
+    },
+    {
+      "kind": "file",
+      "path": ".software-factory/runs/software-factory-v01/evidence/agents-651e9d6-worker-gate.log",
+      "sha256": "cc2e0c4072fc0f1b87462a1e3143a2ee04bce78650ad2ddb1c091043ab0bce3c"
+    },
+    {
+      "kind": "file",
+      "path": ".software-factory/runs/software-factory-v01/evidence/agents-bbda-independent-review.md",
+      "sha256": "929fa61f0a7f6d9de2358e301780ab6d23a2a2bd56d1f2440e76a01f86b41f26"
+    },
+    {
+      "kind": "file",
+      "path": ".software-factory/runs/software-factory-v01/evidence/agents-bbda-packaging-proof.json",
+      "sha256": "c0793b73168d6f9a2738863697ad8280709bfcf75e06a69c8acafd253ba07b56"
     },
     {
       "kind": "file",
@@ -23799,8 +24177,13 @@
       "provenance": [
         {
           "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/candidate-089-worker-gate/subject_sha",
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
+        },
+        {
+          "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/rejected-089-review/subject_sha",
-          "sha256": "7fedaf9006ea6a99edeec013b14007dbc1e6af0a2cb6b2dbbf53ec7797b9857c"
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
         }
       ],
       "type": "commit"
@@ -23828,6 +24211,28 @@
           "path": ".software-factory/context/board/stories/45.json",
           "pointer": "/receipts/implementation-result/subject_sha",
           "sha256": "3ad8f8228f34df63ed4993dd6ce7dba4028f1d2ce66b83b594c542a59445e76c"
+        }
+      ],
+      "type": "commit"
+    },
+    {
+      "id": "commit:090c28fe8c347b85230ca68629994bd986c1b033",
+      "label": "090c28fe8c347b85230ca68629994bd986c1b033",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/candidate-090-worker-gate/subject_sha",
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
+        },
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/rejected-090-packaging/subject_sha",
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
+        },
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/rejected-090-review/subject_sha",
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
         }
       ],
       "type": "commit"
@@ -23873,7 +24278,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/active-attempt/subject_sha",
-          "sha256": "7fedaf9006ea6a99edeec013b14007dbc1e6af0a2cb6b2dbbf53ec7797b9857c"
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
         }
       ],
       "type": "commit"
@@ -24118,6 +24523,28 @@
           "path": ".software-factory/context/board/stories/41.json",
           "pointer": "/receipts/implementation-attempt/subject_sha",
           "sha256": "2e28bfe2042fc711506b36429982cbf33333433477ebe55100e9a8513ea4f978"
+        }
+      ],
+      "type": "commit"
+    },
+    {
+      "id": "commit:651e9d6a2bfc7a944e342836f6401faa66acce0a",
+      "label": "651e9d6a2bfc7a944e342836f6401faa66acce0a",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/candidate-651-worker-gate/subject_sha",
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
+        },
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/rejected-651-packaging/subject_sha",
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
+        },
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/rejected-651-review/subject_sha",
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
         }
       ],
       "type": "commit"
@@ -24402,6 +24829,23 @@
           "path": ".software-factory/context/board/stories/24.json",
           "pointer": "/receipts/repaired-handoff/subject_sha",
           "sha256": "c9bb685a147476ec5804d0927c5856277e0d56dd2411f9e2424894d40dc51d3d"
+        }
+      ],
+      "type": "commit"
+    },
+    {
+      "id": "commit:bbda559611d0126d1b0a574c9a6c369aa8ac4c3f",
+      "label": "bbda559611d0126d1b0a574c9a6c369aa8ac4c3f",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/corrected-bbda-packaging/subject_sha",
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
+        },
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/corrected-bbda-source-review/subject_sha",
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
         }
       ],
       "type": "commit"
@@ -43020,12 +43464,97 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/active-attempt",
-          "sha256": "7fedaf9006ea6a99edeec013b14007dbc1e6af0a2cb6b2dbbf53ec7797b9857c"
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
         }
       ],
       "reported_status": "assigned",
       "story": 27,
       "subject_sha": "19ad67ef69cf9ecf3970d4d3738322d8443bc8a5",
+      "type": "receipt"
+    },
+    {
+      "artifact_integrity": "matched",
+      "freshness": "unknown",
+      "id": "receipt:27:candidate-089-worker-gate",
+      "label": "candidate-089-worker-gate",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/candidate-089-worker-gate",
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
+        }
+      ],
+      "reported_status": "fail",
+      "story": 27,
+      "subject_sha": "0890441902427aa1d4196dd4b503e971d280ef8e",
+      "type": "receipt"
+    },
+    {
+      "artifact_integrity": "matched",
+      "freshness": "unknown",
+      "id": "receipt:27:candidate-090-worker-gate",
+      "label": "candidate-090-worker-gate",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/candidate-090-worker-gate",
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
+        }
+      ],
+      "reported_status": "fail",
+      "story": 27,
+      "subject_sha": "090c28fe8c347b85230ca68629994bd986c1b033",
+      "type": "receipt"
+    },
+    {
+      "artifact_integrity": "matched",
+      "freshness": "unknown",
+      "id": "receipt:27:candidate-651-worker-gate",
+      "label": "candidate-651-worker-gate",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/candidate-651-worker-gate",
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
+        }
+      ],
+      "reported_status": "fail",
+      "story": 27,
+      "subject_sha": "651e9d6a2bfc7a944e342836f6401faa66acce0a",
+      "type": "receipt"
+    },
+    {
+      "artifact_integrity": "matched",
+      "freshness": "unknown",
+      "id": "receipt:27:corrected-bbda-packaging",
+      "label": "corrected-bbda-packaging",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/corrected-bbda-packaging",
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
+        }
+      ],
+      "reported_status": "pass-executed-cases",
+      "story": 27,
+      "subject_sha": "bbda559611d0126d1b0a574c9a6c369aa8ac4c3f",
+      "type": "receipt"
+    },
+    {
+      "artifact_integrity": "matched",
+      "freshness": "unknown",
+      "id": "receipt:27:corrected-bbda-source-review",
+      "label": "corrected-bbda-source-review",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/corrected-bbda-source-review",
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
+        }
+      ],
+      "reported_status": "pass",
+      "story": 27,
+      "subject_sha": "bbda559611d0126d1b0a574c9a6c369aa8ac4c3f",
       "type": "receipt"
     },
     {
@@ -43037,12 +43566,80 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/receipts/rejected-089-review",
-          "sha256": "7fedaf9006ea6a99edeec013b14007dbc1e6af0a2cb6b2dbbf53ec7797b9857c"
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
         }
       ],
       "reported_status": "fail",
       "story": 27,
       "subject_sha": "0890441902427aa1d4196dd4b503e971d280ef8e",
+      "type": "receipt"
+    },
+    {
+      "artifact_integrity": "matched",
+      "freshness": "unknown",
+      "id": "receipt:27:rejected-090-packaging",
+      "label": "rejected-090-packaging",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/rejected-090-packaging",
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
+        }
+      ],
+      "reported_status": "finding",
+      "story": 27,
+      "subject_sha": "090c28fe8c347b85230ca68629994bd986c1b033",
+      "type": "receipt"
+    },
+    {
+      "artifact_integrity": "matched",
+      "freshness": "unknown",
+      "id": "receipt:27:rejected-090-review",
+      "label": "rejected-090-review",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/rejected-090-review",
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
+        }
+      ],
+      "reported_status": "fail",
+      "story": 27,
+      "subject_sha": "090c28fe8c347b85230ca68629994bd986c1b033",
+      "type": "receipt"
+    },
+    {
+      "artifact_integrity": "matched",
+      "freshness": "unknown",
+      "id": "receipt:27:rejected-651-packaging",
+      "label": "rejected-651-packaging",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/rejected-651-packaging",
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
+        }
+      ],
+      "reported_status": "finding",
+      "story": 27,
+      "subject_sha": "651e9d6a2bfc7a944e342836f6401faa66acce0a",
+      "type": "receipt"
+    },
+    {
+      "artifact_integrity": "matched",
+      "freshness": "unknown",
+      "id": "receipt:27:rejected-651-review",
+      "label": "rejected-651-review",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/27.json",
+          "pointer": "/receipts/rejected-651-review",
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
+        }
+      ],
+      "reported_status": "fail",
+      "story": 27,
+      "subject_sha": "651e9d6a2bfc7a944e342836f6401faa66acce0a",
       "type": "receipt"
     },
     {
@@ -43608,7 +44205,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/covers/0",
-          "sha256": "7fedaf9006ea6a99edeec013b14007dbc1e6af0a2cb6b2dbbf53ec7797b9857c"
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
         }
       ],
       "type": "requirement"
@@ -43620,7 +44217,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/covers/1",
-          "sha256": "7fedaf9006ea6a99edeec013b14007dbc1e6af0a2cb6b2dbbf53ec7797b9857c"
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
         }
       ],
       "type": "requirement"
@@ -43632,7 +44229,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/covers/2",
-          "sha256": "7fedaf9006ea6a99edeec013b14007dbc1e6af0a2cb6b2dbbf53ec7797b9857c"
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
         }
       ],
       "type": "requirement"
@@ -43644,7 +44241,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/covers/3",
-          "sha256": "7fedaf9006ea6a99edeec013b14007dbc1e6af0a2cb6b2dbbf53ec7797b9857c"
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
         }
       ],
       "type": "requirement"
@@ -43656,7 +44253,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/covers/4",
-          "sha256": "7fedaf9006ea6a99edeec013b14007dbc1e6af0a2cb6b2dbbf53ec7797b9857c"
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
         }
       ],
       "type": "requirement"
@@ -43668,7 +44265,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/covers/5",
-          "sha256": "7fedaf9006ea6a99edeec013b14007dbc1e6af0a2cb6b2dbbf53ec7797b9857c"
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
         }
       ],
       "type": "requirement"
@@ -43680,7 +44277,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/covers/6",
-          "sha256": "7fedaf9006ea6a99edeec013b14007dbc1e6af0a2cb6b2dbbf53ec7797b9857c"
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
         }
       ],
       "type": "requirement"
@@ -43692,7 +44289,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "/covers/7",
-          "sha256": "7fedaf9006ea6a99edeec013b14007dbc1e6af0a2cb6b2dbbf53ec7797b9857c"
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
         }
       ],
       "type": "requirement"
@@ -47137,7 +47734,7 @@
         {
           "path": ".software-factory/context/board/stories/27.json",
           "pointer": "",
-          "sha256": "7fedaf9006ea6a99edeec013b14007dbc1e6af0a2cb6b2dbbf53ec7797b9857c"
+          "sha256": "aaf0f9f94145ea08a57d6f902f7c9fb355562f194cb554d5254e19ae728f4281"
         }
       ],
       "status": "in-progress",
@@ -47528,6 +48125,123 @@
           "path": ".software-factory/runs/software-factory-v01/evidence/agents-089-independent-review.md",
           "pointer": "",
           "sha256": "b2682a60ea4b70baec9623acc39db07ea0b940dd3f7e362e6699572ce4145715"
+        }
+      ],
+      "type": "surface"
+    },
+    {
+      "exists": true,
+      "id": "surface:.software-factory/runs/software-factory-v01/evidence/agents-0890441-worker-gate.log",
+      "label": ".software-factory/runs/software-factory-v01/evidence/agents-0890441-worker-gate.log",
+      "provenance": [
+        {
+          "path": ".software-factory/runs/software-factory-v01/evidence/agents-0890441-worker-gate.log",
+          "pointer": "",
+          "sha256": "6e9f763ba7e8fbb157181a83719c34d0dc8f2def60ea15a175a63f6cedd1bb4f"
+        }
+      ],
+      "type": "surface"
+    },
+    {
+      "exists": true,
+      "id": "surface:.software-factory/runs/software-factory-v01/evidence/agents-090-independent-review.md",
+      "label": ".software-factory/runs/software-factory-v01/evidence/agents-090-independent-review.md",
+      "provenance": [
+        {
+          "path": ".software-factory/runs/software-factory-v01/evidence/agents-090-independent-review.md",
+          "pointer": "",
+          "sha256": "cfd531f5252368f020057093c233c0117d348146f4c911dfae5968c0df8556f4"
+        }
+      ],
+      "type": "surface"
+    },
+    {
+      "exists": true,
+      "id": "surface:.software-factory/runs/software-factory-v01/evidence/agents-090-packaging-finding.json",
+      "label": ".software-factory/runs/software-factory-v01/evidence/agents-090-packaging-finding.json",
+      "provenance": [
+        {
+          "path": ".software-factory/runs/software-factory-v01/evidence/agents-090-packaging-finding.json",
+          "pointer": "",
+          "sha256": "d5c25b5aaa142a959b3c46259161d926c604026c154b2c2096c0749781b1ce82"
+        }
+      ],
+      "type": "surface"
+    },
+    {
+      "exists": true,
+      "id": "surface:.software-factory/runs/software-factory-v01/evidence/agents-090c28f-worker-gate.log",
+      "label": ".software-factory/runs/software-factory-v01/evidence/agents-090c28f-worker-gate.log",
+      "provenance": [
+        {
+          "path": ".software-factory/runs/software-factory-v01/evidence/agents-090c28f-worker-gate.log",
+          "pointer": "",
+          "sha256": "3d0c1e8fa8cf1bb9db8772dd09a6653291e483ebe0440a3f1b1a42b014aa2445"
+        }
+      ],
+      "type": "surface"
+    },
+    {
+      "exists": true,
+      "id": "surface:.software-factory/runs/software-factory-v01/evidence/agents-651-independent-review.md",
+      "label": ".software-factory/runs/software-factory-v01/evidence/agents-651-independent-review.md",
+      "provenance": [
+        {
+          "path": ".software-factory/runs/software-factory-v01/evidence/agents-651-independent-review.md",
+          "pointer": "",
+          "sha256": "4c968fbe5d376a7538d7613fe570edc955cc4900ed893a947f37a7d5ce6a5cd6"
+        }
+      ],
+      "type": "surface"
+    },
+    {
+      "exists": true,
+      "id": "surface:.software-factory/runs/software-factory-v01/evidence/agents-651-packaging-finding.json",
+      "label": ".software-factory/runs/software-factory-v01/evidence/agents-651-packaging-finding.json",
+      "provenance": [
+        {
+          "path": ".software-factory/runs/software-factory-v01/evidence/agents-651-packaging-finding.json",
+          "pointer": "",
+          "sha256": "a3fd8e0f167830e41aab9ea640e1a2f0b93b24eec8bb0cdefff0f2ca8c003398"
+        }
+      ],
+      "type": "surface"
+    },
+    {
+      "exists": true,
+      "id": "surface:.software-factory/runs/software-factory-v01/evidence/agents-651e9d6-worker-gate.log",
+      "label": ".software-factory/runs/software-factory-v01/evidence/agents-651e9d6-worker-gate.log",
+      "provenance": [
+        {
+          "path": ".software-factory/runs/software-factory-v01/evidence/agents-651e9d6-worker-gate.log",
+          "pointer": "",
+          "sha256": "cc2e0c4072fc0f1b87462a1e3143a2ee04bce78650ad2ddb1c091043ab0bce3c"
+        }
+      ],
+      "type": "surface"
+    },
+    {
+      "exists": true,
+      "id": "surface:.software-factory/runs/software-factory-v01/evidence/agents-bbda-independent-review.md",
+      "label": ".software-factory/runs/software-factory-v01/evidence/agents-bbda-independent-review.md",
+      "provenance": [
+        {
+          "path": ".software-factory/runs/software-factory-v01/evidence/agents-bbda-independent-review.md",
+          "pointer": "",
+          "sha256": "929fa61f0a7f6d9de2358e301780ab6d23a2a2bd56d1f2440e76a01f86b41f26"
+        }
+      ],
+      "type": "surface"
+    },
+    {
+      "exists": true,
+      "id": "surface:.software-factory/runs/software-factory-v01/evidence/agents-bbda-packaging-proof.json",
+      "label": ".software-factory/runs/software-factory-v01/evidence/agents-bbda-packaging-proof.json",
+      "provenance": [
+        {
+          "path": ".software-factory/runs/software-factory-v01/evidence/agents-bbda-packaging-proof.json",
+          "pointer": "",
+          "sha256": "c0793b73168d6f9a2738863697ad8280709bfcf75e06a69c8acafd253ba07b56"
         }
       ],
       "type": "surface"
@@ -49308,5 +50022,5 @@
     }
   ],
   "schema": "sf-trace/1",
-  "source_fingerprint": "a45d72eab063f97ba0d3bff878c0e1dd6b1447d96fa77118d273e7f9e8f1691e"
+  "source_fingerprint": "168413a0bf5d914b78c0f0e866b213ff6e47a88f55210eeb731a64173e1f4d97"
 }
