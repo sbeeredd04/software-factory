@@ -167,6 +167,110 @@
       "cause": "Initial board handoff refused a browser summary having source_sha but no required subject_sha. Root incorrectly continued dependent claim release and integrated accepted source before checking that refusal.",
       "observed": "Source032 was independently accepted and exact source integrated as ae143e2. Story47 remained in-progress with missing claim; dashboard reported one diagnostic. No worker change or work loss inferred.",
       "correction": "Reclaim exact same owner/worktree/paths, add explicit evidence subject binding without changing raw browser result, record in-review while claim live, then release and regenerate. Preserve failed attempt/history; no history rewrite or false completion."
+    },
+    "integrated-gate-attempt": {
+      "type": "integrated-verification",
+      "subject_sha": "c633ad3ed3d02ff3b51301618c25c650f5b5683a",
+      "status": "fail",
+      "exit_code": 1,
+      "tests": {
+        "run": 760,
+        "passed": 758,
+        "failed": 1,
+        "skipped": 1,
+        "seconds": 392.382
+      },
+      "failure": "Root ADR0027 lacked required Drivers/Options/Confirmation sections; no product behavior failure established. Subsequent repair focused ADR test passed, but does not convert this failed fullgate to pass.",
+      "evals": {
+        "run_id": "r-20261015T184602Z-premerge",
+        "passed": 50,
+        "failed": 0,
+        "unverified": 0,
+        "quarantined": 0,
+        "skipped": 0
+      },
+      "gate_log_sha256": "dba0e61296b647a32ebc1b6d44773baa56ebf3133f490b23ac4973ca316903ef",
+      "eval_receipt_sha256": "281525d327ab0ddfe50a6f7caf17489d2c690d5c84fc87e7704018f2b1e991d7",
+      "limitations": [
+        "Exact subject, full gate failed; retain result. No fullgate on corrected ADR yet."
+      ]
+    },
+    "native-cycle-sheet": {
+      "type": "native-browser-cycle-sheets",
+      "subject_sha": "03247128c9667860ce673d2b1d642a120f352223",
+      "status": "pass",
+      "exit_code": 0,
+      "report_sha256": "166250823524f4f0bf1af7dd23c8d67f5afecc17a20902e9c05efb1a9756241b",
+      "execution_script_sha256": "17147c025df7ea1518c71d3c5c2405c7282086a40b244473e4d23de1ba1a8998",
+      "script_hash_match": true,
+      "cases": [
+        {
+          "viewport": {
+            "width": 360,
+            "height": 640
+          },
+          "motion": "default",
+          "failures": []
+        },
+        {
+          "viewport": {
+            "width": 360,
+            "height": 640
+          },
+          "motion": "reduce",
+          "failures": []
+        },
+        {
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          },
+          "motion": "default",
+          "failures": []
+        },
+        {
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          },
+          "motion": "reduce",
+          "failures": []
+        },
+        {
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "motion": "default",
+          "failures": []
+        },
+        {
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "motion": "reduce",
+          "failures": []
+        }
+      ],
+      "root_visual_observation": "Original resolution mobile/tablet/desktop cycle-sheet images viewed: six steps, BMad epics/stories, clockwise arrows and conditional human branch visible; no observed crop.",
+      "screenshots": [
+        {
+          "name": "1440x900-default-cycle-sheet.png",
+          "sha256": "9d716daea1e3b7a3893279b97983ac97c4ef767a043f438c19a7d2193a858752"
+        },
+        {
+          "name": "360x640-reduce-cycle-sheet.png",
+          "sha256": "38073b3dbb9a3ff563f9981c965f4903949aa52964881185827ff6a1764de7ce"
+        },
+        {
+          "name": "768x1024-reduce-cycle-sheet.png",
+          "sha256": "2b5a082daab33dfe8522335e2a105cad860e00f1a635b258972afd0834c2df02"
+        }
+      ],
+      "limitations": [
+        "Bound frozen worker032; presentation only, no policy acceptance or live host-loading proof."
+      ]
     }
   },
   "baseline_sha": null,
@@ -198,6 +302,11 @@
       "at": "2026-10-15T18:38:25.622197+00:00",
       "by": "orchestrator",
       "text": "Handoff receipt initially refused because browser summary omitted subject_sha. Root dependent sequencing then released the claim and integrated accepted source too early. Reclaimed the same owner/worktree/paths, preserved the deviation, added explicit subject binding, recorded exact032 in-review with live claim, then released. Source matches independently reviewed bytes; current ownership reconciled without history rewrite."
+    },
+    {
+      "at": "2026-10-15T18:56:34.125495+00:00",
+      "by": "orchestrator",
+      "text": "Exactc633 fullgate failed1of760tests because rootADR0027 missingrequiredheadings;50evalspass. RootcorrectedADR40linecontract9b00; focusedrecordtestpass. This doesnotpromotefailedfullgatetopass; newintegratedgatepending. Actualsixnativecyclecasespass; rootviewedmobile/tablet/desktopwholecycle."
     }
   ],
   "source_key": "launch-publication/continuous-factory-cycle",

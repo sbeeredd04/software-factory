@@ -851,6 +851,24 @@
           "hitl": false,
           "plan_checkpoint": false,
           "done_checkpoint": true
+        },
+        {
+          "key": "configured-install-input-overlap",
+          "title": "Install safely when configured context includes managed project files",
+          "type": "story",
+          "after": [
+            "installer-hosts/distribution"
+          ],
+          "covers": [
+            "VAL-INSTALL-001",
+            "VAL-INSTALL-002",
+            "VAL-INSTALL-009",
+            "VAL-EVOLVE-OVERLAY"
+          ],
+          "risk": "high",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": false
         }
       ]
     },

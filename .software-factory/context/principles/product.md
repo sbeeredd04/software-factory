@@ -3,15 +3,18 @@
 What this is for: an MIT-licensed skill pack (Markdown plus standard-library
 Python) that turns a coding agent — Claude Code, Cursor or Codex — into an
 autonomous software factory. One orchestrator owns the loop from grounded
-intent to planned work, evidence-gated merge, deploy proof and a human
-checkpoint per epic. BMad Method v6, installed separately and pinned, does
-the planning; the factory ships.
+intent through BMad epics and stories, implementation, independent review,
+evidence-gated integration, delivery proof and observation into the next cycle.
+BMad Method v6 is installed separately and pinned. The factory ships continuously
+within the requested outcome and actual host authority.
 
 ## Outcomes that matter
 
 - One approved outcome drives the host's delivery loop without repeated
   prompts for routine implementation, review, fixes or recovery. Material
-  risk, authority and required human acceptance still escalate.
+  risk, affected assets, reversibility and agreed autonomy determine escalation
+  at any phase. Reserved decisions and unclear authority still reach the owner;
+  routine epic acceptance can be delegated with current evidence and review.
 - Milestone progress, agent contributions, model attribution, evidence and
   blockers stay visible through records and their regenerable dashboard.
 - Authorized monitoring and observed failures feed bug work and priorities;
