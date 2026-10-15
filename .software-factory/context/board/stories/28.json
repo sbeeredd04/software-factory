@@ -4,7 +4,7 @@
   "epic": 4,
   "type": "story",
   "title": "sf-evolve: fold-in registry, overlays and retro pipeline",
-  "status": "in-progress",
+  "status": "in-review",
   "owner": "codex-evolution",
   "after": [
     27
@@ -100,6 +100,23 @@
       "limits": [
         "Source review and isolated API proofs only. Full gate, six separate installed/native contexts, canonical eval admission and human acceptance remain separate."
       ]
+    },
+    "worker-handoff": {
+      "type": "worker-handoff",
+      "status": "implementation-complete-review-pending",
+      "subject_sha": "c8ec5ca67e339ccefa0a8a3cb6c018105bbb64c5",
+      "owner": "codex-evolution",
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/evolution-c8ec-worker-handoff.json",
+      "artifact_sha256": "5aac6b50bd402c1eeea315760ccb2e65e6e117f92bfa958caba8b8c112186e05",
+      "summary": "29 candidate files independently verified against clean committed blobs and live claimed scopes. Exact worker fullgate709:706pass/2crawl-freshness failures/1optional skip;29of30evalpass, all other gate steps pass. Source accepted independently; complete primary gate and six-context QA remain pending.",
+      "limits": [
+        "No live host agent, upstream resolver, provider authentication, MCP service connection, deployment, publication or epic acceptance proof.",
+        "Approval strings and hashes establish structural provenance, not authenticated human consent; host GO reconciliation remains required.",
+        "Supported overlays cover generated canonical skill entry/reference Markdown with unchanged entry frontmatter; arbitrary files/scripts/policies/BMad output are excluded.",
+        "Worker relocation unit proof covered combined all-host installation (two physical helper paths) plus three native contexts; separate six-context independent QA is owned by primary.",
+        "No primary board, state, projection, CODEBASE or canonical eval plan was edited by this worker; primary owner must regenerate crawl and run integrated gate.",
+        "New evaluation supplement admission is pending the owner decision; the unchanged thirty-case plan was used."
+      ]
     }
   },
   "baseline_sha": null,
@@ -118,6 +135,12 @@
       "by": "codex-evolution",
       "from": "ready-for-dev",
       "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T13:15:57.884036+00:00",
+      "by": "codex-evolution",
+      "from": "in-progress",
+      "to": "in-review"
     }
   ],
   "findings": [
@@ -132,5 +155,7 @@
       "text": "Candidate3d5 requires pre-publication refusal of case aliases to governing paths; transient candidate write was rejected and restored. Eight independent preservation probes pass. Failed708-test worker gate and27of30eval evidence preserved; repair and exact-source review pending."
     }
   ],
-  "source_key": "onboarding-integrations/sf-evolve-skill"
+  "source_key": "onboarding-integrations/sf-evolve-skill",
+  "review_subject_sha": "c8ec5ca67e339ccefa0a8a3cb6c018105bbb64c5",
+  "evidence_contract": 1
 }

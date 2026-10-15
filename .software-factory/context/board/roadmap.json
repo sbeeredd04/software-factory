@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-15T13:12:26.057285+00:00",
-  "revision": 250,
+  "generated_at": "2026-10-15T13:16:04.638091+00:00",
+  "revision": 252,
   "streams": [
     {
       "id": "W-foundation",
@@ -82,8 +82,8 @@
       "counts": {
         "planned": 0,
         "ready": 0,
-        "in-progress": 1,
-        "review": 3,
+        "in-progress": 0,
+        "review": 4,
         "built": 0,
         "done": 0,
         "cancelled": 0
@@ -103,8 +103,8 @@
         5
       ],
       "counts": {
-        "planned": 5,
-        "ready": 0,
+        "planned": 4,
+        "ready": 1,
         "in-progress": 0,
         "review": 0,
         "built": 0,
@@ -5038,8 +5038,8 @@
       "stream": "W-onboarding",
       "type": "story",
       "title": "sf-evolve: fold-in registry, overlays and retro pipeline",
-      "status": "in-progress",
-      "state": "in-progress",
+      "status": "in-review",
+      "state": "review",
       "owner": "codex-evolution",
       "after": [
         27
@@ -5135,6 +5135,23 @@
           "limits": [
             "Source review and isolated API proofs only. Full gate, six separate installed/native contexts, canonical eval admission and human acceptance remain separate."
           ]
+        },
+        "worker-handoff": {
+          "type": "worker-handoff",
+          "status": "implementation-complete-review-pending",
+          "subject_sha": "c8ec5ca67e339ccefa0a8a3cb6c018105bbb64c5",
+          "owner": "codex-evolution",
+          "artifact": ".software-factory/runs/software-factory-v01/evidence/evolution-c8ec-worker-handoff.json",
+          "artifact_sha256": "5aac6b50bd402c1eeea315760ccb2e65e6e117f92bfa958caba8b8c112186e05",
+          "summary": "29 candidate files independently verified against clean committed blobs and live claimed scopes. Exact worker fullgate709:706pass/2crawl-freshness failures/1optional skip;29of30evalpass, all other gate steps pass. Source accepted independently; complete primary gate and six-context QA remain pending.",
+          "limits": [
+            "No live host agent, upstream resolver, provider authentication, MCP service connection, deployment, publication or epic acceptance proof.",
+            "Approval strings and hashes establish structural provenance, not authenticated human consent; host GO reconciliation remains required.",
+            "Supported overlays cover generated canonical skill entry/reference Markdown with unchanged entry frontmatter; arbitrary files/scripts/policies/BMad output are excluded.",
+            "Worker relocation unit proof covered combined all-host installation (two physical helper paths) plus three native contexts; separate six-context independent QA is owned by primary.",
+            "No primary board, state, projection, CODEBASE or canonical eval plan was edited by this worker; primary owner must regenerate crawl and run integrated gate.",
+            "New evaluation supplement admission is pending the owner decision; the unchanged thirty-case plan was used."
+          ]
         }
       },
       "baseline_sha": null,
@@ -5142,39 +5159,7 @@
       "pr": null,
       "merged_sha": null,
       "claim": {
-        "live": true,
-        "owner": "codex-evolution",
-        "paths": [
-          "skills/sf-evolve",
-          "schemas/overlay.schema.json",
-          "schemas/config.schema.json",
-          "skills/software-factory/scripts/config.py",
-          "skills/software-factory/references/configuration.md",
-          "skills/software-factory/references/config-schema.md",
-          "skills/sf-agents/scripts/render_bots.py",
-          "install.py",
-          "scripts/install_lifecycle.py",
-          "hosts/plugins/release-files.json",
-          "tests/test_evolve.py",
-          "tests/test_overlays.py",
-          "tests/fixtures/evolve",
-          "tests/fixtures/overlays",
-          "tests/test_config_schema.py",
-          "tests/fixtures/config",
-          "tests/test_installer.py",
-          "tests/test_install_lifecycle.py",
-          "tests/test_uninstall.py",
-          "tests/test_doctor.py",
-          "tests/test_host_claude.py",
-          "tests/test_host_codex.py",
-          "tests/test_host_cursor.py",
-          "tests/test_distribution.py",
-          "tests/test_bot_rendering.py",
-          "docs/evolve.md",
-          "examples/config/config.yaml",
-          "tests/test_bmad_install.py"
-        ],
-        "claimed_at": "2026-10-15T13:06:49.891890+00:00"
+        "live": false
       },
       "blocks": [
         29
@@ -5191,6 +5176,12 @@
           "by": "codex-evolution",
           "from": "ready-for-dev",
           "to": "in-progress"
+        },
+        {
+          "at": "2026-10-15T13:15:57.884036+00:00",
+          "by": "codex-evolution",
+          "from": "in-progress",
+          "to": "in-review"
         }
       ],
       "findings": [
@@ -5205,7 +5196,9 @@
           "text": "Candidate3d5 requires pre-publication refusal of case aliases to governing paths; transient candidate write was rejected and restored. Eight independent preservation probes pass. Failed708-test worker gate and27of30eval evidence preserved; repair and exact-source review pending."
         }
       ],
-      "source_key": "onboarding-integrations/sf-evolve-skill"
+      "source_key": "onboarding-integrations/sf-evolve-skill",
+      "evidence_contract": 1,
+      "review_subject_sha": "c8ec5ca67e339ccefa0a8a3cb6c018105bbb64c5"
     },
     {
       "id": 29,
@@ -5214,7 +5207,7 @@
       "type": "story",
       "title": "Hand-built showcase site with self-hosted OFL fonts",
       "status": "backlog",
-      "state": "planned",
+      "state": "ready",
       "owner": null,
       "after": [
         28
@@ -6563,17 +6556,17 @@
     }
   ],
   "frontier": {
-    "ready": [],
-    "waiting_on_prereq": [
+    "ready": [
       {
         "id": 29,
         "epic": 5,
         "stream": "W-launch",
         "title": "Hand-built showcase site with self-hosted OFL fonts",
-        "missing": [
-          "28 (in-progress)"
-        ]
-      },
+        "why": "after 28 in-review; unclaimed",
+        "claimed": false
+      }
+    ],
+    "waiting_on_prereq": [
       {
         "id": 30,
         "epic": 5,
