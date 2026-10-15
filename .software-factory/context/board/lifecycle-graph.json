@@ -5093,7 +5093,7 @@
         {
           "path": ".software-factory/context/board/epics/4.json",
           "pointer": "/covers/0",
-          "sha256": "5e25a83566f3087652e082121f34b095fe5ff89bef1512f828b36eb149bbcad5"
+          "sha256": "976115a97dcbed7a0f4386f70792a559fa27ab4fa432dfe79b1269f6e99d3bf5"
         }
       ],
       "relation": "covers",
@@ -5106,7 +5106,7 @@
         {
           "path": ".software-factory/context/board/epics/4.json",
           "pointer": "/covers/1",
-          "sha256": "5e25a83566f3087652e082121f34b095fe5ff89bef1512f828b36eb149bbcad5"
+          "sha256": "976115a97dcbed7a0f4386f70792a559fa27ab4fa432dfe79b1269f6e99d3bf5"
         }
       ],
       "relation": "covers",
@@ -5119,7 +5119,7 @@
         {
           "path": ".software-factory/context/board/epics/4.json",
           "pointer": "/covers/2",
-          "sha256": "5e25a83566f3087652e082121f34b095fe5ff89bef1512f828b36eb149bbcad5"
+          "sha256": "976115a97dcbed7a0f4386f70792a559fa27ab4fa432dfe79b1269f6e99d3bf5"
         }
       ],
       "relation": "covers",
@@ -5132,7 +5132,7 @@
         {
           "path": ".software-factory/context/board/epics/4.json",
           "pointer": "/covers/3",
-          "sha256": "5e25a83566f3087652e082121f34b095fe5ff89bef1512f828b36eb149bbcad5"
+          "sha256": "976115a97dcbed7a0f4386f70792a559fa27ab4fa432dfe79b1269f6e99d3bf5"
         }
       ],
       "relation": "covers",
@@ -25355,7 +25355,7 @@
     {
       "kind": "file",
       "path": ".software-factory/context/board/epics/4.json",
-      "sha256": "5e25a83566f3087652e082121f34b095fe5ff89bef1512f828b36eb149bbcad5"
+      "sha256": "976115a97dcbed7a0f4386f70792a559fa27ab4fa432dfe79b1269f6e99d3bf5"
     },
     {
       "kind": "file",
@@ -25925,7 +25925,7 @@
     {
       "kind": "file",
       "path": ".software-factory/runs/software-factory-v01/run.json",
-      "sha256": "712f3fc35fa317833299c15f217ecf97bc20ad6a067151d26fe23765b0fb963b"
+      "sha256": "372dcb0d9c13332010d09b37b001ae1a06a1d1acd75d5226e8abbf399b1db890"
     },
     {
       "kind": "file",
@@ -26394,7 +26394,7 @@
         {
           "path": ".software-factory/runs/software-factory-v01/run.json",
           "pointer": "/checkpoint",
-          "sha256": "712f3fc35fa317833299c15f217ecf97bc20ad6a067151d26fe23765b0fb963b"
+          "sha256": "372dcb0d9c13332010d09b37b001ae1a06a1d1acd75d5226e8abbf399b1db890"
         }
       ],
       "type": "checkpoint"
@@ -27880,10 +27880,10 @@
         {
           "path": ".software-factory/context/board/epics/4.json",
           "pointer": "",
-          "sha256": "5e25a83566f3087652e082121f34b095fe5ff89bef1512f828b36eb149bbcad5"
+          "sha256": "976115a97dcbed7a0f4386f70792a559fa27ab4fa432dfe79b1269f6e99d3bf5"
         }
       ],
-      "status": "planned",
+      "status": "in-progress",
       "type": "epic"
     },
     {
@@ -48997,7 +48997,7 @@
         {
           "path": ".software-factory/context/board/epics/4.json",
           "pointer": "/covers/2",
-          "sha256": "5e25a83566f3087652e082121f34b095fe5ff89bef1512f828b36eb149bbcad5"
+          "sha256": "976115a97dcbed7a0f4386f70792a559fa27ab4fa432dfe79b1269f6e99d3bf5"
         }
       ],
       "type": "requirement"
@@ -49273,7 +49273,7 @@
         {
           "path": ".software-factory/context/board/epics/4.json",
           "pointer": "/covers/0",
-          "sha256": "5e25a83566f3087652e082121f34b095fe5ff89bef1512f828b36eb149bbcad5"
+          "sha256": "976115a97dcbed7a0f4386f70792a559fa27ab4fa432dfe79b1269f6e99d3bf5"
         }
       ],
       "type": "requirement"
@@ -50171,7 +50171,7 @@
         {
           "path": ".software-factory/context/board/epics/4.json",
           "pointer": "/covers/3",
-          "sha256": "5e25a83566f3087652e082121f34b095fe5ff89bef1512f828b36eb149bbcad5"
+          "sha256": "976115a97dcbed7a0f4386f70792a559fa27ab4fa432dfe79b1269f6e99d3bf5"
         }
       ],
       "type": "requirement"
@@ -50255,7 +50255,7 @@
         {
           "path": ".software-factory/context/board/epics/4.json",
           "pointer": "/covers/1",
-          "sha256": "5e25a83566f3087652e082121f34b095fe5ff89bef1512f828b36eb149bbcad5"
+          "sha256": "976115a97dcbed7a0f4386f70792a559fa27ab4fa432dfe79b1269f6e99d3bf5"
         }
       ],
       "type": "requirement"
@@ -55153,5 +55153,5 @@
     }
   ],
   "schema": "sf-trace/1",
-  "source_fingerprint": "f422d24a3df305a3bcd73be6c28d9e672fd33bcd9fdfdb903ed80e62797fc509"
+  "source_fingerprint": "081975d1652c502d086e3b5e6835b6fb6518e2603540389693d25ec9ba77b619"
 }

@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-15T13:21:38.577478+00:00",
-  "revision": 253,
+  "generated_at": "2026-10-15T13:22:38.050094+00:00",
+  "revision": 254,
   "streams": [
     {
       "id": "W-foundation",
@@ -242,7 +242,7 @@
       "stream": "W-onboarding",
       "title": "Onboarding and integrations: config, trackers, sf-help, sf-agents, sf-evolve",
       "outcome": "A new project is interviewed, configured and routed in one sitting.",
-      "status": "planned",
+      "status": "in-progress",
       "done_when": [
         "config schema validates with semantic checks",
         "sf-help drafts documents and applies an approved setup",
