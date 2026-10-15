@@ -32,6 +32,9 @@ The deterministic script builds the map. One command regenerates the artifact
 atomically in place; re-run whenever the tree changes. Output is
 deterministic: a refresh changes only what the tree change changed, with no
 cache and no partial state. `--json <path>` adds the machine-readable report.
+In Git worktrees it selects tracked files plus nonignored new files, so ignored
+installed skill copies do not crowd out project code. Without a usable Git
+inventory it reports its filesystem fallback explicitly; inspect that limit.
 
 ## Coverage
 

@@ -31,6 +31,7 @@ import ast
 import json
 import os
 import re
+import stat
 import subprocess
 import sys
 import tempfile
@@ -99,17 +100,73 @@ def source_revision(root: Path) -> str | None:
     """Best-effort read-only `git rev-parse HEAD`; None when unavailable."""
     try:
         result = subprocess.run(
-            ["git", "-C", str(root), "rev-parse", "HEAD"],
+            ["git", "--no-optional-locks", "-c", "core.fsmonitor=false",
+             "-C", str(root), "rev-parse", "HEAD"],
             capture_output=True,
             text=True,
             timeout=10,
             check=False,
         )
-    except OSError:
+    except (OSError, subprocess.TimeoutExpired):
         return None
     if result.returncode != 0:
         return None
     return result.stdout.strip() or None
+
+
+def inventory(root: Path) -> tuple[list[str], str, list[str]]:
+    """Select Git paths, or explicitly fall back to the static filesystem walk.
+
+    Git's NUL-delimited bytes retain spaces and newlines without shell parsing.
+    Cached paths include tracked ignored files; other paths obey Git's excludes.
+    No hooks, project programs, submodules or filesystem monitor are invoked.
+    """
+    problems: list[str] = []
+    try:
+        result = subprocess.run(
+            ["git", "--no-optional-locks", "-c", "core.fsmonitor=false",
+             "-C", str(root), "ls-files", "--cached", "--others",
+             "--exclude-standard", "-z", "--", "."],
+            capture_output=True, timeout=10, check=False,
+        )
+        if result.returncode == 0:
+            raw = result.stdout
+            if raw and not raw.endswith(b"\0"):
+                raise ValueError("unterminated inventory")
+            paths: set[str] = set()
+            for item in raw.split(b"\0")[:-1]:
+                rel = item.decode("utf-8")
+                # Untracked nested repositories are returned with a trailing /.
+                rel = rel.removesuffix("/")
+                if (not rel or rel.startswith("/")
+                        or any(part in {"", ".", ".."} for part in rel.split("/"))):
+                    raise ValueError("unsafe inventory path")
+                paths.add(rel)
+            return sorted(paths), "git-tracked-and-unignored", problems
+        reason = "Git inventory unavailable (non-repository or Git failure)"
+    except (OSError, subprocess.TimeoutExpired, ValueError) as exc:
+        # Never copy Git stderr, exception text or absolute paths to artifacts.
+        reason = f"Git inventory unavailable ({type(exc).__name__})"
+    problems.append(
+        reason + "; filesystem fallback includes ignored files under static bounds"
+    )
+    paths = []
+
+    def onerror(error: OSError) -> None:
+        try:
+            rel = Path(error.filename).relative_to(root).as_posix()
+        except (TypeError, ValueError):
+            rel = "(unknown directory)"
+        problems.append(f"could not read: {rel} (counted only)")
+
+    for dirpath, dirnames, filenames in os.walk(root, onerror=onerror):
+        dirnames[:] = sorted(
+            name for name in dirnames
+            if name not in IGNORE_DIRS and not (Path(dirpath) / name).is_symlink()
+        )
+        paths.extend((Path(dirpath) / name).relative_to(root).as_posix()
+                     for name in sorted(filenames))
+    return sorted(paths), "filesystem-fallback", problems
 
 
 def module_name(rel: str) -> str:
@@ -388,41 +445,43 @@ def crawl(root: Path, max_files: int) -> dict:
     oversized: list[str] = []
     symlinks = 0
     unreadable_dirs: list[str] = []
-
-    def onerror(error: OSError) -> None:
-        # Report repo-relative: error.filename is absolute once main()
-        # resolves root, and an absolute user path must never reach the
-        # report or the committed artifact.
-        filename = error.filename
-        if filename:
-            rel = os.path.relpath(filename, root)
-            unreadable_dirs.append(Path(rel).as_posix())
-        else:
-            unreadable_dirs.append("(unknown)")
-
-    for dirpath, dirnames, filenames in os.walk(root, onerror=onerror):
-        dirnames[:] = sorted(
-            d
-            for d in dirnames
-            if d not in IGNORE_DIRS and not (Path(dirpath) / d).is_symlink()
-        )
-        for filename in sorted(filenames):
-            path = Path(dirpath) / filename
-            rel = path.relative_to(root).as_posix()
-            suffix = path.suffix.lower()
+    selected, selection, problems = inventory(root)
+    available: set[str] = set()
+    for rel in selected:
+        path = root / rel
+        if any(part in IGNORE_DIRS for part in Path(rel).parts[:-1]):
+            continue
+        if any(parent.is_symlink() for parent in path.parents
+               if parent != root and root in parent.parents):
+            symlinks += 1
+            continue
+        suffix = path.suffix.lower()
+        if path.is_symlink():
             census[suffix or "(no extension)"] = census.get(suffix or "(no extension)", 0) + 1
-            if path.is_symlink():
-                symlinks += 1
-                continue
-            if suffix not in SOURCE_SUFFIXES:
-                continue
-            try:
-                if path.stat().st_size > MAX_FILE_BYTES:
-                    oversized.append(rel)
-                    continue
-            except OSError:
-                unreadable_dirs.append(rel)
-                continue
+            symlinks += 1
+            continue
+        if path.is_dir():
+            problems.append(
+                f"directory inventory boundary not traversed: {rel} "
+                "(submodule or nested repository)"
+            )
+            continue
+        try:
+            info = path.stat()
+        except OSError:
+            unreadable_dirs.append(rel)
+            continue
+        if not stat.S_ISREG(info.st_mode):
+            problems.append(f"non-regular file not read: {rel}")
+            continue
+        size = info.st_size
+        census[suffix or "(no extension)"] = census.get(suffix or "(no extension)", 0) + 1
+        if size > MAX_FILE_BYTES:
+            if suffix in SOURCE_SUFFIXES:
+                oversized.append(rel)
+            continue
+        available.add(rel)
+        if suffix in SOURCE_SUFFIXES:
             candidates.append(rel)
 
     candidates.sort()
@@ -471,9 +530,9 @@ def crawl(root: Path, max_files: int) -> dict:
     js_files.sort(key=lambda f: f["path"])
     unparsed.sort(key=lambda f: f["path"])
 
-    problems: list[str] = []
-    entry_points = pyproject_entry_points(root, problems)
-    entry_points += package_json_entry_points(root, problems)
+    entry_points = pyproject_entry_points(root, problems) if "pyproject.toml" in available else []
+    if "package.json" in available:
+        entry_points += package_json_entry_points(root, problems)
     for record in py_modules:
         if record["main_guard"]:
             entry_points.append({"kind": "python-main-guard", "path": record["path"]})
@@ -481,14 +540,14 @@ def crawl(root: Path, max_files: int) -> dict:
             entry_points.append({"kind": "python-dunder-main", "path": record["path"]})
     entry_points.sort(key=lambda e: (e["kind"], e.get("path", ""), e.get("name", "")))
 
-    if py_modules and not (root / "pyproject.toml").is_file():
+    if py_modules and "pyproject.toml" not in available:
         problems.append(
-            "no pyproject.toml found: packaging-declared Python entry points "
+            "no selected readable pyproject.toml: packaging-declared Python entry points "
             "are not determinable"
         )
-    if (ts_files or js_files) and not (root / "package.json").is_file():
+    if (ts_files or js_files) and "package.json" not in available:
         problems.append(
-            "no package.json found: script entry points are not determinable"
+            "no selected readable package.json: script entry points are not determinable"
         )
     if oversized:
         problems.append(
@@ -511,6 +570,7 @@ def crawl(root: Path, max_files: int) -> dict:
         "source": {
             "root": ".",
             "revision": source_revision(root),
+            "selection": selection,
             "max_files": max_files,
             "cap_reached": cap_reached,
             "source_files_found": len(candidates),
@@ -543,6 +603,7 @@ def render_markdown(report: dict, generated_at: str) -> str:
     add("> or `.agents/skills/sf-crawl`).")
     add("")
     add(f"- Source revision: {revision}")
+    add(f"- File selection: {src['selection']}")
     add(f"- Generated: {generated_at}")
     add("")
 
