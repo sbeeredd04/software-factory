@@ -63,9 +63,10 @@ Every output PNG is validated before any committed output is replaced.
 
 ## Output inventory
 
-The editable delivery-cycle graphic is `site/img/delivery-graph.svg`. The public
-site and asset templates reference that one local SVG through `<use>` clones;
-edit the source graphic, then regenerate and review the affected PNGs. The
+The editable delivery-cycle graphic is `site/img/delivery-graph.svg` in the
+full source checkout. It is a developer source, not an installer requirement.
+The public site and asset templates reference that one local SVG through `<use>`
+clones; edit the source graphic, then regenerate and review the affected PNGs. The
 renderer must resolve each clone's geometry and verify actual custom Inter
 glyph use for every cloned SVG text node through CDP. A font query on the
 outer host element alone is insufficient: it previously missed the cloned
