@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-15T09:53:03.495344+00:00",
-  "revision": 193,
+  "generated_at": "2026-10-15T09:56:41.495335+00:00",
+  "revision": 194,
   "streams": [
     {
       "id": "W-foundation",
@@ -2369,6 +2369,24 @@
           "limitations": [
             "No story/epic acceptance or live host loading claimed.",
             "Exploratory pinned installations are distinct from approved shipped command proof."
+          ]
+        },
+        "root-targeted-proof": {
+          "type": "local-verification",
+          "subject_sha": "bf22dae072e7ac632e93db65dfa17c27859baf89",
+          "status": "pass-executed-cases",
+          "recorded_at": "2026-10-15T09:56:41.459461+00:00",
+          "command": "SF_SKIP_NETWORK=1 python3 -m unittest discover -s tests -p test_bmad_install.py -v",
+          "exit_code": 0,
+          "tests": 20,
+          "passed": 19,
+          "skipped": 1,
+          "artifact": "bmad-reviewed-targeted.log",
+          "sha256": "14818d1459d4ea8cf64eced12b9926cc86f45b6582804424046d1ee608301f43",
+          "source_clean_before_and_after": true,
+          "limitations": [
+            "Real official network criterion explicitly skipped in this root run; author's original network failure remains failed.",
+            "No owner pin amendment, integration or live host loading established."
           ]
         }
       },
