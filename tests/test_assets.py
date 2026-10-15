@@ -24,12 +24,14 @@ render = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(render)
 
 
+def png_chunk(kind, data):
+    return struct.pack(">I", len(data)) + kind + data + struct.pack(">I", zlib.crc32(kind + data) & 0xFFFFFFFF)
+
+
 def synthetic_png(width=2, height=2):
     """Valid solid pixels for TEMPORARY unit fixtures, never real output evidence."""
-    def chunk(kind, data):
-        return struct.pack(">I", len(data)) + kind + data + struct.pack(">I", zlib.crc32(kind + data) & 0xFFFFFFFF)
     header = struct.pack(">IIBBBBB", width, height, 8, 2, 0, 0, 0)
-    return b"\x89PNG\r\n\x1a\n" + chunk(b"IHDR", header) + chunk(b"IDAT", zlib.compress((b"\0" + b"\xf4\xf1\xe9" * width) * height)) + chunk(b"IEND", b"")
+    return b"\x89PNG\r\n\x1a\n" + png_chunk(b"IHDR", header) + png_chunk(b"IDAT", zlib.compress((b"\0" + b"\xf4\xf1\xe9" * width) * height)) + png_chunk(b"IEND", b"")
 
 
 class AssetTests(unittest.TestCase):
@@ -125,6 +127,20 @@ class AssetTests(unittest.TestCase):
         empty_palette = struct.pack(">I", 0) + b"PLTE" + struct.pack(">I", zlib.crc32(b"PLTE") & 0xFFFFFFFF)
         with self.assertRaisesRegex(ValueError, "palette"):
             render.png_size(good[:33] + empty_palette + good[33:])
+
+    def test_png_palette_after_empty_idat_is_rejected(self):
+        good = synthetic_png(1, 1)
+        malformed = good[:33] + png_chunk(b"IDAT", b"") + png_chunk(b"PLTE", b"\0\0\0") + good[33:]
+        with self.assertRaisesRegex(ValueError, "palette"):
+            render.png_size(malformed)
+
+    def test_png_empty_idat_requires_consecutive_image_data(self):
+        good = synthetic_png(1, 1)
+        empty_idat = png_chunk(b"IDAT", b"")
+        self.assertEqual(render.png_size(good[:33] + empty_idat + good[33:]), (1, 1))
+        malformed = good[:33] + empty_idat + png_chunk(b"tEXt", b"label\0specimen") + good[33:]
+        with self.assertRaisesRegex(ValueError, "nonconsecutive"):
+            render.png_size(malformed)
 
     def test_launch_proof_requires_actual_safe_argv(self):
         safe = "pw:browser <launching> browser --headless --user-data-dir=private --remote-debugging-pipe\n"

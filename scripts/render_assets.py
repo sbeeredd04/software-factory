@@ -143,6 +143,7 @@ def png_size(data):
     if len(data) > LIMIT or data[:8] != b"\x89PNG\r\n\x1a\n":
         raise ValueError("invalid PNG signature or size")
     offset, size, compressed, ended, palette, data_closed = 8, None, bytearray(), False, False, False
+    data_seen = False
     while offset < len(data):
         if len(data) - offset < 12:
             raise ValueError("truncated PNG chunk")
@@ -163,12 +164,13 @@ def png_size(data):
                 raise ValueError("unsupported PNG pixel layout")
             size, channels = (width, height), 3 if color == 2 else 4
         elif kind == b"PLTE":
-            if not size or palette or compressed or length == 0 or length > 768 or length % 3:
+            if not size or palette or data_seen or length == 0 or length > 768 or length % 3:
                 raise ValueError("invalid PNG palette")
             palette = True
         elif kind == b"IDAT" and size:
             if data_closed:
                 raise ValueError("nonconsecutive PNG image data")
+            data_seen = True
             compressed.extend(payload)
         elif kind == b"IEND":
             if length or end != len(data) or not compressed:
@@ -176,7 +178,7 @@ def png_size(data):
             ended = True
         elif not size or kind[:1].isupper() and kind != b"PLTE":
             raise ValueError("unknown PNG critical chunk")
-        elif compressed:
+        elif data_seen:
             data_closed = True
         offset = end
     if not ended or size is None:
