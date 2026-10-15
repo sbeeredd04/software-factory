@@ -178,6 +178,51 @@
         "No integration, release or protected board completion asserted.",
         "Displayed output is bounded; existing capture_output still accumulates streams in memory."
       ]
+    },
+    "linux-runner-browser": {
+      "type": "linux-runner-browser-recovery",
+      "subject_sha": "f64dcebddfffef23c0ed99c5c8200029029c957e",
+      "at": "2026-10-15T23:35:51.736115+00:00",
+      "status": "implementation-in-review-real-ci-required",
+      "summary": "Linux CI selects actual preinstalled official Chrome through supported Puppeteer executable config and runs a real checker smoke before full tests. Normal sandboxing retained.",
+      "author": "/root/ci_mermaid_diagnosis",
+      "logical_owner": "codex-ci-recovery",
+      "effective_model": null,
+      "independent_reviewer": "/root/ci_browser_blind",
+      "review": "Three small diagnostic and coverage findings repaired; independent static confirmation found no remaining issues.",
+      "checks": [
+        {
+          "command": "PYTHONPATH=tests python3 -m unittest test_tools.LinuxRunnerChromeTest test_tools.CheckMermaidDiagnosticsTest test_tools.CheckAllShTest -q",
+          "exit_code": 0,
+          "tests": 17,
+          "seconds": 0.343
+        },
+        {
+          "command": "uvx --from ruff==0.17.0 ruff check tests/test_tools.py",
+          "exit_code": 0
+        },
+        {
+          "command": "uvx check-jsonschema --builtin-schema vendor.github-workflows .github/workflows/ci.yml",
+          "exit_code": 0
+        },
+        {
+          "command": "bash -n for both actual workflow shell bodies",
+          "exit_code": 0,
+          "execution": "included in focused tests"
+        }
+      ],
+      "files": {
+        ".github/workflows/ci.yml": "ac8c8d5a8e8924bfbb46df87fd4bc804ba79bf604a1309b2a078f58a3d3e33aa",
+        "tests/test_tools.py": "c0a1121ddcdd6984f46c8d2e9095a54c1322c2a55d756598d472919af46c60e0"
+      },
+      "external_handoff": {
+        "path": "/tmp/sf-ci-runner-chrome-implementation-handoff.md",
+        "sha256": "7a47af8b19d4ad7a523bed18eafadf968d6e56a985fc47c4d379665bd62a4b43"
+      },
+      "limits": [
+        "Stub checks and static review do not prove actual browser protocol/sandbox behavior; real Linux smoke and complete six-job CI required.",
+        "No maintainer integration, release, protected completion or Pages proof asserted."
+      ]
     }
   },
   "baseline_sha": null,
@@ -226,6 +271,18 @@
       "by": "codex-ci-recovery",
       "from": "in-progress",
       "to": "in-review"
+    },
+    {
+      "at": "2026-10-15T23:31:47.252045+00:00",
+      "by": "codex-ci-recovery",
+      "from": "in-review",
+      "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T23:35:51.770909+00:00",
+      "by": "codex-ci-recovery",
+      "from": "in-progress",
+      "to": "in-review"
     }
   ],
   "findings": [
@@ -237,5 +294,5 @@
   ],
   "source_key": "launch-publication/docs-examples-dogfood",
   "evidence_contract": 1,
-  "review_subject_sha": "a2a8e42541205b1404cd2108d45b2fe9a74f62ea"
+  "review_subject_sha": "f64dcebddfffef23c0ed99c5c8200029029c957e"
 }
