@@ -903,6 +903,23 @@
           "hitl": false,
           "plan_checkpoint": false,
           "done_checkpoint": false
+        },
+        {
+          "key": "native-manifest-validation-bases",
+          "title": "Validate native bundle paths against their documented owners",
+          "type": "bug",
+          "after": [
+            "distribution"
+          ],
+          "covers": [
+            "TLS-DIST-001",
+            "VAL-HOST-001",
+            "VAL-INSTALL-009"
+          ],
+          "risk": "standard",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": false
         }
       ]
     },

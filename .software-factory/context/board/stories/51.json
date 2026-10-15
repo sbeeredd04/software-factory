@@ -1,0 +1,94 @@
+{
+  "version": 1,
+  "evidence_contract": 1,
+  "id": 51,
+  "epic": 3,
+  "type": "bug",
+  "title": "Validate native bundle paths against their documented owners",
+  "status": "in-review",
+  "owner": "codex-native-validator",
+  "after": [
+    24
+  ],
+  "covers": [
+    "TLS-DIST-001",
+    "VAL-HOST-001",
+    "VAL-INSTALL-009"
+  ],
+  "risk": "standard",
+  "hitl": false,
+  "plan_checkpoint": false,
+  "done_checkpoint": false,
+  "blocked": null,
+  "receipts": {
+    "reproduction": {
+      "type": "verification-observation",
+      "subject_sha": "4fff49f012c2916f4ffc06460d73886de65c9932",
+      "status": "cancelled",
+      "full_gate_exit_code": 143,
+      "full_gate_pass": false,
+      "reason": "An independently reproduced extracted-release preflight found generic manifest validation resolving documented native paths against the hidden manifest directory instead of the owning plugin/marketplace. All 28 missing-path errors are false base resolutions; the native specialized validators pass. Stop for a normal validator correctness repair before rerunning the complete source gate.",
+      "partial_gate_log_sha256": "464b0a4142bc824cf92477bbcb4793af73338e25b72191ff4070374c70e84e66",
+      "preflight_exit_code": 1,
+      "preflight_failed_command": 15,
+      "native_ui": {
+        "status": "passed",
+        "viewport_motion_cases": 6,
+        "host_setup_checks": 18,
+        "failures": 0
+      },
+      "limits": [
+        "UI success and the preflight candidate proof do not establish a green full52 gate or publication."
+      ]
+    },
+    "independent-review": {
+      "type": "independent-review",
+      "subject_sha": "5892e4996547bec11be47893292657fab4ffc026",
+      "reviewer": "/root",
+      "author": "/root/final_audit",
+      "status": "pass",
+      "scope": "Two-file native manifest owner-base and strict containment repair; all recursive checks retained.",
+      "checks": {
+        "tools_tests_run": 82,
+        "tools_tests_passed": 82,
+        "skipped": 0,
+        "exit_code": 0,
+        "seconds": 34.214,
+        "same_original_extracted_payload_validator_exit_code": 0,
+        "start_end_head_and_file_hashes_unchanged": true
+      },
+      "findings": [],
+      "limits": [
+        "Fresh extracted links remain failed with 28 checker-base and three missing attribution-resource targets; separate repair required. No combined full52 gate or release acceptance."
+      ],
+      "log_sha256": "68fdcd9e52f89511b555334a3954272acf684b10b7fa5b4fabd767d0e930c73b"
+    }
+  },
+  "baseline_sha": null,
+  "branch": null,
+  "pr": null,
+  "merged_sha": null,
+  "history": [
+    {
+      "at": "2026-10-15T20:18:26.356375+00:00",
+      "by": "orchestrator",
+      "from": "backlog",
+      "to": "ready-for-dev"
+    },
+    {
+      "at": "2026-10-15T20:18:26.576332+00:00",
+      "by": "codex-native-validator",
+      "from": "ready-for-dev",
+      "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T20:26:44.757099+00:00",
+      "by": "codex-native-validator",
+      "from": "in-progress",
+      "to": "in-review"
+    }
+  ],
+  "findings": [],
+  "source_key": "installer-hosts/native-manifest-validation-bases",
+  "review_subject_sha": "5892e4996547bec11be47893292657fab4ffc026"
+}
