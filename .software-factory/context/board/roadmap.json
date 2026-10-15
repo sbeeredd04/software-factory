@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-15T09:44:45.295386+00:00",
-  "revision": 189,
+  "generated_at": "2026-10-15T09:53:03.495344+00:00",
+  "revision": 193,
   "streams": [
     {
       "id": "W-foundation",
@@ -55,10 +55,10 @@
         3
       ],
       "counts": {
-        "planned": 1,
+        "planned": 0,
         "ready": 0,
         "in-progress": 1,
-        "review": 4,
+        "review": 5,
         "built": 0,
         "done": 0,
         "cancelled": 0
@@ -2253,8 +2253,8 @@
       "stream": "W-installer",
       "type": "story",
       "title": "Pinned BMad 6.12.0 install through the official installer",
-      "status": "in-progress",
-      "state": "in-progress",
+      "status": "in-review",
+      "state": "review",
       "owner": "codex-bmad-provisioning",
       "after": [
         22
@@ -2338,6 +2338,38 @@
           ],
           "subject_sha": "22076bec9e6458cc834b096e4958eba8ecc5b8f0",
           "subject_kind": "Sanitized research memo revision; exploratory executions identify their own upstream versions and source commits, not this repository SHA."
+        },
+        "implementation-result": {
+          "type": "agent-attempt",
+          "subject_sha": "bf22dae072e7ac632e93db65dfa17c27859baf89",
+          "agent": "/root/host_contracts",
+          "role": "sf-principal-engineer",
+          "skill": "software-factory",
+          "requested_model": "gpt-6-astra",
+          "effective_model": null,
+          "phase": "implementation",
+          "status": "awaiting-review",
+          "recorded_at": "2026-10-15T09:51:55.266035+00:00",
+          "summary": "Local provisioning source accepted by independent review after argv, contained read and output budget repairs. Author153affected tests:152executed pass,1networkskip. Original actual upstream test remains failed; tested pin amendment awaits owner. Candidate not integrated or completed.",
+          "independent_source_review": {
+            "reviewer": "/root/mission_status",
+            "status": "accepted-local-source",
+            "subject_sha": "bf22dae072e7ac632e93db65dfa17c27859baf89"
+          },
+          "verification": {
+            "author_report": {
+              "tests": 153,
+              "passed": 152,
+              "skipped": 1,
+              "exit_code": 0
+            },
+            "live_compatibility": "fail-original-command",
+            "pin_amendment": "pending-owner"
+          },
+          "limitations": [
+            "No story/epic acceptance or live host loading claimed.",
+            "Exploratory pinned installations are distinct from approved shipped command proof."
+          ]
         }
       },
       "baseline_sha": null,
@@ -2345,18 +2377,7 @@
       "pr": null,
       "merged_sha": null,
       "claim": {
-        "live": true,
-        "owner": "codex-bmad-provisioning",
-        "paths": [
-          "install.py",
-          "scripts/bmad_install.py",
-          "schemas/installation.schema.json",
-          "tests/test_bmad_install.py",
-          "tests/test_installer.py",
-          "skills/software-factory/references/bmad-provisioning.md",
-          "skills/software-factory/references/planning.md"
-        ],
-        "claimed_at": "2026-10-15T09:17:21.318962+00:00"
+        "live": false
       },
       "blocks": [
         24
@@ -2373,6 +2394,12 @@
           "by": "codex-bmad-provisioning",
           "from": "ready-for-dev",
           "to": "in-progress"
+        },
+        {
+          "at": "2026-10-15T09:51:55.294312+00:00",
+          "by": "codex-bmad-provisioning",
+          "from": "in-progress",
+          "to": "in-review"
         }
       ],
       "findings": [
@@ -2390,9 +2417,9 @@
       "stream": "W-installer",
       "type": "story",
       "title": "Plugin and marketplace manifests and install.sh bootstrap",
-      "status": "backlog",
-      "state": "planned",
-      "owner": null,
+      "status": "in-progress",
+      "state": "in-progress",
+      "owner": "codex-distribution",
       "after": [
         23
       ],
@@ -2411,18 +2438,61 @@
       "plan_checkpoint": false,
       "done_checkpoint": true,
       "blocked": null,
-      "receipts": {},
+      "receipts": {
+        "active-attempt": {
+          "type": "agent-attempt",
+          "subject_sha": "bf22dae072e7ac632e93db65dfa17c27859baf89",
+          "agent": "/root/distribution",
+          "role": "sf-principal-engineer",
+          "skill": "software-factory",
+          "requested_model": "gpt-6-astra",
+          "effective_model": null,
+          "phase": "implementation",
+          "status": "assigned",
+          "recorded_at": "2026-10-15T09:53:03.464449+00:00",
+          "summary": "Original24 starts from independently reviewed23 local source through existing review-counts-as-met readiness. Implement disjoint distribution/bootstrap/release files under approved ADR0024. install.py glue is serialized later; live BMad criterion remains open."
+        }
+      },
       "baseline_sha": null,
       "branch": null,
       "pr": null,
       "merged_sha": null,
       "claim": {
-        "live": false
+        "live": true,
+        "owner": "codex-distribution",
+        "paths": [
+          "install.sh",
+          "scripts/distribution.py",
+          "scripts/build_release.py",
+          "scripts/check_distribution.py",
+          "tests/test_distribution.py",
+          "tests/test_bootstrap.py",
+          "tests/test_skills_distribution.py",
+          "plugin.json",
+          "hosts/plugins",
+          "schemas/plugins",
+          "docs/distribution.md",
+          "scripts/check_all.sh"
+        ],
+        "claimed_at": "2026-10-15T09:51:55.436089+00:00"
       },
       "blocks": [
         25
       ],
-      "history": [],
+      "history": [
+        {
+          "at": "2026-10-15T09:51:55.377307+00:00",
+          "by": "orchestrator",
+          "from": "backlog",
+          "to": "ready-for-dev"
+        },
+        {
+          "at": "2026-10-15T09:51:55.467038+00:00",
+          "by": "codex-distribution",
+          "from": "ready-for-dev",
+          "to": "in-progress"
+        }
+      ],
       "findings": [],
       "source_key": "installer-hosts/distribution"
     },
@@ -3817,21 +3887,12 @@
     "ready": [],
     "waiting_on_prereq": [
       {
-        "id": 24,
-        "epic": 3,
-        "stream": "W-installer",
-        "title": "Plugin and marketplace manifests and install.sh bootstrap",
-        "missing": [
-          "23 (in-progress)"
-        ]
-      },
-      {
         "id": 25,
         "epic": 4,
         "stream": "W-onboarding",
         "title": "Config contract, JSON Schema and tracker adapters",
         "missing": [
-          "24 (backlog)"
+          "24 (in-progress)"
         ]
       },
       {

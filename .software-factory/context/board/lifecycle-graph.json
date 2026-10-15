@@ -5,19 +5,10 @@
       "problems": [],
       "waiting": [
         {
-          "epic": 3,
-          "id": 24,
-          "missing": [
-            "23 (in-progress)"
-          ],
-          "stream": "W-installer",
-          "title": "Plugin and marketplace manifests and install.sh bootstrap"
-        },
-        {
           "epic": 4,
           "id": 25,
           "missing": [
-            "24 (backlog)"
+            "24 (in-progress)"
           ],
           "stream": "W-onboarding",
           "title": "Config contract, JSON Schema and tracker adapters"
@@ -5042,7 +5033,7 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/covers/0",
-          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
+          "sha256": "39358ea30713f0bd52f160587d2b7de9606532c4d073d68e27b593cbd223acf5"
         }
       ],
       "relation": "covers",
@@ -5055,7 +5046,7 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/covers/1",
-          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
+          "sha256": "39358ea30713f0bd52f160587d2b7de9606532c4d073d68e27b593cbd223acf5"
         }
       ],
       "relation": "covers",
@@ -5068,7 +5059,7 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/covers/2",
-          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
+          "sha256": "39358ea30713f0bd52f160587d2b7de9606532c4d073d68e27b593cbd223acf5"
         }
       ],
       "relation": "covers",
@@ -5081,7 +5072,7 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/covers/3",
-          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
+          "sha256": "39358ea30713f0bd52f160587d2b7de9606532c4d073d68e27b593cbd223acf5"
         }
       ],
       "relation": "covers",
@@ -5094,7 +5085,7 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/covers/4",
-          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
+          "sha256": "39358ea30713f0bd52f160587d2b7de9606532c4d073d68e27b593cbd223acf5"
         }
       ],
       "relation": "covers",
@@ -5107,7 +5098,7 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/covers/5",
-          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
+          "sha256": "39358ea30713f0bd52f160587d2b7de9606532c4d073d68e27b593cbd223acf5"
         }
       ],
       "relation": "covers",
@@ -5120,7 +5111,7 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/covers/6",
-          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
+          "sha256": "39358ea30713f0bd52f160587d2b7de9606532c4d073d68e27b593cbd223acf5"
         }
       ],
       "relation": "covers",
@@ -5133,7 +5124,7 @@
         {
           "path": ".software-factory/context/board/stories/24.json",
           "pointer": "/covers/0",
-          "sha256": "136eac81c1046e49680dd5514062a6207c1ba35c31cf94e329f5fa8ff287f53a"
+          "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
         }
       ],
       "relation": "covers",
@@ -5146,7 +5137,7 @@
         {
           "path": ".software-factory/context/board/stories/24.json",
           "pointer": "/covers/1",
-          "sha256": "136eac81c1046e49680dd5514062a6207c1ba35c31cf94e329f5fa8ff287f53a"
+          "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
         }
       ],
       "relation": "covers",
@@ -5159,7 +5150,7 @@
         {
           "path": ".software-factory/context/board/stories/24.json",
           "pointer": "/covers/2",
-          "sha256": "136eac81c1046e49680dd5514062a6207c1ba35c31cf94e329f5fa8ff287f53a"
+          "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
         }
       ],
       "relation": "covers",
@@ -5172,7 +5163,7 @@
         {
           "path": ".software-factory/context/board/stories/24.json",
           "pointer": "/covers/3",
-          "sha256": "136eac81c1046e49680dd5514062a6207c1ba35c31cf94e329f5fa8ff287f53a"
+          "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
         }
       ],
       "relation": "covers",
@@ -5185,7 +5176,7 @@
         {
           "path": ".software-factory/context/board/stories/24.json",
           "pointer": "/covers/4",
-          "sha256": "136eac81c1046e49680dd5514062a6207c1ba35c31cf94e329f5fa8ff287f53a"
+          "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
         }
       ],
       "relation": "covers",
@@ -5198,7 +5189,7 @@
         {
           "path": ".software-factory/context/board/stories/24.json",
           "pointer": "/covers/5",
-          "sha256": "136eac81c1046e49680dd5514062a6207c1ba35c31cf94e329f5fa8ff287f53a"
+          "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
         }
       ],
       "relation": "covers",
@@ -5211,7 +5202,7 @@
         {
           "path": ".software-factory/context/board/stories/24.json",
           "pointer": "/covers/6",
-          "sha256": "136eac81c1046e49680dd5514062a6207c1ba35c31cf94e329f5fa8ff287f53a"
+          "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
         }
       ],
       "relation": "covers",
@@ -5224,7 +5215,7 @@
         {
           "path": ".software-factory/context/board/stories/24.json",
           "pointer": "/covers/7",
-          "sha256": "136eac81c1046e49680dd5514062a6207c1ba35c31cf94e329f5fa8ff287f53a"
+          "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
         }
       ],
       "relation": "covers",
@@ -17294,7 +17285,7 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/after/0",
-          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
+          "sha256": "39358ea30713f0bd52f160587d2b7de9606532c4d073d68e27b593cbd223acf5"
         }
       ],
       "relation": "depends-on",
@@ -17306,7 +17297,7 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/epic",
-          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
+          "sha256": "39358ea30713f0bd52f160587d2b7de9606532c4d073d68e27b593cbd223acf5"
         }
       ],
       "relation": "part-of",
@@ -17318,7 +17309,7 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/findings/0",
-          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
+          "sha256": "39358ea30713f0bd52f160587d2b7de9606532c4d073d68e27b593cbd223acf5"
         }
       ],
       "relation": "records",
@@ -17330,7 +17321,7 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/receipts/active-attempt",
-          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
+          "sha256": "39358ea30713f0bd52f160587d2b7de9606532c4d073d68e27b593cbd223acf5"
         }
       ],
       "relation": "records",
@@ -17342,7 +17333,7 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/receipts/active-attempt",
-          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
+          "sha256": "39358ea30713f0bd52f160587d2b7de9606532c4d073d68e27b593cbd223acf5"
         }
       ],
       "relation": "subject",
@@ -17354,7 +17345,7 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/receipts/compatibility-investigation",
-          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
+          "sha256": "39358ea30713f0bd52f160587d2b7de9606532c4d073d68e27b593cbd223acf5"
         }
       ],
       "relation": "records",
@@ -17366,7 +17357,7 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/receipts/compatibility-investigation",
-          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
+          "sha256": "39358ea30713f0bd52f160587d2b7de9606532c4d073d68e27b593cbd223acf5"
         }
       ],
       "relation": "subject",
@@ -17376,9 +17367,33 @@
     {
       "provenance": [
         {
+          "path": ".software-factory/context/board/stories/23.json",
+          "pointer": "/receipts/implementation-result",
+          "sha256": "39358ea30713f0bd52f160587d2b7de9606532c4d073d68e27b593cbd223acf5"
+        }
+      ],
+      "relation": "records",
+      "source": "story:23",
+      "target": "receipt:23:implementation-result"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/23.json",
+          "pointer": "/receipts/implementation-result",
+          "sha256": "39358ea30713f0bd52f160587d2b7de9606532c4d073d68e27b593cbd223acf5"
+        }
+      ],
+      "relation": "subject",
+      "source": "receipt:23:implementation-result",
+      "target": "commit:bf22dae072e7ac632e93db65dfa17c27859baf89"
+    },
+    {
+      "provenance": [
+        {
           "path": ".software-factory/context/board/stories/24.json",
           "pointer": "/after/0",
-          "sha256": "136eac81c1046e49680dd5514062a6207c1ba35c31cf94e329f5fa8ff287f53a"
+          "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
         }
       ],
       "relation": "depends-on",
@@ -17390,12 +17405,36 @@
         {
           "path": ".software-factory/context/board/stories/24.json",
           "pointer": "/epic",
-          "sha256": "136eac81c1046e49680dd5514062a6207c1ba35c31cf94e329f5fa8ff287f53a"
+          "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
         }
       ],
       "relation": "part-of",
       "source": "story:24",
       "target": "epic:3"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/24.json",
+          "pointer": "/receipts/active-attempt",
+          "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
+        }
+      ],
+      "relation": "records",
+      "source": "story:24",
+      "target": "receipt:24:active-attempt"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/24.json",
+          "pointer": "/receipts/active-attempt",
+          "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
+        }
+      ],
+      "relation": "subject",
+      "source": "receipt:24:active-attempt",
+      "target": "commit:bf22dae072e7ac632e93db65dfa17c27859baf89"
     },
     {
       "provenance": [
@@ -18721,20 +18760,20 @@
       "provenance": [
         {
           "path": ".software-factory/runs/software-factory-v01/run.json",
-          "pointer": "/claims/23",
-          "sha256": "b20132c0a2b719060f31fe739e209004cb6e2abbca6d41d09db3fdea06766b34"
+          "pointer": "/claims/24",
+          "sha256": "4741881b59e33c70096418d92f057d3bb80d7ccb67138a38df37757fcf503a95"
         }
       ],
       "relation": "assigned-to",
-      "source": "claim:23",
-      "target": "story:23"
+      "source": "claim:24",
+      "target": "story:24"
     },
     {
       "provenance": [
         {
           "path": ".software-factory/runs/software-factory-v01/run.json",
           "pointer": "/claims/44",
-          "sha256": "b20132c0a2b719060f31fe739e209004cb6e2abbca6d41d09db3fdea06766b34"
+          "sha256": "4741881b59e33c70096418d92f057d3bb80d7ccb67138a38df37757fcf503a95"
         }
       ],
       "relation": "assigned-to",
@@ -18886,12 +18925,12 @@
     {
       "kind": "file",
       "path": ".software-factory/context/board/stories/23.json",
-      "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
+      "sha256": "39358ea30713f0bd52f160587d2b7de9606532c4d073d68e27b593cbd223acf5"
     },
     {
       "kind": "file",
       "path": ".software-factory/context/board/stories/24.json",
-      "sha256": "136eac81c1046e49680dd5514062a6207c1ba35c31cf94e329f5fa8ff287f53a"
+      "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
     },
     {
       "kind": "file",
@@ -19171,7 +19210,7 @@
     {
       "kind": "file",
       "path": ".software-factory/runs/software-factory-v01/run.json",
-      "sha256": "b20132c0a2b719060f31fe739e209004cb6e2abbca6d41d09db3fdea06766b34"
+      "sha256": "4741881b59e33c70096418d92f057d3bb80d7ccb67138a38df37757fcf503a95"
     },
     {
       "kind": "file",
@@ -19505,20 +19544,20 @@
         {
           "path": ".software-factory/runs/software-factory-v01/run.json",
           "pointer": "/checkpoint",
-          "sha256": "b20132c0a2b719060f31fe739e209004cb6e2abbca6d41d09db3fdea06766b34"
+          "sha256": "4741881b59e33c70096418d92f057d3bb80d7ccb67138a38df37757fcf503a95"
         }
       ],
       "type": "checkpoint"
     },
     {
-      "id": "claim:23",
-      "label": "codex-bmad-provisioning",
+      "id": "claim:24",
+      "label": "codex-distribution",
       "liveness": "unknown",
       "provenance": [
         {
           "path": ".software-factory/runs/software-factory-v01/run.json",
-          "pointer": "/claims/23",
-          "sha256": "b20132c0a2b719060f31fe739e209004cb6e2abbca6d41d09db3fdea06766b34"
+          "pointer": "/claims/24",
+          "sha256": "4741881b59e33c70096418d92f057d3bb80d7ccb67138a38df37757fcf503a95"
         }
       ],
       "type": "claim"
@@ -19531,7 +19570,7 @@
         {
           "path": ".software-factory/runs/software-factory-v01/run.json",
           "pointer": "/claims/44",
-          "sha256": "b20132c0a2b719060f31fe739e209004cb6e2abbca6d41d09db3fdea06766b34"
+          "sha256": "4741881b59e33c70096418d92f057d3bb80d7ccb67138a38df37757fcf503a95"
         }
       ],
       "type": "claim"
@@ -19565,7 +19604,7 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/receipts/active-attempt/subject_sha",
-          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
+          "sha256": "39358ea30713f0bd52f160587d2b7de9606532c4d073d68e27b593cbd223acf5"
         },
         {
           "path": ".software-factory/context/board/stories/45.json",
@@ -19606,7 +19645,7 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/receipts/compatibility-investigation/subject_sha",
-          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
+          "sha256": "39358ea30713f0bd52f160587d2b7de9606532c4d073d68e27b593cbd223acf5"
         }
       ],
       "type": "commit"
@@ -19970,6 +20009,23 @@
           "path": ".software-factory/context/board/stories/11.json",
           "pointer": "/receipts/backfill/subject_sha",
           "sha256": "9a071a0516507f84734bc975a1137477483a4868c08e20053a0ce32f26c9602f"
+        }
+      ],
+      "type": "commit"
+    },
+    {
+      "id": "commit:bf22dae072e7ac632e93db65dfa17c27859baf89",
+      "label": "bf22dae072e7ac632e93db65dfa17c27859baf89",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/23.json",
+          "pointer": "/receipts/implementation-result/subject_sha",
+          "sha256": "39358ea30713f0bd52f160587d2b7de9606532c4d073d68e27b593cbd223acf5"
+        },
+        {
+          "path": ".software-factory/context/board/stories/24.json",
+          "pointer": "/receipts/active-attempt/subject_sha",
+          "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
         }
       ],
       "type": "commit"
@@ -20573,7 +20629,7 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/findings/0",
-          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
+          "sha256": "39358ea30713f0bd52f160587d2b7de9606532c4d073d68e27b593cbd223acf5"
         }
       ],
       "type": "finding"
@@ -34040,7 +34096,7 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/receipts/active-attempt",
-          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
+          "sha256": "39358ea30713f0bd52f160587d2b7de9606532c4d073d68e27b593cbd223acf5"
         }
       ],
       "reported_status": "assigned",
@@ -34057,12 +34113,46 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/receipts/compatibility-investigation",
-          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
+          "sha256": "39358ea30713f0bd52f160587d2b7de9606532c4d073d68e27b593cbd223acf5"
         }
       ],
       "reported_status": null,
       "story": 23,
       "subject_sha": "22076bec9e6458cc834b096e4958eba8ecc5b8f0",
+      "type": "receipt"
+    },
+    {
+      "artifact_integrity": "unknown",
+      "freshness": "unknown",
+      "id": "receipt:23:implementation-result",
+      "label": "implementation-result",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/23.json",
+          "pointer": "/receipts/implementation-result",
+          "sha256": "39358ea30713f0bd52f160587d2b7de9606532c4d073d68e27b593cbd223acf5"
+        }
+      ],
+      "reported_status": "awaiting-review",
+      "story": 23,
+      "subject_sha": "bf22dae072e7ac632e93db65dfa17c27859baf89",
+      "type": "receipt"
+    },
+    {
+      "artifact_integrity": "unknown",
+      "freshness": "unknown",
+      "id": "receipt:24:active-attempt",
+      "label": "active-attempt",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/24.json",
+          "pointer": "/receipts/active-attempt",
+          "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
+        }
+      ],
+      "reported_status": "assigned",
+      "story": 24,
+      "subject_sha": "bf22dae072e7ac632e93db65dfa17c27859baf89",
       "type": "receipt"
     },
     {
@@ -34706,7 +34796,7 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/covers/0",
-          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
+          "sha256": "39358ea30713f0bd52f160587d2b7de9606532c4d073d68e27b593cbd223acf5"
         }
       ],
       "type": "requirement"
@@ -34718,7 +34808,7 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/covers/1",
-          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
+          "sha256": "39358ea30713f0bd52f160587d2b7de9606532c4d073d68e27b593cbd223acf5"
         }
       ],
       "type": "requirement"
@@ -34730,7 +34820,7 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/covers/2",
-          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
+          "sha256": "39358ea30713f0bd52f160587d2b7de9606532c4d073d68e27b593cbd223acf5"
         }
       ],
       "type": "requirement"
@@ -34742,7 +34832,7 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/covers/3",
-          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
+          "sha256": "39358ea30713f0bd52f160587d2b7de9606532c4d073d68e27b593cbd223acf5"
         }
       ],
       "type": "requirement"
@@ -34754,7 +34844,7 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/covers/4",
-          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
+          "sha256": "39358ea30713f0bd52f160587d2b7de9606532c4d073d68e27b593cbd223acf5"
         }
       ],
       "type": "requirement"
@@ -34766,7 +34856,7 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/covers/5",
-          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
+          "sha256": "39358ea30713f0bd52f160587d2b7de9606532c4d073d68e27b593cbd223acf5"
         }
       ],
       "type": "requirement"
@@ -34778,7 +34868,7 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/covers/6",
-          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
+          "sha256": "39358ea30713f0bd52f160587d2b7de9606532c4d073d68e27b593cbd223acf5"
         }
       ],
       "type": "requirement"
@@ -35328,7 +35418,7 @@
         {
           "path": ".software-factory/context/board/stories/24.json",
           "pointer": "/covers/0",
-          "sha256": "136eac81c1046e49680dd5514062a6207c1ba35c31cf94e329f5fa8ff287f53a"
+          "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
         }
       ],
       "type": "requirement"
@@ -35340,7 +35430,7 @@
         {
           "path": ".software-factory/context/board/stories/24.json",
           "pointer": "/covers/1",
-          "sha256": "136eac81c1046e49680dd5514062a6207c1ba35c31cf94e329f5fa8ff287f53a"
+          "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
         }
       ],
       "type": "requirement"
@@ -35352,7 +35442,7 @@
         {
           "path": ".software-factory/context/board/stories/24.json",
           "pointer": "/covers/2",
-          "sha256": "136eac81c1046e49680dd5514062a6207c1ba35c31cf94e329f5fa8ff287f53a"
+          "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
         }
       ],
       "type": "requirement"
@@ -35364,7 +35454,7 @@
         {
           "path": ".software-factory/context/board/stories/24.json",
           "pointer": "/covers/3",
-          "sha256": "136eac81c1046e49680dd5514062a6207c1ba35c31cf94e329f5fa8ff287f53a"
+          "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
         }
       ],
       "type": "requirement"
@@ -35376,7 +35466,7 @@
         {
           "path": ".software-factory/context/board/stories/24.json",
           "pointer": "/covers/4",
-          "sha256": "136eac81c1046e49680dd5514062a6207c1ba35c31cf94e329f5fa8ff287f53a"
+          "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
         }
       ],
       "type": "requirement"
@@ -35388,7 +35478,7 @@
         {
           "path": ".software-factory/context/board/stories/24.json",
           "pointer": "/covers/5",
-          "sha256": "136eac81c1046e49680dd5514062a6207c1ba35c31cf94e329f5fa8ff287f53a"
+          "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
         }
       ],
       "type": "requirement"
@@ -35400,7 +35490,7 @@
         {
           "path": ".software-factory/context/board/stories/24.json",
           "pointer": "/covers/6",
-          "sha256": "136eac81c1046e49680dd5514062a6207c1ba35c31cf94e329f5fa8ff287f53a"
+          "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
         }
       ],
       "type": "requirement"
@@ -35412,7 +35502,7 @@
         {
           "path": ".software-factory/context/board/stories/24.json",
           "pointer": "/covers/7",
-          "sha256": "136eac81c1046e49680dd5514062a6207c1ba35c31cf94e329f5fa8ff287f53a"
+          "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
         }
       ],
       "type": "requirement"
@@ -38003,10 +38093,10 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "",
-          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
+          "sha256": "39358ea30713f0bd52f160587d2b7de9606532c4d073d68e27b593cbd223acf5"
         }
       ],
-      "status": "in-progress",
+      "status": "in-review",
       "type": "story"
     },
     {
@@ -38016,10 +38106,10 @@
         {
           "path": ".software-factory/context/board/stories/24.json",
           "pointer": "",
-          "sha256": "136eac81c1046e49680dd5514062a6207c1ba35c31cf94e329f5fa8ff287f53a"
+          "sha256": "d10203b3360bfcea2db9ac88ec1584d1bdd661000abde483ac4f5c9479dd3b68"
         }
       ],
-      "status": "backlog",
+      "status": "in-progress",
       "type": "story"
     },
     {
@@ -39671,5 +39761,5 @@
     }
   ],
   "schema": "sf-trace/1",
-  "source_fingerprint": "a822bf57057414487b02fbe5d70a0c999eaa60c1670f490c4873228913305b5d"
+  "source_fingerprint": "e8e7dbadb3eebe024af72b9e91d98d86a4a25dbb2647ff9cd7100d9bc91cefb6"
 }

@@ -4,7 +4,7 @@
   "epic": 3,
   "type": "story",
   "title": "Pinned BMad 6.12.0 install through the official installer",
-  "status": "in-progress",
+  "status": "in-review",
   "owner": "codex-bmad-provisioning",
   "after": [
     22
@@ -88,6 +88,38 @@
       ],
       "subject_sha": "22076bec9e6458cc834b096e4958eba8ecc5b8f0",
       "subject_kind": "Sanitized research memo revision; exploratory executions identify their own upstream versions and source commits, not this repository SHA."
+    },
+    "implementation-result": {
+      "type": "agent-attempt",
+      "subject_sha": "bf22dae072e7ac632e93db65dfa17c27859baf89",
+      "agent": "/root/host_contracts",
+      "role": "sf-principal-engineer",
+      "skill": "software-factory",
+      "requested_model": "gpt-6-astra",
+      "effective_model": null,
+      "phase": "implementation",
+      "status": "awaiting-review",
+      "recorded_at": "2026-10-15T09:51:55.266035+00:00",
+      "summary": "Local provisioning source accepted by independent review after argv, contained read and output budget repairs. Author153affected tests:152executed pass,1networkskip. Original actual upstream test remains failed; tested pin amendment awaits owner. Candidate not integrated or completed.",
+      "independent_source_review": {
+        "reviewer": "/root/mission_status",
+        "status": "accepted-local-source",
+        "subject_sha": "bf22dae072e7ac632e93db65dfa17c27859baf89"
+      },
+      "verification": {
+        "author_report": {
+          "tests": 153,
+          "passed": 152,
+          "skipped": 1,
+          "exit_code": 0
+        },
+        "live_compatibility": "fail-original-command",
+        "pin_amendment": "pending-owner"
+      },
+      "limitations": [
+        "No story/epic acceptance or live host loading claimed.",
+        "Exploratory pinned installations are distinct from approved shipped command proof."
+      ]
     }
   },
   "baseline_sha": null,
@@ -106,6 +138,12 @@
       "by": "codex-bmad-provisioning",
       "from": "ready-for-dev",
       "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T09:51:55.294312+00:00",
+      "by": "codex-bmad-provisioning",
+      "from": "in-progress",
+      "to": "in-review"
     }
   ],
   "findings": [
