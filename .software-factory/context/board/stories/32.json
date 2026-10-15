@@ -139,6 +139,73 @@
         "The native BMad Build unit can close implementation/review; authoritative factory story remains in review until its distinct protected proof/integration gates.",
         "Current primary combined verification, exact52case admission, native final site QA and external publication remain separate."
       ]
+    },
+    "bmad-build-unit-closure": {
+      "type": "native-bmad-unit-closure",
+      "subject_sha": "374eea011296d790a15fcf861b499835ee02f26b",
+      "status": "pass",
+      "unit_status": "done",
+      "authoritative_factory_status": "in-review",
+      "coordinator": "/root",
+      "implementation_agent": "/root/docs_impl/readme_implement",
+      "reviewers": [
+        "/root/bmad32_blind",
+        "/root/bmad32_edge",
+        "/root/bmad32_verification",
+        "/root/final_audit"
+      ],
+      "spec": "_bmad-output/implementation-artifacts/spec-32-readme-adoption.md",
+      "spec_sha256": "e6e92bd5a4f1bb4329d74d005924211d25ee77ce3c9f675953490996566bcee3",
+      "steps": "Actual installed BMad Build render/resume, implementation, three simultaneous reviews, individual verdicts and direct patches, final frozen-source verification, presentation/unit closure.",
+      "deferred": "Two pre-existing cosmetic canonical-diagram omissions retained in worker notes; full evidence contracts remain binding.",
+      "limits": [
+        "Native unit done is not factory story built/done, delivery, maintainer integration or acceptance. No sprint-status store was created; no push occurred."
+      ]
+    },
+    "exact-eval52-admission": {
+      "type": "evaluation-admission",
+      "subject_sha": "d012ad71df197c656664b9fdc563a80975f99409",
+      "status": "admitted-after-independent-implementation-review",
+      "case_id": "TLS-README-001",
+      "original_cases_unchanged": 30,
+      "exact_approved_additions": 22,
+      "total_cases": 52,
+      "payload_sha256": "6de4045d29dd9c49867d7e66c03702b8753ac9ad52d2ce79e7be526eb9c6d2ff",
+      "source_decision": ".software-factory/context/decisions/0026-additive-evaluation-admission.md",
+      "implementation_subject_sha": "374eea011296d790a15fcf861b499835ee02f26b",
+      "new_approval_or_criteria_change": false,
+      "limits": [
+        "Admission reuses the exact approved addition; actual passing combined evidence still required."
+      ]
+    },
+    "combined-source": {
+      "type": "combined-local-source-observation",
+      "subject_sha": "d012ad71df197c656664b9fdc563a80975f99409",
+      "status": "pass",
+      "readme_source_blobs_verified": 8,
+      "readme_review_subject_sha": "374eea011296d790a15fcf861b499835ee02f26b",
+      "installed_repeat": {
+        "exit_code": 0,
+        "tracked_changes": 0,
+        "forbidden_invocations": 0,
+        "owned_manifest_hashes_verified": 116,
+        "existing_bmad_preserved": true
+      },
+      "native_installed_crawl": {
+        "selection": "git-tracked-and-unignored",
+        "python_modules": 80,
+        "source_files": 90,
+        "entry_points": 60,
+        "unparsed": 0,
+        "raw_json_bytes": 925459,
+        "stored_json_bytes": 925459,
+        "raw_json_sha256": "ad17c5b6f328060ef450d8050399ee345259f90dc0fdef1ee0a2b6bb714f2586",
+        "stored_json_sha256": "ad17c5b6f328060ef450d8050399ee345259f90dc0fdef1ee0a2b6bb714f2586",
+        "encoding": "Native bytes"
+      },
+      "limits": [
+        "Combined local feature candidate, not maintainer integration, deployment, live host registration or final full-gate proof."
+      ]
     }
   },
   "baseline_sha": null,

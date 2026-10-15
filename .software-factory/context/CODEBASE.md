@@ -5,9 +5,9 @@
 > (`<skill-dir>` is the installed skill directory, e.g. `.claude/skills/sf-crawl`
 > or `.agents/skills/sf-crawl`).
 
-- Source revision: b0695b11bf5b557b178bcb436cb98ef1f80c4b6a
+- Source revision: d012ad71df197c656664b9fdc563a80975f99409
 - File selection: git-tracked-and-unignored
-- Generated: 2026-10-15T19:49:06Z
+- Generated: 2026-10-15T20:10:54Z
 
 ## Limits
 
@@ -105,11 +105,12 @@
 | `tests.test_installer` | `tests/test_installer.py` | 13 | 0 | 10 |
 | `tests.test_onboarding` | `tests/test_onboarding.py` | 1 | 0 | 11 |
 | `tests.test_overlays` | `tests/test_overlays.py` | 4 | 0 | 12 |
+| `tests.test_readme_journey` | `tests/test_readme_journey.py` | 5 | 0 | 14 |
 | `tests.test_review_triage` | `tests/test_review_triage.py` | 6 | 0 | 5 |
 | `tests.test_run_audit` | `tests/test_run_audit.py` | 1 | 0 | 11 |
 | `tests.test_sf_eval` | `tests/test_sf_eval.py` | 22 | 0 | 13 |
-| `tests.test_showcase` | `tests/test_showcase.py` | 4 | 0 | 13 |
-| `tests.test_skills_distribution` | `tests/test_skills_distribution.py` | 1 | 0 | 7 |
+| `tests.test_showcase` | `tests/test_showcase.py` | 4 | 0 | 14 |
+| `tests.test_skills_distribution` | `tests/test_skills_distribution.py` | 3 | 0 | 9 |
 | `tests.test_state` | `tests/test_state.py` | 17 | 0 | 16 |
 | `tests.test_tools` | `tests/test_tools.py` | 18 | 0 | 8 |
 | `tests.test_trace` | `tests/test_trace.py` | 2 | 0 | 13 |
@@ -222,7 +223,7 @@ No internal import edges.
 - `scripts.bmad_install.provision` (line 425) calls `api.InstallError` (unconfirmed), `api.acquire_lock` (unconfirmed), `api.sha256` (unconfirmed), `attempt` (confirmed: scripts.bmad_install.attempt), `describe` (confirmed: scripts.bmad_install.describe), `fcntl.flock` (unconfirmed), `int` (unconfirmed), `isinstance` (unconfirmed), `load_ownership` (confirmed: scripts.bmad_install.load_ownership), `os.close` (unconfirmed), `previous.get` (unconfirmed), `print` (unconfirmed), `prior_bmad.get` (unconfirmed), `read_payload` (confirmed: scripts.bmad_install.read_payload), `record.update` (unconfirmed), `save_record` (confirmed: scripts.bmad_install.save_record), `set` (unconfirmed)
 - `scripts.build_release.release_files` (line 17) calls `Path` (unconfirmed), `ValueError` (unconfirmed), `all` (unconfirmed), `any` (unconfirmed), `distribution.bundle_files` (unconfirmed), `distribution.load_api` (unconfirmed), `files.items` (unconfirmed), `files.update` (unconfirmed), `is_relative_to` (unconfirmed), `isinstance` (unconfirmed), `items` (unconfirmed), `json.loads` (unconfirmed), `len` (unconfirmed), `name.startswith` (unconfirmed), `p.is_symlink` (unconfirmed), `path.is_file` (unconfirmed), `path.is_symlink` (unconfirmed), `path.parent.mkdir` (unconfirmed), `path.read_bytes` (unconfirmed), `path.resolve` (unconfirmed), `path.write_bytes` (unconfirmed), `read_text` (unconfirmed), `resolve` (unconfirmed), `root.resolve` (unconfirmed), `set` (unconfirmed) … (call cap reached)
 - `scripts.build_release.archive_bytes` (line 47) calls `archive.addfile` (unconfirmed), `files.items` (unconfirmed), `gzip.GzipFile` (unconfirmed), `io.BytesIO` (unconfirmed), `len` (unconfirmed), `name.endswith` (unconfirmed), `result.getvalue` (unconfirmed), `sorted` (unconfirmed), `tarfile.TarInfo` (unconfirmed), `tarfile.open` (unconfirmed)
-- … 1529 more call rows (cap reached)
+- … 1551 more call rows (cap reached)
 
 ## Entry points
 
@@ -277,6 +278,7 @@ No internal import edges.
 - `__main__` guard — confirmed: `tests/test_host_cursor.py`
 - `__main__` guard — confirmed: `tests/test_host_selection.py`
 - `__main__` guard — confirmed: `tests/test_installer.py`
+- `__main__` guard — confirmed: `tests/test_readme_journey.py`
 - `__main__` guard — confirmed: `tests/test_run_audit.py`
 - `__main__` guard — confirmed: `tests/test_sf_eval.py`
 - `__main__` guard — confirmed: `tests/test_showcase.py`
@@ -315,4 +317,4 @@ Everything parsed cleanly.
 
 ## File census
 
-405 file(s) crawled. Counts by extension: `.md` 160, `.py` 79, `.json` 48, `.html` 15, `.yaml` 14, `.svg` 11, `.png` 10, `.mmd` 9, `.txt` 9, `.yml` 8, `.tmpl` 7, `.css` 6, `(no extension)` 4, `.toml` 4, `.ts` 4, … 17 more file(s) (cap reached).
+406 file(s) crawled. Counts by extension: `.md` 160, `.py` 80, `.json` 48, `.html` 15, `.yaml` 14, `.svg` 11, `.png` 10, `.mmd` 9, `.txt` 9, `.yml` 8, `.tmpl` 7, `.css` 6, `(no extension)` 4, `.toml` 4, `.ts` 4, … 17 more file(s) (cap reached).

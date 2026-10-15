@@ -1171,6 +1171,28 @@
         }
       },
       "nondeterministic": false
+    },
+    {
+      "id": "TLS-README-001",
+      "story": "launch-publication/readme",
+      "epic": "launch-publication",
+      "suite": "story",
+      "kind": "fail_to_pass",
+      "criterion": "Exact README local install commands produce the documented three-host assets and repeat without changing user-owned files; command drift and missing resources fail.",
+      "surface": "tools",
+      "tier": [
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "command",
+        "run": "SF_SKIP_NETWORK=1 python3 -m unittest discover -s tests -p 'test_readme_journey.py'",
+        "expect": {
+          "exit": 0,
+          "output_matches": "Ran [1-9][0-9]* tests?"
+        }
+      },
+      "nondeterministic": false
     }
   ],
   "modes": {
@@ -1240,7 +1262,7 @@
     "status": "approved",
     "approved_by": "Repository owner (current conversation)",
     "approved_at": "2026-10-15",
-    "plan_sha256": "00e82fb573dcbb61a2b023e2b0bf8d5dd78609233094ce52a7be08cafc5897bb",
+    "plan_sha256": "6de4045d29dd9c49867d7e66c03702b8753ac9ad52d2ce79e7be526eb9c6d2ff",
     "digest_rule": "sha256 over the plan serialized as UTF-8 JSON with sorted keys and compact separators, the signoff object excluded"
   }
 }
