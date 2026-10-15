@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-15T09:22:14.709647+00:00",
-  "revision": 183,
+  "generated_at": "2026-10-15T09:22:26.417974+00:00",
+  "revision": 185,
   "streams": [
     {
       "id": "W-foundation",
@@ -2186,10 +2186,13 @@
             "evals": 30,
             "failed": 0,
             "unverified": 0,
-            "skipped": 0,
+            "skipped": [
+              "shellcheck: no install.sh exists until story24"
+            ],
             "artifact": "lifecycle-operations-gate.log",
             "sha256": "22783c02319ccfecd30431efb21e1ee1c670ad2da8a9d1182f0fce4f6549b94f",
-            "not_present": "shellcheck has no target until install.sh is implemented in story24"
+            "not_present": "shellcheck has no target until install.sh is implemented in story24",
+            "evals_skipped": 0
           },
           "limitations": [
             "Local verification does not establish provider CI, integration, deployment, live host loading or human acceptance."
@@ -3657,10 +3660,13 @@
             "evals": 30,
             "failed": 0,
             "unverified": 0,
-            "skipped": 0,
+            "skipped": [
+              "shellcheck: no install.sh exists until story24"
+            ],
             "artifact": "lifecycle-operations-gate.log",
             "sha256": "22783c02319ccfecd30431efb21e1ee1c670ad2da8a9d1182f0fce4f6549b94f",
-            "not_present": "shellcheck has no target until install.sh is implemented in story24"
+            "not_present": "shellcheck has no target until install.sh is implemented in story24",
+            "evals_skipped": 0
           },
           "limitations": [
             "Local verification does not establish provider CI, integration, deployment, live host loading or human acceptance."
