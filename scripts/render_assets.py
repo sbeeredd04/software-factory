@@ -38,7 +38,7 @@ INPUTS = {
     "scripts/render_assets.py",
     "assets/toolchain.json", "assets/tools/capture.py", "assets/templates/assets.css",
     "assets/templates/ready.js", "site/styles/tokens.css", "site/styles/base.css",
-    "site/img/mark.svg", *FONTS,
+    "site/img/mark.svg", "site/img/delivery-graph.svg", *FONTS,
     *(f"assets/templates/{name}.html" for name in SIZES),
 }
 MIME = {".html": "text/html; charset=utf-8", ".css": "text/css; charset=utf-8",
@@ -340,6 +340,18 @@ def validate_report(report, manifest):
                 or ready.get("images_decoded") is not True
                 or not capture.get("requests")):
             raise ValueError("browser readiness failed")
+        if entry["id"] not in {"team", "hosts"}:
+            cycle = capture.get("cycle") or {}
+            geometry, texts = cycle.get("geometry", []), cycle.get("text_fonts", [])
+            if (len(geometry) != 4 or geometry[2] < 500 or geometry[3] < 600 or len(texts) != 17
+                    or not any(request.get("path") == "/site/img/delivery-graph.svg" for request in capture["requests"])):
+                raise ValueError("shared cycle SVG evidence is incomplete")
+            for text in texts:
+                fonts = text.get("fonts", [])
+                if not text.get("text") or not fonts or any(
+                        font.get("isCustomFont") is not True or font.get("glyphCount", 0) <= 0
+                        or font.get("postScriptName") not in {"Inter-Regular", "Inter-SemiBold"} for font in fonts):
+                    raise ValueError("shared cycle SVG font evidence failed")
 
 
 def capture(manifest, sources, stage, cache, evidence):

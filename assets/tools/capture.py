@@ -18,6 +18,45 @@ PACKAGES = {"playwright": "1.64.0", "greenlet": "3.5.6", "pyee": "14.0.0", "typi
 SIZES = {"social-preview": (1280, 640), "hero": (1600, 900), "loop": (1200, 800),
          "team": (1200, 800), "hosts": (1200, 800), "launch-landscape": (1200, 675),
          "launch-portrait": (1080, 1350)}
+CYCLE_ASSETS = {"social-preview", "hero", "loop", "launch-landscape", "launch-portrait"}
+
+
+def walk_nodes(node):
+    yield node
+    for key in ("children", "shadowRoots"):
+        for child in node.get(key, []):
+            yield from walk_nodes(child)
+
+
+def cycle_evidence(page):
+    """Observe external-use geometry and actual custom-font glyphs, not CSS intent."""
+    geometry = page.locator("svg.factory-cycle use").evaluate(
+        "element => { const b = element.getBBox(); return [b.x, b.y, b.width, b.height]; }")
+    if len(geometry) != 4 or geometry[2] < 500 or geometry[3] < 600:
+        raise ValueError("shared cycle SVG did not resolve its geometry")
+    client = page.context.new_cdp_session(page)
+    try:
+        client.send("DOM.enable")
+        client.send("CSS.enable")
+        document = client.send("DOM.getDocument", {"depth": -1, "pierce": True})
+        uses = [node for node in walk_nodes(document["root"]) if node.get("localName") == "use"]
+        if len(uses) != 1 or uses[0].get("attributes") != ["href", "../../site/img/delivery-graph.svg#factory-cycle"]:
+            raise ValueError("unexpected shared cycle SVG reference")
+        texts = [node for node in walk_nodes(uses[0]) if node.get("localName") == "text"]
+        if len(texts) != 17:
+            raise ValueError("shared cycle SVG text did not resolve")
+        observations = []
+        for node in texts:
+            fonts = client.send("CSS.getPlatformFontsForNode", {"nodeId": node["nodeId"]})["fonts"]
+            if not fonts or any(not font["isCustomFont"] or font["glyphCount"] <= 0
+                                or font["postScriptName"] not in {"Inter-Regular", "Inter-SemiBold"}
+                                for font in fonts):
+                raise ValueError("shared cycle SVG used a missing or fallback font")
+            observations.append({"text": "".join(child.get("nodeValue", "") for child in node.get("children", [])),
+                                 "fonts": fonts})
+        return {"geometry": geometry, "text_fonts": observations}
+    finally:
+        client.detach()
 
 
 def read_job(path):
@@ -72,12 +111,13 @@ def capture_page(browser, origin, entry, stage):
         ready = page.evaluate("window.SF_RENDER_REPORT")
         if not isinstance(ready, dict) or ready.get("failed") or ready.get("overflow") or errors:
             raise ValueError("template readiness or resource checks failed")
+        cycle = cycle_evidence(page) if entry["id"] in CYCLE_ASSETS else None
         page.screenshot(path=str(stage / (entry["id"] + ".png")), type="png", full_page=False,
                         animations="disabled", caret="hide", timeout=30000)
         ready = page.evaluate("window.SF_RENDER_REPORT")
         if errors or ready.get("failed") or ready.get("overflow"):
             raise ValueError("resource or readiness error during screenshot")
-        return {"id": entry["id"], "ready": ready, "errors": errors, "requests": requests}
+        return {"id": entry["id"], "ready": ready, "cycle": cycle, "errors": errors, "requests": requests}
     except Exception:
         diagnostic = {"id": entry["id"], "errors": errors[:32], "requests": requests[:64]}
         if page is not None:

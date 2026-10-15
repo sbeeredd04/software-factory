@@ -15,6 +15,7 @@ import sys
 import tempfile
 import time
 import unittest
+import xml.etree.ElementTree as ET
 import zlib
 from pathlib import Path
 from unittest import mock
@@ -23,6 +24,15 @@ ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location("render_assets", ROOT / "scripts/render_assets.py")
 render = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(render)
+
+
+def capture_helper():
+    spec = importlib.util.spec_from_file_location("asset_capture_fixture", ROOT / "assets/tools/capture.py")
+    helper = importlib.util.module_from_spec(spec)
+    with mock.patch.dict(sys.modules, {"playwright": mock.Mock(),
+                                      "playwright.sync_api": mock.Mock(Error=RuntimeError)}):
+        spec.loader.exec_module(helper)
+    return helper
 
 
 def png_chunk(kind, data):
@@ -188,11 +198,7 @@ class AssetTests(unittest.TestCase):
 
     def test_capture_failure_retains_bounded_readiness_before_context_cleanup(self):
         # Import the actual helper with a fake optional package; never launch a browser.
-        spec = importlib.util.spec_from_file_location("asset_capture_fixture", ROOT / "assets/tools/capture.py")
-        helper = importlib.util.module_from_spec(spec)
-        with mock.patch.dict(sys.modules, {"playwright": mock.Mock(),
-                                          "playwright.sync_api": mock.Mock(Error=RuntimeError)}):
-            spec.loader.exec_module(helper)
+        helper = capture_helper()
         for evaluation_failure in (False, True):
             with self.subTest(evaluation_failure=evaluation_failure):
                 browser = mock.Mock()
@@ -213,6 +219,88 @@ class AssetTests(unittest.TestCase):
                 self.assertLess(len(log.getvalue()), 16100)
                 page.screenshot.assert_not_called()
                 context.close.assert_called_once()
+
+    def test_cycle_has_one_local_source_and_conditional_human_branch(self):
+        helper = capture_helper()
+        svg = ET.fromstring((ROOT / "site/img/delivery-graph.svg").read_text())
+        text = " ".join(svg.itertext())
+        for label in ("Discover", "BMad epics", "+ stories", "Build", "Review", "+ test",
+                      "Ship", "+ verify", "Observe", "+ improve", "ANY PHASE",
+                      "Human decision, when needed", "Decide, then resume the affected step."):
+            self.assertIn(label, text)
+        self.assertEqual(len(svg.findall('.//{http://www.w3.org/2000/svg}text')), 17)
+        self.assertIn("site/img/delivery-graph.svg", render.INPUTS)
+        for name in render.SIZES:
+            source = (ROOT / f"assets/templates/{name}.html").read_text()
+            self.assertEqual(source.count('href="../../site/img/delivery-graph.svg#factory-cycle"'),
+                             int(name in helper.CYCLE_ASSETS))
+            self.assertNotIn("<path", source)
+            self.assertNotIn("Human epic checkpoint", source)
+
+    def test_cycle_capture_requires_resolved_geometry_and_actual_custom_glyph_fonts(self):
+        helper = capture_helper()
+        for fault in (None, "geometry", "missing_text", "wrong_reference", "missing_font", "fallback", "wrong_font", "no_glyphs"):
+            with self.subTest(fault=fault):
+                page = mock.Mock()
+                page.locator.return_value.evaluate.return_value = [46, 18, 572, 654] if fault != "geometry" else [0, 0, 0, 0]
+                texts = [{"localName": "text", "nodeId": i + 10,
+                          "children": [{"nodeValue": f"label {i}"}]} for i in range(17)]
+                if fault == "missing_text":
+                    texts.pop()
+                use = {"localName": "use", "attributes": ["href", "../../site/img/delivery-graph.svg#factory-cycle"],
+                       "shadowRoots": [{"children": texts}]}
+                if fault == "wrong_reference":
+                    use["attributes"][1] = "foreign.svg#factory-cycle"
+                font = {"postScriptName": "Inter-Regular", "isCustomFont": True, "glyphCount": 8}
+                if fault == "fallback":
+                    font["isCustomFont"] = False
+                if fault == "wrong_font":
+                    font["postScriptName"] = "Arial"
+                if fault == "no_glyphs":
+                    font["glyphCount"] = 0
+                client = page.context.new_cdp_session.return_value
+
+                def response(method, _args=None, *, use=use, fault=fault, font=font):
+                    if method == "DOM.getDocument":
+                        return {"root": {"children": [use]}}
+                    if method == "CSS.getPlatformFontsForNode":
+                        return {"fonts": [] if fault == "missing_font" else [font]}
+                    return {}
+
+                client.send.side_effect = response
+                if fault:
+                    with self.assertRaises(ValueError):
+                        helper.cycle_evidence(page)
+                else:
+                    evidence = helper.cycle_evidence(page)
+                    self.assertEqual(len(evidence["text_fonts"]), 17)
+                if fault != "geometry":
+                    client.detach.assert_called_once()
+
+    def test_receipt_validation_rejects_missing_or_fallback_cycle_proof(self):
+        manifest = self.sources()
+        report = {"packages": render.VERSIONS, "browser_version": "156.0.8078.4",
+                  "settings": {"sandbox": True, "scale": 1, "locale": "en-US", "timezone": "UTC",
+                               "color_scheme": "light", "service_workers": "block", "permissions": []},
+                  "captures": []}
+        for entry in manifest["assets"]:
+            report["captures"].append({"id": entry["id"], "errors": [],
+                "ready": {"viewport": [entry["width"], entry["height"]],
+                          "fonts": ["Bricolage:700", "Inter:400", "Inter:600", "JetBrains Mono:400"],
+                          "overflow": [], "failed": [], "images_decoded": True},
+                "requests": [{"path": "/site/img/delivery-graph.svg"}],
+                "cycle": {"geometry": [46, 18, 572, 654], "text_fonts": [
+                    {"text": "synthetic label", "fonts": [{"isCustomFont": True,
+                     "glyphCount": 5, "postScriptName": "Inter-Regular"}]} for _ in range(17)]}})
+        render.validate_report(report, manifest)
+        for mutation in (lambda c: c.pop("cycle"), lambda c: c.update(requests=[{"path": "/other.svg"}]),
+                         lambda c: c["cycle"].update(geometry=[0, 0, 0, 0]),
+                         lambda c: c["cycle"]["text_fonts"].pop(),
+                         lambda c: c["cycle"]["text_fonts"][0]["fonts"][0].update(isCustomFont=False)):
+            invalid = copy.deepcopy(report)
+            mutation(invalid["captures"][0])
+            with self.assertRaises(ValueError):
+                render.validate_report(invalid, manifest)
 
     def test_actual_ready_script_rejects_font_resource_decode_and_layout_failures(self):
         node = shutil.which("node")
