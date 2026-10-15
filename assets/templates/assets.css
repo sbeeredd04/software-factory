@@ -96,3 +96,8 @@ em { font-style: normal; color: var(--rust); }
 .social-preview .diagram svg { height: 280px; }
 .social-preview .footer { padding-top: 16px; font-size: 10px; }
 .launch-landscape .diagram svg { height: 280px; }
+.loop .masthead { margin-bottom: 24px; }
+.loop .section-head { margin-bottom: 20px; }
+.loop .step { padding: 14px; }
+.loop .step .label { margin-bottom: 8px; }
+.loop .return { padding-block: 12px; }

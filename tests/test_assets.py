@@ -4,6 +4,7 @@ from __future__ import annotations
 import ast
 import copy
 import importlib.util
+import io
 import json
 import os
 import shutil
@@ -184,6 +185,34 @@ class AssetTests(unittest.TestCase):
         manifest = self.sources()
         with self.assertRaises(ValueError):
             render.validate_report({"packages": render.VERSIONS, "captures": []}, manifest)
+
+    def test_capture_failure_retains_bounded_readiness_before_context_cleanup(self):
+        # Import the actual helper with a fake optional package; never launch a browser.
+        spec = importlib.util.spec_from_file_location("asset_capture_fixture", ROOT / "assets/tools/capture.py")
+        helper = importlib.util.module_from_spec(spec)
+        with mock.patch.dict(sys.modules, {"playwright": mock.Mock(),
+                                          "playwright.sync_api": mock.Mock(Error=RuntimeError)}):
+            spec.loader.exec_module(helper)
+        for evaluation_failure in (False, True):
+            with self.subTest(evaluation_failure=evaluation_failure):
+                browser = mock.Mock()
+                context = browser.new_context.return_value
+                page = context.new_page.return_value
+                page.evaluate.return_value = {"failed": ["layout overflow"], "overflow": ["canvas"]}
+                if evaluation_failure:
+                    page.wait_for_selector.side_effect = TimeoutError("readiness timed out")
+                    page.evaluate.side_effect = RuntimeError("page unavailable")
+                log = io.StringIO()
+                with mock.patch.object(sys, "stderr", log), self.assertRaises((ValueError, TimeoutError)):
+                    helper.capture_page(browser, "http://127.0.0.1:1234",
+                                        {"id": "loop", "width": 1200, "height": 800,
+                                         "template": "assets/templates/loop.html"}, self.root)
+                diagnostic = json.loads(log.getvalue().removeprefix("capture failure: "))
+                self.assertEqual(diagnostic["id"], "loop")
+                self.assertEqual(diagnostic["ready"], "unavailable" if evaluation_failure else page.evaluate.return_value)
+                self.assertLess(len(log.getvalue()), 16100)
+                page.screenshot.assert_not_called()
+                context.close.assert_called_once()
 
     def test_actual_ready_script_rejects_font_resource_decode_and_layout_failures(self):
         node = shutil.which("node")

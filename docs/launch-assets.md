@@ -30,6 +30,8 @@ must be private, owned by you and outside the source checkout. Each run retains
 its bounded raw browser launch log there for review; only sanitized launch flags
 and a log hash enter the public receipt. The command prints the private run path
 and reports failures concisely rather than dumping raw browser stderr.
+Failed captures retain a bounded readiness, resource and request diagnostic in
+that private log before the browser context closes.
 `assets/toolchain.json` pins
 the package versions and Chromium headless shell revision 1248 / 156.0.8078.4.
 Missing OS prerequisites require explicit developer setup; the renderer does not

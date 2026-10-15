@@ -7,9 +7,11 @@ import json
 import os
 import platform
 import signal
+import sys
 from pathlib import Path
 from urllib.parse import urlsplit
 
+from playwright.sync_api import Error as PlaywrightError
 from playwright.sync_api import sync_playwright
 
 PACKAGES = {"playwright": "1.64.0", "greenlet": "3.5.6", "pyee": "14.0.0", "typing_extensions": "4.16.0"}
@@ -60,12 +62,13 @@ def capture_page(browser, origin, entry, stage):
                                                             "type": request.resource_type}))
     context.on("requestfailed", lambda request: errors.append("resource failed: " + urlsplit(request.url).path))
     context.on("response", lambda response: errors.append("resource status: " + str(response.status)) if response.status != 200 else None)
+    page = None
     try:
         page = context.new_page()
         page.on("pageerror", lambda _error: errors.append("page exception"))
         page.on("console", lambda message: errors.append("console " + message.type) if message.type in ("error", "warning") else None)
         page.goto(origin + "/" + entry["template"], wait_until="load", timeout=30000)
-        page.wait_for_selector('html[data-render-ready="true"]', state="attached", timeout=30000)
+        page.wait_for_selector('html[data-render-ready]', state="attached", timeout=30000)
         ready = page.evaluate("window.SF_RENDER_REPORT")
         if not isinstance(ready, dict) or ready.get("failed") or ready.get("overflow") or errors:
             raise ValueError("template readiness or resource checks failed")
@@ -75,6 +78,16 @@ def capture_page(browser, origin, entry, stage):
         if errors or ready.get("failed") or ready.get("overflow"):
             raise ValueError("resource or readiness error during screenshot")
         return {"id": entry["id"], "ready": ready, "errors": errors, "requests": requests}
+    except Exception:
+        diagnostic = {"id": entry["id"], "errors": errors[:32], "requests": requests[:64]}
+        if page is not None:
+            try:
+                diagnostic["ready"] = page.evaluate("window.SF_RENDER_REPORT")
+            except PlaywrightError:
+                diagnostic["ready"] = "unavailable"
+        # stderr is retained only in the caller's private evidence directory.
+        print("capture failure: " + json.dumps(diagnostic)[:16000], file=sys.stderr, flush=True)
+        raise
     finally:
         context.close()
 

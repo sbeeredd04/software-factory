@@ -1,0 +1,973 @@
+{
+  "evidence": {
+    "browser": {
+      "browser_version": "156.0.8078.4",
+      "captures": [
+        {
+          "errors": [],
+          "id": "social-preview",
+          "ready": {
+            "failed": [],
+            "fonts": [
+              "Bricolage:700",
+              "Inter:400",
+              "Inter:600",
+              "JetBrains Mono:400"
+            ],
+            "images_decoded": true,
+            "overflow": [],
+            "policy_violations": [],
+            "resources": [
+              "/site/styles/tokens.css",
+              "/site/styles/base.css",
+              "/assets/templates/assets.css",
+              "/assets/templates/ready.js",
+              "/site/img/mark.svg",
+              "/site/fonts/inter/Inter-SemiBold.woff2",
+              "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
+              "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+              "/site/fonts/inter/Inter-Regular.woff2"
+            ],
+            "viewport": [
+              1280,
+              640
+            ]
+          },
+          "requests": [
+            {
+              "path": "/assets/templates/social-preview.html",
+              "type": "document"
+            },
+            {
+              "path": "/site/styles/tokens.css",
+              "type": "stylesheet"
+            },
+            {
+              "path": "/site/styles/base.css",
+              "type": "stylesheet"
+            },
+            {
+              "path": "/assets/templates/assets.css",
+              "type": "stylesheet"
+            },
+            {
+              "path": "/assets/templates/ready.js",
+              "type": "script"
+            },
+            {
+              "path": "/site/img/mark.svg",
+              "type": "image"
+            },
+            {
+              "path": "/site/fonts/inter/Inter-SemiBold.woff2",
+              "type": "font"
+            },
+            {
+              "path": "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+              "type": "font"
+            },
+            {
+              "path": "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
+              "type": "font"
+            },
+            {
+              "path": "/site/fonts/inter/Inter-Regular.woff2",
+              "type": "font"
+            }
+          ]
+        },
+        {
+          "errors": [],
+          "id": "hero",
+          "ready": {
+            "failed": [],
+            "fonts": [
+              "Bricolage:700",
+              "Inter:400",
+              "Inter:600",
+              "JetBrains Mono:400"
+            ],
+            "images_decoded": true,
+            "overflow": [],
+            "policy_violations": [],
+            "resources": [
+              "/site/styles/tokens.css",
+              "/site/styles/base.css",
+              "/assets/templates/assets.css",
+              "/assets/templates/ready.js",
+              "/site/img/mark.svg",
+              "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+              "/site/fonts/inter/Inter-SemiBold.woff2",
+              "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
+              "/site/fonts/inter/Inter-Regular.woff2"
+            ],
+            "viewport": [
+              1600,
+              900
+            ]
+          },
+          "requests": [
+            {
+              "path": "/assets/templates/hero.html",
+              "type": "document"
+            },
+            {
+              "path": "/site/styles/tokens.css",
+              "type": "stylesheet"
+            },
+            {
+              "path": "/site/styles/base.css",
+              "type": "stylesheet"
+            },
+            {
+              "path": "/assets/templates/assets.css",
+              "type": "stylesheet"
+            },
+            {
+              "path": "/assets/templates/ready.js",
+              "type": "script"
+            },
+            {
+              "path": "/site/img/mark.svg",
+              "type": "image"
+            },
+            {
+              "path": "/site/fonts/inter/Inter-SemiBold.woff2",
+              "type": "font"
+            },
+            {
+              "path": "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+              "type": "font"
+            },
+            {
+              "path": "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
+              "type": "font"
+            },
+            {
+              "path": "/site/fonts/inter/Inter-Regular.woff2",
+              "type": "font"
+            }
+          ]
+        },
+        {
+          "errors": [],
+          "id": "loop",
+          "ready": {
+            "failed": [],
+            "fonts": [
+              "Bricolage:700",
+              "Inter:400",
+              "Inter:600",
+              "JetBrains Mono:400"
+            ],
+            "images_decoded": true,
+            "overflow": [],
+            "policy_violations": [],
+            "resources": [
+              "/site/styles/tokens.css",
+              "/site/styles/base.css",
+              "/assets/templates/assets.css",
+              "/site/img/mark.svg",
+              "/assets/templates/ready.js",
+              "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+              "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
+              "/site/fonts/inter/Inter-SemiBold.woff2",
+              "/site/fonts/inter/Inter-Regular.woff2"
+            ],
+            "viewport": [
+              1200,
+              800
+            ]
+          },
+          "requests": [
+            {
+              "path": "/assets/templates/loop.html",
+              "type": "document"
+            },
+            {
+              "path": "/site/styles/tokens.css",
+              "type": "stylesheet"
+            },
+            {
+              "path": "/site/styles/base.css",
+              "type": "stylesheet"
+            },
+            {
+              "path": "/assets/templates/assets.css",
+              "type": "stylesheet"
+            },
+            {
+              "path": "/assets/templates/ready.js",
+              "type": "script"
+            },
+            {
+              "path": "/site/img/mark.svg",
+              "type": "image"
+            },
+            {
+              "path": "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+              "type": "font"
+            },
+            {
+              "path": "/site/fonts/inter/Inter-SemiBold.woff2",
+              "type": "font"
+            },
+            {
+              "path": "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
+              "type": "font"
+            },
+            {
+              "path": "/site/fonts/inter/Inter-Regular.woff2",
+              "type": "font"
+            }
+          ]
+        },
+        {
+          "errors": [],
+          "id": "team",
+          "ready": {
+            "failed": [],
+            "fonts": [
+              "Bricolage:700",
+              "Inter:400",
+              "Inter:600",
+              "JetBrains Mono:400"
+            ],
+            "images_decoded": true,
+            "overflow": [],
+            "policy_violations": [],
+            "resources": [
+              "/site/styles/tokens.css",
+              "/site/styles/base.css",
+              "/assets/templates/assets.css",
+              "/site/img/mark.svg",
+              "/assets/templates/ready.js",
+              "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+              "/site/fonts/inter/Inter-SemiBold.woff2",
+              "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
+              "/site/fonts/inter/Inter-Regular.woff2"
+            ],
+            "viewport": [
+              1200,
+              800
+            ]
+          },
+          "requests": [
+            {
+              "path": "/assets/templates/team.html",
+              "type": "document"
+            },
+            {
+              "path": "/site/styles/tokens.css",
+              "type": "stylesheet"
+            },
+            {
+              "path": "/site/styles/base.css",
+              "type": "stylesheet"
+            },
+            {
+              "path": "/assets/templates/assets.css",
+              "type": "stylesheet"
+            },
+            {
+              "path": "/assets/templates/ready.js",
+              "type": "script"
+            },
+            {
+              "path": "/site/img/mark.svg",
+              "type": "image"
+            },
+            {
+              "path": "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+              "type": "font"
+            },
+            {
+              "path": "/site/fonts/inter/Inter-SemiBold.woff2",
+              "type": "font"
+            },
+            {
+              "path": "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
+              "type": "font"
+            },
+            {
+              "path": "/site/fonts/inter/Inter-Regular.woff2",
+              "type": "font"
+            }
+          ]
+        },
+        {
+          "errors": [],
+          "id": "hosts",
+          "ready": {
+            "failed": [],
+            "fonts": [
+              "Bricolage:700",
+              "Inter:400",
+              "Inter:600",
+              "JetBrains Mono:400"
+            ],
+            "images_decoded": true,
+            "overflow": [],
+            "policy_violations": [],
+            "resources": [
+              "/site/styles/tokens.css",
+              "/site/styles/base.css",
+              "/assets/templates/assets.css",
+              "/site/img/mark.svg",
+              "/assets/templates/ready.js",
+              "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+              "/site/fonts/inter/Inter-SemiBold.woff2",
+              "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
+              "/site/fonts/inter/Inter-Regular.woff2"
+            ],
+            "viewport": [
+              1200,
+              800
+            ]
+          },
+          "requests": [
+            {
+              "path": "/assets/templates/hosts.html",
+              "type": "document"
+            },
+            {
+              "path": "/site/styles/tokens.css",
+              "type": "stylesheet"
+            },
+            {
+              "path": "/site/styles/base.css",
+              "type": "stylesheet"
+            },
+            {
+              "path": "/assets/templates/assets.css",
+              "type": "stylesheet"
+            },
+            {
+              "path": "/assets/templates/ready.js",
+              "type": "script"
+            },
+            {
+              "path": "/site/img/mark.svg",
+              "type": "image"
+            },
+            {
+              "path": "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+              "type": "font"
+            },
+            {
+              "path": "/site/fonts/inter/Inter-SemiBold.woff2",
+              "type": "font"
+            },
+            {
+              "path": "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
+              "type": "font"
+            },
+            {
+              "path": "/site/fonts/inter/Inter-Regular.woff2",
+              "type": "font"
+            }
+          ]
+        },
+        {
+          "errors": [],
+          "id": "launch-landscape",
+          "ready": {
+            "failed": [],
+            "fonts": [
+              "Bricolage:700",
+              "Inter:400",
+              "Inter:600",
+              "JetBrains Mono:400"
+            ],
+            "images_decoded": true,
+            "overflow": [],
+            "policy_violations": [],
+            "resources": [
+              "/site/styles/tokens.css",
+              "/site/styles/base.css",
+              "/assets/templates/assets.css",
+              "/assets/templates/ready.js",
+              "/site/img/mark.svg",
+              "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
+              "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+              "/site/fonts/inter/Inter-SemiBold.woff2",
+              "/site/fonts/inter/Inter-Regular.woff2"
+            ],
+            "viewport": [
+              1200,
+              675
+            ]
+          },
+          "requests": [
+            {
+              "path": "/assets/templates/launch-landscape.html",
+              "type": "document"
+            },
+            {
+              "path": "/site/styles/tokens.css",
+              "type": "stylesheet"
+            },
+            {
+              "path": "/site/styles/base.css",
+              "type": "stylesheet"
+            },
+            {
+              "path": "/assets/templates/assets.css",
+              "type": "stylesheet"
+            },
+            {
+              "path": "/assets/templates/ready.js",
+              "type": "script"
+            },
+            {
+              "path": "/site/img/mark.svg",
+              "type": "image"
+            },
+            {
+              "path": "/site/fonts/inter/Inter-SemiBold.woff2",
+              "type": "font"
+            },
+            {
+              "path": "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+              "type": "font"
+            },
+            {
+              "path": "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
+              "type": "font"
+            },
+            {
+              "path": "/site/fonts/inter/Inter-Regular.woff2",
+              "type": "font"
+            }
+          ]
+        },
+        {
+          "errors": [],
+          "id": "launch-portrait",
+          "ready": {
+            "failed": [],
+            "fonts": [
+              "Bricolage:700",
+              "Inter:400",
+              "Inter:600",
+              "JetBrains Mono:400"
+            ],
+            "images_decoded": true,
+            "overflow": [],
+            "policy_violations": [],
+            "resources": [
+              "/site/styles/tokens.css",
+              "/site/styles/base.css",
+              "/assets/templates/assets.css",
+              "/site/img/mark.svg",
+              "/assets/templates/ready.js",
+              "/site/fonts/inter/Inter-SemiBold.woff2",
+              "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
+              "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+              "/site/fonts/inter/Inter-Regular.woff2"
+            ],
+            "viewport": [
+              1080,
+              1350
+            ]
+          },
+          "requests": [
+            {
+              "path": "/assets/templates/launch-portrait.html",
+              "type": "document"
+            },
+            {
+              "path": "/site/styles/tokens.css",
+              "type": "stylesheet"
+            },
+            {
+              "path": "/site/styles/base.css",
+              "type": "stylesheet"
+            },
+            {
+              "path": "/assets/templates/assets.css",
+              "type": "stylesheet"
+            },
+            {
+              "path": "/assets/templates/ready.js",
+              "type": "script"
+            },
+            {
+              "path": "/site/img/mark.svg",
+              "type": "image"
+            },
+            {
+              "path": "/site/fonts/inter/Inter-SemiBold.woff2",
+              "type": "font"
+            },
+            {
+              "path": "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+              "type": "font"
+            },
+            {
+              "path": "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
+              "type": "font"
+            },
+            {
+              "path": "/site/fonts/inter/Inter-Regular.woff2",
+              "type": "font"
+            }
+          ]
+        }
+      ],
+      "packages": {
+        "greenlet": "3.5.6",
+        "playwright": "1.64.0",
+        "pyee": "14.0.0",
+        "typing_extensions": "4.16.0"
+      },
+      "python": "3.12.14",
+      "settings": {
+        "color_scheme": "light",
+        "locale": "en-US",
+        "permissions": [],
+        "sandbox": true,
+        "scale": 1,
+        "service_workers": "block",
+        "timezone": "UTC"
+      },
+      "system": "Darwin"
+    },
+    "launch": {
+      "chromium_sandbox": true,
+      "flags": [
+        "--disable-field-trial-config",
+        "--disable-background-networking",
+        "--disable-background-timer-throttling",
+        "--disable-backgrounding-occluded-windows",
+        "--disable-back-forward-cache",
+        "--disable-breakpad",
+        "--disable-client-side-phishing-detection",
+        "--disable-component-extensions-with-background-pages",
+        "--disable-component-update",
+        "--no-default-browser-check",
+        "--disable-default-apps",
+        "--disable-dev-shm-usage",
+        "--disable-edgeupdater",
+        "--disable-extensions",
+        "--disable-features",
+        "--enable-features",
+        "--allow-pre-commit-input",
+        "--disable-hang-monitor",
+        "--disable-ipc-flooding-protection",
+        "--disable-popup-blocking",
+        "--disable-prompt-on-repost",
+        "--disable-renderer-backgrounding",
+        "--disable-updater-scheduler",
+        "--force-color-profile",
+        "--metrics-recording-only",
+        "--no-first-run",
+        "--password-store",
+        "--use-mock-keychain",
+        "--no-service-autorun",
+        "--export-tagged-pdf",
+        "--disable-search-engine-choice-screen",
+        "--unsafely-disable-devtools-self-xss-warnings",
+        "--edge-skip-compat-layer-relaunch",
+        "--disable-infobars",
+        "--disable-search-engine-choice-screen",
+        "--disable-sync",
+        "--headless",
+        "--hide-scrollbars",
+        "--mute-audio",
+        "--blink-settings",
+        "--user-data-dir",
+        "--remote-debugging-pipe",
+        "--no-startup-window"
+      ],
+      "log_sha256": "c455cd24f0715ec7534a84e60750c2c6f7a1c8f418a7c0ba21f43dee009f5251"
+    },
+    "server_requests": [
+      {
+        "path": "/assets/templates/social-preview.html",
+        "status": 200
+      },
+      {
+        "path": "/site/styles/tokens.css",
+        "status": 200
+      },
+      {
+        "path": "/site/styles/base.css",
+        "status": 200
+      },
+      {
+        "path": "/assets/templates/assets.css",
+        "status": 200
+      },
+      {
+        "path": "/assets/templates/ready.js",
+        "status": 200
+      },
+      {
+        "path": "/site/img/mark.svg",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/inter/Inter-SemiBold.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/inter/Inter-Regular.woff2",
+        "status": 200
+      },
+      {
+        "path": "/assets/templates/hero.html",
+        "status": 200
+      },
+      {
+        "path": "/site/styles/tokens.css",
+        "status": 200
+      },
+      {
+        "path": "/site/styles/base.css",
+        "status": 200
+      },
+      {
+        "path": "/assets/templates/assets.css",
+        "status": 200
+      },
+      {
+        "path": "/assets/templates/ready.js",
+        "status": 200
+      },
+      {
+        "path": "/site/img/mark.svg",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/inter/Inter-SemiBold.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/inter/Inter-Regular.woff2",
+        "status": 200
+      },
+      {
+        "path": "/assets/templates/loop.html",
+        "status": 200
+      },
+      {
+        "path": "/site/styles/tokens.css",
+        "status": 200
+      },
+      {
+        "path": "/site/styles/base.css",
+        "status": 200
+      },
+      {
+        "path": "/assets/templates/assets.css",
+        "status": 200
+      },
+      {
+        "path": "/assets/templates/ready.js",
+        "status": 200
+      },
+      {
+        "path": "/site/img/mark.svg",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/inter/Inter-SemiBold.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/inter/Inter-Regular.woff2",
+        "status": 200
+      },
+      {
+        "path": "/assets/templates/team.html",
+        "status": 200
+      },
+      {
+        "path": "/site/styles/tokens.css",
+        "status": 200
+      },
+      {
+        "path": "/site/styles/base.css",
+        "status": 200
+      },
+      {
+        "path": "/assets/templates/assets.css",
+        "status": 200
+      },
+      {
+        "path": "/assets/templates/ready.js",
+        "status": 200
+      },
+      {
+        "path": "/site/img/mark.svg",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/inter/Inter-SemiBold.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/inter/Inter-Regular.woff2",
+        "status": 200
+      },
+      {
+        "path": "/assets/templates/hosts.html",
+        "status": 200
+      },
+      {
+        "path": "/site/styles/tokens.css",
+        "status": 200
+      },
+      {
+        "path": "/site/styles/base.css",
+        "status": 200
+      },
+      {
+        "path": "/assets/templates/assets.css",
+        "status": 200
+      },
+      {
+        "path": "/assets/templates/ready.js",
+        "status": 200
+      },
+      {
+        "path": "/site/img/mark.svg",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/inter/Inter-SemiBold.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/inter/Inter-Regular.woff2",
+        "status": 200
+      },
+      {
+        "path": "/assets/templates/launch-landscape.html",
+        "status": 200
+      },
+      {
+        "path": "/site/styles/tokens.css",
+        "status": 200
+      },
+      {
+        "path": "/site/styles/base.css",
+        "status": 200
+      },
+      {
+        "path": "/assets/templates/assets.css",
+        "status": 200
+      },
+      {
+        "path": "/assets/templates/ready.js",
+        "status": 200
+      },
+      {
+        "path": "/site/img/mark.svg",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/inter/Inter-SemiBold.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/inter/Inter-Regular.woff2",
+        "status": 200
+      },
+      {
+        "path": "/assets/templates/launch-portrait.html",
+        "status": 200
+      },
+      {
+        "path": "/site/styles/tokens.css",
+        "status": 200
+      },
+      {
+        "path": "/site/styles/base.css",
+        "status": 200
+      },
+      {
+        "path": "/assets/templates/assets.css",
+        "status": 200
+      },
+      {
+        "path": "/assets/templates/ready.js",
+        "status": 200
+      },
+      {
+        "path": "/site/img/mark.svg",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/inter/Inter-SemiBold.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/inter/Inter-Regular.woff2",
+        "status": 200
+      }
+    ]
+  },
+  "inputs": {
+    "assets/manifest.json": "483c0760d6d961e1309822d1f8faf332682b683339f6dd47bcafcb6baa74cd24",
+    "assets/templates/assets.css": "6ba4fe37d86184b4844da9245b2be8b1764d6da5c6e749c7662f777d5208e04c",
+    "assets/templates/hero.html": "ee4f72bc7f82a96aebe189c2694f06e331d3d50a5206ff708249967e5c7cc3a3",
+    "assets/templates/hosts.html": "151cb48f9d7ee2b6a9f6bbd115ab4151005a4cdf0611df49d3cf10b38bc669bb",
+    "assets/templates/launch-landscape.html": "bf834be59981b8aaa9b3792719b9e07627bf5c9e682e471dba02b407d252cab2",
+    "assets/templates/launch-portrait.html": "5179e32995b8508a22f84c6a431a3b1ffb17ed1e847595940068077ba2132895",
+    "assets/templates/loop.html": "610924a75012f757e16194889393f6b08c489b17fd941132cf487ed1b1c237ea",
+    "assets/templates/ready.js": "265328896459a4eca66397ba4655edd830071b497ecae4ee3f2cd7f781989af3",
+    "assets/templates/social-preview.html": "4afc7012e6d7e83e4fc0566bd0d328845bb834ef529ff72cd427ca1a80d9b09b",
+    "assets/templates/team.html": "a0cf756de8f14da618cca4bf95ae17a84149be40b2b23b331b33956fe8ce13f0",
+    "assets/toolchain.json": "1cfea5c01d5dccac4dcfbf6ac420a264f1f40ed9dd29ff219614a9817f88e9f8",
+    "assets/tools/capture.py": "b3f1dcde629a62b160faa11703679901c2041dc894a71fa9b3c37e1729f464fb",
+    "scripts/render_assets.py": "275ca68414e4eae996dbaf098583016f635341f276599fec0e9a40a6069bc4da",
+    "site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2": "908de7414bcad8649c2127a27e9aec08159059fca39b42bf724b4327a6780961",
+    "site/fonts/inter/Inter-Regular.woff2": "e06f6b1bc553aaea4e4668023ed0ab0a147129c3107f511bc7d03d361b0ae085",
+    "site/fonts/inter/Inter-SemiBold.woff2": "5cb7103e4e605989afebc03d989c79201e54b21b5183db33981f70db9178a301",
+    "site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2": "a9cb1cd82332b23a47e3a1239d25d13c86d16c4220695e34b243effa999f45f2",
+    "site/img/mark.svg": "a9afdfd07235005a4fc3c0a3d7450935b6f97808b0214e7fcc536a6396d0cec1",
+    "site/styles/base.css": "6fec0a26fefa5c80a96e18f4c547eeca1590b637becc7178540522e66e202e33",
+    "site/styles/tokens.css": "c5d5e88aa4bf77a283d1e7c5d1d3d7b2175e2fa6980f55399208f32eb747abec"
+  },
+  "outputs": {
+    "assets/hero.png": {
+      "bytes": 133954,
+      "dimensions": [
+        1600,
+        900
+      ],
+      "sha256": "b505f7c5706fc964fcedf5c38064619543d3797e83de7318199ee04b2d420aa2"
+    },
+    "assets/hosts.png": {
+      "bytes": 104000,
+      "dimensions": [
+        1200,
+        800
+      ],
+      "sha256": "5f5e8155ed1f6e908548328de8041fa92af3b3b9d8c0f0c65855c3c19d92b667"
+    },
+    "assets/launch-landscape.png": {
+      "bytes": 91011,
+      "dimensions": [
+        1200,
+        675
+      ],
+      "sha256": "0ff14f4899600d7dda8d59bcf8464eeba64ff8679e1642e5e06342ae39bc70a1"
+    },
+    "assets/launch-portrait.png": {
+      "bytes": 116667,
+      "dimensions": [
+        1080,
+        1350
+      ],
+      "sha256": "3fe28123334cb49e2132eac0a54325a441b6cd4c60009127359890f03b4f62b8"
+    },
+    "assets/loop.png": {
+      "bytes": 109383,
+      "dimensions": [
+        1200,
+        800
+      ],
+      "sha256": "1e374a367cedb7dc750e04a96a7a2d7af1e49ce97dfbdac80858c77c9b9d431a"
+    },
+    "assets/social-preview.png": {
+      "bytes": 71215,
+      "dimensions": [
+        1280,
+        640
+      ],
+      "sha256": "c3d79d3f55aca00cf2f3e864b764a5566aa91ab557964dfbdaaf99fb6d46af24"
+    },
+    "assets/team.png": {
+      "bytes": 89069,
+      "dimensions": [
+        1200,
+        800
+      ],
+      "sha256": "ab9b816aebb965f16a355860009a529329e964c0998ee033d34c25630eaabd38"
+    },
+    "site/img/hosts.png": {
+      "bytes": 104000,
+      "dimensions": [
+        1200,
+        800
+      ],
+      "sha256": "5f5e8155ed1f6e908548328de8041fa92af3b3b9d8c0f0c65855c3c19d92b667"
+    },
+    "site/img/loop.png": {
+      "bytes": 109383,
+      "dimensions": [
+        1200,
+        800
+      ],
+      "sha256": "1e374a367cedb7dc750e04a96a7a2d7af1e49ce97dfbdac80858c77c9b9d431a"
+    },
+    "site/img/team.png": {
+      "bytes": 89069,
+      "dimensions": [
+        1200,
+        800
+      ],
+      "sha256": "ab9b816aebb965f16a355860009a529329e964c0998ee033d34c25630eaabd38"
+    }
+  },
+  "version": 1
+}
