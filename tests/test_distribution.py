@@ -1,9 +1,11 @@
 """Native bundles: deterministic, contained, relocatable and policy-preserving."""
+import io
 import json
 import os
 import shutil
 import subprocess
 import sys
+import tarfile
 import tempfile
 import unittest
 from pathlib import Path
@@ -194,6 +196,47 @@ class DistributionTests(unittest.TestCase):
         self.assertEqual(before, (tree_hashes(source),tree_hashes(home),tree_hashes(caller)))
         self.assertFalse(list(source.rglob('__pycache__')))
         self.assertFalse(log.exists())
+
+    def release_source(self):
+        source = self.root/'release source'
+        source.mkdir()
+        for name, data in build_release.release_files(self.api).items():
+            if not name.startswith('dist/'):
+                path = source/name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_bytes(data)
+        return dist.load_api(source)
+
+    def test_release_native_payload_excludes_unlisted_local_files(self):
+        api = self.release_source()
+        baseline = build_release.release_files(api)
+        marker = b'UNLISTED_RELEASE_SENTINEL'
+        for name in ('skills/software-factory/.env',
+                     'skills/software-factory/references/private-notes.md'):
+            (api.PACK_ROOT/name).write_bytes(marker)
+        files = build_release.release_files(api)
+        self.assertEqual(files, baseline)
+        archive = build_release.archive_bytes(files, 'v'+api.PACK_VERSION)
+        with tarfile.open(fileobj=io.BytesIO(archive), mode='r:gz') as payload:
+            for member in payload:
+                self.assertNotIn('private-notes', member.name)
+                self.assertNotEqual(Path(member.name).name, '.env')
+                self.assertNotIn(marker, payload.extractfile(member).read())
+
+    def test_native_release_uses_captured_bytes_after_source_changes(self):
+        api = self.release_source()
+        baseline = build_release.release_files(api)
+        projector = dist.bundle_files
+
+        def change_live_source_then_project(snapshot_api, host):
+            self.assertNotEqual(snapshot_api.PACK_ROOT, api.PACK_ROOT)
+            (api.PACK_ROOT/'skills/software-factory/references/late-note.md').write_text('LATE_SENTINEL')
+            (api.PACK_ROOT/'skills/software-factory/SKILL.md').write_text('CHANGED_SENTINEL')
+            return projector(snapshot_api, host)
+
+        with patch.object(dist, 'bundle_files', side_effect=change_live_source_then_project):
+            files = build_release.release_files(api)
+        self.assertEqual(files, baseline)
 
     def test_release_reproducible_and_allowlisted(self):
         one = build_release.build(self.api, self.root/'release1', 'v'+self.api.PACK_VERSION)

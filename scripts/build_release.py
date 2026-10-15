@@ -8,6 +8,7 @@ import io
 import json
 import re
 import tarfile
+import tempfile
 from pathlib import Path
 
 import distribution
@@ -28,9 +29,18 @@ def release_files(api):
                 or not path.is_file() or not path.resolve().is_relative_to(root.resolve())):
             raise ValueError('invalid release allowlist source')
         files[name] = path.read_bytes()
-    for host in distribution.HOSTS:
-        files.update({f'dist/plugins/{host}/{name}': data
-                      for name, data in distribution.bundle_files(api, host).items()})
+    # Native projectors recurse through skills. Give them only the captured
+    # reviewed bytes, never the live checkout (which may contain local notes).
+    with tempfile.TemporaryDirectory(prefix='sf-release-source-') as temporary:
+        snapshot = Path(temporary).resolve()
+        for name, data in files.items():
+            path = snapshot / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(data)
+        snapshot_api = distribution.load_api(snapshot)
+        for host in distribution.HOSTS:
+            files.update({f'dist/plugins/{host}/{name}': data
+                          for name, data in distribution.bundle_files(snapshot_api, host).items()})
     return files
 
 

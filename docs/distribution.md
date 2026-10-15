@@ -26,7 +26,10 @@ release has been published. No latest lookup or fallback occurs.
 
 The trusted bootstrap verifies SHA-256 before extraction or installer execution.
 It rejects ambiguous checksums, traversal, links, devices, collisions, oversized
-archives (128 MiB expanded, 10,000 entries) and missing installers. Downloads
+archives (128 MiB total decoded tar bytes, including metadata and padding;
+10,000 entries) and missing installers. Before tarfile parses the archive, a
+bounded decompression pass and raw header scan reject PAX/GNU extension headers
+and data hidden after the archive terminator. Releases use the USTAR format. Downloads
 use HTTPS, bounded transfer size/time and disposable private staging cleaned on
 normal completion or handled failure. Forced process termination can leave OS
 temporary files. Checksums from the same origin provide integrity checking,
@@ -82,7 +85,9 @@ python3 scripts/build_release.py --ref v0.1.0 --out /existing/parent/new-release
 ```
 
 The reviewed `hosts/plugins/release-files.json` allowlist defines the source
-payload; new source files require an explicit allowlist update. Generated native
+payload; new source files require an explicit allowlist update. Native projectors
+read a disposable snapshot of those captured bytes, so unlisted local files and
+changes made after capture cannot enter the generated release payload. Generated native
 marketplaces are included at `dist/plugins/<host>/`. Git metadata, private project
 context, runs, caches and receipts are excluded. Archive ordering, ownership,
 timestamps and modes are normalized; `SHA256SUMS` describes the final bytes.
@@ -109,7 +114,8 @@ No host agent CLI is executed; fixture guard stubs prove that boundary.
 Contracts inspected 2026-10-15:
 
 - [Agent Plugins 1.0 schema](https://agent-plugins.org/schemas/1.0.0/plugin.schema.json),
-  vendored unchanged as `schemas/plugins/portable.schema.json` for offline checks.
+  vendored unchanged as `schemas/plugins/portable.schema.json` for offline checks;
+  upstream Apache-2.0 attribution and license details are recorded in `NOTICE.md`.
 - [Claude manifest and variables](https://code.claude.com/docs/en/plugins-reference)
   and [marketplaces](https://code.claude.com/docs/en/plugins/marketplaces).
 - [Cursor plugins](https://cursor.com/docs/reference/plugins) and

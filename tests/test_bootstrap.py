@@ -134,6 +134,58 @@ class BootstrapTests(unittest.TestCase):
             self.fixture(members)
             self.assertEqual(self.run_bootstrap().returncode, 1)
 
+    def raw_fixture(self, headers, oversized=False):
+        archive = self.root/'sf-v0.1.0.tar.gz'
+        with gzip.open(archive, 'wb') as stream:
+            for kind in headers:
+                info = tarfile.TarInfo('sf-v0.1.0/metadata')
+                info.type = kind
+                info.size = 128 * 1024 * 1024 + 1 if oversized else 512
+                stream.write(info.tobuf(format=tarfile.USTAR_FORMAT))
+                if oversized:
+                    # A tiny compressed fixture expands beyond the total raw budget.
+                    for _ in range(2048):
+                        stream.write(bytes(65536))
+                    stream.write(bytes(512))
+                else:
+                    stream.write(b'18 comment=hidden\n'.ljust(512, b'\0'))
+            stream.write(bytes(1024))
+        (self.root/'SHA256SUMS').write_text(hashlib.sha256(archive.read_bytes()).hexdigest()+'  '+archive.name+'\n')
+        return archive
+
+    def test_oversized_pax_and_gnu_metadata_bounded_before_parsing(self):
+        for kind in (tarfile.XHDTYPE, tarfile.GNUTYPE_LONGNAME):
+            with self.subTest(kind=kind):
+                self.raw_fixture([kind], oversized=True)
+                result = self.run_bootstrap()
+                self.assertEqual(result.returncode, 1)
+                self.assertIn('raw tar bytes', result.stderr)
+                self.assertNotIn('Traceback', result.stderr)
+                self.assertFalse(self.executed.exists())
+
+    def test_hidden_extension_headers_are_rejected_before_tarfile(self):
+        for kind in (tarfile.XHDTYPE, tarfile.XGLTYPE, tarfile.GNUTYPE_LONGNAME, tarfile.GNUTYPE_LONGLINK):
+            with self.subTest(kind=kind):
+                # Logical-member accounting cannot see these headers. A chain
+                # could also exhaust tarfile's recursive extension handling.
+                self.raw_fixture([kind] * 10001)
+                result = self.run_bootstrap()
+                self.assertEqual(result.returncode, 1)
+                self.assertIn('extensions unsupported', result.stderr)
+                self.assertNotIn('Traceback', result.stderr)
+                self.assertFalse(self.executed.exists())
+
+    def test_hidden_data_after_terminator_rejected(self):
+        archive = self.fixture()
+        raw = gzip.decompress(archive.read_bytes())
+        hidden = tarfile.TarInfo('sf-v0.1.0/hidden').tobuf(format=tarfile.USTAR_FORMAT)
+        archive.write_bytes(gzip.compress(raw + hidden))
+        (self.root/'SHA256SUMS').write_text(hashlib.sha256(archive.read_bytes()).hexdigest()+'  '+archive.name+'\n')
+        result = self.run_bootstrap()
+        self.assertEqual(result.returncode, 1)
+        self.assertIn('after archive terminator', result.stderr)
+        self.assertFalse(self.executed.exists())
+
     def test_declared_expanded_size_bound(self):
         archive = self.root/'sf-v0.1.0.tar.gz'
         info = tarfile.TarInfo('sf-v0.1.0/oversized')

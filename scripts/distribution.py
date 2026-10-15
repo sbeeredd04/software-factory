@@ -14,10 +14,11 @@ CATALOGS = {'claude-code': '.claude-plugin/marketplace.json',
 PLUGIN = 'plugins/software-factory'
 
 
-def load_api():
+def load_api(root=None):
     # Dynamic imports must not leave bytecode in the source checkout.
     sys.dont_write_bytecode = True
-    path = Path(__file__).resolve().parents[1] / 'install.py'
+    root = Path(root) if root is not None else Path(__file__).resolve().parents[1]
+    path = root / 'install.py'
     spec = importlib.util.spec_from_file_location('sf_distribution_installer', path)
     api = importlib.util.module_from_spec(spec)
     sys.modules[spec.name] = api
