@@ -628,6 +628,26 @@
             "skills/software-factory/references/lifecycle-graph.md",
             "tests/test_trace.py"
           ]
+        },
+        {
+          "key": "evidence-bound-transitions",
+          "title": "Require evidence and decision provenance at acceptance transitions",
+          "type": "story",
+          "after": [
+            "board-write-consistency"
+          ],
+          "covers": [],
+          "risk": "high",
+          "hitl": true,
+          "plan_checkpoint": true,
+          "done_checkpoint": true,
+          "scope": [
+            "skills/software-factory/scripts/roadmap.py",
+            "skills/software-factory/scripts/gate.py",
+            "skills/software-factory/schemas/board.schema.json",
+            "tests/test_board_gate.py",
+            "tests/test_gate.py"
+          ]
         }
       ]
     },

@@ -4,7 +4,7 @@
   "epic": 2,
   "type": "story",
   "title": "Derive provenance-linked SDLC trace graph from authoritative records",
-  "status": "in-progress",
+  "status": "in-review",
   "owner": "codex-lifecycle-graph",
   "after": [
     42
@@ -28,6 +28,42 @@
       "status": "assigned",
       "recorded_at": "2026-10-15T08:48:46.721148+00:00",
       "summary": "Native worker is repairing independent source review findings in the derived graph draft: zero-write queries, no-follow file access and captured-input provenance."
+    },
+    "implementation-result": {
+      "type": "agent-attempt",
+      "subject_sha": "93f678d725b35e38a04e9810b227c638a2bc38fd",
+      "agent": "/root/architecture_audit",
+      "role": "sf-principal-engineer",
+      "skill": "software-factory",
+      "requested_model": "inherit",
+      "effective_model": null,
+      "phase": "implementation",
+      "status": "awaiting-review",
+      "recorded_at": "2026-10-15T08:54:19.794798+00:00",
+      "summary": "Derived SDLC graph integrated after independent source review and five corrections. 22 graph tests, Ruff, validator, public scan and reference links passed. Queries derive fresh captured facts; no remote shipping or authenticated authority is inferred."
+    },
+    "native-query-proof": {
+      "type": "native-trace-proof",
+      "subject_sha": "93f678d725b35e38a04e9810b227c638a2bc38fd",
+      "status": "pass",
+      "queries": 7,
+      "query_exit_codes": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "zero_workspace_and_source_writes": true,
+      "source_fingerprint": "296715c1c27ea8539c6049a9410f669725eff3a8e6abecfb1eb0a0614d231a94",
+      "observed": {
+        "ready_candidates": 0,
+        "unproved_requirements": 272,
+        "pending_decisions": 1
+      },
+      "meaning": "Fresh source-derived queries and provenance; metadata does not authenticate authority, independent acceptance or external shipping."
     }
   },
   "baseline_sha": null,
@@ -46,6 +82,12 @@
       "by": "codex-lifecycle-graph",
       "from": "ready-for-dev",
       "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T08:54:19.819292+00:00",
+      "by": "codex-lifecycle-graph",
+      "from": "in-progress",
+      "to": "in-review"
     }
   ],
   "findings": [

@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "id": 44,
+  "epic": 2,
+  "type": "story",
+  "title": "Require evidence and decision provenance at acceptance transitions",
+  "status": "backlog",
+  "owner": null,
+  "after": [
+    42
+  ],
+  "covers": [],
+  "risk": "high",
+  "hitl": true,
+  "plan_checkpoint": true,
+  "done_checkpoint": true,
+  "blocked": {
+    "type": "human-decision",
+    "reason": "Approve mechanically refusing new built/done transitions without SHA-bound passing evidence, independent review and source-linked required checkpoint decisions, preserving historical records.",
+    "since": "2026-10-15T08:57:31.449186+00:00",
+    "owner": "human-owner",
+    "next_action": "Answer the focused transition-policy question in the current conversation; unrelated authorized work continues."
+  },
+  "receipts": {},
+  "baseline_sha": null,
+  "branch": null,
+  "pr": null,
+  "merged_sha": null,
+  "history": [],
+  "findings": [],
+  "source_key": "expansion/evidence-bound-transitions",
+  "scope": [
+    "skills/software-factory/scripts/roadmap.py",
+    "skills/software-factory/scripts/gate.py",
+    "skills/software-factory/schemas/board.schema.json",
+    "tests/test_board_gate.py",
+    "tests/test_gate.py"
+  ]
+}
