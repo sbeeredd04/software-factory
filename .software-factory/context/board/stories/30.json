@@ -98,6 +98,19 @@
         "Final independent review pending; scoped checks do not replace frozen integrated full gate.",
         "No publication, deployment, live host loading or human epic acceptance."
       ]
+    },
+    "final-independent-review": {
+      "type": "independent-review",
+      "subject_sha": "dbdade03590300039b3c308255511453dc7d4097",
+      "reviewer": "/root/launch_copy",
+      "status": "pass",
+      "scope": "Final candidate source/actualrender acceptance.20Gitinputhashes,10PNGhashes/dimensions,3aliases,7independentvisualinspections,70local200responses/fonts/CSP/overflow,actual launch/rawlog/cleanup,missingcachepreservation andauthor64scopedchecks bound. Prior actual failures retained.",
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/assets-final-review-dbdade0.json",
+      "artifact_sha256": "0caa17cd007c418d60c4626f50ed9d7330571e1abdf03293dbca905bf2111780",
+      "limitations": [
+        "Root integrated full gate/maps/currentcase50 admission proof pending.",
+        "No publication, real consumer deployment, live host loading or human epic acceptance."
+      ]
     }
   },
   "baseline_sha": null,
