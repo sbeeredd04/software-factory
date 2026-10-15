@@ -4,7 +4,7 @@
   "epic": 2,
   "type": "spike",
   "title": "Research Factory and review the full SDLC delivery proposal",
-  "status": "in-progress",
+  "status": "in-review",
   "owner": "codex-product-grounding",
   "after": [
     16
@@ -15,7 +15,30 @@
   "plan_checkpoint": false,
   "done_checkpoint": false,
   "blocked": null,
-  "receipts": {},
+  "receipts": {
+    "proposal-review": {
+      "type": "proposal-source-review",
+      "subject_sha": "1da18f35a2d6f98c2b5f26696750d0193ccda77d",
+      "author": "product-expert-and-orchestrator",
+      "reviewer": "independent-principal-architect",
+      "status": "reviewed-proposal",
+      "files": {
+        "docs/research/factory-product.md": "01d31085a3dc29ac6c0f6f6e3c393131000fd1600772bafbdbf848b508d32cc5",
+        "docs/plans/full-sdlc-delivery.md": "d4ff880ad675b725f196260c899827e093df68c7f7c9933deecd52d46e435368",
+        "docs/plans/host-contract-correction.md": "9ee88b9f378d04cb972dcf566d4a88e47a612f5278519d341315a6cbfbc91116"
+      },
+      "observed": [
+        "Public official source synthesis completed",
+        "Independent source review accepted revised delivery proposal",
+        "Narrow installer ownership repair accepted by independent source review"
+      ],
+      "limitations": [
+        "Owner has not approved proposed graph or gate semantics",
+        "Source review does not establish runtime behavior",
+        "Research does not reconstruct proprietary Factory internals"
+      ]
+    }
+  },
   "baseline_sha": null,
   "branch": null,
   "pr": null,
@@ -32,9 +55,21 @@
       "by": "codex-product-grounding",
       "from": "ready-for-dev",
       "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T07:57:20.890576+00:00",
+      "by": "codex-product-grounding",
+      "from": "in-progress",
+      "to": "in-review"
     }
   ],
-  "findings": [],
+  "findings": [
+    {
+      "at": "2026-10-15T07:57:20.890386+00:00",
+      "by": "codex-product-grounding",
+      "text": "Public-source research and the delivery proposal received independent source review. Proposed policy changes remain unapproved; no implementation or epic acceptance is claimed."
+    }
+  ],
   "source_key": "expansion/factory-product-grounding",
   "scope": [
     "docs/research",
