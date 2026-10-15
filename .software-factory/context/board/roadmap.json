@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-15T08:35:08.453997+00:00",
-  "revision": 160,
+  "generated_at": "2026-10-15T08:48:46.749377+00:00",
+  "revision": 165,
   "streams": [
     {
       "id": "W-foundation",
@@ -2051,6 +2051,25 @@
           "status": "awaiting-review",
           "recorded_at": "2026-10-15T08:31:49.403627+00:00",
           "summary": "Installed recovery commands use validated Python and safe quoting. Independent source review accepted. 30 hook, 50 host and 20 installer tests passed. Actual live host loading remains unverified."
+        },
+        "integrated-local-proof": {
+          "type": "local-verification",
+          "subject_sha": "9b849e7cceac4e4ce5f0fecce0a0161d3e8af530",
+          "recorded_at": "2026-10-15T08:41:25.331988+00:00",
+          "status": "pass",
+          "full_static_gate": {
+            "exit_code": 0,
+            "unit_tests": 432,
+            "evals": 30,
+            "failed": 0,
+            "unverified": 0,
+            "skipped": 0,
+            "artifact": "stable-hooks-board-gate.log",
+            "sha256": "ff6a4d6cdab1f55fe857648ffb8bcb07891f929d7a78f2b5a37367912d9e75f1"
+          },
+          "limitations": [
+            "Local verification does not establish provider CI, integration, deployment, live host loading or human acceptance."
+          ]
         }
       },
       "baseline_sha": null,
@@ -2117,7 +2136,21 @@
       "plan_checkpoint": false,
       "done_checkpoint": false,
       "blocked": null,
-      "receipts": {},
+      "receipts": {
+        "active-attempt": {
+          "type": "agent-attempt",
+          "subject_sha": "38fad16312d427841ae94ce7332c3d8249976fb5",
+          "agent": "/root/host_contracts",
+          "role": "sf-principal-engineer",
+          "skill": "software-factory",
+          "requested_model": "gpt-6-astra",
+          "effective_model": null,
+          "phase": "implementation",
+          "status": "assigned",
+          "recorded_at": "2026-10-15T08:48:46.671302+00:00",
+          "summary": "Native worker continues safe uninstall and doctor implementation; exact claim expanded for verified restoration metadata and persistent lock regression."
+        }
+      },
       "baseline_sha": null,
       "branch": null,
       "pr": null,
@@ -2132,9 +2165,10 @@
           "scripts/uninstall.py",
           "tests/test_doctor.py",
           "tests/test_uninstall.py",
+          "tests/test_installer.py",
           "schemas/installation.schema.json"
         ],
-        "claimed_at": "2026-10-15T08:33:46.168206+00:00"
+        "claimed_at": "2026-10-15T08:39:54.825463+00:00"
       },
       "blocks": [
         23
@@ -2942,6 +2976,20 @@
             "Source review does not establish runtime behavior",
             "Research does not reconstruct proprietary Factory internals"
           ]
+        },
+        "current-contract-review": {
+          "type": "proposal-source-review",
+          "subject_sha": "38fad16312d427841ae94ce7332c3d8249976fb5",
+          "recorded_at": "2026-10-15T08:42:26.461717+00:00",
+          "author": "codex-orchestrator",
+          "reviewer": "independent-recovery-reviewer",
+          "status": "reviewed",
+          "summary": "Reconciled delivery and host plans against actual implemented corrections and owner clarification. Original story chain, human epic acceptance and pending protected-transition policy remain explicit. Independent review accepted after correcting stale parallelism wording.",
+          "verification": {
+            "validate_exit_code": 0,
+            "links_exit_code": 0,
+            "public_scan_exit_code": 0
+          }
         }
       },
       "baseline_sha": null,
@@ -3227,6 +3275,25 @@
           "status": "awaiting-review",
           "recorded_at": "2026-10-15T08:26:32.883971+00:00",
           "summary": "Serialized board mutations and blocked readiness for corrupt ownership. Independent source review accepted. Nine new real-process consistency tests and 48 board tests passed; integrated gate remains pending."
+        },
+        "integrated-local-proof": {
+          "type": "local-verification",
+          "subject_sha": "9b849e7cceac4e4ce5f0fecce0a0161d3e8af530",
+          "recorded_at": "2026-10-15T08:41:25.331988+00:00",
+          "status": "pass",
+          "full_static_gate": {
+            "exit_code": 0,
+            "unit_tests": 432,
+            "evals": 30,
+            "failed": 0,
+            "unverified": 0,
+            "skipped": 0,
+            "artifact": "stable-hooks-board-gate.log",
+            "sha256": "ff6a4d6cdab1f55fe857648ffb8bcb07891f929d7a78f2b5a37367912d9e75f1"
+          },
+          "limitations": [
+            "Local verification does not establish provider CI, integration, deployment, live host loading or human acceptance."
+          ]
         }
       },
       "baseline_sha": null,
@@ -3284,7 +3351,21 @@
       "plan_checkpoint": false,
       "done_checkpoint": false,
       "blocked": null,
-      "receipts": {},
+      "receipts": {
+        "active-attempt": {
+          "type": "agent-attempt",
+          "subject_sha": "38fad16312d427841ae94ce7332c3d8249976fb5",
+          "agent": "/root/architecture_audit",
+          "role": "sf-principal-engineer",
+          "skill": "software-factory",
+          "requested_model": "inherit",
+          "effective_model": null,
+          "phase": "implementation",
+          "status": "assigned",
+          "recorded_at": "2026-10-15T08:48:46.721148+00:00",
+          "summary": "Native worker is repairing independent source review findings in the derived graph draft: zero-write queries, no-follow file access and captured-input provenance."
+        }
+      },
       "baseline_sha": null,
       "branch": null,
       "pr": null,

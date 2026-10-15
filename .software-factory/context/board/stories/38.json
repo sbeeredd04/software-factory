@@ -37,6 +37,20 @@
         "Source review does not establish runtime behavior",
         "Research does not reconstruct proprietary Factory internals"
       ]
+    },
+    "current-contract-review": {
+      "type": "proposal-source-review",
+      "subject_sha": "38fad16312d427841ae94ce7332c3d8249976fb5",
+      "recorded_at": "2026-10-15T08:42:26.461717+00:00",
+      "author": "codex-orchestrator",
+      "reviewer": "independent-recovery-reviewer",
+      "status": "reviewed",
+      "summary": "Reconciled delivery and host plans against actual implemented corrections and owner clarification. Original story chain, human epic acceptance and pending protected-transition policy remain explicit. Independent review accepted after correcting stale parallelism wording.",
+      "verification": {
+        "validate_exit_code": 0,
+        "links_exit_code": 0,
+        "public_scan_exit_code": 0
+      }
     }
   },
   "baseline_sha": null,

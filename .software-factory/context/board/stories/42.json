@@ -30,6 +30,25 @@
       "status": "awaiting-review",
       "recorded_at": "2026-10-15T08:26:32.883971+00:00",
       "summary": "Serialized board mutations and blocked readiness for corrupt ownership. Independent source review accepted. Nine new real-process consistency tests and 48 board tests passed; integrated gate remains pending."
+    },
+    "integrated-local-proof": {
+      "type": "local-verification",
+      "subject_sha": "9b849e7cceac4e4ce5f0fecce0a0161d3e8af530",
+      "recorded_at": "2026-10-15T08:41:25.331988+00:00",
+      "status": "pass",
+      "full_static_gate": {
+        "exit_code": 0,
+        "unit_tests": 432,
+        "evals": 30,
+        "failed": 0,
+        "unverified": 0,
+        "skipped": 0,
+        "artifact": "stable-hooks-board-gate.log",
+        "sha256": "ff6a4d6cdab1f55fe857648ffb8bcb07891f929d7a78f2b5a37367912d9e75f1"
+      },
+      "limitations": [
+        "Local verification does not establish provider CI, integration, deployment, live host loading or human acceptance."
+      ]
     }
   },
   "baseline_sha": null,
