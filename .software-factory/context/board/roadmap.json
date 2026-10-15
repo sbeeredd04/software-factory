@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-15T09:07:51.849665+00:00",
-  "revision": 174,
+  "generated_at": "2026-10-15T09:17:21.350035+00:00",
+  "revision": 180,
   "streams": [
     {
       "id": "W-foundation",
@@ -36,8 +36,8 @@
       "counts": {
         "planned": 1,
         "ready": 0,
-        "in-progress": 1,
-        "review": 12,
+        "in-progress": 0,
+        "review": 13,
         "built": 0,
         "done": 8,
         "cancelled": 0
@@ -55,10 +55,10 @@
         3
       ],
       "counts": {
-        "planned": 2,
+        "planned": 1,
         "ready": 0,
         "in-progress": 1,
-        "review": 3,
+        "review": 4,
         "built": 0,
         "done": 0,
         "cancelled": 0
@@ -2113,8 +2113,8 @@
       "stream": "W-installer",
       "type": "story",
       "title": "Safe uninstall and the doctor report",
-      "status": "in-progress",
-      "state": "in-progress",
+      "status": "in-review",
+      "state": "review",
       "owner": "codex-install-lifecycle",
       "after": [
         21
@@ -2151,6 +2151,29 @@
           "status": "assigned",
           "recorded_at": "2026-10-15T08:48:46.671302+00:00",
           "summary": "Native worker continues safe uninstall and doctor implementation; exact claim expanded for verified restoration metadata and persistent lock regression."
+        },
+        "implementation-result": {
+          "type": "agent-attempt",
+          "subject_sha": "089bb4e2f1c731c4ba4bb7f3b20b3a792e89bae5",
+          "agent": "/root/host_contracts",
+          "role": "sf-principal-engineer",
+          "skill": "software-factory",
+          "requested_model": "gpt-6-astra",
+          "effective_model": null,
+          "phase": "implementation",
+          "status": "awaiting-review",
+          "recorded_at": "2026-10-15T09:16:02.086315+00:00",
+          "summary": "Integrated source f676675e89257ee4ac90176769cf2113f2a38666 after independent review by mission_recovery. Author reports 133 affected tests and static checks passing. Safe uninstall and read-only doctor implemented; integrated full gate pending.",
+          "source_sha": "f676675e89257ee4ac90176769cf2113f2a38666",
+          "independent_source_review": {
+            "reviewer": "/root/mission_recovery",
+            "status": "accepted",
+            "subject_sha": "f676675e89257ee4ac90176769cf2113f2a38666"
+          },
+          "limitations": [
+            "Author checks are reported results; integrated full gate has not yet run.",
+            "No live host loading or human epic acceptance established."
+          ]
         }
       },
       "baseline_sha": null,
@@ -2158,19 +2181,7 @@
       "pr": null,
       "merged_sha": null,
       "claim": {
-        "live": true,
-        "owner": "codex-install-lifecycle",
-        "paths": [
-          "install.py",
-          "scripts/install_lifecycle.py",
-          "scripts/doctor.py",
-          "scripts/uninstall.py",
-          "tests/test_doctor.py",
-          "tests/test_uninstall.py",
-          "tests/test_installer.py",
-          "schemas/installation.schema.json"
-        ],
-        "claimed_at": "2026-10-15T08:39:54.825463+00:00"
+        "live": false
       },
       "blocks": [
         23
@@ -2187,6 +2198,12 @@
           "by": "codex-install-lifecycle",
           "from": "ready-for-dev",
           "to": "in-progress"
+        },
+        {
+          "at": "2026-10-15T09:16:15.462176+00:00",
+          "by": "codex-install-lifecycle",
+          "from": "in-progress",
+          "to": "in-review"
         }
       ],
       "findings": [],
@@ -2198,9 +2215,9 @@
       "stream": "W-installer",
       "type": "story",
       "title": "Pinned BMad 6.12.0 install through the official installer",
-      "status": "backlog",
-      "state": "planned",
-      "owner": null,
+      "status": "in-progress",
+      "state": "in-progress",
+      "owner": "codex-bmad-provisioning",
       "after": [
         22
       ],
@@ -2218,18 +2235,56 @@
       "plan_checkpoint": false,
       "done_checkpoint": false,
       "blocked": null,
-      "receipts": {},
+      "receipts": {
+        "active-attempt": {
+          "type": "agent-attempt",
+          "subject_sha": "089bb4e2f1c731c4ba4bb7f3b20b3a792e89bae5",
+          "agent": "/root/host_contracts",
+          "role": "sf-principal-engineer",
+          "skill": "software-factory",
+          "requested_model": "gpt-6-astra",
+          "effective_model": null,
+          "phase": "implementation",
+          "status": "assigned",
+          "recorded_at": "2026-10-15T09:17:12.435041+00:00",
+          "summary": "Author implements original pinned BMad provisioning after reviewed safe uninstall/doctor; exact accepted argv, existing-install preservation and explicit partial effects."
+        }
+      },
       "baseline_sha": null,
       "branch": null,
       "pr": null,
       "merged_sha": null,
       "claim": {
-        "live": false
+        "live": true,
+        "owner": "codex-bmad-provisioning",
+        "paths": [
+          "install.py",
+          "scripts/bmad_install.py",
+          "schemas/installation.schema.json",
+          "tests/test_bmad_install.py",
+          "tests/test_installer.py",
+          "skills/software-factory/references/bmad-provisioning.md",
+          "skills/software-factory/references/planning.md"
+        ],
+        "claimed_at": "2026-10-15T09:17:21.318962+00:00"
       },
       "blocks": [
         24
       ],
-      "history": [],
+      "history": [
+        {
+          "at": "2026-10-15T09:16:33.224982+00:00",
+          "by": "orchestrator",
+          "from": "backlog",
+          "to": "ready-for-dev"
+        },
+        {
+          "at": "2026-10-15T09:16:33.302620+00:00",
+          "by": "codex-bmad-provisioning",
+          "from": "ready-for-dev",
+          "to": "in-progress"
+        }
+      ],
       "findings": [],
       "source_key": "installer-hosts/bmad-install"
     },
@@ -3518,8 +3573,8 @@
       "stream": "W-expansion",
       "type": "story",
       "title": "Connect authorized observations to prioritization and bug delivery",
-      "status": "in-progress",
-      "state": "in-progress",
+      "status": "in-review",
+      "state": "review",
       "owner": "codex-operations-loop",
       "after": [
         40
@@ -3530,21 +3585,39 @@
       "plan_checkpoint": false,
       "done_checkpoint": false,
       "blocked": null,
-      "receipts": {},
+      "receipts": {
+        "implementation-result": {
+          "type": "agent-attempt",
+          "subject_sha": "089bb4e2f1c731c4ba4bb7f3b20b3a792e89bae5",
+          "agent": "/root/autonomy_contract",
+          "role": "sf-principal-engineer",
+          "skill": "software-factory",
+          "requested_model": "inherit",
+          "effective_model": null,
+          "phase": "implementation",
+          "status": "awaiting-review",
+          "recorded_at": "2026-10-15T09:16:15.435020+00:00",
+          "summary": "Integrated operations contract after independent source review by mission_status and four-scenario bounded instruction-use exercise by operations_forward_use; no instruction defects. Integrated full gate pending.",
+          "source_sha": "94b771127f2d8f93664d7f5a8b9364ab215a7b28",
+          "independent_source_review": {
+            "reviewer": "/root/mission_status",
+            "status": "accepted",
+            "subject_sha": "94b771127f2d8f93664d7f5a8b9364ab215a7b28"
+          },
+          "forward_use": {
+            "agent": "/root/operations_forward_use",
+            "scenario_count": 4,
+            "instruction_defects": 0,
+            "limitations": "Decision exercise, no real monitoring, scheduling, source access or deployment effects."
+          }
+        }
+      },
       "baseline_sha": null,
       "branch": null,
       "pr": null,
       "merged_sha": null,
       "claim": {
-        "live": true,
-        "owner": "codex-operations-loop",
-        "paths": [
-          "skills/software-factory/references/operations.md",
-          "skills/software-factory/references/authority.md",
-          "skills/software-factory/workflows/feature.md",
-          "skills/software-factory/workflows/bug.md"
-        ],
-        "claimed_at": "2026-10-15T09:06:01.178951+00:00"
+        "live": false
       },
       "blocks": [],
       "history": [
@@ -3559,6 +3632,12 @@
           "by": "codex-operations-loop",
           "from": "ready-for-dev",
           "to": "in-progress"
+        },
+        {
+          "at": "2026-10-15T09:16:15.532821+00:00",
+          "by": "codex-operations-loop",
+          "from": "in-progress",
+          "to": "in-review"
         }
       ],
       "findings": [
@@ -3581,21 +3660,12 @@
     "ready": [],
     "waiting_on_prereq": [
       {
-        "id": 23,
-        "epic": 3,
-        "stream": "W-installer",
-        "title": "Pinned BMad 6.12.0 install through the official installer",
-        "missing": [
-          "22 (in-progress)"
-        ]
-      },
-      {
         "id": 24,
         "epic": 3,
         "stream": "W-installer",
         "title": "Plugin and marketplace manifests and install.sh bootstrap",
         "missing": [
-          "23 (backlog)"
+          "23 (in-progress)"
         ]
       },
       {

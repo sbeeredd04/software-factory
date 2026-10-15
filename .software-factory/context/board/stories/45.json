@@ -4,7 +4,7 @@
   "epic": 2,
   "type": "story",
   "title": "Connect authorized observations to prioritization and bug delivery",
-  "status": "in-progress",
+  "status": "in-review",
   "owner": "codex-operations-loop",
   "after": [
     40
@@ -15,7 +15,33 @@
   "plan_checkpoint": false,
   "done_checkpoint": false,
   "blocked": null,
-  "receipts": {},
+  "receipts": {
+    "implementation-result": {
+      "type": "agent-attempt",
+      "subject_sha": "089bb4e2f1c731c4ba4bb7f3b20b3a792e89bae5",
+      "agent": "/root/autonomy_contract",
+      "role": "sf-principal-engineer",
+      "skill": "software-factory",
+      "requested_model": "inherit",
+      "effective_model": null,
+      "phase": "implementation",
+      "status": "awaiting-review",
+      "recorded_at": "2026-10-15T09:16:15.435020+00:00",
+      "summary": "Integrated operations contract after independent source review by mission_status and four-scenario bounded instruction-use exercise by operations_forward_use; no instruction defects. Integrated full gate pending.",
+      "source_sha": "94b771127f2d8f93664d7f5a8b9364ab215a7b28",
+      "independent_source_review": {
+        "reviewer": "/root/mission_status",
+        "status": "accepted",
+        "subject_sha": "94b771127f2d8f93664d7f5a8b9364ab215a7b28"
+      },
+      "forward_use": {
+        "agent": "/root/operations_forward_use",
+        "scenario_count": 4,
+        "instruction_defects": 0,
+        "limitations": "Decision exercise, no real monitoring, scheduling, source access or deployment effects."
+      }
+    }
+  },
   "baseline_sha": null,
   "branch": null,
   "pr": null,
@@ -32,6 +58,12 @@
       "by": "codex-operations-loop",
       "from": "ready-for-dev",
       "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T09:16:15.532821+00:00",
+      "by": "codex-operations-loop",
+      "from": "in-progress",
+      "to": "in-review"
     }
   ],
   "findings": [

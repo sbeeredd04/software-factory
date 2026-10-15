@@ -4,7 +4,7 @@
   "epic": 3,
   "type": "story",
   "title": "Safe uninstall and the doctor report",
-  "status": "in-progress",
+  "status": "in-review",
   "owner": "codex-install-lifecycle",
   "after": [
     21
@@ -41,6 +41,29 @@
       "status": "assigned",
       "recorded_at": "2026-10-15T08:48:46.671302+00:00",
       "summary": "Native worker continues safe uninstall and doctor implementation; exact claim expanded for verified restoration metadata and persistent lock regression."
+    },
+    "implementation-result": {
+      "type": "agent-attempt",
+      "subject_sha": "089bb4e2f1c731c4ba4bb7f3b20b3a792e89bae5",
+      "agent": "/root/host_contracts",
+      "role": "sf-principal-engineer",
+      "skill": "software-factory",
+      "requested_model": "gpt-6-astra",
+      "effective_model": null,
+      "phase": "implementation",
+      "status": "awaiting-review",
+      "recorded_at": "2026-10-15T09:16:02.086315+00:00",
+      "summary": "Integrated source f676675e89257ee4ac90176769cf2113f2a38666 after independent review by mission_recovery. Author reports 133 affected tests and static checks passing. Safe uninstall and read-only doctor implemented; integrated full gate pending.",
+      "source_sha": "f676675e89257ee4ac90176769cf2113f2a38666",
+      "independent_source_review": {
+        "reviewer": "/root/mission_recovery",
+        "status": "accepted",
+        "subject_sha": "f676675e89257ee4ac90176769cf2113f2a38666"
+      },
+      "limitations": [
+        "Author checks are reported results; integrated full gate has not yet run.",
+        "No live host loading or human epic acceptance established."
+      ]
     }
   },
   "baseline_sha": null,
@@ -59,6 +82,12 @@
       "by": "codex-install-lifecycle",
       "from": "ready-for-dev",
       "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T09:16:15.462176+00:00",
+      "by": "codex-install-lifecycle",
+      "from": "in-progress",
+      "to": "in-review"
     }
   ],
   "findings": [],
