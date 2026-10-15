@@ -9,6 +9,7 @@ import sys
 import tempfile
 import unittest
 import xml.etree.ElementTree as ET
+from html import unescape
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlsplit
@@ -133,11 +134,19 @@ class ShowcaseTests(unittest.TestCase):
         data = (SITE / "scripts/setup-data.js").read_text()
         payload = json.loads(data.removeprefix("window.SF_SETUP = ").rstrip(";\n"))
         self.assertEqual(set(payload), set(hosts))
+        index = (SITE / "index.html").read_text()
+        fallback = re.search(r'<code id="install-command">([^<]+)</code>', index)
+        route = re.search(r'<h3>Full project setup.*?</h3>.*?<pre>([^<]+)</pre>', index, re.DOTALL)
+        self.assertIsNotNone(fallback)
+        self.assertIsNotNone(route)
+        self.assertEqual(payload["claude-code"]["command"], unescape(fallback.group(1)))
+        self.assertEqual(payload["claude-code"]["command"], unescape(route.group(1)))
         for key, host in hosts.items():
             expected = template.format(**host)
             self.assertEqual(payload[key]["prompt"], expected)
             self.assertIn(expected.rstrip(), (ROOT / "README.md").read_text())
-            self.assertEqual(payload[key]["command"], f'python3 install.py install --host {host["host"]} --skip-bmad --project <this-project> --dry-run')
+            self.assertEqual(payload[key]["command"], f'python3 -I -B install.py install --host {host["host"]} --skip-bmad --project <this-project> --profile full --dry-run')
+            self.assertIn(payload[key]["command"], payload[key]["prompt"])
 
     def test_font_hashes_licenses_and_local_css(self):
         manifest = json.loads((SITE / "fonts/manifest.json").read_text())

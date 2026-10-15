@@ -1,0 +1,279 @@
+"""Literal README adoption contract, exercised without host agent CLIs."""
+from __future__ import annotations
+
+import hashlib
+import json
+import posixpath
+import re
+import shlex
+import shutil
+import subprocess
+import sys
+import tarfile
+import tempfile
+import unittest
+from pathlib import Path
+
+import support
+
+ROOT = Path(__file__).resolve().parents[1]
+README = ROOT / "README.md"
+PYTHON = shutil.which("python3.12") or sys.executable
+DIAGRAMS = ("hero-loop", "feature-loop", "bug-loop", "install-flow",
+            "host-projection", "onboarding", "evolve-loop", "eval-flow", "board-roadmap")
+
+
+def literal_argv(document: str, host: str, pack: Path, project: Path) -> list[str]:
+    """Recognize exactly the documented local preview grammar, never a shell script."""
+    if host not in ("claude-code", "cursor", "codex"):
+        raise ValueError("unsupported host")
+    lines = [line for line in document.splitlines()
+             if line.startswith('"$SF_PYTHON" -I -B "$SF_PACK/install.py" install ')]
+    if len(lines) != 1:
+        raise ValueError("README needs one literal preview command")
+    tokens = shlex.split(lines[0])
+    expected = ["$SF_PYTHON", "-I", "-B", "$SF_PACK/install.py", "install",
+                "--host", "$SF_HOST", "--project", "$SF_PROJECT", "--profile", "full",
+                "--skip-bmad", "--dry-run"]
+    if tokens != expected or "<" in lines[0] or ">" in lines[0]:
+        raise ValueError("README install command drift")
+    return [str(PYTHON), "-I", "-B", str(pack / "install.py"), "install",
+            "--host", host, "--project", str(project), "--profile", "full",
+            "--skip-bmad", "--dry-run"]
+
+
+def diagram_contract(document: str) -> None:
+    bodies = re.findall(r"^```mermaid\n(.*?)\n```$", document, re.MULTILINE | re.DOTALL)
+    if len(bodies) != len(DIAGRAMS):
+        raise ValueError("nine diagram bodies required")
+    for name, body in zip(DIAGRAMS, bodies):
+        anchor = "board-and-roadmap" if name == "board-roadmap" else name
+        if body != (ROOT / "docs/diagrams" / f"{name}.mmd").read_text().rstrip("\n"):
+            raise ValueError(f"{name} body changed")
+        for link in (f"docs/diagrams/{name}.svg", f"docs/diagrams/README.md#{anchor}"):
+            if link not in document:
+                raise ValueError(f"{name} alternative missing")
+
+
+class ReadmeJourneyTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory(prefix="sf-readme-")
+        self.addCleanup(self.temp.cleanup)
+        self.base = Path(self.temp.name).resolve()
+        self.env, self.guard, self.stubs = support.guard_env()
+        self.addCleanup(shutil.rmtree, self.stubs, ignore_errors=True)
+        self.env["PYTHONDONTWRITEBYTECODE"] = "1"
+        for name in ("claude-code", "agent", "droid", "gh"):
+            stub = self.stubs / name
+            stub.write_text('#!/bin/sh\nprintf "%s\\n" "$0 $*" >> "$SF_GUARD_LOG"\nexit 127\n')
+            stub.chmod(0o755)
+
+    def tearDown(self):
+        self.assertFalse(self.guard.exists(), "forbidden host/provider CLI invoked")
+
+    def run_cli(self, *args, cwd=None):
+        return subprocess.run([str(arg) for arg in args], cwd=cwd or ROOT, env=self.env,
+                              capture_output=True, text=True, timeout=90, check=False)
+
+    def consumer(self, name):
+        project = self.base / name
+        shutil.copytree(ROOT / "examples/minimal", project)
+        git = self.run_cli("git", "init", project)
+        self.assertEqual(0, git.returncode, git.stderr)
+        (project / "user-settings.json").write_bytes(b'{"owner":"keep"}\n')
+        return project
+
+    def test_literal_command_refuses_drift(self):
+        readme = README.read_text()
+        project = self.base / "project"
+        self.assertEqual("--dry-run", literal_argv(readme, "codex", ROOT, project)[-1])
+        for changed in (readme.replace("--skip-bmad --dry-run", "--dry-run", 1),
+                        readme.replace("--profile full", "--profile skills-only", 1),
+                        readme.replace("--host \"$SF_HOST\"", "--host <host>", 1)):
+            with self.assertRaises(ValueError):
+                literal_argv(changed, "codex", ROOT, project)
+        with self.assertRaises(ValueError):
+            literal_argv(readme, "unknown", ROOT, project)
+
+    def test_nine_canonical_diagrams_and_alternatives(self):
+        readme = README.read_text()
+        diagram_contract(readme)
+        with self.assertRaises(ValueError):
+            diagram_contract(readme.replace("docs/diagrams/hero-loop.svg", "docs/diagrams/absent.svg", 1))
+        first = (ROOT / "docs/diagrams/hero-loop.mmd").read_text().rstrip("\n")
+        second = (ROOT / "docs/diagrams/feature-loop.mmd").read_text().rstrip("\n")
+        with self.assertRaises(ValueError):
+            diagram_contract(readme.replace(first, second, 1))
+
+    def test_first_screen_and_prompt_parity(self):
+        readme = README.read_text()
+        lines = readme.splitlines()
+        self.assertLess(lines.index("## Quickstart"), 130)
+        for term in ("pre-release", "BMad", "risk", "MIT", "CI", "non-affiliated"):
+            self.assertIn(term, readme)
+        self.assertLess((ROOT / "assets/hero.png").stat().st_size, 1_500_000)
+        prompt = (ROOT / "docs/copy-prompt.txt").read_text()
+        self.assertEqual(prompt, (ROOT / "site/setup-prompt.txt").read_text())
+        payload = json.loads((ROOT / "site/scripts/setup-data.js").read_text().removeprefix("window.SF_SETUP = ").removesuffix(";\n"))
+        for host in json.loads((ROOT / "site/hosts.json").read_text()):
+            self.assertIn(payload[host]["prompt"].rstrip(), readme)
+            self.assertIn(payload[host]["command"], payload[host]["prompt"])
+            self.assertEqual(
+                ["python3", "-I", "-B", "install.py", "install", "--host", host,
+                 "--skip-bmad", "--project", "<this-project>", "--profile", "full", "--dry-run"],
+                shlex.split(payload[host]["command"]),
+            )
+        for term in ("twenty", "GO", "eval", "BMad", "epic", "permission"):
+            self.assertIn(term, prompt)
+        self.assertNotIn("human epic checkpoint", prompt)
+
+    def test_comparison_dimensions_and_distinct_platform(self):
+        readme = README.read_text()
+        comparison = readme.split("## Where this fits\n", 1)[1].split("## One synthetic lap", 1)[0]
+        rows = [line for line in comparison.splitlines() if line.startswith("|")]
+        self.assertGreaterEqual(len(rows) - 2, 10)
+        columns = [cell.strip() for cell in rows[0].strip("|").split("|")]
+        self.assertEqual(["Capability", "Software Factory", "Superpowers", "BMad 6.12",
+                          "Spec Kit", "Factory Missions", "eve template"], columns)
+        for row in rows[2:]:
+            self.assertEqual(len(columns), len(row.strip("|").split("|")), row)
+        for pinned in ("bb92a77741419a4ab5f06e711a283343f1ada0c3",
+                       "05bfbd46d00766ec88eb9b42e76be2c575d64d7b",
+                       "3238fa9285694dc539aeb9829b337bfd6aed7317",
+                       "6bc5febab95de4c05fa08b164f544650f6aa11aa"):
+            self.assertIn(pinned, comparison)
+        self.assertIn("https://docs.factory.com/missions/overview", comparison)
+        self.assertIn("Not established", comparison)
+
+    def test_readme_links_resolve_in_actual_release(self):
+        output = self.base / "release"
+        built = self.run_cli(PYTHON, "-B", ROOT / "scripts/build_release.py",
+                             "--ref", "v0.1.0", "--out", output)
+        self.assertEqual(0, built.returncode, built.stderr[-1000:])
+        with tarfile.open(output / "sf-v0.1.0.tar.gz", "r:gz") as archive:
+            files = {member.name.removeprefix("sf-v0.1.0/"): archive.extractfile(member).read()
+                     for member in archive if member.isfile()}
+        self.assertNotIn(".software-factory/context/board/roadmap.json", files)
+        document = files["README.md"].decode("utf-8")
+        # Match normal links and badge links whose label contains an image.
+        for match in re.finditer(r"\[(?:!\[[^\]]*\]\([^)]*\)|[^\]]*)\]\(([^)]+)\)", document):
+            reference = match.group(1)
+            if "://" in reference or reference.startswith("mailto:"):
+                continue
+            target, _, anchor = reference.partition("#")
+            path = posixpath.normpath(target or "README.md")
+            self.assertIn(path, files, f"released README links to absent {reference}")
+            if anchor:
+                headings = re.findall(r"^#{1,6}\s+(.+?)\s*#*$", files[path].decode("utf-8"), re.MULTILINE)
+                slugs = {re.sub(r"[^\w -]", "", heading.replace("`", "").lower()).replace(" ", "-")
+                         for heading in headings}
+                self.assertIn(anchor, slugs, f"released README links to absent anchor {reference}")
+
+    def test_three_fresh_consumers_preserve_bytes_and_repeat(self):
+        readme = README.read_text()
+        for host, skill, role in (("claude-code", ".claude/skills", ".claude/agents"),
+                                  ("cursor", ".agents/skills", ".cursor/agents"),
+                                  ("codex", ".agents/skills", ".codex/agents")):
+            with self.subTest(host=host):
+                project = self.consumer(host)
+                settings = {"claude-code": (".claude/settings.json", b'{"env":{"USER_CHOICE":"keep"}}\n'),
+                            "cursor": (".cursor/hooks.json", b'{"version":1,"hooks":{"beforeShellExecution":[{"type":"command","command":"echo user"}]}}\n'),
+                            "codex": (".codex/hooks.json", b'{"hooks":{"SessionStart":[{"matcher":"startup","hooks":[{"type":"command","command":"echo user"}]}]}}\n')}
+                setting_name, setting_bytes = settings[host]
+                setting = project / setting_name
+                setting.parent.mkdir(parents=True, exist_ok=True)
+                setting.write_bytes(setting_bytes)
+                before = support.tree_hashes(project)
+                argv = literal_argv(readme, host, ROOT, project)
+                preview = self.run_cli(*argv)
+                self.assertEqual(0, preview.returncode, preview.stderr[-1000:])
+                self.assertEqual(before, support.tree_hashes(project))
+                apply = self.run_cli(*argv[:-1])
+                self.assertEqual(0, apply.returncode, apply.stderr[-1000:])
+                self.assertTrue((project / skill / "software-factory/SKILL.md").is_file())
+                self.assertTrue((project / role).is_dir())
+                self.assertTrue((project / ".software-factory/runtime").is_dir())
+                manifest = json.loads((project / ".software-factory/installation.json").read_text())
+                self.assertEqual([host], manifest["hosts"])
+                self.assertEqual("full", manifest["profile"])
+                self.assertGreater(len(manifest["files"]), 50)
+                for entry in manifest["files"]:
+                    self.assertEqual(entry["sha256"], hashlib.sha256((project / entry["path"]).read_bytes()).hexdigest())
+                after = support.tree_hashes(project)
+                repeat = self.run_cli(*argv[:-1])
+                self.assertEqual(0, repeat.returncode, repeat.stderr[-1000:])
+                self.assertEqual(after, support.tree_hashes(project))
+                for name in ("README.md", "CONVENTIONS.md", "user-settings.json"):
+                    self.assertEqual(before[name], after[name])
+                self.assertIn("USER_CHOICE" if host == "claude-code" else "echo user", setting.read_text())
+
+    def test_controlled_doctor_is_read_only(self):
+        project = self.consumer("doctor")
+        argv = literal_argv(README.read_text(), "codex", ROOT, project)
+        installed = self.run_cli(*argv[:-1])
+        self.assertEqual(0, installed.returncode, installed.stderr[-1000:])
+        before = support.tree_hashes(project)
+        doctor = self.run_cli(PYTHON, "-I", "-B", ROOT / "install.py", "doctor",
+                              "--project", project, "--json")
+        self.assertIn(doctor.returncode, (0, 1), doctor.stderr[-1000:])
+        report = json.loads(doctor.stdout)
+        self.assertIsInstance(report, dict)
+        self.assertEqual(before, support.tree_hashes(project))
+        self.assertTrue(self.guard.exists(), "controlled gh stub should be consulted")
+        self.assertIn("gh auth status", self.guard.read_text())
+        self.guard.unlink()
+
+    def test_foreign_and_edited_owned_refusals(self):
+        readme = README.read_text()
+        project = self.consumer("collision")
+        foreign = project / ".agents/skills/software-factory/SKILL.md"
+        foreign.parent.mkdir(parents=True)
+        foreign.write_bytes(b"user-owned skill\n")
+        argv = literal_argv(readme, "codex", ROOT, project)
+        result = self.run_cli(*argv[:-1])
+        self.assertNotEqual(0, result.returncode)
+        self.assertEqual(b"user-owned skill\n", foreign.read_bytes())
+        self.assertFalse((project / ".software-factory/installation.json").exists())
+        foreign.unlink()
+        self.assertEqual(0, self.run_cli(*argv[:-1]).returncode)
+        foreign.write_bytes(b"edited owned skill\n")
+        before = support.tree_hashes(project)
+        refused = self.run_cli(*argv[:-1])
+        self.assertNotEqual(0, refused.returncode)
+        self.assertEqual(before, support.tree_hashes(project))
+
+    def test_tampered_managed_block_refuses_without_rewrite(self):
+        project = self.consumer("tampered-block")
+        argv = literal_argv(README.read_text(), "claude-code", ROOT, project)
+        installed = self.run_cli(*argv[:-1])
+        self.assertEqual(0, installed.returncode, installed.stderr[-1000:])
+        instructions = project / "CLAUDE.md"
+        self.assertIn("<!-- software-factory:end -->", instructions.read_text())
+        instructions.write_text(instructions.read_text().replace("<!-- software-factory:end -->", "", 1))
+        before = support.tree_hashes(project)
+        refused = self.run_cli(*argv[:-1])
+        self.assertNotEqual(0, refused.returncode)
+        self.assertEqual(before, support.tree_hashes(project))
+
+    def test_missing_source_refuses_before_consumer_writes(self):
+        source = self.base / "source"
+        source.mkdir()
+        for name in json.loads((ROOT / "hosts/plugins/release-files.json").read_text()):
+            src = ROOT / name
+            dest = source / name
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(src, dest)
+        project = self.consumer("missing-source")
+        before = support.tree_hashes(project)
+        argv = literal_argv(README.read_text(), "codex", source, project)
+        preview = self.run_cli(*argv)
+        self.assertEqual(0, preview.returncode, preview.stderr[-1000:])
+        self.assertEqual(before, support.tree_hashes(project))
+        (source / "templates/PRINCIPLES.md").unlink()
+        refused = self.run_cli(*argv[:-1])
+        self.assertNotEqual(0, refused.returncode)
+        self.assertEqual(before, support.tree_hashes(project))
+
+
+if __name__ == "__main__":
+    unittest.main()
