@@ -37,6 +37,22 @@
       "status": "assigned",
       "recorded_at": "2026-10-15T11:38:36.862652+00:00",
       "summary": "Original27 begins after reviewed26handoff using approvedreview-counts-as-metfrontier. Reuseacceptedconfig/setupAPIs; deliverpresence-onlyregistry/routing,principles-derivedpreservingbotproposalsandcompletegh-onlytriage. Primaryorchestratorretainsauthority; integrated26gatepending."
+    },
+    "rejected-089-review": {
+      "type": "independent-review",
+      "status": "fail",
+      "subject_sha": "0890441902427aa1d4196dd4b503e971d280ef8e",
+      "author": "host-contracts",
+      "reviewer": "mission-status",
+      "independent": true,
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/agents-089-independent-review.md",
+      "artifact_sha256": "b2682a60ea4b70baec9623acc39db07ea0b940dd3f7e362e6699572ce4145715",
+      "probe_artifact": ".software-factory/runs/software-factory-v01/evidence/agents-089-independent-probes.json",
+      "probe_sha256": "2472cab6798254db1c26d3058e688008938e61af2e5a8293a529d9bb65611097",
+      "summary": "Changes required: foreign REST PR scope, ambiguous invocation flag forms, managed YAML topology, nonadvancing cursors and missing-installed-dependency fallback. Actual isolated frozen probes; no provider/host execution.",
+      "limits": [
+        "Synthetic source review/probes only; no integrated acceptance."
+      ]
     }
   },
   "baseline_sha": null,

@@ -235,6 +235,35 @@
       "limits": [
         "Local setup only; no live host, remote CI, staging equivalence, integration, publication or monitoring authority."
       ]
+    },
+    "self-setup-integrated-proof": {
+      "type": "verification",
+      "status": "pass",
+      "subject_sha": "2bb6f1c34cb439f57a93338ff4104b760f6bb9f0",
+      "command": "bash scripts/check_all.sh",
+      "exit_code": 0,
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/self-setup-integrated-gate.log",
+      "artifact_sha256": "90c3f18db4308f6e2fc03df9683bb71a089c2a6acc75219819b401c0cf0a5677",
+      "unit_tests": {
+        "run": 632,
+        "passed": 631,
+        "skipped": 1,
+        "failed": 0,
+        "seconds": 197.614
+      },
+      "eval_artifact": ".software-factory/runs/software-factory-v01/evidence/self-setup-integrated-eval.json",
+      "eval_artifact_sha256": "56558f2d26942e561131e3d9725a7cd738b09c3ba538b4417e1d249f1c265bb2",
+      "evals": {
+        "failed": 0,
+        "passed": 30,
+        "quarantined": 0,
+        "skipped": 0,
+        "unverified": 0
+      },
+      "summary": "Full integrated gate after real reviewed self-setup:632tests631pass/1optionalDraftcrosscheckskip;30evalpass; real approved BMad and skills network fixtures, all static/network stages exit0. Prior separate Draft crosscheck remains historical proof; no current optional pass fabricated.",
+      "limits": [
+        "No remote CI, actual host loading, integration, staging equivalence, human acceptance, publication or monitoring authority."
+      ]
     }
   },
   "baseline_sha": null,
