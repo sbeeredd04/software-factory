@@ -684,6 +684,23 @@
           "hitl": true,
           "plan_checkpoint": false,
           "done_checkpoint": true
+        },
+        {
+          "key": "crawl-installed-inventory",
+          "title": "Keep installed generated files out of the default project crawl",
+          "type": "bug",
+          "after": [
+            "crawl-skill"
+          ],
+          "covers": [
+            "SKL-CRAWL-001",
+            "SKL-CRAWL-002",
+            "VAL-CRAWL-001"
+          ],
+          "risk": "standard",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": false
         }
       ]
     },

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "evidence_contract": 1,
+  "id": 49,
+  "epic": 2,
+  "type": "bug",
+  "title": "Keep installed generated files out of the default project crawl",
+  "status": "in-progress",
+  "owner": "codex-crawl-repair",
+  "after": [
+    11
+  ],
+  "covers": [
+    "SKL-CRAWL-001",
+    "SKL-CRAWL-002",
+    "VAL-CRAWL-001"
+  ],
+  "risk": "standard",
+  "hitl": false,
+  "plan_checkpoint": false,
+  "done_checkpoint": false,
+  "blocked": null,
+  "receipts": {
+    "active-attempt": {
+      "type": "agent-attempt",
+      "subject_sha": "21f45331a4c974a75318f529b8a136ef11db3688",
+      "agent": "/root/crawl_repair",
+      "reviewer_planner": "/root/final_audit",
+      "role": "sf-engineer",
+      "skill": "sf-crawl",
+      "requested_model": "native host inherited model",
+      "effective_model": null,
+      "phase": "implementation",
+      "status": "assigned",
+      "scope": "Default Git-aware source inventory, explicit filesystem fallback and matching contract/regression tests. Five canonical paths in isolated worktree. Preserve original eval command, tracked ignored source and nonignored new code; no blanket host directory exclusion.",
+      "reproduction": {
+        "case": "SKL-CRAWL-002",
+        "exit_code": 1,
+        "output_lines": 443
+      },
+      "limitations": [
+        "Actual source fix, independent review, integrated native recrawl and combined gate still pending."
+      ]
+    },
+    "reproduction": {
+      "type": "verification-observation",
+      "subject_sha": "21f45331a4c974a75318f529b8a136ef11db3688",
+      "status": "cancelled",
+      "exit_code": 143,
+      "reason": "Unchanged approved SKL-CRAWL-002 independently reproduced exit 1 after actual installed projections and upstream sources entered the default crawl. Cancelled the owned full gate before completion to repair the defect.",
+      "full_gate_pass": false,
+      "reproduction": {
+        "case": "SKL-CRAWL-002",
+        "exit_code": 1,
+        "output_lines": 443
+      },
+      "partial_log_sha256": "66113f089e3f58a42f59bb77ccc3b80e37a01f55492a1b2f5d027528c7c72c23",
+      "scope": "The partial log records completed checks only; no final unit-count or full 51-case result is asserted."
+    }
+  },
+  "baseline_sha": null,
+  "branch": null,
+  "pr": null,
+  "merged_sha": null,
+  "history": [
+    {
+      "at": "2026-10-15T19:38:51.000507+00:00",
+      "by": "orchestrator",
+      "from": "backlog",
+      "to": "ready-for-dev"
+    },
+    {
+      "at": "2026-10-15T19:38:51.228154+00:00",
+      "by": "codex-crawl-repair",
+      "from": "ready-for-dev",
+      "to": "in-progress"
+    }
+  ],
+  "findings": [],
+  "source_key": "expansion/crawl-installed-inventory"
+}
