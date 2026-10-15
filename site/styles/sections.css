@@ -180,3 +180,10 @@ footer > p { color: var(--muted); font-size: 10px; margin-top: 24px; max-width: 
 .loop-card li { counter-increment: lap; position: relative; margin-left: 12px; padding: 0 0 18px 26px; margin-bottom: 0; border-left: 1px solid var(--line); }
 .loop-card li::before { content: counter(lap); position: absolute; left: -11px; top: 1px; width: 21px; height: 21px; display: grid; place-items: center; border: 1px solid var(--line); background: var(--surface); color: var(--green); font: 10px var(--mono); }
 .loop-card li:last-child { border-left-color: transparent; padding-bottom: 8px; }
+
+/* Reading copy stays at the brief's 16px minimum; utility labels stay compact. */
+.quick-setup p:not(.eyebrow), .flow-steps p, .checkpoint p, .loop-card ol,
+.loop-return, .evidence-item p, .setup-interview p:not(.eyebrow), .interview-line,
+.skill p, .role p, .host-card p, .route p, .os-note, table, .faq-item p,
+.faq-item summary, .close-cta p { font-size: 16px; }
+.setup-interview .eyebrow { font-size: 12px; }

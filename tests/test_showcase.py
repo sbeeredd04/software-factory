@@ -150,6 +150,7 @@ class ShowcaseTests(unittest.TestCase):
         self.assertIn("needs: build", source)
         self.assertIn("name: github-pages", source)
         self.assertIn("pages: write", source)
+        self.assertIn("pages: read", source)
         for action in re.findall(r"uses: (\S+)", source):
             self.assertRegex(action, r"^actions/[a-z-]+@[0-9a-f]{40}$")
 
