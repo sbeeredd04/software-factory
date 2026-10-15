@@ -33,7 +33,7 @@ PAYLOAD = '.software-factory/overlays/lesson/payload.md'
 
 class OverlayCase(unittest.TestCase):
     def setUp(self):
-        self.temp = tempfile.TemporaryDirectory(dir='/private/tmp')
+        self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
         self.base = Path(self.temp.name).resolve()
         self.root = self.base / 'consumer'
@@ -95,6 +95,28 @@ class OverlayCase(unittest.TestCase):
 
     def cli(self, *args):
         return support.run_installer(*args, env=self.env)
+
+
+class OverlayFixtureTests(unittest.TestCase):
+    def test_default_temp_parent_resolves_alias_and_cleans_up(self):
+        with tempfile.TemporaryDirectory(prefix='sf-overlay-parent-') as temporary:
+            base = Path(temporary).resolve()
+            physical = base / 'physical'
+            physical.mkdir()
+            alias = base / 'alias'
+            alias.symlink_to(physical, target_is_directory=True)
+            fixture = OverlayCase()
+            with mock.patch.object(tempfile, 'tempdir', str(alias)):
+                try:
+                    fixture.setUp()
+                    allocated = fixture.base
+                    self.assertEqual(alias, Path(fixture.temp.name).parent)
+                    self.assertEqual(physical, allocated.parent)
+                    self.assertEqual(Path(fixture.temp.name).resolve(), allocated)
+                    self.assertTrue(allocated.is_dir())
+                finally:
+                    self.assertTrue(fixture.doCleanups(), 'overlay fixture cleanup failed')
+            self.assertFalse(allocated.exists())
 
 
 class OverlayTests(OverlayCase):

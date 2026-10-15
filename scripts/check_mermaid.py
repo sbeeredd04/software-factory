@@ -24,6 +24,7 @@ FENCE_CLOSE_RE = re.compile(r"^\s*```\s*$")
 
 MERMAID_PACKAGE = "@mermaid-js/mermaid-cli@11.17.0"
 RENDER_TIMEOUT = 300
+DIAGNOSTIC_STREAM_BYTES = 8 * 1024
 
 SKIP_DIRS = {".git", "__pycache__", "node_modules", ".ruff_cache", ".venv"}
 
@@ -100,6 +101,27 @@ def collect_diagrams(root: Path) -> list[tuple[str, str]]:
     return diagrams
 
 
+def bounded_output(output: str | bytes | None) -> str:
+    """Keep the cause and trailing context within a UTF-8 byte budget."""
+    if not output:
+        return "<empty>"
+    raw = output if isinstance(output, bytes) else output.encode("utf-8", errors="replace")
+    # Decode bytes from TimeoutExpired too; subprocess may retain bytes in text mode.
+    text = raw.decode("utf-8", errors="replace")
+    raw = text.encode("utf-8")
+    if len(raw) <= DIAGNOSTIC_STREAM_BYTES:
+        return text
+    marker = b"\n... renderer output truncated ...\n"
+    available = DIAGNOSTIC_STREAM_BYTES - len(marker)
+    head = available * 3 // 4
+    tail = available - head
+    return (
+        raw[:head].decode("utf-8", errors="ignore")
+        + marker.decode("ascii")
+        + raw[-tail:].decode("utf-8", errors="ignore")
+    )
+
+
 def render(npx: str, source: str, workdir: Path, tag: str) -> tuple[bool, str]:
     """Render one diagram; returns (ok, error output)."""
     src = workdir / f"{tag}.mmd"
@@ -110,15 +132,31 @@ def render(npx: str, source: str, workdir: Path, tag: str) -> tuple[bool, str]:
             [npx, "-y", MERMAID_PACKAGE, "-i", str(src), "-o", str(out)],
             capture_output=True,
             text=True,
+            encoding="utf-8",
+            errors="replace",
             timeout=RENDER_TIMEOUT,
             check=False,
         )
-    except (OSError, subprocess.TimeoutExpired) as exc:
-        return False, f"renderer failed to run: {exc}"
+    except subprocess.TimeoutExpired as exc:
+        return False, (
+            f"renderer timed out after {RENDER_TIMEOUT}s; exit code: unavailable; "
+            f"output SVG: {'present' if out.is_file() else 'missing'}\n"
+            f"stderr:\n{bounded_output(exc.stderr)}\n"
+            f"stdout:\n{bounded_output(exc.stdout)}"
+        )
+    except OSError as exc:
+        return False, (
+            "renderer failed to run; exit code: unavailable; "
+            f"output SVG: {'present' if out.is_file() else 'missing'}\n"
+            f"error:\n{bounded_output(str(exc))}"
+        )
     if result.returncode != 0 or not out.is_file():
-        detail = (result.stderr or result.stdout).strip().splitlines()
-        tail = "\n".join(detail[-5:]) if detail else "no renderer output"
-        return False, tail
+        return False, (
+            f"renderer exit code: {result.returncode}; "
+            f"output SVG: {'present' if out.is_file() else 'missing'}\n"
+            f"stderr:\n{bounded_output(result.stderr)}\n"
+            f"stdout:\n{bounded_output(result.stdout)}"
+        )
     return True, ""
 
 

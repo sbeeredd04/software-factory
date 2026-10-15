@@ -7,6 +7,7 @@ itself stays clean under scripts/scan_public.py.
 from __future__ import annotations
 
 import hashlib
+import importlib.util
 import json
 import os
 import shutil
@@ -16,6 +17,7 @@ import tarfile
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 REPO = Path(__file__).resolve().parent.parent
 TOOLS = REPO / "scripts"
@@ -970,6 +972,127 @@ class CheckLinksTest(unittest.TestCase):
         self.assertEqual(0, self.check(root).returncode)
         git(root, "add", "untracked.json")
         self.assertEqual(1, self.check(root).returncode)
+
+
+class CheckMermaidDiagnosticsTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        spec = importlib.util.spec_from_file_location("check_mermaid", TOOLS / "check_mermaid.py")
+        cls.renderer = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(cls.renderer)
+
+    def render_stub(self, *, returncode=1, stdout="", stderr="", output=False):
+        with tempfile.TemporaryDirectory() as tmp:
+            workdir = Path(tmp)
+            if output:
+                (workdir / "fixture.svg").write_text("<svg/>")
+            result = subprocess.CompletedProcess([], returncode, stdout, stderr)
+            with mock.patch.object(self.renderer.subprocess, "run", return_value=result) as run:
+                outcome = self.renderer.render("fixture-npx", "flowchart TD\nA --> B", workdir, "fixture")
+            args, kwargs = run.call_args
+            self.assertEqual(
+                ["fixture-npx", "-y", self.renderer.MERMAID_PACKAGE,
+                 "-i", str(workdir / "fixture.mmd"), "-o", str(workdir / "fixture.svg")],
+                args[0],
+            )
+            self.assertEqual(self.renderer.RENDER_TIMEOUT, kwargs["timeout"])
+            self.assertTrue(kwargs["capture_output"])
+            self.assertFalse(kwargs["check"])
+            return outcome
+
+    def test_launch_cause_and_both_streams_are_retained(self):
+        stderr = "ROOT BROWSER LAUNCH ERROR\n" + "stack frame\n" * 80
+        ok, detail = self.render_stub(stdout="renderer context", stderr=stderr)
+        self.assertFalse(ok)
+        self.assertIn("ROOT BROWSER LAUNCH ERROR", detail)
+        self.assertIn("stderr:\n", detail)
+        self.assertIn("stdout:\nrenderer context", detail)
+        self.assertIn("exit code: 1; output SVG: missing", detail)
+
+    def test_cli_retains_invalid_utf8_renderer_output_and_fails(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "fixture.mmd").write_text("graph TD\nA --> B\n")
+            stub = root / "npx"
+            stub.write_text(
+                f"#!{sys.executable}\n"
+                "import os\n"
+                "os.write(2, b'ROOT BROWSER CAUSE \\xff\\n')\n"
+                "os.write(1, b'renderer stdout \\xfe\\n')\n"
+                "raise SystemExit(7)\n"
+            )
+            stub.chmod(0o755)
+            env = dict(os.environ, PATH=str(root))
+            result = run_tool("check_mermaid.py", root / "fixture.mmd", env=env)
+        detail = result.stdout + result.stderr
+        self.assertEqual(1, result.returncode, detail)
+        self.assertIn("fixture.mmd: diagram failed to render", detail)
+        self.assertIn("exit code: 7; output SVG: missing", detail)
+        self.assertIn("stderr:\nROOT BROWSER CAUSE \ufffd", detail)
+        self.assertIn("stdout:\nrenderer stdout \ufffd", detail)
+        self.assertNotIn("UnicodeDecodeError", detail)
+
+    def test_large_streams_keep_head_tail_with_inclusive_byte_bound(self):
+        for stream in ("stdout", "stderr"):
+            with self.subTest(stream=stream):
+                text = "HEAD-" + "\u20ac" * 10_000 + "-TAIL"
+                ok, detail = self.render_stub(**{stream: text})
+                self.assertFalse(ok)
+                bounded = self.renderer.bounded_output(text)
+                self.assertLessEqual(len(bounded.encode("utf-8")), 8 * 1024)
+                self.assertTrue(bounded.startswith("HEAD-"))
+                self.assertTrue(bounded.endswith("-TAIL"))
+                self.assertIn("renderer output truncated", bounded)
+                self.assertIn(bounded, detail)
+        boundary = "a" * (8 * 1024)
+        self.assertEqual(boundary, self.renderer.bounded_output(boundary))
+
+    def test_empty_failure_output_still_reports_failure_state(self):
+        ok, detail = self.render_stub()
+        self.assertFalse(ok)
+        self.assertIn("exit code: 1; output SVG: missing", detail)
+        self.assertIn("stderr:\n<empty>\nstdout:\n<empty>", detail)
+
+    def test_missing_svg_with_zero_exit_is_failure(self):
+        ok, detail = self.render_stub(returncode=0)
+        self.assertFalse(ok)
+        self.assertIn("exit code: 0; output SVG: missing", detail)
+
+    def test_nonzero_exit_with_svg_is_failure(self):
+        ok, detail = self.render_stub(returncode=7, output=True)
+        self.assertFalse(ok)
+        self.assertIn("exit code: 7; output SVG: present", detail)
+
+    def test_success_requires_zero_exit_and_svg(self):
+        self.assertEqual((True, ""), self.render_stub(returncode=0, output=True))
+
+    def test_timeout_retains_bounded_partial_streams_and_fails_with_svg(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            workdir = Path(tmp)
+            (workdir / "fixture.svg").write_text("<svg/>")
+            partial = b"ROOT TIMEOUT CAUSE\n" + b"frame\n" * 5000 + b"END"
+            error = subprocess.TimeoutExpired(
+                ["fixture-npx"], self.renderer.RENDER_TIMEOUT,
+                output=b"partial stdout", stderr=partial,
+            )
+            with mock.patch.object(self.renderer.subprocess, "run", side_effect=error):
+                ok, detail = self.renderer.render("fixture-npx", "graph TD\nA-->B", workdir, "fixture")
+        self.assertFalse(ok)
+        self.assertIn("renderer timed out after 300s; exit code: unavailable; output SVG: present", detail)
+        self.assertIn("ROOT TIMEOUT CAUSE", detail)
+        self.assertIn("END", detail)
+        self.assertIn("stdout:\npartial stdout", detail)
+        self.assertLessEqual(len(self.renderer.bounded_output(partial).encode("utf-8")), 8 * 1024)
+
+    def test_spawn_error_still_fails(self):
+        with (
+            tempfile.TemporaryDirectory() as tmp,
+            mock.patch.object(self.renderer.subprocess, "run", side_effect=OSError("fixture unavailable")),
+        ):
+            ok, detail = self.renderer.render("fixture-npx", "graph TD\nA-->B", Path(tmp), "fixture")
+        self.assertFalse(ok)
+        self.assertIn("renderer failed to run; exit code: unavailable; output SVG: missing", detail)
+        self.assertIn("error:\nfixture unavailable", detail)
 
 
 class CheckMermaidTest(unittest.TestCase):
