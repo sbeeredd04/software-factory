@@ -43,7 +43,7 @@
     });
   });
   copy.addEventListener('click', async () => {
-    const subject = generation;
+    const subject = ++generation;
     const prompt = data[selected].prompt;
     copy.textContent = 'Copying…';
     status.textContent = '';

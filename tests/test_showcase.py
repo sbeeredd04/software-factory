@@ -3,6 +3,7 @@ import gzip
 import hashlib
 import json
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -196,6 +197,15 @@ class ShowcaseTests(unittest.TestCase):
         self.assertEqual(rules.get("transition"), "none !important")
         bad = (ROOT / "tests/fixtures/showcase/descendants-only-motion.css").read_text()
         self.assertEqual(root_motion_rules(bad), {})
+
+    @unittest.skipUnless(shutil.which("node"), "developer Node.js unavailable; copy overlap remains unverified")
+    def test_copy_overlap_keeps_latest_attempt_and_host_state(self):
+        result = subprocess.run(
+            [shutil.which("node"), str(ROOT / "tests/fixtures/showcase/copy-overlap.cjs"), str(SITE / "scripts/main.js")],
+            capture_output=True, text=True, check=False, timeout=10,
+        )
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn("copy overlap: 3 cases, 0 failed", result.stdout)
 
     def test_first_view_source_budget(self):
         files = [p for p in SITE.rglob("*") if p.suffix in {".html", ".css", ".js", ".svg", ".woff2"}]

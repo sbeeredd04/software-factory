@@ -43,7 +43,12 @@ Static tests cover local references, canonical prompt drift, font hashes and
 complete licenses, structural accessibility, content contracts, reduced-motion
 hooks, source budgets and the manual SHA-pinned Pages workflow. Negative fixtures
 exercise broken anchors, remote resources, unsafe links, duplicate IDs, missing
-alt text and escaping paths. Static checks do not prove browser rendering,
+alt text and escaping paths. An optional developer Node.js unit fixture executes the actual page script with
+controlled clipboard promises to check overlapping attempts and host changes.
+Missing Node reports an unverified skip; it is not a shipped runtime dependency.
+This synthetic unit proof does not establish browser clipboard effects.
+
+Static checks do not prove browser rendering,
 clipboard effects, live host integration, publication or WCAG conformance.
 
 Browser review uses the supported computer-use API on the loopback page. Inspect
