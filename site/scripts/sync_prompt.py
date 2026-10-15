@@ -16,7 +16,7 @@ def derived_files():
     blocks = [START, "", "### Copy a setup prompt", "", "Use a trusted local pack checkout. Replace `<this-project>` with the intended project path.", "The complete prompts below match the showcase's host selector.", ""]
     for key, host in hosts.items():
         prompt = template.format(**host)
-        payload[key] = {"label": host["label"], "invocation": host["invocation"], "command": f'python3 install.py install --host {host["host"]} --skip-bmad --project <this-project> --dry-run', "prompt": prompt}
+        payload[key] = {"label": host["label"], "invocation": host["invocation"], "command": f'python3 -I -B install.py install --host {host["host"]} --skip-bmad --project "<this-project>" --profile full --dry-run', "prompt": prompt}
         blocks += [f'#### {host["label"]}', "", "```text", prompt.rstrip(), "```", ""]
     blocks += [END]
     readme = (ROOT / "README.md").read_text()
