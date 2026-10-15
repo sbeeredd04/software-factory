@@ -1,0 +1,5 @@
+{
+  "claude-code": {"label": "Claude Code", "host": "claude-code", "invocation": "/software-factory", "install_args": "--host claude-code --skip-bmad"},
+  "cursor": {"label": "Cursor", "host": "cursor", "invocation": "/software-factory", "install_args": "--host cursor --skip-bmad"},
+  "codex": {"label": "Codex", "host": "codex", "invocation": "$software-factory", "install_args": "--host codex --skip-bmad"}
+}

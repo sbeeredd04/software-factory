@@ -66,3 +66,13 @@ Anthropic, Anysphere, OpenAI, GitHub, or the BMad Method maintainers.** All prod
 trademarks are the property of their respective owners; they are used here only to state
 compatibility, under nominative fair use. This project is not a BMad Method product and its
 name contains no BMad trademark.
+
+## Showcase fonts
+
+The showcase self-hosts unmodified Bricolage Grotesque (700), Inter (400/600), and
+JetBrains Mono (400) WOFF2 fonts under SIL Open Font License 1.1. Copyright belongs
+to the Bricolage Grotesque Project Authors (2022), Inter Project Authors (2016),
+and JetBrains Mono Project Authors (2020). Each complete upstream notice is retained
+in its family directory under `site/fonts/`; immutable source revisions and SHA-256
+identities are recorded in [font sources](site/fonts/SOURCES.md). The fonts retain
+their OFL license separately from factory-authored MIT content.

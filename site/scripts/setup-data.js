@@ -1,0 +1,20 @@
+window.SF_SETUP = {
+  "claude-code": {
+    "label": "Claude Code",
+    "invocation": "/software-factory",
+    "command": "python3 install.py install --host claude-code --skip-bmad --project <this-project> --dry-run",
+    "prompt": "Set up Software Factory in this project for Claude Code using an existing trusted local checkout of the pack. Read its README, AGENTS.md and installer help first. Use Python 3.11+ on a POSIX system; native Windows helper execution is unverified.\n\nFrom the pack checkout, inspect the proposed project install with:\npython3 install.py install --host claude-code --skip-bmad --project <this-project> --dry-run\nThen perform the reviewed local install with the same arguments without --dry-run. Preserve existing project files and host trust settings. BMad is optional and excluded from this first setup.\n\nInvoke /software-factory and use sf-help to discover project context, prefill its twenty grouped decisions, and present the exact setup proposal for owner approval before applying it. Keep optional review bots and monitoring disabled until separately scoped and approved.\n\nThen ground one useful first story, define accepted assertions and independent proof, and continue the authorized delivery loop. Record real evidence and unknowns; ask only about unresolved material scope, risk or authority. Keep the human epic checkpoint and actual host permissions in force.\n"
+  },
+  "cursor": {
+    "label": "Cursor",
+    "invocation": "/software-factory",
+    "command": "python3 install.py install --host cursor --skip-bmad --project <this-project> --dry-run",
+    "prompt": "Set up Software Factory in this project for Cursor using an existing trusted local checkout of the pack. Read its README, AGENTS.md and installer help first. Use Python 3.11+ on a POSIX system; native Windows helper execution is unverified.\n\nFrom the pack checkout, inspect the proposed project install with:\npython3 install.py install --host cursor --skip-bmad --project <this-project> --dry-run\nThen perform the reviewed local install with the same arguments without --dry-run. Preserve existing project files and host trust settings. BMad is optional and excluded from this first setup.\n\nInvoke /software-factory and use sf-help to discover project context, prefill its twenty grouped decisions, and present the exact setup proposal for owner approval before applying it. Keep optional review bots and monitoring disabled until separately scoped and approved.\n\nThen ground one useful first story, define accepted assertions and independent proof, and continue the authorized delivery loop. Record real evidence and unknowns; ask only about unresolved material scope, risk or authority. Keep the human epic checkpoint and actual host permissions in force.\n"
+  },
+  "codex": {
+    "label": "Codex",
+    "invocation": "$software-factory",
+    "command": "python3 install.py install --host codex --skip-bmad --project <this-project> --dry-run",
+    "prompt": "Set up Software Factory in this project for Codex using an existing trusted local checkout of the pack. Read its README, AGENTS.md and installer help first. Use Python 3.11+ on a POSIX system; native Windows helper execution is unverified.\n\nFrom the pack checkout, inspect the proposed project install with:\npython3 install.py install --host codex --skip-bmad --project <this-project> --dry-run\nThen perform the reviewed local install with the same arguments without --dry-run. Preserve existing project files and host trust settings. BMad is optional and excluded from this first setup.\n\nInvoke $software-factory and use sf-help to discover project context, prefill its twenty grouped decisions, and present the exact setup proposal for owner approval before applying it. Keep optional review bots and monitoring disabled until separately scoped and approved.\n\nThen ground one useful first story, define accepted assertions and independent proof, and continue the authorized delivery loop. Record real evidence and unknowns; ask only about unresolved material scope, risk or authority. Keep the human epic checkpoint and actual host permissions in force.\n"
+  }
+};

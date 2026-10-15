@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="502" viewBox="0 0 440 502" role="img" aria-labelledby="title desc">
+<title id="title">One continuing delivery loop</title>
+<desc id="desc">Intent is grounded and planned, then independently reviewed under scoped GO. Parallel build and test branches converge at an evidence gate and integration. Deployed identity and effect proof lead to a human epic checkpoint. Failed proof returns to corrective work. Authorized observations feed the next ready frontier.</desc>
+<defs><marker id="arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0L7 3.5L0 7" fill="none" stroke="#767d6a" stroke-width="1.2"/></marker></defs>
+<g fill="none" stroke="#767d6a" stroke-width="1.3" marker-end="url(#arrow)">
+<path d="M220 56V78M220 126V148M220 196V213H112V234M220 213H328V234M112 292V312H220V331M328 292V312H220M220 379V400M220 448V466"/>
+<path d="M391 355H421V262H403" stroke="#a13f23" stroke-dasharray="4 4"/>
+<path d="M47 477H20V172H49" stroke-dasharray="4 4"/>
+</g>
+<g font-family="Arial, sans-serif" text-anchor="middle" fill="#252820">
+<rect x="50" y="7" width="340" height="49" rx="3" fill="#e4eadd" stroke="#9ca990"/>
+<text x="220" y="37" font-size="17">Ground intent → plan</text>
+<rect x="50" y="78" width="340" height="48" rx="3" fill="#faf8f2" stroke="#b1b7a4"/>
+<text x="220" y="108" font-size="17">Independent plan review</text>
+<rect x="50" y="148" width="340" height="48" rx="3" fill="#f0dfd3" stroke="#ba836c"/>
+<text x="220" y="178" font-size="17">Scoped GO · ready frontier</text>
+<rect x="34" y="234" width="156" height="58" rx="3" fill="#faf8f2" stroke="#b1b7a4"/>
+<text x="112" y="258" font-size="17">Build + test</text><text x="112" y="278" font-size="12" fill="#5d6255">claimed worktree</text>
+<rect x="250" y="234" width="156" height="58" rx="3" fill="#faf8f2" stroke="#b1b7a4"/>
+<text x="328" y="258" font-size="17">Build + test</text><text x="328" y="278" font-size="12" fill="#5d6255">independent scope</text>
+<rect x="50" y="331" width="340" height="48" rx="3" fill="#e4eadd" stroke="#9ca990"/>
+<text x="220" y="351" font-size="16">Independent proof → integration</text><text x="220" y="369" font-size="12" fill="#365a40">actual diff · evals · effects</text>
+<rect x="50" y="400" width="340" height="48" rx="3" fill="#faf8f2" stroke="#b1b7a4"/>
+<text x="220" y="420" font-size="16">Deployed identity + effect proof</text><text x="220" y="438" font-size="12" fill="#5d6255">failed or unknown → corrective work</text>
+<rect x="50" y="467" width="340" height="29" rx="3" fill="#252820"/>
+<text x="220" y="486" font-size="14" fill="#f4f1e9">Human epic checkpoint</text>
+<text x="425" y="311" transform="rotate(-90 425 311)" font-size="11" fill="#a13f23">repair</text>
+<text x="13" y="350" transform="rotate(-90 13 350)" font-size="11" fill="#5d6255">authorized observations → next priority</text>
+</g></svg>

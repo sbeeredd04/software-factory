@@ -38,6 +38,57 @@ or Codex - into an autonomous software factory. One orchestrator owns the whole 
 Install instructions ship with the v0.1.0 release. The pack installs into your project - never
 into your home directory - and adds no permission bypasses, no sudo, and no auto-updates.
 
+<!-- setup-prompts:start -->
+
+### Copy a setup prompt
+
+Use a trusted local pack checkout. Replace `<this-project>` with the intended project path.
+The complete prompts below match the showcase's host selector.
+
+#### Claude Code
+
+```text
+Set up Software Factory in this project for Claude Code using an existing trusted local checkout of the pack. Read its README, AGENTS.md and installer help first. Use Python 3.11+ on a POSIX system; native Windows helper execution is unverified.
+
+From the pack checkout, inspect the proposed project install with:
+python3 install.py install --host claude-code --skip-bmad --project <this-project> --dry-run
+Then perform the reviewed local install with the same arguments without --dry-run. Preserve existing project files and host trust settings. BMad is optional and excluded from this first setup.
+
+Invoke /software-factory and use sf-help to discover project context, prefill its twenty grouped decisions, and present the exact setup proposal for owner approval before applying it. Keep optional review bots and monitoring disabled until separately scoped and approved.
+
+Then ground one useful first story, define accepted assertions and independent proof, and continue the authorized delivery loop. Record real evidence and unknowns; ask only about unresolved material scope, risk or authority. Keep the human epic checkpoint and actual host permissions in force.
+```
+
+#### Cursor
+
+```text
+Set up Software Factory in this project for Cursor using an existing trusted local checkout of the pack. Read its README, AGENTS.md and installer help first. Use Python 3.11+ on a POSIX system; native Windows helper execution is unverified.
+
+From the pack checkout, inspect the proposed project install with:
+python3 install.py install --host cursor --skip-bmad --project <this-project> --dry-run
+Then perform the reviewed local install with the same arguments without --dry-run. Preserve existing project files and host trust settings. BMad is optional and excluded from this first setup.
+
+Invoke /software-factory and use sf-help to discover project context, prefill its twenty grouped decisions, and present the exact setup proposal for owner approval before applying it. Keep optional review bots and monitoring disabled until separately scoped and approved.
+
+Then ground one useful first story, define accepted assertions and independent proof, and continue the authorized delivery loop. Record real evidence and unknowns; ask only about unresolved material scope, risk or authority. Keep the human epic checkpoint and actual host permissions in force.
+```
+
+#### Codex
+
+```text
+Set up Software Factory in this project for Codex using an existing trusted local checkout of the pack. Read its README, AGENTS.md and installer help first. Use Python 3.11+ on a POSIX system; native Windows helper execution is unverified.
+
+From the pack checkout, inspect the proposed project install with:
+python3 install.py install --host codex --skip-bmad --project <this-project> --dry-run
+Then perform the reviewed local install with the same arguments without --dry-run. Preserve existing project files and host trust settings. BMad is optional and excluded from this first setup.
+
+Invoke $software-factory and use sf-help to discover project context, prefill its twenty grouped decisions, and present the exact setup proposal for owner approval before applying it. Keep optional review bots and monitoring disabled until separately scoped and approved.
+
+Then ground one useful first story, define accepted assertions and independent proof, and continue the authorized delivery loop. Record real evidence and unknowns; ask only about unresolved material scope, risk or authority. Keep the human epic checkpoint and actual host permissions in force.
+```
+
+<!-- setup-prompts:end -->
+
 ## Community
 
 - [Contributing](CONTRIBUTING.md) - setup, the verification gate, conventions, and the fold-in
