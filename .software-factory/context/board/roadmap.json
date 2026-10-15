@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-15T18:38:25.626267+00:00",
-  "revision": 291,
+  "generated_at": "2026-10-15T18:51:09.564292+00:00",
+  "revision": 292,
   "streams": [
     {
       "id": "W-foundation",
@@ -36,8 +36,8 @@
       "counts": {
         "planned": 0,
         "ready": 0,
-        "in-progress": 1,
-        "review": 14,
+        "in-progress": 0,
+        "review": 15,
         "built": 0,
         "done": 8,
         "cancelled": 0
@@ -7657,8 +7657,8 @@
       "stream": "W-expansion",
       "type": "story",
       "title": "Continuous BMad delivery with risk-adaptive human escalation",
-      "status": "in-progress",
-      "state": "in-progress",
+      "status": "in-review",
+      "state": "review",
       "owner": "codex-adaptive",
       "after": [
         45
@@ -7686,6 +7686,33 @@
           "phase": "implementation",
           "status": "assigned",
           "summary": "Direct owner steering/ADR0027: implement risk-adaptive continuous delivery and BMad-first planning in canonical skills, compatible config/onboarding and actual protected delegated epic acceptance. Preserve evidence/current-subject independent-review gates, explicit human reservations/actual host authority, legacy/frozen history. Root owns actual profile/delegation/board/maps/self-setup after review; no external rights inferred."
+        },
+        "worker-handoff": {
+          "type": "agent-attempt",
+          "subject_sha": "a8a93bd0e8849967792b66339c40221a804b2527",
+          "agent": "/root/adaptive_core",
+          "role": "sf-principal-engineer",
+          "skill": "software-factory",
+          "requested_model": "gpt-6-astra",
+          "requested_reasoning": "high",
+          "effective_model": null,
+          "phase": "implementation",
+          "status": "awaiting-review",
+          "summary": "Risk-adaptive continuous SDLC, BMad-first planning and actual delegated epic acceptance; evidence gates/reservations/legacy restrictions preserved. Initial two P2s reproduced and repaired. Author127 tests pass; independent97run96pass1optional skip and zero-write demotion probes pass. Full primary integration gate/profile/setup remain separate.",
+          "artifact": ".software-factory/runs/software-factory-v01/evidence/adaptive-repair-review-a8a9.json",
+          "artifact_sha256": "ee555e09bb43e933a19a5b8bea73e4dd8cb7936f172957e86372a24cc597916a"
+        },
+        "independent-review": {
+          "type": "independent-review",
+          "subject_sha": "a8a93bd0e8849967792b66339c40221a804b2527",
+          "reviewer": "/root/mission_status",
+          "status": "pass",
+          "artifact": ".software-factory/runs/software-factory-v01/evidence/adaptive-repair-review-a8a9.json",
+          "artifact_sha256": "ee555e09bb43e933a19a5b8bea73e4dd8cb7936f172957e86372a24cc597916a",
+          "scope": "Whole initial source reviewed; both actual P2s fixed at this subject; 97 focused tests, all4 reservation refusals/24 nonboolean cases zero writes,9 malformed dashboard bindings safe. Adversarial8 acceptance probes concern unchanged gate/grant/assessment mechanics at initial0a04.",
+          "limitations": [
+            "Real owner authority/profile/grant/installed BMad/native host behavior and final full gate not established by source review."
+          ]
         }
       },
       "baseline_sha": null,
@@ -7736,11 +7763,24 @@
           "by": "codex-adaptive",
           "from": "ready-for-dev",
           "to": "in-progress"
+        },
+        {
+          "at": "2026-10-15T18:51:09.554415+00:00",
+          "by": "codex-adaptive",
+          "from": "in-progress",
+          "to": "in-review"
         }
       ],
-      "findings": [],
+      "findings": [
+        {
+          "at": "2026-10-15T18:51:09.554242+00:00",
+          "by": "codex-adaptive",
+          "text": "Initial0a04 independent review rejected reservation demotion and malformed dashboard binding. Both actual defects reproduced, repaired and independently reverified at a8a93; original failed evidence retained."
+        }
+      ],
       "source_key": "expansion/risk-adaptive-autonomy",
-      "evidence_contract": 1
+      "evidence_contract": 1,
+      "review_subject_sha": "a8a93bd0e8849967792b66339c40221a804b2527"
     },
     {
       "id": 47,
