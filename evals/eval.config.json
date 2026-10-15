@@ -1127,6 +1127,28 @@
         }
       },
       "nondeterministic": false
+    },
+    {
+      "id": "TLS-ASSET-001",
+      "story": "launch-publication/marketing-assets",
+      "epic": "launch-publication",
+      "suite": "story",
+      "kind": "fail_to_pass",
+      "criterion": "Declared PNG assets have their exact dimensions and valid local usage references; absent or dimension-mismatched files refuse, with documented regeneration inputs.",
+      "surface": "tools",
+      "tier": [
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "command",
+        "run": "SF_SKIP_NETWORK=1 python3 -m unittest discover -s tests -p 'test_assets.py'",
+        "expect": {
+          "exit": 0,
+          "output_matches": "Ran [1-9][0-9]* tests?"
+        }
+      },
+      "nondeterministic": false
     }
   ],
   "modes": {
@@ -1196,7 +1218,7 @@
     "status": "approved",
     "approved_by": "Repository owner (current conversation)",
     "approved_at": "2026-10-15",
-    "plan_sha256": "144f2496adba8650722864158366e8441879dcb9244fad351c23bfc1e0a0e248",
+    "plan_sha256": "a070c3a7aa63483bdb96a1980680044fbac21a9633016ff90d2ca076d824ab0b",
     "digest_rule": "sha256 over the plan serialized as UTF-8 JSON with sorted keys and compact separators, the signoff object excluded"
   }
 }
