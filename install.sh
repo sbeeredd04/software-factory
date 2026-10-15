@@ -56,8 +56,11 @@ def bounded_tar(archive):
             if ended:
                 raise ValueError('nonzero data after archive terminator')
             # These are the only header types produced by our USTAR builder.
-            # Reject extensions before tarfile parses or recursively hides them.
-            if header[156:157] not in (b'0', b'\0', b'5'):
+            # NUL/V7 headers are excluded: tarfile can reinterpret a name ending
+            # in '/' as a directory and stop skipping its declared payload.
+            # Accept only explicit regular files/directories, with identical
+            # payload boundaries in this scan and tarfile's builtin processing.
+            if header[156:157] not in (b'0', b'5'):
                 raise ValueError('unsafe archive header type (extensions unsupported)')
             count += 1
             raw_size = header[124:136].strip(b'\0 ')

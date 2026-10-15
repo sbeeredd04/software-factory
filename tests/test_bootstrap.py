@@ -175,6 +175,39 @@ class BootstrapTests(unittest.TestCase):
                 self.assertNotIn('Traceback', result.stderr)
                 self.assertFalse(self.executed.exists())
 
+    def test_v7_directory_payload_cannot_hide_extension_headers(self):
+        for kind in (tarfile.XHDTYPE, tarfile.GNUTYPE_LONGNAME):
+            with self.subTest(kind=kind):
+                extension = tarfile.TarInfo('sf-v0.1.0/hidden-extension')
+                extension.type, extension.size = kind, 512
+                payload = b'18 comment=hidden\n' if kind == tarfile.XHDTYPE else b'sf-v0.1.0/hidden\0'
+                hidden = (extension.tobuf(format=tarfile.USTAR_FORMAT) + payload.ljust(512, b'\0')) * 1001
+                directory = tarfile.TarInfo('sf-v0.1.0/legacy/')
+                directory.type, directory.size = tarfile.AREGTYPE, len(hidden)
+                header = directory.tobuf(format=tarfile.USTAR_FORMAT)
+                # Establish the mismatch: tarfile treats raw NUL as a directory
+                # here and therefore parses declared data as more headers.
+                self.assertTrue(tarfile.TarInfo.frombuf(header, 'utf-8', 'strict').isdir())
+                archive = self.root/'sf-v0.1.0.tar.gz'
+                archive.write_bytes(gzip.compress(header + hidden + bytes(1024)))
+                (self.root/'SHA256SUMS').write_text(hashlib.sha256(archive.read_bytes()).hexdigest()+'  '+archive.name+'\n')
+                result = self.run_bootstrap()
+                self.assertEqual(result.returncode, 1)
+                self.assertIn('unsafe archive header type', result.stderr)
+                self.assertNotIn('Traceback', result.stderr)
+                self.assertFalse(self.executed.exists())
+
+    def test_explicit_empty_ustar_directory_remains_supported(self):
+        archive = self.fixture()
+        directory = tarfile.TarInfo('sf-v0.1.0/')
+        directory.type = tarfile.DIRTYPE
+        archive.write_bytes(gzip.compress(directory.tobuf(format=tarfile.USTAR_FORMAT)
+                                          + gzip.decompress(archive.read_bytes())))
+        (self.root/'SHA256SUMS').write_text(hashlib.sha256(archive.read_bytes()).hexdigest()+'  '+archive.name+'\n')
+        result = self.run_bootstrap()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertTrue(self.executed.exists())
+
     def test_hidden_data_after_terminator_rejected(self):
         archive = self.fixture()
         raw = gzip.decompress(archive.read_bytes())
