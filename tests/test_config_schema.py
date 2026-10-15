@@ -24,6 +24,23 @@ class SchemaTests(unittest.TestCase):
         with self.assertRaises(config.ConfigError):
             config.validate_schema(data,schema)
 
+    def test_optional_autonomy_and_planning_modes_preserve_legacy_and_reject_unknowns(self):
+        schema = config.load(support.REPO/'schemas/config.schema.json')
+        data = config.load(support.REPO/'examples/config/config.yaml')
+        config.validate_schema(data, schema)
+        for mode in ('supervised', 'risk-adaptive'):
+            for method in ('bmad', 'native'):
+                data['autonomy']['mode'] = mode
+                data['planning']['method'] = method
+                config.validate_schema(data, schema)
+        for section, key in (('autonomy', 'mode'), ('planning', 'method')):
+            original = data[section][key]
+            for value in (True, None, 'unrestricted', '*'):
+                data[section][key] = value
+                with self.assertRaises(config.ConfigError):
+                    config.validate_schema(data, schema)
+            data[section][key] = original
+
     def test_supported_keywords(self):
         schema = {'type':'object','required':['x'],'properties':{'x':{'$ref':'#/$defs/n'}},'additionalProperties':False,'$defs':{'n':{'type':'integer','minimum':1,'maximum':4}}}
         config.validate_schema({'x':2},schema)

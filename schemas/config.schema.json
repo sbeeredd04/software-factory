@@ -155,6 +155,13 @@
             "full"
           ],
           "maxLength": 128
+        },
+        "method": {
+          "enum": [
+            "bmad",
+            "native"
+          ],
+          "description": "New setup prefers BMad; missing preserves the existing approved route."
         }
       },
       "required": [
@@ -403,6 +410,13 @@
             "stop-and-ask"
           ],
           "maxLength": 128
+        },
+        "mode": {
+          "enum": [
+            "supervised",
+            "risk-adaptive"
+          ],
+          "description": "Absent retains supervised epic acceptance; a mode grants no actions."
         }
       },
       "required": [

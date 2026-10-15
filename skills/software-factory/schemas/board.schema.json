@@ -63,7 +63,8 @@
           "description": "Declared cross-epic gates: epics this epic depends on."
         },
         "status": {"enum": ["planned", "in-progress", "awaiting-acceptance", "done", "parked", "cancelled"]},
-        "acceptance": {"type": ["object", "null"], "description": "New acceptance binds a source decision, exact epic/current-child scope and independent reconciliation bundle. Historical terminal acceptance objects remain readable."},
+        "hitl": {"type": "boolean", "description": "Reserve epic acceptance for the human; absence is false."},
+        "acceptance": {"type": ["object", "null"], "description": "Human acceptance binds a source decision; delegated acceptance records by=orchestrator, mode=delegated, actor and current delegation/assessment/config/risk/evidence bindings. Both bind exact epic/current-child scope and independent reconciliation. Historical terminal acceptance objects remain readable."},
         "acceptance_history": {"type": "array", "items": {"type": "object"}},
         "parked": {"type": ["object", "null"]},
         "park_proposal": {"type": ["object", "null"]},

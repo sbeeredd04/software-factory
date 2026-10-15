@@ -171,10 +171,19 @@ def _human_accepted(epic):
     )
 
 
+def _delegated_accepted(epic):
+    acceptance = epic.get("acceptance")
+    return (epic["status"] == "done" and isinstance(acceptance, dict)
+            and acceptance.get("by") == "orchestrator" and acceptance.get("mode") == "delegated"
+            and isinstance(acceptance.get("actor"), str) and bool(acceptance["actor"].strip())
+            and _timestamp(acceptance.get("at")) is not None)
+
+
 def render_overview(roadmap):
     stories = roadmap["stories"]
     counts = {state: sum(s["state"] == state for s in stories) for state in ALL_STATES}
     accepted = sum(_human_accepted(epic) for epic in roadmap["epics"])
+    delegated = sum(_delegated_accepted(epic) for epic in roadmap["epics"])
     metrics = "".join(
         f'<div class="metric">{esc(state)}: <strong>{count}</strong></div>'
         for state, count in counts.items()
@@ -182,7 +191,7 @@ def render_overview(roadmap):
     return (
         '<section id="overview"><h2>Mission status</h2>'
         f'<p>{counts["done"]}/{len(stories)} stories done · '
-        f'{accepted}/{len(roadmap["epics"])} epics with recorded human acceptance</p>'
+        f'{accepted}/{len(roadmap["epics"])} epics with recorded human acceptance · {delegated} with recorded delegated acceptance</p>'
         f'<div class="overview">{metrics}</div>'
         '<p class="small">Review and built are separate from done. Cancelled work is not '
         'completed work. Finishing stories does not accept their epic. '
@@ -457,6 +466,10 @@ def render_acceptance(roadmap):
             f'human acceptance recorded at {esc(_time_label(acceptance.get("at")))}'
             if _human_accepted(epic) else "human acceptance not recorded"
         )
+        if _delegated_accepted(epic):
+            human = (f'delegated acceptance by {esc(acceptance["actor"])} recorded at '
+                     f'{esc(_time_label(acceptance.get("at")))}; grant '
+                     f'{esc(acceptance.get("delegation", {}).get("artifact", "source unknown"))}')
         out.append(
             f"<h3>Epic {esc(epic['id'])} — {esc(epic['title'])} {badge(epic['status'])}</h3>"
             f'<div class="small">stream {esc(epic["stream"])} · outcome: {esc(epic["outcome"])}</div>'

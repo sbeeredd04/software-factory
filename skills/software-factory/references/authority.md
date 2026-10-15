@@ -47,8 +47,9 @@ Bring principle conflicts, new scope, new authority and real risk to the human
 owner as exactly one focused question carrying a recommendation and 2-4 options.
 Record the answer durably (checkpoint decisions, plus the principles or decision
 documents when the human changes them) and honor it. A pending question blocks
-only its dependents; independent safe work continues. Required human epic
-acceptance remains a checkpoint; completing the stories does not grant it.
+only its dependents; independent safe work continues, unless the owner selected
+`stop-and-ask`. Explicit human reservations remain binding; closing stories alone
+does not accept their epic.
 
 ## Uncertain outcomes
 
@@ -56,3 +57,47 @@ Authority includes the duty to reconcile: when the outcome of an external action
 is unknown — a push, merge, deploy or purchase whose result was not observed —
 inspect the provider's actual state before retrying. Retrying an action whose
 first attempt may have succeeded is how duplicated side effects happen.
+
+## Consequence assessment at every phase
+
+Reassess on new intent, findings, scope or access, before consequential actions,
+at integration/effect proof, during recovery and at acceptance. Record the cause
+and intended outcome; affected behavior, data, files, branches, environments,
+tenants, trust, money and external systems; proposed method and actual permissions;
+effect proof, recovery, reversibility and blast radius; governing owner scope,
+autonomy and reservations; unknowns and the decision with rationale.
+
+Choose proceed within scope, deepen independent review/proof, or escalate. Record
+exact blocked dependents and the required owner action. Preserve prior assessments
+and failures. A risky module name alone does not force another question: reversible
+local auth-parser tests or transaction repairs can proceed within a covering GO
+with suitable independent review. New trust/credential scope, irreversible data
+operations, material product tradeoffs, consequential production effects and
+unbounded recovery need applicable owner authority. Existing project reservations
+remain in force until explicitly amended. No risk score overrides them.
+
+## Conditional epic acceptance
+
+`autonomy.mode` is `supervised` or `risk-adaptive`; absence preserves legacy
+supervised acceptance. New setup proposes risk-adaptive, local edits/commits within
+GO and `checkpoints.manual: false`; external flags stay false. Existing profiles
+are preserved. Durable checkpoints still occur at configured transitions/reset/
+external writes. Persisting a checkpoint and asking a human are separate actions.
+A manual profile, epic `hitl: true`, unresolved required story checkpoint or an
+applicable project reservation keeps human acceptance mandatory. The helper treats
+manual true conservatively for epic acceptance, including custom transition lists.
+
+Under adaptive policy, a current finite owner grant can delegate acceptance for
+named epics. Mode alone grants nothing. The protected helper requires the same
+child/effect checks and independent reconciliation for both actors, plus current
+authority and consequence bindings for the orchestrator. The accepting owner and
+reviewer must differ from every implementation owner. Legacy descendants require
+explicit scoped legacy authority and independent reconciliation, never fabricated
+gates. See [evidence](evidence.md) for the concrete source/assessment contract.
+
+An orchestrator acceptance records its actual identity and `mode: delegated`;
+it never uses the human actor or a fabricated human decision. The host verifies
+actual owner identity, permissions and the truth of consequences. Helpers check
+bounded assertions, digests and source provenance; they cannot authenticate a
+caller or prove the reasoning. Accepted epic `done` unlocks dependencies; waiting
+for acceptance can mean evidence/authority reconciliation or a reserved human choice.

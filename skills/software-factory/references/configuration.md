@@ -29,6 +29,9 @@ contains.
 - **tracker** — the planning source: `bmad-v6` (sprint status), `markdown`, or
   the `bmad-v7` read-only preview adapter. The tracker feeds planning; story
   status lives in the per-story board record.
+- **planning** — `method: bmad` for new setup; native requires explicit selection,
+  scoped fallback or preservation of an approved legacy route. `depth` sizes the
+  planning work. A tracker adapter never proves that BMad ran.
 - **branches** — the integration branch (default `dev`) and the protected
   branches (default `main`). Integration merges go to the former; the latter are
   never pushed or merged to directly. The two are never the same branch.
@@ -50,8 +53,13 @@ contains.
   [evidence](evidence.md)).
 - **autonomy** — defaults: local work within the request; external actions
   (push, PR, merge, deploy) ask first unless a standing delegation covers the
-  exact scope. See [authority](authority.md).
-- **checkpoints / budgets** — when checkpoints are taken; budgets are alarms by
+  exact scope. `mode: risk-adaptive` enables the protected delegated acceptance
+  route only with current finite owner authority and independent consequence
+  evidence; `supervised` or absence retains human epic acceptance. See [authority](authority.md).
+- **checkpoints / budgets** — when checkpoints are taken; `manual: true` reserves
+  human acceptance, while new setup proposes false with durable checkpoints and
+  consequence-driven escalation. Epic `hitl` and story reservations remain binding.
+  Existing profiles are never silently rewritten. Budgets are alarms by
   default, not silent task abandonment. `budgets.max_parallel_workers` is an
   optional owner ceiling: omit it when the owner sets no ceiling. Actual observed
   host capacity always bounds dispatch; unknown capacity calls for conservative

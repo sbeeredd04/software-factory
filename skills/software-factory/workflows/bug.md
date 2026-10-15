@@ -9,7 +9,7 @@ flowchart TD
   A --> E[Primary evidence: live logs, telemetry, error body, persisted state, plus a safe reproduction]
   E --> R[Analysis: confirmed mechanism at a source anchor, labeled vs hypothesis]
   R --> D{Fix needed?}
-  D -->|no, demonstrated| Z[No-fix closure: explain the evidence, change no code, record the closure]
+  D -->|no, demonstrated| Z[Independent no-fix disposition review: reproduction proof, no fabricated code or deploy closure]
   D -->|unknown| U[Safest separating experiment or one targeted clarification]
   U -->|back to evidence| E
   D -->|yes| B[Root cause and class handling; BMad planning skills as needed]
@@ -23,9 +23,10 @@ flowchart TD
   C --> M[Gated merge by the single integration owner]
   M --> S[Deployed staging SHA: the original reproduction now passes]
   S -->|fails or unknown: loop reopens| O
-  S --> H[Applicable epic manual checkpoint with the human owner]
+  S --> H[Policy-selected epic acceptance; escalate when reserved]
   H --> K[Durable evidence: bug, planning-source and board-record closure, follow-ups recorded]
   K --> OP[Authorized re-observation and next priorities: operations reference]
+  Z --> OP
 ```
 
 ## The flow in prose
@@ -43,7 +44,9 @@ hypotheses, and keep them labeled. Plan only on the confirmed side.
 
 **Decide: fix, no-fix, or unknown.** "No fix needed" is a valid, evidence-backed
 closure that changes no code — demonstrate why the observed behavior is correct
-or already handled, record the evidence, and exit. If the cause is unknown, do
+or already handled. An independent reviewer checks the reproduction and disposition;
+record that evidence without fabricating code, merge or deploy completion. Apply
+any reserved acceptance decision and continue the eligible frontier. If the cause is unknown, do
 not guess a fix: run the safest separating experiment that distinguishes the
 competing explanations, or ask one targeted clarification, and return to the
 evidence. If a reproduction needs human login or consequential authority, ask
@@ -51,8 +54,9 @@ narrowly while safe analysis continues.
 
 **Root cause and class.** Name the root cause, then sweep the whole class of the
 defect: the sweep ends in fixes or recorded follow-ups, not silence. Use BMad
-planning skills as needed for the size of the fix; do not force every bug
-through a full PRD.
+planning skills to form a compact structured story when a fix needs planning;
+explicit native or approved legacy routes follow the planning reference. Do not
+force every bug through a full PRD.
 
 **Plan and work the fix.** The plan is risk-sized and names the regression test,
 the effect proof, any eval slice and the staging proof. An independent plan
@@ -71,8 +75,9 @@ original reproduction must pass against the deployed staging SHA, or against the
 configured local equivalent for work that does not deploy. If it fails or the
 outcome is unknown, the loop reopens at the work stage with receipts preserved.
 
-**Close durably.** Hold the applicable epic's manual checkpoint with the human
-owner, then close with durable evidence: the bug ledger, the planning source
+**Close durably.** Reconcile the current consequences and acceptance authority
+under [authority](../references/authority.md), then close with durable evidence:
+the bug ledger, the planning source
 and the story's own board record closed (`.software-factory/context/board/`),
 no-fix evidence kept where relevant, and unresolved obligations recorded as
 follow-ups. The same single-status rule as [the feature loop](feature.md)

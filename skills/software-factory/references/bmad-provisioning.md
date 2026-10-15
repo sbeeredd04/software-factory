@@ -3,8 +3,9 @@
 A normal `install.py install` first commits the factory projections, then runs
 an independent BMad provisioning phase. `--skip-bmad` bypasses all BMad discovery,
 probes and subprocesses. `--dry-run` only describes the factory plan and writes
-nothing. BMad is optional: unavailable prerequisites leave the factory usable
-with native planning and an explicit degraded report.
+nothing. New setup prefers BMad; unavailable prerequisites are explicit planning
+gaps. Native planning needs an owner-selected method, scoped fallback or preserved
+approved legacy route, with equivalent structured artifacts and proof.
 
 ## Pinned invocation and prerequisites
 

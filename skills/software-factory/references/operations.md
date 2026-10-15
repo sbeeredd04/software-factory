@@ -110,3 +110,9 @@ action, updating repeated identical signals without noise. External notification
 delivery needs its scoped authority. Feed repeated failures and rework into
 [sf-evolve](../../sf-evolve/SKILL.md) proposals or the next grounded priority;
 continue the approved frontier without another phase prompt.
+
+
+Reassess affected data, users, trust, permissions and recovery before each newly
+consequential observation or follow-up, using [authority](authority.md). A valid
+read scope can support continued authorized diagnosis; a new write, credential
+scope or uncertain provider effect needs its own applicable authority and proof.

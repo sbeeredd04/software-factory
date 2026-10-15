@@ -38,7 +38,8 @@ With a custom config, only its selected missing canonical document paths are
 proposed. Unreferenced generic conventions, tracker and eval scaffolds are omitted;
 existing linked principles and eval plans remain the selected sources.
 
-Defaults include native fallback, alarm budgets, optional owner ceiling omitted,
+Defaults include risk-adaptive mode, local edits/commits within GO, manual false,
+BMad planning and native worker fallback, alarm budgets, optional owner ceiling omitted,
 empty bots/environments, disabled monitoring and external writes. These are setup
 choices, not observed capabilities. All mappings use the strict configuration
 contract; qualitative policy stays in documents. A new `evals-draft.json` is
@@ -104,8 +105,10 @@ optional route, with consent before npm network access and upstream code executi
 `--pin tea=v1.27.2 --pin bmb=v2.2.2 --pin cis=v0.3.2`.
 Use the canonical provisioning reference for the complete installer contract;
 `--yes` selects upstream defaults, not blanket authority. Decline, missing
-prerequisites or failure leaves native planning available with equivalent proof;
-no GO without a concrete minimal spec, acceptance and eval readiness. No hidden
+prerequisites or failure is an explicit BMad planning gap. Native requires an
+owner-selected method, scoped fallback decision or existing approved legacy route;
+label actual method honestly. No GO without a concrete minimal spec, acceptance
+and eval readiness. No hidden
 network call, trust configuration or service is part of this setup helper.
 
 ## Operational handoff
@@ -137,7 +140,8 @@ a dry run or scratch clone for the first lap in an unfamiliar repo. The helper's
 first-lap placeholder is an input to this host planning, never dispatch-ready GO.
 
 Continue under existing user scope through worker, independent reviewer, repair,
-next eligible work, integration and effect proof; retain manual epic acceptance.
+next eligible work, integration and effect proof; complete policy-selected epic
+acceptance while preserving explicit human reservations.
 Offer a design audit once, off by default: `sf-design`, `sf-smell-audit`,
 `sf-refactor`, `sf-patterns`. With approval, record file-anchored findings in
 `.software-factory/context/design-audit.md`. They feed candidate stories only;
