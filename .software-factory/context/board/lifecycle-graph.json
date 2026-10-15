@@ -32,16 +32,7 @@
         "question": "accept epic 1 (Foundation: skeleton, kernel, orchestrator, team, design module, tooling) against its done-when?"
       }
     ],
-    "ready": [
-      {
-        "claimed": false,
-        "epic": 2,
-        "id": 46,
-        "stream": "W-expansion",
-        "title": "Continuous BMad delivery with risk-adaptive human escalation",
-        "why": "after 45 in-review; unclaimed"
-      }
-    ],
+    "ready": [],
     "shipped": {
       "recorded_deployments": [],
       "recorded_done": [
@@ -1484,6 +1475,17 @@
     }
   },
   "diagnostics": [
+    {
+      "category": "inconsistencies",
+      "kind": "board-diagnostic",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/47.json",
+          "pointer": "",
+          "sha256": "69895771aea5823c270404eb3896b0818c04ec2f055c7fcbff811d0f96212275"
+        }
+      ]
+    },
     {
       "kind": "crawl-binding-unverified",
       "provenance": [
@@ -8656,7 +8658,7 @@
         {
           "path": ".software-factory/context/board/stories/46.json",
           "pointer": "/covers/0",
-          "sha256": "8f70a39e0a1ecfcb7ba94322a67728cbd67ebcce1b0bb509372ba44c16d2fef5"
+          "sha256": "94d2bc9e0f292707b2fee7a16c70625344b9ba348feb74cb1f81a0a03b013ac1"
         }
       ],
       "relation": "covers",
@@ -8669,7 +8671,7 @@
         {
           "path": ".software-factory/context/board/stories/46.json",
           "pointer": "/covers/1",
-          "sha256": "8f70a39e0a1ecfcb7ba94322a67728cbd67ebcce1b0bb509372ba44c16d2fef5"
+          "sha256": "94d2bc9e0f292707b2fee7a16c70625344b9ba348feb74cb1f81a0a03b013ac1"
         }
       ],
       "relation": "covers",
@@ -8682,7 +8684,7 @@
         {
           "path": ".software-factory/context/board/stories/46.json",
           "pointer": "/covers/2",
-          "sha256": "8f70a39e0a1ecfcb7ba94322a67728cbd67ebcce1b0bb509372ba44c16d2fef5"
+          "sha256": "94d2bc9e0f292707b2fee7a16c70625344b9ba348feb74cb1f81a0a03b013ac1"
         }
       ],
       "relation": "covers",
@@ -26687,7 +26689,7 @@
         {
           "path": ".software-factory/context/board/stories/46.json",
           "pointer": "/after/0",
-          "sha256": "8f70a39e0a1ecfcb7ba94322a67728cbd67ebcce1b0bb509372ba44c16d2fef5"
+          "sha256": "94d2bc9e0f292707b2fee7a16c70625344b9ba348feb74cb1f81a0a03b013ac1"
         }
       ],
       "relation": "depends-on",
@@ -26699,12 +26701,36 @@
         {
           "path": ".software-factory/context/board/stories/46.json",
           "pointer": "/epic",
-          "sha256": "8f70a39e0a1ecfcb7ba94322a67728cbd67ebcce1b0bb509372ba44c16d2fef5"
+          "sha256": "94d2bc9e0f292707b2fee7a16c70625344b9ba348feb74cb1f81a0a03b013ac1"
         }
       ],
       "relation": "part-of",
       "source": "story:46",
       "target": "epic:2"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/46.json",
+          "pointer": "/receipts/active-attempt",
+          "sha256": "94d2bc9e0f292707b2fee7a16c70625344b9ba348feb74cb1f81a0a03b013ac1"
+        }
+      ],
+      "relation": "records",
+      "source": "story:46",
+      "target": "receipt:46:active-attempt"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/46.json",
+          "pointer": "/receipts/active-attempt",
+          "sha256": "94d2bc9e0f292707b2fee7a16c70625344b9ba348feb74cb1f81a0a03b013ac1"
+        }
+      ],
+      "relation": "subject",
+      "source": "receipt:46:active-attempt",
+      "target": "commit:23b47f4e044ec5dd12c41f4d50f1ba2a3c875f5d"
     },
     {
       "provenance": [
@@ -26999,7 +27025,7 @@
         {
           "path": ".software-factory/runs/software-factory-v01/run.json",
           "pointer": "/claims/31",
-          "sha256": "448b7496f29ad9d5558fb0ea22874d115dddd19a0b60a84c249e90a92a997681"
+          "sha256": "aff503a093eb3abdf8b316e4045a2f360007f462e521ea6c4a157cc887a5e736"
         }
       ],
       "relation": "assigned-to",
@@ -27010,13 +27036,13 @@
       "provenance": [
         {
           "path": ".software-factory/runs/software-factory-v01/run.json",
-          "pointer": "/claims/47",
-          "sha256": "448b7496f29ad9d5558fb0ea22874d115dddd19a0b60a84c249e90a92a997681"
+          "pointer": "/claims/46",
+          "sha256": "aff503a093eb3abdf8b316e4045a2f360007f462e521ea6c4a157cc887a5e736"
         }
       ],
       "relation": "assigned-to",
-      "source": "claim:47",
-      "target": "story:47"
+      "source": "claim:46",
+      "target": "story:46"
     }
   ],
   "inputs": [
@@ -27288,7 +27314,7 @@
     {
       "kind": "file",
       "path": ".software-factory/context/board/stories/46.json",
-      "sha256": "8f70a39e0a1ecfcb7ba94322a67728cbd67ebcce1b0bb509372ba44c16d2fef5"
+      "sha256": "94d2bc9e0f292707b2fee7a16c70625344b9ba348feb74cb1f81a0a03b013ac1"
     },
     {
       "kind": "file",
@@ -27723,7 +27749,7 @@
     {
       "kind": "file",
       "path": ".software-factory/runs/software-factory-v01/run.json",
-      "sha256": "448b7496f29ad9d5558fb0ea22874d115dddd19a0b60a84c249e90a92a997681"
+      "sha256": "aff503a093eb3abdf8b316e4045a2f360007f462e521ea6c4a157cc887a5e736"
     },
     {
       "kind": "file",
@@ -28222,7 +28248,7 @@
         {
           "path": ".software-factory/runs/software-factory-v01/run.json",
           "pointer": "/checkpoint",
-          "sha256": "448b7496f29ad9d5558fb0ea22874d115dddd19a0b60a84c249e90a92a997681"
+          "sha256": "aff503a093eb3abdf8b316e4045a2f360007f462e521ea6c4a157cc887a5e736"
         }
       ],
       "type": "checkpoint"
@@ -28235,20 +28261,20 @@
         {
           "path": ".software-factory/runs/software-factory-v01/run.json",
           "pointer": "/claims/31",
-          "sha256": "448b7496f29ad9d5558fb0ea22874d115dddd19a0b60a84c249e90a92a997681"
+          "sha256": "aff503a093eb3abdf8b316e4045a2f360007f462e521ea6c4a157cc887a5e736"
         }
       ],
       "type": "claim"
     },
     {
-      "id": "claim:47",
-      "label": "codex-cycle",
+      "id": "claim:46",
+      "label": "codex-adaptive",
       "liveness": "unknown",
       "provenance": [
         {
           "path": ".software-factory/runs/software-factory-v01/run.json",
-          "pointer": "/claims/47",
-          "sha256": "448b7496f29ad9d5558fb0ea22874d115dddd19a0b60a84c249e90a92a997681"
+          "pointer": "/claims/46",
+          "sha256": "aff503a093eb3abdf8b316e4045a2f360007f462e521ea6c4a157cc887a5e736"
         }
       ],
       "type": "claim"
@@ -28438,6 +28464,18 @@
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/receipts/compatibility-investigation/subject_sha",
           "sha256": "0e69cf2c93e0184612fdbb26e0d109840dafd4d9e173f23edc05a3bba9c24a04"
+        }
+      ],
+      "type": "commit"
+    },
+    {
+      "id": "commit:23b47f4e044ec5dd12c41f4d50f1ba2a3c875f5d",
+      "label": "23b47f4e044ec5dd12c41f4d50f1ba2a3c875f5d",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/46.json",
+          "pointer": "/receipts/active-attempt/subject_sha",
+          "sha256": "94d2bc9e0f292707b2fee7a16c70625344b9ba348feb74cb1f81a0a03b013ac1"
         }
       ],
       "type": "commit"
@@ -52449,6 +52487,23 @@
     {
       "artifact_integrity": "unknown",
       "freshness": "unknown",
+      "id": "receipt:46:active-attempt",
+      "label": "active-attempt",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/46.json",
+          "pointer": "/receipts/active-attempt",
+          "sha256": "94d2bc9e0f292707b2fee7a16c70625344b9ba348feb74cb1f81a0a03b013ac1"
+        }
+      ],
+      "reported_status": "assigned",
+      "story": 46,
+      "subject_sha": "23b47f4e044ec5dd12c41f4d50f1ba2a3c875f5d",
+      "type": "receipt"
+    },
+    {
+      "artifact_integrity": "unknown",
+      "freshness": "unknown",
       "id": "receipt:47:active-attempt",
       "label": "active-attempt",
       "provenance": [
@@ -52853,7 +52908,7 @@
         {
           "path": ".software-factory/context/board/stories/46.json",
           "pointer": "/covers/2",
-          "sha256": "8f70a39e0a1ecfcb7ba94322a67728cbd67ebcce1b0bb509372ba44c16d2fef5"
+          "sha256": "94d2bc9e0f292707b2fee7a16c70625344b9ba348feb74cb1f81a0a03b013ac1"
         }
       ],
       "type": "requirement"
@@ -52865,7 +52920,7 @@
         {
           "path": ".software-factory/context/board/stories/46.json",
           "pointer": "/covers/1",
-          "sha256": "8f70a39e0a1ecfcb7ba94322a67728cbd67ebcce1b0bb509372ba44c16d2fef5"
+          "sha256": "94d2bc9e0f292707b2fee7a16c70625344b9ba348feb74cb1f81a0a03b013ac1"
         }
       ],
       "type": "requirement"
@@ -54877,7 +54932,7 @@
         {
           "path": ".software-factory/context/board/stories/46.json",
           "pointer": "/covers/0",
-          "sha256": "8f70a39e0a1ecfcb7ba94322a67728cbd67ebcce1b0bb509372ba44c16d2fef5"
+          "sha256": "94d2bc9e0f292707b2fee7a16c70625344b9ba348feb74cb1f81a0a03b013ac1"
         }
       ],
       "type": "requirement"
@@ -56444,10 +56499,10 @@
         {
           "path": ".software-factory/context/board/stories/46.json",
           "pointer": "",
-          "sha256": "8f70a39e0a1ecfcb7ba94322a67728cbd67ebcce1b0bb509372ba44c16d2fef5"
+          "sha256": "94d2bc9e0f292707b2fee7a16c70625344b9ba348feb74cb1f81a0a03b013ac1"
         }
       ],
-      "status": "backlog",
+      "status": "in-progress",
       "type": "story"
     },
     {
@@ -59095,5 +59150,5 @@
     }
   ],
   "schema": "sf-trace/1",
-  "source_fingerprint": "1b8103ec8e59044c8a4fd99dc14664f4818d2592b63ba824b34ff1c5e4763808"
+  "source_fingerprint": "7cad940f30e8317f09d99b34131efe266721babfd417ab0097da54749c839f23"
 }
