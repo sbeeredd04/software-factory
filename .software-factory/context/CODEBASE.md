@@ -5,8 +5,8 @@
 > (`<skill-dir>` is the installed skill directory, e.g. `.claude/skills/sf-crawl`
 > or `.agents/skills/sf-crawl`).
 
-- Source revision: 089bb4e2f1c731c4ba4bb7f3b20b3a792e89bae5
-- Generated: 2026-10-15T09:17:12Z
+- Source revision: 92d45e9b156acdd649850744c23531308010e33e
+- Generated: 2026-10-15T10:24:19Z
 
 ## Limits
 
@@ -45,9 +45,9 @@
 | `skills.sf-eval.scripts.sf_eval` | `skills/sf-eval/scripts/sf_eval.py` | 36 | 0 | 16 |
 | `skills.software-factory.scripts.config` | `skills/software-factory/scripts/config.py` | 4 | 0 | 5 |
 | `skills.software-factory.scripts.dashboard` | `skills/software-factory/scripts/dashboard.py` | 26 | 0 | 7 |
-| `skills.software-factory.scripts.gate` | `skills/software-factory/scripts/gate.py` | 3 | 0 | 5 |
+| `skills.software-factory.scripts.gate` | `skills/software-factory/scripts/gate.py` | 14 | 0 | 10 |
 | `skills.software-factory.scripts.hook` | `skills/software-factory/scripts/hook.py` | 8 | 0 | 8 |
-| `skills.software-factory.scripts.roadmap` | `skills/software-factory/scripts/roadmap.py` | 42 | 0 | 9 |
+| `skills.software-factory.scripts.roadmap` | `skills/software-factory/scripts/roadmap.py` | 54 | 0 | 9 |
 | `skills.software-factory.scripts.state` | `skills/software-factory/scripts/state.py` | 33 | 0 | 16 |
 | `skills.software-factory.scripts.trace` | `skills/software-factory/scripts/trace.py` | 21 | 0 | 15 |
 | `tests.fixtures.repos.python-cli.fixture_cli` | `tests/fixtures/repos/python-cli/fixture_cli/__init__.py` | 0 | 0 | 0 |
@@ -55,14 +55,15 @@
 | `tests.fixtures.repos.python-cli.fixture_cli.cli` | `tests/fixtures/repos/python-cli/fixture_cli/cli.py` | 1 | 0 | 1 |
 | `tests.fixtures.repos.python-cli.fixture_cli.core` | `tests/fixtures/repos/python-cli/fixture_cli/core.py` | 2 | 0 | 1 |
 | `tests.support` | `tests/support.py` | 13 | 0 | 10 |
-| `tests.test_board` | `tests/test_board.py` | 10 | 0 | 6 |
+| `tests.test_board` | `tests/test_board.py` | 10 | 0 | 8 |
 | `tests.test_board_consistency` | `tests/test_board_consistency.py` | 1 | 0 | 9 |
+| `tests.test_board_gate` | `tests/test_board_gate.py` | 1 | 0 | 9 |
 | `tests.test_config_kernel` | `tests/test_config_kernel.py` | 4 | 0 | 6 |
 | `tests.test_crawl` | `tests/test_crawl.py` | 9 | 0 | 11 |
 | `tests.test_dashboard` | `tests/test_dashboard.py` | 6 | 0 | 5 |
 | `tests.test_doctor` | `tests/test_doctor.py` | 1 | 0 | 10 |
 | `tests.test_dogfood` | `tests/test_dogfood.py` | 9 | 0 | 10 |
-| `tests.test_gate` | `tests/test_gate.py` | 5 | 0 | 6 |
+| `tests.test_gate` | `tests/test_gate.py` | 6 | 0 | 7 |
 | `tests.test_hook` | `tests/test_hook.py` | 8 | 0 | 10 |
 | `tests.test_hook_installation` | `tests/test_hook_installation.py` | 1 | 0 | 10 |
 | `tests.test_host_claude` | `tests/test_host_claude.py` | 7 | 0 | 11 |
@@ -183,7 +184,7 @@ No internal import edges.
 - `scripts.validate.looks_non_string` (line 182) calls `re.fullmatch` (unconfirmed), `value.lower` (unconfirmed)
 - `scripts.validate.parse_frontmatter` (line 195) calls `FrontmatterError` (confirmed: scripts.validate.FrontmatterError), `data.get` (unconfirmed), `enumerate` (unconfirmed), `isinstance` (unconfirmed), `len` (unconfirmed), `line.lstrip` (unconfirmed), `line.strip` (unconfirmed), `match.group` (unconfirmed), `parse_scalar` (confirmed: scripts.validate.parse_scalar), `raw.strip` (unconfirmed), `re.match` (unconfirmed), `split_frontmatter` (confirmed: scripts.validate.split_frontmatter), `startswith` (unconfirmed)
 - `scripts.validate.is_placeholder` (line 242) calls `all` (unconfirmed), `body.lower` (unconfirmed)
-- … 887 more call rows (cap reached)
+- … 965 more call rows (cap reached)
 
 ## Entry points
 
@@ -247,4 +248,4 @@ Everything parsed cleanly.
 
 ## File census
 
-142 file(s) crawled. Counts by extension: `.md` 72, `.py` 41, `.json` 10, `.yml` 5, `.toml` 3, `.ts` 3, `(no extension)` 2, `.mdc` 2, `.yaml` 2, `.sh` 1, `.sha256` 1.
+144 file(s) crawled. Counts by extension: `.md` 73, `.py` 42, `.json` 10, `.yml` 5, `.toml` 3, `.ts` 3, `(no extension)` 2, `.mdc` 2, `.yaml` 2, `.sh` 1, `.sha256` 1.

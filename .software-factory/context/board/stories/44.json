@@ -4,7 +4,7 @@
   "epic": 2,
   "type": "story",
   "title": "Require evidence and decision provenance at acceptance transitions",
-  "status": "in-progress",
+  "status": "in-review",
   "owner": "codex-evidence-transitions",
   "after": [
     42
@@ -28,6 +28,73 @@
       "status": "assigned",
       "recorded_at": "2026-10-15T09:24:32.585277+00:00",
       "summary": "Owner explicitly approved recommended enforcement; ADR0023 records final instruction. Independent worker implements subject-bound gates and required checkpoint provenance, preserving historical records."
+    },
+    "worker-handoff": {
+      "type": "worker-handoff",
+      "subject_sha": "293bf670d853a0059b5f818797b32e57e7adec3f",
+      "author": "codex-evidence-transitions",
+      "status": "source-reviewed-integration-proof-pending",
+      "recorded_at": "2026-10-15T10:23:06.005830+00:00",
+      "targeted": {
+        "board_passed": 91,
+        "gate_passed": 23,
+        "trace_passed": 22
+      },
+      "full_gate": {
+        "exit_code": 1,
+        "tests": 528,
+        "failures": 2,
+        "eval_passed": 28,
+        "eval_total": 30,
+        "unverified": 0,
+        "skipped": 0,
+        "failures_detail": [
+          "isolated board/crawl dependent dogfood evaluation",
+          "isolated CODEBASE regeneration freshness"
+        ]
+      },
+      "other_steps": "pass",
+      "frozen_source": "seven scoped hashes unchanged; only captured tool-generated roadmap/dashboard bytes restored",
+      "independent_review": ".software-factory/runs/software-factory-v01/evidence/evidence-293bf67-review.json",
+      "limitations": [
+        "Source review and targeted regressions do not constitute an integrated full gate or story/epic acceptance."
+      ]
+    },
+    "independent-review": {
+      "type": "independent-review",
+      "subject_sha": "293bf670d853a0059b5f818797b32e57e7adec3f",
+      "author": "codex-evidence-transitions",
+      "reviewer": "codex-orchestrator",
+      "status": "pass",
+      "scope": "source and focused regression review",
+      "recorded_at": "2026-10-15T10:21:33.341920+00:00",
+      "reviewed": [
+        "Earlier independent review findings and follow-up diff",
+        "Protected initial config/record/directory/projection reads and captured trace API",
+        "Current-scope binding at completion and epic reconciliation",
+        "Epic actor compatibility and substantive reconciliation evidence",
+        "Frozen terminal bytes and membership safeguards",
+        "Independent32-case protected transition suite"
+      ],
+      "limitations": [
+        "Structural provenance cannot authenticate an actor or attest external effects.",
+        "Author final isolated gate still running; no integrated gate or completion accepted."
+      ]
+    },
+    "root-targeted-proof": {
+      "type": "targeted-tests",
+      "subject_sha": "293bf670d853a0059b5f818797b32e57e7adec3f",
+      "status": "pass",
+      "exit_code": 0,
+      "suite": "test_board_gate.py",
+      "tests": 32,
+      "elapsed_seconds": 18.527,
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/evidence-293bf67-root-targeted.log",
+      "artifact_sha256": "314f007b244e7c5d3c3fc737feffad4b9855da3cefe343fc618fb44bbaa6f238",
+      "recorded_at": "2026-10-15T10:21:33.341920+00:00",
+      "limitations": [
+        "Targeted suite only; integrated full gate remains pending."
+      ]
     }
   },
   "baseline_sha": null,
@@ -46,6 +113,12 @@
       "by": "codex-evidence-transitions",
       "from": "ready-for-dev",
       "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T10:23:06.045411+00:00",
+      "by": "codex-evidence-transitions",
+      "from": "in-progress",
+      "to": "in-review"
     }
   ],
   "findings": [
@@ -67,5 +140,7 @@
     "skills/software-factory/schemas/board.schema.json",
     "tests/test_board_gate.py",
     "tests/test_gate.py"
-  ]
+  ],
+  "review_subject_sha": "293bf670d853a0059b5f818797b32e57e7adec3f",
+  "evidence_contract": 1
 }
