@@ -61,9 +61,11 @@ source commit, engine, viewport and settings in the review receipt.
 Design budgets: 30 KiB gzip CSS, 10 KiB gzip JavaScript, 750 KiB first-view local
 resources including fonts. The static suite bounds source bytes conservatively;
 it does not establish measured transfer, LCP, CLS, interaction latency or field
-Core Web Vitals. No runtime telemetry is collected. Marketing images are a later
-asset set; any site-used image must be exported into `site/img/`, with fixed
-intrinsic dimensions and lazy loading below the fold.
+Core Web Vitals. No runtime telemetry is collected. The three below-fold marketing
+cards in `site/img/` have fixed intrinsic dimensions and lazy loading. They are
+byte-identical exports of the root marketing masters; the site needs no build.
+See the [launch asset runbook](../docs/launch-assets.md) for their finite inventory,
+explicit developer prerequisites, regeneration, visual review and manual upload.
 
 ## Publication source references
 

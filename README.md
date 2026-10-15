@@ -1,5 +1,7 @@
 # Software Factory
 
+![Software Factory: eleven skills and eleven role prompts for planning, building, proving and delivering through your coding host.](assets/hero.png)
+
 **BMad plans, the factory ships.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
@@ -17,6 +19,8 @@ or Codex - into an autonomous software factory. One orchestrator owns the whole 
 
 > **Status: pre-release, targeting v0.1.0.** This repository is under active development.
 > [CHANGELOG.md](CHANGELOG.md) tracks what has landed.
+
+[Launch image inventory and regeneration](docs/launch-assets.md).
 
 ## What's inside
 

@@ -395,8 +395,8 @@ def publish(root_fd, outputs, root_path=None):
                 visible_directories(root_fd, root_path, parents)
                 if snapshot_at(item["fd"], item["name"], missing=True) != item["before"]:
                     raise ValueError("asset changed during publication preparation")
-                os.replace(item["new"], item["name"], src_dir_fd=item["fd"], dst_dir_fd=item["fd"])
                 changed.append(item)
+                os.replace(item["new"], item["name"], src_dir_fd=item["fd"], dst_dir_fd=item["fd"])
             for fd in parents.values():
                 os.fsync(fd)
             visible_directories(root_fd, root_path, parents)
@@ -405,7 +405,10 @@ def publish(root_fd, outputs, root_path=None):
             for item in reversed(changed):
                 try:
                     visible_directories(root_fd, root_path, parents)
-                    if snapshot_at(item["fd"], item["name"], missing=True) != item["after"]:
+                    current = snapshot_at(item["fd"], item["name"], missing=True)
+                    if current == item["before"]:
+                        continue
+                    if current != item["after"]:
                         raise OSError("published asset changed; refuse rollback over a foreign edit")
                     if item["old"] is None:
                         os.unlink(item["name"], dir_fd=item["fd"])

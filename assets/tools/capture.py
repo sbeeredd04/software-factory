@@ -70,8 +70,9 @@ def capture_page(browser, origin, entry, stage):
             raise ValueError("template readiness or resource checks failed")
         page.screenshot(path=str(stage / (entry["id"] + ".png")), type="png", full_page=False,
                         animations="disabled", caret="hide", timeout=30000)
-        if errors:
-            raise ValueError("resource error during screenshot")
+        ready = page.evaluate("window.SF_RENDER_REPORT")
+        if errors or ready.get("failed") or ready.get("overflow"):
+            raise ValueError("resource or readiness error during screenshot")
         return {"id": entry["id"], "ready": ready, "errors": errors, "requests": requests}
     finally:
         context.close()

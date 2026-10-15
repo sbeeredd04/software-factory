@@ -239,6 +239,23 @@ class AssetTests(unittest.TestCase):
         self.assertEqual(list((self.root / "assets").iterdir()), [])
         self.assertEqual(list((self.root / "site/img").iterdir()), [])
 
+    def test_interrupt_after_replace_effect_is_also_rolled_back(self):
+        old = self.outputs(old=True)
+        original, count = render.os.replace, 0
+
+        def replace(*args, **kwargs):
+            nonlocal count
+            count += 1
+            result = original(*args, **kwargs)
+            if count == 3:
+                raise KeyboardInterrupt("synthetic interruption after filesystem effect")
+            return result
+
+        with mock.patch.object(render.os, "replace", side_effect=replace), self.assertRaises(KeyboardInterrupt):
+            render.publish(self.fd, self.outputs())
+        self.assert_outputs(old)
+        self.assertEqual(list(self.root.rglob(".sf-asset-*")), [])
+
     def test_contested_rollback_preserves_foreign_edit_and_recovery_backups(self):
         self.outputs(old=True)
         original, count = render.os.replace, 0

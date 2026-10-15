@@ -190,3 +190,7 @@ footer > p { color: var(--muted); font-size: 10px; margin-top: 24px; max-width: 
 .skill p, .role p, .host-card p, .route p, .os-note, table, .faq-item p,
 .faq-item summary, .close-cta p { font-size: 16px; }
 .setup-interview .eyebrow { font-size: 12px; }
+.asset-card { max-width: 760px; margin: 36px auto 0; }
+.asset-card img { width: 100%; height: auto; border: 1px solid var(--line); }
+.asset-card figcaption { margin-top: 10px; font-size: 14px; color: var(--muted); }
+.asset-card figcaption a { display: inline-flex; align-items: center; min-height: 44px; }
