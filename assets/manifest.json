@@ -1,0 +1,95 @@
+{
+  "version": 1,
+  "inputs": [
+    "assets/templates/assets.css",
+    "assets/templates/hero.html",
+    "assets/templates/hosts.html",
+    "assets/templates/launch-landscape.html",
+    "assets/templates/launch-portrait.html",
+    "assets/templates/loop.html",
+    "assets/templates/ready.js",
+    "assets/templates/social-preview.html",
+    "assets/templates/team.html",
+    "assets/toolchain.json",
+    "assets/tools/capture.py",
+    "scripts/render_assets.py",
+    "site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
+    "site/fonts/inter/Inter-Regular.woff2",
+    "site/fonts/inter/Inter-SemiBold.woff2",
+    "site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+    "site/img/mark.svg",
+    "site/styles/base.css",
+    "site/styles/tokens.css"
+  ],
+  "assets": [
+    {
+      "id": "social-preview",
+      "template": "assets/templates/social-preview.html",
+      "output": "assets/social-preview.png",
+      "width": 1280,
+      "height": 640,
+      "copies": [],
+      "use": "Manual repository social-preview upload."
+    },
+    {
+      "id": "hero",
+      "template": "assets/templates/hero.html",
+      "output": "assets/hero.png",
+      "width": 1600,
+      "height": 900,
+      "copies": [],
+      "use": "README overview."
+    },
+    {
+      "id": "loop",
+      "template": "assets/templates/loop.html",
+      "output": "assets/loop.png",
+      "width": 1200,
+      "height": 800,
+      "copies": [
+        "site/img/loop.png"
+      ],
+      "use": "Showcase delivery-loop card and shareable explainer."
+    },
+    {
+      "id": "team",
+      "template": "assets/templates/team.html",
+      "output": "assets/team.png",
+      "width": 1200,
+      "height": 800,
+      "copies": [
+        "site/img/team.png"
+      ],
+      "use": "Showcase role-team card and shareable explainer."
+    },
+    {
+      "id": "hosts",
+      "template": "assets/templates/hosts.html",
+      "output": "assets/hosts.png",
+      "width": 1200,
+      "height": 800,
+      "copies": [
+        "site/img/hosts.png"
+      ],
+      "use": "Showcase installation-route card and shareable explainer."
+    },
+    {
+      "id": "launch-landscape",
+      "template": "assets/templates/launch-landscape.html",
+      "output": "assets/launch-landscape.png",
+      "width": 1200,
+      "height": 675,
+      "copies": [],
+      "use": "Landscape launch-post attachment."
+    },
+    {
+      "id": "launch-portrait",
+      "template": "assets/templates/launch-portrait.html",
+      "output": "assets/launch-portrait.png",
+      "width": 1080,
+      "height": 1350,
+      "copies": [],
+      "use": "Portrait launch-post attachment."
+    }
+  ]
+}

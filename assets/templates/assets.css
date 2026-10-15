@@ -1,0 +1,98 @@
+/* Original fixed-canvas compositions using the showcase's palette and fonts. */
+*, *::before, *::after { animation: none !important; transition: none !important; caret-color: transparent !important; }
+html { scroll-behavior: auto; }
+html, body { width: 100%; height: 100%; }
+body { margin: 0; font-synthesis: none; line-height: 1.4; }
+.canvas { width: 100vw; height: 100vh; padding: 52px 60px; position: relative; display: flex; flex-direction: column; overflow: hidden; }
+.masthead { display: flex; align-items: center; justify-content: space-between; margin-bottom: 34px; }
+.brand { display: flex; align-items: center; gap: 13px; font: 600 21px var(--body); letter-spacing: -.04em; }
+.brand img { width: 33px; height: 33px; }
+.label { font: 400 11px/1.4 var(--mono); letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
+.pill { border: 1px solid var(--line); padding: 7px 11px; }
+h1, h2, h3 { max-width: none; font-family: var(--display); font-weight: 700; letter-spacing: -.045em; line-height: 1.02; }
+h1 { font-size: 61px; }
+h2 { font-size: 29px; }
+h3 { font-size: 24px; }
+em { font-style: normal; color: var(--rust); }
+.lede { font: 400 20px/1.5 var(--body); color: var(--muted); max-width: 760px; margin-top: 20px; }
+.footer { margin-top: auto; padding-top: 22px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: end; font: 400 12px/1.5 var(--mono); color: var(--muted); }
+.footer strong { font-weight: 400; color: var(--ink); }
+.split { display: grid; grid-template-columns: 1.03fr 1fr; gap: 38px; align-items: center; flex: 1; padding-bottom: 32px; }
+.split h1 { font-size: 65px; }
+.split .lede { font-size: 18px; max-width: 440px; }
+.stamp { display: inline-block; margin-top: 26px; padding: 9px 13px; background: var(--green-soft); border: 1px solid var(--line); font: 400 12px var(--mono); color: var(--green); }
+.diagram { background: var(--surface); border: 1px solid var(--line); padding: 25px; box-shadow: 7px 7px 0 #e5e6dc; }
+.diagram svg { width: 100%; height: auto; }
+.diagram text { font-family: var(--body); font-size: 14px; fill: var(--ink); }
+.diagram .small { font-family: var(--mono); font-size: 9px; fill: var(--muted); }
+.diagram rect { fill: var(--paper); stroke: var(--line); }
+.diagram .proof { fill: var(--green-soft); stroke: var(--green); }
+.diagram .human { fill: var(--rust-soft); stroke: var(--rust); }
+.diagram .edge { fill: none; stroke: var(--muted); stroke-width: 1.6; }
+.diagram .repair { fill: none; stroke: var(--rust); stroke-width: 1.6; stroke-dasharray: 4 4; }
+.diagram .caption { margin-top: 13px; font: 400 11px/1.5 var(--mono); color: var(--muted); }
+.stats { display: flex; gap: 30px; margin-top: 30px; }
+.stats div { max-width: 130px; font: 400 13px/1.4 var(--body); color: var(--muted); }
+.stats strong { display: block; color: var(--ink); font: 700 35px/1 var(--display); margin-bottom: 6px; }
+.hero .canvas { padding: 64px 76px; }
+.hero .split { gap: 70px; }
+.hero .split h1 { font-size: 88px; }
+.hero .split .lede { font-size: 24px; max-width: 580px; }
+.hero .brand { font-size: 27px; }
+.hero .label, .hero .footer { font-size: 14px; }
+.hero .diagram { padding: 33px; }
+.hero .stats { gap: 42px; }
+.hero .stats strong { font-size: 46px; }
+.hero .stats div { font-size: 17px; max-width: 170px; }
+.hero .stamp { font-size: 16px; }
+.hero .diagram .caption { font-size: 14px; }
+.section-head { display: block; margin-bottom: 26px; }
+.section-head .label { margin-bottom: 12px; }
+.section-head h1 { font-size: 52px; }
+.section-head .lede { margin-top: 14px; max-width: 990px; font-size: 18px; }
+.steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 6px; }
+.step { background: var(--surface); border: 1px solid var(--line); padding: 18px; min-height: 130px; }
+.step .label { color: var(--green); margin-bottom: 11px; }
+.step h2 { font-size: 27px; }
+.step p { margin-top: 9px; font-size: 14px; color: var(--muted); }
+.step.prove { background: var(--green-soft); border-color: var(--green); }
+.step.human { background: var(--rust-soft); border-color: var(--rust); }
+.return { margin-top: 18px; padding: 15px 20px; border-left: 3px solid var(--rust); font: 400 15px/1.5 var(--body); }
+.return strong { font-weight: 600; color: var(--rust); }
+.teams { display: grid; grid-template-columns: 1fr 1fr 1.08fr; gap: 18px; }
+.team-group { padding: 23px; background: var(--surface); border: 1px solid var(--line); }
+.team-group .label { margin-bottom: 18px; color: var(--green); }
+.role-name { padding-block: 13px; border-top: 1px solid var(--line); font: 600 20px/1.1 var(--body); }
+.team-group:last-child { background: var(--green-soft); }
+.team-note { font-size: 16px; color: var(--muted); margin-top: 20px; }
+.host-names { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-bottom: 20px; }
+.host-name { padding: 17px 21px; border: 1px solid var(--line); background: var(--surface); display: flex; justify-content: space-between; align-items: center; }
+.host-name h2 { font-size: 25px; }
+.host-name span { font: 400 10px var(--mono); color: var(--muted); }
+.route { display: grid; grid-template-columns: 215px 1fr; gap: 22px; padding: 17px 21px; border-top: 1px solid var(--line); }
+.route h2 { font-size: 23px; }
+.route p { font-size: 15px; color: var(--muted); }
+.route.recommended { background: var(--green-soft); }
+.routes { border-bottom: 1px solid var(--line); }
+.host-note { font: 400 12px/1.5 var(--mono); margin-top: 17px; color: var(--rust); }
+.launch-landscape .split h1 { font-size: 62px; }
+.launch-landscape .stats { margin-top: 26px; }
+.launch-portrait .canvas { padding: 65px; }
+.launch-portrait .masthead { margin-bottom: 50px; }
+.launch-portrait h1 { font-size: 86px; max-width: 850px; }
+.launch-portrait .lede { font-size: 25px; max-width: 820px; margin-top: 27px; }
+.launch-portrait .diagram { margin-top: 36px; padding: 23px; }
+.launch-portrait .diagram svg { height: 340px; }
+.launch-portrait .stats { margin-top: 30px; gap: 65px; }
+.launch-portrait .stats div { max-width: 200px; font-size: 18px; }
+.launch-portrait .stats strong { font-size: 48px; }
+.launch-portrait .footer { font-size: 14px; }
+.social-preview .canvas { padding: 64px; }
+.social-preview .masthead { margin-bottom: 20px; }
+.social-preview .split { padding-bottom: 20px; gap: 34px; }
+.social-preview .split h1 { font-size: 57px; }
+.social-preview .stats, .social-preview .diagram .caption { display: none; }
+.social-preview .diagram { padding: 20px; }
+.social-preview .diagram svg { height: 280px; }
+.social-preview .footer { padding-top: 16px; font-size: 10px; }
+.launch-landscape .diagram svg { height: 280px; }
