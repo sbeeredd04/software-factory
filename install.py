@@ -35,6 +35,7 @@ import fcntl
 import hashlib
 import json
 import os
+import shlex
 import shutil
 import sys
 import tempfile
@@ -502,14 +503,28 @@ PROJECTORS = {
 
 
 def detect_python() -> str:
-    return shutil.which("python3") or sys.executable
+    """Keep the interpreter that successfully ran this Python >=3.11 installer.
+
+    PATH may contain an older Python or a different environment. Preserve
+    executable symlinks so virtual environments keep their intended runtime.
+    """
+    if sys.version_info < (3, 11) or not sys.executable:
+        raise InstallError("run the installer with Python 3.11 or newer")
+    executable = Path(sys.executable).absolute()
+    if not executable.is_file() or not os.access(executable, os.X_OK):
+        raise InstallError("installer Python is unavailable; reinstall with Python 3.11 or newer")
+    return str(executable)
 
 
 def hook_command(root: Path, host: str, event: str) -> str:
     """The installed hook command; stderr merges into stdout (2>&1) so the
     sanitized recovery warning is observable on stdout (VAL-HOST-018)."""
     script = root / RUNTIME_REL / "hook.py"
-    return f'"{detect_python()}" "{script}" --host {host} --event {event} 2>&1'
+    command = shlex.join([
+        detect_python(), str(script), "--host", host, "--event", event,
+        "--workspace", str(root),
+    ])
+    return f"{command} 2>&1"
 
 
 def is_owned_handler(handler: object, host: str, event: str) -> bool:
