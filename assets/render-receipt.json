@@ -17,7 +17,7 @@
               985,
               586
             ],
-            "reference": "../../site/img/delivery-graph.svg#factory-cycle",
+            "observed_use_selector": "use[href=\"../../site/img/delivery-graph.svg#factory-cycle\"]",
             "text_fonts": [
               {
                 "bounds": [
@@ -560,7 +560,7 @@
               985,
               586
             ],
-            "reference": "../../site/img/delivery-graph.svg#factory-cycle",
+            "observed_use_selector": "use[href=\"../../site/img/delivery-graph.svg#factory-cycle\"]",
             "text_fonts": [
               {
                 "bounds": [
@@ -1032,9 +1032,9 @@
               "/site/img/mark.svg",
               "/assets/templates/ready.js",
               "/site/img/delivery-graph.svg",
+              "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
               "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
               "/site/fonts/inter/Inter-SemiBold.woff2",
-              "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
               "/site/fonts/inter/Inter-Regular.woff2"
             ],
             "viewport": [
@@ -1103,7 +1103,7 @@
               985,
               586
             ],
-            "reference": "../../site/img/delivery-graph.svg#factory-cycle",
+            "observed_use_selector": "use[href=\"../../site/img/delivery-graph.svg#factory-cycle\"]",
             "text_fonts": [
               {
                 "bounds": [
@@ -1794,7 +1794,7 @@
               985,
               586
             ],
-            "reference": "../../site/img/delivery-graph.svg#factory-cycle",
+            "observed_use_selector": "use[href=\"../../site/img/delivery-graph.svg#factory-cycle\"]",
             "text_fonts": [
               {
                 "bounds": [
@@ -2266,9 +2266,9 @@
               "/site/img/mark.svg",
               "/assets/templates/ready.js",
               "/site/img/delivery-graph.svg",
-              "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
               "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
               "/site/fonts/inter/Inter-SemiBold.woff2",
+              "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
               "/site/fonts/inter/Inter-Regular.woff2"
             ],
             "viewport": [
@@ -2337,7 +2337,7 @@
               985,
               586
             ],
-            "reference": "../../site/img/delivery-graph.svg#factory-cycle",
+            "observed_use_selector": "use[href=\"../../site/img/delivery-graph.svg#factory-cycle\"]",
             "text_fonts": [
               {
                 "bounds": [
@@ -2932,7 +2932,7 @@
         "--remote-debugging-pipe",
         "--no-startup-window"
       ],
-      "log_sha256": "6c2546577b279ae0660aa2142b7e0f26566a9fca1f50ee8a89a70ce179d514df"
+      "log_sha256": "a9c46571ab44b98f4da36b9b011f11076a7a9bd4ef876679a55782136decc48b"
     },
     "server_requests": [
       {
@@ -3329,8 +3329,8 @@
     "assets/templates/social-preview.html": "2b13d4ee6bc3179b5a25b4a1e84fdcda5c9c8e273f1e52e1bc75740b57bbfbce",
     "assets/templates/team.html": "d403cf7225c19a1d60948d195f32a17ab9b4de64471f48adefa306223e8f1a38",
     "assets/toolchain.json": "1cfea5c01d5dccac4dcfbf6ac420a264f1f40ed9dd29ff219614a9817f88e9f8",
-    "assets/tools/capture.py": "8b2adaab866a170c5853b628185a771ce5a348d5e9da5792d2b98436ce29a7be",
-    "scripts/render_assets.py": "238f90f1a60070b4b981f4c7b0293b57867a0c7122f165b8f0dcdb39c15ee26f",
+    "assets/tools/capture.py": "9da037b6d32d2484892620b124f4c46530abf0b39d863fd3694fa566dcd5e50e",
+    "scripts/render_assets.py": "f8af931f062a765ddadc7aa02c2130105d82e1581cd92416d43b601391e2f450",
     "site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2": "908de7414bcad8649c2127a27e9aec08159059fca39b42bf724b4327a6780961",
     "site/fonts/inter/Inter-Regular.woff2": "e06f6b1bc553aaea4e4668023ed0ab0a147129c3107f511bc7d03d361b0ae085",
     "site/fonts/inter/Inter-SemiBold.woff2": "5cb7103e4e605989afebc03d989c79201e54b21b5183db33981f70db9178a301",

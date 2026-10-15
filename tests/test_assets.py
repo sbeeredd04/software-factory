@@ -315,6 +315,8 @@ class AssetTests(unittest.TestCase):
                     else:
                         evidence = helper.svg_evidence(page, "svg." + fragment, fragment, reference)
                         self.assertEqual([item["text"] for item in evidence["text_fonts"]], labels)
+                        self.assertEqual(evidence["observed_use_selector"], 'use[href="' + reference + '"]')
+                        self.assertNotIn("reference", evidence)
                     if fault not in {"geometry", "nan", "viewbox", "shifted_frame", "clipped_frame"}:
                         client.detach.assert_called_once()
 
@@ -338,7 +340,8 @@ class AssetTests(unittest.TestCase):
                     return result
 
                 client.send.side_effect = response
-                helper.svg_evidence(page, reference=reference)
+                observed = helper.svg_evidence(page, reference=reference)
+                self.assertEqual(observed["observed_use_selector"], 'use[href="' + reference + '"]')
                 page.request.get.assert_called_once_with(expected)
         helper, page, _, _, _ = self.svg_fixture()
         for reference in ("https://example.invalid/img/delivery-graph.svg#factory-cycle", "other.svg#factory-cycle"):
@@ -366,7 +369,9 @@ class AssetTests(unittest.TestCase):
                          lambda c: c["cycle"].update(viewbox=[0, 0, 640, 680]),
                          lambda c: c["cycle"].update(bounds=[1400, 0, 2400, 600]),
                          lambda c: c["cycle"].update(bounds=[0, -10, 1000, 590]),
-                         lambda c: c["cycle"].update(reference="foreign.svg#factory-cycle"),
+                         lambda c: c["cycle"].update(observed_use_selector='use[href="foreign.svg#factory-cycle"]'),
+                         lambda c: c["cycle"].update(observed_use_selector='use[href="../../site/img/delivery-graph.svg#factory-system"]'),
+                         lambda c: c["cycle"].pop("observed_use_selector"),
                          lambda c: c["cycle"]["text_fonts"].pop(),
                          lambda c: c["cycle"]["text_fonts"][0].update(text="wrong label"),
                          lambda c: c["cycle"]["text_fonts"][0].update(bounds=[0, 0, 2000, 2000]),

@@ -353,7 +353,7 @@ def validate_report(report, manifest, svg_source=None):
             if (len(geometry) != 4 or any(not isinstance(v, (int, float)) or not math.isfinite(v) for v in geometry)
                     or geometry[0] < 0 or geometry[1] < 0 or geometry[2] < 900 or geometry[3] < 540
                     or geometry[0] + geometry[2] > 1000 or geometry[1] + geometry[3] > 600
-                    or cycle.get("reference") != "../../site/img/delivery-graph.svg#factory-cycle"
+                    or cycle.get("observed_use_selector") != 'use[href="../../site/img/delivery-graph.svg#factory-cycle"]'
                     or cycle.get("viewbox") != [0, 0, 1000, 600]
                     or [item.get("text") for item in texts] != labels
                     or not any(request.get("path") == "/site/img/delivery-graph.svg" for request in capture["requests"])):

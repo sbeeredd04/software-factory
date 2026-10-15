@@ -76,8 +76,12 @@ every cloned label with the captured canonical source, and verifies actual custo
 Inter Regular or SemiBold glyphs through CDP. It also requires finite resolved
 geometry within the viewBox, an SVG frame inside the screenshot viewport,
 label bounds inside that frame, and label bounding boxes that do not overlap.
-A font query on the outer host element alone is insufficient. Negative fixtures exercise both SVG
-variants; the committed render receipt contains the 26 observed overview labels
+A font query on the outer host element alone is insufficient. The receipt
+records the actually observed CDP use-node href as `observed_use_selector`, for example
+`use[href="../../site/img/delivery-graph.svg#factory-cycle"]`. This is a DOM
+identity within the captured page, not a receipt-relative artifact URL. Exact
+href, fragment, view, count, label and glyph checks still apply.
+Negative fixtures exercise both SVG variants; the committed render receipt contains the 26 observed overview labels
 in each of five captures. The expanded showcase view needs its own actual
 browser and visual review; PNG capture does not prove that view. The standalone
 SVG links the existing same-origin base stylesheet through XML stylesheet

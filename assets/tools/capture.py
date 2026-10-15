@@ -113,7 +113,8 @@ def svg_evidence(page, selector="svg.factory-cycle", fragment="factory-cycle",
                 if min(bounds[2], other[2]) - max(bounds[0], other[0]) > .5 and min(bounds[3], other[3]) - max(bounds[1], other[1]) > .5:
                     raise ValueError("shared SVG labels overlap: " + previous["text"] + " / " + actual)
             observations.append({"text": actual, "fonts": fonts, "bounds": bounds})
-        return {"reference": reference, "viewbox": viewbox, "geometry": geometry,
+        return {"observed_use_selector": 'use[href="' + selected[0]["attributes"][1] + '"]',
+                "viewbox": viewbox, "geometry": geometry,
                 "bounds": observed["bounds"], "text_fonts": observations}
     finally:
         client.detach()
