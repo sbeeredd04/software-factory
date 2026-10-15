@@ -1,0 +1,165 @@
+{
+  "answers": [
+    {
+      "id": 1,
+      "source": "active user completion request; .software-factory/context/decisions/0021-continuous-host-orchestration.md",
+      "state": "confirmed",
+      "value": "Continue the approved full Software Factory completion outcome through local implementation, testing, independent review, repair and recovery. Material risk and required human acceptance escalate."
+    },
+    {
+      "id": 2,
+      "source": "AGENTS.md#hard-boundaries; CONTRIBUTING.md#conventions",
+      "state": "confirmed",
+      "value": "Feature branches use codex/. Pull requests target dev; main is protected by repository policy. No configured remote or provider protection is established."
+    },
+    {
+      "id": 3,
+      "source": "AGENTS.md; active completion request; proposed config",
+      "state": "defaulted",
+      "value": "Local edits and commits are within this outcome. Push, opening remote PRs, integration merge and deployment remain disabled in this setup; final external authority is reconciled separately."
+    },
+    {
+      "id": 4,
+      "source": ".software-factory/context/decisions/0021-continuous-host-orchestration.md; docs/plans/full-sdlc-delivery.md",
+      "state": "confirmed",
+      "value": "Continue demonstrably independent approved work while a material question blocks only its dependents. Preserve original dependency edges."
+    },
+    {
+      "id": 5,
+      "source": "current host collaboration metadata; proposed config",
+      "state": "defaulted",
+      "value": "No owner ceiling is configured. Dispatch is bounded by actual host capacity and exclusive claims; current native interface offers four concurrent seats including the orchestrator. Future capacity must be observed."
+    },
+    {
+      "id": 6,
+      "source": "active user scope; .software-factory/context/principles/risk.md",
+      "state": "unknown",
+      "value": "Use disposable local fixtures within the existing task. No monitoring source, service access, new environment or schedule is approved; operations remains disabled with no sources."
+    },
+    {
+      "id": 7,
+      "source": "docs/plans/full-sdlc-delivery.md; .software-factory/context/decisions/0023-evidence-bound-transitions.md",
+      "state": "unknown",
+      "value": "Require exact artifact identity and affected behavior proof. Candidate installer/release checks exist; completion-phase local staging equivalence and required human acceptance remain unresolved."
+    },
+    {
+      "id": 8,
+      "source": "AGENTS.md#commands; CONTRIBUTING.md#the-verification-gate; actual local gate receipt",
+      "state": "confirmed",
+      "value": "Use Python >=3.11 and bash scripts/check_all.sh plus affected regression proof. Fixed244b480 gate ran611 tests:610 passed/1 optional skipped, with30 evals passed. This does not establish remote CI."
+    },
+    {
+      "id": 9,
+      "source": "current repository has no configured remote; .github/workflows/ci.yml",
+      "state": "unknown",
+      "value": "Required remote CI checks, branch protection and current provider outcomes are unobserved. Keep the CI requirement; no local pass silently waives it."
+    },
+    {
+      "id": 10,
+      "source": "active user model/delegation request; .software-factory/context/decisions/0012-native-fallback-risk-routing.md",
+      "state": "confirmed",
+      "value": "Staff best-fit native specialists and independent reviewers by risk and complexity, as requested. Native fallback is mandatory. Requested model and effective model are separate; effective identity may remain unknown."
+    },
+    {
+      "id": 11,
+      "source": "proposed config; .software-factory/context/decisions/0013-gh-only-review-ingestion.md",
+      "state": "defaulted",
+      "value": "Configure no review bots or subscriptions. No provider report is inferred; optional zero-bot disposition is explicit and internal independent review remains required."
+    },
+    {
+      "id": 12,
+      "source": "AGENTS.md#hard-boundaries; CONTRIBUTING.md#conventions",
+      "state": "confirmed",
+      "value": "One integration owner follows feature branch -> PR against dev -> maintainer integration. Never push directly to main or force-push. No merge or publication is approved by setup."
+    },
+    {
+      "id": 13,
+      "source": ".software-factory/context/decisions/0015-alarm-first-resource-policy.md",
+      "state": "confirmed",
+      "value": "Alarm-first budgets; three repeated stalls trigger diagnosis/escalation. Unobserved spend stays unknown and is not fabricated or used to silently abandon the task."
+    },
+    {
+      "id": 14,
+      "source": "AGENTS.md; proposed document-drafts.json; existing .software-factory/context/principles/",
+      "state": "defaulted",
+      "value": "Preserve all four existing principles modules. Review the grounded architecture and planning drafts with the exact setup proposal; no principles edits or duplicate conventions authority are proposed."
+    },
+    {
+      "id": 15,
+      "source": ".software-factory/context/principles/conventions.md; AGENTS.md#writing-style---agent-first",
+      "state": "confirmed",
+      "value": "Reuse existing owners, smallest complete diff, meaningful proof, progressive disclosure and enforced budgets. Optional design audit stays off."
+    },
+    {
+      "id": 16,
+      "source": "AGENTS.md#conventions; CONTRIBUTING.md; .github/pull_request_template.md",
+      "state": "confirmed",
+      "value": "Conventional generic commits, public-clean tracked content and PRs against dev; use the existing contribution flow and pull-request template."
+    },
+    {
+      "id": 17,
+      "source": "active user status request; .software-factory/context/decisions/0021-continuous-host-orchestration.md",
+      "state": "confirmed",
+      "value": "Report concise milestone progress, next work, blockers and actual agent/model/evidence attribution. Operational notifications need an approved destination and meaningful change policy."
+    },
+    {
+      "id": 18,
+      "source": ".software-factory/context/decisions/0020-context-home-and-master-board.md; docs/plans/full-sdlc-delivery.md",
+      "state": "confirmed",
+      "value": "Use adaptive planning and the existing master board. Markdown tracker is a planning input, never a second story-status store. A concrete spec, acceptance and eval readiness precede delivery."
+    },
+    {
+      "id": 19,
+      "source": ".software-factory/context/decisions/0025-bmad-module-compatibility-pins.md",
+      "state": "defaulted",
+      "value": "Preserve detected BMad artifacts and use native planning when needed. This setup requests no provisioning. Any fresh official route uses approved6.12.0 plus TEA1.27.2/BMB2.2.2/CIS0.3.2, with separate disclosed consent."
+    },
+    {
+      "id": 20,
+      "source": "AGENTS.md; .software-factory/context/decisions/0020-context-home-and-master-board.md; .software-factory/context/principles/risk.md",
+      "state": "confirmed",
+      "value": "Keep committed context/decisions/board and bounded ignored run evidence. Preserve failed evidence; never retain credentials in public artifacts. Retros propose reviewed/tested improvements; new data retention or access policy needs its source decision."
+    }
+  ],
+  "approval_ref": ".software-factory/runs/software-factory-v01/evidence/self-setup-standing-go-approval.json",
+  "config_path": ".software-factory/config.yaml",
+  "config_sha256": "f6c25ce4f9dad2e9a345cc577e304bd13cdcb581ab56fbb1d974519b5d3ac6df",
+  "discovery_sources": {
+    ".coderabbit.yaml": null,
+    ".cursor/BUGBOT.md": null,
+    ".cursor/config/bugbot.yaml": null,
+    ".github/copilot-instructions.md": null,
+    ".github/workflows/ci.yml": "8752faa8d69273d098f39782a3a18b359c2a664eec7d6b5017f0544479d117b4",
+    ".greptile/config.json": null,
+    ".software-factory/config.yaml": null,
+    ".software-factory/context/CODEBASE.md": "bd1e7d4a51522d76b644d7b9c27f762794b881de8aa796dd4513e7827384aae8",
+    "AGENTS.md": "06a68ec73c74c67d088e79890510b2143c8761a0ef6793b0580c15aebd64f37a",
+    "ARCHITECTURE.md": null,
+    "CLAUDE.md": "1ee005c4e188ab79e12a991cae0b40f513bbfc358ae9550084a7d029ca18d14d",
+    "CONTRIBUTING.md": "495ae89aefc6a189d559232b8e005d9ae8eb19575abd9b90d79a0e8b49165dca",
+    "CONVENTIONS.md": null,
+    "Cargo.toml": null,
+    "PRINCIPLES.md": null,
+    "README.md": "6fd5c86fe2a5e411643b4e927bb7c2a017dbf833fb9a8b6db880f39c8917302d",
+    "_bmad/_config/manifest.yaml": null,
+    "_bmad/config.toml": null,
+    "go.mod": null,
+    "greptile.json": null,
+    "package.json": null,
+    "pyproject.toml": null,
+    "requirements.txt": null,
+    "skills-lock.json": null
+  },
+  "outstanding": [
+    6,
+    7,
+    9
+  ],
+  "proposal_sha256": "570576d5d5a130a1848d35ff3455d4f9814969ac90d58a441b9e4ef8347a3200",
+  "schema": "sf-setup-receipt/1",
+  "written": {
+    ".software-factory/config.yaml": "f6c25ce4f9dad2e9a345cc577e304bd13cdcb581ab56fbb1d974519b5d3ac6df",
+    ".software-factory/context/ARCHITECTURE.md": "4d9e0e1a87a72db59f54db487267862012b31fbc076054dac884d90c6fdbda96",
+    ".software-factory/context/TASKS.md": "4f268a2f2814561dffcd5276e32fae1f6388c353f82dd6d2e31deccf5720ab9f"
+  }
+}

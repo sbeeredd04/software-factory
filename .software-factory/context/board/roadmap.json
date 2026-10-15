@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-15T11:38:44.853704+00:00",
-  "revision": 229,
+  "generated_at": "2026-10-15T12:00:04.913273+00:00",
+  "revision": 232,
   "streams": [
     {
       "id": "W-foundation",
@@ -4496,6 +4496,60 @@
           "limits": [
             "Isolated board/crawl projections stale; no successful full-gate claim. Network-dependent stages unverified.",
             "No actual consumer owner approval, live-host loading, integration or human epic acceptance."
+          ]
+        },
+        "integrated-primary-proof": {
+          "type": "verification",
+          "status": "pass",
+          "subject_sha": "0cd449a2c7f3903487e5d217970d446693df3195",
+          "command": "bash scripts/check_all.sh",
+          "exit_code": 0,
+          "artifact": ".software-factory/runs/software-factory-v01/evidence/onboarding-integrated-gate.log",
+          "unit_tests": {
+            "run": 632,
+            "passed": 631,
+            "failed": 0,
+            "skipped": 1,
+            "skip_reason": "Optional Draft202012 crosscheck not requested; separate8d18 opt-in crosscheck passed, schema unchanged by26."
+          },
+          "evals": {
+            "passed": 30,
+            "failed": 0,
+            "unverified": 0,
+            "skipped": 0,
+            "run_id": "r-20261015T114243Z-premerge"
+          },
+          "summary": "Fixed integrated source26 after board/crawl regeneration passes full static gate, real approved-pins BMad install and skills CLI, distribution/shell/Mermaid/skill/workflow/form validation.",
+          "limits": [
+            "Local candidate source proof, not remote CI, maintainer merge, live host loading, deployment or human acceptance."
+          ]
+        },
+        "independent-packaging-proof": {
+          "type": "independent-packaging-proof",
+          "status": "pass-executed-cases",
+          "subject_sha": "0cd449a2c7f3903487e5d217970d446693df3195",
+          "reviewer": "mission-recovery",
+          "artifact": ".software-factory/runs/software-factory-v01/evidence/onboarding-integrated-packaging-proof.json",
+          "artifact_sha256": "531d51414c2fb72c462f740802333d86ceac4a68979f432f03189cabf57b419b",
+          "actual_cli_commands": 65,
+          "observations": 74,
+          "expected_wrong_digest_refusals": 6,
+          "summary": "All3fullprojectinstallations and3generatednativecontexts run sf-help/config helpers after frozen source relocation; chosen existing authority preserved, unusedscaffolds absent, approved fixture apply/repeat/reuse20answers work. Two releases identical:397members,875493bytes, archiveSHA256ca615d76e87ddce5b21d77fa5d38b6993615de1518d1a41d81abcb614fc37c38. Zero forbidden-tool guards.",
+          "limits": [
+            "Simulated fixture-only consent, not real owner or epic acceptance.",
+            "Inherited home variables unchanged; no real-home snapshot or credential/network audit. No doctor/auth/provider/network tool invocation.",
+            "Static native and actual local helper proof, not live host loading/trust, remote CI, maintainer merge, publication or full-SDLC completion."
+          ]
+        },
+        "self-dogfood-setup": {
+          "type": "forward-use",
+          "status": "pass-executed-cases",
+          "subject_sha": "0cd449a2c7f3903487e5d217970d446693df3195",
+          "artifact": ".software-factory/runs/software-factory-v01/evidence/self-setup-forward-use.json",
+          "artifact_sha256": "5030d63cc8b43811e96d132f7058aad271e5b7f50550520d2eabcd0d47ef900c",
+          "summary": "Real repository self-setup under standing completion/dogfood GO and independent exact-proposal review: create-only apply, strict config validation, unchanged exact replay, prior-answer reuse and 53 protected files unchanged. No fresh human decision or epic acceptance.",
+          "limits": [
+            "Local setup only; no live host, remote CI, staging equivalence, integration, publication or monitoring authority."
           ]
         }
       },
