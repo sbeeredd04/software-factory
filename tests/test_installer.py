@@ -448,8 +448,11 @@ class GitUntouchedTests(InstallerCase):
         factory_prefixes = (
             ".gitignore",
             "CLAUDE.md",
+            "AGENTS.md",
             ".claude/",
-            ".cursor/",  # pre-existing user hook config in this fixture
+            ".cursor/",
+            ".codex/",
+            ".agents/",
             ".software-factory/",
         )
         for entry in changed - {"notes.txt", "scratch.txt"}:

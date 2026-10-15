@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-12T09:57:18.675476+00:00",
-  "revision": 121,
+  "generated_at": "2026-10-12T10:10:38.587814+00:00",
+  "revision": 123,
   "streams": [
     {
       "id": "W-foundation",
@@ -56,8 +56,8 @@
       ],
       "counts": {
         "planned": 4,
-        "ready": 1,
-        "in-progress": 0,
+        "ready": 0,
+        "in-progress": 1,
         "review": 1,
         "built": 0,
         "done": 0,
@@ -1853,9 +1853,9 @@
       "stream": "W-installer",
       "type": "story",
       "title": "Cursor and Codex projections",
-      "status": "backlog",
-      "state": "ready",
-      "owner": null,
+      "status": "in-progress",
+      "state": "in-progress",
+      "owner": "worker-cursor-codex-projections",
       "after": [
         19
       ],
@@ -1884,12 +1884,33 @@
       "pr": null,
       "merged_sha": null,
       "claim": {
-        "live": false
+        "live": true,
+        "owner": "worker-cursor-codex-projections",
+        "paths": [
+          "install.py",
+          "hosts",
+          "tests",
+          ".software-factory/context"
+        ],
+        "claimed_at": "2026-10-12T10:10:38.520745+00:00"
       },
       "blocks": [
         21
       ],
-      "history": [],
+      "history": [
+        {
+          "at": "2026-10-12T10:10:38.552348+00:00",
+          "by": "orchestrator",
+          "from": "backlog",
+          "to": "ready-for-dev"
+        },
+        {
+          "at": "2026-10-12T10:10:38.585580+00:00",
+          "by": "worker-cursor-codex-projections",
+          "from": "ready-for-dev",
+          "to": "in-progress"
+        }
+      ],
       "findings": [],
       "source_key": "installer-hosts/cursor-codex-projections"
     },
@@ -2726,16 +2747,7 @@
     }
   ],
   "frontier": {
-    "ready": [
-      {
-        "id": 20,
-        "epic": 3,
-        "stream": "W-installer",
-        "title": "Cursor and Codex projections",
-        "why": "after 19 in-review; unclaimed",
-        "claimed": false
-      }
-    ],
+    "ready": [],
     "waiting_on_prereq": [
       {
         "id": 21,
@@ -2743,7 +2755,7 @@
         "stream": "W-installer",
         "title": "Session-start and pre-compact hooks per host",
         "missing": [
-          "20 (backlog)"
+          "20 (in-progress)"
         ]
       },
       {

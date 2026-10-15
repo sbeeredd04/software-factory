@@ -39,6 +39,7 @@ import shutil
 import sys
 import tempfile
 import time
+import tomllib
 import uuid
 from datetime import UTC, datetime
 from pathlib import Path
@@ -77,20 +78,47 @@ CLAUDE_BLOCK = (
     "`.software-factory/` and is ignored except for the committed\n"
     "`context/` home.\n"
 )
+CODEX_BLOCK = (
+    "## Software Factory\n"
+    "\n"
+    "This project has the Software Factory pack installed for Codex.\n"
+    "Start or resume factory work with the `software-factory` skill\n"
+    "(`$software-factory`); its entry point is\n"
+    "`.agents/skills/software-factory/SKILL.md`.\n"
+    "Factory-owned files are listed in\n"
+    "`.software-factory/installation.json`; runtime state lives under\n"
+    "`.software-factory/` and is ignored except for the committed\n"
+    "`context/` home. Codex hooks run only after a one-time trust\n"
+    "review: run `/hooks` and trust the factory hooks.\n"
+)
+BLOCKS = {"CLAUDE.md": CLAUDE_BLOCK, "AGENTS.md": CODEX_BLOCK}
 
-# (settings hook event, matcher, normalized hook.py event)
+# (settings hook event, matcher, normalized hook.py event); Claude Code and
+# Codex share this matcher-group shape.
 HOOK_EVENTS = (
     ("SessionStart", "startup|resume|clear|compact", "session-start"),
     ("PreCompact", "manual|auto", "pre-compact"),
+)
+# (hooks.json event, normalized hook.py event); Cursor events are flat
+# command entries with no matcher (sessionStart fires per conversation and
+# the helper filters background agents itself).
+CURSOR_HOOK_EVENTS = (
+    ("sessionStart", "session-start"),
+    ("preCompact", "pre-compact"),
 )
 
 LOCK_WAIT_SECONDS = 5.0
 LOCK_POLL_SECONDS = 0.05
 
-# Host ids with a registered projector. Cursor and Codex register here in
-# their own milestone feature; the selection plumbing already supports them.
-REGISTERED_HOSTS = ("claude-code",)
-POLICY_DIRS = {"claude-code": "claude"}
+# Host ids with a registered projector.
+REGISTERED_HOSTS = ("claude-code", "cursor", "codex")
+POLICY_DIRS = {"claude-code": "claude", "cursor": "cursor", "codex": "codex"}
+# Project-directory markers and CLI binary names used by --host auto.
+# Detection is `command -v` style (shutil.which): host binaries are never
+# executed.
+HOST_MARKERS = {"claude-code": ".claude", "cursor": ".cursor", "codex": ".codex"}
+HOST_BINARIES = {"claude-code": "claude", "cursor": "cursor-agent",
+                 "codex": "codex"}
 
 
 class InstallError(Exception):
@@ -193,25 +221,139 @@ def load_policy(host: str) -> dict:
     return policy
 
 
+def load_agent_policy(host: str) -> dict:
+    path = PACK_ROOT / "hosts" / POLICY_DIRS[host] / "agent-policy.json"
+    try:
+        policy = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise InstallError(f"pack host policy is unreadable: {path.name}") from exc
+    if not isinstance(policy, dict):
+        raise InstallError(f"pack host policy is invalid for {host}")
+    return policy
+
+
+def frontmatter_close(lines: list[str], rel: str) -> int:
+    """Index of the closing frontmatter fence; refuses a malformed block."""
+    if not lines or lines[0].strip() != "---":
+        raise InstallError(f"{rel}: missing frontmatter")
+    for index in range(1, len(lines)):
+        if lines[index].strip() == "---":
+            return index
+    raise InstallError(f"{rel}: frontmatter never closes")
+
+
 def inject_claude_frontmatter(content: bytes, skill: str, policy: dict) -> bytes:
     """Add Claude-only keys to a canonical SKILL.md; the body never changes."""
     text = content.decode("utf-8")
     lines = text.split("\n")
-    if not lines or lines[0].strip() != "---":
-        raise InstallError(f"skill {skill}: SKILL.md is missing frontmatter")
-    closing = None
-    for index in range(1, len(lines)):
-        if lines[index].strip() == "---":
-            closing = index
-            break
-    if closing is None:
-        raise InstallError(f"skill {skill}: SKILL.md frontmatter never closes")
+    closing = frontmatter_close(lines, f"skills/{skill}/SKILL.md")
     hint = policy["argument_hints"].get(skill, "[request]")
     extra = [f'argument-hint: "{hint}"']
     if skill in policy.get("explicit_only", []):
         extra.append("disable-model-invocation: true")
     lines[closing:closing] = extra
     return "\n".join(lines).encode()
+
+
+def inject_cursor_readonly(content: bytes, role: str, policy: dict) -> bytes:
+    """Add the Cursor readonly flag to a canonical agent; body never changes."""
+    text = content.decode("utf-8")
+    lines = text.split("\n")
+    closing = frontmatter_close(lines, f"agents/{role}.md")
+    readonly = "true" if role in set(policy.get("readonly", [])) else "false"
+    insert_at = closing
+    for index in range(1, closing):
+        if lines[index].startswith("model:"):
+            insert_at = index + 1
+            break
+    lines[insert_at:insert_at] = [f"readonly: {readonly}"]
+    return "\n".join(lines).encode()
+
+
+def parse_agent_frontmatter(path: Path) -> tuple[str, str, str]:
+    """(name, description, body) of a canonical role agent."""
+    text = path.read_text(encoding="utf-8")
+    lines = text.split("\n")
+    closing = frontmatter_close(lines, f"agents/{path.name}")
+    fields: dict[str, str] = {}
+    for line in lines[1:closing]:
+        if not line.strip():
+            continue
+        key, sep, raw = line.partition(":")
+        if not sep:
+            raise InstallError(f"agents/{path.name}: unparsable frontmatter line")
+        fields[key.strip()] = raw.strip()
+    name = fields.get("name", "")
+    if name != path.stem:
+        raise InstallError(f"agents/{path.name}: name does not match the file")
+    if fields.get("model") != "inherit":
+        raise InstallError(f"agents/{path.name}: canonical agents use model: inherit")
+    raw_description = fields.get("description", "")
+    if raw_description.startswith('"'):
+        try:
+            description = json.loads(raw_description)
+        except json.JSONDecodeError as exc:
+            raise InstallError(
+                f"agents/{path.name}: bad description quoting"
+            ) from exc
+    else:
+        description = raw_description
+    if not description:
+        raise InstallError(f"agents/{path.name}: missing description")
+    body = "\n".join(lines[closing + 1 :]).lstrip("\n").rstrip("\n") + "\n"
+    return name, description, body
+
+
+def codex_agent_toml(path: Path, policy: dict) -> bytes:
+    """Convert a canonical role agent to the Codex TOML config layer.
+
+    Codex inheritance means omitting ``model`` entirely, never
+    ``model = "inherit"``; sandbox_mode carries the reviewer/evaluator
+    read-only matrix from hosts/codex/agent-policy.json.
+    """
+    name, description, body = parse_agent_frontmatter(path)
+    if "'''" in body:
+        raise InstallError(f"agents/{path.name}: body cannot embed in TOML")
+    if name in set(policy.get("read_only", [])):
+        sandbox = "read-only"
+    else:
+        sandbox = "workspace-write"
+    text = (
+        f"# Generated from agents/{name}.md by the Software Factory installer;\n"
+        "# regenerate with install.py instead of editing by hand.\n"
+        f"name = {json.dumps(name)}\n"
+        f"description = {json.dumps(description)}\n"
+        f"sandbox_mode = {json.dumps(sandbox)}\n"
+        "developer_instructions = '''\n"
+        f"{body}"
+        "'''\n"
+    )
+    return text.encode()
+
+
+def openai_yaml(skill: str, policy: dict) -> bytes:
+    """The Codex ``agents/openai.yaml`` policy file for one skill.
+
+    Written for the six entry/admin skills (``allow_implicit_invocation:
+    false``) and for working skills with an interface declaration
+    (``sf-crawl``, implicitly invocable like the design skills, which carry
+    no policy file at all).
+    """
+    lines = [
+        "# Generated by the Software Factory installer; canonical policy:"
+        " hosts/codex/policy.json."
+    ]
+    interface = policy.get("openai_interface", {}).get(skill)
+    if interface:
+        lines.append("interface:")
+        for key in sorted(interface):
+            lines.append(f'  {key}: "{interface[key]}"')
+    explicit = skill in set(policy.get("explicit_only", []))
+    lines.append("policy:")
+    lines.append(
+        f"  allow_implicit_invocation: {'false' if explicit else 'true'}"
+    )
+    return ("\n".join(lines) + "\n").encode()
 
 
 def project_claude(root: Path, policy: dict, profile: str) -> list[Action]:
@@ -237,10 +379,7 @@ def project_claude(root: Path, policy: dict, profile: str) -> list[Action]:
         for src in sorted((PACK_ROOT / "agents").glob("sf-*.md")):
             actions.append(Action(f".claude/agents/{src.name}", "write",
                                   src.read_bytes(), "claude-code"))
-        for helper in RUNTIME_HELPERS:
-            src = PACK_ROOT / KERNEL_SCRIPTS / helper
-            actions.append(Action(f"{RUNTIME_REL}/{helper}", "write",
-                                  src.read_bytes(), None))
+        actions.extend(runtime_actions())
         actions.append(Action(".claude/settings.json", "merge", None,
                               "claude-code"))
         actions.append(Action("CLAUDE.md", "block", None, "claude-code"))
@@ -248,7 +387,108 @@ def project_claude(root: Path, policy: dict, profile: str) -> list[Action]:
     return actions
 
 
-PROJECTORS = {"claude-code": project_claude}
+def runtime_actions() -> list[Action]:
+    """The host-neutral kernel helper copies under .software-factory/runtime/."""
+    return [
+        Action(
+            f"{RUNTIME_REL}/{helper}",
+            "write",
+            (PACK_ROOT / KERNEL_SCRIPTS / helper).read_bytes(),
+            None,
+        )
+        for helper in RUNTIME_HELPERS
+    ]
+
+
+def project_shared_skills(hosts: list[str]) -> list[Action]:
+    """The one shared .agents/skills payload for Cursor and Codex.
+
+    Canonical bytes only: Claude-only frontmatter fields never appear here
+    (VAL-HOST-003/013). The Codex ``agents/openai.yaml`` policy files are
+    added when Codex is among the selected hosts; a Cursor-only install
+    stays free of Codex-specific files.
+    """
+    actions: list[Action] = []
+    skills_src = PACK_ROOT / "skills"
+    for skill_dir in sorted(skills_src.iterdir()):
+        if not (skill_dir / "SKILL.md").is_file():
+            continue
+        for src in sorted(skill_dir.rglob("*")):
+            if not src.is_file():
+                continue
+            if "__pycache__" in src.parts or src.suffix == ".pyc":
+                continue
+            rel = src.relative_to(skills_src).as_posix()
+            actions.append(
+                Action(f".agents/skills/{rel}", "write", src.read_bytes(), None)
+            )
+    if "codex" in hosts:
+        codex_policy = load_policy("codex")
+        policy_skills = set(codex_policy.get("explicit_only", [])) | set(
+            codex_policy.get("openai_interface", {})
+        )
+        for skill in sorted(policy_skills):
+            actions.append(
+                Action(
+                    f".agents/skills/{skill}/agents/openai.yaml",
+                    "write",
+                    openai_yaml(skill, codex_policy),
+                    None,
+                )
+            )
+    return actions
+
+
+def project_cursor(root: Path, policy: dict, profile: str) -> list[Action]:
+    """The Cursor projection: readonly-matrix agents, hooks v1, .mdc rule.
+
+    The skills payload is shared with Codex and planned once per install
+    by build_plan (project_shared_skills).
+    """
+    del root, policy  # destinations are root-relative; policy already loaded
+    actions: list[Action] = []
+    if profile == "full":
+        agent_policy = load_agent_policy("cursor")
+        for src in sorted((PACK_ROOT / "agents").glob("sf-*.md")):
+            actions.append(Action(
+                f".cursor/agents/{src.name}", "write",
+                inject_cursor_readonly(src.read_bytes(), src.stem, agent_policy),
+                "cursor"))
+        actions.extend(runtime_actions())
+        actions.append(Action(".cursor/hooks.json", "merge", None, "cursor"))
+        rule = (PACK_ROOT / "hosts" / "cursor" / "factory.mdc").read_bytes()
+        actions.append(Action(
+            ".cursor/rules/software-factory.mdc", "write", rule, "cursor"))
+    actions.append(Action(".gitignore", "gitignore", None, None))
+    return actions
+
+
+def project_codex(root: Path, policy: dict, profile: str) -> list[Action]:
+    """The Codex projection: TOML agents, hooks.json, the AGENTS.md block.
+
+    The skills payload is shared with Cursor and planned once per install
+    by build_plan (project_shared_skills).
+    """
+    del root, policy
+    actions: list[Action] = []
+    if profile == "full":
+        agent_policy = load_agent_policy("codex")
+        for src in sorted((PACK_ROOT / "agents").glob("sf-*.md")):
+            actions.append(Action(
+                f".codex/agents/{src.stem}.toml", "write",
+                codex_agent_toml(src, agent_policy), "codex"))
+        actions.extend(runtime_actions())
+        actions.append(Action(".codex/hooks.json", "merge", None, "codex"))
+        actions.append(Action("AGENTS.md", "block", None, "codex"))
+    actions.append(Action(".gitignore", "gitignore", None, None))
+    return actions
+
+
+PROJECTORS = {
+    "claude-code": project_claude,
+    "cursor": project_cursor,
+    "codex": project_codex,
+}
 
 
 # -- merge kinds -------------------------------------------------------------
@@ -276,23 +516,23 @@ def is_owned_handler(handler: object, host: str, event: str) -> bool:
     )
 
 
-def merge_settings(current: bytes | None, root: Path, host: str) -> bytes:
-    """Add owned hook entries to Claude settings, preserving all user data."""
-    rel = ".claude/settings.json"
+def parse_json_document(current: bytes | None, rel: str) -> dict:
+    """Parse a JSON settings/hooks document; refuse malformed bytes as-is."""
     if current is None:
-        settings: dict = {}
-    else:
-        try:
-            settings = json.loads(current.decode("utf-8"))
-        except (UnicodeDecodeError, json.JSONDecodeError) as exc:
-            raise InstallError(
-                f"{rel} is malformed ({exc}); fix or remove it manually"
-            ) from exc
-        if not isinstance(settings, dict):
-            raise InstallError(f"{rel} must contain a JSON object; refusing")
-    hooks = settings.setdefault("hooks", {})
-    if not isinstance(hooks, dict):
-        raise InstallError(f"{rel}: 'hooks' is not an object; refusing")
+        return {}
+    try:
+        doc = json.loads(current.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise InstallError(
+            f"{rel} is malformed ({exc}); fix or remove it manually"
+        ) from exc
+    if not isinstance(doc, dict):
+        raise InstallError(f"{rel} must contain a JSON object; refusing")
+    return doc
+
+
+def merge_event_groups(hooks: dict, root: Path, host: str, rel: str) -> None:
+    """Fold one owned command group per event into a matcher-group map."""
     for event, matcher, normalized in HOOK_EVENTS:
         groups = hooks.setdefault(event, [])
         if not isinstance(groups, list):
@@ -325,16 +565,70 @@ def merge_settings(current: bytes | None, root: Path, host: str) -> bytes:
             }
         )
         hooks[event] = kept
+
+
+def merge_settings(current: bytes | None, root: Path, host: str) -> bytes:
+    """Add owned hook entries to Claude settings, preserving all user data."""
+    rel = ".claude/settings.json"
+    settings = parse_json_document(current, rel)
+    hooks = settings.setdefault("hooks", {})
+    if not isinstance(hooks, dict):
+        raise InstallError(f"{rel}: 'hooks' is not an object; refusing")
+    merge_event_groups(hooks, root, host, rel)
     return (json.dumps(settings, indent=2) + "\n").encode()
 
 
-def block_text() -> str:
-    return f"{BLOCK_BEGIN}\n{CLAUDE_BLOCK}{BLOCK_END}\n"
+def merge_codex_hooks(current: bytes | None, root: Path) -> bytes:
+    """Codex hooks.json: the same matcher-group shape as Claude settings,
+    at the top level, preserving every user group and unrelated key."""
+    rel = ".codex/hooks.json"
+    doc = parse_json_document(current, rel)
+    hooks = doc.setdefault("hooks", {})
+    if not isinstance(hooks, dict):
+        raise InstallError(f"{rel}: 'hooks' is not an object; refusing")
+    merge_event_groups(hooks, root, "codex", rel)
+    return (json.dumps(doc, indent=2) + "\n").encode()
+
+
+def merge_cursor_hooks(current: bytes | None, root: Path) -> bytes:
+    """Cursor hooks.json v1: flat command entries without matchers.
+
+    The user's version and unrelated events (e.g. beforeShellExecution)
+    survive byte-value-identical; exactly one owned entry per event.
+    """
+    rel = ".cursor/hooks.json"
+    doc = parse_json_document(current, rel)
+    version = doc.get("version", 1)
+    if version != 1:
+        raise InstallError(
+            f"{rel}: unsupported hooks version {version!r}; refusing to merge"
+        )
+    doc["version"] = 1
+    hooks = doc.setdefault("hooks", {})
+    if not isinstance(hooks, dict):
+        raise InstallError(f"{rel}: 'hooks' is not an object; refusing")
+    for event, normalized in CURSOR_HOOK_EVENTS:
+        entries = hooks.setdefault(event, [])
+        if not isinstance(entries, list):
+            raise InstallError(f"{rel}: 'hooks.{event}' is not a list; refusing")
+        kept = [
+            entry
+            for entry in entries
+            if not is_owned_handler(entry, "cursor", normalized)
+        ]
+        kept.append(
+            {
+                "type": "command",
+                "command": hook_command(root, "cursor", normalized),
+            }
+        )
+        hooks[event] = kept
+    return (json.dumps(doc, indent=2) + "\n").encode()
 
 
 def merge_block(current: bytes | None, rel: str) -> bytes:
     """Insert or refresh the factory managed block; never touch user text."""
-    block = block_text()
+    block = f"{BLOCK_BEGIN}\n{BLOCKS[rel]}{BLOCK_END}\n"
     if current is None:
         return block.encode()
     try:
@@ -383,7 +677,13 @@ def merge_gitignore(current: bytes | None) -> bytes:
 
 def compute_content(action: Action, root: Path, before: bytes | None) -> bytes:
     if action.kind == "merge":
-        return merge_settings(before, root, action.host or "claude-code")
+        if action.path == ".claude/settings.json":
+            return merge_settings(before, root, action.host or "claude-code")
+        if action.path == ".cursor/hooks.json":
+            return merge_cursor_hooks(before, root)
+        if action.path == ".codex/hooks.json":
+            return merge_codex_hooks(before, root)
+        raise InstallError(f"internal error: no merge handler for {action.path}")
     if action.kind == "block":
         return merge_block(before, action.path)
     if action.kind == "gitignore":
@@ -473,6 +773,27 @@ def build_plan(
     actions: list[Action] = []
     for host in hosts:
         actions.extend(PROJECTORS[host](root, load_policy(host), profile))
+    if any(host in ("cursor", "codex") for host in hosts):
+        actions.extend(project_shared_skills(hosts))
+    # Collapse duplicate destinations (runtime helpers, .gitignore) emitted
+    # by more than one projector; identical content is shared, divergent
+    # content is an internal error.
+    unique: list[Action] = []
+    seen_paths: dict[str, Action] = {}
+    for action in actions:
+        previous_action = seen_paths.get(action.path)
+        if previous_action is not None:
+            if (previous_action.kind, previous_action.content) != (
+                action.kind,
+                action.content,
+            ):
+                raise InstallError(
+                    f"internal error: conflicting plan for {action.path}"
+                )
+            continue
+        seen_paths[action.path] = action
+        unique.append(action)
+    actions = unique
     previous = load_manifest(root)
     owned = {}
     if previous:
@@ -634,6 +955,77 @@ def apply_plan(
             pass
 
 
+# -- plugin/project stacking ---------------------------------------------------
+# A plugin install and a project projection for the same host are
+# alternatives; stacking them double-loads every skill and hook.
+
+
+def plugin_enabled_claude(root: Path) -> str | None:
+    path = root / ".claude/settings.json"
+    if not path.is_file():
+        return None
+    try:
+        settings = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError):
+        return None  # malformed settings are refused by the merge itself
+    if not isinstance(settings, dict):
+        return None
+    enabled = settings.get("enabledPlugins")
+    if not isinstance(enabled, dict):
+        return None
+    for key, value in enabled.items():
+        if isinstance(key, str) and key.startswith(f"{PACK_NAME}@") and value:
+            return ".claude/settings.json"
+    return None
+
+
+def plugin_enabled_codex(root: Path) -> str | None:
+    path = root / ".codex/config.toml"
+    if not path.is_file():
+        return None
+    try:
+        config = tomllib.loads(path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeDecodeError, tomllib.TOMLDecodeError):
+        return None  # the installer never writes config.toml; leave it alone
+    plugins = config.get("plugins")
+    if not isinstance(plugins, dict):
+        return None
+    for key, value in plugins.items():
+        if (
+            isinstance(key, str)
+            and key.startswith(f"{PACK_NAME}@")
+            and isinstance(value, dict)
+            and value.get("enabled")
+        ):
+            return ".codex/config.toml"
+    return None
+
+
+# Cursor has no documented project-scope enabled-plugin store; only hosts
+# with a detectable marker refuse stacking.
+PLUGIN_DETECTORS = {
+    "claude-code": plugin_enabled_claude,
+    "codex": plugin_enabled_codex,
+}
+
+
+def check_plugin_stacking(root: Path, hosts: list[str]) -> None:
+    """Refuse to stack a project projection on an enabled factory plugin."""
+    for host in hosts:
+        detector = PLUGIN_DETECTORS.get(host)
+        if detector is None:
+            continue
+        source = detector(root)
+        if source is not None:
+            raise InstallError(
+                f"a {PACK_NAME} plugin is already enabled for {host} in "
+                f"{source}; a plugin install and a project projection are "
+                "alternatives - migration: disable the plugin entry (or "
+                "uninstall the plugin), then rerun this install; nothing "
+                "was written"
+            )
+
+
 # -- command surface -----------------------------------------------------------
 
 
@@ -661,20 +1053,45 @@ def resolve_hosts(selection: str, root: Path) -> list[str]:
 
 
 def auto_detect(root: Path) -> str:
-    """Inspect project markers only; never executes a host binary."""
+    """Pick a host from project markers, then available binaries.
+
+    Project directories are the stronger signal; host binaries are only a
+    ``command -v``-style presence check (shutil.which) and are never
+    executed. An ambiguous or empty result demands an explicit --host.
+    """
     markers = [
-        host for host in REGISTERED_HOSTS if (root / f".{POLICY_DIRS[host]}").exists()
+        host for host in REGISTERED_HOSTS if (root / HOST_MARKERS[host]).exists()
     ]
-    if not markers:
-        raise InstallError(
-            "no host detected in this project; pass --host explicitly"
+    if len(markers) == 1:
+        print(
+            f"install: auto-detected host {markers[0]} "
+            f"(project {HOST_MARKERS[markers[0]]}/)"
         )
+        return markers[0]
     if len(markers) > 1:
         raise InstallError(
-            "multiple hosts detected; pass --host explicitly to choose"
+            "multiple hosts detected ("
+            + ", ".join(markers)
+            + "); pass --host explicitly to choose"
         )
-    print(f"install: auto-detected host {markers[0]}")
-    return markers[0]
+    available = [
+        host for host in REGISTERED_HOSTS if shutil.which(HOST_BINARIES[host])
+    ]
+    if len(available) == 1:
+        print(
+            f"install: auto-detected host {available[0]} "
+            f"({HOST_BINARIES[available[0]]} on PATH)"
+        )
+        return available[0]
+    if available:
+        raise InstallError(
+            "multiple host binaries on PATH ("
+            + ", ".join(available)
+            + ") and no project markers; pass --host explicitly to choose"
+        )
+    raise InstallError(
+        "no host detected in this project; pass --host explicitly"
+    )
 
 
 def format_plan(planned: list[PlannedFile]) -> list[str]:
@@ -691,6 +1108,7 @@ def cmd_install(args: argparse.Namespace) -> int:
     if not root.is_dir():
         raise InstallError(f"project directory does not exist: {args.project}")
     hosts = resolve_hosts(args.host, root)
+    check_plugin_stacking(root, hosts)
     allow = normalize_overwrite_paths(args.allow_overwrite)
     planned, conflicts, previous = build_plan(root, hosts, args.profile, allow)
     if conflicts:
@@ -735,7 +1153,8 @@ def main(argv: list[str] | None = None) -> int:
     install.add_argument("--project", type=Path, required=True,
                          help="consumer project root")
     install.add_argument("--host", required=True,
-                         help="claude-code, a comma list, all, or auto")
+                         help="claude-code, cursor, codex, a comma list, "
+                              "all, or auto")
     install.add_argument("--dry-run", action="store_true",
                          help="print the plan; write nothing, spawn nothing")
     install.add_argument("--skip-bmad", action="store_true",

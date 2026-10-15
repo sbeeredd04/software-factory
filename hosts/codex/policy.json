@@ -1,0 +1,21 @@
+{
+  "host": "codex",
+  "skills_dest": ".agents/skills",
+  "agents_dest": ".codex/agents",
+  "hooks": ".codex/hooks.json",
+  "pointer": "AGENTS.md",
+  "explicit_only": [
+    "software-factory",
+    "sf-help",
+    "sf-agents",
+    "sf-evolve",
+    "sf-eval",
+    "sf-principles"
+  ],
+  "openai_interface": {
+    "sf-crawl": {
+      "display_name": "SF Crawl"
+    }
+  },
+  "agent_policy": "agent-policy.json"
+}

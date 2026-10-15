@@ -1,0 +1,17 @@
+{
+  "host": "cursor",
+  "skills_dest": ".agents/skills",
+  "agents_dest": ".cursor/agents",
+  "hooks": ".cursor/hooks.json",
+  "pointer": ".cursor/rules/software-factory.mdc",
+  "explicit_only": [
+    "software-factory",
+    "sf-help",
+    "sf-agents",
+    "sf-evolve",
+    "sf-eval",
+    "sf-principles"
+  ],
+  "agent_policy": "agent-policy.json",
+  "notes": "The shared .agents/skills payload stays canonical (no Cursor frontmatter injection): the validation contract forbids disable-model-invocation outside the Claude projection, so explicit-only intent is documented by the .mdc pointer and this policy."
+}
