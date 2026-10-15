@@ -667,6 +667,23 @@
             "skills/software-factory/workflows/feature.md",
             "skills/software-factory/workflows/bug.md"
           ]
+        },
+        {
+          "key": "risk-adaptive-autonomy",
+          "title": "Continuous BMad delivery with risk-adaptive human escalation",
+          "type": "story",
+          "after": [
+            "authorized-operations-loop"
+          ],
+          "covers": [
+            "VAL-ORCH-AUTONOMY",
+            "VAL-BOARD-EPIC-POLICY",
+            "VAL-BMAD-PLANNING"
+          ],
+          "risk": "high",
+          "hitl": true,
+          "plan_checkpoint": false,
+          "done_checkpoint": true
         }
       ]
     },
@@ -1083,6 +1100,23 @@
           "hitl": true,
           "plan_checkpoint": false,
           "done_checkpoint": true
+        },
+        {
+          "key": "continuous-factory-cycle",
+          "title": "Whole software factory messaging and continuous SDLC cycle visuals",
+          "type": "story",
+          "after": [
+            "marketing-assets"
+          ],
+          "covers": [
+            "VAL-FACTORY-CYCLE",
+            "VAL-ASSET-001",
+            "VAL-SITE-006"
+          ],
+          "risk": "standard",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": false
         }
       ]
     }

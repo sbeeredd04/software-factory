@@ -32,7 +32,24 @@
         "question": "accept epic 1 (Foundation: skeleton, kernel, orchestrator, team, design module, tooling) against its done-when?"
       }
     ],
-    "ready": [],
+    "ready": [
+      {
+        "claimed": false,
+        "epic": 2,
+        "id": 46,
+        "stream": "W-expansion",
+        "title": "Continuous BMad delivery with risk-adaptive human escalation",
+        "why": "after 45 in-review; unclaimed"
+      },
+      {
+        "claimed": false,
+        "epic": 5,
+        "id": 47,
+        "stream": "W-launch",
+        "title": "Whole software factory messaging and continuous SDLC cycle visuals",
+        "why": "after 30 in-review; unclaimed"
+      }
+    ],
     "shipped": {
       "recorded_deployments": [],
       "recorded_done": [
@@ -1030,12 +1047,46 @@
           {
             "path": ".software-factory/context/board/stories/30.json",
             "pointer": "/receipts/active-attempt",
-            "sha256": "c704bfa17bd23197d7f69554cf27190b4bedf59ffa513b449a96c1e2c03b3dc0"
+            "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
           }
         ],
         "reported_status": "assigned",
         "story": 30,
         "subject_sha": "d2c2a6b29455c1bfdcbd9507bc05405c245318fc",
+        "type": "receipt"
+      },
+      {
+        "artifact_integrity": "unknown",
+        "freshness": "stale",
+        "id": "receipt:30:integrated-native-card-proof",
+        "label": "integrated-native-card-proof",
+        "provenance": [
+          {
+            "path": ".software-factory/context/board/stories/30.json",
+            "pointer": "/receipts/integrated-native-card-proof",
+            "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
+          }
+        ],
+        "reported_status": "passed",
+        "story": 30,
+        "subject_sha": "4f20f851a9776c542f0ad09d61cd2b099a3530d2",
+        "type": "receipt"
+      },
+      {
+        "artifact_integrity": "unknown",
+        "freshness": "stale",
+        "id": "receipt:30:integrated-primary-proof",
+        "label": "integrated-primary-proof",
+        "provenance": [
+          {
+            "path": ".software-factory/context/board/stories/30.json",
+            "pointer": "/receipts/integrated-primary-proof",
+            "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
+          }
+        ],
+        "reported_status": null,
+        "story": 30,
+        "subject_sha": "4f20f851a9776c542f0ad09d61cd2b099a3530d2",
         "type": "receipt"
       },
       {
@@ -1047,7 +1098,7 @@
           {
             "path": ".software-factory/context/board/stories/30.json",
             "pointer": "/receipts/method-authorization",
-            "sha256": "c704bfa17bd23197d7f69554cf27190b4bedf59ffa513b449a96c1e2c03b3dc0"
+            "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
           }
         ],
         "reported_status": null,
@@ -1064,7 +1115,7 @@
           {
             "path": ".software-factory/context/board/stories/30.json",
             "pointer": "/receipts/preparation-review",
-            "sha256": "c704bfa17bd23197d7f69554cf27190b4bedf59ffa513b449a96c1e2c03b3dc0"
+            "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
           }
         ],
         "reported_status": "changes-required",
@@ -1081,7 +1132,7 @@
           {
             "path": ".software-factory/context/board/stories/30.json",
             "pointer": "/receipts/source-readiness",
-            "sha256": "c704bfa17bd23197d7f69554cf27190b4bedf59ffa513b449a96c1e2c03b3dc0"
+            "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
           }
         ],
         "reported_status": "pass",
@@ -1184,6 +1235,8 @@
         "requirement:VAL-BMAD-005",
         "requirement:VAL-BMAD-006",
         "requirement:VAL-BMAD-007",
+        "requirement:VAL-BMAD-PLANNING",
+        "requirement:VAL-BOARD-EPIC-POLICY",
         "requirement:VAL-CONFIG",
         "requirement:VAL-CONFIG-001",
         "requirement:VAL-CONFIG-002",
@@ -1265,6 +1318,7 @@
         "requirement:VAL-EVOLVE-004",
         "requirement:VAL-EVOLVE-005",
         "requirement:VAL-EVOLVE-006",
+        "requirement:VAL-FACTORY-CYCLE",
         "requirement:VAL-HELP",
         "requirement:VAL-HELP-001",
         "requirement:VAL-HELP-002",
@@ -1348,6 +1402,7 @@
         "requirement:VAL-ORCH-010",
         "requirement:VAL-ORCH-011",
         "requirement:VAL-ORCH-012",
+        "requirement:VAL-ORCH-AUTONOMY",
         "requirement:VAL-PRIN",
         "requirement:VAL-PRIN-001",
         "requirement:VAL-PRIN-002",
@@ -5138,7 +5193,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/final-independent-review",
-          "sha256": "c704bfa17bd23197d7f69554cf27190b4bedf59ffa513b449a96c1e2c03b3dc0"
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
         }
       ],
       "relation": "records",
@@ -5151,7 +5206,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/preparation-review",
-          "sha256": "c704bfa17bd23197d7f69554cf27190b4bedf59ffa513b449a96c1e2c03b3dc0"
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
         }
       ],
       "relation": "records",
@@ -5164,7 +5219,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/source-readiness",
-          "sha256": "c704bfa17bd23197d7f69554cf27190b4bedf59ffa513b449a96c1e2c03b3dc0"
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
         }
       ],
       "relation": "records",
@@ -5177,7 +5232,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/worker-handoff",
-          "sha256": "c704bfa17bd23197d7f69554cf27190b4bedf59ffa513b449a96c1e2c03b3dc0"
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
         }
       ],
       "relation": "records",
@@ -5320,7 +5375,7 @@
         {
           "path": ".software-factory/context/board/epics/2.json",
           "pointer": "/covers/0",
-          "sha256": "0fcd37e0bfbc2e33a89b6d5ec14ed1dfa1845eff0b0d0eb16f42a40ce6213a24"
+          "sha256": "b2affc2075c427bbf934cfa8d350cb4f630c735084f30be51f9f94012d0262ba"
         }
       ],
       "relation": "covers",
@@ -5333,7 +5388,7 @@
         {
           "path": ".software-factory/context/board/epics/2.json",
           "pointer": "/covers/1",
-          "sha256": "0fcd37e0bfbc2e33a89b6d5ec14ed1dfa1845eff0b0d0eb16f42a40ce6213a24"
+          "sha256": "b2affc2075c427bbf934cfa8d350cb4f630c735084f30be51f9f94012d0262ba"
         }
       ],
       "relation": "covers",
@@ -5346,7 +5401,7 @@
         {
           "path": ".software-factory/context/board/epics/2.json",
           "pointer": "/covers/2",
-          "sha256": "0fcd37e0bfbc2e33a89b6d5ec14ed1dfa1845eff0b0d0eb16f42a40ce6213a24"
+          "sha256": "b2affc2075c427bbf934cfa8d350cb4f630c735084f30be51f9f94012d0262ba"
         }
       ],
       "relation": "covers",
@@ -5359,7 +5414,7 @@
         {
           "path": ".software-factory/context/board/epics/2.json",
           "pointer": "/covers/3",
-          "sha256": "0fcd37e0bfbc2e33a89b6d5ec14ed1dfa1845eff0b0d0eb16f42a40ce6213a24"
+          "sha256": "b2affc2075c427bbf934cfa8d350cb4f630c735084f30be51f9f94012d0262ba"
         }
       ],
       "relation": "covers",
@@ -5372,7 +5427,7 @@
         {
           "path": ".software-factory/context/board/epics/2.json",
           "pointer": "/covers/4",
-          "sha256": "0fcd37e0bfbc2e33a89b6d5ec14ed1dfa1845eff0b0d0eb16f42a40ce6213a24"
+          "sha256": "b2affc2075c427bbf934cfa8d350cb4f630c735084f30be51f9f94012d0262ba"
         }
       ],
       "relation": "covers",
@@ -5385,7 +5440,7 @@
         {
           "path": ".software-factory/context/board/epics/2.json",
           "pointer": "/covers/5",
-          "sha256": "0fcd37e0bfbc2e33a89b6d5ec14ed1dfa1845eff0b0d0eb16f42a40ce6213a24"
+          "sha256": "b2affc2075c427bbf934cfa8d350cb4f630c735084f30be51f9f94012d0262ba"
         }
       ],
       "relation": "covers",
@@ -5398,7 +5453,7 @@
         {
           "path": ".software-factory/context/board/epics/2.json",
           "pointer": "/covers/6",
-          "sha256": "0fcd37e0bfbc2e33a89b6d5ec14ed1dfa1845eff0b0d0eb16f42a40ce6213a24"
+          "sha256": "b2affc2075c427bbf934cfa8d350cb4f630c735084f30be51f9f94012d0262ba"
         }
       ],
       "relation": "covers",
@@ -5411,7 +5466,7 @@
         {
           "path": ".software-factory/context/board/epics/2.json",
           "pointer": "/covers/7",
-          "sha256": "0fcd37e0bfbc2e33a89b6d5ec14ed1dfa1845eff0b0d0eb16f42a40ce6213a24"
+          "sha256": "b2affc2075c427bbf934cfa8d350cb4f630c735084f30be51f9f94012d0262ba"
         }
       ],
       "relation": "covers",
@@ -5541,7 +5596,7 @@
         {
           "path": ".software-factory/context/board/epics/5.json",
           "pointer": "/covers/0",
-          "sha256": "e54d637b4545fa7913919c76e140871d1021469a139fca08bba6710795a543b5"
+          "sha256": "9f6b031d8b1351050f5308c9f4594ecce1495c5928504a1f83a9b25e1dda242d"
         }
       ],
       "relation": "covers",
@@ -5554,7 +5609,7 @@
         {
           "path": ".software-factory/context/board/epics/5.json",
           "pointer": "/covers/1",
-          "sha256": "e54d637b4545fa7913919c76e140871d1021469a139fca08bba6710795a543b5"
+          "sha256": "9f6b031d8b1351050f5308c9f4594ecce1495c5928504a1f83a9b25e1dda242d"
         }
       ],
       "relation": "covers",
@@ -5567,7 +5622,7 @@
         {
           "path": ".software-factory/context/board/epics/5.json",
           "pointer": "/covers/2",
-          "sha256": "e54d637b4545fa7913919c76e140871d1021469a139fca08bba6710795a543b5"
+          "sha256": "9f6b031d8b1351050f5308c9f4594ecce1495c5928504a1f83a9b25e1dda242d"
         }
       ],
       "relation": "covers",
@@ -5580,7 +5635,7 @@
         {
           "path": ".software-factory/context/board/epics/5.json",
           "pointer": "/covers/3",
-          "sha256": "e54d637b4545fa7913919c76e140871d1021469a139fca08bba6710795a543b5"
+          "sha256": "9f6b031d8b1351050f5308c9f4594ecce1495c5928504a1f83a9b25e1dda242d"
         }
       ],
       "relation": "covers",
@@ -5593,7 +5648,7 @@
         {
           "path": ".software-factory/context/board/epics/5.json",
           "pointer": "/covers/4",
-          "sha256": "e54d637b4545fa7913919c76e140871d1021469a139fca08bba6710795a543b5"
+          "sha256": "9f6b031d8b1351050f5308c9f4594ecce1495c5928504a1f83a9b25e1dda242d"
         }
       ],
       "relation": "covers",
@@ -8011,7 +8066,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/covers/0",
-          "sha256": "c704bfa17bd23197d7f69554cf27190b4bedf59ffa513b449a96c1e2c03b3dc0"
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
         }
       ],
       "relation": "covers",
@@ -8024,7 +8079,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/covers/1",
-          "sha256": "c704bfa17bd23197d7f69554cf27190b4bedf59ffa513b449a96c1e2c03b3dc0"
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
         }
       ],
       "relation": "covers",
@@ -8037,7 +8092,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/covers/2",
-          "sha256": "c704bfa17bd23197d7f69554cf27190b4bedf59ffa513b449a96c1e2c03b3dc0"
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
         }
       ],
       "relation": "covers",
@@ -8050,7 +8105,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/covers/3",
-          "sha256": "c704bfa17bd23197d7f69554cf27190b4bedf59ffa513b449a96c1e2c03b3dc0"
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
         }
       ],
       "relation": "covers",
@@ -8063,7 +8118,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/covers/4",
-          "sha256": "c704bfa17bd23197d7f69554cf27190b4bedf59ffa513b449a96c1e2c03b3dc0"
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
         }
       ],
       "relation": "covers",
@@ -8602,6 +8657,84 @@
       "relation": "covers",
       "source": "story:42",
       "target": "requirement:VAL-ROADMAP-004"
+    },
+    {
+      "basis": "declared-coverage",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/46.json",
+          "pointer": "/covers/0",
+          "sha256": "8f70a39e0a1ecfcb7ba94322a67728cbd67ebcce1b0bb509372ba44c16d2fef5"
+        }
+      ],
+      "relation": "covers",
+      "source": "story:46",
+      "target": "requirement:VAL-ORCH-AUTONOMY"
+    },
+    {
+      "basis": "declared-coverage",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/46.json",
+          "pointer": "/covers/1",
+          "sha256": "8f70a39e0a1ecfcb7ba94322a67728cbd67ebcce1b0bb509372ba44c16d2fef5"
+        }
+      ],
+      "relation": "covers",
+      "source": "story:46",
+      "target": "requirement:VAL-BOARD-EPIC-POLICY"
+    },
+    {
+      "basis": "declared-coverage",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/46.json",
+          "pointer": "/covers/2",
+          "sha256": "8f70a39e0a1ecfcb7ba94322a67728cbd67ebcce1b0bb509372ba44c16d2fef5"
+        }
+      ],
+      "relation": "covers",
+      "source": "story:46",
+      "target": "requirement:VAL-BMAD-PLANNING"
+    },
+    {
+      "basis": "declared-coverage",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/47.json",
+          "pointer": "/covers/0",
+          "sha256": "bea5e65ad9d3e4d2b90a422bd7816c856523bde2abbe0f7465a302573fe5131b"
+        }
+      ],
+      "relation": "covers",
+      "source": "story:47",
+      "target": "requirement:VAL-FACTORY-CYCLE"
+    },
+    {
+      "basis": "declared-coverage",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/47.json",
+          "pointer": "/covers/1",
+          "sha256": "bea5e65ad9d3e4d2b90a422bd7816c856523bde2abbe0f7465a302573fe5131b"
+        }
+      ],
+      "relation": "covers",
+      "source": "story:47",
+      "target": "requirement:VAL-ASSET-001"
+    },
+    {
+      "basis": "declared-coverage",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/47.json",
+          "pointer": "/covers/2",
+          "sha256": "bea5e65ad9d3e4d2b90a422bd7816c856523bde2abbe0f7465a302573fe5131b"
+        }
+      ],
+      "relation": "covers",
+      "source": "story:47",
+      "target": "requirement:VAL-SITE-006"
     },
     {
       "basis": "declared-coverage",
@@ -25266,7 +25399,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/after/0",
-          "sha256": "c704bfa17bd23197d7f69554cf27190b4bedf59ffa513b449a96c1e2c03b3dc0"
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
         }
       ],
       "relation": "depends-on",
@@ -25278,7 +25411,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/epic",
-          "sha256": "c704bfa17bd23197d7f69554cf27190b4bedf59ffa513b449a96c1e2c03b3dc0"
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
         }
       ],
       "relation": "part-of",
@@ -25290,7 +25423,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/active-attempt",
-          "sha256": "c704bfa17bd23197d7f69554cf27190b4bedf59ffa513b449a96c1e2c03b3dc0"
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
         }
       ],
       "relation": "records",
@@ -25302,7 +25435,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/active-attempt",
-          "sha256": "c704bfa17bd23197d7f69554cf27190b4bedf59ffa513b449a96c1e2c03b3dc0"
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
         }
       ],
       "relation": "subject",
@@ -25314,7 +25447,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/final-independent-review",
-          "sha256": "c704bfa17bd23197d7f69554cf27190b4bedf59ffa513b449a96c1e2c03b3dc0"
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
         }
       ],
       "relation": "records",
@@ -25326,7 +25459,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/final-independent-review",
-          "sha256": "c704bfa17bd23197d7f69554cf27190b4bedf59ffa513b449a96c1e2c03b3dc0"
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
         }
       ],
       "relation": "subject",
@@ -25337,8 +25470,56 @@
       "provenance": [
         {
           "path": ".software-factory/context/board/stories/30.json",
+          "pointer": "/receipts/integrated-native-card-proof",
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
+        }
+      ],
+      "relation": "records",
+      "source": "story:30",
+      "target": "receipt:30:integrated-native-card-proof"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/30.json",
+          "pointer": "/receipts/integrated-native-card-proof",
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
+        }
+      ],
+      "relation": "subject",
+      "source": "receipt:30:integrated-native-card-proof",
+      "target": "commit:4f20f851a9776c542f0ad09d61cd2b099a3530d2"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/30.json",
+          "pointer": "/receipts/integrated-primary-proof",
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
+        }
+      ],
+      "relation": "records",
+      "source": "story:30",
+      "target": "receipt:30:integrated-primary-proof"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/30.json",
+          "pointer": "/receipts/integrated-primary-proof",
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
+        }
+      ],
+      "relation": "subject",
+      "source": "receipt:30:integrated-primary-proof",
+      "target": "commit:4f20f851a9776c542f0ad09d61cd2b099a3530d2"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/method-authorization",
-          "sha256": "c704bfa17bd23197d7f69554cf27190b4bedf59ffa513b449a96c1e2c03b3dc0"
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
         }
       ],
       "relation": "records",
@@ -25350,7 +25531,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/method-authorization",
-          "sha256": "c704bfa17bd23197d7f69554cf27190b4bedf59ffa513b449a96c1e2c03b3dc0"
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
         }
       ],
       "relation": "subject",
@@ -25362,7 +25543,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/preparation-review",
-          "sha256": "c704bfa17bd23197d7f69554cf27190b4bedf59ffa513b449a96c1e2c03b3dc0"
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
         }
       ],
       "relation": "records",
@@ -25374,7 +25555,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/preparation-review",
-          "sha256": "c704bfa17bd23197d7f69554cf27190b4bedf59ffa513b449a96c1e2c03b3dc0"
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
         }
       ],
       "relation": "subject",
@@ -25386,7 +25567,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/source-readiness",
-          "sha256": "c704bfa17bd23197d7f69554cf27190b4bedf59ffa513b449a96c1e2c03b3dc0"
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
         }
       ],
       "relation": "records",
@@ -25398,7 +25579,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/source-readiness",
-          "sha256": "c704bfa17bd23197d7f69554cf27190b4bedf59ffa513b449a96c1e2c03b3dc0"
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
         }
       ],
       "relation": "subject",
@@ -25410,7 +25591,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/worker-handoff",
-          "sha256": "c704bfa17bd23197d7f69554cf27190b4bedf59ffa513b449a96c1e2c03b3dc0"
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
         }
       ],
       "relation": "records",
@@ -25422,7 +25603,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/worker-handoff",
-          "sha256": "c704bfa17bd23197d7f69554cf27190b4bedf59ffa513b449a96c1e2c03b3dc0"
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
         }
       ],
       "relation": "subject",
@@ -26512,6 +26693,54 @@
     {
       "provenance": [
         {
+          "path": ".software-factory/context/board/stories/46.json",
+          "pointer": "/after/0",
+          "sha256": "8f70a39e0a1ecfcb7ba94322a67728cbd67ebcce1b0bb509372ba44c16d2fef5"
+        }
+      ],
+      "relation": "depends-on",
+      "source": "story:46",
+      "target": "story:45"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/46.json",
+          "pointer": "/epic",
+          "sha256": "8f70a39e0a1ecfcb7ba94322a67728cbd67ebcce1b0bb509372ba44c16d2fef5"
+        }
+      ],
+      "relation": "part-of",
+      "source": "story:46",
+      "target": "epic:2"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/47.json",
+          "pointer": "/after/0",
+          "sha256": "bea5e65ad9d3e4d2b90a422bd7816c856523bde2abbe0f7465a302573fe5131b"
+        }
+      ],
+      "relation": "depends-on",
+      "source": "story:47",
+      "target": "story:30"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/47.json",
+          "pointer": "/epic",
+          "sha256": "bea5e65ad9d3e4d2b90a422bd7816c856523bde2abbe0f7465a302573fe5131b"
+        }
+      ],
+      "relation": "part-of",
+      "source": "story:47",
+      "target": "epic:5"
+    },
+    {
+      "provenance": [
+        {
           "path": ".software-factory/context/board/stories/5.json",
           "pointer": "/after/0",
           "sha256": "a06c8adb682caa1576cd044f8c8b5ce0822f6643afcdb3fd9619e54f646a3544"
@@ -26754,7 +26983,7 @@
         {
           "path": ".software-factory/runs/software-factory-v01/run.json",
           "pointer": "/claims/31",
-          "sha256": "fa1fb5a15cd658dbbc64669921b0a9d883cb1b2eba98c03555d0a3723041717c"
+          "sha256": "b5d8ce1377a9605a9aeef8e3a4a99a18b60aad068d25edf54d4bcfb272c24580"
         }
       ],
       "relation": "assigned-to",
@@ -26801,7 +27030,7 @@
     {
       "kind": "file",
       "path": ".software-factory/context/board/epics/2.json",
-      "sha256": "0fcd37e0bfbc2e33a89b6d5ec14ed1dfa1845eff0b0d0eb16f42a40ce6213a24"
+      "sha256": "b2affc2075c427bbf934cfa8d350cb4f630c735084f30be51f9f94012d0262ba"
     },
     {
       "kind": "file",
@@ -26816,17 +27045,17 @@
     {
       "kind": "file",
       "path": ".software-factory/context/board/epics/5.json",
-      "sha256": "e54d637b4545fa7913919c76e140871d1021469a139fca08bba6710795a543b5"
+      "sha256": "9f6b031d8b1351050f5308c9f4594ecce1495c5928504a1f83a9b25e1dda242d"
     },
     {
       "kind": "file",
       "path": ".software-factory/context/board/meta.json",
-      "sha256": "5b37d8059829acea3f1d0d719cea7c3561911eb3ea613c5375f88ff9c26165f5"
+      "sha256": "de75302c410eb5a0250e75ecb354ee299d4867a6c75e8cba78ce709acb18ec20"
     },
     {
       "kind": "directory",
       "path": ".software-factory/context/board/stories",
-      "sha256": "8936107f6a6a176106c056f9b20e4fdcaf906fb6ff7b674afee53f5351f156f1"
+      "sha256": "8fe5f881bcc8f56afdd7e7506815ad081b1e26c57ba3e80f1fe8b8344df03529"
     },
     {
       "kind": "file",
@@ -26946,7 +27175,7 @@
     {
       "kind": "file",
       "path": ".software-factory/context/board/stories/30.json",
-      "sha256": "c704bfa17bd23197d7f69554cf27190b4bedf59ffa513b449a96c1e2c03b3dc0"
+      "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
     },
     {
       "kind": "file",
@@ -27030,6 +27259,16 @@
     },
     {
       "kind": "file",
+      "path": ".software-factory/context/board/stories/46.json",
+      "sha256": "8f70a39e0a1ecfcb7ba94322a67728cbd67ebcce1b0bb509372ba44c16d2fef5"
+    },
+    {
+      "kind": "file",
+      "path": ".software-factory/context/board/stories/47.json",
+      "sha256": "bea5e65ad9d3e4d2b90a422bd7816c856523bde2abbe0f7465a302573fe5131b"
+    },
+    {
+      "kind": "file",
       "path": ".software-factory/context/board/stories/5.json",
       "sha256": "a06c8adb682caa1576cd044f8c8b5ce0822f6643afcdb3fd9619e54f646a3544"
     },
@@ -27061,7 +27300,7 @@
     {
       "kind": "directory",
       "path": ".software-factory/context/decisions",
-      "sha256": "457e317a5b4c3a1e2eab7126e5e7a233e1a6cb3d98a7eb437d5eed54910d9166"
+      "sha256": "bccc440681f95f4ec1a213f923f195386935430c916e656cd9e4142afc53f250"
     },
     {
       "kind": "file",
@@ -27192,6 +27431,11 @@
       "kind": "file",
       "path": ".software-factory/context/decisions/0026-additive-evaluation-admission.md",
       "sha256": "ab7ffb8be07f6d4fba3249e3522868da553e68e4859503b9ba0af0c7da1539b3"
+    },
+    {
+      "kind": "file",
+      "path": ".software-factory/context/decisions/0027-risk-adaptive-continuous-delivery.md",
+      "sha256": "bada1b73769b3d47c41c495b4dd511489c8f654ed9b7d76a9661fe8c3b085a7f"
     },
     {
       "kind": "file",
@@ -27451,7 +27695,7 @@
     {
       "kind": "file",
       "path": ".software-factory/runs/software-factory-v01/run.json",
-      "sha256": "fa1fb5a15cd658dbbc64669921b0a9d883cb1b2eba98c03555d0a3723041717c"
+      "sha256": "b5d8ce1377a9605a9aeef8e3a4a99a18b60aad068d25edf54d4bcfb272c24580"
     },
     {
       "kind": "file",
@@ -27950,7 +28194,7 @@
         {
           "path": ".software-factory/runs/software-factory-v01/run.json",
           "pointer": "/checkpoint",
-          "sha256": "fa1fb5a15cd658dbbc64669921b0a9d883cb1b2eba98c03555d0a3723041717c"
+          "sha256": "b5d8ce1377a9605a9aeef8e3a4a99a18b60aad068d25edf54d4bcfb272c24580"
         }
       ],
       "type": "checkpoint"
@@ -27963,7 +28207,7 @@
         {
           "path": ".software-factory/runs/software-factory-v01/run.json",
           "pointer": "/claims/31",
-          "sha256": "fa1fb5a15cd658dbbc64669921b0a9d883cb1b2eba98c03555d0a3723041717c"
+          "sha256": "b5d8ce1377a9605a9aeef8e3a4a99a18b60aad068d25edf54d4bcfb272c24580"
         }
       ],
       "type": "claim"
@@ -28082,7 +28326,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/preparation-review/subject_sha",
-          "sha256": "c704bfa17bd23197d7f69554cf27190b4bedf59ffa513b449a96c1e2c03b3dc0"
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
         }
       ],
       "type": "commit"
@@ -28266,7 +28510,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/method-authorization/subject_sha",
-          "sha256": "c704bfa17bd23197d7f69554cf27190b4bedf59ffa513b449a96c1e2c03b3dc0"
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
         }
       ],
       "type": "commit"
@@ -28371,6 +28615,23 @@
           "path": ".software-factory/context/board/stories/1.json",
           "pointer": "/receipts/backfill/subject_sha",
           "sha256": "3e0fd93bab7bdb21a82261c5c5a05d7a8a6344f64f8813c519aa9bc94743a21b"
+        }
+      ],
+      "type": "commit"
+    },
+    {
+      "id": "commit:4f20f851a9776c542f0ad09d61cd2b099a3530d2",
+      "label": "4f20f851a9776c542f0ad09d61cd2b099a3530d2",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/30.json",
+          "pointer": "/receipts/integrated-native-card-proof/subject_sha",
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
+        },
+        {
+          "path": ".software-factory/context/board/stories/30.json",
+          "pointer": "/receipts/integrated-primary-proof/subject_sha",
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
         }
       ],
       "type": "commit"
@@ -28933,7 +29194,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/active-attempt/subject_sha",
-          "sha256": "c704bfa17bd23197d7f69554cf27190b4bedf59ffa513b449a96c1e2c03b3dc0"
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
         }
       ],
       "type": "commit"
@@ -28984,12 +29245,12 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/final-independent-review/subject_sha",
-          "sha256": "c704bfa17bd23197d7f69554cf27190b4bedf59ffa513b449a96c1e2c03b3dc0"
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
         },
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/worker-handoff/subject_sha",
-          "sha256": "c704bfa17bd23197d7f69554cf27190b4bedf59ffa513b449a96c1e2c03b3dc0"
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
         }
       ],
       "type": "commit"
@@ -29040,7 +29301,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/source-readiness/subject_sha",
-          "sha256": "c704bfa17bd23197d7f69554cf27190b4bedf59ffa513b449a96c1e2c03b3dc0"
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
         }
       ],
       "type": "commit"
@@ -29587,6 +29848,20 @@
       "type": "decision"
     },
     {
+      "authenticated": false,
+      "content_sha256": "bada1b73769b3d47c41c495b4dd511489c8f654ed9b7d76a9661fe8c3b085a7f",
+      "id": "decision:.software-factory/context/decisions/0027-risk-adaptive-continuous-delivery.md",
+      "label": ".software-factory/context/decisions/0027-risk-adaptive-continuous-delivery.md",
+      "provenance": [
+        {
+          "line": 1,
+          "path": ".software-factory/context/decisions/0027-risk-adaptive-continuous-delivery.md",
+          "sha256": "bada1b73769b3d47c41c495b4dd511489c8f654ed9b7d76a9661fe8c3b085a7f"
+        }
+      ],
+      "type": "decision"
+    },
+    {
       "id": "epic:1",
       "label": "Foundation: skeleton, kernel, orchestrator, team, design module, tooling",
       "provenance": [
@@ -29606,7 +29881,7 @@
         {
           "path": ".software-factory/context/board/epics/2.json",
           "pointer": "",
-          "sha256": "0fcd37e0bfbc2e33a89b6d5ec14ed1dfa1845eff0b0d0eb16f42a40ce6213a24"
+          "sha256": "b2affc2075c427bbf934cfa8d350cb4f630c735084f30be51f9f94012d0262ba"
         }
       ],
       "status": "in-progress",
@@ -29645,7 +29920,7 @@
         {
           "path": ".software-factory/context/board/epics/5.json",
           "pointer": "",
-          "sha256": "e54d637b4545fa7913919c76e140871d1021469a139fca08bba6710795a543b5"
+          "sha256": "9f6b031d8b1351050f5308c9f4594ecce1495c5928504a1f83a9b25e1dda242d"
         }
       ],
       "status": "in-progress",
@@ -51549,7 +51824,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/active-attempt",
-          "sha256": "c704bfa17bd23197d7f69554cf27190b4bedf59ffa513b449a96c1e2c03b3dc0"
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
         }
       ],
       "reported_status": "assigned",
@@ -51566,12 +51841,46 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/final-independent-review",
-          "sha256": "c704bfa17bd23197d7f69554cf27190b4bedf59ffa513b449a96c1e2c03b3dc0"
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
         }
       ],
       "reported_status": "pass",
       "story": 30,
       "subject_sha": "dbdade03590300039b3c308255511453dc7d4097",
+      "type": "receipt"
+    },
+    {
+      "artifact_integrity": "unknown",
+      "freshness": "stale",
+      "id": "receipt:30:integrated-native-card-proof",
+      "label": "integrated-native-card-proof",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/30.json",
+          "pointer": "/receipts/integrated-native-card-proof",
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
+        }
+      ],
+      "reported_status": "passed",
+      "story": 30,
+      "subject_sha": "4f20f851a9776c542f0ad09d61cd2b099a3530d2",
+      "type": "receipt"
+    },
+    {
+      "artifact_integrity": "unknown",
+      "freshness": "stale",
+      "id": "receipt:30:integrated-primary-proof",
+      "label": "integrated-primary-proof",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/30.json",
+          "pointer": "/receipts/integrated-primary-proof",
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
+        }
+      ],
+      "reported_status": null,
+      "story": 30,
+      "subject_sha": "4f20f851a9776c542f0ad09d61cd2b099a3530d2",
       "type": "receipt"
     },
     {
@@ -51583,7 +51892,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/method-authorization",
-          "sha256": "c704bfa17bd23197d7f69554cf27190b4bedf59ffa513b449a96c1e2c03b3dc0"
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
         }
       ],
       "reported_status": null,
@@ -51600,7 +51909,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/preparation-review",
-          "sha256": "c704bfa17bd23197d7f69554cf27190b4bedf59ffa513b449a96c1e2c03b3dc0"
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
         }
       ],
       "reported_status": "changes-required",
@@ -51617,7 +51926,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/source-readiness",
-          "sha256": "c704bfa17bd23197d7f69554cf27190b4bedf59ffa513b449a96c1e2c03b3dc0"
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
         }
       ],
       "reported_status": "pass",
@@ -51634,7 +51943,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/worker-handoff",
-          "sha256": "c704bfa17bd23197d7f69554cf27190b4bedf59ffa513b449a96c1e2c03b3dc0"
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
         }
       ],
       "reported_status": "awaiting-review",
@@ -52301,7 +52610,7 @@
         {
           "path": ".software-factory/context/board/epics/5.json",
           "pointer": "/covers/1",
-          "sha256": "e54d637b4545fa7913919c76e140871d1021469a139fca08bba6710795a543b5"
+          "sha256": "9f6b031d8b1351050f5308c9f4594ecce1495c5928504a1f83a9b25e1dda242d"
         }
       ],
       "type": "requirement"
@@ -52313,7 +52622,12 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/covers/0",
-          "sha256": "c704bfa17bd23197d7f69554cf27190b4bedf59ffa513b449a96c1e2c03b3dc0"
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
+        },
+        {
+          "path": ".software-factory/context/board/stories/47.json",
+          "pointer": "/covers/1",
+          "sha256": "bea5e65ad9d3e4d2b90a422bd7816c856523bde2abbe0f7465a302573fe5131b"
         }
       ],
       "type": "requirement"
@@ -52325,7 +52639,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/covers/1",
-          "sha256": "c704bfa17bd23197d7f69554cf27190b4bedf59ffa513b449a96c1e2c03b3dc0"
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
         }
       ],
       "type": "requirement"
@@ -52337,7 +52651,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/covers/2",
-          "sha256": "c704bfa17bd23197d7f69554cf27190b4bedf59ffa513b449a96c1e2c03b3dc0"
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
         }
       ],
       "type": "requirement"
@@ -52349,7 +52663,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/covers/3",
-          "sha256": "c704bfa17bd23197d7f69554cf27190b4bedf59ffa513b449a96c1e2c03b3dc0"
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
         }
       ],
       "type": "requirement"
@@ -52361,7 +52675,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/covers/4",
-          "sha256": "c704bfa17bd23197d7f69554cf27190b4bedf59ffa513b449a96c1e2c03b3dc0"
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
         }
       ],
       "type": "requirement"
@@ -52458,6 +52772,30 @@
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/covers/6",
           "sha256": "0e69cf2c93e0184612fdbb26e0d109840dafd4d9e173f23edc05a3bba9c24a04"
+        }
+      ],
+      "type": "requirement"
+    },
+    {
+      "id": "requirement:VAL-BMAD-PLANNING",
+      "label": "VAL-BMAD-PLANNING",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/46.json",
+          "pointer": "/covers/2",
+          "sha256": "8f70a39e0a1ecfcb7ba94322a67728cbd67ebcce1b0bb509372ba44c16d2fef5"
+        }
+      ],
+      "type": "requirement"
+    },
+    {
+      "id": "requirement:VAL-BOARD-EPIC-POLICY",
+      "label": "VAL-BOARD-EPIC-POLICY",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/46.json",
+          "pointer": "/covers/1",
+          "sha256": "8f70a39e0a1ecfcb7ba94322a67728cbd67ebcce1b0bb509372ba44c16d2fef5"
         }
       ],
       "type": "requirement"
@@ -52613,7 +52951,7 @@
         {
           "path": ".software-factory/context/board/epics/2.json",
           "pointer": "/covers/4",
-          "sha256": "0fcd37e0bfbc2e33a89b6d5ec14ed1dfa1845eff0b0d0eb16f42a40ce6213a24"
+          "sha256": "b2affc2075c427bbf934cfa8d350cb4f630c735084f30be51f9f94012d0262ba"
         }
       ],
       "type": "requirement"
@@ -52673,7 +53011,7 @@
         {
           "path": ".software-factory/context/board/epics/2.json",
           "pointer": "/covers/2",
-          "sha256": "0fcd37e0bfbc2e33a89b6d5ec14ed1dfa1845eff0b0d0eb16f42a40ce6213a24"
+          "sha256": "b2affc2075c427bbf934cfa8d350cb4f630c735084f30be51f9f94012d0262ba"
         }
       ],
       "type": "requirement"
@@ -52750,7 +53088,7 @@
         {
           "path": ".software-factory/context/board/epics/5.json",
           "pointer": "/covers/4",
-          "sha256": "e54d637b4545fa7913919c76e140871d1021469a139fca08bba6710795a543b5"
+          "sha256": "9f6b031d8b1351050f5308c9f4594ecce1495c5928504a1f83a9b25e1dda242d"
         }
       ],
       "type": "requirement"
@@ -52851,7 +53189,7 @@
         {
           "path": ".software-factory/context/board/epics/2.json",
           "pointer": "/covers/6",
-          "sha256": "0fcd37e0bfbc2e33a89b6d5ec14ed1dfa1845eff0b0d0eb16f42a40ce6213a24"
+          "sha256": "b2affc2075c427bbf934cfa8d350cb4f630c735084f30be51f9f94012d0262ba"
         }
       ],
       "type": "requirement"
@@ -53223,7 +53561,7 @@
         {
           "path": ".software-factory/context/board/epics/2.json",
           "pointer": "/covers/5",
-          "sha256": "0fcd37e0bfbc2e33a89b6d5ec14ed1dfa1845eff0b0d0eb16f42a40ce6213a24"
+          "sha256": "b2affc2075c427bbf934cfa8d350cb4f630c735084f30be51f9f94012d0262ba"
         }
       ],
       "type": "requirement"
@@ -53440,6 +53778,18 @@
           "path": ".software-factory/context/board/stories/28.json",
           "pointer": "/covers/5",
           "sha256": "edd245b949484873b785ce3142f87cd496bed3afa57ab18f359199087954fc81"
+        }
+      ],
+      "type": "requirement"
+    },
+    {
+      "id": "requirement:VAL-FACTORY-CYCLE",
+      "label": "VAL-FACTORY-CYCLE",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/47.json",
+          "pointer": "/covers/0",
+          "sha256": "bea5e65ad9d3e4d2b90a422bd7816c856523bde2abbe0f7465a302573fe5131b"
         }
       ],
       "type": "requirement"
@@ -54044,7 +54394,7 @@
         {
           "path": ".software-factory/context/board/epics/2.json",
           "pointer": "/covers/0",
-          "sha256": "0fcd37e0bfbc2e33a89b6d5ec14ed1dfa1845eff0b0d0eb16f42a40ce6213a24"
+          "sha256": "b2affc2075c427bbf934cfa8d350cb4f630c735084f30be51f9f94012d0262ba"
         }
       ],
       "type": "requirement"
@@ -54451,13 +54801,25 @@
       "type": "requirement"
     },
     {
+      "id": "requirement:VAL-ORCH-AUTONOMY",
+      "label": "VAL-ORCH-AUTONOMY",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/46.json",
+          "pointer": "/covers/0",
+          "sha256": "8f70a39e0a1ecfcb7ba94322a67728cbd67ebcce1b0bb509372ba44c16d2fef5"
+        }
+      ],
+      "type": "requirement"
+    },
+    {
       "id": "requirement:VAL-PRIN",
       "label": "VAL-PRIN",
       "provenance": [
         {
           "path": ".software-factory/context/board/epics/2.json",
           "pointer": "/covers/3",
-          "sha256": "0fcd37e0bfbc2e33a89b6d5ec14ed1dfa1845eff0b0d0eb16f42a40ce6213a24"
+          "sha256": "b2affc2075c427bbf934cfa8d350cb4f630c735084f30be51f9f94012d0262ba"
         }
       ],
       "type": "requirement"
@@ -54529,7 +54891,7 @@
         {
           "path": ".software-factory/context/board/epics/5.json",
           "pointer": "/covers/3",
-          "sha256": "e54d637b4545fa7913919c76e140871d1021469a139fca08bba6710795a543b5"
+          "sha256": "9f6b031d8b1351050f5308c9f4594ecce1495c5928504a1f83a9b25e1dda242d"
         }
       ],
       "type": "requirement"
@@ -54661,7 +55023,7 @@
         {
           "path": ".software-factory/context/board/epics/5.json",
           "pointer": "/covers/2",
-          "sha256": "e54d637b4545fa7913919c76e140871d1021469a139fca08bba6710795a543b5"
+          "sha256": "9f6b031d8b1351050f5308c9f4594ecce1495c5928504a1f83a9b25e1dda242d"
         }
       ],
       "type": "requirement"
@@ -54961,7 +55323,7 @@
         {
           "path": ".software-factory/context/board/epics/2.json",
           "pointer": "/covers/1",
-          "sha256": "0fcd37e0bfbc2e33a89b6d5ec14ed1dfa1845eff0b0d0eb16f42a40ce6213a24"
+          "sha256": "b2affc2075c427bbf934cfa8d350cb4f630c735084f30be51f9f94012d0262ba"
         }
       ],
       "type": "requirement"
@@ -55067,7 +55429,7 @@
         {
           "path": ".software-factory/context/board/epics/5.json",
           "pointer": "/covers/0",
-          "sha256": "e54d637b4545fa7913919c76e140871d1021469a139fca08bba6710795a543b5"
+          "sha256": "9f6b031d8b1351050f5308c9f4594ecce1495c5928504a1f83a9b25e1dda242d"
         }
       ],
       "type": "requirement"
@@ -55140,6 +55502,11 @@
           "path": ".software-factory/context/board/stories/29.json",
           "pointer": "/covers/5",
           "sha256": "01ff39dbcd39080ac91798621f6661dceac0c85114a992f4d2281ffc527a3773"
+        },
+        {
+          "path": ".software-factory/context/board/stories/47.json",
+          "pointer": "/covers/2",
+          "sha256": "bea5e65ad9d3e4d2b90a422bd7816c856523bde2abbe0f7465a302573fe5131b"
         }
       ],
       "type": "requirement"
@@ -55427,7 +55794,7 @@
         {
           "path": ".software-factory/context/board/epics/2.json",
           "pointer": "/covers/7",
-          "sha256": "0fcd37e0bfbc2e33a89b6d5ec14ed1dfa1845eff0b0d0eb16f42a40ce6213a24"
+          "sha256": "b2affc2075c427bbf934cfa8d350cb4f630c735084f30be51f9f94012d0262ba"
         }
       ],
       "type": "requirement"
@@ -55786,7 +56153,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "",
-          "sha256": "c704bfa17bd23197d7f69554cf27190b4bedf59ffa513b449a96c1e2c03b3dc0"
+          "sha256": "95c4e858df9caa1608b61e194d847a8554d54bba2c6369a5387ac850589d29a1"
         }
       ],
       "status": "in-review",
@@ -55998,6 +56365,32 @@
         }
       ],
       "status": "in-review",
+      "type": "story"
+    },
+    {
+      "id": "story:46",
+      "label": "Continuous BMad delivery with risk-adaptive human escalation",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/46.json",
+          "pointer": "",
+          "sha256": "8f70a39e0a1ecfcb7ba94322a67728cbd67ebcce1b0bb509372ba44c16d2fef5"
+        }
+      ],
+      "status": "backlog",
+      "type": "story"
+    },
+    {
+      "id": "story:47",
+      "label": "Whole software factory messaging and continuous SDLC cycle visuals",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/47.json",
+          "pointer": "",
+          "sha256": "bea5e65ad9d3e4d2b90a422bd7816c856523bde2abbe0f7465a302573fe5131b"
+        }
+      ],
+      "status": "backlog",
       "type": "story"
     },
     {
@@ -58632,5 +59025,5 @@
     }
   ],
   "schema": "sf-trace/1",
-  "source_fingerprint": "dae15e947eef65af833b879d5161dfda34970f33e9c5cedf05d4309049a6b051"
+  "source_fingerprint": "735295f78a429e7962c9688c9b77c16012c8ccb02dfd00f4ee8334f257aef12d"
 }

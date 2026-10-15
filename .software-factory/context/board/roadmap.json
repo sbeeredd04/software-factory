@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-15T18:05:49.063164+00:00",
-  "revision": 280,
+  "generated_at": "2026-10-15T18:15:31.728577+00:00",
+  "revision": 282,
   "streams": [
     {
       "id": "W-foundation",
@@ -35,7 +35,7 @@
       ],
       "counts": {
         "planned": 0,
-        "ready": 0,
+        "ready": 1,
         "in-progress": 0,
         "review": 14,
         "built": 0,
@@ -43,8 +43,9 @@
         "cancelled": 0
       },
       "critical_path": [
-        17,
-        18
+        40,
+        45,
+        46
       ]
     },
     {
@@ -104,7 +105,7 @@
       ],
       "counts": {
         "planned": 2,
-        "ready": 0,
+        "ready": 1,
         "in-progress": 1,
         "review": 2,
         "built": 0,
@@ -197,7 +198,8 @@
         42,
         43,
         44,
-        45
+        45,
+        46
       ],
       "needs": [
         1
@@ -289,7 +291,8 @@
         30,
         31,
         32,
-        33
+        33,
+        47
       ],
       "needs": [
         4
@@ -5749,6 +5752,552 @@
             "Root integrated full gate/maps/currentcase50 admission proof pending.",
             "No publication, real consumer deployment, live host loading or human epic acceptance."
           ]
+        },
+        "integrated-primary-proof": {
+          "type": "integrated-verification",
+          "subject_sha": "4f20f851a9776c542f0ad09d61cd2b099a3530d2",
+          "exit_code": 0,
+          "tests": {
+            "run": 756,
+            "passed": 755,
+            "failed": 0,
+            "skipped": 1,
+            "seconds": 284.166,
+            "skip": "optional jsonschema cross-check"
+          },
+          "evals": {
+            "run_id": "r-20261015T181049Z-premerge",
+            "passed": 50,
+            "failed": 0,
+            "unverified": 0,
+            "quarantined": 0,
+            "skipped": 0
+          },
+          "gate_log_sha256": "44b4c52e3f1c5c336c2c93160d3671f7370f8fc7ecde5307d6d57e17fb4cf7ba",
+          "eval_receipt_sha256": "b33fa48a4f71c7b9940dcca2ac02b0e820ae69d99b1b3ac7d7869a6cb9a1c617",
+          "plan_payload_sha256": "a070c3a7aa63483bdb96a1980680044fbac21a9633016ff90d2ca076d824ab0b",
+          "scope": "All existing static and authorized network gate steps passed; independent34-file source/admission review accepted. Integrated site separately passed6native media/card cases.",
+          "limitations": [
+            "Exact earlier policy subject only; latest owner risk-adaptive/BMad/visual amendment is new work, not verified by this result.",
+            "No external integration/deployment/publication or live host-loading proof."
+          ]
+        },
+        "integrated-native-card-proof": {
+          "type": "browser-verification",
+          "subject_sha": "4f20f851a9776c542f0ad09d61cd2b099a3530d2",
+          "status": "passed",
+          "exit_code": 0,
+          "report_sha256": "4e842cabbcd4c5962740627e315762561c82609dc531fe248d24c91c5b4798a9",
+          "controller_sha256": "21db0bd6a1ce6b1f50d042c3aa1eb3e9b6d7a3060fc22699631e41b10fcfd65f",
+          "script_current_sha256": "a7c7f32a1ea5327381efcf4725200c0e6ad93862fe9a49fd2e8599d8bb423554",
+          "cases": [
+            {
+              "viewport_requested": {
+                "width": 360,
+                "height": 640
+              },
+              "motion_requested": "default",
+              "failures": [],
+              "checks": {
+                "actual_html_bytes": true,
+                "viewport_matches": true,
+                "four_font_faces_loaded": true,
+                "four_font_resources_observed": true,
+                "hero_loaded_intrinsic_dimensions": true,
+                "same_origin_observed_resources": true,
+                "no_blocked_request": true,
+                "no_page_or_console_errors": true,
+                "no_http_or_request_failures": true,
+                "no_horizontal_document_overflow": true
+              },
+              "asset_cards": [
+                {
+                  "src": "img/loop.png",
+                  "complete": true,
+                  "naturalWidth": 1200,
+                  "naturalHeight": 800,
+                  "renderedWidth": 320,
+                  "renderedHeight": 214,
+                  "figureWidth": 320,
+                  "figureScrollWidth": 320,
+                  "figureHeight": 268,
+                  "figureScrollHeight": 268,
+                  "passed": true
+                },
+                {
+                  "src": "img/team.png",
+                  "complete": true,
+                  "naturalWidth": 1200,
+                  "naturalHeight": 800,
+                  "renderedWidth": 320,
+                  "renderedHeight": 214,
+                  "figureWidth": 320,
+                  "figureScrollWidth": 320,
+                  "figureHeight": 268,
+                  "figureScrollHeight": 268,
+                  "passed": true
+                },
+                {
+                  "src": "img/hosts.png",
+                  "complete": true,
+                  "naturalWidth": 1200,
+                  "naturalHeight": 800,
+                  "renderedWidth": 320,
+                  "renderedHeight": 214,
+                  "figureWidth": 320,
+                  "figureScrollWidth": 320,
+                  "figureHeight": 270,
+                  "figureScrollHeight": 270,
+                  "passed": true
+                }
+              ],
+              "final_io_checks": {
+                "no_blocked_requests": true,
+                "no_request_failures": true,
+                "no_page_errors": true,
+                "no_console_errors": true,
+                "no_http_errors": true
+              }
+            },
+            {
+              "viewport_requested": {
+                "width": 360,
+                "height": 640
+              },
+              "motion_requested": "reduce",
+              "failures": [],
+              "checks": {
+                "actual_html_bytes": true,
+                "viewport_matches": true,
+                "four_font_faces_loaded": true,
+                "four_font_resources_observed": true,
+                "hero_loaded_intrinsic_dimensions": true,
+                "same_origin_observed_resources": true,
+                "no_blocked_request": true,
+                "no_page_or_console_errors": true,
+                "no_http_or_request_failures": true,
+                "no_horizontal_document_overflow": true,
+                "native_reduced_motion_true": true,
+                "all_elements_and_pseudos_motion_disabled": true,
+                "root_scroll_auto": true
+              },
+              "asset_cards": [
+                {
+                  "src": "img/loop.png",
+                  "complete": true,
+                  "naturalWidth": 1200,
+                  "naturalHeight": 800,
+                  "renderedWidth": 320,
+                  "renderedHeight": 214,
+                  "figureWidth": 320,
+                  "figureScrollWidth": 320,
+                  "figureHeight": 268,
+                  "figureScrollHeight": 268,
+                  "passed": true,
+                  "screenshot": {
+                    "path": "/private/tmp/sf-showcase-headless-qa-assets-4f20f85/360x640-reduce-loop-card.png",
+                    "sha256": "0280f9997e4565726cbc8009d8acd9b7c5a3558b54cba1bf855b1e6d9903d24c",
+                    "bytes": 27260,
+                    "dimensions": [
+                      320,
+                      269
+                    ]
+                  }
+                },
+                {
+                  "src": "img/team.png",
+                  "complete": true,
+                  "naturalWidth": 1200,
+                  "naturalHeight": 800,
+                  "renderedWidth": 320,
+                  "renderedHeight": 214,
+                  "figureWidth": 320,
+                  "figureScrollWidth": 320,
+                  "figureHeight": 268,
+                  "figureScrollHeight": 268,
+                  "passed": true,
+                  "screenshot": {
+                    "path": "/private/tmp/sf-showcase-headless-qa-assets-4f20f85/360x640-reduce-team-card.png",
+                    "sha256": "dc2a861a5ff0e62f52340b345b95b26f4325879adea03da75f297b2d19d13706",
+                    "bytes": 22554,
+                    "dimensions": [
+                      320,
+                      269
+                    ]
+                  }
+                },
+                {
+                  "src": "img/hosts.png",
+                  "complete": true,
+                  "naturalWidth": 1200,
+                  "naturalHeight": 800,
+                  "renderedWidth": 320,
+                  "renderedHeight": 214,
+                  "figureWidth": 320,
+                  "figureScrollWidth": 320,
+                  "figureHeight": 270,
+                  "figureScrollHeight": 270,
+                  "passed": true,
+                  "screenshot": {
+                    "path": "/private/tmp/sf-showcase-headless-qa-assets-4f20f85/360x640-reduce-hosts-card.png",
+                    "sha256": "4cc107809525957f2225865ae4631e39f1849945876bba81668f822c330f5497",
+                    "bytes": 25736,
+                    "dimensions": [
+                      320,
+                      271
+                    ]
+                  }
+                }
+              ],
+              "final_io_checks": {
+                "no_blocked_requests": true,
+                "no_request_failures": true,
+                "no_page_errors": true,
+                "no_console_errors": true,
+                "no_http_errors": true
+              }
+            },
+            {
+              "viewport_requested": {
+                "width": 768,
+                "height": 1024
+              },
+              "motion_requested": "default",
+              "failures": [],
+              "checks": {
+                "actual_html_bytes": true,
+                "viewport_matches": true,
+                "four_font_faces_loaded": true,
+                "four_font_resources_observed": true,
+                "hero_loaded_intrinsic_dimensions": true,
+                "same_origin_observed_resources": true,
+                "no_blocked_request": true,
+                "no_page_or_console_errors": true,
+                "no_http_or_request_failures": true,
+                "no_horizontal_document_overflow": true
+              },
+              "asset_cards": [
+                {
+                  "src": "img/loop.png",
+                  "complete": true,
+                  "naturalWidth": 1200,
+                  "naturalHeight": 800,
+                  "renderedWidth": 691.1875,
+                  "renderedHeight": 461.453125,
+                  "figureWidth": 691,
+                  "figureScrollWidth": 691,
+                  "figureHeight": 515,
+                  "figureScrollHeight": 515,
+                  "passed": true
+                },
+                {
+                  "src": "img/team.png",
+                  "complete": true,
+                  "naturalWidth": 1200,
+                  "naturalHeight": 800,
+                  "renderedWidth": 691.1875,
+                  "renderedHeight": 461.453125,
+                  "figureWidth": 691,
+                  "figureScrollWidth": 691,
+                  "figureHeight": 515,
+                  "figureScrollHeight": 515,
+                  "passed": true
+                },
+                {
+                  "src": "img/hosts.png",
+                  "complete": true,
+                  "naturalWidth": 1200,
+                  "naturalHeight": 800,
+                  "renderedWidth": 691.1875,
+                  "renderedHeight": 461.453125,
+                  "figureWidth": 691,
+                  "figureScrollWidth": 691,
+                  "figureHeight": 515,
+                  "figureScrollHeight": 515,
+                  "passed": true
+                }
+              ],
+              "final_io_checks": {
+                "no_blocked_requests": true,
+                "no_request_failures": true,
+                "no_page_errors": true,
+                "no_console_errors": true,
+                "no_http_errors": true
+              }
+            },
+            {
+              "viewport_requested": {
+                "width": 768,
+                "height": 1024
+              },
+              "motion_requested": "reduce",
+              "failures": [],
+              "checks": {
+                "actual_html_bytes": true,
+                "viewport_matches": true,
+                "four_font_faces_loaded": true,
+                "four_font_resources_observed": true,
+                "hero_loaded_intrinsic_dimensions": true,
+                "same_origin_observed_resources": true,
+                "no_blocked_request": true,
+                "no_page_or_console_errors": true,
+                "no_http_or_request_failures": true,
+                "no_horizontal_document_overflow": true,
+                "native_reduced_motion_true": true,
+                "all_elements_and_pseudos_motion_disabled": true,
+                "root_scroll_auto": true
+              },
+              "asset_cards": [
+                {
+                  "src": "img/loop.png",
+                  "complete": true,
+                  "naturalWidth": 1200,
+                  "naturalHeight": 800,
+                  "renderedWidth": 691.1875,
+                  "renderedHeight": 461.453125,
+                  "figureWidth": 691,
+                  "figureScrollWidth": 691,
+                  "figureHeight": 515,
+                  "figureScrollHeight": 515,
+                  "passed": true
+                },
+                {
+                  "src": "img/team.png",
+                  "complete": true,
+                  "naturalWidth": 1200,
+                  "naturalHeight": 800,
+                  "renderedWidth": 691.1875,
+                  "renderedHeight": 461.453125,
+                  "figureWidth": 691,
+                  "figureScrollWidth": 691,
+                  "figureHeight": 515,
+                  "figureScrollHeight": 515,
+                  "passed": true
+                },
+                {
+                  "src": "img/hosts.png",
+                  "complete": true,
+                  "naturalWidth": 1200,
+                  "naturalHeight": 800,
+                  "renderedWidth": 691.1875,
+                  "renderedHeight": 461.453125,
+                  "figureWidth": 691,
+                  "figureScrollWidth": 691,
+                  "figureHeight": 515,
+                  "figureScrollHeight": 515,
+                  "passed": true
+                }
+              ],
+              "final_io_checks": {
+                "no_blocked_requests": true,
+                "no_request_failures": true,
+                "no_page_errors": true,
+                "no_console_errors": true,
+                "no_http_errors": true
+              }
+            },
+            {
+              "viewport_requested": {
+                "width": 1440,
+                "height": 900
+              },
+              "motion_requested": "default",
+              "failures": [],
+              "checks": {
+                "actual_html_bytes": true,
+                "viewport_matches": true,
+                "four_font_faces_loaded": true,
+                "four_font_resources_observed": true,
+                "hero_loaded_intrinsic_dimensions": true,
+                "same_origin_observed_resources": true,
+                "no_blocked_request": true,
+                "no_page_or_console_errors": true,
+                "no_http_or_request_failures": true,
+                "no_horizontal_document_overflow": true
+              },
+              "asset_cards": [
+                {
+                  "src": "img/loop.png",
+                  "complete": true,
+                  "naturalWidth": 1200,
+                  "naturalHeight": 800,
+                  "renderedWidth": 760,
+                  "renderedHeight": 507.328125,
+                  "figureWidth": 760,
+                  "figureScrollWidth": 760,
+                  "figureHeight": 561,
+                  "figureScrollHeight": 561,
+                  "passed": true,
+                  "screenshot": {
+                    "path": "/private/tmp/sf-showcase-headless-qa-assets-4f20f85/1440x900-default-loop-card.png",
+                    "sha256": "3164b5ce7ba0f2fb58b4d6058696166bddace1c9fe0a4419bd908ca9c3425493",
+                    "bytes": 85069,
+                    "dimensions": [
+                      760,
+                      562
+                    ]
+                  }
+                },
+                {
+                  "src": "img/team.png",
+                  "complete": true,
+                  "naturalWidth": 1200,
+                  "naturalHeight": 800,
+                  "renderedWidth": 760,
+                  "renderedHeight": 507.328125,
+                  "figureWidth": 760,
+                  "figureScrollWidth": 760,
+                  "figureHeight": 561,
+                  "figureScrollHeight": 561,
+                  "passed": true,
+                  "screenshot": {
+                    "path": "/private/tmp/sf-showcase-headless-qa-assets-4f20f85/1440x900-default-team-card.png",
+                    "sha256": "1df559bc02f20d366566e81e168da788eb1fcfd66e629d629a677454e889fae2",
+                    "bytes": 69284,
+                    "dimensions": [
+                      760,
+                      562
+                    ]
+                  }
+                },
+                {
+                  "src": "img/hosts.png",
+                  "complete": true,
+                  "naturalWidth": 1200,
+                  "naturalHeight": 800,
+                  "renderedWidth": 760,
+                  "renderedHeight": 507.328125,
+                  "figureWidth": 760,
+                  "figureScrollWidth": 760,
+                  "figureHeight": 561,
+                  "figureScrollHeight": 561,
+                  "passed": true,
+                  "screenshot": {
+                    "path": "/private/tmp/sf-showcase-headless-qa-assets-4f20f85/1440x900-default-hosts-card.png",
+                    "sha256": "addc535aca9b87e4b2594ad0e22bdd8852565d30bd607cc10f1e409e05475519",
+                    "bytes": 84016,
+                    "dimensions": [
+                      760,
+                      563
+                    ]
+                  }
+                }
+              ],
+              "final_io_checks": {
+                "no_blocked_requests": true,
+                "no_request_failures": true,
+                "no_page_errors": true,
+                "no_console_errors": true,
+                "no_http_errors": true
+              }
+            },
+            {
+              "viewport_requested": {
+                "width": 1440,
+                "height": 900
+              },
+              "motion_requested": "reduce",
+              "failures": [],
+              "checks": {
+                "actual_html_bytes": true,
+                "viewport_matches": true,
+                "four_font_faces_loaded": true,
+                "four_font_resources_observed": true,
+                "hero_loaded_intrinsic_dimensions": true,
+                "same_origin_observed_resources": true,
+                "no_blocked_request": true,
+                "no_page_or_console_errors": true,
+                "no_http_or_request_failures": true,
+                "no_horizontal_document_overflow": true,
+                "native_reduced_motion_true": true,
+                "all_elements_and_pseudos_motion_disabled": true,
+                "root_scroll_auto": true
+              },
+              "asset_cards": [
+                {
+                  "src": "img/loop.png",
+                  "complete": true,
+                  "naturalWidth": 1200,
+                  "naturalHeight": 800,
+                  "renderedWidth": 760,
+                  "renderedHeight": 507.328125,
+                  "figureWidth": 760,
+                  "figureScrollWidth": 760,
+                  "figureHeight": 561,
+                  "figureScrollHeight": 561,
+                  "passed": true
+                },
+                {
+                  "src": "img/team.png",
+                  "complete": true,
+                  "naturalWidth": 1200,
+                  "naturalHeight": 800,
+                  "renderedWidth": 760,
+                  "renderedHeight": 507.328125,
+                  "figureWidth": 760,
+                  "figureScrollWidth": 760,
+                  "figureHeight": 561,
+                  "figureScrollHeight": 561,
+                  "passed": true
+                },
+                {
+                  "src": "img/hosts.png",
+                  "complete": true,
+                  "naturalWidth": 1200,
+                  "naturalHeight": 800,
+                  "renderedWidth": 760,
+                  "renderedHeight": 507.328125,
+                  "figureWidth": 760,
+                  "figureScrollWidth": 760,
+                  "figureHeight": 561,
+                  "figureScrollHeight": 561,
+                  "passed": true
+                }
+              ],
+              "final_io_checks": {
+                "no_blocked_requests": true,
+                "no_request_failures": true,
+                "no_page_errors": true,
+                "no_console_errors": true,
+                "no_http_errors": true
+              }
+            }
+          ],
+          "content_parity": [
+            {
+              "viewport": {
+                "width": 360,
+                "height": 640
+              },
+              "default_vs_reduce_equal": true,
+              "comparison": "body visible text, generated prompt/command, headings and link text/targets; no source mutation"
+            },
+            {
+              "viewport": {
+                "width": 768,
+                "height": 1024
+              },
+              "default_vs_reduce_equal": true,
+              "comparison": "body visible text, generated prompt/command, headings and link text/targets; no source mutation"
+            },
+            {
+              "viewport": {
+                "width": 1440,
+                "height": 900
+              },
+              "default_vs_reduce_equal": true,
+              "comparison": "body visible text, generated prompt/command, headings and link text/targets; no source mutation"
+            }
+          ],
+          "engine_version": "156.0.8078.4",
+          "forbidden_flags_present": [],
+          "root_visual_review": "Viewed all six mobile-reduced/desktop-default card screenshots at original detail; images uncropped, matching full-size links and descriptive alt text present. Small mobile figure detail available through full-size link.",
+          "limitations": [
+            "Raw reports/PNGs retained externally; no binary run artifacts.",
+            "Current script hash is inspected after execution, not independently authenticated runtime source proof.",
+            "Automated overflow tests cover document horizontal and each figure box, not all internal page elements.",
+            "No production, host-loading, owner-acceptance or universal orphan proof."
+          ]
         }
       },
       "baseline_sha": null,
@@ -5759,7 +6308,8 @@
         "live": false
       },
       "blocks": [
-        31
+        31,
+        47
       ],
       "history": [
         {
@@ -7063,7 +7613,9 @@
       "claim": {
         "live": false
       },
-      "blocks": [],
+      "blocks": [
+        46
+      ],
       "history": [
         {
           "at": "2026-10-15T09:06:01.118358+00:00",
@@ -7098,10 +7650,99 @@
         "skills/software-factory/workflows/bug.md"
       ],
       "source_key": "expansion/authorized-operations-loop"
+    },
+    {
+      "id": 46,
+      "epic": 2,
+      "stream": "W-expansion",
+      "type": "story",
+      "title": "Continuous BMad delivery with risk-adaptive human escalation",
+      "status": "backlog",
+      "state": "ready",
+      "owner": null,
+      "after": [
+        45
+      ],
+      "covers": [
+        "VAL-ORCH-AUTONOMY",
+        "VAL-BOARD-EPIC-POLICY",
+        "VAL-BMAD-PLANNING"
+      ],
+      "risk": "high",
+      "hitl": true,
+      "plan_checkpoint": false,
+      "done_checkpoint": true,
+      "blocked": null,
+      "receipts": {},
+      "baseline_sha": null,
+      "branch": null,
+      "pr": null,
+      "merged_sha": null,
+      "claim": {
+        "live": false
+      },
+      "blocks": [],
+      "history": [],
+      "findings": [],
+      "source_key": "expansion/risk-adaptive-autonomy",
+      "evidence_contract": 1
+    },
+    {
+      "id": 47,
+      "epic": 5,
+      "stream": "W-launch",
+      "type": "story",
+      "title": "Whole software factory messaging and continuous SDLC cycle visuals",
+      "status": "backlog",
+      "state": "ready",
+      "owner": null,
+      "after": [
+        30
+      ],
+      "covers": [
+        "VAL-FACTORY-CYCLE",
+        "VAL-ASSET-001",
+        "VAL-SITE-006"
+      ],
+      "risk": "standard",
+      "hitl": false,
+      "plan_checkpoint": false,
+      "done_checkpoint": false,
+      "blocked": null,
+      "receipts": {},
+      "baseline_sha": null,
+      "branch": null,
+      "pr": null,
+      "merged_sha": null,
+      "claim": {
+        "live": false
+      },
+      "blocks": [],
+      "history": [],
+      "findings": [],
+      "source_key": "launch-publication/continuous-factory-cycle",
+      "evidence_contract": 1
     }
   ],
   "frontier": {
-    "ready": [],
+    "ready": [
+      {
+        "id": 46,
+        "epic": 2,
+        "stream": "W-expansion",
+        "title": "Continuous BMad delivery with risk-adaptive human escalation",
+        "why": "after 45 in-review; unclaimed",
+        "claimed": false
+      },
+      {
+        "id": 47,
+        "epic": 5,
+        "stream": "W-launch",
+        "title": "Whole software factory messaging and continuous SDLC cycle visuals",
+        "why": "after 30 in-review; unclaimed",
+        "claimed": false
+      }
+    ],
     "waiting_on_prereq": [
       {
         "id": 32,
