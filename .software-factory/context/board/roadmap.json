@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-15T19:09:59.578775+00:00",
-  "revision": 303,
+  "generated_at": "2026-10-15T19:11:24.112302+00:00",
+  "revision": 304,
   "streams": [
     {
       "id": "W-foundation",
@@ -8234,16 +8234,7 @@
       "pr": null,
       "merged_sha": null,
       "claim": {
-        "live": true,
-        "owner": "codex-install-repair",
-        "paths": [
-          "install.py",
-          "skills/sf-evolve/scripts/evolve.py",
-          "tests/test_evolve.py",
-          "tests/test_installer.py",
-          "tests/test_install_lifecycle.py"
-        ],
-        "claimed_at": "2026-10-15T18:55:43.644313+00:00"
+        "live": false
       },
       "blocks": [],
       "history": [

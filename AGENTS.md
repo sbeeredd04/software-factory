@@ -87,3 +87,20 @@ never in canonical files.
 - [SECURITY.md](SECURITY.md) - vulnerability reporting and scope
 - [NOTICE.md](NOTICE.md) - attribution, trademarks, non-affiliation
 - [CHANGELOG.md](CHANGELOG.md) - what changed
+<!-- software-factory:begin -->
+## Software Factory
+
+This project has the Software Factory pack installed for Codex.
+Start or resume factory work with the `software-factory` skill
+(`$software-factory`); its entry point is
+`.agents/skills/software-factory/SKILL.md`.
+Factory-owned files are listed in
+`.software-factory/installation.json`; runtime state lives under
+`.software-factory/` and is ignored except for the committed
+`context/` home. Codex hooks run only after a one-time trust
+review: run `/hooks` and trust the factory hooks.
+Custom agents inherit the parent session permissions; reviewer
+instructions do not enforce a separate read-only sandbox. When enforced
+read-only review is required, verify an actually read-only parent/session
+or supported restriction before proceeding with dependent work.
+<!-- software-factory:end -->
