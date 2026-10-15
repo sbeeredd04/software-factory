@@ -1220,6 +1220,23 @@
           "hitl": false,
           "plan_checkpoint": false,
           "done_checkpoint": false
+        },
+        {
+          "key": "lifecycle-system-map",
+          "title": "Explain the complete factory through orchestration and delivery graphs",
+          "type": "story",
+          "after": [
+            "continuous-factory-cycle"
+          ],
+          "covers": [
+            "VAL-FACTORY-CYCLE",
+            "VAL-ASSET-001",
+            "VAL-SITE-006"
+          ],
+          "risk": "standard",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": false
         }
       ]
     }

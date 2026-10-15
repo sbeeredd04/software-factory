@@ -5,7 +5,7 @@
   "epic": 5,
   "type": "story",
   "title": "Explain the complete factory through orchestration and delivery graphs",
-  "status": "in-progress",
+  "status": "in-review",
   "owner": "codex-lifecycle",
   "after": [
     47
@@ -23,13 +23,13 @@
   "receipts": {
     "worker-handoff": {
       "type": "agent-attempt",
-      "subject_sha": "f2369bab60f5baac0a6e2171cf4122215812a162",
+      "subject_sha": "a6434eeb3ecbc4308f272db1da55a4543911d73a",
       "agent": "/root/lifecycle_design",
       "role": "lifecycle visual implementation",
       "skill": "bmad-build",
       "effective_model": null,
       "status": "awaiting-review",
-      "scope": "Two-level illustrative factory architecture, parallel per-story delivery, BMad planning, independent proof and repair, sequential integration, authorized feedback, recovery, conditional human escalation; no policy/runtime changes.",
+      "scope": "Two-level illustrative factory architecture, parallel per-story delivery, BMad planning, independent proof and repair, sequential integration, authorized feedback, recovery, conditional human escalation; no policy/runtime changes. Exact observed-use-selector receipt representation corrects generic-link interpretation without changing checker or eval criteria.",
       "checks": {
         "assets_tests_passed": 36,
         "showcase_tests_passed": 18,
@@ -39,12 +39,15 @@
         "byte_equal_aliases": 3,
         "expanded_custom_inter_labels": 52,
         "standalone_custom_inter_labels": 52,
-        "owning_card_failures": 0
+        "owning_card_failures": 0,
+        "source_links_exit_code": 0,
+        "exact_archive_links_exit_code": 0,
+        "site_and_png_files_unchanged": 32
       },
       "evidence": ".software-factory/runs/software-factory-v01/evidence/lifecycle54-author-expanded-visual.json",
       "evidence_sha256": "1f1cd13a01ac26b2384d6eb20a8eb7025038b81d13d0c1c1fe45163439f30301",
       "limits": [
-        "Author-focused verification only; root exact-source native browser verification and full gate pending.",
+        "Author-focused checks and source/archive links passed; final root full gate/native UI/release preflight pending.",
         "Review findings corrected in f236; first c955 browser run remains failed and is not relabeled.",
         "No built/done, remote CI, external integration, publication or live-host execution claim."
       ]
@@ -101,8 +104,15 @@
       "by": "codex-lifecycle",
       "from": "in-review",
       "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T21:41:45.571355+00:00",
+      "by": "codex-lifecycle",
+      "from": "in-progress",
+      "to": "in-review"
     }
   ],
   "findings": [],
-  "source_key": "launch-publication/lifecycle-system-map"
+  "source_key": "launch-publication/lifecycle-system-map",
+  "review_subject_sha": "a6434eeb3ecbc4308f272db1da55a4543911d73a"
 }

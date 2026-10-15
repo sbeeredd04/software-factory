@@ -5,9 +5,9 @@
 > (`<skill-dir>` is the installed skill directory, e.g. `.claude/skills/sf-crawl`
 > or `.agents/skills/sf-crawl`).
 
-- Source revision: 02e77b795c33fc4ad92ea61908011a877b652dc5
+- Source revision: a6434eeb3ecbc4308f272db1da55a4543911d73a
 - File selection: git-tracked-and-unignored
-- Generated: 2026-10-15T20:52:06Z
+- Generated: 2026-10-15T21:41:46Z
 
 ## Limits
 
@@ -37,7 +37,7 @@
 | Module | File | Definitions | Internal imports | Import fan-out |
 | --- | --- | --- | --- | --- |
 | `adapters.trackers` | `adapters/trackers.py` | 10 | 0 | 8 |
-| `assets.tools.capture` | `assets/tools/capture.py` | 6 | 0 | 11 |
+| `assets.tools.capture` | `assets/tools/capture.py` | 7 | 0 | 13 |
 | `examples.minimal.greet` | `examples/minimal/greet.py` | 1 | 0 | 2 |
 | `examples.minimal.tests.test_greet` | `examples/minimal/tests/test_greet.py` | 1 | 0 | 2 |
 | `examples.python-api.app` | `examples/python-api/app.py` | 3 | 0 | 5 |
@@ -51,7 +51,7 @@
 | `scripts.check_mermaid` | `scripts/check_mermaid.py` | 6 | 0 | 8 |
 | `scripts.distribution` | `scripts/distribution.py` | 9 | 0 | 7 |
 | `scripts.install_lifecycle` | `scripts/install_lifecycle.py` | 23 | 0 | 17 |
-| `scripts.render_assets` | `scripts/render_assets.py` | 22 | 0 | 20 |
+| `scripts.render_assets` | `scripts/render_assets.py` | 22 | 0 | 22 |
 | `scripts.scan_public` | `scripts/scan_public.py` | 10 | 0 | 7 |
 | `scripts.validate` | `scripts/validate.py` | 9 | 0 | 6 |
 | `site.scripts.sync_prompt` | `site/scripts/sync_prompt.py` | 2 | 0 | 4 |
@@ -132,12 +132,13 @@ No internal import edges.
 - `adapters.trackers.read` (line 168) calls `Path` (unconfirmed), `TrackerError` (confirmed: adapters.trackers.TrackerError), `absolute` (unconfirmed), `content.decode` (unconfirmed), `enumerate` (unconfirmed), `fds.append` (unconfirmed), `identity` (unconfirmed), `len` (unconfirmed), `min` (unconfirmed), `os.close` (unconfirmed), `os.fstat` (unconfirmed), `os.open` (unconfirmed), `os.read` (unconfirmed), `os.stat` (unconfirmed), `reversed` (unconfirmed), `stat.S_ISREG` (unconfirmed)
 - `adapters.trackers.detect` (line 209) calls `Path` (unconfirmed), `TrackerError` (confirmed: adapters.trackers.TrackerError), `is_file` (unconfirmed), `len` (unconfirmed)
 - `adapters.trackers.main` (line 222) calls `argparse.ArgumentParser` (unconfirmed), `json.dumps` (unconfirmed), `observe` (confirmed: adapters.trackers.observe), `parser.add_argument` (unconfirmed), `parser.exit` (unconfirmed), `parser.parse_args` (unconfirmed), `print` (unconfirmed), `read` (confirmed: adapters.trackers.read)
-- `assets.tools.capture.walk_nodes` (line 24) calls `node.get` (unconfirmed), `walk_nodes` (confirmed: assets.tools.capture.walk_nodes)
-- `assets.tools.capture.cycle_evidence` (line 31) calls `ValueError` (unconfirmed), `any` (unconfirmed), `child.get` (unconfirmed), `client.detach` (unconfirmed), `client.send` (unconfirmed), `evaluate` (unconfirmed), `get` (unconfirmed), `join` (unconfirmed), `len` (unconfirmed), `node.get` (unconfirmed), `observations.append` (unconfirmed), `page.context.new_cdp_session` (unconfirmed), `page.locator` (unconfirmed), `walk_nodes` (confirmed: assets.tools.capture.walk_nodes)
-- `assets.tools.capture.read_job` (line 62) calls `ValueError` (unconfirmed), `json.loads` (unconfirmed), `len` (unconfirmed), `os.getuid` (unconfirmed), `parent.is_symlink` (unconfirmed), `parent.stat` (unconfirmed), `path.is_absolute` (unconfirmed), `path.is_file` (unconfirmed), `path.is_symlink` (unconfirmed), `path.read_text` (unconfirmed), `path.stat` (unconfirmed), `set` (unconfirmed), `urlsplit` (unconfirmed)
-- `assets.tools.capture.capture_page` (line 82) calls `ValueError` (unconfirmed), `browser.new_context` (unconfirmed), `context.close` (unconfirmed), `context.new_page` (unconfirmed), `context.on` (unconfirmed), `context.route` (unconfirmed), `cycle_evidence` (confirmed: assets.tools.capture.cycle_evidence), `errors.append` (unconfirmed), `isinstance` (unconfirmed), `json.dumps` (unconfirmed), `page.evaluate` (unconfirmed), `page.goto` (unconfirmed), `page.on` (unconfirmed), `page.screenshot` (unconfirmed), `page.wait_for_selector` (unconfirmed), `print` (unconfirmed), `ready.get` (unconfirmed), `requests.append` (unconfirmed), `route.abort` (unconfirmed), `route.continue_` (unconfirmed), `str` (unconfirmed), `urlsplit` (unconfirmed)
-- `assets.tools.capture.capture` (line 135) calls `ValueError` (unconfirmed), `append` (unconfirmed), `browser.close` (unconfirmed), `capture_page` (confirmed: assets.tools.capture.capture_page), `importlib.metadata.version` (unconfirmed), `json.dumps` (unconfirmed), `platform.python_version` (unconfirmed), `platform.system` (unconfirmed), `playwright.chromium.launch` (unconfirmed), `read_job` (confirmed: assets.tools.capture.read_job), `str` (unconfirmed), `sync_playwright` (unconfirmed), `write_text` (unconfirmed)
-- `assets.tools.capture.main` (line 162) calls `RuntimeError` (unconfirmed), `argparse.ArgumentParser` (unconfirmed), `capture` (confirmed: assets.tools.capture.capture), `parser.add_argument` (unconfirmed), `parser.parse_args` (unconfirmed), `print` (unconfirmed), `signal.getsignal` (unconfirmed), `signal.signal` (unconfirmed)
+- `assets.tools.capture.walk_nodes` (line 26) calls `node.get` (unconfirmed), `walk_nodes` (confirmed: assets.tools.capture.walk_nodes)
+- `assets.tools.capture.cycle_evidence` (line 37) calls `svg_evidence` (confirmed: assets.tools.capture.svg_evidence)
+- `assets.tools.capture.svg_evidence` (line 41) calls `ET.fromstring` (unconfirmed), `ValueError` (unconfirmed), `any` (unconfirmed), `child.get` (unconfirmed), `client.detach` (unconfirmed), `client.send` (unconfirmed), `evaluate` (unconfirmed), `group.iter` (unconfirmed), `isinstance` (unconfirmed), `join` (unconfirmed), `len` (unconfirmed), `math.isfinite` (unconfirmed), `max` (unconfirmed), `min` (unconfirmed), `next` (unconfirmed), `node.get` (unconfirmed), `node.itertext` (unconfirmed), `observations.append` (unconfirmed), `observed.get` (unconfirmed), `page.context.new_cdp_session` (unconfirmed), `page.locator` (unconfirmed), `page.request.get` (unconfirmed), `reference.rsplit` (unconfirmed), `reference.startswith` (unconfirmed), `response.body` (unconfirmed) … (call cap reached)
+- `assets.tools.capture.read_job` (line 123) calls `ValueError` (unconfirmed), `json.loads` (unconfirmed), `len` (unconfirmed), `os.getuid` (unconfirmed), `parent.is_symlink` (unconfirmed), `parent.stat` (unconfirmed), `path.is_absolute` (unconfirmed), `path.is_file` (unconfirmed), `path.is_symlink` (unconfirmed), `path.read_text` (unconfirmed), `path.stat` (unconfirmed), `set` (unconfirmed), `urlsplit` (unconfirmed)
+- `assets.tools.capture.capture_page` (line 143) calls `ValueError` (unconfirmed), `browser.new_context` (unconfirmed), `context.close` (unconfirmed), `context.new_page` (unconfirmed), `context.on` (unconfirmed), `context.route` (unconfirmed), `cycle_evidence` (confirmed: assets.tools.capture.cycle_evidence), `errors.append` (unconfirmed), `isinstance` (unconfirmed), `json.dumps` (unconfirmed), `page.evaluate` (unconfirmed), `page.goto` (unconfirmed), `page.on` (unconfirmed), `page.screenshot` (unconfirmed), `page.wait_for_selector` (unconfirmed), `print` (unconfirmed), `ready.get` (unconfirmed), `requests.append` (unconfirmed), `route.abort` (unconfirmed), `route.continue_` (unconfirmed), `str` (unconfirmed), `urlsplit` (unconfirmed)
+- `assets.tools.capture.capture` (line 196) calls `ValueError` (unconfirmed), `append` (unconfirmed), `browser.close` (unconfirmed), `capture_page` (confirmed: assets.tools.capture.capture_page), `importlib.metadata.version` (unconfirmed), `json.dumps` (unconfirmed), `platform.python_version` (unconfirmed), `platform.system` (unconfirmed), `playwright.chromium.launch` (unconfirmed), `read_job` (confirmed: assets.tools.capture.read_job), `str` (unconfirmed), `sync_playwright` (unconfirmed), `write_text` (unconfirmed)
+- `assets.tools.capture.main` (line 223) calls `RuntimeError` (unconfirmed), `argparse.ArgumentParser` (unconfirmed), `capture` (confirmed: assets.tools.capture.capture), `parser.add_argument` (unconfirmed), `parser.parse_args` (unconfirmed), `print` (unconfirmed), `signal.getsignal` (unconfirmed), `signal.signal` (unconfirmed)
 - `examples.minimal.greet.greeting` (line 7) calls `ValueError` (unconfirmed), `isinstance` (unconfirmed), `name.strip` (unconfirmed)
 - `examples.minimal.tests.test_greet.GreetingTests.test_named_and_default` (line 7) calls `greeting` (unconfirmed), `self.assertEqual` (unconfirmed)
 - `examples.minimal.tests.test_greet.GreetingTests.test_empty_refused` (line 11) calls `greeting` (unconfirmed), `self.assertRaises` (unconfirmed)
@@ -222,8 +223,7 @@ No internal import edges.
 - `scripts.bmad_install.save_record` (line 402) calls `Path` (unconfirmed), `api.InstallError` (unconfirmed), `encode` (unconfirmed), `importlib.util.module_from_spec` (unconfirmed), `importlib.util.spec_from_file_location` (unconfirmed), `json.dumps` (unconfirmed), `json.loads` (unconfirmed), `lifecycle.parent_fd` (unconfirmed), `lifecycle.publish` (unconfirmed), `lifecycle.recovery_directory` (unconfirmed), `os.close` (unconfirmed), `os.open` (unconfirmed), `read_at_bounded` (confirmed: scripts.bmad_install.read_at_bounded), `spec.loader.exec_module` (unconfirmed), `with_name` (unconfirmed)
 - `scripts.bmad_install.provision` (line 425) calls `api.InstallError` (unconfirmed), `api.acquire_lock` (unconfirmed), `api.sha256` (unconfirmed), `attempt` (confirmed: scripts.bmad_install.attempt), `describe` (confirmed: scripts.bmad_install.describe), `fcntl.flock` (unconfirmed), `int` (unconfirmed), `isinstance` (unconfirmed), `load_ownership` (confirmed: scripts.bmad_install.load_ownership), `os.close` (unconfirmed), `previous.get` (unconfirmed), `print` (unconfirmed), `prior_bmad.get` (unconfirmed), `read_payload` (confirmed: scripts.bmad_install.read_payload), `record.update` (unconfirmed), `save_record` (confirmed: scripts.bmad_install.save_record), `set` (unconfirmed)
 - `scripts.build_release.release_files` (line 17) calls `Path` (unconfirmed), `ValueError` (unconfirmed), `all` (unconfirmed), `any` (unconfirmed), `distribution.bundle_files` (unconfirmed), `distribution.load_api` (unconfirmed), `files.items` (unconfirmed), `files.update` (unconfirmed), `is_relative_to` (unconfirmed), `isinstance` (unconfirmed), `items` (unconfirmed), `json.loads` (unconfirmed), `len` (unconfirmed), `name.startswith` (unconfirmed), `p.is_symlink` (unconfirmed), `path.is_file` (unconfirmed), `path.is_symlink` (unconfirmed), `path.parent.mkdir` (unconfirmed), `path.read_bytes` (unconfirmed), `path.resolve` (unconfirmed), `path.write_bytes` (unconfirmed), `read_text` (unconfirmed), `resolve` (unconfirmed), `root.resolve` (unconfirmed), `set` (unconfirmed) … (call cap reached)
-- `scripts.build_release.archive_bytes` (line 47) calls `archive.addfile` (unconfirmed), `files.items` (unconfirmed), `gzip.GzipFile` (unconfirmed), `io.BytesIO` (unconfirmed), `len` (unconfirmed), `name.endswith` (unconfirmed), `result.getvalue` (unconfirmed), `sorted` (unconfirmed), `tarfile.TarInfo` (unconfirmed), `tarfile.open` (unconfirmed)
-- … 1576 more call rows (cap reached)
+- … 1581 more call rows (cap reached)
 
 ## Entry points
 
