@@ -54,7 +54,7 @@ class InstallerCase(unittest.TestCase):
 
     def install(self, repo, *args):
         return support.run_installer(
-            "install", "--project", repo, *args, env=self.env
+            "install", "--project", repo, *args, "--skip-bmad", env=self.env
         )
 
     def assert_recorders_empty(self):

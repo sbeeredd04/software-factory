@@ -21,7 +21,8 @@ work for genuinely missing planning, architecture skills for contract changes,
 and the ticket/sprint artifacts to slice an initiative into epics and stories.
 When BMad is absent, plan natively with the same discipline: outcome, acceptance
 criteria, stories, proof per story. The orchestrator keeps ownership of design
-and acceptance either way.
+and acceptance either way. Installation, provenance and partial-effect recovery
+are described in [BMad provisioning](bmad-provisioning.md).
 
 ## What a plan names
 

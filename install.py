@@ -788,6 +788,7 @@ def build_manifest(
         "hosts": [host for host in REGISTERED_HOSTS if host in installed_hosts],
         "profile": "full" if (previous or {}).get("profile") == "full" else profile,
         "files": files,
+        **({"bmad": previous["bmad"]} if previous and "bmad" in previous else {}),
     }
 
 
@@ -1194,13 +1195,19 @@ def cmd_install(args: argparse.Namespace) -> int:
     )
     if not changes and not metadata_changed:
         print(f"install: 0 changes ({len(planned)} files already current)")
-        return 0
-    apply_plan(root, planned, previous, hosts, args.profile)
-    for line in format_plan(planned):
-        print(line)
-    current = sum(1 for item in planned if item.status == "noop")
-    print(f"install: {len(changes)} change(s) applied "
-          f"({current} already current); manifest {MANIFEST_REL}")
+    else:
+        apply_plan(root, planned, previous, hosts, args.profile)
+        for line in format_plan(planned):
+            print(line)
+        current = sum(1 for item in planned if item.status == "noop")
+        print(f"install: {len(changes)} change(s) applied "
+              f"({current} already current); manifest {MANIFEST_REL}")
+    if not args.skip_bmad:
+        sys.dont_write_bytecode = True
+        spec = importlib.util.spec_from_file_location("sf_bmad_install", PACK_ROOT / "scripts/bmad_install.py")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        return module.provision(root, hosts, sys.modules[__name__])
     return 0
 
 

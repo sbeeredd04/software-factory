@@ -49,6 +49,40 @@
     "profile": {
       "enum": ["full", "skills-only"]
     },
+    "bmad": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Observed third-party provenance only; never factory ownership or permission to uninstall BMad.",
+      "required": ["package", "requested_version", "tools", "status", "reason", "runtime_versions", "version", "modules", "ides", "manifest", "manifest_sha256"],
+      "properties": {
+        "package": {"const": "bmad-method@6.12.0"},
+        "requested_version": {"const": "6.12.0"},
+        "tools": {"type": "array", "items": {"enum": ["claude-code", "cursor", "codex"]}},
+        "status": {"enum": ["installed", "existing", "degraded", "failed"]},
+        "reason": {"type": "string"},
+        "runtime_versions": {
+          "type": "object", "additionalProperties": false,
+          "properties": {"node": {"type": "string"}, "npm": {"type": "string"}}
+        },
+        "version": {"type": ["string", "null"]},
+        "modules": {
+          "type": "array",
+          "items": {
+            "type": "object", "additionalProperties": false,
+            "required": ["name", "version"],
+            "properties": {
+              "name": {"type": "string"}, "version": {"type": ["string", "null"]},
+              "source": {"type": ["string", "null"]}, "channel": {"type": ["string", "null"]},
+              "sha": {"type": ["string", "null"]}
+            }
+          }
+        },
+        "ides": {"type": "array", "items": {"type": "string"}},
+        "manifest": {"enum": ["_bmad/_config/manifest.yaml", null]},
+        "manifest_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+        "exit_code": {"type": ["integer", "null"]}
+      }
+    },
     "files": {
       "type": "array",
       "items": {
