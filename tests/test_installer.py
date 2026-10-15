@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import runpy
 import shutil
 import stat
 import subprocess
@@ -144,6 +145,31 @@ class FreshInstallTests(InstallerCase):
         self.assertFalse((repo / ".software-factory/runtime").exists())
         manifest = json.loads((repo / MANIFEST).read_text())
         self.assertEqual("skills-only", manifest["profile"])
+
+
+class ManifestTransactionTests(InstallerCase):
+    def test_stale_plan_cannot_drop_ownership_added_by_another_install(self):
+        repo = support.fresh_repo(self.temp)
+        installed = self.install(repo, "--host", "claude-code")
+        self.assertEqual(0, installed.returncode, installed.stderr)
+        installer = runpy.run_path(str(support.INSTALLER))
+        planned, conflicts, previous = installer["build_plan"](
+            repo, ["codex"], "skills-only", set()
+        )
+        self.assertEqual([], conflicts)
+        intervening = self.install(
+            repo, "--host", "cursor", "--profile", "skills-only"
+        )
+        self.assertEqual(0, intervening.returncode, intervening.stderr)
+        before = support.tree_hashes(repo)
+        with self.assertRaisesRegex(
+            installer["InstallError"], "ownership changed"
+        ):
+            installer["apply_plan"](
+                repo, planned, previous, ["codex"], "skills-only"
+            )
+        self.assertEqual(before, support.tree_hashes(repo))
+        self.assert_recorders_empty()
 
 
 class GitignoreTests(InstallerCase):

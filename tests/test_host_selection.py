@@ -244,6 +244,109 @@ class AllHostsTests(SelectionCase):
 
 
 class ConvergenceTests(SelectionCase):
+    def test_sequential_installs_keep_complete_ownership_and_reinstall_cleanly(self):
+        env, guard_log, _ = support.guard_env()
+        repo = support.fresh_repo(self.temp)
+        prior_paths = set()
+        for index, host in enumerate(("claude-code", "cursor", "codex"), start=1):
+            result = self.install(repo, "--host", host, env=env)
+            self.assertEqual(0, result.returncode, result.stderr)
+            manifest = json.loads((repo / MANIFEST).read_text())
+            self.assertEqual(
+                ["claude-code", "cursor", "codex"][:index], manifest["hosts"]
+            )
+            owned = {entry["path"]: entry for entry in manifest["files"]}
+            self.assertTrue(prior_paths <= owned.keys())
+            hashes = support.tree_hashes(repo)
+            for path, entry in owned.items():
+                self.assertEqual(hashes[path], entry["sha256"], path)
+            prior_paths = set(owned)
+        before = support.tree_hashes(repo)
+        for host in ("all", "claude-code", "cursor", "codex"):
+            result = self.install(repo, "--host", host, env=env)
+            self.assertEqual(0, result.returncode, result.stderr)
+            self.assertIn("0 changes", result.stdout)
+            self.assertEqual(before, support.tree_hashes(repo))
+        self.assertFalse(guard_log.exists() and guard_log.read_text().strip())
+
+    def test_adding_host_keeps_modified_prior_file_hash_and_backup(self):
+        env, _, _ = support.guard_env()
+        repo = support.fresh_repo(self.temp)
+        rel = ".claude/skills/sf-patterns/SKILL.md"
+        target = repo / rel
+        target.parent.mkdir(parents=True)
+        target.write_text("original user content\n")
+        first = self.install(
+            repo, "--host", "claude-code", "--allow-overwrite", rel, env=env
+        )
+        self.assertEqual(0, first.returncode, first.stderr)
+        prior = next(
+            entry for entry in json.loads((repo / MANIFEST).read_text())["files"]
+            if entry["path"] == rel
+        )
+        self.assertEqual("original user content\n", (repo / prior["backup"]).read_text())
+        target.write_text("local modification after install\n")
+        result = self.install(repo, "--host", "cursor", env=env)
+        self.assertEqual(0, result.returncode, result.stderr)
+        current = next(
+            entry for entry in json.loads((repo / MANIFEST).read_text())["files"]
+            if entry["path"] == rel
+        )
+        self.assertEqual(prior, current)
+        self.assertEqual("local modification after install\n", target.read_text())
+        before = support.tree_hashes(repo)
+        refusal = self.install(repo, "--host", "claude-code", env=env)
+        self.assertEqual(1, refusal.returncode)
+        self.assertIn("modified locally", refusal.stderr)
+        self.assertEqual(before, support.tree_hashes(repo))
+
+    def test_skills_only_addition_preserves_full_profile_and_prior_ownership(self):
+        env, _, _ = support.guard_env()
+        repo = support.fresh_repo(self.temp)
+        result = self.install(repo, "--host", "claude-code", env=env)
+        self.assertEqual(0, result.returncode, result.stderr)
+        prior = json.loads((repo / MANIFEST).read_text())
+        result = self.install(
+            repo, "--host", "cursor", "--profile", "skills-only", env=env
+        )
+        self.assertEqual(0, result.returncode, result.stderr)
+        current = json.loads((repo / MANIFEST).read_text())
+        self.assertEqual("full", current["profile"])
+        self.assertEqual(["claude-code", "cursor"], current["hosts"])
+        owned = {entry["path"]: entry for entry in current["files"]}
+        for entry in prior["files"]:
+            self.assertEqual(entry, owned[entry["path"]])
+        self.assertFalse((repo / ".cursor/agents").exists())
+        before = support.tree_hashes(repo)
+        again = self.install(
+            repo, "--host", "cursor", "--profile", "skills-only", env=env
+        )
+        self.assertEqual(0, again.returncode, again.stderr)
+        self.assertEqual(before, support.tree_hashes(repo))
+
+    def test_shared_skills_host_addition_records_host_without_payload_changes(self):
+        env, _, _ = support.guard_env()
+        repo = support.fresh_repo(self.temp)
+        first = self.install(
+            repo, "--host", "codex", "--profile", "skills-only", env=env
+        )
+        self.assertEqual(0, first.returncode, first.stderr)
+        before = projection_hashes(repo)
+        addition = self.install(
+            repo, "--host", "cursor", "--profile", "skills-only", env=env
+        )
+        self.assertEqual(0, addition.returncode, addition.stderr)
+        self.assertEqual(before, projection_hashes(repo))
+        manifest = json.loads((repo / MANIFEST).read_text())
+        self.assertEqual(["cursor", "codex"], manifest["hosts"])
+        self.assertEqual("skills-only", manifest["profile"])
+        snapshot = support.tree_hashes(repo)
+        again = self.install(
+            repo, "--host", "cursor", "--profile", "skills-only", env=env
+        )
+        self.assertEqual(0, again.returncode, again.stderr)
+        self.assertEqual(snapshot, support.tree_hashes(repo))
+
     def test_sequential_installs_converge_to_the_all_tree(self):
         # Same path for both runs so embedded absolute hook paths match:
         # sequential first, then the tree is rebuilt fresh for --host all.
