@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-15T17:58:08.427792+00:00",
-  "revision": 273,
+  "generated_at": "2026-10-15T18:00:02.106063+00:00",
+  "revision": 274,
   "streams": [
     {
       "id": "W-foundation",
@@ -5582,6 +5582,21 @@
           "limitations": [
             "Independent evidence review pending; original passing static gate remains separately bound to39ee.",
             "Local isolated Chromium only; no deployed Pages, live host loading or owner epic acceptance."
+          ]
+        },
+        "native-media-review": {
+          "type": "independent-review",
+          "subject_sha": "39ee461f133383930f275ca841acc12e41f48386",
+          "reviewer": "/root/mission_status",
+          "status": "pass-bounded-evidence",
+          "artifact": ".software-factory/runs/software-factory-v01/evidence/showcase-headless-independent-review-39ee.json",
+          "artifact_sha256": "8f6dcb48ea1bbb2c88ea4d33415ff7a3d19d1473039c2175dd62ef838d88207b",
+          "scope": "Independently matched both frozen22-file Git inventories,18PNG hashes/dimensions, six-case native motion results twice, parity/font/resource checks, actual launch and normal cleanup logs.",
+          "limitations": [
+            "No browser rerun or independent visual inspection; root reviewed actual PNG pixels separately.",
+            "Overflow assertion is document-horizontal only; separate asset loop overflow was repaired by asset worker.",
+            "Raw browser stderr retains11/12 macOS CVDisplayLink errors; page-error arrays are empty.",
+            "Scripts independently inspected now are not runtime-digest-bound by original result; no global orphan audit, deployed site, host loading or epic acceptance."
           ]
         }
       },
