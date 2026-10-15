@@ -119,6 +119,7 @@ project root as `--workspace`:
 - `scripts/roadmap.py` — the board kernel: per-story records, enforced
   transitions and the locked roadmap projection.
 - `scripts/dashboard.py` — the static offline board dashboard render.
+- `scripts/trace.py` — derived SDLC links and read-only readiness/evidence queries.
 - `scripts/gate.py` — structural evidence-gate check on a manifest.
 - `scripts/hook.py` — session-start recovery pointer and pre-compact snapshot;
   inert without an active run. Wired by the installer, never a dispatcher.
@@ -141,4 +142,5 @@ in configuration. They preserve facts; you own the judgment.
 - [Authority](references/authority.md) — delegated scope, GO, escalation
 - [Hosts](references/hosts.md) — Claude Code, Cursor and Codex differences
 - [Evidence](references/evidence.md) — manifest, phases, statuses, the gate
+- [Lifecycle graph](references/lifecycle-graph.md) — provenance, missing proof, stale subjects and dependency paths
 - [Handoff](references/handoff.md) — worker brief and return templates
