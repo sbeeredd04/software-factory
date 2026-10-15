@@ -5042,7 +5042,7 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/covers/0",
-          "sha256": "b3a0fd39ce450773387369ab609de1b075e972d1b5d72848f0aac163b4e3c9b9"
+          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
         }
       ],
       "relation": "covers",
@@ -5055,7 +5055,7 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/covers/1",
-          "sha256": "b3a0fd39ce450773387369ab609de1b075e972d1b5d72848f0aac163b4e3c9b9"
+          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
         }
       ],
       "relation": "covers",
@@ -5068,7 +5068,7 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/covers/2",
-          "sha256": "b3a0fd39ce450773387369ab609de1b075e972d1b5d72848f0aac163b4e3c9b9"
+          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
         }
       ],
       "relation": "covers",
@@ -5081,7 +5081,7 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/covers/3",
-          "sha256": "b3a0fd39ce450773387369ab609de1b075e972d1b5d72848f0aac163b4e3c9b9"
+          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
         }
       ],
       "relation": "covers",
@@ -5094,7 +5094,7 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/covers/4",
-          "sha256": "b3a0fd39ce450773387369ab609de1b075e972d1b5d72848f0aac163b4e3c9b9"
+          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
         }
       ],
       "relation": "covers",
@@ -5107,7 +5107,7 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/covers/5",
-          "sha256": "b3a0fd39ce450773387369ab609de1b075e972d1b5d72848f0aac163b4e3c9b9"
+          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
         }
       ],
       "relation": "covers",
@@ -5120,7 +5120,7 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/covers/6",
-          "sha256": "b3a0fd39ce450773387369ab609de1b075e972d1b5d72848f0aac163b4e3c9b9"
+          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
         }
       ],
       "relation": "covers",
@@ -17294,7 +17294,7 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/after/0",
-          "sha256": "b3a0fd39ce450773387369ab609de1b075e972d1b5d72848f0aac163b4e3c9b9"
+          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
         }
       ],
       "relation": "depends-on",
@@ -17306,7 +17306,7 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/epic",
-          "sha256": "b3a0fd39ce450773387369ab609de1b075e972d1b5d72848f0aac163b4e3c9b9"
+          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
         }
       ],
       "relation": "part-of",
@@ -17317,8 +17317,20 @@
       "provenance": [
         {
           "path": ".software-factory/context/board/stories/23.json",
+          "pointer": "/findings/0",
+          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
+        }
+      ],
+      "relation": "records",
+      "source": "story:23",
+      "target": "finding:23:0"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/receipts/active-attempt",
-          "sha256": "b3a0fd39ce450773387369ab609de1b075e972d1b5d72848f0aac163b4e3c9b9"
+          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
         }
       ],
       "relation": "records",
@@ -17330,12 +17342,36 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/receipts/active-attempt",
-          "sha256": "b3a0fd39ce450773387369ab609de1b075e972d1b5d72848f0aac163b4e3c9b9"
+          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
         }
       ],
       "relation": "subject",
       "source": "receipt:23:active-attempt",
       "target": "commit:089bb4e2f1c731c4ba4bb7f3b20b3a792e89bae5"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/23.json",
+          "pointer": "/receipts/compatibility-investigation",
+          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
+        }
+      ],
+      "relation": "records",
+      "source": "story:23",
+      "target": "receipt:23:compatibility-investigation"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/23.json",
+          "pointer": "/receipts/compatibility-investigation",
+          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
+        }
+      ],
+      "relation": "subject",
+      "source": "receipt:23:compatibility-investigation",
+      "target": "commit:22076bec9e6458cc834b096e4958eba8ecc5b8f0"
     },
     {
       "provenance": [
@@ -18686,7 +18722,7 @@
         {
           "path": ".software-factory/runs/software-factory-v01/run.json",
           "pointer": "/claims/23",
-          "sha256": "62998e627f5c3c752a12653d0b1ebc4200dc1face6eb0c013f602ecd130871cf"
+          "sha256": "b20132c0a2b719060f31fe739e209004cb6e2abbca6d41d09db3fdea06766b34"
         }
       ],
       "relation": "assigned-to",
@@ -18698,7 +18734,7 @@
         {
           "path": ".software-factory/runs/software-factory-v01/run.json",
           "pointer": "/claims/44",
-          "sha256": "62998e627f5c3c752a12653d0b1ebc4200dc1face6eb0c013f602ecd130871cf"
+          "sha256": "b20132c0a2b719060f31fe739e209004cb6e2abbca6d41d09db3fdea06766b34"
         }
       ],
       "relation": "assigned-to",
@@ -18850,7 +18886,7 @@
     {
       "kind": "file",
       "path": ".software-factory/context/board/stories/23.json",
-      "sha256": "b3a0fd39ce450773387369ab609de1b075e972d1b5d72848f0aac163b4e3c9b9"
+      "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
     },
     {
       "kind": "file",
@@ -19135,7 +19171,7 @@
     {
       "kind": "file",
       "path": ".software-factory/runs/software-factory-v01/run.json",
-      "sha256": "62998e627f5c3c752a12653d0b1ebc4200dc1face6eb0c013f602ecd130871cf"
+      "sha256": "b20132c0a2b719060f31fe739e209004cb6e2abbca6d41d09db3fdea06766b34"
     },
     {
       "kind": "file",
@@ -19150,7 +19186,7 @@
     {
       "kind": "directory",
       "path": "docs/research",
-      "sha256": "b0f8af5419aeab74782ace0e27f010249b0d4071020b61dd94aac55657d6da8a"
+      "sha256": "47e5dc6865b9277bdef9b70a6ed4ca3a45e5e1d75b5b050a7e71075c89a7b780"
     },
     {
       "kind": "directory",
@@ -19469,7 +19505,7 @@
         {
           "path": ".software-factory/runs/software-factory-v01/run.json",
           "pointer": "/checkpoint",
-          "sha256": "62998e627f5c3c752a12653d0b1ebc4200dc1face6eb0c013f602ecd130871cf"
+          "sha256": "b20132c0a2b719060f31fe739e209004cb6e2abbca6d41d09db3fdea06766b34"
         }
       ],
       "type": "checkpoint"
@@ -19482,7 +19518,7 @@
         {
           "path": ".software-factory/runs/software-factory-v01/run.json",
           "pointer": "/claims/23",
-          "sha256": "62998e627f5c3c752a12653d0b1ebc4200dc1face6eb0c013f602ecd130871cf"
+          "sha256": "b20132c0a2b719060f31fe739e209004cb6e2abbca6d41d09db3fdea06766b34"
         }
       ],
       "type": "claim"
@@ -19495,7 +19531,7 @@
         {
           "path": ".software-factory/runs/software-factory-v01/run.json",
           "pointer": "/claims/44",
-          "sha256": "62998e627f5c3c752a12653d0b1ebc4200dc1face6eb0c013f602ecd130871cf"
+          "sha256": "b20132c0a2b719060f31fe739e209004cb6e2abbca6d41d09db3fdea06766b34"
         }
       ],
       "type": "claim"
@@ -19529,7 +19565,7 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/receipts/active-attempt/subject_sha",
-          "sha256": "b3a0fd39ce450773387369ab609de1b075e972d1b5d72848f0aac163b4e3c9b9"
+          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
         },
         {
           "path": ".software-factory/context/board/stories/45.json",
@@ -19559,6 +19595,18 @@
           "path": ".software-factory/context/board/stories/38.json",
           "pointer": "/receipts/proposal-review/subject_sha",
           "sha256": "fabc403a34e8ce3255d7a7b54532953f34fa1a4ebf4f53f5256c3da092dcd138"
+        }
+      ],
+      "type": "commit"
+    },
+    {
+      "id": "commit:22076bec9e6458cc834b096e4958eba8ecc5b8f0",
+      "label": "22076bec9e6458cc834b096e4958eba8ecc5b8f0",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/23.json",
+          "pointer": "/receipts/compatibility-investigation/subject_sha",
+          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
         }
       ],
       "type": "commit"
@@ -20514,6 +20562,18 @@
           "path": ".software-factory/context/board/stories/20.json",
           "pointer": "/findings/2",
           "sha256": "4d5b7b7f80860cf9be1168ccedf7fa3bcf50f6b30c18d712570d1b37ec9e7897"
+        }
+      ],
+      "type": "finding"
+    },
+    {
+      "id": "finding:23:0",
+      "label": "Real official installer fixture failed on incompatible TEA stable resolution; independently tested compatible pin alternatives are recorded in a research memo. Exact command amendment awaits owner decision; code review and unrelated work continue.",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/23.json",
+          "pointer": "/findings/0",
+          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
         }
       ],
       "type": "finding"
@@ -33980,12 +34040,29 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/receipts/active-attempt",
-          "sha256": "b3a0fd39ce450773387369ab609de1b075e972d1b5d72848f0aac163b4e3c9b9"
+          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
         }
       ],
       "reported_status": "assigned",
       "story": 23,
       "subject_sha": "089bb4e2f1c731c4ba4bb7f3b20b3a792e89bae5",
+      "type": "receipt"
+    },
+    {
+      "artifact_integrity": "unknown",
+      "freshness": "unknown",
+      "id": "receipt:23:compatibility-investigation",
+      "label": "compatibility-investigation",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/23.json",
+          "pointer": "/receipts/compatibility-investigation",
+          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
+        }
+      ],
+      "reported_status": null,
+      "story": 23,
+      "subject_sha": "22076bec9e6458cc834b096e4958eba8ecc5b8f0",
       "type": "receipt"
     },
     {
@@ -34629,7 +34706,7 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/covers/0",
-          "sha256": "b3a0fd39ce450773387369ab609de1b075e972d1b5d72848f0aac163b4e3c9b9"
+          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
         }
       ],
       "type": "requirement"
@@ -34641,7 +34718,7 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/covers/1",
-          "sha256": "b3a0fd39ce450773387369ab609de1b075e972d1b5d72848f0aac163b4e3c9b9"
+          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
         }
       ],
       "type": "requirement"
@@ -34653,7 +34730,7 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/covers/2",
-          "sha256": "b3a0fd39ce450773387369ab609de1b075e972d1b5d72848f0aac163b4e3c9b9"
+          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
         }
       ],
       "type": "requirement"
@@ -34665,7 +34742,7 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/covers/3",
-          "sha256": "b3a0fd39ce450773387369ab609de1b075e972d1b5d72848f0aac163b4e3c9b9"
+          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
         }
       ],
       "type": "requirement"
@@ -34677,7 +34754,7 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/covers/4",
-          "sha256": "b3a0fd39ce450773387369ab609de1b075e972d1b5d72848f0aac163b4e3c9b9"
+          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
         }
       ],
       "type": "requirement"
@@ -34689,7 +34766,7 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/covers/5",
-          "sha256": "b3a0fd39ce450773387369ab609de1b075e972d1b5d72848f0aac163b4e3c9b9"
+          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
         }
       ],
       "type": "requirement"
@@ -34701,7 +34778,7 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "/covers/6",
-          "sha256": "b3a0fd39ce450773387369ab609de1b075e972d1b5d72848f0aac163b4e3c9b9"
+          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
         }
       ],
       "type": "requirement"
@@ -37926,7 +38003,7 @@
         {
           "path": ".software-factory/context/board/stories/23.json",
           "pointer": "",
-          "sha256": "b3a0fd39ce450773387369ab609de1b075e972d1b5d72848f0aac163b4e3c9b9"
+          "sha256": "1358ab6ffb6e82569693542ffb0d8d35cbb448382afc6301b632d08214941354"
         }
       ],
       "status": "in-progress",
@@ -39594,5 +39671,5 @@
     }
   ],
   "schema": "sf-trace/1",
-  "source_fingerprint": "fea753aabe432f976bce1779d9a637aa1a0b068389d0e3b07e892f33ce7a76f9"
+  "source_fingerprint": "a822bf57057414487b02fbe5d70a0c999eaa60c1670f490c4873228913305b5d"
 }

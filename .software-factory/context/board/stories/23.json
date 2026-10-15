@@ -36,6 +36,58 @@
       "status": "assigned",
       "recorded_at": "2026-10-15T09:17:12.435041+00:00",
       "summary": "Author implements original pinned BMad provisioning after reviewed safe uninstall/doctor; exact accepted argv, existing-install preservation and explicit partial effects."
+    },
+    "compatibility-investigation": {
+      "type": "compatibility-investigation",
+      "recorded_at": "2026-10-15T09:44:26.322708+00:00",
+      "package": "bmad-method@6.12.0",
+      "original_command": {
+        "status": "fail",
+        "source": "Author's real guarded fixture; precise dirty-source execution is retained privately, not attributed to a later committed SHA.",
+        "upstream_exit_code": 1,
+        "cause": "TEA stable v3.0.2 lacks the module definition expected by pinned CLI."
+      },
+      "exploratory_alternatives": [
+        {
+          "pins": {
+            "tea": "v1.27.2"
+          },
+          "exit_code": 0,
+          "elapsed_seconds": 8.25
+        },
+        {
+          "pins": {
+            "tea": "v1.27.2",
+            "bmb": "v2.2.2",
+            "cis": "v0.3.2"
+          },
+          "exit_code": 0,
+          "elapsed_seconds": 9.12
+        }
+      ],
+      "observed": {
+        "core": "6.12.0",
+        "bmm": "6.12.0",
+        "host_skills": {
+          "claude-code": 54,
+          "shared": 54
+        },
+        "host_cli_guard_attempts": 0,
+        "external_sources": {
+          "bmb": "4a1422274a2acb0fb0ec0511753da6263948f072",
+          "cis": "97298b22fee1c7e482710d3a8414adb5cfccccd9",
+          "tea": "d99ad29c62697c152e3393351406686d5bcd323c"
+        }
+      },
+      "reviewer": "/root/product_expert",
+      "authority": "Exploratory fixtures only; exact shipped argv amendment pending owner decision.",
+      "limitations": [
+        "Not live host loading or BMad workflow execution.",
+        "Tags can move; npm transitive dependencies are not locked.",
+        "No automatic fallback or existing-tree update authorized."
+      ],
+      "subject_sha": "22076bec9e6458cc834b096e4958eba8ecc5b8f0",
+      "subject_kind": "Sanitized research memo revision; exploratory executions identify their own upstream versions and source commits, not this repository SHA."
     }
   },
   "baseline_sha": null,
@@ -56,6 +108,12 @@
       "to": "in-progress"
     }
   ],
-  "findings": [],
+  "findings": [
+    {
+      "at": "2026-10-15T09:44:45.292195+00:00",
+      "by": "orchestrator",
+      "text": "Real official installer fixture failed on incompatible TEA stable resolution; independently tested compatible pin alternatives are recorded in a research memo. Exact command amendment awaits owner decision; code review and unrelated work continue."
+    }
+  ],
   "source_key": "installer-hosts/bmad-install"
 }
