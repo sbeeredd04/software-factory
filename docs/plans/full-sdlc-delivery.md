@@ -1,6 +1,6 @@
 # Software Factory v0.1 delivery proposal
 
-Draft for owner review. No scope, gate policy, board transition, dependency, release authority or implementation is changed by this document. The proposal preserves the full remaining v0.1 outcome: an installable, documented eleven-skill and eleven-role pack that takes a grounded request through implementation, independent proof, integration, release evidence and a human checkpoint. The implementation remains Markdown and standard-library Python unless the owner explicitly chooses a different product boundary.
+Delivery plan, updated after the owner's clarification. [ADR 0021](../../.software-factory/context/decisions/0021-continuous-host-orchestration.md) records the portable, continuous host-owned loop with visible progress; the owner also explicitly requested the derived SDLC graph. The plan preserves the full remaining v0.1 outcome: an installable, documented eleven-skill and eleven-role pack that takes a grounded request through implementation, independent proof, integration, release evidence and a human checkpoint. The implementation remains Markdown and standard-library Python. Protected state-transition enforcement and final release authority retain their separate decisions below.
 
 ## Approval and evidence baseline
 
@@ -10,13 +10,13 @@ Draft for owner review. No scope, gate policy, board transition, dependency, rel
 
 **Proposed additions:** enforce evidence and ownership invariants, expose a derived lifecycle graph, and make operational failure/recovery a demonstrated part of the dogfood story. These fit existing skills; they do not add a twelfth skill or a hosted runtime.
 
-**Pending owner decisions:** portable pack versus separate runtime; state/lock/gate policy changes; the pack's exact local staging equivalent; any changed dependency semantics or acceptance cadence. Earlier validators' success is not human acceptance. Foundation and Expansion acceptance must be reconciled against actual owner decisions before being treated as complete.
+**Remaining owner decisions:** mechanically enforcing the proposed protected acceptance transitions and source-linked required checkpoints; the pack's exact completion-phase local staging equivalent; any changed original story dependencies or acceptance cadence. The portable product direction is resolved. Earlier validators' success is not human acceptance. Foundation and Expansion acceptance must be reconciled against actual owner decisions before being treated as complete.
 
-Current audit findings to address, without prescribing unapproved behavior: board transitions do not invoke the evidence gate; a released claim prevents a worker from reaching in-review; same-story updates lack serialization; unreadable claim state can yield a ready frontier; checkpoint flags are advisory. A further confirmed compatibility defect is that `sf_eval` emits run IDs containing uppercase `T`/`Z`, while state audit applies the program-slug grammar and rejects those IDs; skipped entries also undercount stored bytes. These findings limit claims of mechanically checked governance and storage accounting until resolved and demonstrated.
+**Implementation progress:** the claim handoff wording now retains ownership until review submission; story updates are serialized and corrupt ownership suppresses readiness (story 42); audit recognizes historical evaluation IDs and accounts for invalid entries (story 41). Those repairs have independent source review and targeted proof. Protected board transitions still do not invoke the evidence gate, and checkpoint flags remain advisory. The proposed matrix below addresses those remaining limits; ordinary local green checks do not establish them.
 
 ## Workstream 1 — trustworthy progress and evidence
 
-**Outcome:** the owner can trust a ready candidate, transition and completion claim, including after interruption or concurrent updates. This is proposed sensitive-mechanics work, not permission to alter gate policy now.
+**Outcome:** the owner can trust a ready candidate, transition and completion claim, including after interruption or concurrent updates. Existing ownership and audit defects are being repaired within their documented contracts. The protected acceptance-transition changes remain a separate sensitive-mechanics decision.
 
 **Scope:** extend existing board/state/gate contracts under `software-factory` and receipt handling under `sf-eval`. Use draft proposal labels P-GATE, P-CLAIMS and P-CHECKPOINT until the owner approves board entries. Preserve stable IDs, frozen terminal history and the single story-status authority.
 
@@ -88,9 +88,9 @@ Current audit findings to address, without prescribing unapproved behavior: boar
 
 **Failure/recovery:** interrupted regeneration leaves the last valid projection; invalid inputs cannot produce an apparently current graph. The projection is rebuilt after source repair. No graph database, daemon, semantic embedding service or second mutable status store is introduced.
 
-**Dependencies/checkpoint:** draft graph contracts can proceed read-only while installer work continues. Mutating graph integration waits for Workstream 1's approved invariants and Workstream 3's schema contract. The owner approves this addition and its scope; an independent reviewer checks derivation/provenance before a manual graph walkthrough. Assign new IDs only after approval.
+**Dependencies/checkpoint:** story 43 implements the explicitly requested graph as a derived reader of the existing version-1 board and optional existing crawl JSON, after story 42's consistency repair. It changes neither configuration nor gate policy, so that bounded producer can proceed while installer work continues. Later onboarding integration consumes Workstream 3's completed config contract. An independent reviewer checks derivation/provenance before a manual graph walkthrough. The original 20–33 dependency chain remains intact.
 
-**Narrow parallelism proposal, awaiting dependency-contract approval:** preserve the existing 20–33 chain until rebaselined. Candidate independent work is a read-only lifecycle-graph contract/spike consuming fixed artifact schemas, a public documentation inventory/draft consuming existing verified contracts, and run-audit compatibility work confined to its approved helper/tests after shared-file ownership is checked. Each candidate needs explicit input versions, disjoint writable paths or a serialized shared phase, acceptance cases and its actual upstream dependencies. Drafts cannot declare downstream implementation complete or change host/config contracts. If these conditions cannot be demonstrated, keep the work sequential. Within the current story, native specialist investigation and appropriately timed independent reviews can already run without removing downstream dependencies.
+**Current parallel work and future dependency changes:** stories 41 and 42 repair existing audit and ownership contracts; story 43 consumes those fixed version-1 records in a disjoint derived graph helper. Their claimed scopes and actual prerequisite evidence allow overlap with installer work. Preserve the original 20–33 chain. Any future removal or rebaseline of those original edges still requires the dependency-contract decision: explicit input versions, disjoint writes or a serialized shared phase, acceptance cases and actual upstream dependencies. Research drafts cannot declare downstream implementation complete or change host/config contracts.
 
 ## Workstream 5 — native dogfood, operations and recovery
 
@@ -137,11 +137,11 @@ Current audit findings to address, without prescribing unapproved behavior: boar
 
 **Checkpoint:** publication requires a separate explicit owner GO before outward-facing actions; final acceptance follows observed live proof, not the act of uploading.
 
-## One bundled owner decision
+## Resolved direction and remaining decisions
 
-Recommended decision: **complete v0.1 as the existing portable eleven-skill pack; approve the concrete transition matrix, source-linked checkpoint records and run-audit compatibility/accounting repair, then implement and independently verify them; approve the derived lifecycle graph with typed cycle rules; retain existing story dependencies, twenty-question onboarding and epic acceptance; use an exact-revision disposable-consumer installation plus affected-behavior checks as the pack's local staging proof.** Any parallel implementation beyond the current story requires approval of the narrowly documented dependency-contract rebaseline. Keep a new runtime/scheduler/memory service as separate future scope and retain a final publication GO. These choices approve structural checks and provenance requirements, not claims of local caller authentication.
+The owner clarified continuous execution through existing coding harnesses, visible contributions, risk-based escalation and authorized monitoring. Implement that portable eleven-skill product and the explicitly requested derived graph. Retain the original story dependencies, twenty-question onboarding and epic acceptance. Current candidate-revision disposable-consumer installation checks are real implementation proof; completion-phase equivalence remains a separate decision.
 
-Alternative: complete only the already-approved v0.1 scope now and defer graph/policy additions; the release must then disclose any unresolved enforcement limits. A runtime product would require a separate architecture and scope decision before implementation.
+The focused pending policy question is whether to require SHA-bound passing evidence, independent review and source-linked required checkpoint decisions before new built/done transitions. Preserve historical records and independently prove the boundary cases if approved. These are structural checks and provenance requirements, without claims of local caller authentication. Final publication still requires its scoped GO.
 
 The owner is being asked because state-machine/concurrency/gate rules and publication authority are explicitly reserved decisions in the repository risk policy. Routine repairs, drafts and evidence gathering within existing scope can continue while that decision is pending; dependent semantic changes cannot.
 

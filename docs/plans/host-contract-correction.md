@@ -1,6 +1,6 @@
 # Host contract correction proposal
 
-Status: proposed; no repository policy changes approved or applied. Sources checked 2026-10-15.
+Status: source corrections implemented and independently reviewed; live host loading remains unverified. Sources checked 2026-10-15. [ADR 0022](../../.software-factory/context/decisions/0022-documented-host-contracts.md) records the current contract and evidence boundary. The recommendations below describe the design that was implemented; doctor observations remain part of the installer lifecycle work.
 
 ## Shared Cursor and Codex skills
 
@@ -50,4 +50,4 @@ Doctor observations should be separate: generated TOML structure can pass; per-r
 - Codex standalone custom agents and permission inheritance: https://learn.chatgpt.com/docs/agent-configuration/subagents (Approvals and sandbox controls; Custom agents).
 - Codex hook shape and trust: https://learn.chatgpt.com/docs/hooks (Config shape; Review and trust hooks).
 
-The earlier mission's sandbox_mode requirement and shared-payload field prohibition need a recorded correction against these current official contracts. The proposal changes claimed host behavior; it must remain a proposal until the user resolves that material policy question.
+The earlier mission's sandbox_mode requirement and shared-payload field prohibition are superseded by ADR 0022. The correction removes an unsupported enforcement claim and emits the documented invocation controls. Stronger permission requirements still need an observed enforcing capability.
