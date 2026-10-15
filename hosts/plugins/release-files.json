@@ -27,6 +27,7 @@
   "install.sh",
   "plugin.json",
   "schemas/installation.schema.json",
+  "schemas/plugins/LICENSE-APACHE-2.0.txt",
   "schemas/plugins/portable.schema.json",
   "scripts/bmad_install.py",
   "scripts/build_release.py",

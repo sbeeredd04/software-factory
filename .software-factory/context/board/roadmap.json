@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-15T10:34:26.412772+00:00",
-  "revision": 208,
+  "generated_at": "2026-10-15T10:44:40.115614+00:00",
+  "revision": 211,
   "streams": [
     {
       "id": "W-foundation",
@@ -57,8 +57,8 @@
       "counts": {
         "planned": 0,
         "ready": 0,
-        "in-progress": 2,
-        "review": 4,
+        "in-progress": 0,
+        "review": 6,
         "built": 0,
         "done": 0,
         "cancelled": 0
@@ -2253,8 +2253,8 @@
       "stream": "W-installer",
       "type": "story",
       "title": "Pinned BMad 6.12.0 install through the official installer",
-      "status": "in-progress",
-      "state": "in-progress",
+      "status": "in-review",
+      "state": "review",
       "owner": "codex-bmad-provisioning",
       "after": [
         22
@@ -2400,6 +2400,71 @@
           "phase": "implementation-and-real-installer-proof",
           "status": "assigned",
           "summary": "Owner approved all three tested module pins; ADR0025 records authority. Amend exacthelper/test/reference scopes, rerun actual installer in guarded disposable consumers; preserve existing and partial installs, prior failure and exploratory proof."
+        },
+        "approved-pin-handoff": {
+          "type": "worker-handoff",
+          "subject_sha": "c0e23a07380b6ee6e2f717daf150d65eca9ddc65",
+          "author": "codex-bmad-provisioning",
+          "status": "source-reviewed-integration-proof-pending",
+          "targeted_network": {
+            "tests": 21,
+            "passed": 21,
+            "exit_code": 0,
+            "skipped": 0
+          },
+          "modules": {
+            "tea": {
+              "version": "v1.27.2",
+              "channel": "pinned",
+              "sha": "d99ad29c62697c152e3393351406686d5bcd323c"
+            },
+            "bmb": {
+              "version": "v2.2.2",
+              "channel": "pinned",
+              "sha": "4a1422274a2acb0fb0ec0511753da6263948f072"
+            },
+            "cis": {
+              "version": "v0.3.2",
+              "channel": "pinned",
+              "sha": "97298b22fee1c7e482710d3a8414adb5cfccccd9"
+            }
+          },
+          "full_gate": {
+            "exit_code": 1,
+            "tests": 508,
+            "failed": 2,
+            "skipped": 0,
+            "eval_passed": 28,
+            "eval_total": 30,
+            "failed_eval_ids": [
+              "SKL-BOARD-002",
+              "SKL-CRAWL-002"
+            ]
+          },
+          "frozen_source": "three-file hashes match tested and committed bytes",
+          "limitations": [
+            "Isolated board/crawl freshness failure preserved.",
+            "Module tags and npm dependencies are not an immutable lock."
+          ],
+          "recorded_at": "2026-10-15T10:44:39.920114+00:00"
+        },
+        "approved-pin-review": {
+          "type": "independent-review",
+          "subject_sha": "c0e23a07380b6ee6e2f717daf150d65eca9ddc65",
+          "author": "codex-bmad-provisioning",
+          "reviewer": "codex-orchestrator",
+          "status": "pass",
+          "scope": "three-file approved pin amendment plus prior bf22 reviewed source",
+          "reviewed": [
+            "Exact argv literal independent regression",
+            "Fresh version/channel checks and prior-install preservation",
+            "Actual21-test network log and repeated full-suite module observations",
+            "Source bytes match frozen hash map; tags remain mutable"
+          ],
+          "limitations": [
+            "Source review only; combined primary gate remains pending."
+          ],
+          "recorded_at": "2026-10-15T10:44:39.920114+00:00"
         }
       },
       "baseline_sha": null,
@@ -2407,14 +2472,7 @@
       "pr": null,
       "merged_sha": null,
       "claim": {
-        "live": true,
-        "owner": "codex-bmad-provisioning",
-        "paths": [
-          "scripts/bmad_install.py",
-          "tests/test_bmad_install.py",
-          "skills/software-factory/references/bmad-provisioning.md"
-        ],
-        "claimed_at": "2026-10-15T10:33:08.998416+00:00"
+        "live": false
       },
       "blocks": [
         24
@@ -2443,6 +2501,12 @@
           "by": "codex-bmad-provisioning",
           "from": "in-review",
           "to": "in-progress"
+        },
+        {
+          "at": "2026-10-15T10:44:39.958978+00:00",
+          "by": "codex-bmad-provisioning",
+          "from": "in-progress",
+          "to": "in-review"
         }
       ],
       "findings": [
@@ -2457,7 +2521,9 @@
           "text": "Owner approved all three tested external-module pins in current conversation; ADR0025 records the command amendment. Reopened exacthelper/test/reference scope, preserving original failed live proof. Actual amended install and independent review remain required."
         }
       ],
-      "source_key": "installer-hosts/bmad-install"
+      "source_key": "installer-hosts/bmad-install",
+      "evidence_contract": 1,
+      "review_subject_sha": "c0e23a07380b6ee6e2f717daf150d65eca9ddc65"
     },
     {
       "id": 24,
@@ -2465,8 +2531,8 @@
       "stream": "W-installer",
       "type": "story",
       "title": "Plugin and marketplace manifests and install.sh bootstrap",
-      "status": "in-progress",
-      "state": "in-progress",
+      "status": "in-review",
+      "state": "review",
       "owner": "codex-distribution",
       "after": [
         23
@@ -2567,6 +2633,60 @@
             "Source review only; no tests executed by reviewer",
             "Additional source review ongoing"
           ]
+        },
+        "repaired-handoff": {
+          "type": "worker-handoff",
+          "subject_sha": "b81c0d61c19327263ffb0a293565e2e0d97b7056",
+          "author": "codex-distribution",
+          "status": "source-reviewed-integration-proof-pending",
+          "targeted": {
+            "bootstrap_passed": 19,
+            "distribution_passed": 15
+          },
+          "full_gate": {
+            "exit_code": 1,
+            "tests": 542,
+            "failed": 2,
+            "skipped": 7,
+            "eval_passed": 28,
+            "eval_total": 30,
+            "failed_eval_ids": [
+              "SKL-BOARD-002",
+              "SKL-CRAWL-002"
+            ]
+          },
+          "limitations": [
+            "Isolated freshness failures and seven skips preserved.",
+            "Final archive must include Apache license; coordinated primary allowlist addition now applied.",
+            "No live host loading or publication proved."
+          ],
+          "recorded_at": "2026-10-15T10:44:39.920114+00:00"
+        },
+        "final-source-review": {
+          "type": "independent-review",
+          "subject_sha": "b81c0d61c19327263ffb0a293565e2e0d97b7056",
+          "author": "codex-distribution",
+          "reviewer": "/root/mission_status",
+          "status": "pass",
+          "scope": "source only",
+          "reviewed": [
+            "Captured reviewed allowlist snapshot excludes unlisted/live extras",
+            "Bounded decompression and common header parser close PAX/GNU/V7/size mismatches",
+            "Isolated bootstrap, child installers and native hook startup",
+            "Primary schema provenance and full Apache license attribution"
+          ],
+          "prior_rejected_candidates": [
+            "e8cc96869e58c600d3845428afa76d2ce2a14b99",
+            "1d930b26e9106f172487e3e8d1f21af7df84fc9d",
+            "a39326d8f7b9300c199f94640a58ba09270fdc9f",
+            "b3cc7e857ff8c16e8ea0593716d47205f6f99cc0"
+          ],
+          "limitations": [
+            "Reviewer ran no product tests.",
+            "Actual final archive and combined primary gate remain required.",
+            "No live host/publication/owner acceptance."
+          ],
+          "recorded_at": "2026-10-15T10:44:39.920114+00:00"
         }
       },
       "baseline_sha": null,
@@ -2574,20 +2694,7 @@
       "pr": null,
       "merged_sha": null,
       "claim": {
-        "live": true,
-        "owner": "codex-distribution",
-        "paths": [
-          "install.sh",
-          "scripts/distribution.py",
-          "scripts/build_release.py",
-          "tests/test_distribution.py",
-          "tests/test_bootstrap.py",
-          "docs/distribution.md",
-          "NOTICE.md",
-          "schemas/plugins/LICENSE-APACHE-2.0.txt",
-          "hosts/plugins/hook.sh"
-        ],
-        "claimed_at": "2026-10-15T10:33:08.941332+00:00"
+        "live": false
       },
       "blocks": [
         25
@@ -2616,6 +2723,12 @@
           "by": "codex-distribution",
           "from": "in-review",
           "to": "in-progress"
+        },
+        {
+          "at": "2026-10-15T10:44:40.036362+00:00",
+          "by": "codex-distribution",
+          "from": "in-progress",
+          "to": "in-review"
         }
       ],
       "findings": [
@@ -2640,7 +2753,9 @@
           "text": "Independent review accepted captured allowlist and shared bounded header parser repairs; Python startup isolation remains required before verification and hook dispatch. Prior failed candidate reviews retained; repaired source and complete integrated proof pending."
         }
       ],
-      "source_key": "installer-hosts/distribution"
+      "source_key": "installer-hosts/distribution",
+      "evidence_contract": 1,
+      "review_subject_sha": "b81c0d61c19327263ffb0a293565e2e0d97b7056"
     },
     {
       "id": 25,
@@ -4007,6 +4122,26 @@
           "artifact": ".software-factory/runs/software-factory-v01/evidence/integrated-evidence-first-gate.log",
           "artifact_sha256": "a8a887828d9fa271973fa4c4da24b6618b844b59a4b5792447cefc7cea62ae66",
           "recorded_at": "2026-10-15T10:28:45.642810+00:00"
+        },
+        "integrated-local-proof": {
+          "type": "full-static-gate",
+          "subject_sha": "40a6cda5aed580c52d28e21385bd9074791fd3a1",
+          "status": "pass",
+          "exit_code": 0,
+          "unit_tests": 528,
+          "unit_seconds": 163.366,
+          "evals_passed": 30,
+          "evals_total": 30,
+          "skipped": [
+            "shellcheck target absent: install.sh not yet integrated at this subject"
+          ],
+          "artifact": ".software-factory/runs/software-factory-v01/evidence/integrated-evidence-final-gate.log",
+          "artifact_sha256": "71ac4ede6c895378b7aaa781cb46065667cd087225d6a02883695952b76bac6f",
+          "recorded_at": "2026-10-15T10:41:21.929069+00:00",
+          "limitations": [
+            "Subject predates BMad provisioning and distribution integration.",
+            "No story/epic acceptance or external effects established."
+          ]
         }
       },
       "baseline_sha": null,

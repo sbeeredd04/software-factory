@@ -4,7 +4,7 @@
   "epic": 3,
   "type": "story",
   "title": "Plugin and marketplace manifests and install.sh bootstrap",
-  "status": "in-progress",
+  "status": "in-review",
   "owner": "codex-distribution",
   "after": [
     23
@@ -105,6 +105,60 @@
         "Source review only; no tests executed by reviewer",
         "Additional source review ongoing"
       ]
+    },
+    "repaired-handoff": {
+      "type": "worker-handoff",
+      "subject_sha": "b81c0d61c19327263ffb0a293565e2e0d97b7056",
+      "author": "codex-distribution",
+      "status": "source-reviewed-integration-proof-pending",
+      "targeted": {
+        "bootstrap_passed": 19,
+        "distribution_passed": 15
+      },
+      "full_gate": {
+        "exit_code": 1,
+        "tests": 542,
+        "failed": 2,
+        "skipped": 7,
+        "eval_passed": 28,
+        "eval_total": 30,
+        "failed_eval_ids": [
+          "SKL-BOARD-002",
+          "SKL-CRAWL-002"
+        ]
+      },
+      "limitations": [
+        "Isolated freshness failures and seven skips preserved.",
+        "Final archive must include Apache license; coordinated primary allowlist addition now applied.",
+        "No live host loading or publication proved."
+      ],
+      "recorded_at": "2026-10-15T10:44:39.920114+00:00"
+    },
+    "final-source-review": {
+      "type": "independent-review",
+      "subject_sha": "b81c0d61c19327263ffb0a293565e2e0d97b7056",
+      "author": "codex-distribution",
+      "reviewer": "/root/mission_status",
+      "status": "pass",
+      "scope": "source only",
+      "reviewed": [
+        "Captured reviewed allowlist snapshot excludes unlisted/live extras",
+        "Bounded decompression and common header parser close PAX/GNU/V7/size mismatches",
+        "Isolated bootstrap, child installers and native hook startup",
+        "Primary schema provenance and full Apache license attribution"
+      ],
+      "prior_rejected_candidates": [
+        "e8cc96869e58c600d3845428afa76d2ce2a14b99",
+        "1d930b26e9106f172487e3e8d1f21af7df84fc9d",
+        "a39326d8f7b9300c199f94640a58ba09270fdc9f",
+        "b3cc7e857ff8c16e8ea0593716d47205f6f99cc0"
+      ],
+      "limitations": [
+        "Reviewer ran no product tests.",
+        "Actual final archive and combined primary gate remain required.",
+        "No live host/publication/owner acceptance."
+      ],
+      "recorded_at": "2026-10-15T10:44:39.920114+00:00"
     }
   },
   "baseline_sha": null,
@@ -135,6 +189,12 @@
       "by": "codex-distribution",
       "from": "in-review",
       "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T10:44:40.036362+00:00",
+      "by": "codex-distribution",
+      "from": "in-progress",
+      "to": "in-review"
     }
   ],
   "findings": [
@@ -159,5 +219,7 @@
       "text": "Independent review accepted captured allowlist and shared bounded header parser repairs; Python startup isolation remains required before verification and hook dispatch. Prior failed candidate reviews retained; repaired source and complete integrated proof pending."
     }
   ],
-  "source_key": "installer-hosts/distribution"
+  "source_key": "installer-hosts/distribution",
+  "review_subject_sha": "b81c0d61c19327263ffb0a293565e2e0d97b7056",
+  "evidence_contract": 1
 }

@@ -144,6 +144,9 @@ handoff and `state.py release`. Revision work reacquires ownership. The generato
 claims read-only into the projection; no board code ever writes claims or
 the run state.
 
+Use the [protected transition contract](evidence.md#protected-board-transitions)
+for review subjects, gate manifests, checkpoint decisions and revision resubmission.
+
 Regenerate the projections from this skill's directory:
 
 ```sh

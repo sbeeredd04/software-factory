@@ -35,10 +35,11 @@ bash scripts/check_all.sh
 ```bash
 python3 -m unittest discover -s tests -v   # unit tests (SF_SKIP_NETWORK=1 skips network-marked tests)
 uvx --from ruff==0.17.0 ruff check .       # Python lint (pinned; keep in sync with CI)
-npx -y shellcheck@latest install.sh        # shell lint (runs when install.sh exists)
+npx -y shellcheck@4.1.0 install.sh hosts/plugins/hook.sh  # shell lint
 python3 scripts/validate.py               # canonical layout and frontmatter rules
 python3 scripts/scan_public.py             # public-cleanliness scan (private terms, secrets, paths)
 python3 scripts/check_links.py             # relative-link resolution
+python3 scripts/check_distribution.py      # portable metadata and native artifact consistency
 python3 skills/sf-eval/scripts/sf_eval.py run --plan evals/eval.config.json --mode premerge  # the pack's own evals
 ```
 

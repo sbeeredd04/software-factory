@@ -114,6 +114,26 @@
       "artifact": ".software-factory/runs/software-factory-v01/evidence/integrated-evidence-first-gate.log",
       "artifact_sha256": "a8a887828d9fa271973fa4c4da24b6618b844b59a4b5792447cefc7cea62ae66",
       "recorded_at": "2026-10-15T10:28:45.642810+00:00"
+    },
+    "integrated-local-proof": {
+      "type": "full-static-gate",
+      "subject_sha": "40a6cda5aed580c52d28e21385bd9074791fd3a1",
+      "status": "pass",
+      "exit_code": 0,
+      "unit_tests": 528,
+      "unit_seconds": 163.366,
+      "evals_passed": 30,
+      "evals_total": 30,
+      "skipped": [
+        "shellcheck target absent: install.sh not yet integrated at this subject"
+      ],
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/integrated-evidence-final-gate.log",
+      "artifact_sha256": "71ac4ede6c895378b7aaa781cb46065667cd087225d6a02883695952b76bac6f",
+      "recorded_at": "2026-10-15T10:41:21.929069+00:00",
+      "limitations": [
+        "Subject predates BMad provisioning and distribution integration.",
+        "No story/epic acceptance or external effects established."
+      ]
     }
   },
   "baseline_sha": null,

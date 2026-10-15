@@ -4,7 +4,7 @@
   "epic": 3,
   "type": "story",
   "title": "Pinned BMad 6.12.0 install through the official installer",
-  "status": "in-progress",
+  "status": "in-review",
   "owner": "codex-bmad-provisioning",
   "after": [
     22
@@ -150,6 +150,71 @@
       "phase": "implementation-and-real-installer-proof",
       "status": "assigned",
       "summary": "Owner approved all three tested module pins; ADR0025 records authority. Amend exacthelper/test/reference scopes, rerun actual installer in guarded disposable consumers; preserve existing and partial installs, prior failure and exploratory proof."
+    },
+    "approved-pin-handoff": {
+      "type": "worker-handoff",
+      "subject_sha": "c0e23a07380b6ee6e2f717daf150d65eca9ddc65",
+      "author": "codex-bmad-provisioning",
+      "status": "source-reviewed-integration-proof-pending",
+      "targeted_network": {
+        "tests": 21,
+        "passed": 21,
+        "exit_code": 0,
+        "skipped": 0
+      },
+      "modules": {
+        "tea": {
+          "version": "v1.27.2",
+          "channel": "pinned",
+          "sha": "d99ad29c62697c152e3393351406686d5bcd323c"
+        },
+        "bmb": {
+          "version": "v2.2.2",
+          "channel": "pinned",
+          "sha": "4a1422274a2acb0fb0ec0511753da6263948f072"
+        },
+        "cis": {
+          "version": "v0.3.2",
+          "channel": "pinned",
+          "sha": "97298b22fee1c7e482710d3a8414adb5cfccccd9"
+        }
+      },
+      "full_gate": {
+        "exit_code": 1,
+        "tests": 508,
+        "failed": 2,
+        "skipped": 0,
+        "eval_passed": 28,
+        "eval_total": 30,
+        "failed_eval_ids": [
+          "SKL-BOARD-002",
+          "SKL-CRAWL-002"
+        ]
+      },
+      "frozen_source": "three-file hashes match tested and committed bytes",
+      "limitations": [
+        "Isolated board/crawl freshness failure preserved.",
+        "Module tags and npm dependencies are not an immutable lock."
+      ],
+      "recorded_at": "2026-10-15T10:44:39.920114+00:00"
+    },
+    "approved-pin-review": {
+      "type": "independent-review",
+      "subject_sha": "c0e23a07380b6ee6e2f717daf150d65eca9ddc65",
+      "author": "codex-bmad-provisioning",
+      "reviewer": "codex-orchestrator",
+      "status": "pass",
+      "scope": "three-file approved pin amendment plus prior bf22 reviewed source",
+      "reviewed": [
+        "Exact argv literal independent regression",
+        "Fresh version/channel checks and prior-install preservation",
+        "Actual21-test network log and repeated full-suite module observations",
+        "Source bytes match frozen hash map; tags remain mutable"
+      ],
+      "limitations": [
+        "Source review only; combined primary gate remains pending."
+      ],
+      "recorded_at": "2026-10-15T10:44:39.920114+00:00"
     }
   },
   "baseline_sha": null,
@@ -180,6 +245,12 @@
       "by": "codex-bmad-provisioning",
       "from": "in-review",
       "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T10:44:39.958978+00:00",
+      "by": "codex-bmad-provisioning",
+      "from": "in-progress",
+      "to": "in-review"
     }
   ],
   "findings": [
@@ -194,5 +265,7 @@
       "text": "Owner approved all three tested external-module pins in current conversation; ADR0025 records the command amendment. Reopened exacthelper/test/reference scope, preserving original failed live proof. Actual amended install and independent review remain required."
     }
   ],
-  "source_key": "installer-hosts/bmad-install"
+  "source_key": "installer-hosts/bmad-install",
+  "review_subject_sha": "c0e23a07380b6ee6e2f717daf150d65eca9ddc65",
+  "evidence_contract": 1
 }
