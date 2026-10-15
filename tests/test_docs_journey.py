@@ -216,6 +216,14 @@ class DocsJourneyTests(unittest.TestCase):
         validate = self.cli(PYTHON, "-I", "-B", skills / "software-factory/scripts/config.py", "validate",
                             "--config", project / ".software-factory/config.yaml", "--root", project)
         self.assertEqual(0, validate.returncode, validate.stderr[-1200:])
+        configured = json.loads((project / ".software-factory/config.yaml").read_text())
+        self.assertEqual("bmad", configured["planning"]["method"])
+        self.assertEqual("risk-adaptive", configured["autonomy"]["mode"])
+        self.assertIs(configured["checkpoints"]["manual"], False)
+        for key in ("local_edits", "commits"):
+            self.assertIs(configured["autonomy"][key], True)
+        for key in ("push", "open_pr", "merge_integration", "deploy"):
+            self.assertIs(configured["autonomy"][key], False)
         self.assertEqual(before, (project / "CONVENTIONS.md").read_bytes())
         reused = self.cli(PYTHON, "-I", "-B", skills / "sf-help/scripts/setup.py", "propose", "--project", project)
         self.assertEqual("sf-setup-reuse/1", json.loads(reused.stdout)["schema"])

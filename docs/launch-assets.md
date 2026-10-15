@@ -70,10 +70,11 @@ clones; edit the source graphic, then regenerate and review the affected PNGs. T
 renderer must resolve each clone's geometry and verify actual custom Inter
 glyph use for every cloned SVG text node through CDP. A font query on the
 outer host element alone is insufficient: it previously missed the cloned
-text. A focused observation saw positive glyph counts for 16 text nodes using
-Inter Regular or Semibold. Keep that observation separate from a final
-render run's exact source/output receipt. Missing geometry or glyph proof is a
-capture failure and should preserve the prior published images.
+text. The committed render receipt records 17 cycle text nodes in each of its
+five cycle-bearing captures, with positive custom Inter Regular or Semibold
+glyph counts. The earlier focused 16-node observation preceded the final
+source. Missing geometry or glyph proof is a capture failure and should preserve
+the prior published images.
 
 The SVG is an editable source and does not change the seven PNG master
 dimensions or the three served PNG alias identities below.

@@ -13,3 +13,9 @@ git -C "$SF_PROJECT" status --short
 The orchestrator compares the saved claim owner and path scope with actual Git worktrees, HEADs, dirty files, review receipts and external outcomes. Reconcile before assigning another worker or retrying an uncertain push/deploy/message. `reconcile` can report gaps; it cannot prove a process lives or an effect succeeded. Preserve failed and unknown evidence. The [canonical recovery contract](../skills/software-factory/references/recovery.md) specifies checkpoint fields, repair and release.
 
 Only the run owner initializes or repairs a run. A broken pointer does not authorize a reset; inspect the retained program first. Before handoff, save the exact five-key checkpoint notes (`objective`, `next`, `completed`, `decisions`, `open_questions`) from current facts. Board projections and lifecycle graph are derived from owned records; their read-only queries cannot create delivery proof. [Verification](verification.md) explains current subject and effect evidence.
+
+Ordinary planning refresh preserves existing human reservations. It refuses an
+explicit attempt to remove epic `hitl` or story `hitl`, `plan_checkpoint` or
+`done_checkpoint`; omission also preserves those flags. A change needs a real
+owner amendment outside ordinary derivation. The [canonical recovery contract](../skills/software-factory/references/recovery.md)
+defines this boundary; a regenerated plan is not new authority.

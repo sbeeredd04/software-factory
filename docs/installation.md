@@ -42,7 +42,7 @@ repo-relative path and records a private backup. It is not a default repair and
 cannot force an overlay conflict. Preserve evidence, reconcile current bytes and
 use the [evolution contract](evolve.md) for reviewed persistent customizations.
 
-## Optional BMad
+## BMad provisioning and planning readiness
 
 The local installer smoke uses `--skip-bmad`. A BMad-planned delivery lap
 requires observed provisioning and planning capability. Separately consented provisioning
