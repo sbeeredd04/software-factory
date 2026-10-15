@@ -35,6 +35,71 @@
       "status": "assigned",
       "recorded_at": "2026-10-15T12:35:58.114064+00:00",
       "summary": "Original28 begins after independently reviewed27in-review through existing readiness. Source-pinned registry, composed installer overlays, BMad customization/recursion and reviewed retro loop; one canonical ownership transaction. Isolated reusedworktree baseline6747cb9, primary combined677-testgate pending."
+    },
+    "installer-baseline-race": {
+      "type": "forward-use",
+      "status": "finding",
+      "subject_sha": "6747cb9be598c8985acfb998a4f3bc397bd7696a",
+      "reviewer": "mission-status",
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/evolution-installer-baseline-race.json",
+      "artifact_sha256": "b809843ce081a6ae12a9f5d6ea7783a5e2516a82bf754588947adf5daedf8395",
+      "command": "bundled Python -I -B frozen baseline build_plan/apply_plan race probe",
+      "exit_code": 0,
+      "summary": "Two actualbaselineAPIcases reproduce late-useredit loss atpath-basedinstallerpublication: initiallyabsenttargetcreatedlate andpreapprovedexistingtargeteditedlate. Apply completesandlatebytesare absentfromtarget/backups. Existing677tests donotcoverthisrace. Story28 ownsfixthroughsameinstallertransaction; no secondwriter.",
+      "limits": [
+        "Deterministicisolatedfixture observation, not production/WIPacceptance. No host/provider/network/source/primary effects; inheritedHOME unchanged."
+      ]
+    },
+    "source-review-3d5": {
+      "type": "source-review",
+      "status": "changes-required",
+      "subject_sha": "3d5bd8200a5e53375e63b2453a24a25d929a1043",
+      "reviewer": "mission-status",
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/evolution-3d5-source-review.md",
+      "artifact_sha256": "a8cc3af36c8901f1331ceedec92647237384791fff587f3a44da343a30f933fc",
+      "summary": "Independent review finds one required pre-mutation case-alias authority refusal repair. Eight exact-source publication/recovery API probes pass. Alias probe observes transient governing candidate publication, later rejection and original-byte restoration; no committed governing edit established.",
+      "limits": [
+        "No full gate, live host/provider execution, canonical eval admission or human acceptance claimed."
+      ]
+    },
+    "worker-gate-3d5": {
+      "type": "verification",
+      "status": "fail",
+      "subject_sha": "3d5bd8200a5e53375e63b2453a24a25d929a1043",
+      "command": "bash scripts/check_all.sh",
+      "exit_code": 1,
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/evolution-3d5-worker-gate.log",
+      "artifact_sha256": "8eccf795394ed8c77dfd07a234b6e8c5595af2da172124d24b300be9aaebd76d",
+      "unit_tests": {
+        "run": 708,
+        "passed": 696,
+        "failed": 11,
+        "skipped": 1,
+        "seconds": 212.192
+      },
+      "evals": {
+        "passed": 27,
+        "failed": 3,
+        "unverified": 0,
+        "quarantined": 0,
+        "skipped": 0
+      },
+      "summary": "Frozen worker full gate failed unit tests, links and evals. Two unit freshness failures; six host projection assertions, copied fixture link, uninstall fixture config and broad BMad import guard also need repair. Separate authority-alias finding is not erased by this result.",
+      "limits": [
+        "Worker report plus root log inspection; root did not rerun this worker gate. Primary dc8992 green677/30 predates evolution implementation."
+      ]
+    },
+    "corrected-source-review": {
+      "type": "source-review",
+      "status": "accepted",
+      "subject_sha": "c8ec5ca67e339ccefa0a8a3cb6c018105bbb64c5",
+      "reviewer": "mission-status",
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/evolution-c8ec-source-review.md",
+      "artifact_sha256": "e937910d0783172d3a05a25a61d7a1b437845d0dbb8c93b0038e5a9f7aab4769",
+      "summary": "Exact corrected-source delta accepted; ten independent API cases include six actual filesystem authority aliases refusing declaration/replanning/stale-plan apply with zero publication calls and preserved target/ownership. Prior3d5 failure remains retained.",
+      "limits": [
+        "Source review and isolated API proofs only. Full gate, six separate installed/native contexts, canonical eval admission and human acceptance remain separate."
+      ]
     }
   },
   "baseline_sha": null,
@@ -55,6 +120,17 @@
       "to": "in-progress"
     }
   ],
-  "findings": [],
+  "findings": [
+    {
+      "at": "2026-10-15T12:50:24.716582+00:00",
+      "by": "orchestrator",
+      "text": "Fixed-baseline6747cb9 probes reproduce two final-publication races losing concurrent user bytes. Story28 will harden the existing installer owner with anchored expected-byte publication; prior677-test pass does not cover these races."
+    },
+    {
+      "at": "2026-10-15T13:07:59.196036+00:00",
+      "by": "orchestrator",
+      "text": "Candidate3d5 requires pre-publication refusal of case aliases to governing paths; transient candidate write was rejected and restored. Eight independent preservation probes pass. Failed708-test worker gate and27of30eval evidence preserved; repair and exact-source review pending."
+    }
+  ],
   "source_key": "onboarding-integrations/sf-evolve-skill"
 }
