@@ -28,7 +28,7 @@ while continuing independent authorized work (ADR 0027).
 - Changes to owner-reserved policy, permissions, hook trust or gate rules
   outside the accepted decision; an existing scoped approval is reusable.
 - New credentials, access scopes or external services without scoped consent.
-- Public repository visibility, releases or announcements without scoped GO.
+- Publishing: repository visibility, releases or announcements without scoped GO.
 - Principle conflicts, missing authority, unbounded recovery, unknown important
   effects, or an explicit human reservation. Never infer approval from silence.
 

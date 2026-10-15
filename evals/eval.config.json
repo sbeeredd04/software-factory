@@ -1149,6 +1149,28 @@
         }
       },
       "nondeterministic": false
+    },
+    {
+      "id": "TLS-JOURNEY-001",
+      "story": "launch-publication/docs-examples-dogfood",
+      "epic": "launch-publication",
+      "suite": "story",
+      "kind": "fail_to_pass",
+      "criterion": "Documented local examples and setup steps preserve existing user files; operations/no-fix/recovery contract checks and bounded synthetic journey scenarios retain separate observation, repair and rollback authority and truthful evidence distinctions.",
+      "surface": "tools",
+      "tier": [
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "command",
+        "run": "SF_SKIP_NETWORK=1 python3 -m unittest discover -s tests -p 'test_docs_journey.py'",
+        "expect": {
+          "exit": 0,
+          "output_matches": "Ran [1-9][0-9]* tests?"
+        }
+      },
+      "nondeterministic": false
     }
   ],
   "modes": {
@@ -1218,7 +1240,7 @@
     "status": "approved",
     "approved_by": "Repository owner (current conversation)",
     "approved_at": "2026-10-15",
-    "plan_sha256": "a070c3a7aa63483bdb96a1980680044fbac21a9633016ff90d2ca076d824ab0b",
+    "plan_sha256": "00e82fb573dcbb61a2b023e2b0bf8d5dd78609233094ce52a7be08cafc5897bb",
     "digest_rule": "sha256 over the plan serialized as UTF-8 JSON with sorted keys and compact separators, the signoff object excluded"
   }
 }
