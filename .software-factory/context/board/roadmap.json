@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-15T08:31:49.593240+00:00",
-  "revision": 159,
+  "generated_at": "2026-10-15T08:35:08.453997+00:00",
+  "revision": 160,
   "streams": [
     {
       "id": "W-foundation",
@@ -2131,9 +2131,10 @@
           "scripts/doctor.py",
           "scripts/uninstall.py",
           "tests/test_doctor.py",
-          "tests/test_uninstall.py"
+          "tests/test_uninstall.py",
+          "schemas/installation.schema.json"
         ],
-        "claimed_at": "2026-10-15T08:31:49.552976+00:00"
+        "claimed_at": "2026-10-15T08:33:46.168206+00:00"
       },
       "blocks": [
         23
