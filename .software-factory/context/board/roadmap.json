@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-15T19:49:51.617522+00:00",
-  "revision": 321,
+  "generated_at": "2026-10-15T20:09:32.088191+00:00",
+  "revision": 327,
   "streams": [
     {
       "id": "W-foundation",
@@ -59,7 +59,7 @@
         "planned": 0,
         "ready": 0,
         "in-progress": 0,
-        "review": 7,
+        "review": 8,
         "built": 0,
         "done": 0,
         "cancelled": 0
@@ -105,10 +105,10 @@
         5
       ],
       "counts": {
-        "planned": 1,
-        "ready": 0,
-        "in-progress": 1,
-        "review": 4,
+        "planned": 0,
+        "ready": 1,
+        "in-progress": 0,
+        "review": 5,
         "built": 0,
         "done": 0,
         "cancelled": 0
@@ -234,7 +234,8 @@
         22,
         23,
         24,
-        48
+        48,
+        50
       ],
       "needs": [
         2
@@ -4115,7 +4116,8 @@
       },
       "blocks": [
         25,
-        48
+        48,
+        50
       ],
       "history": [
         {
@@ -6550,8 +6552,8 @@
       "stream": "W-launch",
       "type": "story",
       "title": "Viral-quality README with diagrams and quickstart",
-      "status": "in-progress",
-      "state": "in-progress",
+      "status": "in-review",
+      "state": "review",
       "owner": "codex-readme",
       "after": [
         31
@@ -6655,6 +6657,37 @@
             "exit_code": 0,
             "limits": "Pre-repair test pass does not settle the review findings."
           }
+        },
+        "independent-review": {
+          "type": "independent-review",
+          "subject_sha": "374eea011296d790a15fcf861b499835ee02f26b",
+          "reviewer": "/root/final_audit",
+          "author": "/root/docs_impl/readme_implement",
+          "coordinator": "/root",
+          "status": "pass",
+          "scope": "Complete eight-file README/setup journey; original BMad unit and three independent layers followed by verified direct repairs, actual local effects and source-preserving clean-SHA final review.",
+          "checks": {
+            "readme_tests": 12,
+            "showcase_tests": 16,
+            "failed": 0,
+            "skipped": 0,
+            "mermaid_rendered": 9,
+            "pinned_ruff_exit_code": 0,
+            "sync_exit_code": 0,
+            "links_exit_code": 0,
+            "public_scan_exit_code": 0,
+            "distribution_exit_code": 0,
+            "independent_route_mutation_refusals": 3,
+            "start_end_source_equal": true,
+            "start_end_clean": true
+          },
+          "deferred": [
+            "Two pre-existing cosmetic canonical-diagram edge omissions; prose and strict evidence gates still require successful review/effect proof."
+          ],
+          "limits": [
+            "The native BMad Build unit can close implementation/review; authoritative factory story remains in review until its distinct protected proof/integration gates.",
+            "Current primary combined verification, exact52case admission, native final site QA and external publication remain separate."
+          ]
         }
       },
       "baseline_sha": null,
@@ -6662,20 +6695,7 @@
       "pr": null,
       "merged_sha": null,
       "claim": {
-        "live": true,
-        "owner": "codex-readme",
-        "paths": [
-          "README.md",
-          "docs/copy-prompt.txt",
-          "site/scripts/setup-data.js",
-          "site/setup-prompt.txt",
-          "tests/test_readme_journey.py",
-          "site/scripts/sync_prompt.py",
-          "tests/test_showcase.py",
-          "site/index.html",
-          "_bmad-output/implementation-artifacts"
-        ],
-        "claimed_at": "2026-10-15T19:38:21.444939+00:00"
+        "live": false
       },
       "blocks": [
         33
@@ -6692,10 +6712,18 @@
           "by": "codex-readme",
           "from": "ready-for-dev",
           "to": "in-progress"
+        },
+        {
+          "at": "2026-10-15T20:09:31.303061+00:00",
+          "by": "codex-readme",
+          "from": "in-progress",
+          "to": "in-review"
         }
       ],
       "findings": [],
-      "source_key": "launch-publication/readme"
+      "source_key": "launch-publication/readme",
+      "evidence_contract": 1,
+      "review_subject_sha": "374eea011296d790a15fcf861b499835ee02f26b"
     },
     {
       "id": 33,
@@ -6704,7 +6732,7 @@
       "type": "story",
       "title": "Public repository, v0.1.0 release and Pages",
       "status": "backlog",
-      "state": "planned",
+      "state": "ready",
       "owner": null,
       "after": [
         32
@@ -8697,21 +8725,134 @@
       "source_key": "expansion/crawl-installed-inventory",
       "evidence_contract": 1,
       "review_subject_sha": "f90acb14c613da17b8e1a32a17695f260fedf9af"
+    },
+    {
+      "id": 50,
+      "epic": 3,
+      "stream": "W-installer",
+      "type": "bug",
+      "title": "Bound raw skills acquisition to canonical pack sources",
+      "status": "in-review",
+      "state": "review",
+      "owner": "codex-route-repair",
+      "after": [
+        24
+      ],
+      "covers": [
+        "TLS-DIST-001",
+        "VAL-HOST-001",
+        "VAL-README-002"
+      ],
+      "risk": "standard",
+      "hitl": false,
+      "plan_checkpoint": false,
+      "done_checkpoint": false,
+      "blocked": null,
+      "receipts": {
+        "reproduction": {
+          "type": "verification-observation",
+          "subject_sha": "92f33f1d5ae69158ced797a33fc2acb1f7bd3388",
+          "status": "failed",
+          "full_gate_exit_code": 1,
+          "unit_tests": {
+            "run": 817,
+            "passed": 815,
+            "failed": 1,
+            "skipped": 1,
+            "seconds": 393.333
+          },
+          "failure": "Real pinned skills CLI local-root acquisition discovered the separately installed BMad skills as well as canonical eleven; network-marked test failed its exact ownership set.",
+          "evals": {
+            "run_id": "r-20261015T195645Z-premerge",
+            "passed": 51,
+            "failed": 0,
+            "unverified": 0,
+            "skipped": 0,
+            "verdict": "pass"
+          },
+          "other_steps": "All other full-gate steps passed, including native crawl reproducibility, lint, syntax, shellcheck, static distribution, Mermaid, skills and schema validation.",
+          "gate_log_sha256": "e2fb92316be2f059e15628f396153a5f431a3d7ee5050f2a68b6492c96ab42e9",
+          "eval_receipt_sha256": "51a5b6384bcc8309daed6a31e2d8a633f9d84142f2578170a4422132ad991c3b",
+          "candidate_probe": {
+            "change": "Bound local acquisition to canonical skills directory",
+            "real_pinned_cli_version": "1.7.2",
+            "tests_run": 1,
+            "exit_code": 0,
+            "all_three_hosts_exact_canonical_eleven": true
+          },
+          "limits": [
+            "The successful unchanged 51-case evals do not turn this failed full gate green. Source/test/docs correction and resulting full gate remain pending."
+          ]
+        },
+        "independent-review": {
+          "type": "independent-review",
+          "subject_sha": "b595fc664bb09e88d2c6bde9b54b7fd7ac08e42b",
+          "reviewer": "/root/skills_route_review",
+          "author": "/root",
+          "status": "pass",
+          "scope": "Exact reviewed two-file canonical acquisition documentation and literal-route network/static regression implementation committed without byte changes.",
+          "checks": {
+            "tests_run": 2,
+            "tests_passed": 2,
+            "exit_code": 0,
+            "real_cli_version": "1.7.2",
+            "consumer_scenarios": 2,
+            "mutation_refusals": 8,
+            "links_exit_code": 0,
+            "diff_exit_code": 0
+          },
+          "findings": [],
+          "limits": [
+            "No combined full-gate, marketplace/live-host or external publication acceptance. Real pinned CLI acquisition is separately network-marked; offline skips remain unverified."
+          ]
+        }
+      },
+      "baseline_sha": null,
+      "branch": null,
+      "pr": null,
+      "merged_sha": null,
+      "claim": {
+        "live": false
+      },
+      "blocks": [],
+      "history": [
+        {
+          "at": "2026-10-15T20:02:12.842733+00:00",
+          "by": "orchestrator",
+          "from": "backlog",
+          "to": "ready-for-dev"
+        },
+        {
+          "at": "2026-10-15T20:02:13.069206+00:00",
+          "by": "codex-route-repair",
+          "from": "ready-for-dev",
+          "to": "in-progress"
+        },
+        {
+          "at": "2026-10-15T20:09:31.479028+00:00",
+          "by": "codex-route-repair",
+          "from": "in-progress",
+          "to": "in-review"
+        }
+      ],
+      "findings": [],
+      "source_key": "installer-hosts/canonical-skills-acquisition",
+      "evidence_contract": 1,
+      "review_subject_sha": "b595fc664bb09e88d2c6bde9b54b7fd7ac08e42b"
     }
   ],
   "frontier": {
-    "ready": [],
-    "waiting_on_prereq": [
+    "ready": [
       {
         "id": 33,
         "epic": 5,
         "stream": "W-launch",
         "title": "Public repository, v0.1.0 release and Pages",
-        "missing": [
-          "32 (in-progress)"
-        ]
+        "why": "after 32 in-review; unclaimed",
+        "claimed": false
       }
-    ]
+    ],
+    "waiting_on_prereq": []
   },
   "blockers": [],
   "diagnostics": {

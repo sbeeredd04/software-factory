@@ -4,7 +4,7 @@
   "epic": 5,
   "type": "story",
   "title": "Viral-quality README with diagrams and quickstart",
-  "status": "in-progress",
+  "status": "in-review",
   "owner": "codex-readme",
   "after": [
     31
@@ -108,6 +108,37 @@
         "exit_code": 0,
         "limits": "Pre-repair test pass does not settle the review findings."
       }
+    },
+    "independent-review": {
+      "type": "independent-review",
+      "subject_sha": "374eea011296d790a15fcf861b499835ee02f26b",
+      "reviewer": "/root/final_audit",
+      "author": "/root/docs_impl/readme_implement",
+      "coordinator": "/root",
+      "status": "pass",
+      "scope": "Complete eight-file README/setup journey; original BMad unit and three independent layers followed by verified direct repairs, actual local effects and source-preserving clean-SHA final review.",
+      "checks": {
+        "readme_tests": 12,
+        "showcase_tests": 16,
+        "failed": 0,
+        "skipped": 0,
+        "mermaid_rendered": 9,
+        "pinned_ruff_exit_code": 0,
+        "sync_exit_code": 0,
+        "links_exit_code": 0,
+        "public_scan_exit_code": 0,
+        "distribution_exit_code": 0,
+        "independent_route_mutation_refusals": 3,
+        "start_end_source_equal": true,
+        "start_end_clean": true
+      },
+      "deferred": [
+        "Two pre-existing cosmetic canonical-diagram edge omissions; prose and strict evidence gates still require successful review/effect proof."
+      ],
+      "limits": [
+        "The native BMad Build unit can close implementation/review; authoritative factory story remains in review until its distinct protected proof/integration gates.",
+        "Current primary combined verification, exact52case admission, native final site QA and external publication remain separate."
+      ]
     }
   },
   "baseline_sha": null,
@@ -126,8 +157,16 @@
       "by": "codex-readme",
       "from": "ready-for-dev",
       "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T20:09:31.303061+00:00",
+      "by": "codex-readme",
+      "from": "in-progress",
+      "to": "in-review"
     }
   ],
   "findings": [],
-  "source_key": "launch-publication/readme"
+  "source_key": "launch-publication/readme",
+  "review_subject_sha": "374eea011296d790a15fcf861b499835ee02f26b",
+  "evidence_contract": 1
 }

@@ -886,6 +886,23 @@
           "hitl": false,
           "plan_checkpoint": false,
           "done_checkpoint": false
+        },
+        {
+          "key": "canonical-skills-acquisition",
+          "title": "Bound raw skills acquisition to canonical pack sources",
+          "type": "bug",
+          "after": [
+            "distribution"
+          ],
+          "covers": [
+            "TLS-DIST-001",
+            "VAL-HOST-001",
+            "VAL-README-002"
+          ],
+          "risk": "standard",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": false
         }
       ]
     },
