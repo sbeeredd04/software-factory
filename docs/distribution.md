@@ -31,7 +31,9 @@ archives (128 MiB total decoded tar bytes, including metadata and padding;
 bounded decompression pass and raw header scan reject PAX/GNU extension headers
 and data hidden after the archive terminator. Releases use the USTAR format
 with explicit regular-file/directory types; legacy NUL/V7 types are rejected
-to keep raw scanning and tarfile payload boundaries identical. Downloads
+to keep raw scanning and tarfile payload boundaries identical. The raw scan
+uses tarfile's fixed-header parser for size and checksum semantics; it never
+invokes extension-payload processing. Downloads
 use HTTPS, bounded transfer size/time and disposable private staging cleaned on
 normal completion or handled failure. Forced process termination can leave OS
 temporary files. Checksums from the same origin provide integrity checking,

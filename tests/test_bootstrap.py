@@ -197,6 +197,30 @@ class BootstrapTests(unittest.TestCase):
                 self.assertNotIn('Traceback', result.stderr)
                 self.assertFalse(self.executed.exists())
 
+    def test_leading_nul_size_cannot_hide_extension_headers(self):
+        for kind in (tarfile.XHDTYPE, tarfile.GNUTYPE_LONGNAME):
+            with self.subTest(kind=kind):
+                extension = tarfile.TarInfo('sf-v0.1.0/hidden-extension')
+                extension.type, extension.size = kind, 512
+                payload = b'18 comment=hidden\n' if kind == tarfile.XHDTYPE else b'sf-v0.1.0/hidden\0'
+                hidden = (extension.tobuf(format=tarfile.USTAR_FORMAT) + payload.ljust(512, b'\0')) * 1001
+                info = tarfile.TarInfo('sf-v0.1.0/explicit-file')
+                header = bytearray(info.tobuf(format=tarfile.USTAR_FORMAT))
+                header[124:136] = b'\0' + f'{len(hidden):011o}'.encode()
+                header[148:156] = b' ' * 8
+                header[148:156] = f'{sum(header):06o}\0 '.encode()
+                # The first NUL terminates tarfile's number; stripping it would
+                # instead produce the positive length of the hidden chain.
+                self.assertEqual(tarfile.TarInfo.frombuf(bytes(header), 'utf-8', 'strict').size, 0)
+                archive = self.root/'sf-v0.1.0.tar.gz'
+                archive.write_bytes(gzip.compress(header + hidden + bytes(1024)))
+                (self.root/'SHA256SUMS').write_text(hashlib.sha256(archive.read_bytes()).hexdigest()+'  '+archive.name+'\n')
+                result = self.run_bootstrap()
+                self.assertEqual(result.returncode, 1)
+                self.assertIn('unsafe archive header type', result.stderr)
+                self.assertNotIn('Traceback', result.stderr)
+                self.assertFalse(self.executed.exists())
+
     def test_explicit_empty_ustar_directory_remains_supported(self):
         archive = self.fixture()
         directory = tarfile.TarInfo('sf-v0.1.0/')

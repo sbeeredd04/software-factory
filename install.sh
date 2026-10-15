@@ -63,11 +63,12 @@ def bounded_tar(archive):
             if header[156:157] not in (b'0', b'5'):
                 raise ValueError('unsafe archive header type (extensions unsupported)')
             count += 1
-            raw_size = header[124:136].strip(b'\0 ')
-            if not re.fullmatch(b'[0-7]*', raw_size):
-                raise ValueError('invalid archive size encoding')
-            size = int(raw_size or b'0', 8)
-            if count > MAX_MEMBERS or size > MAX_BYTES:
+            # Parse this fixed header only, using exactly the same numeric and
+            # checksum semantics as the later TarFile reader. frombuf does not
+            # read or process extension payloads; their types were rejected above.
+            member = tarfile.TarInfo.frombuf(header, tarfile.ENCODING, 'surrogateescape')
+            size = member.size
+            if count > MAX_MEMBERS or size < 0 or size > MAX_BYTES:
                 raise ValueError('archive exceeds extraction limits')
             padded = ((size + 511) // 512) * 512
             if source.tell() + padded > total:
