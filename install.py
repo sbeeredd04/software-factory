@@ -1247,10 +1247,26 @@ def main(argv: list[str] | None = None) -> int:
     doctor = sub.add_parser("doctor", help="read-only installation diagnostics")
     doctor.add_argument("--project", type=Path, required=True)
     doctor.add_argument("--json", action="store_true")
+    project = sub.add_parser("project", help="generate a native marketplace artifact")
+    project.add_argument("--host", choices=(*REGISTERED_HOSTS, "all"), required=True)
+    project.add_argument("--out", type=Path, required=True)
     args = parser.parse_args(argv)
     try:
         if args.command == "install":
             return cmd_install(args)
+        if args.command == "project":
+            sys.dont_write_bytecode = True
+            spec = importlib.util.spec_from_file_location(
+                "sf_distribution", PACK_ROOT / "scripts/distribution.py"
+            )
+            distribution = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(distribution)
+            try:
+                distribution.project(sys.modules[__name__], args.host, args.out)
+            except (OSError, ValueError) as exc:
+                raise InstallError(str(exc)) from exc
+            print("project: generated native marketplace (static format; live loading unverified)")
+            return 0
         # Read-only diagnostics and uninstall dry-runs must not write caches
         # into the source pack when loading their shared implementation.
         sys.dont_write_bytecode = True
