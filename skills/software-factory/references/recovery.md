@@ -187,8 +187,8 @@ reads and runs the evidence. Installation creates no run state.
 
 ## Bounds: claims, run.json and the run folder
 
-Claims are a lease, not a ledger: release each claim when its work merges or
-stops. The helper warns above 50 active claims and refuses new claims at 100
+Claims record active ownership, not history: release each claim when its work
+merges or stops. The helper warns above 50 active claims and refuses new claims at 100
 with an error naming the way out; `state.py reconcile` lists claims whose
 worktree or HEAD no longer resolves (exit 1 when any are listed) so a human
 can release them through the normal owner check. Claims are never expired
