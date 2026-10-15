@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-15T15:17:22.674066+00:00",
-  "revision": 270,
+  "generated_at": "2026-10-15T15:29:47.051311+00:00",
+  "revision": 271,
   "streams": [
     {
       "id": "W-foundation",
@@ -5630,7 +5630,13 @@
       "hitl": false,
       "plan_checkpoint": false,
       "done_checkpoint": false,
-      "blocked": null,
+      "blocked": {
+        "type": "human-decision",
+        "reason": "Source and fixture review is complete; actual asset capture waits for the explicit pending alternative-browser-method answer required by the browser-control tool instructions.",
+        "since": "2026-10-15T15:29:47.040125+00:00",
+        "owner": "human-owner",
+        "next_action": "Answer the existing isolated headless-check question; then render the frozen public templates and finish actual PNG, native media and full-gate verification."
+      },
       "receipts": {
         "active-attempt": {
           "type": "agent-attempt",
@@ -5660,6 +5666,23 @@
             "No browser or renderer execution; published-artifact test excluded and not passing.",
             "Normal in-app-browser CSP event also reproduces on a minimal control page with browser-comments DOM; isolated render result remains unverified.",
             "Headless-method owner answer, final visual review, integrated verification and human/publication acceptance remain separate."
+          ]
+        },
+        "source-readiness": {
+          "type": "independent-review",
+          "subject_sha": "e80b348508d4f4cab6e90cc4737c620fbe265faf",
+          "author": "codex-assets",
+          "reviewer": "/root/launch_copy",
+          "requested_model": "gpt-6.1-sol",
+          "effective_model": null,
+          "status": "pass",
+          "scope": "Source readiness only. Original prepared-temp ownership, SIGTERM child cleanup and malformed PNG findings repaired; final delta independently accepted. Root independently ran30 source/fixture tests,0fail/errors/skips. Original rejected reviews and real regression failures retained.",
+          "artifact": ".software-factory/runs/software-factory-v01/evidence/assets-source-final-review-e80.md",
+          "artifact_sha256": "1fc64783664e1c60ed572ee2c513238995477aa73cdbb34d51e569e77008b815",
+          "limitations": [
+            "Real PNGs, aliases and render receipt absent; published-artifact check excluded and not passing.",
+            "No separate showcase/asset-capture browser execution; explicit alternative-method answer remains pending.",
+            "No final story handoff, integrated asset gate, case50 admission, publication or human epic acceptance."
           ]
         }
       },
@@ -7009,7 +7032,23 @@
       }
     ]
   },
-  "blockers": [],
+  "blockers": [
+    {
+      "id": 30,
+      "epic": 5,
+      "stream": "W-launch",
+      "type": "human-decision",
+      "reason": "Source and fixture review is complete; actual asset capture waits for the explicit pending alternative-browser-method answer required by the browser-control tool instructions.",
+      "owner": "human-owner",
+      "since": "2026-10-15T15:29:47.040125+00:00",
+      "next_action": "Answer the existing isolated headless-check question; then render the frozen public templates and finish actual PNG, native media and full-gate verification.",
+      "stalls": [
+        31,
+        32,
+        33
+      ]
+    }
+  ],
   "diagnostics": {
     "unpinned_gates": [],
     "undeclared_after": [],
@@ -7017,6 +7056,13 @@
     "inconsistencies": []
   },
   "decision_queue": [
+    {
+      "kind": "blocked",
+      "story": 30,
+      "question": "Source and fixture review is complete; actual asset capture waits for the explicit pending alternative-browser-method answer required by the browser-control tool instructions.",
+      "owner": "human-owner",
+      "next_action": "Answer the existing isolated headless-check question; then render the frozen public templates and finish actual PNG, native media and full-gate verification."
+    },
     {
       "kind": "epic-acceptance",
       "epic": 1,

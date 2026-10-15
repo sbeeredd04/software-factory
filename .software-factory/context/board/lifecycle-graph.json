@@ -1,7 +1,23 @@
 {
   "answers": {
     "blocked": {
-      "blockers": [],
+      "blockers": [
+        {
+          "epic": 5,
+          "id": 30,
+          "next_action": "Answer the existing isolated headless-check question; then render the frozen public templates and finish actual PNG, native media and full-gate verification.",
+          "owner": "human-owner",
+          "reason": "Source and fixture review is complete; actual asset capture waits for the explicit pending alternative-browser-method answer required by the browser-control tool instructions.",
+          "since": "2026-10-15T15:29:47.040125+00:00",
+          "stalls": [
+            31,
+            32,
+            33
+          ],
+          "stream": "W-launch",
+          "type": "human-decision"
+        }
+      ],
       "problems": [],
       "waiting": [
         {
@@ -34,6 +50,13 @@
       ]
     },
     "decisions": [
+      {
+        "kind": "blocked",
+        "next_action": "Answer the existing isolated headless-check question; then render the frozen public templates and finish actual PNG, native media and full-gate verification.",
+        "owner": "human-owner",
+        "question": "Source and fixture review is complete; actual asset capture waits for the explicit pending alternative-browser-method answer required by the browser-control tool instructions.",
+        "story": 30
+      },
       {
         "epic": 1,
         "kind": "epic-acceptance",
@@ -5019,12 +5042,25 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/preparation-review",
-          "sha256": "a4b0aeb5926b45aa821da163fe8ef0531b31a7ae7eb9c65b054165b5a16c9c69"
+          "sha256": "4568442dfb995233b8c1721ee492bcfffb1d3003e82a253839ae360f0e8e5e80"
         }
       ],
       "relation": "records",
       "source": "receipt:30:preparation-review",
       "target": "surface:.software-factory/runs/software-factory-v01/evidence/assets-preparation-review-094.md"
+    },
+    {
+      "basis": "artifact-reference",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/30.json",
+          "pointer": "/receipts/source-readiness",
+          "sha256": "4568442dfb995233b8c1721ee492bcfffb1d3003e82a253839ae360f0e8e5e80"
+        }
+      ],
+      "relation": "records",
+      "source": "receipt:30:source-readiness",
+      "target": "surface:.software-factory/runs/software-factory-v01/evidence/assets-source-final-review-e80.md"
     },
     {
       "basis": "artifact-reference",
@@ -7853,7 +7889,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/covers/0",
-          "sha256": "a4b0aeb5926b45aa821da163fe8ef0531b31a7ae7eb9c65b054165b5a16c9c69"
+          "sha256": "4568442dfb995233b8c1721ee492bcfffb1d3003e82a253839ae360f0e8e5e80"
         }
       ],
       "relation": "covers",
@@ -7866,7 +7902,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/covers/1",
-          "sha256": "a4b0aeb5926b45aa821da163fe8ef0531b31a7ae7eb9c65b054165b5a16c9c69"
+          "sha256": "4568442dfb995233b8c1721ee492bcfffb1d3003e82a253839ae360f0e8e5e80"
         }
       ],
       "relation": "covers",
@@ -7879,7 +7915,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/covers/2",
-          "sha256": "a4b0aeb5926b45aa821da163fe8ef0531b31a7ae7eb9c65b054165b5a16c9c69"
+          "sha256": "4568442dfb995233b8c1721ee492bcfffb1d3003e82a253839ae360f0e8e5e80"
         }
       ],
       "relation": "covers",
@@ -7892,7 +7928,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/covers/3",
-          "sha256": "a4b0aeb5926b45aa821da163fe8ef0531b31a7ae7eb9c65b054165b5a16c9c69"
+          "sha256": "4568442dfb995233b8c1721ee492bcfffb1d3003e82a253839ae360f0e8e5e80"
         }
       ],
       "relation": "covers",
@@ -7905,7 +7941,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/covers/4",
-          "sha256": "a4b0aeb5926b45aa821da163fe8ef0531b31a7ae7eb9c65b054165b5a16c9c69"
+          "sha256": "4568442dfb995233b8c1721ee492bcfffb1d3003e82a253839ae360f0e8e5e80"
         }
       ],
       "relation": "covers",
@@ -24500,7 +24536,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/after/0",
-          "sha256": "a4b0aeb5926b45aa821da163fe8ef0531b31a7ae7eb9c65b054165b5a16c9c69"
+          "sha256": "4568442dfb995233b8c1721ee492bcfffb1d3003e82a253839ae360f0e8e5e80"
         }
       ],
       "relation": "depends-on",
@@ -24512,7 +24548,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/epic",
-          "sha256": "a4b0aeb5926b45aa821da163fe8ef0531b31a7ae7eb9c65b054165b5a16c9c69"
+          "sha256": "4568442dfb995233b8c1721ee492bcfffb1d3003e82a253839ae360f0e8e5e80"
         }
       ],
       "relation": "part-of",
@@ -24524,7 +24560,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/active-attempt",
-          "sha256": "a4b0aeb5926b45aa821da163fe8ef0531b31a7ae7eb9c65b054165b5a16c9c69"
+          "sha256": "4568442dfb995233b8c1721ee492bcfffb1d3003e82a253839ae360f0e8e5e80"
         }
       ],
       "relation": "records",
@@ -24536,7 +24572,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/active-attempt",
-          "sha256": "a4b0aeb5926b45aa821da163fe8ef0531b31a7ae7eb9c65b054165b5a16c9c69"
+          "sha256": "4568442dfb995233b8c1721ee492bcfffb1d3003e82a253839ae360f0e8e5e80"
         }
       ],
       "relation": "subject",
@@ -24548,7 +24584,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/preparation-review",
-          "sha256": "a4b0aeb5926b45aa821da163fe8ef0531b31a7ae7eb9c65b054165b5a16c9c69"
+          "sha256": "4568442dfb995233b8c1721ee492bcfffb1d3003e82a253839ae360f0e8e5e80"
         }
       ],
       "relation": "records",
@@ -24560,12 +24596,36 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/preparation-review",
-          "sha256": "a4b0aeb5926b45aa821da163fe8ef0531b31a7ae7eb9c65b054165b5a16c9c69"
+          "sha256": "4568442dfb995233b8c1721ee492bcfffb1d3003e82a253839ae360f0e8e5e80"
         }
       ],
       "relation": "subject",
       "source": "receipt:30:preparation-review",
       "target": "commit:094b6b84baf00614c8dcf40462b8c1ab1e943b73"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/30.json",
+          "pointer": "/receipts/source-readiness",
+          "sha256": "4568442dfb995233b8c1721ee492bcfffb1d3003e82a253839ae360f0e8e5e80"
+        }
+      ],
+      "relation": "records",
+      "source": "story:30",
+      "target": "receipt:30:source-readiness"
+    },
+    {
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/30.json",
+          "pointer": "/receipts/source-readiness",
+          "sha256": "4568442dfb995233b8c1721ee492bcfffb1d3003e82a253839ae360f0e8e5e80"
+        }
+      ],
+      "relation": "subject",
+      "source": "receipt:30:source-readiness",
+      "target": "commit:e80b348508d4f4cab6e90cc4737c620fbe265faf"
     },
     {
       "provenance": [
@@ -26060,7 +26120,7 @@
     {
       "kind": "file",
       "path": ".software-factory/context/board/stories/30.json",
-      "sha256": "a4b0aeb5926b45aa821da163fe8ef0531b31a7ae7eb9c65b054165b5a16c9c69"
+      "sha256": "4568442dfb995233b8c1721ee492bcfffb1d3003e82a253839ae360f0e8e5e80"
     },
     {
       "kind": "file",
@@ -26381,6 +26441,11 @@
       "kind": "file",
       "path": ".software-factory/runs/software-factory-v01/evidence/assets-preparation-review-094.md",
       "sha256": "117c07214c8ce85123c647a245a2358c21e41a0d73c34538fa06bb5d30ea4720"
+    },
+    {
+      "kind": "file",
+      "path": ".software-factory/runs/software-factory-v01/evidence/assets-source-final-review-e80.md",
+      "sha256": "1fc64783664e1c60ed572ee2c513238995477aa73cdbb34d51e569e77008b815"
     },
     {
       "kind": "file",
@@ -27151,7 +27216,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/preparation-review/subject_sha",
-          "sha256": "a4b0aeb5926b45aa821da163fe8ef0531b31a7ae7eb9c65b054165b5a16c9c69"
+          "sha256": "4568442dfb995233b8c1721ee492bcfffb1d3003e82a253839ae360f0e8e5e80"
         }
       ],
       "type": "commit"
@@ -27968,7 +28033,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/active-attempt/subject_sha",
-          "sha256": "a4b0aeb5926b45aa821da163fe8ef0531b31a7ae7eb9c65b054165b5a16c9c69"
+          "sha256": "4568442dfb995233b8c1721ee492bcfffb1d3003e82a253839ae360f0e8e5e80"
         }
       ],
       "type": "commit"
@@ -28047,6 +28112,18 @@
           "path": ".software-factory/context/board/stories/6.json",
           "pointer": "/receipts/backfill/subject_sha",
           "sha256": "e4f88b899ded1e969f1c0e8be495087edb498f26bf36ed7d39db73fac3e5b4ea"
+        }
+      ],
+      "type": "commit"
+    },
+    {
+      "id": "commit:e80b348508d4f4cab6e90cc4737c620fbe265faf",
+      "label": "e80b348508d4f4cab6e90cc4737c620fbe265faf",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/30.json",
+          "pointer": "/receipts/source-readiness/subject_sha",
+          "sha256": "4568442dfb995233b8c1721ee492bcfffb1d3003e82a253839ae360f0e8e5e80"
         }
       ],
       "type": "commit"
@@ -49689,7 +49766,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/active-attempt",
-          "sha256": "a4b0aeb5926b45aa821da163fe8ef0531b31a7ae7eb9c65b054165b5a16c9c69"
+          "sha256": "4568442dfb995233b8c1721ee492bcfffb1d3003e82a253839ae360f0e8e5e80"
         }
       ],
       "reported_status": "assigned",
@@ -49706,12 +49783,29 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/receipts/preparation-review",
-          "sha256": "a4b0aeb5926b45aa821da163fe8ef0531b31a7ae7eb9c65b054165b5a16c9c69"
+          "sha256": "4568442dfb995233b8c1721ee492bcfffb1d3003e82a253839ae360f0e8e5e80"
         }
       ],
       "reported_status": "changes-required",
       "story": 30,
       "subject_sha": "094b6b84baf00614c8dcf40462b8c1ab1e943b73",
+      "type": "receipt"
+    },
+    {
+      "artifact_integrity": "matched",
+      "freshness": "unknown",
+      "id": "receipt:30:source-readiness",
+      "label": "source-readiness",
+      "provenance": [
+        {
+          "path": ".software-factory/context/board/stories/30.json",
+          "pointer": "/receipts/source-readiness",
+          "sha256": "4568442dfb995233b8c1721ee492bcfffb1d3003e82a253839ae360f0e8e5e80"
+        }
+      ],
+      "reported_status": "pass",
+      "story": 30,
+      "subject_sha": "e80b348508d4f4cab6e90cc4737c620fbe265faf",
       "type": "receipt"
     },
     {
@@ -50368,7 +50462,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/covers/0",
-          "sha256": "a4b0aeb5926b45aa821da163fe8ef0531b31a7ae7eb9c65b054165b5a16c9c69"
+          "sha256": "4568442dfb995233b8c1721ee492bcfffb1d3003e82a253839ae360f0e8e5e80"
         }
       ],
       "type": "requirement"
@@ -50380,7 +50474,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/covers/1",
-          "sha256": "a4b0aeb5926b45aa821da163fe8ef0531b31a7ae7eb9c65b054165b5a16c9c69"
+          "sha256": "4568442dfb995233b8c1721ee492bcfffb1d3003e82a253839ae360f0e8e5e80"
         }
       ],
       "type": "requirement"
@@ -50392,7 +50486,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/covers/2",
-          "sha256": "a4b0aeb5926b45aa821da163fe8ef0531b31a7ae7eb9c65b054165b5a16c9c69"
+          "sha256": "4568442dfb995233b8c1721ee492bcfffb1d3003e82a253839ae360f0e8e5e80"
         }
       ],
       "type": "requirement"
@@ -50404,7 +50498,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/covers/3",
-          "sha256": "a4b0aeb5926b45aa821da163fe8ef0531b31a7ae7eb9c65b054165b5a16c9c69"
+          "sha256": "4568442dfb995233b8c1721ee492bcfffb1d3003e82a253839ae360f0e8e5e80"
         }
       ],
       "type": "requirement"
@@ -50416,7 +50510,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "/covers/4",
-          "sha256": "a4b0aeb5926b45aa821da163fe8ef0531b31a7ae7eb9c65b054165b5a16c9c69"
+          "sha256": "4568442dfb995233b8c1721ee492bcfffb1d3003e82a253839ae360f0e8e5e80"
         }
       ],
       "type": "requirement"
@@ -53841,7 +53935,7 @@
         {
           "path": ".software-factory/context/board/stories/30.json",
           "pointer": "",
-          "sha256": "a4b0aeb5926b45aa821da163fe8ef0531b31a7ae7eb9c65b054165b5a16c9c69"
+          "sha256": "4568442dfb995233b8c1721ee492bcfffb1d3003e82a253839ae360f0e8e5e80"
         }
       ],
       "status": "in-progress",
@@ -54362,6 +54456,19 @@
           "path": ".software-factory/runs/software-factory-v01/evidence/assets-preparation-review-094.md",
           "pointer": "",
           "sha256": "117c07214c8ce85123c647a245a2358c21e41a0d73c34538fa06bb5d30ea4720"
+        }
+      ],
+      "type": "surface"
+    },
+    {
+      "exists": true,
+      "id": "surface:.software-factory/runs/software-factory-v01/evidence/assets-source-final-review-e80.md",
+      "label": ".software-factory/runs/software-factory-v01/evidence/assets-source-final-review-e80.md",
+      "provenance": [
+        {
+          "path": ".software-factory/runs/software-factory-v01/evidence/assets-source-final-review-e80.md",
+          "pointer": "",
+          "sha256": "1fc64783664e1c60ed572ee2c513238995477aa73cdbb34d51e569e77008b815"
         }
       ],
       "type": "surface"
@@ -56546,5 +56653,5 @@
     }
   ],
   "schema": "sf-trace/1",
-  "source_fingerprint": "a588a880d45de787b48b46028ab051f7829980c305df7a022c030feaaeba9686"
+  "source_fingerprint": "30621a8f35d24ed89fce2201853cf402bd0f3e4bb28833f564807f27cbba9023"
 }
