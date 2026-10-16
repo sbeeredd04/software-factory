@@ -8,10 +8,13 @@ python3 -m http.server 4317 --bind 127.0.0.1 --directory site
 
 The HTML, CSS, JavaScript, SVG and four unmodified OFL font faces are local.
 There is no analytics, worker, remote runtime asset or network API client.
-External anchors are explicitly labeled declared source targets; their public
-availability is pending verification. An existing trusted checkout supplies the
-recommended setup route. Pages publication is a separate owner action through
-manual workflow dispatch; this tree does not establish a deployment.
+Skill and role anchors link to the published v0.1.0 source. The
+[v0.1.0 pre-release](https://github.com/sbeeredd04/software-factory/releases/tag/v0.1.0)
+and [public showcase](https://sbeeredd04.github.io/software-factory/) were verified
+at commit `bc206b3751da7c3ca0cc32436893be96bfe6c42b`, including public asset
+checksums and standalone setup. An existing trusted checkout remains a setup
+route. Pages uses a separately authorized manual workflow dispatch; a later
+source revision or workflow file alone does not establish its deployment.
 
 ## Canonical setup prompt
 
@@ -79,10 +82,13 @@ Font source revisions, byte counts, hashes and notices are in
 
 ## Shared delivery cycle
 
-`img/delivery-graph.svg` is the single editable cycle source. The site and marketing
-templates use its local `factory-cycle` group through SVG `use`, so the page's
-loaded Inter faces render its text. Six clockwise stages include BMad epics and
-stories; human decisions branch from any phase according to risk, affected assets
-and agreed autonomy. Reserved checkpoints and actual permissions stay binding.
+`img/delivery-graph.svg` is the single editable lifecycle source. Its
+`factory-cycle` group supplies the compact layered overview for the site and
+marketing templates; `factory-system` supplies the site's complete system map.
+Both use local SVG `use`, so the page's loaded Inter faces render their text.
+The views show BMad planning, parallel claimed work, independent proof,
+single-owner delivery, repair, feedback and recovery. Human decisions branch
+from any phase according to risk, affected assets and agreed autonomy. Reserved
+checkpoints and actual permissions stay binding.
 The asset capture checks resolved SVG geometry and the actual custom fonts used
 for every cloned text node, in addition to named document font readiness.
