@@ -223,6 +223,65 @@
         "Stub checks and static review do not prove actual browser protocol/sandbox behavior; real Linux smoke and complete six-job CI required.",
         "No maintainer integration, release, protected completion or Pages proof asserted."
       ]
+    },
+    "git-fixture-isolation": {
+      "type": "disposable-git-maintenance-isolation",
+      "subject_sha": "b5a53f27acfc554b50ec0b89df44006ccecd18ae",
+      "at": "2026-10-16T00:01:39.978363+00:00",
+      "status": "implementation-in-review-real-ci-required",
+      "summary": "Test Git helper disables automatic housekeeping through command-local options. Strict fixture removal and all product convergence assertions remain. No persistent/global/environment settings changes.",
+      "author": "/root/ci_temp_diagnosis",
+      "logical_owner": "codex-ci-recovery",
+      "effective_model": null,
+      "independent_reviewer": "/root/ci_git_fixture_blind",
+      "review": "Two low coverage findings patched and independently confirmed; actual commit trace and temporary global/environment persistence checks included.",
+      "checks": [
+        {
+          "command": "python3 -m unittest discover -s tests -p test_host_selection.py -v",
+          "exit_code": 0,
+          "tests": 18
+        },
+        {
+          "command": "python3 -m unittest discover -s tests -p test_installer.py -v",
+          "exit_code": 0,
+          "tests": 20
+        },
+        {
+          "command": "python3 -m unittest discover -s tests -p test_state.py -v",
+          "exit_code": 0,
+          "tests": 56
+        },
+        {
+          "command": "uvx --from ruff==0.17.0 ruff check tests/support.py tests/test_host_selection.py",
+          "exit_code": 0
+        }
+      ],
+      "files": {
+        "tests/support.py": "485ce070811862a0bdea8d1b4dd3882eb80c5806b486e2f0b6a7b6af84133d7d",
+        "tests/test_host_selection.py": "1ff84af0eeef944dac582026e72e11489e0acff6a83967354c6f631403016e24"
+      },
+      "actual_local_trace": {
+        "actual_commit_start_events": 1,
+        "head_changed": true,
+        "maintenance_or_gc_child_start_events": 0,
+        "child_environment_unchanged": true,
+        "global_config_sentinel_unchanged": true,
+        "repository_config_unchanged": true,
+        "parent_environment_unchanged": true
+      },
+      "external_handoff": {
+        "path": "/tmp/sf-ci-maintenance-handoff.json",
+        "sha256": "21121b8ac77b381144057aac5dfcb21fe7143d310e1b0fc200acb9151747b981"
+      },
+      "external_review": {
+        "path": "/tmp/sf-ci-maintenance-review.md",
+        "sha256": "614eb3252908ccac1fe42bbca69644c4b5f6c63c2b6024d68bca95920583118e"
+      },
+      "limits": [
+        "Host selection18cases and Ruff rerun after coverage fixes. Prior installer20/state56cases remain applicable: tests/support.py bytes unchanged since those passing runs and only host-selection regression coverage extended.",
+        "Focused macOS3.12 proof; fresh complete localgate and actual six-jobCI includingMac3.11 remain required.",
+        "No integration/release/protectedcompletion asserted."
+      ]
     }
   },
   "baseline_sha": null,
@@ -283,6 +342,18 @@
       "by": "codex-ci-recovery",
       "from": "in-progress",
       "to": "in-review"
+    },
+    {
+      "at": "2026-10-15T23:56:58.441741+00:00",
+      "by": "codex-ci-recovery",
+      "from": "in-review",
+      "to": "in-progress"
+    },
+    {
+      "at": "2026-10-16T00:01:40.011081+00:00",
+      "by": "codex-ci-recovery",
+      "from": "in-progress",
+      "to": "in-review"
     }
   ],
   "findings": [
@@ -294,5 +365,5 @@
   ],
   "source_key": "launch-publication/docs-examples-dogfood",
   "evidence_contract": 1,
-  "review_subject_sha": "f64dcebddfffef23c0ed99c5c8200029029c957e"
+  "review_subject_sha": "b5a53f27acfc554b50ec0b89df44006ccecd18ae"
 }
