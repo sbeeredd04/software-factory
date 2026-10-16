@@ -4,8 +4,8 @@
   "epic": 5,
   "type": "story",
   "title": "Viral-quality README with diagrams and quickstart",
-  "status": "backlog",
-  "owner": null,
+  "status": "in-review",
+  "owner": "codex-readme",
   "after": [
     31
   ],
@@ -28,12 +28,275 @@
   "plan_checkpoint": false,
   "done_checkpoint": false,
   "blocked": null,
-  "receipts": {},
+  "receipts": {
+    "planning-attempt": {
+      "type": "agent-attempt",
+      "subject_sha": "1ebe84907207df2350df2fea5080bbdeb5ec59f9",
+      "agent": "/root/mission_status",
+      "role": "sf-product-manager",
+      "skill": "bmad-create-epics-and-stories",
+      "requested_model": "native host agent default",
+      "effective_model": null,
+      "phase": "planning",
+      "status": "assigned",
+      "summary": "Actually installedBMad6.12.0 sequentialepics/storiesworkflow forremaininglaunchscope32/33; reusableexistingepic5/requirements/ADR27. DirectownerautonomyGO coversroutinecontinuation, no fabricatedhumanCanswers. Writeonlyclaimedignoredplanningartifacts, rootreviewsbeforeimplementation."
+    },
+    "plan-review": {
+      "type": "independent-plan-review",
+      "subject_sha": "b532758b731897cf06b67798171817a8afd91066",
+      "reviewer": "/root",
+      "planner": "/root/mission_status",
+      "status": "pass",
+      "skill": "bmad-build",
+      "phase": "planning",
+      "spec": "_bmad-output/implementation-artifacts/spec-32-readme-adoption.md",
+      "spec_sha256": "1fa59099c3f7f14398699be3f781b060ee4c75295f3cb009572049b91c1ef532",
+      "scope": "SingleREADMEadoptiongoal; actualnativeBMadBuildsteps01/02 investigation,7GWTACs/5sourceoutputs, rootedexistingCE/SPplan. Correctedforeignoverwriteboundary/futureverificationwording, no AC/grader/scopechange. ReadyunderexistingownerGO/rootapproval, notfictionalnewhumananswer.",
+      "limits": [
+        "Implementationstep03 notstarted; actualdiff/fixtures/review/fullgate/52case stillrequired.",
+        "Story33publication/legacy/staging/explicitreservations remainseparate."
+      ]
+    },
+    "active-attempt": {
+      "type": "agent-attempt",
+      "subject_sha": "b532758b731897cf06b67798171817a8afd91066",
+      "agent": "/root/docs_impl",
+      "implementation_agent": "/root/docs_impl/readme_implement",
+      "role": "sf-engineer",
+      "skill": "bmad-build",
+      "requested_model": "gpt-6-sol",
+      "requested_reasoning": "high",
+      "effective_model": null,
+      "phase": "implementation",
+      "status": "in-progress",
+      "summary": "Actual installed BMad Build rendered once in the claimed worktree and resumed the approved story 32 spec. Parent dispatched the implementation agent, then reviewed its draft. Seven source paths now include the prompt generator and one existing parity assertion to keep the same safe literal command across README, quickstart and showcase.",
+      "deviations": [
+        "The child initially wrote the five scoped drafts in the primary checkout. The parent preserved their exact diff externally, copied them byte-for-byte into the claimed worktree and restored only those primary drafts. No primary commit was made."
+      ],
+      "limits": [
+        "Effective model is not exposed by collaboration status. Implementation and independent review are still pending; no complete or live-host claim."
+      ]
+    },
+    "independent-step04-review": {
+      "type": "independent-review",
+      "subject_sha": "34b44b13649499e24b4e7fc649825c29c0fa62ee",
+      "skill": "bmad-build",
+      "phase": "review",
+      "status": "patches-required",
+      "coordinator": "/root",
+      "layers": [
+        {
+          "agent": "/root/bmad32_blind",
+          "findings": 10
+        },
+        {
+          "agent": "/root/bmad32_edge",
+          "findings": 2
+        },
+        {
+          "agent": "/root/bmad32_verification",
+          "findings": 0
+        }
+      ],
+      "requested_model": "Same capability as native coordinator, inherited without override",
+      "effective_model": null,
+      "summary": "All three installed BMad step04 layers were launched before any result was triaged. Twelve individual verdicts recorded before grouping; eight direct patch groups, two pre-existing cosmetic diagram omissions deferred. Exact original implementation child was re-engaged for directory/path safety and fixture/asset assertions. No acceptance claimed.",
+      "patch_agent": "/root/docs_impl/readme_implement",
+      "root_focused_tests": {
+        "run": 10,
+        "passed": 10,
+        "exit_code": 0,
+        "limits": "Pre-repair test pass does not settle the review findings."
+      }
+    },
+    "independent-review": {
+      "type": "independent-review",
+      "subject_sha": "374eea011296d790a15fcf861b499835ee02f26b",
+      "reviewer": "/root/final_audit",
+      "author": "/root/docs_impl/readme_implement",
+      "coordinator": "/root",
+      "status": "pass",
+      "scope": "Complete eight-file README/setup journey; original BMad unit and three independent layers followed by verified direct repairs, actual local effects and source-preserving clean-SHA final review.",
+      "checks": {
+        "readme_tests": 12,
+        "showcase_tests": 16,
+        "failed": 0,
+        "skipped": 0,
+        "mermaid_rendered": 9,
+        "pinned_ruff_exit_code": 0,
+        "sync_exit_code": 0,
+        "links_exit_code": 0,
+        "public_scan_exit_code": 0,
+        "distribution_exit_code": 0,
+        "independent_route_mutation_refusals": 3,
+        "start_end_source_equal": true,
+        "start_end_clean": true
+      },
+      "deferred": [
+        "Two pre-existing cosmetic canonical-diagram edge omissions; prose and strict evidence gates still require successful review/effect proof."
+      ],
+      "limits": [
+        "The native BMad Build unit can close implementation/review; authoritative factory story remains in review until its distinct protected proof/integration gates.",
+        "Current primary combined verification, exact52case admission, native final site QA and external publication remain separate."
+      ]
+    },
+    "bmad-build-unit-closure": {
+      "type": "native-bmad-unit-closure",
+      "subject_sha": "374eea011296d790a15fcf861b499835ee02f26b",
+      "status": "pass",
+      "unit_status": "done",
+      "authoritative_factory_status": "in-review",
+      "coordinator": "/root",
+      "implementation_agent": "/root/docs_impl/readme_implement",
+      "reviewers": [
+        "/root/bmad32_blind",
+        "/root/bmad32_edge",
+        "/root/bmad32_verification",
+        "/root/final_audit"
+      ],
+      "spec": "_bmad-output/implementation-artifacts/spec-32-readme-adoption.md",
+      "spec_sha256": "e6e92bd5a4f1bb4329d74d005924211d25ee77ce3c9f675953490996566bcee3",
+      "steps": "Actual installed BMad Build render/resume, implementation, three simultaneous reviews, individual verdicts and direct patches, final frozen-source verification, presentation/unit closure.",
+      "deferred": "Two pre-existing cosmetic canonical-diagram omissions retained in worker notes; full evidence contracts remain binding.",
+      "limits": [
+        "Native unit done is not factory story built/done, delivery, maintainer integration or acceptance. No sprint-status store was created; no push occurred."
+      ]
+    },
+    "exact-eval52-admission": {
+      "type": "evaluation-admission",
+      "subject_sha": "d012ad71df197c656664b9fdc563a80975f99409",
+      "status": "admitted-after-independent-implementation-review",
+      "case_id": "TLS-README-001",
+      "original_cases_unchanged": 30,
+      "exact_approved_additions": 22,
+      "total_cases": 52,
+      "payload_sha256": "6de4045d29dd9c49867d7e66c03702b8753ac9ad52d2ce79e7be526eb9c6d2ff",
+      "source_decision": ".software-factory/context/decisions/0026-additive-evaluation-admission.md",
+      "implementation_subject_sha": "374eea011296d790a15fcf861b499835ee02f26b",
+      "new_approval_or_criteria_change": false,
+      "limits": [
+        "Admission reuses the exact approved addition; actual passing combined evidence still required."
+      ]
+    },
+    "combined-source": {
+      "type": "combined-local-source-observation",
+      "subject_sha": "d012ad71df197c656664b9fdc563a80975f99409",
+      "status": "pass",
+      "readme_source_blobs_verified": 8,
+      "readme_review_subject_sha": "374eea011296d790a15fcf861b499835ee02f26b",
+      "installed_repeat": {
+        "exit_code": 0,
+        "tracked_changes": 0,
+        "forbidden_invocations": 0,
+        "owned_manifest_hashes_verified": 116,
+        "existing_bmad_preserved": true
+      },
+      "native_installed_crawl": {
+        "selection": "git-tracked-and-unignored",
+        "python_modules": 80,
+        "source_files": 90,
+        "entry_points": 60,
+        "unparsed": 0,
+        "raw_json_bytes": 925459,
+        "stored_json_bytes": 925459,
+        "raw_json_sha256": "ad17c5b6f328060ef450d8050399ee345259f90dc0fdef1ee0a2b6bb714f2586",
+        "stored_json_sha256": "ad17c5b6f328060ef450d8050399ee345259f90dc0fdef1ee0a2b6bb714f2586",
+        "encoding": "Native bytes"
+      },
+      "limits": [
+        "Combined local feature candidate, not maintainer integration, deployment, live host registration or final full-gate proof."
+      ]
+    },
+    "readme-format-repair": {
+      "type": "mechanical-format-repair-handoff",
+      "subject_sha": "6db0aabef98b643c8e218ac5372b1c1d7225db46",
+      "status": "in-review",
+      "implementation_agent": "/root/readme_format_repair",
+      "implementation_owner": "codex-readme",
+      "reviewer": "/root/publication_authority_audit",
+      "coordinator": "/root",
+      "model_requested": "inherited native host model",
+      "effective_model": null,
+      "scope": "Existing story32: escape acquisition shellguard pipes in the GFM table so the complete command/explanation render; preserve actual rendered shell command bytes. No new product/architecture/skill/evaluation scope.",
+      "workflow": "Mechanical formatting-only maintenance; installed BMadBuild explicitly excludes this class. Existing story re-entered in-progress under exact live32claim; no new approval or test/eval case count.",
+      "checks": {
+        "existing_readme_tests": {
+          "run": 12,
+          "passed": 12,
+          "failed": 0,
+          "exit_code": 0
+        },
+        "pinned_ruff": {
+          "version": "0.17.0",
+          "exit_code": 0
+        },
+        "github_gfm": {
+          "before": "reproduced missing command/explanation",
+          "after": "3cells and exact decoded shellguard/fullcommand restored",
+          "exit_code": 0
+        },
+        "independent_review": "accepted"
+      },
+      "artifacts": [
+        {
+          "artifact": ".software-factory/runs/software-factory-v01/evidence/sf-readme-format-independent-review.md",
+          "sha256": "31eeb40eb80c721d7e08c6a7df09f1bc6f8079dfba9dec7b725ac3249d5c32df"
+        },
+        {
+          "artifact": ".software-factory/runs/software-factory-v01/evidence/sf-readme-gfm-verification.json",
+          "sha256": "ccdcf836f65592c912dbc24cb435de9e0717b2f74503a7e3ce1825509fc45e77"
+        },
+        {
+          "artifact": ".software-factory/runs/software-factory-v01/evidence/sf-readme-table-format-repair-handoff.json",
+          "sha256": "02fc2615e9327896fbd93c3047726b232807bf54785456e5f2c1de7eff481f1b"
+        }
+      ],
+      "limits": [
+        "Full frozen gate and current-subject remoteCI remain required.",
+        "Public browser result on the pushed repair must still be observed.",
+        "Prior ac587 gate/CI do not become proof of this new subject.",
+        "No protected story/epic closure, integration or deployment is asserted."
+      ]
+    }
+  },
   "baseline_sha": null,
   "branch": null,
   "pr": null,
   "merged_sha": null,
-  "history": [],
+  "history": [
+    {
+      "at": "2026-10-15T19:27:10.245140+00:00",
+      "by": "orchestrator",
+      "from": "backlog",
+      "to": "ready-for-dev"
+    },
+    {
+      "at": "2026-10-15T19:28:05.559578+00:00",
+      "by": "codex-readme",
+      "from": "ready-for-dev",
+      "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T20:09:31.303061+00:00",
+      "by": "codex-readme",
+      "from": "in-progress",
+      "to": "in-review"
+    },
+    {
+      "at": "2026-10-15T22:55:44.566783+00:00",
+      "by": "codex-readme",
+      "from": "in-review",
+      "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T22:59:07.539227+00:00",
+      "by": "codex-readme",
+      "from": "in-progress",
+      "to": "in-review"
+    }
+  ],
   "findings": [],
-  "source_key": "launch-publication/readme"
+  "source_key": "launch-publication/readme",
+  "evidence_contract": 1,
+  "review_subject_sha": "6db0aabef98b643c8e218ac5372b1c1d7225db46"
 }

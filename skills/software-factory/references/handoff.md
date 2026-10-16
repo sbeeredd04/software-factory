@@ -30,6 +30,39 @@ Uncertainty: <what is unknown, unverified or flaky>.
 Next: <one exact next action>; blockers: <...>.
 ```
 
+## Agent-attempt receipts
+
+For durable attribution, use the existing story `receipts` extension rather
+than a separate status store. The required `subject_sha` is the actual baseline
+at dispatch or the actual result SHA for a return. Optional fields are:
+
+```text
+type: "agent-attempt"; agent: <host agent/session identifier>; role: <role>;
+skill: <skill used>; requested_model: <requested route>;
+effective_model: <observed model or null>; phase: <phase>; status: <status>;
+recorded_at: <timestamp>; summary: <short factual report and route rationale>.
+```
+
+Use phases `dispatch | implementation | verification | review | recovery` and
+statuses `assigned | reported-complete | failed | cancelled | awaiting-review`.
+Absent or null `effective_model` means unknown; never infer it from the request.
+These are optional descriptive receipt fields, not new story transitions or a
+kernel-validated schema. A receipt records a report, not proof that a process
+is live, an effect occurred or independent verification passed. Link the
+actual evidence separately and use distinct receipt names for separate attempts.
+
+Attach a JSON receipt from this skill's directory, using the existing writer
+authority (worker updates require its live claim):
+
+```sh
+python3 scripts/roadmap.py update --workspace "<project-root>" --story <id> \
+  --actor worker --owner <owner> --receipt attempt-1=<receipt.json>
+```
+
+At check-in, submit result receipts and `in-review` while the claim still
+exists; reconcile the handoff before releasing it. Later revisions reacquire
+ownership. A dispatch receipt does not substitute for result evidence.
+
 ## The rules of the contract
 
 - Workers get the exact orchestrator-created worktree, absolute edit paths and

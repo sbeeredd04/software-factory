@@ -1,0 +1,784 @@
+{
+  "version": 1,
+  "plan_file": "evals/eval.config.json",
+  "receipts_dir": ".software-factory/runs",
+  "user_signoff_required": true,
+  "risk_tier": 1,
+  "minimums": {
+    "cases_per_criterion": 1,
+    "negative_cases_per_behavior": "tier1",
+    "smoke_paths_per_surface": 1,
+    "regression_cases_per_epic": 3,
+    "deterministic_only_below_tier": 1
+  },
+  "surfaces": [
+    {
+      "id": "kernel",
+      "kind": "library",
+      "harness": {
+        "type": "command"
+      },
+      "suites": [
+        "smoke",
+        "regression"
+      ]
+    },
+    {
+      "id": "tools",
+      "kind": "cli",
+      "harness": {
+        "type": "command"
+      },
+      "suites": [
+        "smoke",
+        "regression"
+      ]
+    },
+    {
+      "id": "skills",
+      "kind": "content",
+      "harness": {
+        "type": "file_state"
+      },
+      "suites": [
+        "smoke",
+        "story",
+        "regression"
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "id": "KRN-KERNEL-001",
+      "story": "foundation/kernel-helpers",
+      "epic": "foundation",
+      "suite": "regression",
+      "kind": "pass_to_pass",
+      "criterion": "The state helper's claims, checkpoints, locking and recovery behaviors pass their unit suite.",
+      "surface": "kernel",
+      "tier": [
+        "quick",
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "command",
+        "run": "python3 -m unittest discover -s tests -p test_state.py",
+        "expect": {
+          "exit": 0
+        }
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "KRN-KERNEL-002",
+      "story": "foundation/kernel-helpers",
+      "epic": "foundation",
+      "suite": "regression",
+      "kind": "pass_to_pass",
+      "criterion": "The evidence gate binds receipts to subject SHAs and refuses missing, skipped or unknown proof.",
+      "surface": "kernel",
+      "tier": [
+        "quick",
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "command",
+        "run": "python3 -m unittest discover -s tests -p test_gate.py",
+        "expect": {
+          "exit": 0
+        }
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "KRN-KERNEL-003",
+      "story": "foundation/kernel-helpers",
+      "epic": "foundation",
+      "suite": "regression",
+      "kind": "pass_to_pass",
+      "criterion": "The hook helper stays inert without an active program and emits host-correct recovery envelopes.",
+      "surface": "kernel",
+      "tier": [
+        "quick",
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "command",
+        "run": "python3 -m unittest discover -s tests -p test_hook.py",
+        "expect": {
+          "exit": 0
+        }
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "KRN-KERNEL-004",
+      "story": "foundation/kernel-helpers",
+      "epic": "foundation",
+      "suite": "regression",
+      "kind": "pass_to_pass",
+      "criterion": "The config helper parses the JSON-compatible subset and enforces semantic rules.",
+      "surface": "kernel",
+      "tier": [
+        "quick",
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "command",
+        "run": "python3 -m unittest discover -s tests -p test_config_kernel.py",
+        "expect": {
+          "exit": 0
+        }
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "KRN-KERNEL-005",
+      "story": "foundation/kernel-helpers",
+      "epic": "foundation",
+      "suite": "regression",
+      "kind": "pass_to_pass",
+      "criterion": "Gate check names ride configuration (verification.required_checks), never a new hardcoded literal.",
+      "surface": "kernel",
+      "tier": [
+        "quick",
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "state",
+        "path": "skills/software-factory/scripts/gate.py",
+        "contains": [
+          "required_checks"
+        ]
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "KRN-KERNEL-006",
+      "story": "expansion/kernel-hardening",
+      "epic": "expansion",
+      "suite": "regression",
+      "kind": "pass_to_pass",
+      "criterion": "Claim accumulation is bounded with a reconcile warning above the threshold.",
+      "surface": "kernel",
+      "tier": [
+        "quick",
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "state",
+        "path": "skills/software-factory/scripts/state.py",
+        "contains": [
+          "CLAIM_WARN_THRESHOLD"
+        ]
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "TLS-TOOLS-001",
+      "story": "foundation/validation-tooling",
+      "epic": "foundation",
+      "suite": "smoke",
+      "kind": "pass_to_pass",
+      "criterion": "Layout validation passes on the shipped tree.",
+      "surface": "tools",
+      "tier": [
+        "quick",
+        "epic",
+        "premerge",
+        "canary"
+      ],
+      "grade": {
+        "type": "command",
+        "run": "python3 scripts/validate.py",
+        "expect": {
+          "exit": 0
+        }
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "TLS-TOOLS-002",
+      "story": "foundation/validation-tooling",
+      "epic": "foundation",
+      "suite": "smoke",
+      "kind": "pass_to_pass",
+      "criterion": "The public-cleanliness scan passes on the tracked tree.",
+      "surface": "tools",
+      "tier": [
+        "quick",
+        "epic",
+        "premerge",
+        "canary"
+      ],
+      "grade": {
+        "type": "command",
+        "run": "python3 scripts/scan_public.py",
+        "expect": {
+          "exit": 0
+        }
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "TLS-TOOLS-003",
+      "story": "foundation/validation-tooling",
+      "epic": "foundation",
+      "suite": "smoke",
+      "kind": "pass_to_pass",
+      "criterion": "Every relative link in tracked Markdown resolves offline.",
+      "surface": "tools",
+      "tier": [
+        "quick",
+        "epic",
+        "premerge",
+        "canary"
+      ],
+      "grade": {
+        "type": "command",
+        "run": "python3 scripts/check_links.py",
+        "expect": {
+          "exit": 0
+        }
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "TLS-TOOLS-004",
+      "story": "foundation/validation-tooling",
+      "epic": "foundation",
+      "suite": "regression",
+      "kind": "pass_to_pass",
+      "criterion": "The Mermaid render check is wired into the gate (the renderer itself is network-gated).",
+      "surface": "tools",
+      "tier": [
+        "quick",
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "state",
+        "path": "scripts/check_all.sh",
+        "contains": [
+          "check_mermaid"
+        ]
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "TLS-TOOLS-005",
+      "story": "foundation/validation-tooling",
+      "epic": "foundation",
+      "suite": "regression",
+      "kind": "pass_to_pass",
+      "criterion": "The tooling unit suite (validator, scanner, links) passes.",
+      "surface": "tools",
+      "tier": [
+        "quick",
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "command",
+        "run": "python3 -m unittest discover -s tests -p test_tools.py",
+        "expect": {
+          "exit": 0
+        }
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "TLS-TOOLS-006",
+      "story": "foundation/validation-tooling",
+      "epic": "foundation",
+      "suite": "regression",
+      "kind": "pass_to_pass",
+      "criterion": "Negative: a tampered receipt fails verification with a nonzero exit \u2014 proof is never counted on trust.",
+      "surface": "tools",
+      "tier": [
+        "quick",
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "command",
+        "run": "python3 skills/sf-eval/scripts/sf_eval.py verify --receipt evals/fixtures/tampered-receipt.json",
+        "expect": {
+          "exit": 1
+        }
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "SKL-EVAL-001",
+      "story": "expansion/eval-skill",
+      "epic": "expansion",
+      "suite": "regression",
+      "kind": "pass_to_pass",
+      "criterion": "The eval runner, its receipts, self-hashes and manifest verification pass their unit suite.",
+      "surface": "skills",
+      "tier": [
+        "quick",
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "command",
+        "run": "python3 -m unittest discover -s tests -p test_sf_eval.py",
+        "expect": {
+          "exit": 0
+        }
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "SKL-EVAL-002",
+      "story": "expansion/eval-skill",
+      "epic": "expansion",
+      "suite": "regression",
+      "kind": "pass_to_pass",
+      "criterion": "The documented grading ladder keeps its six rungs in the deterministic-first order.",
+      "surface": "skills",
+      "tier": [
+        "quick",
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "command",
+        "run": "python3 -c \"from pathlib import Path; t=Path('skills/sf-eval/references/grading.md').read_text(); m=('1. **state**','2. **command**','3. **http**','4. **browser**','5. **golden**','6. **judge**'); idx=[t.index(x) for x in m]; assert idx==sorted(idx), 'ladder rungs out of order'\"",
+        "expect": {
+          "exit": 0
+        }
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "SKL-EVAL-003",
+      "story": "expansion/dogfood-evals",
+      "epic": "expansion",
+      "suite": "story",
+      "kind": "fail_to_pass",
+      "criterion": "The pack's own plan carries an approved sign-off record, not only consumer examples.",
+      "surface": "skills",
+      "tier": [
+        "quick",
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "state",
+        "path": "evals/eval.config.json",
+        "json": {
+          "signoff.status": "approved"
+        }
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "SKL-CRAWL-001",
+      "story": "expansion/crawl-skill",
+      "epic": "expansion",
+      "suite": "regression",
+      "kind": "pass_to_pass",
+      "criterion": "The crawl parses the fixture repos deterministically and honors its read-only rule.",
+      "surface": "skills",
+      "tier": [
+        "quick",
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "command",
+        "run": "python3 -m unittest discover -s tests -p test_crawl.py",
+        "expect": {
+          "exit": 0
+        }
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "SKL-CRAWL-002",
+      "story": "expansion/dogfood-evals",
+      "epic": "expansion",
+      "suite": "story",
+      "kind": "fail_to_pass",
+      "criterion": "The committed CODEBASE.md regenerates from the crawler with only its declared volatile lines differing.",
+      "surface": "skills",
+      "tier": [
+        "quick",
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "command",
+        "run": "tmp=$(mktemp) && python3 skills/sf-crawl/scripts/crawl.py . --artifact \"$tmp\" >/dev/null && grep -v -e '^- Source revision:' -e '^- Generated:' \"$tmp\" > \"$tmp.stable\" && grep -v -e '^- Source revision:' -e '^- Generated:' .software-factory/context/CODEBASE.md | diff - \"$tmp.stable\"",
+        "expect": {
+          "exit": 0
+        }
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "SKL-PRIN-001",
+      "story": "expansion/dogfood-evals",
+      "epic": "expansion",
+      "suite": "story",
+      "kind": "fail_to_pass",
+      "criterion": "The product module states outcomes and explicit non-goals for this pack.",
+      "surface": "skills",
+      "tier": [
+        "quick",
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "state",
+        "path": ".software-factory/context/principles/product.md",
+        "contains": [
+          "Non-goals"
+        ]
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "SKL-PRIN-002",
+      "story": "expansion/dogfood-evals",
+      "epic": "expansion",
+      "suite": "story",
+      "kind": "fail_to_pass",
+      "criterion": "The conventions module carries the anti-bloat bar.",
+      "surface": "skills",
+      "tier": [
+        "quick",
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "state",
+        "path": ".software-factory/context/principles/conventions.md",
+        "contains": [
+          "smallest complete diff"
+        ]
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "SKL-PRIN-003",
+      "story": "expansion/dogfood-evals",
+      "epic": "expansion",
+      "suite": "story",
+      "kind": "fail_to_pass",
+      "criterion": "The risk module names the human owner and the always-escalate list.",
+      "surface": "skills",
+      "tier": [
+        "quick",
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "state",
+        "path": ".software-factory/context/principles/risk.md",
+        "contains": [
+          "Always escalate to the human owner"
+        ]
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "SKL-PRIN-004",
+      "story": "expansion/dogfood-evals",
+      "epic": "expansion",
+      "suite": "story",
+      "kind": "fail_to_pass",
+      "criterion": "The evals module states the eval-first policy for this repository.",
+      "surface": "skills",
+      "tier": [
+        "quick",
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "state",
+        "path": ".software-factory/context/principles/evals.md",
+        "contains": [
+          "Eval-first"
+        ]
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "SKL-PRIN-005",
+      "story": "expansion/principles-context",
+      "epic": "expansion",
+      "suite": "regression",
+      "kind": "pass_to_pass",
+      "criterion": "The principles skill owns the canonical two-line reading rule verbatim.",
+      "surface": "skills",
+      "tier": [
+        "quick",
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "state",
+        "path": "skills/sf-principles/references/modules.md",
+        "contains": [
+          "Read the repository's own governing principles; they remain authoritative."
+        ]
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "SKL-BOARD-001",
+      "story": "expansion/board-roadmap",
+      "epic": "expansion",
+      "suite": "regression",
+      "kind": "pass_to_pass",
+      "criterion": "The board kernel enforces ownership in code and regenerates deterministically.",
+      "surface": "skills",
+      "tier": [
+        "quick",
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "command",
+        "run": "python3 -m unittest discover -s tests -p test_board.py",
+        "expect": {
+          "exit": 0
+        }
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "SKL-BOARD-002",
+      "story": "expansion/dogfood-evals",
+      "epic": "expansion",
+      "suite": "story",
+      "kind": "fail_to_pass",
+      "criterion": "The committed roadmap.json and dashboard.html are byte-identical regenerations of the committed records.",
+      "surface": "skills",
+      "tier": [
+        "quick",
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "command",
+        "run": "python3 skills/software-factory/scripts/roadmap.py build --workspace . >/dev/null && git diff --quiet -- .software-factory/context/board/",
+        "expect": {
+          "exit": 0
+        }
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "SKL-BOARD-003",
+      "story": "expansion/dogfood-evals",
+      "epic": "expansion",
+      "suite": "story",
+      "kind": "fail_to_pass",
+      "criterion": "The committed board loads with zero degenerate records or dangling references.",
+      "surface": "skills",
+      "tier": [
+        "quick",
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "command",
+        "run": "python3 -c \"import json; d=json.load(open('.software-factory/context/board/roadmap.json')); assert not d['problems'], d['problems']\"",
+        "expect": {
+          "exit": 0
+        }
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "SKL-ORCH-001",
+      "story": "expansion/loop-integration",
+      "epic": "expansion",
+      "suite": "regression",
+      "kind": "pass_to_pass",
+      "criterion": "The orchestrator entry states the full eleven-skill palette once as the capability graph.",
+      "surface": "skills",
+      "tier": [
+        "quick",
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "command",
+        "run": "python3 -c \"from pathlib import Path; t=Path('skills/software-factory/SKILL.md').read_text(); names=('sf-help','sf-agents','sf-evolve','sf-design','sf-smell-audit','sf-refactor','sf-patterns','sf-eval','sf-principles','sf-crawl'); missing=[n for n in names if n not in t]; assert not missing, missing\"",
+        "expect": {
+          "exit": 0
+        }
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "SKL-ORCH-002",
+      "story": "expansion/loop-integration",
+      "epic": "expansion",
+      "suite": "regression",
+      "kind": "pass_to_pass",
+      "criterion": "The feature workflow names the eval gate as a required verification stage.",
+      "surface": "skills",
+      "tier": [
+        "quick",
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "state",
+        "path": "skills/software-factory/workflows/feature.md",
+        "contains": [
+          "eval"
+        ]
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "SKL-WORK-001",
+      "story": "expansion/loop-integration",
+      "epic": "expansion",
+      "suite": "regression",
+      "kind": "pass_to_pass",
+      "criterion": "Parallel workstreams are visible on the committed dashboard.",
+      "surface": "skills",
+      "tier": [
+        "quick",
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "state",
+        "path": ".software-factory/context/board/dashboard.html",
+        "contains": [
+          "id=\"stream-W-foundation\""
+        ]
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "SKL-HELP-001",
+      "story": "onboarding-integrations/sf-help-skill",
+      "epic": "onboarding-integrations",
+      "suite": "smoke",
+      "kind": "pass_to_pass",
+      "criterion": "The sf-help surface exists with well-formed frontmatter and names its interview.",
+      "surface": "skills",
+      "tier": [
+        "quick",
+        "epic",
+        "premerge",
+        "canary"
+      ],
+      "grade": {
+        "type": "state",
+        "path": "skills/sf-help/SKILL.md",
+        "contains": [
+          "name: sf-help",
+          "interview"
+        ]
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "SKL-DOGFOOD-001",
+      "story": "expansion/dogfood-evals",
+      "epic": "expansion",
+      "suite": "story",
+      "kind": "fail_to_pass",
+      "criterion": "The generalized decision records live under the context home.",
+      "surface": "skills",
+      "tier": [
+        "quick",
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "state",
+        "path": ".software-factory/context/decisions/0001-agent-directed-loop.md"
+      },
+      "nondeterministic": false
+    }
+  ],
+  "modes": {
+    "quick": {
+      "scope": "story_cases_plus_smoke",
+      "max_duration_sec": 300,
+      "allow_grades": [
+        "state",
+        "command",
+        "http",
+        "golden"
+      ]
+    },
+    "epic": {
+      "scope": "epic_cases_plus_regression"
+    },
+    "premerge": {
+      "scope": "all_cases"
+    },
+    "canary": {
+      "scope": "smoke_plus_ops"
+    }
+  },
+  "routing": {
+    "retry_cap_per_case": 3,
+    "escalate_after_cap": [
+      "maintainer-checkpoint"
+    ],
+    "quarantine_on_flake": true,
+    "quarantine_must_resolve_by": "epic_close",
+    "override": {
+      "allowed": true,
+      "record": [
+        "who",
+        "when",
+        "reason"
+      ]
+    }
+  },
+  "receipts": {
+    "per_case_files": true,
+    "artifacts_on_failure": [
+      "output_tail",
+      "diff"
+    ],
+    "manifest_citation": {
+      "fields": [
+        "run_id",
+        "verdict",
+        "case_results",
+        "self_sha256"
+      ],
+      "required_for": [
+        "story_done",
+        "merge"
+      ]
+    }
+  },
+  "judge_policy": {
+    "last_resort": true,
+    "binary_assertions_only": true,
+    "one_dimension_per_call": true,
+    "never_sole_gate_below_tier": 2,
+    "note": "the pack's own suite is fully deterministic; no judge cases"
+  },
+  "signoff": {
+    "status": "approved",
+    "approved_by": "the repository maintainer (@sbeeredd04)",
+    "approved_at": "2026-10-11",
+    "plan_sha256": "35998a2ea381efe8c0242f5fe78b7b5451527bad395b8167fb869b5bd6c49992",
+    "digest_rule": "sha256 over the plan serialized as UTF-8 JSON with sorted keys and compact separators, the signoff object excluded"
+  }
+}

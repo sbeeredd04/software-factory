@@ -1,0 +1,1 @@
+{"name":"example-typescript","packageManager":"npm@10.0.0","scripts":{"test":"node --test","build":"tsc","lint":"tsc --noEmit"},"devDependencies":{"typescript":"5.0.0"}}

@@ -9,6 +9,7 @@ the single artifact.
 from __future__ import annotations
 
 import hashlib
+import importlib.util
 import json
 import os
 import subprocess
@@ -16,6 +17,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 import support
 
@@ -56,6 +58,221 @@ def normalize_artifact(text: str) -> str:
         if not line.startswith("- Source revision:") and not line.startswith("- Generated:")
     ]
     return "\n".join(lines)
+
+
+def crawler():
+    spec = importlib.util.spec_from_file_location("crawl_under_test", CRAWL)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+class GitInventory(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.tmp = Path(self.temp.name).resolve()
+        self.root = self.tmp / "repo"
+        self.root.mkdir()
+        self.git("init", "-q", "-b", "main")
+
+    def git(self, *args):
+        return support.Workspace.git(self.root, *args)
+
+    def put(self, rel, text="X = 1\n"):
+        path = self.root / rel
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(text)
+        return path
+
+    def report(self, root=None, max_files=5000):
+        return crawler().crawl(root or self.root, max_files)
+
+    def paths(self, report):
+        return {item["path"] for item in report["python"]["modules"]}
+
+    def test_installed_copies_excluded_user_host_code_and_new_files_preserved(self):
+        # A negated file needs its directory visible to Git.
+        self.put(".gitignore", "/.agents/skills/\n/_bmad/\nignored/*\n!ignored/keep.py\n")
+        self.put("app.py")
+        self.put(".agents/user.py")
+        self.put(".agents/skills/owned.py")
+        self.git("add", "-f", ".agents/skills/owned.py")
+        self.git("add", "app.py", ".agents/user.py", ".gitignore")
+        for rel in (".agents/skills/generated.py", "_bmad/helper.py", "ignored/no.py",
+                    "local/install.py"):
+            self.put(rel)
+        with (self.root / ".git/info/exclude").open("a") as handle:
+            handle.write("\n/local/\n")
+        self.put("ignored/keep.py")
+        self.put("fresh code.py")
+        report = self.report()
+        self.assertEqual(self.paths(report), {
+            "app.py", ".agents/user.py", ".agents/skills/owned.py",
+            "ignored/keep.py", "fresh code.py",
+        })
+        self.assertEqual(report["source"]["selection"], "git-tracked-and-unignored")
+        self.assertEqual(report, self.report())
+
+    def test_nested_root_and_nul_delimited_unusual_names(self):
+        self.put("outside.py")
+        expected = {"a space.py", "a\nline.py", "tab\tname.py", "unicode-λ.py"}
+        for rel in expected:
+            self.put("nested/" + rel)
+        self.git("add", "-A")
+        self.assertEqual(self.paths(self.report(self.root / "nested")), expected)
+
+    def test_linked_worktree_uses_shared_excludes_and_tracked_ignored_paths(self):
+        self.put("app.py")
+        self.git("add", "-A")
+        self.git("-c", f"user.email={support.FIXTURE_EMAIL}", "-c",
+                 f"user.name={support.FIXTURE_NAME}", "commit", "-qm", "fixture")
+        linked = self.tmp / "linked"
+        self.git("worktree", "add", "--detach", str(linked), "HEAD")
+        with (self.root / ".git/info/exclude").open("a") as handle:
+            handle.write("\n/.agents/skills/\n")
+        generated = linked / ".agents/skills/generated.py"
+        generated.parent.mkdir(parents=True)
+        generated.write_text("X = 1\n")
+        self.assertEqual(self.paths(self.report(linked)), {"app.py"})
+
+    def test_actual_nested_repository_is_a_reported_boundary(self):
+        self.put("app.py")
+        nested = self.root / "nested"
+        nested.mkdir()
+        support.Workspace.git(nested, "init", "-q")
+        self.put("nested/unseen.py")
+        report = self.report()
+        self.assertEqual(self.paths(report), {"app.py"})
+        self.assertEqual(report["source"]["selection"], "git-tracked-and-unignored")
+        self.assertTrue(any("nested repository" in p for p in report["not_determined"]))
+
+    def test_packaging_obeys_inventory_and_safety_bounds(self):
+        self.put("app.py")
+        self.put("main.js")
+        self.put(".gitignore", "pyproject.toml\npackage.json\n")
+        self.put("pyproject.toml", '[project.scripts]\nrun = "app:main"\n')
+        self.put("package.json", '{"main":"main.js"}')
+        self.assertEqual(self.report()["entry_points"], [])
+        self.git("add", "-f", "pyproject.toml", "package.json")
+        self.assertEqual({entry["kind"] for entry in self.report()["entry_points"]},
+                         {"pyproject-script", "package-json-main"})
+        (self.root / "pyproject.toml").unlink()
+        (self.root / "package.json").unlink()
+        (self.root / "package.json").symlink_to(self.tmp / "foreign.json")
+        (self.tmp / "foreign.json").write_text('{"main":"foreign.js"}')
+        report = self.report()
+        self.assertEqual(report["entry_points"], [])
+        self.assertTrue(any("pyproject.toml" in p for p in report["not_determined"]))
+        self.assertTrue(any("symlink" in p for p in report["not_determined"]))
+
+    def test_static_bounds_symlinks_caps_and_submodule_boundary(self):
+        self.put("a.py")
+        self.put("b.py")
+        self.put("dist/hidden.py")
+        self.git("add", "-f", "dist/hidden.py")
+        self.put("large.py", " " * 1_000_001)
+        self.put("deleted.py")
+        self.git("add", "deleted.py")
+        (self.root / "deleted.py").unlink()
+        (self.root / "link.py").symlink_to(self.root / "a.py")
+        (self.root / "linked").symlink_to(self.tmp, target_is_directory=True)
+        module = crawler()
+        actual_inventory = module.inventory(self.root)[0]
+        # Model gitlink inventory without fetching or executing a submodule.
+        (self.root / "submodule").mkdir()
+        self.put("submodule/unseen.py")
+        with mock.patch.object(module, "inventory", return_value=(
+                actual_inventory + ["linked/outside.py", "submodule"],
+                "git-tracked-and-unignored", [])):
+            report = module.crawl(self.root, 1)
+        self.assertEqual(self.paths(report), {"a.py"})
+        self.assertEqual(report["source"]["source_files_found"], 2)
+        self.assertTrue(report["source"]["cap_reached"])
+        for phrase in ("deleted.py", "large.py", "symlink", "submodule"):
+            self.assertTrue(any(phrase in p for p in report["not_determined"]), phrase)
+
+    def test_explicit_fallback_never_empty_success_or_private_error(self):
+        self.put("app.py")
+        self.put(".gitignore", "ignored.py\n")
+        self.put("ignored.py")
+        module = crawler()
+        outcomes = [FileNotFoundError("private sentinel"),
+                    subprocess.TimeoutExpired("private sentinel", 10),
+                    subprocess.CompletedProcess([], 128, b"", b"private sentinel"),
+                    subprocess.CompletedProcess([], 0, b"../escape.py\0", b""),
+                    subprocess.CompletedProcess([], 0, b"/escape.py\0", b""),
+                    subprocess.CompletedProcess([], 0, b"missing-terminator", b"")]
+        for outcome in outcomes:
+            with self.subTest(outcome=type(outcome).__name__):
+                options = {"side_effect": outcome} if isinstance(outcome, Exception) else {
+                    "return_value": outcome}
+                with mock.patch.object(module.subprocess, "run", **options), \
+                        mock.patch.object(module, "source_revision", return_value=None):
+                    report = module.crawl(self.root, 5000)
+                self.assertEqual(self.paths(report), {"app.py", "ignored.py"})
+                self.assertEqual(report["source"]["selection"], "filesystem-fallback")
+                self.assertIn("filesystem fallback", " ".join(report["not_determined"]))
+                self.assertNotIn("private sentinel", json.dumps(report))
+
+    def test_nongit_fallback_is_explicit(self):
+        root = self.tmp / "plain"
+        root.mkdir()
+        (root / "app.py").write_text("X = 1\n")
+        report = self.report(root)
+        self.assertEqual(self.paths(report), {"app.py"})
+        self.assertEqual(report["source"]["selection"], "filesystem-fallback")
+
+    def test_inventory_deduplicates_nul_paths_and_has_literal_readonly_argv(self):
+        module = crawler()
+        with mock.patch.object(module.subprocess, "run", return_value=
+                subprocess.CompletedProcess([], 0, b"app.py\0app.py\0", b"")) as run:
+            self.assertEqual(module.inventory(self.root)[0], ["app.py"])
+        self.assertEqual(run.call_args.args[0], [
+            "git", "--no-optional-locks", "-c", "core.fsmonitor=false", "-C",
+            str(self.root), "ls-files", "--cached", "--others", "--exclude-standard",
+            "-z", "--", ".",
+        ])
+        self.assertEqual(run.call_args.kwargs["timeout"], 10)
+
+    def test_path_guards_no_host_cli_or_project_execution_and_no_tree_mutation(self):
+        self.put("app.py", 'raise RuntimeError("must never execute")\n')
+        self.git("add", "app.py")
+        guards = self.tmp / "guards"
+        guards.mkdir()
+        marker = self.tmp / "forbidden-called"
+        for name in ("claude", "cursor-agent", "codex", "agent", "droid"):
+            path = guards / name
+            path.write_text(f'#!/bin/sh\nprintf called > "{marker}"\nexit 99\n')
+            path.chmod(0o755)
+        before = tree_hashes(self.root)
+        with mock.patch.dict(os.environ, {"PATH": str(guards) + os.pathsep + os.environ["PATH"]}):
+            result = run_crawl(self.root, "--artifact", self.tmp / "CB.md",
+                               "--json", self.tmp / "report.json")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertFalse(marker.exists())
+        self.assertEqual(tree_hashes(self.root), before)
+
+    def test_git_fsmonitor_is_not_executed(self):
+        self.put("app.py")
+        self.git("add", "app.py")
+        marker = self.tmp / "monitor-called"
+        monitor = self.tmp / "monitor"
+        monitor.write_text(f'#!/bin/sh\nprintf called > "{marker}"\nexit 1\n')
+        monitor.chmod(0o755)
+        self.git("config", "core.fsmonitor", str(monitor))
+        self.assertEqual(self.paths(self.report()), {"app.py"})
+        self.assertFalse(marker.exists())
+
+    @unittest.skipUnless(hasattr(os, "mkfifo"), "requires POSIX named pipes")
+    def test_fallback_never_reads_nonregular_source(self):
+        root = self.tmp / "plain"
+        root.mkdir()
+        (root / "app.py").write_text("X = 1\n")
+        os.mkfifo(root / "pipe.py")
+        report = self.report(root)
+        self.assertEqual(self.paths(report), {"app.py"})
+        self.assertIn("non-regular file", " ".join(report["not_determined"]))
 
 
 class CrawlerSourceChecks(unittest.TestCase):

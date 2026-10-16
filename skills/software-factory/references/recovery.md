@@ -116,7 +116,8 @@ what — stated here only, enforced by `scripts/roadmap.py`:
 | set/clear `blocked` | worker (own story) or orchestrator | stored blockers are `human-decision`, `external`, `resource-contention` or `design`; dependency waiting is derived from `after`, never stored |
 | `any → cancelled` | orchestrator proposes, human confirms | terminal; needs a recorded decision reference; a cancelled story still blocks its dependents until each is repointed |
 | epic → `in-progress` / `awaiting-acceptance` | orchestrator | awaiting-acceptance only after every story is done or cancelled — closing children never closes the parent |
-| epic → `done` / `parked` / `cancelled` | human | acceptance is the human checkpoint; parking carries a resume pointer; cancelling cancels the descendants |
+| epic → `done` | human or delegated orchestrator | current scope, child/effect gates and independent reconciliation; adaptive delegation additionally requires current grant and consequence assessment |
+| epic → `parked` / `cancelled` | human | parking carries a resume pointer; cancelling cancels the descendants |
 
 Corollaries: no actor moves a story past `built` except the merge step; no
 agent self-declares done; `done` and `cancelled` records are frozen — a
@@ -125,7 +126,7 @@ findings append dated blocks to the record and never change status.
 
 Readiness is computed from the dependency graph, never from list position or
 titles: a story is ready when every `after` prerequisite is done or in
-review, every epic gate it rides on is human-done, and it is unclaimed,
+review, every epic gate it rides on has valid acceptance, and it is unclaimed,
 unblocked and not cancelled. The ready frontier is global across streams —
 every unblocked, unclaimed candidate is offered, ordered inside an epic by
 its `order` array. Generation also reports the cross-stream diagnostics (an
@@ -136,18 +137,33 @@ crashing, and lists claim/record inconsistencies (in-progress with no live
 claim, a claim with no record, claim paths outside the story scope) without
 auto-repairing any of them.
 
-Checkout and checkin are one protocol: the claim's task id is the story id.
+Checkout and check-in are one protocol: the claim's task id is the story id.
 Checkout = the frontier shows the story ready, then `state.py claim`, then
-the worker writes `in-progress` on its own record. Checkin = receipts on the
-record, then `state.py release`, then `in-review`. The generator mirrors live
+the worker writes `in-progress` on its own record. Check-in = result receipts
+and `in-review` while the worker still holds its claim, then reconcile the
+handoff and `state.py release`. Revision work reacquires ownership. The generator mirrors live
 claims read-only into the projection; no board code ever writes claims or
 the run state.
+
+Use the [protected transition contract](evidence.md#protected-board-transitions)
+for review subjects, gate manifests, checkpoint decisions and revision resubmission.
 
 Regenerate the projections from this skill's directory:
 
 ```sh
 python3 scripts/roadmap.py build --workspace "<project-root>"
 ```
+
+During execution, refresh after meaningful worker steps, assignments, receipts
+and blockers. With `manual` regeneration, run `build`; `on-write` updates also
+build, but a claim-only change still needs a refresh. Reports link this snapshot
+and state its generation time; unchanged inputs retain their earlier time.
+The board shows recorded progress and [agent attribution](handoff.md#agent-attempt-receipts),
+not live process telemetry. Check actual host handles before calling a worker
+running; a claim, receipt or saved status alone does not establish liveness.
+For a status-only query, read the existing snapshot and explain its age without
+regenerating or dispatching. Continue authorized execution after progress
+reports; route required decisions through [authority](authority.md).
 
 `build` reads the records under the board lock and rewrites `roadmap.json`
 and `dashboard.html` atomically; the revision counter and timestamp change
@@ -175,8 +191,8 @@ reads and runs the evidence. Installation creates no run state.
 
 ## Bounds: claims, run.json and the run folder
 
-Claims are a lease, not a ledger: release each claim when its work merges or
-stops. The helper warns above 50 active claims and refuses new claims at 100
+Claims record active ownership, not history: release each claim when its work
+merges or stops. The helper warns above 50 active claims and refuses new claims at 100
 with an error naming the way out; `state.py reconcile` lists claims whose
 worktree or HEAD no longer resolves (exit 1 when any are listed) so a human
 can release them through the normal owner check. Claims are never expired
@@ -199,3 +215,15 @@ canonical role. `state.py audit` reports usage against these budgets and
 flags violations (exit 1) without altering any run artifact; the installer
 keeps `runs/` out of version control while `config.yaml` and `context/` stay
 tracked.
+
+
+On resume, refresh the consequence assessment against actual config, risk policy,
+source grants and effects before relying on delegated acceptance. Expired grants,
+changed evidence or unknown effects block their dependents; they are never repaired
+by relabeling an agent action as human approval. Continue independent work under
+the owner's blocked-work preference. See [authority](authority.md).
+
+Ordinary planning derivation can add human reservations but cannot remove an
+existing epic `hitl` or story `hitl`, `plan_checkpoint` or `done_checkpoint`, even
+when a regenerated plan explicitly supplies false. Removal requires an explicit
+owner amendment outside ordinary derivation; omission preserves the reservation.

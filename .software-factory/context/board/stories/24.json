@@ -4,8 +4,8 @@
   "epic": 3,
   "type": "story",
   "title": "Plugin and marketplace manifests and install.sh bootstrap",
-  "status": "backlog",
-  "owner": null,
+  "status": "in-review",
+  "owner": "codex-distribution",
   "after": [
     23
   ],
@@ -24,12 +24,1562 @@
   "plan_checkpoint": false,
   "done_checkpoint": true,
   "blocked": null,
-  "receipts": {},
+  "receipts": {
+    "active-attempt": {
+      "type": "agent-attempt",
+      "subject_sha": "bf22dae072e7ac632e93db65dfa17c27859baf89",
+      "agent": "/root/distribution",
+      "role": "sf-principal-engineer",
+      "skill": "software-factory",
+      "requested_model": "gpt-6-astra",
+      "effective_model": null,
+      "phase": "implementation",
+      "status": "assigned",
+      "recorded_at": "2026-10-15T09:53:03.464449+00:00",
+      "summary": "Original24 starts from independently reviewed23 local source through existing review-counts-as-met readiness. Implement disjoint distribution/bootstrap/release files under approved ADR0024. install.py glue is serialized later; live BMad criterion remains open."
+    },
+    "worker-handoff": {
+      "type": "worker-handoff",
+      "subject_sha": "e8cc96869e58c600d3845428afa76d2ce2a14b99",
+      "agent": "/root/distribution",
+      "owner": "codex-distribution",
+      "status": "source-ready-review-pending",
+      "recorded_at": "2026-10-15T10:11:26.196354+00:00",
+      "checks": {
+        "distribution": {
+          "passed": 12
+        },
+        "bootstrap": {
+          "passed": 12
+        },
+        "skills_cli_network": {
+          "status": "pass",
+          "version": "1.7.2",
+          "host_agent_calls": 0
+        },
+        "ruff": {
+          "exit_code": 0
+        },
+        "shellcheck": {
+          "exit_code": 0
+        },
+        "public_scan": {
+          "exit_code": 0
+        },
+        "full_offline_gate": {
+          "exit_code": 1,
+          "tests": 532,
+          "failures": 2,
+          "skipped": 7,
+          "limitations": [
+            "stale isolated crawl and dependent evaluation",
+            "initial import-order finding repaired; ruff rerun passed"
+          ]
+        }
+      },
+      "independent_review": "pending",
+      "limitations": [
+        "No live host loading proved",
+        "No publication performed",
+        "Source23 module pin decision pending; integration gate not yet run"
+      ]
+    },
+    "independent-review": {
+      "type": "independent-review",
+      "subject_sha": "e8cc96869e58c600d3845428afa76d2ce2a14b99",
+      "author": "codex-distribution",
+      "reviewer": "/root/mission_status",
+      "status": "fail",
+      "recorded_at": "2026-10-15T10:13:24.883116+00:00",
+      "findings": [
+        {
+          "id": "DIST-R1",
+          "summary": "Native bundles bypass reviewed release allowlist by recursively projecting unlisted skill files."
+        },
+        {
+          "id": "DIST-R2",
+          "summary": "tarfile consumes hidden extension headers before logical member limits, allowing expanded/count budget bypass."
+        }
+      ],
+      "limitations": [
+        "Source review only; no tests executed by reviewer",
+        "Additional source review ongoing"
+      ]
+    },
+    "repaired-handoff": {
+      "type": "worker-handoff",
+      "subject_sha": "b81c0d61c19327263ffb0a293565e2e0d97b7056",
+      "author": "codex-distribution",
+      "status": "source-reviewed-integration-proof-pending",
+      "targeted": {
+        "bootstrap_passed": 19,
+        "distribution_passed": 15
+      },
+      "full_gate": {
+        "exit_code": 1,
+        "tests": 542,
+        "failed": 2,
+        "skipped": 7,
+        "eval_passed": 28,
+        "eval_total": 30,
+        "failed_eval_ids": [
+          "SKL-BOARD-002",
+          "SKL-CRAWL-002"
+        ]
+      },
+      "limitations": [
+        "Isolated freshness failures and seven skips preserved.",
+        "Final archive must include Apache license; coordinated primary allowlist addition now applied.",
+        "No live host loading or publication proved."
+      ],
+      "recorded_at": "2026-10-15T10:44:39.920114+00:00"
+    },
+    "final-source-review": {
+      "type": "independent-review",
+      "subject_sha": "b81c0d61c19327263ffb0a293565e2e0d97b7056",
+      "author": "codex-distribution",
+      "reviewer": "/root/mission_status",
+      "status": "pass",
+      "scope": "source only",
+      "reviewed": [
+        "Captured reviewed allowlist snapshot excludes unlisted/live extras",
+        "Bounded decompression and common header parser close PAX/GNU/V7/size mismatches",
+        "Isolated bootstrap, child installers and native hook startup",
+        "Primary schema provenance and full Apache license attribution"
+      ],
+      "prior_rejected_candidates": [
+        "e8cc96869e58c600d3845428afa76d2ce2a14b99",
+        "1d930b26e9106f172487e3e8d1f21af7df84fc9d",
+        "a39326d8f7b9300c199f94640a58ba09270fdc9f",
+        "b3cc7e857ff8c16e8ea0593716d47205f6f99cc0"
+      ],
+      "limitations": [
+        "Reviewer ran no product tests.",
+        "Actual final archive and combined primary gate remain required.",
+        "No live host/publication/owner acceptance."
+      ],
+      "recorded_at": "2026-10-15T10:44:39.920114+00:00"
+    },
+    "integrated-release-fixture": {
+      "actual_command_count": 28,
+      "limitations": [
+        "Not a full repository gate receipt or completed story/epic acceptance.",
+        "Download fixture uses actual assembled archive/checksum bytes but performs no HTTPS or GitHub request.",
+        "Static marketplace consistency and fixture hook execution do not prove live host loading, trust, acceptance or publication.",
+        "Codex custom-agent loading, explicit hook trust and combined Cursor/Codex live frontmatter tolerance remain unverified.",
+        "Separate canonical skills-CLI network proof is outside this receipt.",
+        "Checksums provide same-origin integrity, not independent publisher authentication."
+      ],
+      "observations": [
+        {
+          "argv": [
+            "<python3.12>",
+            "-B",
+            "<source-root>/scripts/build_release.py",
+            "--ref",
+            "v0.1.0",
+            "--out",
+            "<proof-root>/release one"
+          ],
+          "assertions": [
+            "actual command returned expected exit",
+            "snapshots unchanged for declared read-only roots"
+          ],
+          "exit_code": 0,
+          "id": "assemble-1",
+          "log_file": "001-assemble-1.log",
+          "readonly": {
+            "caller": {
+              "entries": 1,
+              "inventory_sha256": "f5784b6d6add8408a8832839904b23c065518a4ca6587a8e754c305bdbb8571f",
+              "unchanged": true
+            },
+            "home": {
+              "entries": 2,
+              "inventory_sha256": "904df19c5c40d93bd3a5bb20a9c68e7e4b774456cfab6e32bc4fb69a6cb846d6",
+              "unchanged": true
+            },
+            "source": {
+              "entries": 1464,
+              "inventory_sha256": "f88c73870e3184cd63d00fc6933a44edd17efeb7446d177952525a1475e3c6df",
+              "unchanged": true
+            }
+          },
+          "seconds": 0.229,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "argv": [
+            "<python3.12>",
+            "-B",
+            "<source-root>/scripts/build_release.py",
+            "--ref",
+            "v0.1.0",
+            "--out",
+            "<proof-root>/release two"
+          ],
+          "assertions": [
+            "actual command returned expected exit",
+            "snapshots unchanged for declared read-only roots"
+          ],
+          "exit_code": 0,
+          "id": "assemble-2",
+          "log_file": "002-assemble-2.log",
+          "readonly": {
+            "caller": {
+              "entries": 1,
+              "inventory_sha256": "f5784b6d6add8408a8832839904b23c065518a4ca6587a8e754c305bdbb8571f",
+              "unchanged": true
+            },
+            "home": {
+              "entries": 2,
+              "inventory_sha256": "904df19c5c40d93bd3a5bb20a9c68e7e4b774456cfab6e32bc4fb69a6cb846d6",
+              "unchanged": true
+            },
+            "source": {
+              "entries": 1464,
+              "inventory_sha256": "f88c73870e3184cd63d00fc6933a44edd17efeb7446d177952525a1475e3c6df",
+              "unchanged": true
+            }
+          },
+          "seconds": 0.221,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "archive_bytes": 680486,
+          "archive_sha256": "28c6d4c64ff488bea188ac4f1d15ac212bc59f0fa62ec11c043964db28184aa5",
+          "assertions": [
+            "two actual assembler outputs have identical paths, bytes and modes",
+            "both SHA256SUMS files match the actual archive SHA-256"
+          ],
+          "id": "release-reproducibility",
+          "sums_sha256": "9e34a946f0301d67babb38a1e6cb38bd74b268e43433df9ed7e8c217ec752680"
+        },
+        {
+          "allowlist_entries": 90,
+          "apache_license_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "assertions": [
+            "archive contains every reviewed allowlist entry and only allowlist/native payload",
+            "required installers, lifecycle/helpers, MIT notice/license and full Apache-2.0 text match actual source",
+            "no Git/private-context/runs/cache payload; normalized regular USTAR entries only"
+          ],
+          "id": "archive-allowlist-and-licenses",
+          "members": 330,
+          "required_paths": [
+            "LICENSE",
+            "NOTICE.md",
+            "install.py",
+            "install.sh",
+            "schemas/plugins/LICENSE-APACHE-2.0.txt",
+            "schemas/plugins/portable.schema.json",
+            "scripts/distribution.py",
+            "scripts/install_lifecycle.py",
+            "skills/software-factory/scripts/hook.py",
+            "skills/software-factory/scripts/state.py"
+          ]
+        },
+        {
+          "argv": [
+            "<python3.12>",
+            "-I",
+            "-B",
+            "<source-root>/install.py",
+            "project",
+            "--host",
+            "all",
+            "--out",
+            "<proof-root>/native all one"
+          ],
+          "assertions": [
+            "actual command returned expected exit",
+            "snapshots unchanged for declared read-only roots"
+          ],
+          "exit_code": 0,
+          "id": "native-project-1",
+          "log_file": "003-native-project-1.log",
+          "readonly": {
+            "caller": {
+              "entries": 1,
+              "inventory_sha256": "f5784b6d6add8408a8832839904b23c065518a4ca6587a8e754c305bdbb8571f",
+              "unchanged": true
+            },
+            "home": {
+              "entries": 2,
+              "inventory_sha256": "904df19c5c40d93bd3a5bb20a9c68e7e4b774456cfab6e32bc4fb69a6cb846d6",
+              "unchanged": true
+            },
+            "source": {
+              "entries": 1464,
+              "inventory_sha256": "f88c73870e3184cd63d00fc6933a44edd17efeb7446d177952525a1475e3c6df",
+              "unchanged": true
+            }
+          },
+          "seconds": 0.105,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "e904bf4feef82bb39241579ab823797961aa11f15f8de0585b196f65ac0f9040"
+        },
+        {
+          "argv": [
+            "<python3.12>",
+            "-I",
+            "-B",
+            "<source-root>/install.py",
+            "project",
+            "--host",
+            "all",
+            "--out",
+            "<proof-root>/native all two"
+          ],
+          "assertions": [
+            "actual command returned expected exit",
+            "snapshots unchanged for declared read-only roots"
+          ],
+          "exit_code": 0,
+          "id": "native-project-2",
+          "log_file": "004-native-project-2.log",
+          "readonly": {
+            "caller": {
+              "entries": 1,
+              "inventory_sha256": "f5784b6d6add8408a8832839904b23c065518a4ca6587a8e754c305bdbb8571f",
+              "unchanged": true
+            },
+            "home": {
+              "entries": 2,
+              "inventory_sha256": "904df19c5c40d93bd3a5bb20a9c68e7e4b774456cfab6e32bc4fb69a6cb846d6",
+              "unchanged": true
+            },
+            "source": {
+              "entries": 1464,
+              "inventory_sha256": "f88c73870e3184cd63d00fc6933a44edd17efeb7446d177952525a1475e3c6df",
+              "unchanged": true
+            }
+          },
+          "seconds": 0.106,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "e904bf4feef82bb39241579ab823797961aa11f15f8de0585b196f65ac0f9040"
+        },
+        {
+          "argv": [
+            "<python3.12>",
+            "-B",
+            "<source-root>/scripts/check_distribution.py",
+            "--root",
+            "<proof-root>/native all one/claude-code",
+            "--host",
+            "claude-code"
+          ],
+          "assertions": [
+            "actual command returned expected exit",
+            "snapshots unchanged for declared read-only roots"
+          ],
+          "exit_code": 0,
+          "id": "check-native-claude-code",
+          "log_file": "005-check-native-claude-code.log",
+          "readonly": {
+            "artifact": {
+              "entries": 108,
+              "inventory_sha256": "35a811baf6bd16214436174cc300bf0c3db468e7b8244be6f56d311adda913fd",
+              "unchanged": true
+            },
+            "caller": {
+              "entries": 1,
+              "inventory_sha256": "f5784b6d6add8408a8832839904b23c065518a4ca6587a8e754c305bdbb8571f",
+              "unchanged": true
+            },
+            "home": {
+              "entries": 2,
+              "inventory_sha256": "904df19c5c40d93bd3a5bb20a9c68e7e4b774456cfab6e32bc4fb69a6cb846d6",
+              "unchanged": true
+            },
+            "source": {
+              "entries": 1464,
+              "inventory_sha256": "f88c73870e3184cd63d00fc6933a44edd17efeb7446d177952525a1475e3c6df",
+              "unchanged": true
+            }
+          },
+          "seconds": 0.09,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "c111729a2d7c67f4c32ae64e3a5004ff6e937fba280d4a205132b154b3a26a84"
+        },
+        {
+          "argv": [
+            "<python3.12>",
+            "-B",
+            "<source-root>/scripts/check_distribution.py",
+            "--root",
+            "<proof-root>/native all one/cursor",
+            "--host",
+            "cursor"
+          ],
+          "assertions": [
+            "actual command returned expected exit",
+            "snapshots unchanged for declared read-only roots"
+          ],
+          "exit_code": 0,
+          "id": "check-native-cursor",
+          "log_file": "006-check-native-cursor.log",
+          "readonly": {
+            "artifact": {
+              "entries": 110,
+              "inventory_sha256": "93ef901d0181b9dd4ffd2936c6c21059656ce3d39092f7b0a12cf29005add0e1",
+              "unchanged": true
+            },
+            "caller": {
+              "entries": 1,
+              "inventory_sha256": "f5784b6d6add8408a8832839904b23c065518a4ca6587a8e754c305bdbb8571f",
+              "unchanged": true
+            },
+            "home": {
+              "entries": 2,
+              "inventory_sha256": "904df19c5c40d93bd3a5bb20a9c68e7e4b774456cfab6e32bc4fb69a6cb846d6",
+              "unchanged": true
+            },
+            "source": {
+              "entries": 1464,
+              "inventory_sha256": "f88c73870e3184cd63d00fc6933a44edd17efeb7446d177952525a1475e3c6df",
+              "unchanged": true
+            }
+          },
+          "seconds": 0.093,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "c111729a2d7c67f4c32ae64e3a5004ff6e937fba280d4a205132b154b3a26a84"
+        },
+        {
+          "argv": [
+            "<python3.12>",
+            "-B",
+            "<source-root>/scripts/check_distribution.py",
+            "--root",
+            "<proof-root>/native all one/codex",
+            "--host",
+            "codex"
+          ],
+          "assertions": [
+            "actual command returned expected exit",
+            "snapshots unchanged for declared read-only roots"
+          ],
+          "exit_code": 0,
+          "id": "check-native-codex",
+          "log_file": "007-check-native-codex.log",
+          "readonly": {
+            "artifact": {
+              "entries": 123,
+              "inventory_sha256": "4b166e3453e3c4960cd715b3e8cee97597858e952749824d6a4e7b10904da2d3",
+              "unchanged": true
+            },
+            "caller": {
+              "entries": 1,
+              "inventory_sha256": "f5784b6d6add8408a8832839904b23c065518a4ca6587a8e754c305bdbb8571f",
+              "unchanged": true
+            },
+            "home": {
+              "entries": 2,
+              "inventory_sha256": "904df19c5c40d93bd3a5bb20a9c68e7e4b774456cfab6e32bc4fb69a6cb846d6",
+              "unchanged": true
+            },
+            "source": {
+              "entries": 1464,
+              "inventory_sha256": "f88c73870e3184cd63d00fc6933a44edd17efeb7446d177952525a1475e3c6df",
+              "unchanged": true
+            }
+          },
+          "seconds": 0.099,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "c111729a2d7c67f4c32ae64e3a5004ff6e937fba280d4a205132b154b3a26a84"
+        },
+        {
+          "assertions": [
+            "two root-install.py project --host all outputs match paths/bytes/modes",
+            "all three extracted release marketplaces match actual native CLI projections",
+            "static checker inspected all three hosts"
+          ],
+          "file_count": 240,
+          "id": "native-reproducibility-and-release-match"
+        },
+        {
+          "argv": [
+            "<python3.12>",
+            "-I",
+            "-B",
+            "<proof-root>/relocated native roots with spaces/claude-code/plugins/software-factory/scripts/state.py",
+            "--workspace",
+            "<proof-root>/active consumer with spaces",
+            "init",
+            "--tracker",
+            "tracker.yaml",
+            "--principles",
+            "principles.md",
+            "--program",
+            "release-proof"
+          ],
+          "assertions": [
+            "actual command returned expected exit",
+            "snapshots unchanged for declared read-only roots"
+          ],
+          "exit_code": 0,
+          "id": "active-fixture-init",
+          "log_file": "008-active-fixture-init.log",
+          "readonly": {
+            "caller": {
+              "entries": 1,
+              "inventory_sha256": "f5784b6d6add8408a8832839904b23c065518a4ca6587a8e754c305bdbb8571f",
+              "unchanged": true
+            },
+            "home": {
+              "entries": 2,
+              "inventory_sha256": "904df19c5c40d93bd3a5bb20a9c68e7e4b774456cfab6e32bc4fb69a6cb846d6",
+              "unchanged": true
+            },
+            "plugin": {
+              "entries": 342,
+              "inventory_sha256": "c66654510166df8569d88874371031e12c8479d370aa9810119e72e0f516ad6e",
+              "unchanged": true
+            },
+            "source": {
+              "entries": 1464,
+              "inventory_sha256": "f88c73870e3184cd63d00fc6933a44edd17efeb7446d177952525a1475e3c6df",
+              "unchanged": true
+            }
+          },
+          "seconds": 0.078,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "e4357750fa315b020da565a85cd11109f85bbf384ff8775514e4812f2357a3ca"
+        },
+        {
+          "argv": [
+            "<python3.12>",
+            "-I",
+            "-B",
+            "<proof-root>/relocated native roots with spaces/claude-code/plugins/software-factory/scripts/state.py",
+            "--workspace",
+            "<proof-root>/active consumer with spaces",
+            "checkpoint",
+            "--notes",
+            "<proof-root>/fixture-notes.json"
+          ],
+          "assertions": [
+            "actual command returned expected exit",
+            "snapshots unchanged for declared read-only roots"
+          ],
+          "exit_code": 0,
+          "id": "active-fixture-checkpoint",
+          "log_file": "009-active-fixture-checkpoint.log",
+          "readonly": {
+            "caller": {
+              "entries": 1,
+              "inventory_sha256": "f5784b6d6add8408a8832839904b23c065518a4ca6587a8e754c305bdbb8571f",
+              "unchanged": true
+            },
+            "home": {
+              "entries": 2,
+              "inventory_sha256": "904df19c5c40d93bd3a5bb20a9c68e7e4b774456cfab6e32bc4fb69a6cb846d6",
+              "unchanged": true
+            },
+            "plugin": {
+              "entries": 342,
+              "inventory_sha256": "c66654510166df8569d88874371031e12c8479d370aa9810119e72e0f516ad6e",
+              "unchanged": true
+            },
+            "source": {
+              "entries": 1464,
+              "inventory_sha256": "f88c73870e3184cd63d00fc6933a44edd17efeb7446d177952525a1475e3c6df",
+              "unchanged": true
+            }
+          },
+          "seconds": 0.077,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "6502bffb902c6b893fb80f4923ae4a2132b00e3b9d9eceed539d2df42005e331"
+        },
+        {
+          "argv": [
+            "/bin/sh",
+            "-c",
+            "sh \"${CLAUDE_PLUGIN_ROOT}/scripts/hook.sh\" --host claude-code --event session-start"
+          ],
+          "assertions": [
+            "actual command returned expected exit",
+            "snapshots unchanged for declared read-only roots"
+          ],
+          "exit_code": 0,
+          "id": "relocated-hook-claude-code-inactive",
+          "log_file": "010-relocated-hook-claude-code-inactive.log",
+          "readonly": {
+            "consumer": {
+              "entries": 7,
+              "inventory_sha256": "4a3b05990572d99c9d6e04c78e14cc273e5517fd9afb4d0c893775a98ede6e38",
+              "unchanged": true
+            },
+            "home": {
+              "entries": 2,
+              "inventory_sha256": "904df19c5c40d93bd3a5bb20a9c68e7e4b774456cfab6e32bc4fb69a6cb846d6",
+              "unchanged": true
+            },
+            "packaged-source": {
+              "entries": 467,
+              "inventory_sha256": "6dd8b0314eb42e4d29c6e6c6413ffe9acbc697213f526bb82ce4fa4094188b9f",
+              "unchanged": true
+            },
+            "plugin": {
+              "entries": 342,
+              "inventory_sha256": "c66654510166df8569d88874371031e12c8479d370aa9810119e72e0f516ad6e",
+              "unchanged": true
+            },
+            "source": {
+              "entries": 1464,
+              "inventory_sha256": "f88c73870e3184cd63d00fc6933a44edd17efeb7446d177952525a1475e3c6df",
+              "unchanged": true
+            }
+          },
+          "seconds": 0.1,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "argv": [
+            "/bin/sh",
+            "-c",
+            "sh \"${CLAUDE_PLUGIN_ROOT}/scripts/hook.sh\" --host claude-code --event session-start"
+          ],
+          "assertions": [
+            "actual command returned expected exit",
+            "snapshots unchanged for declared read-only roots"
+          ],
+          "exit_code": 0,
+          "id": "relocated-hook-claude-code-active",
+          "log_file": "011-relocated-hook-claude-code-active.log",
+          "readonly": {
+            "consumer": {
+              "entries": 15,
+              "inventory_sha256": "38bb5a2f8a9f36b795874cf19262f4e78de7e1c7c3ee5d7ea0bdb6fc8f2880c1",
+              "unchanged": true
+            },
+            "home": {
+              "entries": 2,
+              "inventory_sha256": "904df19c5c40d93bd3a5bb20a9c68e7e4b774456cfab6e32bc4fb69a6cb846d6",
+              "unchanged": true
+            },
+            "packaged-source": {
+              "entries": 467,
+              "inventory_sha256": "6dd8b0314eb42e4d29c6e6c6413ffe9acbc697213f526bb82ce4fa4094188b9f",
+              "unchanged": true
+            },
+            "plugin": {
+              "entries": 342,
+              "inventory_sha256": "c66654510166df8569d88874371031e12c8479d370aa9810119e72e0f516ad6e",
+              "unchanged": true
+            },
+            "source": {
+              "entries": 1464,
+              "inventory_sha256": "f88c73870e3184cd63d00fc6933a44edd17efeb7446d177952525a1475e3c6df",
+              "unchanged": true
+            }
+          },
+          "seconds": 0.101,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "98f8476c31be6866c12ee664e1033399d0c9632db28b626c061a62eee17d9d2f"
+        },
+        {
+          "argv": [
+            "/bin/sh",
+            "<proof-root>/relocated native roots with spaces/claude-code/plugins/software-factory/scripts/hook.sh",
+            "--host",
+            "claude-code",
+            "--event",
+            "session-start"
+          ],
+          "assertions": [
+            "actual command returned expected exit",
+            "snapshots unchanged for declared read-only roots"
+          ],
+          "exit_code": 0,
+          "id": "relocated-hook-claude-code-missing-python",
+          "log_file": "012-relocated-hook-claude-code-missing-python.log",
+          "readonly": {
+            "consumer": {
+              "entries": 15,
+              "inventory_sha256": "38bb5a2f8a9f36b795874cf19262f4e78de7e1c7c3ee5d7ea0bdb6fc8f2880c1",
+              "unchanged": true
+            },
+            "home": {
+              "entries": 2,
+              "inventory_sha256": "904df19c5c40d93bd3a5bb20a9c68e7e4b774456cfab6e32bc4fb69a6cb846d6",
+              "unchanged": true
+            },
+            "plugin": {
+              "entries": 342,
+              "inventory_sha256": "c66654510166df8569d88874371031e12c8479d370aa9810119e72e0f516ad6e",
+              "unchanged": true
+            },
+            "source": {
+              "entries": 1464,
+              "inventory_sha256": "f88c73870e3184cd63d00fc6933a44edd17efeb7446d177952525a1475e3c6df",
+              "unchanged": true
+            }
+          },
+          "seconds": 0.047,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "74b890ec7cd2346fe88413119f5869baec0f7350b28faa4eac04b85c449a7271"
+        },
+        {
+          "argv": [
+            "/bin/sh",
+            "<proof-root>/relocated native roots with spaces/claude-code/plugins/software-factory/scripts/hook.sh",
+            "--host",
+            "claude-code",
+            "--event",
+            "session-start"
+          ],
+          "assertions": [
+            "actual command returned expected exit",
+            "snapshots unchanged for declared read-only roots"
+          ],
+          "exit_code": 0,
+          "id": "relocated-hook-claude-code-old-python",
+          "log_file": "013-relocated-hook-claude-code-old-python.log",
+          "readonly": {
+            "consumer": {
+              "entries": 15,
+              "inventory_sha256": "38bb5a2f8a9f36b795874cf19262f4e78de7e1c7c3ee5d7ea0bdb6fc8f2880c1",
+              "unchanged": true
+            },
+            "home": {
+              "entries": 2,
+              "inventory_sha256": "904df19c5c40d93bd3a5bb20a9c68e7e4b774456cfab6e32bc4fb69a6cb846d6",
+              "unchanged": true
+            },
+            "plugin": {
+              "entries": 342,
+              "inventory_sha256": "c66654510166df8569d88874371031e12c8479d370aa9810119e72e0f516ad6e",
+              "unchanged": true
+            },
+            "source": {
+              "entries": 1464,
+              "inventory_sha256": "f88c73870e3184cd63d00fc6933a44edd17efeb7446d177952525a1475e3c6df",
+              "unchanged": true
+            }
+          },
+          "seconds": 0.081,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "74b890ec7cd2346fe88413119f5869baec0f7350b28faa4eac04b85c449a7271"
+        },
+        {
+          "argv": [
+            "/bin/sh",
+            "-c",
+            "sh \"${CURSOR_PLUGIN_ROOT}/scripts/hook.sh\" --host cursor --event session-start"
+          ],
+          "assertions": [
+            "actual command returned expected exit",
+            "snapshots unchanged for declared read-only roots"
+          ],
+          "exit_code": 0,
+          "id": "relocated-hook-cursor-inactive",
+          "log_file": "014-relocated-hook-cursor-inactive.log",
+          "readonly": {
+            "consumer": {
+              "entries": 7,
+              "inventory_sha256": "4a3b05990572d99c9d6e04c78e14cc273e5517fd9afb4d0c893775a98ede6e38",
+              "unchanged": true
+            },
+            "home": {
+              "entries": 2,
+              "inventory_sha256": "904df19c5c40d93bd3a5bb20a9c68e7e4b774456cfab6e32bc4fb69a6cb846d6",
+              "unchanged": true
+            },
+            "packaged-source": {
+              "entries": 467,
+              "inventory_sha256": "6dd8b0314eb42e4d29c6e6c6413ffe9acbc697213f526bb82ce4fa4094188b9f",
+              "unchanged": true
+            },
+            "plugin": {
+              "entries": 342,
+              "inventory_sha256": "c66654510166df8569d88874371031e12c8479d370aa9810119e72e0f516ad6e",
+              "unchanged": true
+            },
+            "source": {
+              "entries": 1464,
+              "inventory_sha256": "f88c73870e3184cd63d00fc6933a44edd17efeb7446d177952525a1475e3c6df",
+              "unchanged": true
+            }
+          },
+          "seconds": 0.112,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "argv": [
+            "/bin/sh",
+            "-c",
+            "sh \"${CURSOR_PLUGIN_ROOT}/scripts/hook.sh\" --host cursor --event session-start"
+          ],
+          "assertions": [
+            "actual command returned expected exit",
+            "snapshots unchanged for declared read-only roots"
+          ],
+          "exit_code": 0,
+          "id": "relocated-hook-cursor-active",
+          "log_file": "015-relocated-hook-cursor-active.log",
+          "readonly": {
+            "consumer": {
+              "entries": 15,
+              "inventory_sha256": "38bb5a2f8a9f36b795874cf19262f4e78de7e1c7c3ee5d7ea0bdb6fc8f2880c1",
+              "unchanged": true
+            },
+            "home": {
+              "entries": 2,
+              "inventory_sha256": "904df19c5c40d93bd3a5bb20a9c68e7e4b774456cfab6e32bc4fb69a6cb846d6",
+              "unchanged": true
+            },
+            "packaged-source": {
+              "entries": 467,
+              "inventory_sha256": "6dd8b0314eb42e4d29c6e6c6413ffe9acbc697213f526bb82ce4fa4094188b9f",
+              "unchanged": true
+            },
+            "plugin": {
+              "entries": 342,
+              "inventory_sha256": "c66654510166df8569d88874371031e12c8479d370aa9810119e72e0f516ad6e",
+              "unchanged": true
+            },
+            "source": {
+              "entries": 1464,
+              "inventory_sha256": "f88c73870e3184cd63d00fc6933a44edd17efeb7446d177952525a1475e3c6df",
+              "unchanged": true
+            }
+          },
+          "seconds": 0.117,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "c443a16e04e3cd83fd187d140d3b0c8c356c326ff676c800b941a368253df44f"
+        },
+        {
+          "argv": [
+            "/bin/sh",
+            "<proof-root>/relocated native roots with spaces/cursor/plugins/software-factory/scripts/hook.sh",
+            "--host",
+            "cursor",
+            "--event",
+            "session-start"
+          ],
+          "assertions": [
+            "actual command returned expected exit",
+            "snapshots unchanged for declared read-only roots"
+          ],
+          "exit_code": 0,
+          "id": "relocated-hook-cursor-missing-python",
+          "log_file": "016-relocated-hook-cursor-missing-python.log",
+          "readonly": {
+            "consumer": {
+              "entries": 15,
+              "inventory_sha256": "38bb5a2f8a9f36b795874cf19262f4e78de7e1c7c3ee5d7ea0bdb6fc8f2880c1",
+              "unchanged": true
+            },
+            "home": {
+              "entries": 2,
+              "inventory_sha256": "904df19c5c40d93bd3a5bb20a9c68e7e4b774456cfab6e32bc4fb69a6cb846d6",
+              "unchanged": true
+            },
+            "plugin": {
+              "entries": 342,
+              "inventory_sha256": "c66654510166df8569d88874371031e12c8479d370aa9810119e72e0f516ad6e",
+              "unchanged": true
+            },
+            "source": {
+              "entries": 1464,
+              "inventory_sha256": "f88c73870e3184cd63d00fc6933a44edd17efeb7446d177952525a1475e3c6df",
+              "unchanged": true
+            }
+          },
+          "seconds": 0.053,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "74b890ec7cd2346fe88413119f5869baec0f7350b28faa4eac04b85c449a7271"
+        },
+        {
+          "argv": [
+            "/bin/sh",
+            "<proof-root>/relocated native roots with spaces/cursor/plugins/software-factory/scripts/hook.sh",
+            "--host",
+            "cursor",
+            "--event",
+            "session-start"
+          ],
+          "assertions": [
+            "actual command returned expected exit",
+            "snapshots unchanged for declared read-only roots"
+          ],
+          "exit_code": 0,
+          "id": "relocated-hook-cursor-old-python",
+          "log_file": "017-relocated-hook-cursor-old-python.log",
+          "readonly": {
+            "consumer": {
+              "entries": 15,
+              "inventory_sha256": "38bb5a2f8a9f36b795874cf19262f4e78de7e1c7c3ee5d7ea0bdb6fc8f2880c1",
+              "unchanged": true
+            },
+            "home": {
+              "entries": 2,
+              "inventory_sha256": "904df19c5c40d93bd3a5bb20a9c68e7e4b774456cfab6e32bc4fb69a6cb846d6",
+              "unchanged": true
+            },
+            "plugin": {
+              "entries": 342,
+              "inventory_sha256": "c66654510166df8569d88874371031e12c8479d370aa9810119e72e0f516ad6e",
+              "unchanged": true
+            },
+            "source": {
+              "entries": 1464,
+              "inventory_sha256": "f88c73870e3184cd63d00fc6933a44edd17efeb7446d177952525a1475e3c6df",
+              "unchanged": true
+            }
+          },
+          "seconds": 0.105,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "74b890ec7cd2346fe88413119f5869baec0f7350b28faa4eac04b85c449a7271"
+        },
+        {
+          "argv": [
+            "/bin/sh",
+            "-c",
+            "sh \"${PLUGIN_ROOT}/scripts/hook.sh\" --host codex --event session-start"
+          ],
+          "assertions": [
+            "actual command returned expected exit",
+            "snapshots unchanged for declared read-only roots"
+          ],
+          "exit_code": 0,
+          "id": "relocated-hook-codex-inactive",
+          "log_file": "018-relocated-hook-codex-inactive.log",
+          "readonly": {
+            "consumer": {
+              "entries": 7,
+              "inventory_sha256": "4a3b05990572d99c9d6e04c78e14cc273e5517fd9afb4d0c893775a98ede6e38",
+              "unchanged": true
+            },
+            "home": {
+              "entries": 2,
+              "inventory_sha256": "904df19c5c40d93bd3a5bb20a9c68e7e4b774456cfab6e32bc4fb69a6cb846d6",
+              "unchanged": true
+            },
+            "packaged-source": {
+              "entries": 467,
+              "inventory_sha256": "6dd8b0314eb42e4d29c6e6c6413ffe9acbc697213f526bb82ce4fa4094188b9f",
+              "unchanged": true
+            },
+            "plugin": {
+              "entries": 342,
+              "inventory_sha256": "c66654510166df8569d88874371031e12c8479d370aa9810119e72e0f516ad6e",
+              "unchanged": true
+            },
+            "source": {
+              "entries": 1464,
+              "inventory_sha256": "f88c73870e3184cd63d00fc6933a44edd17efeb7446d177952525a1475e3c6df",
+              "unchanged": true
+            }
+          },
+          "seconds": 0.101,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "argv": [
+            "/bin/sh",
+            "-c",
+            "sh \"${PLUGIN_ROOT}/scripts/hook.sh\" --host codex --event session-start"
+          ],
+          "assertions": [
+            "actual command returned expected exit",
+            "snapshots unchanged for declared read-only roots"
+          ],
+          "exit_code": 0,
+          "id": "relocated-hook-codex-active",
+          "log_file": "019-relocated-hook-codex-active.log",
+          "readonly": {
+            "consumer": {
+              "entries": 15,
+              "inventory_sha256": "38bb5a2f8a9f36b795874cf19262f4e78de7e1c7c3ee5d7ea0bdb6fc8f2880c1",
+              "unchanged": true
+            },
+            "home": {
+              "entries": 2,
+              "inventory_sha256": "904df19c5c40d93bd3a5bb20a9c68e7e4b774456cfab6e32bc4fb69a6cb846d6",
+              "unchanged": true
+            },
+            "packaged-source": {
+              "entries": 467,
+              "inventory_sha256": "6dd8b0314eb42e4d29c6e6c6413ffe9acbc697213f526bb82ce4fa4094188b9f",
+              "unchanged": true
+            },
+            "plugin": {
+              "entries": 342,
+              "inventory_sha256": "c66654510166df8569d88874371031e12c8479d370aa9810119e72e0f516ad6e",
+              "unchanged": true
+            },
+            "source": {
+              "entries": 1464,
+              "inventory_sha256": "f88c73870e3184cd63d00fc6933a44edd17efeb7446d177952525a1475e3c6df",
+              "unchanged": true
+            }
+          },
+          "seconds": 0.105,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "98f8476c31be6866c12ee664e1033399d0c9632db28b626c061a62eee17d9d2f"
+        },
+        {
+          "argv": [
+            "/bin/sh",
+            "<proof-root>/relocated native roots with spaces/codex/plugins/software-factory/scripts/hook.sh",
+            "--host",
+            "codex",
+            "--event",
+            "session-start"
+          ],
+          "assertions": [
+            "actual command returned expected exit",
+            "snapshots unchanged for declared read-only roots"
+          ],
+          "exit_code": 0,
+          "id": "relocated-hook-codex-missing-python",
+          "log_file": "020-relocated-hook-codex-missing-python.log",
+          "readonly": {
+            "consumer": {
+              "entries": 15,
+              "inventory_sha256": "38bb5a2f8a9f36b795874cf19262f4e78de7e1c7c3ee5d7ea0bdb6fc8f2880c1",
+              "unchanged": true
+            },
+            "home": {
+              "entries": 2,
+              "inventory_sha256": "904df19c5c40d93bd3a5bb20a9c68e7e4b774456cfab6e32bc4fb69a6cb846d6",
+              "unchanged": true
+            },
+            "plugin": {
+              "entries": 342,
+              "inventory_sha256": "c66654510166df8569d88874371031e12c8479d370aa9810119e72e0f516ad6e",
+              "unchanged": true
+            },
+            "source": {
+              "entries": 1464,
+              "inventory_sha256": "f88c73870e3184cd63d00fc6933a44edd17efeb7446d177952525a1475e3c6df",
+              "unchanged": true
+            }
+          },
+          "seconds": 0.045,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "74b890ec7cd2346fe88413119f5869baec0f7350b28faa4eac04b85c449a7271"
+        },
+        {
+          "argv": [
+            "/bin/sh",
+            "<proof-root>/relocated native roots with spaces/codex/plugins/software-factory/scripts/hook.sh",
+            "--host",
+            "codex",
+            "--event",
+            "session-start"
+          ],
+          "assertions": [
+            "actual command returned expected exit",
+            "snapshots unchanged for declared read-only roots"
+          ],
+          "exit_code": 0,
+          "id": "relocated-hook-codex-old-python",
+          "log_file": "021-relocated-hook-codex-old-python.log",
+          "readonly": {
+            "consumer": {
+              "entries": 15,
+              "inventory_sha256": "38bb5a2f8a9f36b795874cf19262f4e78de7e1c7c3ee5d7ea0bdb6fc8f2880c1",
+              "unchanged": true
+            },
+            "home": {
+              "entries": 2,
+              "inventory_sha256": "904df19c5c40d93bd3a5bb20a9c68e7e4b774456cfab6e32bc4fb69a6cb846d6",
+              "unchanged": true
+            },
+            "plugin": {
+              "entries": 342,
+              "inventory_sha256": "c66654510166df8569d88874371031e12c8479d370aa9810119e72e0f516ad6e",
+              "unchanged": true
+            },
+            "source": {
+              "entries": 1464,
+              "inventory_sha256": "f88c73870e3184cd63d00fc6933a44edd17efeb7446d177952525a1475e3c6df",
+              "unchanged": true
+            }
+          },
+          "seconds": 0.098,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "74b890ec7cd2346fe88413119f5869baec0f7350b28faa4eac04b85c449a7271"
+        },
+        {
+          "argv": [
+            "/bin/sh",
+            "<proof-root>/standalone bootstrap/install.sh",
+            "--host",
+            "all",
+            "--skip-bmad",
+            "--dry-run"
+          ],
+          "assertions": [
+            "actual command returned expected exit",
+            "snapshots unchanged for declared read-only roots"
+          ],
+          "exit_code": 0,
+          "id": "standalone-real-archive-dry-run",
+          "log_file": "022-standalone-real-archive-dry-run.log",
+          "readonly": {
+            "archive": {
+              "entries": 3,
+              "inventory_sha256": "f47519cee5448c6e0f9a3451e6fc6e0dc9920523110d58103e29980a39b43c51",
+              "unchanged": true
+            },
+            "consumer": {
+              "entries": 6,
+              "inventory_sha256": "292ce98f2af6524e2e01dc504e92437f7bd7ad0628a812736009d211b5e9dfb8",
+              "unchanged": true
+            },
+            "home": {
+              "entries": 2,
+              "inventory_sha256": "904df19c5c40d93bd3a5bb20a9c68e7e4b774456cfab6e32bc4fb69a6cb846d6",
+              "unchanged": true
+            },
+            "source": {
+              "entries": 1464,
+              "inventory_sha256": "f88c73870e3184cd63d00fc6933a44edd17efeb7446d177952525a1475e3c6df",
+              "unchanged": true
+            },
+            "standalone": {
+              "entries": 2,
+              "inventory_sha256": "b47482f57d93b26d81103549c5bc9852f09b4eab443178429e03aa1934276cb5",
+              "unchanged": true
+            }
+          },
+          "seconds": 0.317,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "53ba07e09c15bd093ba9601fd3488266f885bcc0acc97c8e6769e54b933e369c"
+        },
+        {
+          "argv": [
+            "/bin/sh",
+            "<proof-root>/standalone bootstrap/install.sh",
+            "--host",
+            "all",
+            "--skip-bmad"
+          ],
+          "assertions": [
+            "actual command returned expected exit",
+            "snapshots unchanged for declared read-only roots"
+          ],
+          "exit_code": 0,
+          "id": "standalone-real-archive-install",
+          "log_file": "023-standalone-real-archive-install.log",
+          "readonly": {
+            "archive": {
+              "entries": 3,
+              "inventory_sha256": "f47519cee5448c6e0f9a3451e6fc6e0dc9920523110d58103e29980a39b43c51",
+              "unchanged": true
+            },
+            "home": {
+              "entries": 2,
+              "inventory_sha256": "904df19c5c40d93bd3a5bb20a9c68e7e4b774456cfab6e32bc4fb69a6cb846d6",
+              "unchanged": true
+            },
+            "source": {
+              "entries": 1464,
+              "inventory_sha256": "f88c73870e3184cd63d00fc6933a44edd17efeb7446d177952525a1475e3c6df",
+              "unchanged": true
+            },
+            "standalone": {
+              "entries": 2,
+              "inventory_sha256": "b47482f57d93b26d81103549c5bc9852f09b4eab443178429e03aa1934276cb5",
+              "unchanged": true
+            }
+          },
+          "seconds": 0.241,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "c3d637edc5a8ae524accb78a59147806ea78994b4cbb88589c676ecce7c86303"
+        },
+        {
+          "argv": [
+            "/bin/sh",
+            "<proof-root>/standalone bootstrap/install.sh",
+            "--host",
+            "all",
+            "--skip-bmad"
+          ],
+          "assertions": [
+            "actual command returned expected exit",
+            "snapshots unchanged for declared read-only roots"
+          ],
+          "exit_code": 0,
+          "id": "standalone-real-archive-reinstall",
+          "log_file": "024-standalone-real-archive-reinstall.log",
+          "readonly": {
+            "archive": {
+              "entries": 3,
+              "inventory_sha256": "f47519cee5448c6e0f9a3451e6fc6e0dc9920523110d58103e29980a39b43c51",
+              "unchanged": true
+            },
+            "consumer": {
+              "entries": 232,
+              "inventory_sha256": "31e2013854776bd92168b965c5a4b8892bd416666b4a8c50b116d0c7fe0d3422",
+              "unchanged": true
+            },
+            "home": {
+              "entries": 2,
+              "inventory_sha256": "904df19c5c40d93bd3a5bb20a9c68e7e4b774456cfab6e32bc4fb69a6cb846d6",
+              "unchanged": true
+            },
+            "source": {
+              "entries": 1464,
+              "inventory_sha256": "f88c73870e3184cd63d00fc6933a44edd17efeb7446d177952525a1475e3c6df",
+              "unchanged": true
+            },
+            "standalone": {
+              "entries": 2,
+              "inventory_sha256": "b47482f57d93b26d81103549c5bc9852f09b4eab443178429e03aa1934276cb5",
+              "unchanged": true
+            }
+          },
+          "seconds": 0.236,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "c5c78b57e111af9f35f4c30ea21bb1256d572a71669816b17da56c8e91832afd"
+        },
+        {
+          "argv": [
+            "<python3.12>",
+            "-I",
+            "-B",
+            "<proof-root>/unpacked verified release/sf-v0.1.0/install.py",
+            "doctor",
+            "--project",
+            "<proof-root>/bootstrap fresh consumer with spaces",
+            "--json"
+          ],
+          "assertions": [
+            "actual command returned expected exit",
+            "snapshots unchanged for declared read-only roots"
+          ],
+          "exit_code": 0,
+          "id": "packaged-doctor-json",
+          "log_file": "025-packaged-doctor-json.log",
+          "readonly": {
+            "consumer": {
+              "entries": 232,
+              "inventory_sha256": "31e2013854776bd92168b965c5a4b8892bd416666b4a8c50b116d0c7fe0d3422",
+              "unchanged": true
+            },
+            "home": {
+              "entries": 2,
+              "inventory_sha256": "904df19c5c40d93bd3a5bb20a9c68e7e4b774456cfab6e32bc4fb69a6cb846d6",
+              "unchanged": true
+            },
+            "packaged-source": {
+              "entries": 467,
+              "inventory_sha256": "6dd8b0314eb42e4d29c6e6c6413ffe9acbc697213f526bb82ce4fa4094188b9f",
+              "unchanged": true
+            },
+            "source": {
+              "entries": 1464,
+              "inventory_sha256": "f88c73870e3184cd63d00fc6933a44edd17efeb7446d177952525a1475e3c6df",
+              "unchanged": true
+            },
+            "standalone": {
+              "entries": 2,
+              "inventory_sha256": "b47482f57d93b26d81103549c5bc9852f09b4eab443178429e03aa1934276cb5",
+              "unchanged": true
+            }
+          },
+          "seconds": 0.407,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "e4bc7e7db49d44defde509d17a6a8a909aa0eb22dab4455cd2b08b72782e62ec"
+        },
+        {
+          "assertions": [
+            "standalone bootstrap executed the assembled source installer, not a fake installer",
+            "fresh consumer path with spaces received all three hosts and eleven canonical/shared skill entries",
+            "runtime hook bytes match source, no active pointer was invented, second bootstrap install was a byte/mode/mtime no-op",
+            "doctor was read-only and reports hook fixtures separately from live trust/loading"
+          ],
+          "doctor_status_counts": {
+            "pass": 5,
+            "unverified": 7,
+            "warning": 3
+          },
+          "doctor_unverified_checks": [
+            "codex-hook-trust",
+            "codex-agent-loading",
+            "shared-skill-loading",
+            "board-records",
+            "global-plugin-state",
+            "config-syntax",
+            "config-semantics"
+          ],
+          "hook_checks": {
+            "hooks:claude-code": "pass",
+            "hooks:codex": "pass",
+            "hooks:cursor": "pass"
+          },
+          "id": "packaged-install-observations",
+          "installed_manifest_files": 161
+        },
+        {
+          "argv": [
+            "<python3.12>",
+            "-I",
+            "-B",
+            "<proof-root>/unpacked verified release/sf-v0.1.0/install.py",
+            "uninstall",
+            "--project",
+            "<proof-root>/bootstrap fresh consumer with spaces",
+            "--host",
+            "all",
+            "--dry-run"
+          ],
+          "assertions": [
+            "actual command returned expected exit",
+            "snapshots unchanged for declared read-only roots"
+          ],
+          "exit_code": 0,
+          "id": "packaged-uninstall-dry-run",
+          "log_file": "026-packaged-uninstall-dry-run.log",
+          "readonly": {
+            "consumer": {
+              "entries": 232,
+              "inventory_sha256": "31e2013854776bd92168b965c5a4b8892bd416666b4a8c50b116d0c7fe0d3422",
+              "unchanged": true
+            },
+            "home": {
+              "entries": 2,
+              "inventory_sha256": "904df19c5c40d93bd3a5bb20a9c68e7e4b774456cfab6e32bc4fb69a6cb846d6",
+              "unchanged": true
+            },
+            "packaged-source": {
+              "entries": 467,
+              "inventory_sha256": "6dd8b0314eb42e4d29c6e6c6413ffe9acbc697213f526bb82ce4fa4094188b9f",
+              "unchanged": true
+            },
+            "source": {
+              "entries": 1464,
+              "inventory_sha256": "f88c73870e3184cd63d00fc6933a44edd17efeb7446d177952525a1475e3c6df",
+              "unchanged": true
+            }
+          },
+          "seconds": 0.103,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "f6c68ffaa071f7a5f6379ddf7b9b7b4af1c6d58553936c190ed7d425a27b318d"
+        },
+        {
+          "argv": [
+            "<python3.12>",
+            "-I",
+            "-B",
+            "<proof-root>/unpacked verified release/sf-v0.1.0/install.py",
+            "uninstall",
+            "--project",
+            "<proof-root>/bootstrap fresh consumer with spaces",
+            "--host",
+            "all"
+          ],
+          "assertions": [
+            "actual command returned expected exit",
+            "snapshots unchanged for declared read-only roots"
+          ],
+          "exit_code": 0,
+          "id": "packaged-uninstall-actual",
+          "log_file": "027-packaged-uninstall-actual.log",
+          "readonly": {
+            "home": {
+              "entries": 2,
+              "inventory_sha256": "904df19c5c40d93bd3a5bb20a9c68e7e4b774456cfab6e32bc4fb69a6cb846d6",
+              "unchanged": true
+            },
+            "packaged-source": {
+              "entries": 467,
+              "inventory_sha256": "6dd8b0314eb42e4d29c6e6c6413ffe9acbc697213f526bb82ce4fa4094188b9f",
+              "unchanged": true
+            },
+            "source": {
+              "entries": 1464,
+              "inventory_sha256": "f88c73870e3184cd63d00fc6933a44edd17efeb7446d177952525a1475e3c6df",
+              "unchanged": true
+            }
+          },
+          "seconds": 0.154,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "261d7fa79d508b60ee6bd667655cb5d2153d15e93b1bbf9ea3b90bb41d2172c7"
+        },
+        {
+          "assertions": [
+            "actual packaged uninstall removed all unchanged owned payload and ownership manifest",
+            "pre-existing files retain bytes, modes and mtimes",
+            "volatile-ignore entries, persistent lock and uninstall recovery backup/metadata records are retained intentionally"
+          ],
+          "id": "uninstall-preservation",
+          "retained_categories": {
+            "persistent_install_lock": 1,
+            "uninstall_recovery_backup_or_metadata": 322,
+            "volatile_ignore_file": 1
+          },
+          "retained_inventory_sha256": "c28d4afc573c0cc7e9e80af4b3041e8d4c02916f2dbd391c20cabaa0deb96945",
+          "retained_nonoriginal_file_count": 324
+        },
+        {
+          "argv": [
+            "/bin/sh",
+            "<proof-root>/standalone bootstrap/install.sh",
+            "--host",
+            "all",
+            "--skip-bmad",
+            "--project",
+            "<proof-root>/tampered fresh consumer with spaces"
+          ],
+          "assertions": [
+            "actual command returned expected exit",
+            "snapshots unchanged for declared read-only roots"
+          ],
+          "exit_code": 1,
+          "id": "standalone-tampered-actual-archive",
+          "log_file": "028-standalone-tampered-actual-archive.log",
+          "readonly": {
+            "archive": {
+              "entries": 3,
+              "inventory_sha256": "8575f5c9ac65578ff85e380108958334b190d9bf2c15702c3e27348a11c96f13",
+              "unchanged": true
+            },
+            "consumer": {
+              "entries": 2,
+              "inventory_sha256": "9fe1972945b918d0ead5dc494ea40cc3b907628cea5a73f1d8a423d66c12badc",
+              "unchanged": true
+            },
+            "home": {
+              "entries": 2,
+              "inventory_sha256": "904df19c5c40d93bd3a5bb20a9c68e7e4b774456cfab6e32bc4fb69a6cb846d6",
+              "unchanged": true
+            },
+            "source": {
+              "entries": 1464,
+              "inventory_sha256": "f88c73870e3184cd63d00fc6933a44edd17efeb7446d177952525a1475e3c6df",
+              "unchanged": true
+            },
+            "standalone": {
+              "entries": 2,
+              "inventory_sha256": "b47482f57d93b26d81103549c5bc9852f09b4eab443178429e03aa1934276cb5",
+              "unchanged": true
+            }
+          },
+          "seconds": 0.107,
+          "stderr_sha256": "1cb56c8c721746993335109768e3ecdb043020f37c07aa2afd1320273565d8d0",
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "assertions": [
+            "complete source inventory excluding Git administration preserved bytes/modes/mtimes/paths",
+            "isolated home preserved bytes/modes/mtimes/paths across every command",
+            "no host CLI guard invoked, no shadow imports ran, no staging leak after standalone cases",
+            "configured downloads were simulated by copying actual locally assembled release bytes; no network/publication claim",
+            "source HEAD and clean worktree remain fixed"
+          ],
+          "id": "boundaries-and-read-only-proof",
+          "isolated_home_inventory_sha256": "904df19c5c40d93bd3a5bb20a9c68e7e4b774456cfab6e32bc4fb69a6cb846d6",
+          "source_entries": 1464,
+          "source_inventory_sha256": "f88c73870e3184cd63d00fc6933a44edd17efeb7446d177952525a1475e3c6df",
+          "standalone_fixture_downloads": 8
+        }
+      ],
+      "observations_count": 34,
+      "scope": "Local integrated release, native-format, relocated-hook and standalone-bootstrap fixture observations only",
+      "status": "pass-executed-cases",
+      "subject_sha": "481ff7c5596ef2c28bc16e156246dbeb4b0f9fd4"
+    },
+    "combined-primary-proof": {
+      "type": "full-static-gate",
+      "subject_sha": "8d18eb4578c19b6ccc4e83323aa3e5637433d549",
+      "status": "pass",
+      "exit_code": 0,
+      "unit_tests": 611,
+      "unit_passed": 610,
+      "unit_skipped": 1,
+      "unit_skip_reason": "optional jsonschema crosscheck not requested in full suite",
+      "unit_seconds": 191.89,
+      "evals_passed": 30,
+      "evals_failed": 0,
+      "evals_unverified": 0,
+      "evals_skipped": 0,
+      "real_network_tests": [
+        "BMad6.12.0all3approvedmodulepins",
+        "skills CLI1.7.2 all3hosts canonical copies"
+      ],
+      "other_steps": "pass including shellcheck4.1.0, distribution, Mermaid,11skills-refvalidators, workflow and issueform schemas",
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/combined-install-config-gate.log",
+      "artifact_sha256": "a2f3c400b4a6d94ffcb8c8c6208e2fdc6afe5f7ab45b9231156ef36d29a25610",
+      "recorded_at": "2026-10-15T11:03:47.462473+00:00",
+      "limitations": [
+        "No owner epic acceptance, live host loading, public release delivery, production monitoring or deployment established."
+      ]
+    }
+  },
   "baseline_sha": null,
   "branch": null,
   "pr": null,
   "merged_sha": null,
-  "history": [],
-  "findings": [],
-  "source_key": "installer-hosts/distribution"
+  "history": [
+    {
+      "at": "2026-10-15T09:51:55.377307+00:00",
+      "by": "orchestrator",
+      "from": "backlog",
+      "to": "ready-for-dev"
+    },
+    {
+      "at": "2026-10-15T09:51:55.467038+00:00",
+      "by": "codex-distribution",
+      "from": "ready-for-dev",
+      "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T10:11:26.234602+00:00",
+      "by": "codex-distribution",
+      "from": "in-progress",
+      "to": "in-review"
+    },
+    {
+      "at": "2026-10-15T10:34:26.408760+00:00",
+      "by": "codex-distribution",
+      "from": "in-review",
+      "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T10:44:40.036362+00:00",
+      "by": "codex-distribution",
+      "from": "in-progress",
+      "to": "in-review"
+    }
+  ],
+  "findings": [
+    {
+      "at": "2026-10-15T10:04:45.100153+00:00",
+      "by": "orchestrator",
+      "text": "Worker reports real skills CLI1.7.2 three-host discovery/install succeeded with eleven exact canonical skill copies and no host guard calls; initial11 distribution and10 bootstrap tests passed. Source and security review remain pending; install.py glue uses the serialized claimed phase."
+    },
+    {
+      "at": "2026-10-15T10:12:26.249192+00:00",
+      "by": "orchestrator",
+      "text": "Committed candidate e8cc96869e58c600d3845428afa76d2ce2a14b99 submitted to independent source/security review;12 distribution and12 bootstrap cases pass; full isolated offline gate failed on stale crawl/dependent evaluation, not integrated proof. Generated release/native artifacts remain uncommitted."
+    },
+    {
+      "at": "2026-10-15T10:13:24.917645+00:00",
+      "by": "orchestrator",
+      "text": "Independent review requires release allowlist coverage for native payloads and pre-tar parsing decompression/header bounds; source candidate needs repair before integration. Existing source and failed gate receipts retained."
+    },
+    {
+      "at": "2026-10-15T10:34:26.408594+00:00",
+      "by": "codex-distribution",
+      "text": "Independent review accepted captured allowlist and shared bounded header parser repairs; Python startup isolation remains required before verification and hook dispatch. Prior failed candidate reviews retained; repaired source and complete integrated proof pending."
+    },
+    {
+      "at": "2026-10-15T10:54:02.951249+00:00",
+      "by": "orchestrator",
+      "text": "Independent actual integration proof on481ff7c:28commands/34observations pass, reproducible licensed archive/nativebundles, relocatedhooks and standalone bootstrap/lifecycle/tamper cases. Full source/home snapshots unchanged; no host CLI. This partial local proof predates25 and does not establish live host loading, HTTPS delivery or publication."
+    }
+  ],
+  "source_key": "installer-hosts/distribution",
+  "review_subject_sha": "b81c0d61c19327263ffb0a293565e2e0d97b7056",
+  "evidence_contract": 1
 }

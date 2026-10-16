@@ -1,0 +1,8 @@
+{
+  "status": "draft-only",
+  "principles": ["PRINCIPLES.md", "ARCHITECTURE.md", "CONVENTIONS.md", "RISK.md"],
+  "tracker": "TASKS.md",
+  "optional_bmad": false,
+  "review_bots": [],
+  "monitoring": "disabled"
+}

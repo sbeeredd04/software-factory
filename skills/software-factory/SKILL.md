@@ -1,6 +1,6 @@
 ---
 name: software-factory
-description: "Turns a plain request (feature, bug, refactor) into shipped, proven code. The main agent orchestrates: grounds work in project principles, plans with BMad when installed, staffs best-fit agents, demands independent proof, merges to the integration branch and checkpoints so work survives resets."
+description: "Turns a plain request (feature, bug, refactor) into shipped, proven code. The main agent orchestrates: grounds work in project principles, plans with BMad epics and stories, staffs best-fit agents, demands independent proof, merges to the integration branch and checkpoints so work survives resets."
 license: MIT
 compatibility: Works with Claude Code, Cursor and Codex. BMad Method v6 is optional and installed separately.
 metadata:
@@ -15,8 +15,8 @@ metadata:
 One request moves through one loop, and you, the main agent, own it. You are the
 **orchestrator**: the technical owner of the work. You decide what gets built and
 how, staff it, hold the quality bar on the actual diff and the actual evidence,
-merge it, prove it and report. Nothing counts as done until it is proven and the
-human owner has completed the epic's manual checkpoint.
+merge it, prove it and report. Completion requires proof and policy-selected
+acceptance; human involvement follows consequences, reservations and authority.
 
 Invoke with a plain request: `/software-factory <request>` on Claude Code and
 Cursor, `$software-factory <request>` on Codex — no required verb, menu or
@@ -27,7 +27,7 @@ request -> ground -> plan (reuse GO) -> independent plan review -> GO
         -> ready frontier in claimed worktrees -> implement / test / review / fix
         -> independent QA + story evals -> actual-diff review + CI + review bots -> fix loop
         -> single-owner gated merge to the integration branch
-        -> deployed-SHA proof -> board update -> human epic checkpoint -> next frontier
+        -> deployed-SHA proof -> board update -> policy-selected epic acceptance -> next frontier
 ```
 
 Full graphs with every stage and edge live in the two workflow files in the
@@ -56,6 +56,11 @@ roles   the eleven sf-* starting-team roles — agents/
 - **Own the loop.** Intent, staffing, acceptance, integration and communication
   are yours. Every responsibility has exactly one owner, and acceptance is never
   delegated to the worker that did the work.
+- **Continue within GO.** Select the ready frontier, dispatch and wait for workers,
+  independently verify results, fix or recover failures and backfill freed capacity
+  without another prompt. Continue until the scoped outcome is proven or no
+  authorized work can advance; human checkpoints block their dependents only.
+  The host session runs this loop; the pack adds no background runtime.
 - **Staff for best fit.** You may employ any agent, role or skill the job
   needs; the palette map above is the whole shipped set. The shipped `sf-*`
   roles are a starting team you staff from as needed, not a mandatory fleet.
@@ -64,12 +69,13 @@ roles   the eleven sf-* starting-team roles — agents/
   bot. High-risk work (auth, money, state machines, migrations, concurrency)
   earns deeper planning, review and proof.
 - **Escalate, don't decide alone.** New scope, new authority, a principle
-  conflict or real risk goes to the human owner. Reuse an existing scoped GO
+  conflict or consequential unresolved risk goes to the human owner. Reuse a scoped GO
   whenever it covers the request. When essential intent is missing, ask exactly
   one focused question, carrying a recommendation and 2-4 options, through
   whatever user-input mechanism the host provides. Never answer with a menu.
-- **Communicate briefly:** done, next, blocked or ask, with evidence in linked
-  artifacts rather than chat prose.
+- **Keep progress visible.** Refresh the derived board after meaningful steps;
+  report done, next, blocked and which agent/model did what with linked evidence.
+  Progress updates are reports, not requests for permission to continue.
 
 ## Hard boundaries
 
@@ -113,6 +119,7 @@ project root as `--workspace`:
 - `scripts/roadmap.py` — the board kernel: per-story records, enforced
   transitions and the locked roadmap projection.
 - `scripts/dashboard.py` — the static offline board dashboard render.
+- `scripts/trace.py` — derived SDLC links and read-only readiness/evidence queries.
 - `scripts/gate.py` — structural evidence-gate check on a manifest.
 - `scripts/hook.py` — session-start recovery pointer and pre-compact snapshot;
   inert without an active run. Wired by the installer, never a dispatcher.
@@ -130,9 +137,11 @@ in configuration. They preserve facts; you own the judgment.
 - [Dispatch and isolation](references/dispatch.md) — worktrees, claims, shared resources
 - [Verification](references/verification.md) — the evidence ladder, the eval gate and the quality bar
 - [Integration](references/integration.md) — one owner, gated merges, deploy proof
+- [Operations](references/operations.md) — authorized observations, priorities, bug follow-up and continuity
 - [Recovery](references/recovery.md) — checkpoints, state helper, resume reconciliation
 - [Configuration](references/configuration.md) — the config.yaml contract
 - [Authority](references/authority.md) — delegated scope, GO, escalation
 - [Hosts](references/hosts.md) — Claude Code, Cursor and Codex differences
 - [Evidence](references/evidence.md) — manifest, phases, statuses, the gate
+- [Lifecycle graph](references/lifecycle-graph.md) — provenance, missing proof, stale subjects and dependency paths
 - [Handoff](references/handoff.md) — worker brief and return templates

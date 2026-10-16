@@ -4,8 +4,8 @@
   "epic": 4,
   "type": "story",
   "title": "Config contract, JSON Schema and tracker adapters",
-  "status": "backlog",
-  "owner": null,
+  "status": "in-review",
+  "owner": "codex-eval-isolation",
   "after": [
     24
   ],
@@ -27,12 +27,267 @@
   "plan_checkpoint": false,
   "done_checkpoint": false,
   "blocked": null,
-  "receipts": {},
+  "receipts": {
+    "active-attempt": {
+      "type": "agent-attempt",
+      "subject_sha": "e8cc96869e58c600d3845428afa76d2ce2a14b99",
+      "agent": "/root/product_expert",
+      "role": "sf-principal-engineer",
+      "skill": "software-factory",
+      "requested_model": "gpt-6-astra",
+      "effective_model": null,
+      "phase": "implementation",
+      "status": "assigned",
+      "recorded_at": "2026-10-15T10:12:26.162190+00:00",
+      "summary": "Original25 config/schema/trackers begins from submitted24 candidate through existing review-counts-met readiness; independent24 review and BMad module pin decision remain open. Root owns primary runtime and integration."
+    },
+    "worker-handoff": {
+      "type": "worker-handoff",
+      "subject_sha": "e952b0a1d0e73f294157ad0947188367e7f242fb",
+      "author": "codex-config-trackers",
+      "status": "source-reviewed-integration-proof-pending",
+      "full_gate": {
+        "exit_code": 1,
+        "tests": 564,
+        "passed": 554,
+        "failed": 2,
+        "skipped": 8,
+        "eval_passed": 28,
+        "eval_total": 30,
+        "failed_eval_ids": [
+          "SKL-BOARD-002",
+          "SKL-CRAWL-002"
+        ]
+      },
+      "other_executed_steps": "pass",
+      "limitations": [
+        "Isolated freshness failures retained.",
+        "Network and optional unavailable schema crosscheck explicitly skipped.",
+        "Full combined primary gate and consumer evidence remain required."
+      ],
+      "recorded_at": "2026-10-15T10:54:02.909204+00:00"
+    },
+    "independent-review": {
+      "type": "independent-review",
+      "subject_sha": "e952b0a1d0e73f294157ad0947188367e7f242fb",
+      "author": "codex-config-trackers",
+      "reviewer": "/root/mission_status",
+      "status": "pass",
+      "scope": "44-file source diff vs0d0a641; exact commit",
+      "reviewed": [
+        "Tracker root/ancestor identity and deterministic swap regression",
+        "Runner-compatible golden and nested JSON assertion fields",
+        "Recursive numeric/bool equality, pinned Cursor force recipe and authority path overlap",
+        "Readonly config/tracker validation and owner-mediated patch proposals",
+        "Genuine doctor semantics, schema/tracker installed/native dependencies and Apache license allowlist",
+        "Optional owner ceiling and honest fixture/example/monitoring authority documentation"
+      ],
+      "limitations": [
+        "Reviewer ran no product tests or host CLI.",
+        "Does not establish authenticated authority, live monitoring/models/host loading or eval readiness."
+      ],
+      "recorded_at": "2026-10-15T10:54:02.909204+00:00"
+    },
+    "combined-primary-proof": {
+      "type": "full-static-gate",
+      "subject_sha": "8d18eb4578c19b6ccc4e83323aa3e5637433d549",
+      "status": "pass",
+      "exit_code": 0,
+      "unit_tests": 611,
+      "unit_passed": 610,
+      "unit_skipped": 1,
+      "unit_skip_reason": "optional jsonschema crosscheck not requested in full suite",
+      "unit_seconds": 191.89,
+      "evals_passed": 30,
+      "evals_failed": 0,
+      "evals_unverified": 0,
+      "evals_skipped": 0,
+      "real_network_tests": [
+        "BMad6.12.0all3approvedmodulepins",
+        "skills CLI1.7.2 all3hosts canonical copies"
+      ],
+      "other_steps": "pass including shellcheck4.1.0, distribution, Mermaid,11skills-refvalidators, workflow and issueform schemas",
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/combined-install-config-gate.log",
+      "artifact_sha256": "a2f3c400b4a6d94ffcb8c8c6208e2fdc6afe5f7ab45b9231156ef36d29a25610",
+      "recorded_at": "2026-10-15T11:03:47.462473+00:00",
+      "limitations": [
+        "No owner epic acceptance, live host loading, public release delivery, production monitoring or deployment established."
+      ]
+    },
+    "external-schema-crosscheck": {
+      "type": "supplemental-schema-crosscheck",
+      "subject_sha": "8d18eb4578c19b6ccc4e83323aa3e5637433d549",
+      "status": "pass",
+      "exit_code": 0,
+      "tests": 1,
+      "seconds": 0.089,
+      "command": "SF_CONFIG_JSONSCHEMA_CROSSCHECK=1 PYTHONDONTWRITEBYTECODE=1 uvx --from check-jsonschema python -B -m unittest discover -s tests -p test_config_schema.py -k optional_jsonschema_crosscheck -v",
+      "coverage": "Draft202012 schema metaschema and all parseable labeled config fixtures; syntax-invalid fixture excluded by test design",
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/config-external-schema-crosscheck.log",
+      "artifact_sha256": "9f71372e89e0d2954f19c68c9f985065f75b534ec923b4ebb8a46fc91e73dcb5",
+      "recorded_at": "2026-10-15T11:03:47.462473+00:00",
+      "limitations": [
+        "Third-party library used only in optional dev crosscheck; shipped validator remains standard-library-only.",
+        "Does not establish governing document existence, authority or actual recipe execution."
+      ]
+    },
+    "auth-isolation-repair": {
+      "type": "verification",
+      "status": "pass",
+      "subject_sha": "c38380e8623d28fdaa3ad24feb0ba8f9feeadc7c",
+      "command": "bash scripts/check_all.sh",
+      "exit_code": 0,
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/auth-isolation-integrated-gate.log",
+      "artifact_sha256": "d92c072177c6e0732d4c3ae80e55ae36ceb0f34c451ef6e796aea2bf9b1f702f",
+      "unit_tests": {
+        "run": 709,
+        "passed": 708,
+        "failed": 0,
+        "skipped": 1,
+        "seconds": 220.423
+      },
+      "evals": {
+        "passed": 30,
+        "failed": 0,
+        "unverified": 0,
+        "skipped": 0,
+        "quarantined": 0
+      },
+      "summary": "Narrow test-only authfixture isolation repair passes complete integrated gate; actual approved BMad/skills network and allstatic steps exit0. Independentsource+guarded1test confirm4fixture auth observations and0escapedcalls. Private unsigned52draft separately48pass/4future-suite failures,0guardhits; execution was before newadmission and is not canonicalgate or approval.",
+      "review": {
+        "artifact": ".software-factory/runs/software-factory-v01/evidence/auth-isolation-source-review.md",
+        "artifact_sha256": "5f3866776c99240c04ec5c3ec56a20c803ca7168c7519b70517ae07f9c711664"
+      },
+      "probe": {
+        "artifact": ".software-factory/runs/software-factory-v01/evidence/auth-isolation-independent-probe.json",
+        "artifact_sha256": "fa003907a5e02a2a03ab01914097a817944277951a8ac4205b568180eb13a05f"
+      },
+      "limits": [
+        "Product source/criteria/canonical30caseplan unchanged at this tested SHA. Source permission/real provider auth, livehost, production/publication and human epic acceptance not established. Canonical eval supplement needs separate actualowner decision; private red receipt is not a passing gate."
+      ]
+    },
+    "eval-admission-first-gate": {
+      "type": "verification",
+      "status": "fail",
+      "subject_sha": "fd7c0f0067d8657cb248b9acf595dcdfe07ff5cf",
+      "command": "bash scripts/check_all.sh",
+      "exit_code": 1,
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/eval-admission-first-gate.log",
+      "artifact_sha256": "6e2ebd9f64748a561d506042d773ea0ee4b77b31899ef0b0ca60efe5a174bd8f",
+      "unit_tests": {
+        "run": 709,
+        "passed": 706,
+        "failed": 2,
+        "skipped": 1,
+        "seconds": 408.737
+      },
+      "evals": {
+        "passed": 47,
+        "failed": 1,
+        "unverified": 0,
+        "quarantined": 0,
+        "skipped": 0
+      },
+      "failed_cases": [
+        "SKL-CRAWL-002"
+      ],
+      "summary": "First approved48-case gate fails only generated crawl freshness and enclosing dogfood expectation: root omitted two newly tracked evaluation admission/history JSONfiles from CODEBASE total (247vs249). Root will refresh and repeat fullgate; all other static/network steps passed. No pass asserted for this subject.",
+      "limits": [
+        "Source acceptance and genuine owner check-contract approval do not replace passing gate evidence. No production/publication/human epic acceptance established."
+      ]
+    },
+    "eval-admission-source-review": {
+      "type": "source-review",
+      "status": "accepted",
+      "subject_sha": "fd7c0f0067d8657cb248b9acf595dcdfe07ff5cf",
+      "reviewer": "mission-status",
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/eval-admission-source-review.md",
+      "artifact_sha256": "df2896c20a2f3bc73a18a40e01eab2979110d4c19b239e978c5b35f31496d9b2",
+      "summary": "16 independent source checks confirm exact22 approvedcaseobjects/order, original30prefix and rawsignedhistory, current48payload8ed... and full52contract6de...; fourfuturecontracts remain approved/deferred. Chat authority comes from actualparent ownerreply, not source authentication.",
+      "limits": [
+        "No tests executed by reviewer; first rootfullgate independentlyfailed stale generatedfilecount."
+      ]
+    },
+    "approved-evaluation-admission": {
+      "type": "verification",
+      "status": "pass",
+      "subject_sha": "a70773df0c09f218602cc3a29fa16476a1de8485",
+      "command": "bash scripts/check_all.sh",
+      "exit_code": 0,
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/eval-admission-refreshed-gate.log",
+      "artifact_sha256": "f350c4f51e0f1c4dbc42945d5c9c6989fe7788f03387c8346cee2331090ffa06",
+      "unit_tests": {
+        "run": 709,
+        "passed": 708,
+        "failed": 0,
+        "skipped": 1,
+        "seconds": 372.802
+      },
+      "evals": {
+        "failed": 0,
+        "passed": 48,
+        "quarantined": 0,
+        "skipped": 0,
+        "unverified": 0
+      },
+      "eval_run": "r-20261015T140631Z-premerge",
+      "eval_receipt_sha256": "3f389698c14a047f165f04d4c043db0a38cbac47e29baf4d60375777780f49da",
+      "summary": "Owner-approved additive admission: current48case suite passes after root refresh of source inventory for new tracked contract/history JSON files. Original failed247vs249 inventory gate is retained separately. All static steps and actual approved BMad/skills installer network checks pass.",
+      "limitations": [
+        "Four approved future launch cases remain prospectively deferred until their implementations exist.",
+        "No live host loading, remote integration, deployed effects, publication or human epic acceptance is established."
+      ]
+    }
+  },
   "baseline_sha": null,
   "branch": null,
   "pr": null,
   "merged_sha": null,
-  "history": [],
-  "findings": [],
-  "source_key": "onboarding-integrations/config-schema-trackers"
+  "history": [
+    {
+      "at": "2026-10-15T10:11:47.292549+00:00",
+      "by": "orchestrator",
+      "from": "backlog",
+      "to": "ready-for-dev"
+    },
+    {
+      "at": "2026-10-15T10:11:47.397815+00:00",
+      "by": "codex-config-trackers",
+      "from": "ready-for-dev",
+      "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T10:54:03.007214+00:00",
+      "by": "codex-config-trackers",
+      "from": "in-progress",
+      "to": "in-review"
+    },
+    {
+      "at": "2026-10-15T13:32:56.372792+00:00",
+      "by": "codex-eval-isolation",
+      "from": "in-review",
+      "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T13:40:44.229624+00:00",
+      "by": "codex-eval-isolation",
+      "from": "in-progress",
+      "to": "in-review"
+    }
+  ],
+  "findings": [
+    {
+      "at": "2026-10-15T13:32:56.372626+00:00",
+      "by": "codex-eval-isolation",
+      "text": "Private evaluation-proposal validation exposed four blocked gh auth status attempts from the existing BMad diagnostic test. Narrow fixture repair will stub those observations explicitly; no provider/auth execution occurred in the guarded reproduction, and canonical evaluation admission stays pending."
+    },
+    {
+      "at": "2026-10-15T13:40:44.229448+00:00",
+      "by": "codex-eval-isolation",
+      "text": "Diagnostic fixture isolation repaired and independently verified: four intended fixture auth observations, zero escaped commands. Exactc383 fullgate709tests708pass/1optional skip and30evalpass; private unsigned52draft separately48pass/4expected future-suite failures with0guardhits. Original findings retained."
+    }
+  ],
+  "source_key": "onboarding-integrations/config-schema-trackers",
+  "evidence_contract": 1,
+  "review_subject_sha": "c38380e8623d28fdaa3ad24feb0ba8f9feeadc7c"
 }

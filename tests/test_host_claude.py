@@ -100,7 +100,7 @@ class FileSetTests(ClaudeInstallCase):
         for path in sorted(skills_dir.rglob("*")):
             if path.is_file():
                 projected.add(path.relative_to(skills_dir).as_posix())
-        self.assertEqual(canonical_tree(), projected)
+        self.assertEqual(canonical_tree() | {"software-factory/schemas/config.schema.json", "software-factory/scripts/trackers.py", "sf-agents/scripts/install_lifecycle.py", "sf-evolve/schemas/overlay.schema.json", "sf-evolve/scripts/bmad_install.py", *{"sf-agents/templates/" + p.relative_to(support.REPO / "integrations/bots").as_posix() for p in (support.REPO / "integrations/bots").rglob("*.tmpl")}, *{f"sf-help/templates/{name}" for name in ("PRINCIPLES.md", "ARCHITECTURE.md", "CONVENTIONS.md")}}, projected)
 
     def test_exact_agent_set(self):
         agents = sorted(p.name for p in (self.repo / ".claude/agents").glob("*.md"))
@@ -123,9 +123,9 @@ class FileSetTests(ClaudeInstallCase):
     def test_runtime_helper_set_and_pointer_block(self):
         runtime = self.repo / ".software-factory/runtime"
         names = sorted(p.name for p in runtime.glob("*.py"))
-        self.assertEqual(["config.py", "gate.py", "hook.py", "state.py"], names)
+        self.assertEqual(["config.py", "gate.py", "hook.py", "state.py", "trackers.py"], names)
         for name in names:
-            canonical = support.SCRIPTS / name
+            canonical = support.REPO / "adapters/trackers.py" if name == "trackers.py" else support.SCRIPTS / name
             self.assertEqual(canonical.read_bytes(), (runtime / name).read_bytes())
         content = (self.repo / "CLAUDE.md").read_text()
         self.assertEqual(1, content.count("<!-- software-factory:begin -->"))
@@ -178,15 +178,17 @@ class SkillFrontmatterTests(ClaudeInstallCase):
                 )
                 self.assertEqual(canonical_body, projected_body)
 
-    def test_non_skill_files_are_byte_identical(self):
+    def test_non_skill_files_preserve_bytes_except_explicit_installed_layout(self):
         for rel in sorted(canonical_tree()):
             if rel.endswith("SKILL.md"):
                 continue
             canonical = support.REPO / "skills" / rel
             projected = self.repo / ".claude/skills" / rel
-            self.assertEqual(
-                canonical.read_bytes(), projected.read_bytes(), rel
-            )
+            expected = canonical.read_bytes()
+            if rel in ('sf-agents/scripts/render_bots.py', 'sf-evolve/scripts/evolve.py'):
+                self.assertEqual(1,expected.count(b'SOURCE_LAYOUT = True  #'))
+                expected = expected.replace(b'SOURCE_LAYOUT = True  #',b'SOURCE_LAYOUT = False  #',1)
+            self.assertEqual(expected, projected.read_bytes(), rel)
 
     def test_projected_frontmatter_still_parses_cleanly(self):
         for skill in sorted(validate.SKILLS):

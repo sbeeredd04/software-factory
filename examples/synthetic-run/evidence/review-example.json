@@ -1,0 +1,12 @@
+{
+  "actual_review": false,
+  "artifact": "synthetic-revision-B",
+  "assertion": "illustrative actual-diff and regression questions, no live subject verified",
+  "environment": "disposable-local-fixture",
+  "observed_at": "2026-01-01T00:04:30Z",
+  "origin": "invented-teaching-data",
+  "review_ref": "synthetic-independent-review-example",
+  "source": "formatter-run-001",
+  "synthetic": true,
+  "window_end": "2026-01-01T00:05:00Z"
+}

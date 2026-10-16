@@ -1,0 +1,84 @@
+{
+  "version": 1,
+  "id": 42,
+  "epic": 2,
+  "type": "bug",
+  "title": "Serialize story updates and refuse unknown ownership readiness",
+  "status": "in-review",
+  "owner": "codex-board-consistency",
+  "after": [
+    9
+  ],
+  "covers": [
+    "VAL-ROADMAP-004"
+  ],
+  "risk": "standard",
+  "hitl": false,
+  "plan_checkpoint": false,
+  "done_checkpoint": false,
+  "blocked": null,
+  "receipts": {
+    "implementation-attempt": {
+      "type": "agent-attempt",
+      "subject_sha": "5999680c40961b8cf6d7fd79ccc0e0af9ed6a45d",
+      "agent": "/root/run_audit",
+      "role": "sf-engineer",
+      "skill": "software-factory",
+      "requested_model": "inherit",
+      "effective_model": null,
+      "phase": "implementation",
+      "status": "awaiting-review",
+      "recorded_at": "2026-10-15T08:26:32.883971+00:00",
+      "summary": "Serialized board mutations and blocked readiness for corrupt ownership. Independent source review accepted. Nine new real-process consistency tests and 48 board tests passed; integrated gate remains pending."
+    },
+    "integrated-local-proof": {
+      "type": "local-verification",
+      "subject_sha": "9b849e7cceac4e4ce5f0fecce0a0161d3e8af530",
+      "recorded_at": "2026-10-15T08:41:25.331988+00:00",
+      "status": "pass",
+      "full_static_gate": {
+        "exit_code": 0,
+        "unit_tests": 432,
+        "evals": 30,
+        "failed": 0,
+        "unverified": 0,
+        "skipped": 0,
+        "artifact": "stable-hooks-board-gate.log",
+        "sha256": "ff6a4d6cdab1f55fe857648ffb8bcb07891f929d7a78f2b5a37367912d9e75f1"
+      },
+      "limitations": [
+        "Local verification does not establish provider CI, integration, deployment, live host loading or human acceptance."
+      ]
+    }
+  },
+  "baseline_sha": null,
+  "branch": null,
+  "pr": null,
+  "merged_sha": null,
+  "history": [
+    {
+      "at": "2026-10-15T08:20:36.478014+00:00",
+      "by": "orchestrator",
+      "from": "backlog",
+      "to": "ready-for-dev"
+    },
+    {
+      "at": "2026-10-15T08:20:36.563065+00:00",
+      "by": "codex-board-consistency",
+      "from": "ready-for-dev",
+      "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T08:26:32.908762+00:00",
+      "by": "codex-board-consistency",
+      "from": "in-progress",
+      "to": "in-review"
+    }
+  ],
+  "findings": [],
+  "source_key": "expansion/board-write-consistency",
+  "scope": [
+    "skills/software-factory/scripts/roadmap.py",
+    "tests/test_board_consistency.py"
+  ]
+}

@@ -43,7 +43,7 @@ run_step "unit tests" python3 -m unittest discover -s tests -v
 run_step "ruff" uvx --from "ruff==${RUFF_VERSION}" ruff check .
 
 if [ -f install.sh ]; then
-  run_step "shellcheck" npx -y shellcheck@latest install.sh
+  run_step "shellcheck" npx -y shellcheck@4.1.0 install.sh hosts/plugins/hook.sh
 else
   printf '\n==> shellcheck: skipped (no install.sh yet)\n'
 fi
@@ -51,6 +51,7 @@ fi
 run_step "validate" python3 scripts/validate.py
 run_step "scan_public" python3 scripts/scan_public.py
 run_step "check_links" python3 scripts/check_links.py
+run_step "distribution" python3 scripts/check_distribution.py
 # The pack verifies itself: its own eval suite, offline and deterministic.
 run_step "evals (pack self-verification)" \
   python3 skills/sf-eval/scripts/sf_eval.py run \

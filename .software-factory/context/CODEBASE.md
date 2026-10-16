@@ -5,8 +5,9 @@
 > (`<skill-dir>` is the installed skill directory, e.g. `.claude/skills/sf-crawl`
 > or `.agents/skills/sf-crawl`).
 
-- Source revision: a38269fd0e5035020c14ec90f74ff41e171a8956
-- Generated: 2026-10-12T09:49:42Z
+- Source revision: a354d16d1d24360e2809b8707dcd485ee43f27b3
+- File selection: git-tracked-and-unignored
+- Generated: 2026-10-16T00:48:56Z
 
 ## Limits
 
@@ -35,35 +36,86 @@
 
 | Module | File | Definitions | Internal imports | Import fan-out |
 | --- | --- | --- | --- | --- |
-| `install` | `install.py` | 31 | 0 | 14 |
+| `adapters.trackers` | `adapters/trackers.py` | 10 | 0 | 8 |
+| `assets.tools.capture` | `assets/tools/capture.py` | 7 | 0 | 13 |
+| `examples.minimal.greet` | `examples/minimal/greet.py` | 1 | 0 | 2 |
+| `examples.minimal.tests.test_greet` | `examples/minimal/tests/test_greet.py` | 1 | 0 | 2 |
+| `examples.python-api.app` | `examples/python-api/app.py` | 3 | 0 | 5 |
+| `examples.python-api.tests.test_app` | `examples/python-api/tests/test_app.py` | 1 | 0 | 8 |
+| `hosts.plugins.dispatch` | `hosts/plugins/dispatch.py` | 1 | 0 | 5 |
+| `install` | `install.py` | 55 | 0 | 19 |
+| `scripts.bmad_install` | `scripts/bmad_install.py` | 17 | 0 | 14 |
+| `scripts.build_release` | `scripts/build_release.py` | 4 | 0 | 11 |
+| `scripts.check_distribution` | `scripts/check_distribution.py` | 7 | 0 | 7 |
 | `scripts.check_links` | `scripts/check_links.py` | 10 | 0 | 7 |
-| `scripts.check_mermaid` | `scripts/check_mermaid.py` | 6 | 0 | 8 |
+| `scripts.check_mermaid` | `scripts/check_mermaid.py` | 7 | 0 | 8 |
+| `scripts.distribution` | `scripts/distribution.py` | 9 | 0 | 7 |
+| `scripts.install_lifecycle` | `scripts/install_lifecycle.py` | 23 | 0 | 17 |
+| `scripts.render_assets` | `scripts/render_assets.py` | 22 | 0 | 22 |
 | `scripts.scan_public` | `scripts/scan_public.py` | 10 | 0 | 7 |
 | `scripts.validate` | `scripts/validate.py` | 9 | 0 | 6 |
-| `skills.sf-crawl.scripts.crawl` | `skills/sf-crawl/scripts/crawl.py` | 17 | 0 | 12 |
+| `site.scripts.sync_prompt` | `site/scripts/sync_prompt.py` | 2 | 0 | 4 |
+| `skills.sf-agents.scripts.agents` | `skills/sf-agents/scripts/agents.py` | 9 | 0 | 8 |
+| `skills.sf-agents.scripts.render_bots` | `skills/sf-agents/scripts/render_bots.py` | 12 | 0 | 12 |
+| `skills.sf-agents.scripts.triage` | `skills/sf-agents/scripts/triage.py` | 10 | 0 | 7 |
+| `skills.sf-crawl.scripts.crawl` | `skills/sf-crawl/scripts/crawl.py` | 18 | 0 | 13 |
 | `skills.sf-eval.scripts.sf_eval` | `skills/sf-eval/scripts/sf_eval.py` | 36 | 0 | 16 |
-| `skills.software-factory.scripts.config` | `skills/software-factory/scripts/config.py` | 4 | 0 | 5 |
-| `skills.software-factory.scripts.dashboard` | `skills/software-factory/scripts/dashboard.py` | 15 | 0 | 6 |
-| `skills.software-factory.scripts.gate` | `skills/software-factory/scripts/gate.py` | 3 | 0 | 5 |
-| `skills.software-factory.scripts.hook` | `skills/software-factory/scripts/hook.py` | 8 | 0 | 7 |
-| `skills.software-factory.scripts.roadmap` | `skills/software-factory/scripts/roadmap.py` | 42 | 0 | 9 |
-| `skills.software-factory.scripts.state` | `skills/software-factory/scripts/state.py` | 33 | 0 | 15 |
+| `skills.sf-evolve.scripts.evolve` | `skills/sf-evolve/scripts/evolve.py` | 19 | 0 | 10 |
+| `skills.sf-help.scripts.discover` | `skills/sf-help/scripts/discover.py` | 9 | 0 | 11 |
+| `skills.sf-help.scripts.setup` | `skills/sf-help/scripts/setup.py` | 13 | 0 | 8 |
+| `skills.software-factory.scripts.config` | `skills/software-factory/scripts/config.py` | 15 | 0 | 11 |
+| `skills.software-factory.scripts.dashboard` | `skills/software-factory/scripts/dashboard.py` | 27 | 0 | 7 |
+| `skills.software-factory.scripts.gate` | `skills/software-factory/scripts/gate.py` | 20 | 0 | 12 |
+| `skills.software-factory.scripts.hook` | `skills/software-factory/scripts/hook.py` | 8 | 0 | 8 |
+| `skills.software-factory.scripts.roadmap` | `skills/software-factory/scripts/roadmap.py` | 56 | 0 | 9 |
+| `skills.software-factory.scripts.state` | `skills/software-factory/scripts/state.py` | 33 | 0 | 16 |
+| `skills.software-factory.scripts.trace` | `skills/software-factory/scripts/trace.py` | 21 | 0 | 15 |
+| `tests.fixtures.assets.sigterm_controller` | `tests/fixtures/assets/sigterm_controller.py` | 0 | 0 | 4 |
 | `tests.fixtures.repos.python-cli.fixture_cli` | `tests/fixtures/repos/python-cli/fixture_cli/__init__.py` | 0 | 0 | 0 |
 | `tests.fixtures.repos.python-cli.fixture_cli.__main__` | `tests/fixtures/repos/python-cli/fixture_cli/__main__.py` | 0 | 0 | 1 |
 | `tests.fixtures.repos.python-cli.fixture_cli.cli` | `tests/fixtures/repos/python-cli/fixture_cli/cli.py` | 1 | 0 | 1 |
 | `tests.fixtures.repos.python-cli.fixture_cli.core` | `tests/fixtures/repos/python-cli/fixture_cli/core.py` | 2 | 0 | 1 |
 | `tests.support` | `tests/support.py` | 13 | 0 | 10 |
-| `tests.test_board` | `tests/test_board.py` | 10 | 0 | 6 |
+| `tests.test_agents` | `tests/test_agents.py` | 5 | 0 | 10 |
+| `tests.test_assets` | `tests/test_assets.py` | 4 | 0 | 18 |
+| `tests.test_bmad_install` | `tests/test_bmad_install.py` | 2 | 0 | 14 |
+| `tests.test_board` | `tests/test_board.py` | 10 | 0 | 8 |
+| `tests.test_board_consistency` | `tests/test_board_consistency.py` | 1 | 0 | 9 |
+| `tests.test_board_gate` | `tests/test_board_gate.py` | 2 | 0 | 9 |
+| `tests.test_bootstrap` | `tests/test_bootstrap.py` | 1 | 0 | 15 |
+| `tests.test_bot_rendering` | `tests/test_bot_rendering.py` | 1 | 0 | 11 |
+| `tests.test_config` | `tests/test_config.py` | 1 | 0 | 7 |
 | `tests.test_config_kernel` | `tests/test_config_kernel.py` | 4 | 0 | 6 |
-| `tests.test_crawl` | `tests/test_crawl.py` | 9 | 0 | 11 |
+| `tests.test_config_schema` | `tests/test_config_schema.py` | 1 | 0 | 5 |
+| `tests.test_crawl` | `tests/test_crawl.py` | 11 | 0 | 12 |
+| `tests.test_dashboard` | `tests/test_dashboard.py` | 6 | 0 | 5 |
+| `tests.test_distribution` | `tests/test_distribution.py` | 1 | 0 | 16 |
+| `tests.test_docs_journey` | `tests/test_docs_journey.py` | 3 | 0 | 16 |
+| `tests.test_doctor` | `tests/test_doctor.py` | 1 | 0 | 10 |
 | `tests.test_dogfood` | `tests/test_dogfood.py` | 9 | 0 | 10 |
-| `tests.test_gate` | `tests/test_gate.py` | 5 | 0 | 6 |
-| `tests.test_hook` | `tests/test_hook.py` | 8 | 0 | 8 |
+| `tests.test_evolve` | `tests/test_evolve.py` | 4 | 0 | 8 |
+| `tests.test_gate` | `tests/test_gate.py` | 6 | 0 | 7 |
+| `tests.test_hook` | `tests/test_hook.py` | 8 | 0 | 10 |
+| `tests.test_hook_installation` | `tests/test_hook_installation.py` | 1 | 0 | 10 |
 | `tests.test_host_claude` | `tests/test_host_claude.py` | 7 | 0 | 11 |
-| `tests.test_installer` | `tests/test_installer.py` | 12 | 0 | 9 |
+| `tests.test_host_codex` | `tests/test_host_codex.py` | 8 | 0 | 9 |
+| `tests.test_host_cursor` | `tests/test_host_cursor.py` | 8 | 0 | 7 |
+| `tests.test_host_selection` | `tests/test_host_selection.py` | 8 | 0 | 11 |
+| `tests.test_install_lifecycle` | `tests/test_install_lifecycle.py` | 1 | 0 | 8 |
+| `tests.test_installer` | `tests/test_installer.py` | 13 | 0 | 10 |
+| `tests.test_onboarding` | `tests/test_onboarding.py` | 1 | 0 | 11 |
+| `tests.test_overlays` | `tests/test_overlays.py` | 5 | 0 | 12 |
+| `tests.test_readme_journey` | `tests/test_readme_journey.py` | 5 | 0 | 14 |
+| `tests.test_review_triage` | `tests/test_review_triage.py` | 6 | 0 | 5 |
+| `tests.test_run_audit` | `tests/test_run_audit.py` | 1 | 0 | 11 |
 | `tests.test_sf_eval` | `tests/test_sf_eval.py` | 22 | 0 | 13 |
+| `tests.test_showcase` | `tests/test_showcase.py` | 4 | 0 | 14 |
+| `tests.test_skills_distribution` | `tests/test_skills_distribution.py` | 3 | 0 | 9 |
 | `tests.test_state` | `tests/test_state.py` | 17 | 0 | 16 |
-| `tests.test_tools` | `tests/test_tools.py` | 18 | 0 | 8 |
+| `tests.test_tools` | `tests/test_tools.py` | 22 | 0 | 16 |
+| `tests.test_trace` | `tests/test_trace.py` | 2 | 0 | 13 |
+| `tests.test_trackers` | `tests/test_trackers.py` | 1 | 0 | 5 |
+| `tests.test_uninstall` | `tests/test_uninstall.py` | 1 | 0 | 14 |
 
 ## Import edges (Python)
 
@@ -71,136 +123,170 @@ No internal import edges.
 
 ## Call edges (Python)
 
-- `install.PlannedFile.before_hash` (line 119) calls `sha256` (confirmed: install.sha256)
-- `install.PlannedFile.after_hash` (line 123) calls `sha256` (confirmed: install.sha256)
-- `install.sha256` (line 127) calls `hashlib.sha256` (unconfirmed), `hexdigest` (unconfirmed)
-- `install.read_file` (line 131) calls `InstallError` (confirmed: install.InstallError), `path.exists` (unconfirmed), `path.is_file` (unconfirmed), `path.is_symlink` (unconfirmed), `path.read_bytes` (unconfirmed)
-- `install.check_symlink_safety` (line 145) calls `InstallError` (confirmed: install.InstallError), `Path` (unconfirmed), `current.is_symlink` (unconfirmed), `current.resolve` (unconfirmed)
-- `install.atomic_write` (line 158) calls `created_dirs.update` (unconfirmed), `handle.fileno` (unconfirmed), `handle.flush` (unconfirmed), `handle.write` (unconfirmed), `missing.append` (unconfirmed), `os.fdopen` (unconfirmed), `os.fsync` (unconfirmed), `os.replace` (unconfirmed), `os.unlink` (unconfirmed), `parent.mkdir` (unconfirmed), `str` (unconfirmed), `tempfile.mkstemp` (unconfirmed), `walk.exists` (unconfirmed)
-- `install.load_policy` (line 185) calls `InstallError` (confirmed: install.InstallError), `isinstance` (unconfirmed), `json.loads` (unconfirmed), `path.read_text` (unconfirmed), `policy.get` (unconfirmed)
-- `install.inject_claude_frontmatter` (line 196) calls `InstallError` (confirmed: install.InstallError), `content.decode` (unconfirmed), `encode` (unconfirmed), `extra.append` (unconfirmed), `get` (unconfirmed), `join` (unconfirmed), `len` (unconfirmed), `policy.get` (unconfirmed), `range` (unconfirmed), `strip` (unconfirmed), `text.split` (unconfirmed)
-- `install.project_claude` (line 217) calls `Action` (confirmed: install.Action), `actions.append` (unconfirmed), `as_posix` (unconfirmed), `glob` (unconfirmed), `inject_claude_frontmatter` (confirmed: install.inject_claude_frontmatter), `is_file` (unconfirmed), `skill_dir.rglob` (unconfirmed), `skills_src.iterdir` (unconfirmed), `sorted` (unconfirmed), `src.is_file` (unconfirmed), `src.read_bytes` (unconfirmed), `src.relative_to` (unconfirmed)
-- `install.detect_python` (line 257) calls `shutil.which` (unconfirmed)
-- `install.hook_command` (line 261) calls `detect_python` (confirmed: install.detect_python)
-- `install.is_owned_handler` (line 268) calls `handler.get` (unconfirmed), `isinstance` (unconfirmed), `str` (unconfirmed)
-- `install.merge_settings` (line 279) calls `InstallError` (confirmed: install.InstallError), `current.decode` (unconfirmed), `dict` (unconfirmed), `encode` (unconfirmed), `group.get` (unconfirmed), `hook_command` (confirmed: install.hook_command), `hooks.setdefault` (unconfirmed), `is_owned_handler` (confirmed: install.is_owned_handler), `isinstance` (unconfirmed), `json.dumps` (unconfirmed), `json.loads` (unconfirmed), `kept.append` (unconfirmed), `len` (unconfirmed), `settings.setdefault` (unconfirmed)
-- `install.merge_block` (line 335) calls `InstallError` (confirmed: install.InstallError), `block.encode` (unconfirmed), `block.rstrip` (unconfirmed), `block_text` (confirmed: install.block_text), `current.decode` (unconfirmed), `encode` (unconfirmed), `enumerate` (unconfirmed), `join` (unconfirmed), `len` (unconfirmed), `split` (unconfirmed), `text.count` (unconfirmed), `text.endswith` (unconfirmed), `text.split` (unconfirmed)
-- `install.merge_gitignore` (line 367) calls `InstallError` (confirmed: install.InstallError), `current.decode` (unconfirmed), `encode` (unconfirmed), `join` (unconfirmed), `text.endswith` (unconfirmed), `text.split` (unconfirmed)
-- `install.compute_content` (line 384) calls `InstallError` (confirmed: install.InstallError), `merge_block` (confirmed: install.merge_block), `merge_gitignore` (confirmed: install.merge_gitignore), `merge_settings` (confirmed: install.merge_settings)
-- `install.load_manifest` (line 399) calls `InstallError` (confirmed: install.InstallError), `isinstance` (unconfirmed), `json.loads` (unconfirmed), `manifest.get` (unconfirmed), `path.exists` (unconfirmed), `path.read_text` (unconfirmed)
-- `install.build_manifest` (line 415) calls `datetime.now` (unconfirmed), `files.append` (unconfirmed), `files.sort` (unconfirmed), `get` (unconfirmed), `isinstance` (unconfirmed), `isoformat` (unconfirmed), `previous.get` (unconfirmed), `prior.get` (unconfirmed)
-- `install.normalize_overwrite_paths` (line 456) calls `InstallError` (confirmed: install.InstallError), `Path` (unconfirmed), `normalized.add` (unconfirmed), `raw.removeprefix` (unconfirmed), `rel.startswith` (unconfirmed), `removesuffix` (unconfirmed), `set` (unconfirmed)
-- `install.build_plan` (line 466) calls `InstallError` (confirmed: install.InstallError), `Path` (unconfirmed), `PlannedFile` (confirmed: install.PlannedFile), `actions.extend` (unconfirmed), `check_symlink_safety` (confirmed: install.check_symlink_safety), `compute_content` (confirmed: install.compute_content), `conflicts.append` (unconfirmed), `covered.add` (unconfirmed), `entry.get` (unconfirmed), `isinstance` (unconfirmed), `load_manifest` (confirmed: install.load_manifest), `load_policy` (confirmed: install.load_policy), `owned.get` (unconfirmed), `planned.append` (unconfirmed), `previous.get` (unconfirmed), `read_file` (confirmed: install.read_file), `rel.startswith` (unconfirmed), `set` (unconfirmed), `sha256` (confirmed: install.sha256), `sorted` (unconfirmed)
-- `install.write_backup` (line 525) calls `atomic_write` (confirmed: install.atomic_write), `dest.parent.mkdir` (unconfirmed), `os.chmod` (unconfirmed), `set` (unconfirmed)
-- `install.acquire_lock` (line 541) calls `InstallError` (confirmed: install.InstallError), `created_dirs.add` (unconfirmed), `fcntl.flock` (unconfirmed), `os.close` (unconfirmed), `os.open` (unconfirmed), `state_dir.exists` (unconfirmed), `state_dir.mkdir` (unconfirmed), `time.monotonic` (unconfirmed), `time.sleep` (unconfirmed)
-- `install.rollback` (line 564) calls `atomic_write` (confirmed: install.atomic_write), `backup.is_file` (unconfirmed), `backup.read_bytes` (unconfirmed), `directory.rmdir` (unconfirmed), `len` (unconfirmed), `reversed` (unconfirmed), `set` (unconfirmed), `sha256` (confirmed: install.sha256), `sorted` (unconfirmed), `target.is_file` (unconfirmed), `target.read_bytes` (unconfirmed), `target.unlink` (unconfirmed)
-- `install.apply_plan` (line 592) calls `InstallError` (confirmed: install.InstallError), `acquire_lock` (confirmed: install.acquire_lock), `applied.append` (unconfirmed), `atomic_write` (confirmed: install.atomic_write), `build_manifest` (confirmed: install.build_manifest), `datetime.now` (unconfirmed), `encode` (unconfirmed), `fcntl.flock` (unconfirmed), `json.dumps` (unconfirmed), `lock_path.unlink` (unconfirmed), `os.close` (unconfirmed), `read_file` (confirmed: install.read_file), `rollback` (confirmed: install.rollback), `set` (unconfirmed), `sha256` (confirmed: install.sha256), `uuid.uuid4` (unconfirmed), `write_backup` (confirmed: install.write_backup)
-- `install.resolve_hosts` (line 640) calls `InstallError` (confirmed: install.InstallError), `auto_detect` (confirmed: install.auto_detect), `join` (unconfirmed), `part.strip` (unconfirmed), `resolved.append` (unconfirmed), `selection.split` (unconfirmed)
-- `install.auto_detect` (line 663) calls `InstallError` (confirmed: install.InstallError), `exists` (unconfirmed), `len` (unconfirmed), `print` (unconfirmed)
-- `install.format_plan` (line 680) calls `lines.append` (unconfirmed)
-- `install.cmd_install` (line 689) calls `InstallError` (confirmed: install.InstallError), `apply_plan` (confirmed: install.apply_plan), `args.project.expanduser` (unconfirmed), `build_plan` (confirmed: install.build_plan), `format_plan` (confirmed: install.format_plan), `join` (unconfirmed), `len` (unconfirmed), `normalize_overwrite_paths` (confirmed: install.normalize_overwrite_paths), `print` (unconfirmed), `resolve` (unconfirmed), `resolve_hosts` (confirmed: install.resolve_hosts), `root.is_dir` (unconfirmed), `sum` (unconfirmed)
-- `install.main` (line 722) calls `argparse.ArgumentParser` (unconfirmed), `cmd_install` (confirmed: install.cmd_install), `install.add_argument` (unconfirmed), `parser.add_subparsers` (unconfirmed), `parser.parse_args` (unconfirmed), `print` (unconfirmed), `sub.add_parser` (unconfirmed)
-- `scripts.check_links.tracked_files` (line 30) calls `endswith` (unconfirmed), `line.strip` (unconfirmed), `result.stdout.splitlines` (unconfirmed), `str` (unconfirmed), `subprocess.run` (unconfirmed)
-- `scripts.check_links.walk_files` (line 49) calls `found.append` (unconfirmed), `path.is_file` (unconfirmed), `path.name.endswith` (unconfirmed), `path.relative_to` (unconfirmed), `root.rglob` (unconfirmed), `set` (unconfirmed), `sorted` (unconfirmed)
-- `scripts.check_links.scope_files` (line 60) calls `path.is_file` (unconfirmed), `sorted` (unconfirmed), `tracked_files` (confirmed: scripts.check_links.tracked_files), `walk_files` (confirmed: scripts.check_links.walk_files)
-- `scripts.check_links.outside_fences` (line 67) calls `FENCE_RE.match` (unconfirmed), `enumerate` (unconfirmed), `out.append` (unconfirmed)
-- `scripts.check_links.slugify` (line 79) calls `heading.strip` (unconfirmed), `lower` (unconfirmed), `re.sub` (unconfirmed), `text.replace` (unconfirmed)
-- `scripts.check_links.anchors_of` (line 86) calls `HEADING_RE.match` (unconfirmed), `match.group` (unconfirmed), `outside_fences` (confirmed: scripts.check_links.outside_fences), `path.read_text` (unconfirmed), `set` (unconfirmed), `slugify` (confirmed: scripts.check_links.slugify), `slugs.add` (unconfirmed), `splitlines` (unconfirmed)
-- `scripts.check_links.check_markdown` (line 99) calls `INLINE_LINK_RE.finditer` (unconfirmed), `REFERENCE_DEF_RE.match` (unconfirmed), `anchors_of` (confirmed: scripts.check_links.anchors_of), `match.group` (unconfirmed), `md.read_text` (unconfirmed), `md.relative_to` (unconfirmed), `outside_fences` (confirmed: scripts.check_links.outside_fences), `problems.append` (unconfirmed), `ref.group` (unconfirmed), `resolve` (unconfirmed), `resolved.exists` (unconfirmed), `scope_files` (confirmed: scripts.check_links.scope_files), `splitlines` (unconfirmed), `startswith` (unconfirmed), `str` (unconfirmed), `strip` (unconfirmed), `target.partition` (unconfirmed), `target.startswith` (unconfirmed), `target_file.is_file` (unconfirmed), `target_file.relative_to` (unconfirmed), `targets.append` (unconfirmed), `targets.extend` (unconfirmed)
-- `scripts.check_links.check_json` (line 152) calls `base.relative_to` (unconfirmed), `isinstance` (unconfirmed), `js.read_text` (unconfirmed), `json.loads` (unconfirmed), `node.startswith` (unconfirmed), `node.values` (unconfirmed), `problems.append` (unconfirmed), `resolve` (unconfirmed), `resolved.exists` (unconfirmed), `scope_files` (confirmed: scripts.check_links.scope_files), `startswith` (unconfirmed), `str` (unconfirmed), `walk` (unconfirmed)
-- `scripts.check_links.main` (line 181) calls `Path.cwd` (unconfirmed), `_check_single` (confirmed: scripts.check_links._check_single), `argparse.ArgumentParser` (unconfirmed), `args.root.resolve` (unconfirmed), `check_json` (confirmed: scripts.check_links.check_json), `check_markdown` (confirmed: scripts.check_links.check_markdown), `given.append` (unconfirmed), `given.extend` (unconfirmed), `item.is_dir` (unconfirmed), `item.is_file` (unconfirmed), `item.resolve` (unconfirmed), `len` (unconfirmed), `parser.add_argument` (unconfirmed), `parser.parse_args` (unconfirmed), `print` (unconfirmed), `problems.append` (unconfirmed), `root.is_dir` (unconfirmed), `set` (unconfirmed), `sorted` (unconfirmed), `walk_files` (confirmed: scripts.check_links.walk_files)
-- `scripts.check_links._check_single` (line 235) calls `INLINE_LINK_RE.finditer` (unconfirmed), `anchors_of` (confirmed: scripts.check_links.anchors_of), `match.group` (unconfirmed), `md.read_text` (unconfirmed), `outside_fences` (confirmed: scripts.check_links.outside_fences), `problems.append` (unconfirmed), `resolve` (unconfirmed), `resolved.exists` (unconfirmed), `splitlines` (unconfirmed), `strip` (unconfirmed), `target.partition` (unconfirmed), `target.startswith` (unconfirmed), `target_file.is_file` (unconfirmed)
-- `scripts.check_mermaid.tracked_files` (line 31) calls `line.strip` (unconfirmed), `result.stdout.splitlines` (unconfirmed), `str` (unconfirmed), `subprocess.run` (unconfirmed)
-- `scripts.check_mermaid.walk_files` (line 46) calls `found.append` (unconfirmed), `path.is_file` (unconfirmed), `path.name.endswith` (unconfirmed), `path.relative_to` (unconfirmed), `root.rglob` (unconfirmed), `set` (unconfirmed), `sorted` (unconfirmed)
-- `scripts.check_mermaid.fenced_blocks` (line 58) calls `FENCE_CLOSE_RE.match` (unconfirmed), `FENCE_OPEN_RE.match` (unconfirmed), `body.append` (unconfirmed), `diagrams.append` (unconfirmed), `join` (unconfirmed), `len` (unconfirmed), `text.splitlines` (unconfirmed)
-- `scripts.check_mermaid.collect_diagrams` (line 80) calls `diagrams.append` (unconfirmed), `diagrams.extend` (unconfirmed), `fenced_blocks` (confirmed: scripts.check_mermaid.fenced_blocks), `path.is_file` (unconfirmed), `path.name.endswith` (unconfirmed), `path.read_text` (unconfirmed), `path.relative_to` (unconfirmed), `set` (unconfirmed), `sorted` (unconfirmed), `str` (unconfirmed), `tracked_files` (confirmed: scripts.check_mermaid.tracked_files), `walk_files` (confirmed: scripts.check_mermaid.walk_files)
-- `scripts.check_mermaid.render` (line 103) calls `join` (unconfirmed), `out.is_file` (unconfirmed), `splitlines` (unconfirmed), `src.write_text` (unconfirmed), `str` (unconfirmed), `strip` (unconfirmed), `subprocess.run` (unconfirmed)
-- `scripts.check_mermaid.main` (line 125) calls `Path` (unconfirmed), `Path.cwd` (unconfirmed), `argparse.ArgumentParser` (unconfirmed), `args.root.resolve` (unconfirmed), `collect_diagrams` (confirmed: scripts.check_mermaid.collect_diagrams), `diagrams.append` (unconfirmed), `diagrams.extend` (unconfirmed), `enumerate` (unconfirmed), `failures.append` (unconfirmed), `fenced_blocks` (confirmed: scripts.check_mermaid.fenced_blocks), `item.is_dir` (unconfirmed), `item.is_file` (unconfirmed), `item.read_text` (unconfirmed), `item.resolve` (unconfirmed), `len` (unconfirmed), `parser.add_argument` (unconfirmed), `parser.parse_args` (unconfirmed), `print` (unconfirmed), `render` (confirmed: scripts.check_mermaid.render), `root.is_dir` (unconfirmed), `shutil.which` (unconfirmed), `str` (unconfirmed), `tempfile.TemporaryDirectory` (unconfirmed)
-- `scripts.scan_public.load_denylist` (line 80) calls `DIGEST_RE.fullmatch` (unconfirmed), `ScanError` (confirmed: scripts.scan_public.ScanError), `digests.add` (unconfirmed), `entry.startswith` (unconfirmed), `enumerate` (unconfirmed), `frozenset` (unconfirmed), `line.strip` (unconfirmed), `path.is_file` (unconfirmed), `path.read_text` (unconfirmed), `set` (unconfirmed), `splitlines` (unconfirmed)
-- `scripts.scan_public.tracked_files` (line 102) calls `line.strip` (unconfirmed), `result.stdout.splitlines` (unconfirmed), `str` (unconfirmed), `subprocess.run` (unconfirmed)
-- `scripts.scan_public.walk_files` (line 118) calls `found.append` (unconfirmed), `path.is_file` (unconfirmed), `path.relative_to` (unconfirmed), `root.rglob` (unconfirmed), `set` (unconfirmed), `sorted` (unconfirmed)
-- `scripts.scan_public.scope_files` (line 129) calls `denylist.resolve` (unconfirmed), `extra_dir.is_dir` (unconfirmed), `files.append` (unconfirmed), `path.is_file` (unconfirmed), `path.resolve` (unconfirmed), `set` (unconfirmed), `sorted` (unconfirmed), `tracked_files` (confirmed: scripts.scan_public.tracked_files), `walk_files` (confirmed: scripts.scan_public.walk_files)
-- `scripts.scan_public.read_text_lossy` (line 151) calls `path.read_bytes` (unconfirmed), `raw.decode` (unconfirmed)
-- `scripts.scan_public.digest_of` (line 161) calls `candidate.encode` (unconfirmed), `hashlib.sha256` (unconfirmed), `hexdigest` (unconfirmed)
-- `scripts.scan_public.scan_text` (line 165) calls `PRIVATE_KEY_BODY.match` (unconfirmed), `PRIVATE_KEY_HEADER.search` (unconfirmed), `TOKEN_RE.findall` (unconfirmed), `digest_of` (confirmed: scripts.scan_public.digest_of), `enumerate` (unconfirmed), `follow.startswith` (unconfirmed), `follow.strip` (unconfirmed), `hits.append` (unconfirmed), `join` (unconfirmed), `len` (unconfirmed), `line.lower` (unconfirmed), `pattern.search` (unconfirmed), `range` (unconfirmed), `text.splitlines` (unconfirmed), `tokens.extend` (unconfirmed)
-- `scripts.scan_public.report` (line 203) calls `len` (unconfirmed), `print` (unconfirmed)
-- `scripts.scan_public.main` (line 213) calls `Path` (unconfirmed), `Path.cwd` (unconfirmed), `argparse.ArgumentParser` (unconfirmed), `args.root.resolve` (unconfirmed), `load_denylist` (confirmed: scripts.scan_public.load_denylist), `parser.add_argument` (unconfirmed), `parser.parse_args` (unconfirmed), `path.relative_to` (unconfirmed), `print` (unconfirmed), `read_text` (unconfirmed), `read_text_lossy` (confirmed: scripts.scan_public.read_text_lossy), `report` (confirmed: scripts.scan_public.report), `resolve` (unconfirmed), `root.is_dir` (unconfirmed), `scan_text` (confirmed: scripts.scan_public.scan_text), `scope_files` (confirmed: scripts.scan_public.scope_files), `str` (unconfirmed), `sys.stdin.read` (unconfirmed), `with_name` (unconfirmed)
-- `scripts.validate.strip_fences` (line 138) calls `FENCE_RE.match` (unconfirmed), `join` (unconfirmed), `out.append` (unconfirmed), `text.splitlines` (unconfirmed)
-- `scripts.validate.split_frontmatter` (line 151) calls `FrontmatterError` (confirmed: scripts.validate.FrontmatterError), `join` (unconfirmed), `len` (unconfirmed), `range` (unconfirmed), `strip` (unconfirmed), `text.splitlines` (unconfirmed)
-- `scripts.validate.parse_scalar` (line 161) calls `FrontmatterError` (confirmed: scripts.validate.FrontmatterError), `len` (unconfirmed), `raw.strip` (unconfirmed), `value.endswith` (unconfirmed)
-- `scripts.validate.looks_non_string` (line 182) calls `re.fullmatch` (unconfirmed), `value.lower` (unconfirmed)
-- `scripts.validate.parse_frontmatter` (line 195) calls `FrontmatterError` (confirmed: scripts.validate.FrontmatterError), `data.get` (unconfirmed), `enumerate` (unconfirmed), `isinstance` (unconfirmed), `len` (unconfirmed), `line.lstrip` (unconfirmed), `line.strip` (unconfirmed), `match.group` (unconfirmed), `parse_scalar` (confirmed: scripts.validate.parse_scalar), `raw.strip` (unconfirmed), `re.match` (unconfirmed), `split_frontmatter` (confirmed: scripts.validate.split_frontmatter), `startswith` (unconfirmed)
-- `scripts.validate.is_placeholder` (line 242) calls `all` (unconfirmed), `body.lower` (unconfirmed)
-- `scripts.validate.Validator.error` (line 255) calls `self.errors.append` (unconfirmed)
-- `scripts.validate.Validator.observe` (line 258) calls `max` (unconfirmed), `self.budget_max.get` (unconfirmed)
-- `scripts.validate.Validator.check_skill` (line 263) calls `description.strip` (unconfirmed), `folder.is_dir` (unconfirmed), `is_placeholder` (confirmed: scripts.validate.is_placeholder), `isinstance` (unconfirmed), `join` (unconfirmed), `len` (unconfirmed), `looks_non_string` (confirmed: scripts.validate.looks_non_string), `meta.get` (unconfirmed), `meta.pop` (unconfirmed), `metadata.items` (unconfirmed), `parse_frontmatter` (confirmed: scripts.validate.parse_frontmatter), `self.error` (unconfirmed), `self.observe` (unconfirmed), `skill_md.is_file` (unconfirmed), `skill_md.read_text` (unconfirmed), `sorted` (unconfirmed), `str` (unconfirmed), `text.splitlines` (unconfirmed)
-- `scripts.validate.Validator.check_agent` (line 344) calls `description.strip` (unconfirmed), `isinstance` (unconfirmed), `join` (unconfirmed), `len` (unconfirmed), `meta.get` (unconfirmed), `meta.pop` (unconfirmed), `parse_frontmatter` (confirmed: scripts.validate.parse_frontmatter), `path.read_text` (unconfirmed), `self.error` (unconfirmed), `self.observe` (unconfirmed), `sorted` (unconfirmed), `str` (unconfirmed), `text.splitlines` (unconfirmed)
-- `scripts.validate.Validator.check_reference_budgets` (line 389) calls `len` (unconfirmed), `md.read_text` (unconfirmed), `md.relative_to` (unconfirmed), `self.error` (unconfirmed), `self.observe` (unconfirmed), `skills_dir.is_dir` (unconfirmed), `skills_dir.rglob` (unconfirmed), `sorted` (unconfirmed), `splitlines` (unconfirmed)
-- `scripts.validate.Validator.check_references` (line 410) calls `LINK_RE.findall` (unconfirmed), `md.read_text` (unconfirmed), `resolve` (unconfirmed), `resolved.exists` (unconfirmed), `self.error` (unconfirmed), `skills_dir.is_dir` (unconfirmed), `skills_dir.rglob` (unconfirmed), `sorted` (unconfirmed), `startswith` (unconfirmed), `str` (unconfirmed), `strip_fences` (confirmed: scripts.validate.strip_fences), `target.split` (unconfirmed), `target.startswith` (unconfirmed)
-- `scripts.validate.Validator.check_legacy_names` (line 428) calls `LEGACY_NAME_RE.finditer` (unconfirmed), `base.glob` (unconfirmed), `base.is_dir` (unconfirmed), `body.splitlines` (unconfirmed), `candidates.extend` (unconfirmed), `enumerate` (unconfirmed), `len` (unconfirmed), `match.group` (unconfirmed), `md.read_text` (unconfirmed), `self.error` (unconfirmed), `sorted` (unconfirmed), `split_frontmatter` (confirmed: scripts.validate.split_frontmatter)
-- `scripts.validate.Validator.check_manifest` (line 451) calls `isinstance` (unconfirmed), `json.loads` (unconfirmed), `node.startswith` (unconfirmed), `node.values` (unconfirmed), `path.read_text` (unconfirmed), `resolve` (unconfirmed), `resolved.exists` (unconfirmed), `self.error` (unconfirmed), `startswith` (unconfirmed), `str` (unconfirmed), `walk` (unconfirmed)
-- `scripts.validate.Validator.run` (line 476) calls `agents_dir.glob` (unconfirmed), `agents_dir.is_dir` (unconfirmed), `join` (unconfirmed), `len` (unconfirmed), `manifest.is_file` (unconfirmed), `parts.append` (unconfirmed), `print` (unconfirmed), `self.budget_max.get` (unconfirmed), `self.check_agent` (unconfirmed), `self.check_legacy_names` (unconfirmed), `self.check_manifest` (unconfirmed), `self.check_reference_budgets` (unconfirmed), `self.check_references` (unconfirmed), `self.check_skill` (unconfirmed), `self.error` (unconfirmed), `self.root.rglob` (unconfirmed), `skills_dir.is_dir` (unconfirmed), `skills_dir.iterdir` (unconfirmed), `sorted` (unconfirmed), `str` (unconfirmed)
-- `scripts.validate.main` (line 543) calls `Path.cwd` (unconfirmed), `Validator` (confirmed: scripts.validate.Validator), `argparse.ArgumentParser` (unconfirmed), `args.root.resolve` (unconfirmed), `parser.add_argument` (unconfirmed), `parser.parse_args` (unconfirmed), `print` (unconfirmed), `root.is_dir` (unconfirmed), `run` (unconfirmed)
-- `skills.sf-crawl.scripts.crawl.eprint` (line 94) calls `print` (unconfirmed)
-- `skills.sf-crawl.scripts.crawl.source_revision` (line 98) calls `result.stdout.strip` (unconfirmed), `str` (unconfirmed), `subprocess.run` (unconfirmed)
-- `skills.sf-crawl.scripts.crawl.module_name` (line 115) calls `join` (unconfirmed), `rel.endswith` (unconfirmed), `stem.split` (unconfirmed)
-- `skills.sf-crawl.scripts.crawl.call_name` (line 124) calls `call_name` (confirmed: skills.sf-crawl.scripts.crawl.call_name), `isinstance` (unconfirmed)
-- `skills.sf-crawl.scripts.crawl.has_main_guard` (line 134) calls `ast.walk` (unconfirmed), `isinstance` (unconfirmed), `len` (unconfirmed)
-- `skills.sf-crawl.scripts.crawl.package_parts` (line 153) calls `name.split` (unconfirmed), `rel.endswith` (unconfirmed)
-- `skills.sf-crawl.scripts.crawl.resolve_from_import` (line 161) calls `join` (unconfirmed), `len` (unconfirmed), `module.split` (unconfirmed)
-- `skills.sf-crawl.scripts.crawl.is_internal` (line 174) calls `any` (unconfirmed), `name.startswith` (unconfirmed)
-- `skills.sf-crawl.scripts.crawl.analyze_python` (line 184) calls `any` (unconfirmed), `ast.get_docstring` (unconfirmed), `ast.parse` (unconfirmed), `ast.walk` (unconfirmed), `call_name` (confirmed: skills.sf-crawl.scripts.crawl.call_name), `called.partition` (unconfirmed), `calls.append` (unconfirmed), `definitions.append` (unconfirmed), `doc.splitlines` (unconfirmed), `found.add` (unconfirmed), `functions.append` (unconfirmed), `getattr` (unconfirmed), `has_main_guard` (confirmed: skills.sf-crawl.scripts.crawl.has_main_guard), `internal.add` (unconfirmed), `is_internal` (confirmed: skills.sf-crawl.scripts.crawl.is_internal), `isinstance` (unconfirmed), `len` (unconfirmed), `module_name` (confirmed: skills.sf-crawl.scripts.crawl.module_name), `other.add` (unconfirmed), `package_parts` (confirmed: skills.sf-crawl.scripts.crawl.package_parts), `path.read_text` (unconfirmed), `resolve_from_import` (confirmed: skills.sf-crawl.scripts.crawl.resolve_from_import), `set` (unconfirmed), `sorted` (unconfirmed), `type` (unconfirmed)
-- `skills.sf-crawl.scripts.crawl.analyze_script` (line 291) calls `EXPORT_RE.match` (unconfirmed), `IMPORT_RE.match` (unconfirmed), `exports.add` (unconfirmed), `imports.add` (unconfirmed), `match.group` (unconfirmed), `path.read_text` (unconfirmed), `set` (unconfirmed), `sorted` (unconfirmed), `splitlines` (unconfirmed)
-- `skills.sf-crawl.scripts.crawl.pyproject_entry_points` (line 305) calls `data.get` (unconfirmed), `entries.items` (unconfirmed), `found.append` (unconfirmed), `isinstance` (unconfirmed), `path.is_file` (unconfirmed), `path.read_text` (unconfirmed), `problems.append` (unconfirmed), `project.get` (unconfirmed), `sorted` (unconfirmed), `tomllib.loads` (unconfirmed), `type` (unconfirmed)
-- `skills.sf-crawl.scripts.crawl.package_json_entry_points` (line 340) calls `bins.items` (unconfirmed), `data.get` (unconfirmed), `found.append` (unconfirmed), `isinstance` (unconfirmed), `json.loads` (unconfirmed), `path.is_file` (unconfirmed), `path.read_text` (unconfirmed), `problems.append` (unconfirmed), `sorted` (unconfirmed), `type` (unconfirmed)
-- `skills.sf-crawl.scripts.crawl.crawl` (line 384) calls `Path` (unconfirmed), `analyze_python` (confirmed: skills.sf-crawl.scripts.crawl.analyze_python), `analyze_script` (confirmed: skills.sf-crawl.scripts.crawl.analyze_script), `as_posix` (unconfirmed), `candidates.append` (unconfirmed), `candidates.sort` (unconfirmed), `census.get` (unconfirmed), `census.items` (unconfirmed), `dict` (unconfirmed), `e.get` (unconfirmed), `endswith` (unconfirmed), `entry_points.append` (unconfirmed), `entry_points.sort` (unconfirmed), `eprint` (confirmed: skills.sf-crawl.scripts.crawl.eprint), `is_file` (unconfirmed), `is_symlink` (unconfirmed), `join` (unconfirmed), `js_files.append` (unconfirmed), `js_files.sort` (unconfirmed), `len` (unconfirmed), `module_name` (confirmed: skills.sf-crawl.scripts.crawl.module_name), `module_names.add` (unconfirmed), `os.path.relpath` (unconfirmed), `os.walk` (unconfirmed), `oversized.append` (unconfirmed) … (call cap reached)
-- `skills.sf-crawl.scripts.crawl.render_markdown` (line 531) calls `add` (unconfirmed), `entry.get` (unconfirmed), `failure.get` (unconfirmed), `fmt_confirmed` (confirmed: skills.sf-crawl.scripts.crawl.fmt_confirmed), `get` (unconfirmed), `items` (unconfirmed), `join` (unconfirmed), `len` (unconfirmed), `rendered.append` (unconfirmed), `sorted` (unconfirmed), `sum` (unconfirmed), `values` (unconfirmed)
-- `skills.sf-crawl.scripts.crawl.write_atomic` (line 722) calls `os.fdopen` (unconfirmed), `os.replace` (unconfirmed), `os.unlink` (unconfirmed), `path.parent.mkdir` (unconfirmed), `tempfile.mkstemp` (unconfirmed), `tmp.write` (unconfirmed)
-- `skills.sf-crawl.scripts.crawl.main` (line 740) calls `Path` (unconfirmed), `argparse.ArgumentParser` (unconfirmed), `crawl` (confirmed: skills.sf-crawl.scripts.crawl.crawl), `datetime.now` (unconfirmed), `eprint` (confirmed: skills.sf-crawl.scripts.crawl.eprint), `json.dumps` (unconfirmed), `len` (unconfirmed), `max` (unconfirmed), `parser.add_argument` (unconfirmed), `parser.parse_args` (unconfirmed), `render_markdown` (confirmed: skills.sf-crawl.scripts.crawl.render_markdown), `root.is_dir` (unconfirmed), `root.resolve` (unconfirmed), `strftime` (unconfirmed), `sys.stdout.write` (unconfirmed), `write_atomic` (confirmed: skills.sf-crawl.scripts.crawl.write_atomic), `write_text` (unconfirmed)
-- `skills.sf-eval.scripts.sf_eval.utc_now` (line 81) calls `datetime.now` (unconfirmed), `strftime` (unconfirmed)
-- `skills.sf-eval.scripts.sf_eval.receipt_digest` (line 86) calls `encode` (unconfirmed), `hashlib.sha256` (unconfirmed), `hexdigest` (unconfirmed), `json.dumps` (unconfirmed), `obj.items` (unconfirmed)
-- `skills.sf-eval.scripts.sf_eval.atomic_write_json` (line 99) calls `handle.write` (unconfirmed), `json.dumps` (unconfirmed), `os.fdopen` (unconfirmed), `os.replace` (unconfirmed), `path.parent.mkdir` (unconfirmed), `tempfile.mkstemp` (unconfirmed)
-- `skills.sf-eval.scripts.sf_eval.write_artifact` (line 109) calls `Path` (unconfirmed), `artifacts_dir.mkdir` (unconfirmed), `path.write_text` (unconfirmed), `str` (unconfirmed)
-- `skills.sf-eval.scripts.sf_eval._require` (line 120) calls `PlanError` (confirmed: skills.sf-eval.scripts.sf_eval.PlanError)
-- `skills.sf-eval.scripts.sf_eval.validate_case` (line 125) calls `CASE_ID_RE.fullmatch` (unconfirmed), `CONSISTENCY_RE.fullmatch` (unconfirmed), `_require` (confirmed: skills.sf-eval.scripts.sf_eval._require), `all` (unconfirmed), `bool` (unconfirmed), `case.get` (unconfirmed), `grade.get` (unconfirmed), `isinstance` (unconfirmed), `join` (unconfirmed), `required.get` (unconfirmed), `seen_ids.add` (unconfirmed), `str` (unconfirmed)
-- `skills.sf-eval.scripts.sf_eval.load_plan` (line 189) calls `Path` (unconfirmed), `PlanError` (confirmed: skills.sf-eval.scripts.sf_eval.PlanError), `_require` (confirmed: skills.sf-eval.scripts.sf_eval._require), `data.get` (unconfirmed), `isinstance` (unconfirmed), `json.loads` (unconfirmed), `read_text` (unconfirmed), `set` (unconfirmed), `surface.get` (unconfirmed), `validate_case` (confirmed: skills.sf-eval.scripts.sf_eval.validate_case)
-- `skills.sf-eval.scripts.sf_eval.select_cases` (line 216) calls `_require` (confirmed: skills.sf-eval.scripts.sf_eval._require), `c.get` (unconfirmed), `case.get` (unconfirmed), `get` (unconfirmed), `list` (unconfirmed), `mode_cfg.get` (unconfirmed), `plan.get` (unconfirmed), `runnable.append` (unconfirmed)
-- `skills.sf-eval.scripts.sf_eval.aggregate_trials` (line 252) calls `PlanError` (confirmed: skills.sf-eval.scripts.sf_eval.PlanError), `len` (unconfirmed), `statuses.count` (unconfirmed)
-- `skills.sf-eval.scripts.sf_eval.dig` (line 271) calls `KeyError` (unconfirmed), `dotted.split` (unconfirmed), `int` (unconfirmed), `isinstance` (unconfirmed), `match.groups` (unconfirmed), `re.findall` (unconfirmed), `re.fullmatch` (unconfirmed)
-- `skills.sf-eval.scripts.sf_eval._resolve_inside` (line 287) calls `Unverified` (confirmed: skills.sf-eval.scripts.sf_eval.Unverified), `resolve` (unconfirmed), `root.resolve` (unconfirmed), `target.is_relative_to` (unconfirmed)
-- `skills.sf-eval.scripts.sf_eval.check_state` (line 294) calls `_resolve_inside` (confirmed: skills.sf-eval.scripts.sf_eval._resolve_inside), `assertions.items` (unconfirmed), `bool` (unconfirmed), `dig` (confirmed: skills.sf-eval.scripts.sf_eval.dig), `expected.append` (unconfirmed), `grade.get` (unconfirmed), `join` (unconfirmed), `json.loads` (unconfirmed), `problems.append` (unconfirmed), `target.is_file` (unconfirmed), `target.read_text` (unconfirmed)
-- `skills.sf-eval.scripts.sf_eval._run_shell` (line 338) calls `subprocess.run` (unconfirmed)
-- `skills.sf-eval.scripts.sf_eval.check_command` (line 354) calls `_run_shell` (confirmed: skills.sf-eval.scripts.sf_eval._run_shell), `artifacts.append` (unconfirmed), `expect.get` (unconfirmed), `grade.get` (unconfirmed), `join` (unconfirmed), `problems.append` (unconfirmed), `re.search` (unconfirmed), `write_artifact` (confirmed: skills.sf-eval.scripts.sf_eval.write_artifact)
-- … 588 more call rows (cap reached)
+- `adapters.trackers.digest` (line 29) calls `hashlib.sha256` (unconfirmed), `hexdigest` (unconfirmed), `text.encode` (unconfirmed)
+- `adapters.trackers.lines` (line 33) calls `TrackerError` (confirmed: adapters.trackers.TrackerError), `len` (unconfirmed), `text.encode` (unconfirmed), `text.splitlines` (unconfirmed)
+- `adapters.trackers.observe_v6` (line 39) calls `STORY.fullmatch` (unconfirmed), `TrackerError` (confirmed: adapters.trackers.TrackerError), `actions.append` (unconfirmed), `any` (unconfirmed), `digest` (confirmed: adapters.trackers.digest), `entries.append` (unconfirmed), `enumerate` (unconfirmed), `len` (unconfirmed), `line.lstrip` (unconfirmed), `line.startswith` (unconfirmed), `line.strip` (unconfirmed), `lines` (confirmed: adapters.trackers.lines), `match.groups` (unconfirmed), `raw.split` (unconfirmed), `re.fullmatch` (unconfirmed), `seen.add` (unconfirmed), `set` (unconfirmed), `startswith` (unconfirmed), `strip` (unconfirmed)
+- `adapters.trackers.observe_markdown` (line 91) calls `MD_TASK.fullmatch` (unconfirmed), `TrackerError` (confirmed: adapters.trackers.TrackerError), `ac.split` (unconfirmed), `all` (unconfirmed), `any` (unconfirmed), `checked.lower` (unconfirmed), `dependencies.split` (unconfirmed), `digest` (confirmed: adapters.trackers.digest), `entries.append` (unconfirmed), `enumerate` (unconfirmed), `lines` (confirmed: adapters.trackers.lines), `match.groups` (unconfirmed), `p.strip` (unconfirmed), `re.fullmatch` (unconfirmed), `re.match` (unconfirmed), `seen.add` (unconfirmed), `set` (unconfirmed)
+- `adapters.trackers.observe` (line 116) calls `TrackerError` (confirmed: adapters.trackers.TrackerError), `observe_markdown` (confirmed: adapters.trackers.observe_markdown), `observe_v6` (confirmed: adapters.trackers.observe_v6)
+- `adapters.trackers.propose` (line 124) calls `Path` (unconfirmed), `SHA.fullmatch` (unconfirmed), `TrackerError` (confirmed: adapters.trackers.TrackerError), `any` (unconfirmed), `changes.append` (unconfirmed), `digest` (confirmed: adapters.trackers.digest), `evidence.get` (unconfirmed), `isinstance` (unconfirmed), `join` (unconfirmed), `len` (unconfirmed), `lines` (confirmed: adapters.trackers.lines), `next` (unconfirmed), `observe` (confirmed: adapters.trackers.observe), `path.is_absolute` (unconfirmed), `re.escape` (unconfirmed), `re.fullmatch` (unconfirmed), `re.sub` (unconfirmed), `replace` (unconfirmed), `set` (unconfirmed), `source_key.split` (unconfirmed), `update` (unconfirmed)
+- `adapters.trackers.read` (line 168) calls `Path` (unconfirmed), `TrackerError` (confirmed: adapters.trackers.TrackerError), `absolute` (unconfirmed), `content.decode` (unconfirmed), `enumerate` (unconfirmed), `fds.append` (unconfirmed), `identity` (unconfirmed), `len` (unconfirmed), `min` (unconfirmed), `os.close` (unconfirmed), `os.fstat` (unconfirmed), `os.open` (unconfirmed), `os.read` (unconfirmed), `os.stat` (unconfirmed), `reversed` (unconfirmed), `stat.S_ISREG` (unconfirmed)
+- `adapters.trackers.detect` (line 209) calls `Path` (unconfirmed), `TrackerError` (confirmed: adapters.trackers.TrackerError), `is_file` (unconfirmed), `len` (unconfirmed)
+- `adapters.trackers.main` (line 222) calls `argparse.ArgumentParser` (unconfirmed), `json.dumps` (unconfirmed), `observe` (confirmed: adapters.trackers.observe), `parser.add_argument` (unconfirmed), `parser.exit` (unconfirmed), `parser.parse_args` (unconfirmed), `print` (unconfirmed), `read` (confirmed: adapters.trackers.read)
+- `assets.tools.capture.walk_nodes` (line 26) calls `node.get` (unconfirmed), `walk_nodes` (confirmed: assets.tools.capture.walk_nodes)
+- `assets.tools.capture.cycle_evidence` (line 37) calls `svg_evidence` (confirmed: assets.tools.capture.svg_evidence)
+- `assets.tools.capture.svg_evidence` (line 41) calls `ET.fromstring` (unconfirmed), `ValueError` (unconfirmed), `any` (unconfirmed), `child.get` (unconfirmed), `client.detach` (unconfirmed), `client.send` (unconfirmed), `evaluate` (unconfirmed), `group.iter` (unconfirmed), `isinstance` (unconfirmed), `join` (unconfirmed), `len` (unconfirmed), `math.isfinite` (unconfirmed), `max` (unconfirmed), `min` (unconfirmed), `next` (unconfirmed), `node.get` (unconfirmed), `node.itertext` (unconfirmed), `observations.append` (unconfirmed), `observed.get` (unconfirmed), `page.context.new_cdp_session` (unconfirmed), `page.locator` (unconfirmed), `page.request.get` (unconfirmed), `reference.rsplit` (unconfirmed), `reference.startswith` (unconfirmed), `response.body` (unconfirmed) … (call cap reached)
+- `assets.tools.capture.read_job` (line 123) calls `ValueError` (unconfirmed), `json.loads` (unconfirmed), `len` (unconfirmed), `os.getuid` (unconfirmed), `parent.is_symlink` (unconfirmed), `parent.stat` (unconfirmed), `path.is_absolute` (unconfirmed), `path.is_file` (unconfirmed), `path.is_symlink` (unconfirmed), `path.read_text` (unconfirmed), `path.stat` (unconfirmed), `set` (unconfirmed), `urlsplit` (unconfirmed)
+- `assets.tools.capture.capture_page` (line 143) calls `ValueError` (unconfirmed), `browser.new_context` (unconfirmed), `context.close` (unconfirmed), `context.new_page` (unconfirmed), `context.on` (unconfirmed), `context.route` (unconfirmed), `cycle_evidence` (confirmed: assets.tools.capture.cycle_evidence), `errors.append` (unconfirmed), `isinstance` (unconfirmed), `json.dumps` (unconfirmed), `page.evaluate` (unconfirmed), `page.goto` (unconfirmed), `page.on` (unconfirmed), `page.screenshot` (unconfirmed), `page.wait_for_selector` (unconfirmed), `print` (unconfirmed), `ready.get` (unconfirmed), `requests.append` (unconfirmed), `route.abort` (unconfirmed), `route.continue_` (unconfirmed), `str` (unconfirmed), `urlsplit` (unconfirmed)
+- `assets.tools.capture.capture` (line 196) calls `ValueError` (unconfirmed), `append` (unconfirmed), `browser.close` (unconfirmed), `capture_page` (confirmed: assets.tools.capture.capture_page), `importlib.metadata.version` (unconfirmed), `json.dumps` (unconfirmed), `platform.python_version` (unconfirmed), `platform.system` (unconfirmed), `playwright.chromium.launch` (unconfirmed), `read_job` (confirmed: assets.tools.capture.read_job), `str` (unconfirmed), `sync_playwright` (unconfirmed), `write_text` (unconfirmed)
+- `assets.tools.capture.main` (line 223) calls `RuntimeError` (unconfirmed), `argparse.ArgumentParser` (unconfirmed), `capture` (confirmed: assets.tools.capture.capture), `parser.add_argument` (unconfirmed), `parser.parse_args` (unconfirmed), `print` (unconfirmed), `signal.getsignal` (unconfirmed), `signal.signal` (unconfirmed)
+- `examples.minimal.greet.greeting` (line 7) calls `ValueError` (unconfirmed), `isinstance` (unconfirmed), `name.strip` (unconfirmed)
+- `examples.minimal.tests.test_greet.GreetingTests.test_named_and_default` (line 7) calls `greeting` (unconfirmed), `self.assertEqual` (unconfirmed)
+- `examples.minimal.tests.test_greet.GreetingTests.test_empty_refused` (line 11) calls `greeting` (unconfirmed), `self.assertRaises` (unconfirmed)
+- `examples.python-api.app.format_payload` (line 13) calls `TypeError` (unconfirmed), `ValueError` (unconfirmed), `isinstance` (unconfirmed), `strip` (unconfirmed), `value.get` (unconfirmed)
+- `examples.python-api.app.Handler.setup` (line 23) calls `self.connection.settimeout` (unconfirmed), `setup` (unconfirmed), `super` (unconfirmed)
+- `examples.python-api.app.Handler.read_body` (line 27) calls `TimeoutError` (unconfirmed), `ValueError` (unconfirmed), `chunks.append` (unconfirmed), `join` (unconfirmed), `len` (unconfirmed), `min` (unconfirmed), `self.connection.settimeout` (unconfirmed), `self.rfile.read1` (unconfirmed), `time.monotonic` (unconfirmed)
+- `examples.python-api.app.Handler.do_POST` (line 43) calls `ValueError` (unconfirmed), `encode` (unconfirmed), `format_payload` (confirmed: examples.python-api.app.format_payload), `int` (unconfirmed), `json.dumps` (unconfirmed), `json.loads` (unconfirmed), `len` (unconfirmed), `self.end_headers` (unconfirmed), `self.headers.get` (unconfirmed), `self.read_body` (unconfirmed), `self.send_error` (unconfirmed), `self.send_header` (unconfirmed), `self.send_response` (unconfirmed), `self.wfile.write` (unconfirmed), `str` (unconfirmed)
+- `examples.python-api.app.main` (line 73) calls `ThreadingHTTPServer` (unconfirmed), `argparse.ArgumentParser` (unconfirmed), `args.serve.rpartition` (unconfirmed), `format_payload` (confirmed: examples.python-api.app.format_payload), `group.add_argument` (unconfirmed), `int` (unconfirmed), `json.dumps` (unconfirmed), `json.loads` (unconfirmed), `parser.add_mutually_exclusive_group` (unconfirmed), `parser.error` (unconfirmed), `parser.parse_args` (unconfirmed), `print` (unconfirmed), `server.serve_forever` (unconfirmed), `str` (unconfirmed)
+- `examples.python-api.tests.test_app.ApiTests.test_pure_contract` (line 13) calls `format_payload` (unconfirmed), `self.assertEqual` (unconfirmed), `self.assertRaises` (unconfirmed), `self.subTest` (unconfirmed)
+- `examples.python-api.tests.test_app.ApiTests.test_loopback_http` (line 19) calls `ThreadingHTTPServer` (unconfirmed), `conn.close` (unconfirmed), `conn.getresponse` (unconfirmed), `conn.request` (unconfirmed), `http.client.HTTPConnection` (unconfirmed), `json.loads` (unconfirmed), `response.read` (unconfirmed), `self.assertEqual` (unconfirmed), `server.shutdown` (unconfirmed), `threading.Thread` (unconfirmed), `worker.join` (unconfirmed), `worker.start` (unconfirmed)
+- `examples.python-api.tests.test_app.ApiTests.test_incomplete_and_slow_request_bodies` (line 38) calls `ThreadingHTTPServer` (unconfirmed), `client.recv` (unconfirmed), `client.sendall` (unconfirmed), `client.settimeout` (unconfirmed), `client.shutdown` (unconfirmed), `reply.split` (unconfirmed), `self.assertFalse` (unconfirmed), `self.assertIn` (unconfirmed), `self.assertLess` (unconfirmed), `self.subTest` (unconfirmed), `server.shutdown` (unconfirmed), `socket.create_connection` (unconfirmed), `threading.Thread` (unconfirmed), `time.monotonic` (unconfirmed), `worker.is_alive` (unconfirmed), `worker.join` (unconfirmed), `worker.start` (unconfirmed)
+- `hosts.plugins.dispatch.main` (line 9) calls `Path` (unconfirmed), `TypeError` (unconfirmed), `ValueError` (unconfirmed), `hook.main` (unconfirmed), `importlib.util.module_from_spec` (unconfirmed), `importlib.util.spec_from_file_location` (unconfirmed), `io.StringIO` (unconfirmed), `is_absolute` (unconfirmed), `is_dir` (unconfirmed), `isinstance` (unconfirmed), `json.loads` (unconfirmed), `len` (unconfirmed), `payload.get` (unconfirmed), `print` (unconfirmed), `spec.loader.exec_module` (unconfirmed), `sys.argv.extend` (unconfirmed), `sys.argv.index` (unconfirmed), `sys.stdin.read` (unconfirmed), `with_name` (unconfirmed)
+- `install.PlannedFile.before_hash` (line 159) calls `sha256` (confirmed: install.sha256)
+- `install.PlannedFile.after_hash` (line 163) calls `sha256` (confirmed: install.sha256)
+- `install.sha256` (line 167) calls `hashlib.sha256` (unconfirmed), `hexdigest` (unconfirmed)
+- `install.read_file` (line 171) calls `InstallError` (confirmed: install.InstallError), `path.exists` (unconfirmed), `path.is_file` (unconfirmed), `path.is_symlink` (unconfirmed), `path.read_bytes` (unconfirmed)
+- `install.check_symlink_safety` (line 185) calls `InstallError` (confirmed: install.InstallError), `Path` (unconfirmed), `current.is_symlink` (unconfirmed), `current.resolve` (unconfirmed)
+- `install.atomic_write` (line 198) calls `created_dirs.update` (unconfirmed), `handle.fileno` (unconfirmed), `handle.flush` (unconfirmed), `handle.write` (unconfirmed), `missing.append` (unconfirmed), `os.fdopen` (unconfirmed), `os.fsync` (unconfirmed), `os.replace` (unconfirmed), `os.unlink` (unconfirmed), `parent.mkdir` (unconfirmed), `str` (unconfirmed), `tempfile.mkstemp` (unconfirmed), `walk.exists` (unconfirmed)
+- `install.load_policy` (line 225) calls `InstallError` (confirmed: install.InstallError), `isinstance` (unconfirmed), `json.loads` (unconfirmed), `path.read_text` (unconfirmed), `policy.get` (unconfirmed)
+- `install.load_agent_policy` (line 236) calls `InstallError` (confirmed: install.InstallError), `isinstance` (unconfirmed), `json.loads` (unconfirmed), `path.read_text` (unconfirmed)
+- `install.frontmatter_close` (line 247) calls `InstallError` (confirmed: install.InstallError), `len` (unconfirmed), `range` (unconfirmed), `strip` (unconfirmed)
+- `install.inject_claude_frontmatter` (line 257) calls `content.decode` (unconfirmed), `encode` (unconfirmed), `extra.append` (unconfirmed), `frontmatter_close` (confirmed: install.frontmatter_close), `get` (unconfirmed), `join` (unconfirmed), `policy.get` (unconfirmed), `text.split` (unconfirmed)
+- `install.inject_cursor_readonly` (line 270) calls `content.decode` (unconfirmed), `encode` (unconfirmed), `frontmatter_close` (confirmed: install.frontmatter_close), `join` (unconfirmed), `policy.get` (unconfirmed), `range` (unconfirmed), `set` (unconfirmed), `startswith` (unconfirmed), `text.split` (unconfirmed)
+- `install.parse_agent_frontmatter` (line 285) calls `InstallError` (confirmed: install.InstallError), `fields.get` (unconfirmed), `frontmatter_close` (confirmed: install.frontmatter_close), `join` (unconfirmed), `json.loads` (unconfirmed), `key.strip` (unconfirmed), `line.partition` (unconfirmed), `line.strip` (unconfirmed), `lstrip` (unconfirmed), `path.read_text` (unconfirmed), `raw.strip` (unconfirmed), `raw_description.startswith` (unconfirmed), `rstrip` (unconfirmed), `text.split` (unconfirmed)
+- `install.codex_agent_toml` (line 319) calls `InstallError` (confirmed: install.InstallError), `json.dumps` (unconfirmed), `parse_agent_frontmatter` (confirmed: install.parse_agent_frontmatter), `text.encode` (unconfirmed)
+- `install.openai_yaml` (line 341) calls `encode` (unconfirmed), `get` (unconfirmed), `join` (unconfirmed), `lines.append` (unconfirmed), `policy.get` (unconfirmed), `set` (unconfirmed), `sorted` (unconfirmed)
+- `install.project_claude` (line 366) calls `Action` (confirmed: install.Action), `actions.append` (unconfirmed), `actions.extend` (unconfirmed), `as_posix` (unconfirmed), `auxiliary_bytes` (confirmed: install.auxiliary_bytes), `bot_assets` (confirmed: install.bot_assets), `evolve_assets` (confirmed: install.evolve_assets), `glob` (unconfirmed), `inject_claude_frontmatter` (confirmed: install.inject_claude_frontmatter), `is_file` (unconfirmed), `project_runtime_script` (confirmed: install.project_runtime_script), `runtime_actions` (confirmed: install.runtime_actions), `skill_dir.rglob` (unconfirmed), `skills_src.iterdir` (unconfirmed), `sorted` (unconfirmed), `src.is_file` (unconfirmed), `src.read_bytes` (unconfirmed), `src.relative_to` (unconfirmed)
+- `install.project_runtime_script` (line 406) calls `InstallError` (confirmed: install.InstallError), `content.count` (unconfirmed), `content.replace` (unconfirmed), `marker.replace` (unconfirmed)
+- `install.bot_assets` (line 416) calls `Action` (confirmed: install.Action), `actions.append` (unconfirmed), `as_posix` (unconfirmed), `auxiliary_bytes` (confirmed: install.auxiliary_bytes), `p.relative_to` (unconfirmed), `rel.removeprefix` (unconfirmed), `rglob` (unconfirmed), `sorted` (unconfirmed)
+- `install.evolve_assets` (line 425) calls `Action` (confirmed: install.Action), `auxiliary_bytes` (confirmed: install.auxiliary_bytes)
+- `install.evolution` (line 432) calls `importlib.util.module_from_spec` (unconfirmed), `importlib.util.spec_from_file_location` (unconfirmed), `spec.loader.exec_module` (unconfirmed)
+- `install.auxiliary_bytes` (line 446) calls `InstallError` (confirmed: install.InstallError), `Path` (unconfirmed), `bytearray` (unconfirmed), `bytes` (unconfirmed), `content.extend` (unconfirmed), `descriptors.append` (unconfirmed), `identity` (unconfirmed), `len` (unconfirmed), `min` (unconfirmed), `os.close` (unconfirmed), `os.fstat` (unconfirmed), `os.open` (unconfirmed), `os.read` (unconfirmed), `os.stat` (unconfirmed), `reversed` (unconfirmed), `stat.S_ISREG` (unconfirmed)
+- `install.runtime_actions` (line 481) calls `Action` (confirmed: install.Action), `auxiliary_bytes` (confirmed: install.auxiliary_bytes), `read_bytes` (unconfirmed)
+- `install.project_shared_skills` (line 496) calls `Action` (confirmed: install.Action), `actions.append` (unconfirmed), `actions.extend` (unconfirmed), `as_posix` (unconfirmed), `auxiliary_bytes` (confirmed: install.auxiliary_bytes), `bot_assets` (confirmed: install.bot_assets), `codex_policy.get` (unconfirmed), `content.decode` (unconfirmed), `encode` (unconfirmed), `evolve_assets` (confirmed: install.evolve_assets), `frontmatter_close` (confirmed: install.frontmatter_close), `get` (unconfirmed), `is_file` (unconfirmed), `join` (unconfirmed), `load_policy` (confirmed: install.load_policy), `openai_yaml` (confirmed: install.openai_yaml), `project_runtime_script` (confirmed: install.project_runtime_script), `set` (unconfirmed), `skill_dir.rglob` (unconfirmed), `skills_src.iterdir` (unconfirmed), `sorted` (unconfirmed), `split` (unconfirmed), `src.is_file` (unconfirmed), `src.read_bytes` (unconfirmed), `src.relative_to` (unconfirmed)
+- `install.project_cursor` (line 553) calls `Action` (confirmed: install.Action), `actions.append` (unconfirmed), `actions.extend` (unconfirmed), `glob` (unconfirmed), `inject_cursor_readonly` (confirmed: install.inject_cursor_readonly), `load_agent_policy` (confirmed: install.load_agent_policy), `read_bytes` (unconfirmed), `runtime_actions` (confirmed: install.runtime_actions), `sorted` (unconfirmed), `src.read_bytes` (unconfirmed)
+- `install.project_codex` (line 577) calls `Action` (confirmed: install.Action), `actions.append` (unconfirmed), `actions.extend` (unconfirmed), `codex_agent_toml` (confirmed: install.codex_agent_toml), `glob` (unconfirmed), `runtime_actions` (confirmed: install.runtime_actions), `sorted` (unconfirmed)
+- `install.detect_python` (line 607) calls `InstallError` (confirmed: install.InstallError), `Path` (unconfirmed), `absolute` (unconfirmed), `executable.is_file` (unconfirmed), `os.access` (unconfirmed), `str` (unconfirmed)
+- `install.hook_command` (line 621) calls `detect_python` (confirmed: install.detect_python), `shlex.join` (unconfirmed), `str` (unconfirmed)
+- `install.is_owned_handler` (line 632) calls `handler.get` (unconfirmed), `isinstance` (unconfirmed), `str` (unconfirmed)
+- `install.parse_json_document` (line 643) calls `InstallError` (confirmed: install.InstallError), `current.decode` (unconfirmed), `isinstance` (unconfirmed), `json.loads` (unconfirmed)
+- `install.merge_event_groups` (line 658) calls `InstallError` (confirmed: install.InstallError), `dict` (unconfirmed), `group.get` (unconfirmed), `hook_command` (confirmed: install.hook_command), `hooks.setdefault` (unconfirmed), `is_owned_handler` (confirmed: install.is_owned_handler), `isinstance` (unconfirmed), `kept.append` (unconfirmed), `len` (unconfirmed)
+- `install.merge_settings` (line 694) calls `InstallError` (confirmed: install.InstallError), `encode` (unconfirmed), `isinstance` (unconfirmed), `json.dumps` (unconfirmed), `merge_event_groups` (confirmed: install.merge_event_groups), `parse_json_document` (confirmed: install.parse_json_document), `settings.setdefault` (unconfirmed)
+- `install.merge_codex_hooks` (line 705) calls `InstallError` (confirmed: install.InstallError), `doc.setdefault` (unconfirmed), `encode` (unconfirmed), `isinstance` (unconfirmed), `json.dumps` (unconfirmed), `merge_event_groups` (confirmed: install.merge_event_groups), `parse_json_document` (confirmed: install.parse_json_document)
+- `install.merge_cursor_hooks` (line 717) calls `InstallError` (confirmed: install.InstallError), `doc.get` (unconfirmed), `doc.setdefault` (unconfirmed), `encode` (unconfirmed), `hook_command` (confirmed: install.hook_command), `hooks.setdefault` (unconfirmed), `is_owned_handler` (confirmed: install.is_owned_handler), `isinstance` (unconfirmed), `json.dumps` (unconfirmed), `kept.append` (unconfirmed), `parse_json_document` (confirmed: install.parse_json_document)
+- `install.merge_block` (line 753) calls `InstallError` (confirmed: install.InstallError), `block.encode` (unconfirmed), `block.rstrip` (unconfirmed), `current.decode` (unconfirmed), `encode` (unconfirmed), `enumerate` (unconfirmed), `join` (unconfirmed), `len` (unconfirmed), `split` (unconfirmed), `text.count` (unconfirmed), `text.endswith` (unconfirmed), `text.split` (unconfirmed)
+- `install.merge_gitignore` (line 785) calls `InstallError` (confirmed: install.InstallError), `current.decode` (unconfirmed), `encode` (unconfirmed), `join` (unconfirmed), `text.endswith` (unconfirmed), `text.split` (unconfirmed)
+- `install.compute_content` (line 802) calls `InstallError` (confirmed: install.InstallError), `merge_block` (confirmed: install.merge_block), `merge_codex_hooks` (confirmed: install.merge_codex_hooks), `merge_cursor_hooks` (confirmed: install.merge_cursor_hooks), `merge_gitignore` (confirmed: install.merge_gitignore), `merge_settings` (confirmed: install.merge_settings)
+- `install.load_manifest` (line 823) calls `InstallError` (confirmed: install.InstallError), `isinstance` (unconfirmed), `json.loads` (unconfirmed), `manifest.get` (unconfirmed), `path.exists` (unconfirmed), `path.read_text` (unconfirmed)
+- `install.build_manifest` (line 839) calls `datetime.now` (unconfirmed), `dict` (unconfirmed), `files_by_path.values` (unconfirmed), `get` (unconfirmed), `isinstance` (unconfirmed), `isoformat` (unconfirmed), `previous.get` (unconfirmed), `prior.get` (unconfirmed), `set` (unconfirmed), `sorted` (unconfirmed)
+- `install.normalize_overwrite_paths` (line 898) calls `InstallError` (confirmed: install.InstallError), `Path` (unconfirmed), `normalized.add` (unconfirmed), `raw.removeprefix` (unconfirmed), `rel.startswith` (unconfirmed), `removesuffix` (unconfirmed), `set` (unconfirmed)
+- `install.build_plan` (line 908) calls `InstallError` (confirmed: install.InstallError), `Path` (unconfirmed), `PlannedFile` (confirmed: install.PlannedFile), `actions.extend` (unconfirmed), `any` (unconfirmed), `check_symlink_safety` (confirmed: install.check_symlink_safety), `compute_content` (confirmed: install.compute_content), `conflicts.append` (unconfirmed), `covered.add` (unconfirmed), `entry.get` (unconfirmed), `evolution` (confirmed: install.evolution), `get` (unconfirmed), `isinstance` (unconfirmed), `load_manifest` (confirmed: install.load_manifest), `load_policy` (confirmed: install.load_policy), `overlay_actions` (unconfirmed), `owned.get` (unconfirmed), `planned.append` (unconfirmed), `previous.get` (unconfirmed), `project_shared_skills` (confirmed: install.project_shared_skills), `read_file` (confirmed: install.read_file), `rel.startswith` (unconfirmed), `seen_paths.get` (unconfirmed), `set` (unconfirmed), `sha256` (confirmed: install.sha256) … (call cap reached)
+- `install.acquire_lock` (line 994) calls `InstallError` (confirmed: install.InstallError), `Path` (unconfirmed), `created_dirs.add` (unconfirmed), `fcntl.flock` (unconfirmed), `os.close` (unconfirmed), `os.mkdir` (unconfirmed), `os.open` (unconfirmed), `time.monotonic` (unconfirmed), `time.sleep` (unconfirmed)
+- `install.composition_sources` (line 1029) calls `InstallError` (confirmed: install.InstallError), `items` (unconfirmed), `set` (unconfirmed)
+- `install.verify_composition` (line 1050) calls `InstallError` (confirmed: install.InstallError), `any` (unconfirmed), `build_plan` (confirmed: install.build_plan), `composition_sources` (confirmed: install.composition_sources), `evolution` (confirmed: install.evolution), `revalidate` (unconfirmed), `set` (unconfirmed)
+- `install.lifecycle_api` (line 1065) calls `importlib.util.module_from_spec` (unconfirmed), `importlib.util.spec_from_file_location` (unconfirmed), `spec.loader.exec_module` (unconfirmed)
+- `install.installation_parent` (line 1073) calls `Path` (unconfirmed), `created_dirs.add` (unconfirmed), `descriptors.append` (unconfirmed), `enumerate` (unconfirmed), `os.close` (unconfirmed), `os.dup` (unconfirmed), `os.mkdir` (unconfirmed), `os.open` (unconfirmed), `relative.startswith` (unconfirmed), `reversed` (unconfirmed), `root.joinpath` (unconfirmed)
+- `install.check_parent` (line 1093) calls `InstallError` (confirmed: install.InstallError), `lifecycle.parent_fd` (unconfirmed), `os.fstat` (unconfirmed), `os.stat` (unconfirmed)
+- `install.apply_plan` (line 1104) calls `InstallError` (confirmed: install.InstallError), `acquire_lock` (confirmed: install.acquire_lock), `applied.append` (unconfirmed), `build_manifest` (confirmed: install.build_manifest), `check_parent` (confirmed: install.check_parent), `composition_sources` (confirmed: install.composition_sources), `datetime.now` (unconfirmed), `directory.rmdir` (unconfirmed), `encode` (unconfirmed), `evolution` (confirmed: install.evolution), `fcntl.flock` (unconfirmed), `installation_parent` (confirmed: install.installation_parent), `json.dumps` (unconfirmed), `len` (unconfirmed), `lifecycle.anchored_read` (unconfirmed), `lifecycle.parent_fd` (unconfirmed), `lifecycle.publish` (unconfirmed), `lifecycle.read_at` (unconfirmed), `lifecycle_api` (confirmed: install.lifecycle_api), `load_manifest` (confirmed: install.load_manifest), `os.close` (unconfirmed), `os.dup` (unconfirmed), `os.fchmod` (unconfirmed), `os.fstat` (unconfirmed), `os.open` (unconfirmed) … (call cap reached)
+- `install.plugin_enabled_claude` (line 1208) calls `enabled.items` (unconfirmed), `isinstance` (unconfirmed), `json.loads` (unconfirmed), `key.startswith` (unconfirmed), `path.is_file` (unconfirmed), `path.read_text` (unconfirmed), `settings.get` (unconfirmed)
+- `install.plugin_enabled_codex` (line 1227) calls `config.get` (unconfirmed), `isinstance` (unconfirmed), `key.startswith` (unconfirmed), `path.is_file` (unconfirmed), `path.read_text` (unconfirmed), `plugins.items` (unconfirmed), `tomllib.loads` (unconfirmed), `value.get` (unconfirmed)
+- `install.check_plugin_stacking` (line 1257) calls `InstallError` (confirmed: install.InstallError), `PLUGIN_DETECTORS.get` (unconfirmed), `detector` (unconfirmed)
+- `install.resolve_hosts` (line 1277) calls `InstallError` (confirmed: install.InstallError), `auto_detect` (confirmed: install.auto_detect), `join` (unconfirmed), `part.strip` (unconfirmed), `resolved.append` (unconfirmed), `selection.split` (unconfirmed)
+- `install.auto_detect` (line 1300) calls `InstallError` (confirmed: install.InstallError), `exists` (unconfirmed), `join` (unconfirmed), `len` (unconfirmed), `print` (unconfirmed), `shutil.which` (unconfirmed)
+- `install.format_plan` (line 1342) calls `lines.append` (unconfirmed)
+- `install.cmd_install` (line 1351) calls `InstallError` (confirmed: install.InstallError), `any` (unconfirmed), `apply_plan` (confirmed: install.apply_plan), `args.project.expanduser` (unconfirmed), `build_manifest` (confirmed: install.build_manifest), `build_plan` (confirmed: install.build_plan), `check_plugin_stacking` (confirmed: install.check_plugin_stacking), `format_plan` (confirmed: install.format_plan), `get` (unconfirmed), `importlib.util.module_from_spec` (unconfirmed), `importlib.util.spec_from_file_location` (unconfirmed), `join` (unconfirmed), `len` (unconfirmed), `module.provision` (unconfirmed), `normalize_overwrite_paths` (confirmed: install.normalize_overwrite_paths), `previous.get` (unconfirmed), `print` (unconfirmed), `resolve` (unconfirmed), `resolve_hosts` (confirmed: install.resolve_hosts), `root.is_dir` (unconfirmed), `set` (unconfirmed), `spec.loader.exec_module` (unconfirmed), `sum` (unconfirmed)
+- `install.main` (line 1404) calls `InstallError` (confirmed: install.InstallError), `argparse.ArgumentParser` (unconfirmed), `cmd_install` (confirmed: install.cmd_install), `distribution.project` (unconfirmed), `doctor.add_argument` (unconfirmed), `getattr` (unconfirmed), `importlib.util.module_from_spec` (unconfirmed), `importlib.util.spec_from_file_location` (unconfirmed), `install.add_argument` (unconfirmed), `parser.add_subparsers` (unconfirmed), `parser.parse_args` (unconfirmed), `print` (unconfirmed), `project.add_argument` (unconfirmed), `spec.loader.exec_module` (unconfirmed), `str` (unconfirmed), `sub.add_parser` (unconfirmed), `uninstall.add_argument` (unconfirmed)
+- `scripts.bmad_install.scalar` (line 39) calls `ValueError` (unconfirmed), `isinstance` (unconfirmed), `json.loads` (unconfirmed), `re.search` (unconfirmed), `re.split` (unconfirmed), `replace` (unconfirmed), `text.endswith` (unconfirmed), `text.startswith` (unconfirmed)
+- `scripts.bmad_install.parse_manifest` (line 63) calls `TypeError` (unconfirmed), `ValueError` (unconfirmed), `all` (unconfirmed), `any` (unconfirmed), `block` (unconfirmed), `content.decode` (unconfirmed), `data.get` (unconfirmed), `field` (unconfirmed), `get` (unconfirmed), `isinstance` (unconfirmed), `item.update` (unconfirmed), `json.loads` (unconfirmed), `len` (unconfirmed), `line.lstrip` (unconfirmed), `line.startswith` (unconfirmed), `line.strip` (unconfirmed), `module.get` (unconfirmed), `normalized.append` (unconfirmed), `re.fullmatch` (unconfirmed), `re.match` (unconfirmed), `record.values` (unconfirmed), `result.append` (unconfirmed), `rows.append` (unconfirmed), `scalar` (confirmed: scripts.bmad_install.scalar), `seen.add` (unconfirmed) … (call cap reached)
+- `scripts.bmad_install.relative_parts` (line 168) calls `Path` (unconfirmed), `ValueError` (unconfirmed), `any` (unconfirmed), `as_posix` (unconfirmed), `is_absolute` (unconfirmed), `isinstance` (unconfirmed), `rel.isprintable` (unconfirmed), `rel.split` (unconfirmed)
+- `scripts.bmad_install.contained` (line 176) calls `ValueError` (unconfirmed), `path.is_symlink` (unconfirmed), `relative_parts` (confirmed: scripts.bmad_install.relative_parts)
+- `scripts.bmad_install.discovered` (line 186) calls `any` (unconfirmed), `contained` (confirmed: scripts.bmad_install.contained), `directory.is_dir` (unconfirmed), `directory.iterdir` (unconfirmed), `p.name.lower` (unconfirmed), `path.exists` (unconfirmed), `path.is_symlink` (unconfirmed), `startswith` (unconfirmed)
+- `scripts.bmad_install.read_at_bounded` (line 202) calls `ValueError` (unconfirmed), `identity` (unconfirmed), `len` (unconfirmed), `os.fdopen` (unconfirmed), `os.fstat` (unconfirmed), `os.open` (unconfirmed), `os.stat` (unconfirmed), `stat.S_ISREG` (unconfirmed), `stream.fileno` (unconfirmed), `stream.read` (unconfirmed)
+- `scripts.bmad_install.read_payload` (line 222) calls `os.close` (unconfirmed), `os.open` (unconfirmed), `read_at_bounded` (confirmed: scripts.bmad_install.read_at_bounded), `relative_parts` (confirmed: scripts.bmad_install.relative_parts)
+- `scripts.bmad_install.load_ownership` (line 235) calls `TypeError` (unconfirmed), `ValueError` (unconfirmed), `data.get` (unconfirmed), `entry.get` (unconfirmed), `isinstance` (unconfirmed), `json.loads` (unconfirmed), `re.fullmatch` (unconfirmed), `read_payload` (confirmed: scripts.bmad_install.read_payload), `relative_parts` (confirmed: scripts.bmad_install.relative_parts), `seen.add` (unconfirmed), `set` (unconfirmed)
+- `scripts.bmad_install.observe` (line 251) calls `hashlib.sha256` (unconfirmed), `hexdigest` (unconfirmed), `parse_manifest` (confirmed: scripts.bmad_install.parse_manifest), `read_payload` (confirmed: scripts.bmad_install.read_payload), `record.update` (unconfirmed)
+- `scripts.bmad_install.command` (line 263) calls `MODULE_PINS.items` (unconfirmed), `join` (unconfirmed), `str` (unconfirmed)
+- `scripts.bmad_install.prerequisites` (line 269) calls `ValueError` (unconfirmed), `any` (unconfirmed), `map` (unconfirmed), `matched.groups` (unconfirmed), `re.fullmatch` (unconfirmed), `result.stdout.strip` (unconfirmed), `shutil.which` (unconfirmed), `subprocess.run` (unconfirmed), `tuple` (unconfirmed)
+- `scripts.bmad_install.invoke` (line 289) calls `command` (confirmed: scripts.bmad_install.command), `isinstance` (unconfirmed), `os.killpg` (unconfirmed), `process.wait` (unconfirmed), `subprocess.Popen` (unconfirmed)
+- `scripts.bmad_install.complete` (line 311) calls `MODULE_PINS.items` (unconfirmed), `any` (unconfirmed), `bases.append` (unconfirmed), `content.decode` (unconfirmed), `covered.add` (unconfirmed), `csv.DictReader` (unconfirmed), `get` (unconfirmed), `identifiers.add` (unconfirmed), `inventory.append` (unconfirmed), `io.StringIO` (unconfirmed), `isinstance` (unconfirmed), `len` (unconfirmed), `min` (unconfirmed), `modules.keys` (unconfirmed), `re.fullmatch` (unconfirmed), `read_payload` (confirmed: scripts.bmad_install.read_payload), `row.get` (unconfirmed), `set` (unconfirmed), `skill.strip` (unconfirmed)
+- `scripts.bmad_install.describe` (line 359) calls `isinstance` (unconfirmed), `join` (unconfirmed), `print` (unconfirmed), `re.fullmatch` (unconfirmed), `re.search` (unconfirmed), `version` (unconfirmed)
+- `scripts.bmad_install.attempt` (line 373) calls `before_invoke` (unconfirmed), `complete` (confirmed: scripts.bmad_install.complete), `discovered` (confirmed: scripts.bmad_install.discovered), `invoke` (confirmed: scripts.bmad_install.invoke), `observe` (confirmed: scripts.bmad_install.observe), `prerequisites` (confirmed: scripts.bmad_install.prerequisites), `record.update` (unconfirmed)
+- `scripts.bmad_install.save_record` (line 402) calls `Path` (unconfirmed), `api.InstallError` (unconfirmed), `encode` (unconfirmed), `importlib.util.module_from_spec` (unconfirmed), `importlib.util.spec_from_file_location` (unconfirmed), `json.dumps` (unconfirmed), `json.loads` (unconfirmed), `lifecycle.parent_fd` (unconfirmed), `lifecycle.publish` (unconfirmed), `lifecycle.recovery_directory` (unconfirmed), `os.close` (unconfirmed), `os.open` (unconfirmed), `read_at_bounded` (confirmed: scripts.bmad_install.read_at_bounded), `spec.loader.exec_module` (unconfirmed), `with_name` (unconfirmed)
+- `scripts.bmad_install.provision` (line 425) calls `api.InstallError` (unconfirmed), `api.acquire_lock` (unconfirmed), `api.sha256` (unconfirmed), `attempt` (confirmed: scripts.bmad_install.attempt), `describe` (confirmed: scripts.bmad_install.describe), `fcntl.flock` (unconfirmed), `int` (unconfirmed), `isinstance` (unconfirmed), `load_ownership` (confirmed: scripts.bmad_install.load_ownership), `os.close` (unconfirmed), `previous.get` (unconfirmed), `print` (unconfirmed), `prior_bmad.get` (unconfirmed), `read_payload` (confirmed: scripts.bmad_install.read_payload), `record.update` (unconfirmed), `save_record` (confirmed: scripts.bmad_install.save_record), `set` (unconfirmed)
+- `scripts.build_release.release_files` (line 17) calls `Path` (unconfirmed), `ValueError` (unconfirmed), `all` (unconfirmed), `any` (unconfirmed), `distribution.bundle_files` (unconfirmed), `distribution.load_api` (unconfirmed), `files.items` (unconfirmed), `files.update` (unconfirmed), `is_relative_to` (unconfirmed), `isinstance` (unconfirmed), `items` (unconfirmed), `json.loads` (unconfirmed), `len` (unconfirmed), `name.startswith` (unconfirmed), `p.is_symlink` (unconfirmed), `path.is_file` (unconfirmed), `path.is_symlink` (unconfirmed), `path.parent.mkdir` (unconfirmed), `path.read_bytes` (unconfirmed), `path.resolve` (unconfirmed), `path.write_bytes` (unconfirmed), `read_text` (unconfirmed), `resolve` (unconfirmed), `root.resolve` (unconfirmed), `set` (unconfirmed) … (call cap reached)
+- … 1620 more call rows (cap reached)
 
 ## Entry points
 
 - module execution — confirmed: `tests/fixtures/repos/python-cli/fixture_cli/__main__.py`
+- `__main__` guard — confirmed: `adapters/trackers.py`
+- `__main__` guard — confirmed: `assets/tools/capture.py`
+- `__main__` guard — confirmed: `examples/minimal/greet.py`
+- `__main__` guard — confirmed: `examples/python-api/app.py`
+- `__main__` guard — confirmed: `hosts/plugins/dispatch.py`
 - `__main__` guard — confirmed: `install.py`
+- `__main__` guard — confirmed: `scripts/build_release.py`
+- `__main__` guard — confirmed: `scripts/check_distribution.py`
 - `__main__` guard — confirmed: `scripts/check_links.py`
 - `__main__` guard — confirmed: `scripts/check_mermaid.py`
+- `__main__` guard — confirmed: `scripts/distribution.py`
+- `__main__` guard — confirmed: `scripts/render_assets.py`
 - `__main__` guard — confirmed: `scripts/scan_public.py`
 - `__main__` guard — confirmed: `scripts/validate.py`
+- `__main__` guard — confirmed: `site/scripts/sync_prompt.py`
+- `__main__` guard — confirmed: `skills/sf-agents/scripts/agents.py`
+- `__main__` guard — confirmed: `skills/sf-agents/scripts/render_bots.py`
+- `__main__` guard — confirmed: `skills/sf-agents/scripts/triage.py`
 - `__main__` guard — confirmed: `skills/sf-crawl/scripts/crawl.py`
 - `__main__` guard — confirmed: `skills/sf-eval/scripts/sf_eval.py`
+- `__main__` guard — confirmed: `skills/sf-evolve/scripts/evolve.py`
+- `__main__` guard — confirmed: `skills/sf-help/scripts/discover.py`
+- `__main__` guard — confirmed: `skills/sf-help/scripts/setup.py`
 - `__main__` guard — confirmed: `skills/software-factory/scripts/config.py`
 - `__main__` guard — confirmed: `skills/software-factory/scripts/dashboard.py`
 - `__main__` guard — confirmed: `skills/software-factory/scripts/gate.py`
 - `__main__` guard — confirmed: `skills/software-factory/scripts/hook.py`
 - `__main__` guard — confirmed: `skills/software-factory/scripts/roadmap.py`
 - `__main__` guard — confirmed: `skills/software-factory/scripts/state.py`
+- `__main__` guard — confirmed: `skills/software-factory/scripts/trace.py`
 - `__main__` guard — confirmed: `tests/fixtures/repos/python-cli/fixture_cli/cli.py`
+- `__main__` guard — confirmed: `tests/test_assets.py`
 - `__main__` guard — confirmed: `tests/test_board.py`
+- `__main__` guard — confirmed: `tests/test_board_consistency.py`
+- `__main__` guard — confirmed: `tests/test_bootstrap.py`
 - `__main__` guard — confirmed: `tests/test_config_kernel.py`
 - `__main__` guard — confirmed: `tests/test_crawl.py`
+- `__main__` guard — confirmed: `tests/test_dashboard.py`
+- `__main__` guard — confirmed: `tests/test_distribution.py`
+- `__main__` guard — confirmed: `tests/test_docs_journey.py`
+- `__main__` guard — confirmed: `tests/test_doctor.py`
 - `__main__` guard — confirmed: `tests/test_dogfood.py`
 - `__main__` guard — confirmed: `tests/test_gate.py`
 - `__main__` guard — confirmed: `tests/test_hook.py`
+- `__main__` guard — confirmed: `tests/test_hook_installation.py`
 - `__main__` guard — confirmed: `tests/test_host_claude.py`
+- `__main__` guard — confirmed: `tests/test_host_codex.py`
+- `__main__` guard — confirmed: `tests/test_host_cursor.py`
+- `__main__` guard — confirmed: `tests/test_host_selection.py`
 - `__main__` guard — confirmed: `tests/test_installer.py`
+- `__main__` guard — confirmed: `tests/test_readme_journey.py`
+- `__main__` guard — confirmed: `tests/test_run_audit.py`
 - `__main__` guard — confirmed: `tests/test_sf_eval.py`
+- `__main__` guard — confirmed: `tests/test_showcase.py`
+- `__main__` guard — confirmed: `tests/test_skills_distribution.py`
 - `__main__` guard — confirmed: `tests/test_state.py`
 - `__main__` guard — confirmed: `tests/test_tools.py`
+- `__main__` guard — confirmed: `tests/test_trace.py`
+- `__main__` guard — confirmed: `tests/test_uninstall.py`
 
 ## Best effort (JavaScript/TypeScript)
 
@@ -209,9 +295,16 @@ resolved to files.
 
 | File | Imports | Exports |
 | --- | --- | --- |
+| `examples/typescript-web/src/app.ts` | — | `GreetingView`, `greetingFor`, `submitGreeting` |
 | `tests/fixtures/repos/typescript-web/src/cli.ts` | `./index` | — |
 | `tests/fixtures/repos/typescript-web/src/greet.ts` | — | `greet` |
 | `tests/fixtures/repos/typescript-web/src/index.ts` | `./greet` | `main` |
+| `assets/templates/ready.js` | — | — |
+| `examples/typescript-web/tests/app.test.mjs` | `../dist/app.js`, `node:assert/strict`, `node:test` | — |
+| `site/scripts/main.js` | — | — |
+| `site/scripts/setup-data.js` | — | — |
+| `tests/fixtures/assets/readiness.cjs` | — | — |
+| `tests/fixtures/showcase/copy-overlap.cjs` | — | — |
 
 ## Files not parsed
 
@@ -219,9 +312,9 @@ Everything parsed cleanly.
 
 ## Not determined
 
-- no pyproject.toml found: packaging-declared Python entry points are not determinable.
-- no package.json found: script entry points are not determinable.
+- no selected readable pyproject.toml: packaging-declared Python entry points are not determinable.
+- no selected readable package.json: script entry points are not determinable.
 
 ## File census
 
-114 file(s) crawled. Counts by extension: `.md` 65, `.py` 29, `.json` 7, `.yml` 5, `.ts` 3, `(no extension)` 2, `.sh` 1, `.sha256` 1, `.toml` 1.
+406 file(s) crawled. Counts by extension: `.md` 160, `.py` 80, `.json` 48, `.html` 15, `.yaml` 14, `.svg` 11, `.png` 10, `.mmd` 9, `.txt` 9, `.yml` 8, `.tmpl` 7, `.css` 6, `(no extension)` 4, `.toml` 4, `.ts` 4, … 17 more file(s) (cap reached).

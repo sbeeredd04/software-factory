@@ -1,0 +1,14 @@
+{
+  "artifact": "synthetic-revision-B",
+  "assertion": "named and default greeting",
+  "environment": "disposable-local-fixture",
+  "independent_review": "separate sample review needed",
+  "observation": "named greeting and default both match fictional contract",
+  "observed_at": "2026-01-01T00:02:00Z",
+  "origin": "invented-teaching-data",
+  "result": "illustrative-pass",
+  "source": "formatter-run-001",
+  "story": "feature/name",
+  "synthetic": true,
+  "window_end": "2026-01-01T00:05:00Z"
+}

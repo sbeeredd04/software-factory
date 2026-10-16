@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import runpy
 import shutil
 import stat
 import subprocess
@@ -32,6 +33,7 @@ GITIGNORE_LINES = (
     ".software-factory/runs/",
     ".software-factory/active.json",
     ".software-factory/state.lock",
+    ".software-factory/.install.lock",
     ".software-factory/installation.json",
 )
 CONTEXT_FILES = {
@@ -52,7 +54,7 @@ class InstallerCase(unittest.TestCase):
 
     def install(self, repo, *args):
         return support.run_installer(
-            "install", "--project", repo, *args, env=self.env
+            "install", "--project", repo, *args, "--skip-bmad", env=self.env
         )
 
     def assert_recorders_empty(self):
@@ -113,9 +115,11 @@ class FreshInstallTests(InstallerCase):
             )
 
         # Every created/modified path is listed; nothing unlisted was written.
-        # (The manifest itself and the transient install lock are not owned
+        # (The manifest itself and the persistent install lock are not owned
         # payloads - the manifest cannot hash itself.)
-        created = set(support.tree_hashes(repo)) - {"README.md", MANIFEST}
+        created = set(support.tree_hashes(repo)) - {
+            "README.md", MANIFEST, ".software-factory/.install.lock",
+        }
         self.assertEqual(created, listed)
 
         # Install never creates runtime state pointers.
@@ -146,6 +150,31 @@ class FreshInstallTests(InstallerCase):
         self.assertEqual("skills-only", manifest["profile"])
 
 
+class ManifestTransactionTests(InstallerCase):
+    def test_stale_plan_cannot_drop_ownership_added_by_another_install(self):
+        repo = support.fresh_repo(self.temp)
+        installed = self.install(repo, "--host", "claude-code")
+        self.assertEqual(0, installed.returncode, installed.stderr)
+        installer = runpy.run_path(str(support.INSTALLER))
+        planned, conflicts, previous = installer["build_plan"](
+            repo, ["codex"], "skills-only", set()
+        )
+        self.assertEqual([], conflicts)
+        intervening = self.install(
+            repo, "--host", "cursor", "--profile", "skills-only"
+        )
+        self.assertEqual(0, intervening.returncode, intervening.stderr)
+        before = support.tree_hashes(repo)
+        with self.assertRaisesRegex(
+            installer["InstallError"], "ownership changed"
+        ):
+            installer["apply_plan"](
+                repo, planned, previous, ["codex"], "skills-only"
+            )
+        self.assertEqual(before, support.tree_hashes(repo))
+        self.assert_recorders_empty()
+
+
 class GitignoreTests(InstallerCase):
     def test_volatile_entries_only_and_user_lines_survive(self):
         repo = support.existing_repo(self.temp)
@@ -170,6 +199,7 @@ class GitignoreTests(InstallerCase):
         for volatile in (
             ".software-factory/active.json",
             ".software-factory/state.lock",
+            ".software-factory/.install.lock",
             ".software-factory/runtime/hook.py",
             ".software-factory/backups/x",
             ".software-factory/runs/demo/run.json",
@@ -448,8 +478,11 @@ class GitUntouchedTests(InstallerCase):
         factory_prefixes = (
             ".gitignore",
             "CLAUDE.md",
+            "AGENTS.md",
             ".claude/",
-            ".cursor/",  # pre-existing user hook config in this fixture
+            ".cursor/",
+            ".codex/",
+            ".agents/",
             ".software-factory/",
         )
         for entry in changed - {"notes.txt", "scratch.txt"}:

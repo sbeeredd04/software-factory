@@ -6,7 +6,7 @@ Four cost-tiered modes; every run writes receipts (see
 | Mode | Scope | Budget | Gates |
 | --- | --- | --- | --- |
 | `quick` | the story's cases on all its surfaces + the surface smoke set + the story's `pass_to_pass` cases | seconds to minutes; deterministic rungs only | story done |
-| `epic` | all the epic's cases on all surfaces + the full regression suite | minutes | the epic's human checkpoint and its verification manifest |
+| `epic` | all the epic's cases on all surfaces + the full regression suite | minutes | the epic's policy-selected acceptance and verification manifest |
 | `premerge` | every case in the plan, with trials for the nondeterministic ones | as long as needed; may run in CI | the gated merge; rerun as deploy-proof input |
 | `canary` | the smoke set + ops probes against the deployed URL | seconds | the deploy proof |
 
@@ -56,3 +56,9 @@ after one.
 - **Trust gradient.** The loop starts reviewed — the agent iterates on
   evals and a human approves the diffs — and deepens automation only as the
   gate proves itself.
+
+
+Apply [authority](../../software-factory/references/authority.md) throughout the
+loop. Routine case refinement may use a real scoped owner delegation; material
+success changes, weakened cases or unapproved applicability still need the required
+owner decision. Preserve failed history and the independent proof floor.

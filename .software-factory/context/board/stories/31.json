@@ -4,8 +4,8 @@
   "epic": 5,
   "type": "story",
   "title": "Docs set, examples and the dogfood journey",
-  "status": "backlog",
-  "owner": null,
+  "status": "in-review",
+  "owner": "codex-ci-recovery",
   "after": [
     30
   ],
@@ -21,12 +21,412 @@
   "plan_checkpoint": false,
   "done_checkpoint": false,
   "blocked": null,
-  "receipts": {},
+  "receipts": {
+    "active-attempt": {
+      "type": "agent-attempt",
+      "subject_sha": "733ce7d900169f65d7cb476939f0a4b0ee81ed15",
+      "agent": "/root/docs_impl",
+      "role": "sf-engineer",
+      "skill": "software-factory",
+      "requested_model": "gpt-6-sol",
+      "requested_reasoning": "high",
+      "effective_model": null,
+      "phase": "implementation",
+      "status": "assigned",
+      "summary": "Story31 begins after clean reviewed30 handoff/integration through existing review-counts-as-met readiness. Reused clean managed worktree on exact integrated asset50prefix source; primary combined gate pending. Publish substantive manual, four examples, nine canonical diagrams and real public-clean dogfood account with literal-command tests. Root owns all board/run/maps/integration.",
+      "routing_note": "Initially requested gpt-6.1-sol worker reported capacity error before work; fallback gpt-6-sol requested, effective runtime model unknown."
+    },
+    "worker-handoff": {
+      "type": "agent-attempt",
+      "subject_sha": "c21fc14a8d1f4f6e9c2d494068886dc79f1c0445",
+      "agent": "/root/docs_impl",
+      "role": "sf-engineer",
+      "skill": "software-factory",
+      "requested_model": "gpt-6-sol",
+      "requested_reasoning": "high",
+      "effective_model": null,
+      "phase": "implementation",
+      "status": "awaiting-review",
+      "summary": "Substantive manuals/examples/nine pinned rendered diagrams, literal3host journey and releaseclosure/scope/refusal/bodydeadline tests. Four initialP2s fixed, finalcorea8a93/cycle032 sourcealigned and independentlyaccepted. Author14docs+3API+16showcase pass; independentfinal14docs/static+all21inputs10outputs bound. Failed760gate vs50evalpass preserved. Actualselfinstall48repair/fullgate/publication separate.",
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/sf-docs-final-independent-review.json",
+      "artifact_sha256": "48ca1be0a1163253caa84f0e0c6e9de6b8b29287b82b6a18446f1ba8375d0168"
+    },
+    "independent-review": {
+      "type": "independent-review",
+      "subject_sha": "c21fc14a8d1f4f6e9c2d494068886dc79f1c0445",
+      "reviewer": "/root/launch_copy",
+      "status": "pass",
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/sf-docs-final-independent-review.json",
+      "artifact_sha256": "48ca1be0a1163253caa84f0e0c6e9de6b8b29287b82b6a18446f1ba8375d0168",
+      "scope": "Final docs/source/receiptalignment accepted; fresh14docs allpass, static4steps pass. Priorindependent14docs+3API+actual1.002s408 repairreview scope retained separately.",
+      "limitations": [
+        "Root configuredselfinstall failure unresolved; no livehost/BMadexecution/fullgate/publication fact inferred."
+      ]
+    },
+    "approved-journey-admission": {
+      "type": "approved-eval-admission",
+      "subject_sha": "4c16cb6f6e7bd16de3a143d8100d8ea973c1d13f",
+      "status": "admitted-not-yet-canonical-run",
+      "case_id": "TLS-JOURNEY-001",
+      "count": 51,
+      "payload_sha256": "00e82fb573dcbb61a2b023e2b0bf8d5dd78609233094ce52a7be08cafc5897bb",
+      "approval": "ADR0026 exact approved addition21; full22 sourcecontract unchanged",
+      "implementation_subject": "c21fc14a8d1f4f6e9c2d494068886dc79f1c0445",
+      "independent_review": ".software-factory/runs/software-factory-v01/evidence/sf-docs-final-independent-review.json",
+      "limits": [
+        "No passing51case canonical run claimed before execution.",
+        "README52 remains approved future contract."
+      ]
+    },
+    "canonical-launch-epic-evals": {
+      "type": "canonical-epic-evaluation",
+      "subject_sha": "b532758b731897cf06b67798171817a8afd91066",
+      "status": "pass",
+      "scope": "40selectedlaunch+regressioncases under51caseplan; notall51premerge.",
+      "run_id": "r-20261015T191832Z-epic",
+      "mode": "epic",
+      "totals": {
+        "failed": 0,
+        "passed": 40,
+        "quarantined": 0,
+        "skipped": 0,
+        "unverified": 0
+      },
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/canonical-launch51-epic-receipt-b532.json",
+      "artifact_sha256": "1f6463e00bd4101cf9dc09941b3197ad69a427c0bedb2653cba4659c2e306673"
+    },
+    "actual-dogfood-review": {
+      "type": "independent-review",
+      "subject_sha": "06f812e1c34ead34d942b5f2542f995fbf0be38d",
+      "reviewer": "/root/final_audit",
+      "author": "/root",
+      "status": "pass",
+      "scope": "Actual setup and BMad planning addition only; exact reviewed document bytes committed unchanged. Historical failures/cancellation and current capability limits remain explicit.",
+      "document": "docs/DOGFOOD.md",
+      "document_sha256": "86bcd29f9ad27f4162408d17275a132bcfc5458ee505330da96a1cec67bdbf81",
+      "checks": {
+        "docs_journey": {
+          "run": 14,
+          "passed": 14,
+          "exit_code": 0
+        },
+        "links_exit_code": 0,
+        "public_scan_exit_code": 0
+      },
+      "limitations": [
+        "No current combined full-gate, live host registration, external integration, deployment or publication acceptance."
+      ]
+    },
+    "ci-portability-recovery": {
+      "type": "ci-portability-recovery",
+      "subject_sha": "a2a8e42541205b1404cd2108d45b2fe9a74f62ea",
+      "at": "2026-10-15T23:19:04.763446+00:00",
+      "status": "implementation-in-review-remote-ci-required",
+      "summary": "Portable overlay fixture and bounded browser launch diagnostics, including UTF-8 replacement and real subprocess regression. No runner-browser cause or fix inferred.",
+      "authors": [
+        "/root/ci_temp_diagnosis",
+        "/root/ci_mermaid_diagnosis"
+      ],
+      "logical_owner": "codex-ci-recovery",
+      "effective_model": null,
+      "independent_reviewer": "/root/ci_recovery_blind",
+      "review": "Three actionable findings repaired and independently confirmed; preexisting capture memory limitation deferred.",
+      "checks": [
+        {
+          "command": "python3 -m unittest discover -s tests -p test_overlays.py -v",
+          "exit_code": 0,
+          "tests": 22
+        },
+        {
+          "command": "python3 -m unittest discover -s tests -p test_evolve.py -v",
+          "exit_code": 0,
+          "tests": 18
+        },
+        {
+          "command": "python3 -m unittest discover -s tests -p test_tools.py -k CheckMermaidDiagnosticsTest -v",
+          "exit_code": 0,
+          "tests": 9
+        },
+        {
+          "command": "python3 -m unittest discover -s tests -p test_tools.py -k CheckMermaidTest -v",
+          "exit_code": 0,
+          "tests": 4
+        },
+        {
+          "command": "uvx --from ruff==0.17.0 ruff check scripts/check_mermaid.py tests/test_tools.py tests/test_overlays.py",
+          "exit_code": 0,
+          "execution": "two disjoint touched-file commands"
+        }
+      ],
+      "files": {
+        "scripts/check_mermaid.py": "3a0fe568f40f8b18b2f346d8408e17d4156a5172cf2e011b8dfbf62900ae51f7",
+        "tests/test_tools.py": "2eb43a83afeb7b0bec0de98118db4e87fabf3270b266fb270ea199dfd9543f33",
+        "tests/test_overlays.py": "aa67dc1cad2119663f5bb00802abc8530e416df5acdf2c52e2c346d0398742b2"
+      },
+      "external_handoffs": [
+        {
+          "path": "/tmp/sf-ci-temp-recovery-handoff.json",
+          "sha256": "ae2b6ff99caffaac009cc12276cd94b9170d63f7502627b16c04020d2114841c"
+        },
+        {
+          "path": "/tmp/sf-ci-mermaid-implementation-handoff.md",
+          "sha256": "0632bbda65ff372c26657a24458bdfd4f83a3ff294e50739f93865bcb9b04eba"
+        }
+      ],
+      "limits": [
+        "Local macOS3.12 focused proof only; complete frozen gate and actual six-job CI still required.",
+        "No integration, release or protected board completion asserted.",
+        "Displayed output is bounded; existing capture_output still accumulates streams in memory."
+      ]
+    },
+    "linux-runner-browser": {
+      "type": "linux-runner-browser-recovery",
+      "subject_sha": "f64dcebddfffef23c0ed99c5c8200029029c957e",
+      "at": "2026-10-15T23:35:51.736115+00:00",
+      "status": "implementation-in-review-real-ci-required",
+      "summary": "Linux CI selects actual preinstalled official Chrome through supported Puppeteer executable config and runs a real checker smoke before full tests. Normal sandboxing retained.",
+      "author": "/root/ci_mermaid_diagnosis",
+      "logical_owner": "codex-ci-recovery",
+      "effective_model": null,
+      "independent_reviewer": "/root/ci_browser_blind",
+      "review": "Three small diagnostic and coverage findings repaired; independent static confirmation found no remaining issues.",
+      "checks": [
+        {
+          "command": "PYTHONPATH=tests python3 -m unittest test_tools.LinuxRunnerChromeTest test_tools.CheckMermaidDiagnosticsTest test_tools.CheckAllShTest -q",
+          "exit_code": 0,
+          "tests": 17,
+          "seconds": 0.343
+        },
+        {
+          "command": "uvx --from ruff==0.17.0 ruff check tests/test_tools.py",
+          "exit_code": 0
+        },
+        {
+          "command": "uvx check-jsonschema --builtin-schema vendor.github-workflows .github/workflows/ci.yml",
+          "exit_code": 0
+        },
+        {
+          "command": "bash -n for both actual workflow shell bodies",
+          "exit_code": 0,
+          "execution": "included in focused tests"
+        }
+      ],
+      "files": {
+        ".github/workflows/ci.yml": "ac8c8d5a8e8924bfbb46df87fd4bc804ba79bf604a1309b2a078f58a3d3e33aa",
+        "tests/test_tools.py": "c0a1121ddcdd6984f46c8d2e9095a54c1322c2a55d756598d472919af46c60e0"
+      },
+      "external_handoff": {
+        "path": "/tmp/sf-ci-runner-chrome-implementation-handoff.md",
+        "sha256": "7a47af8b19d4ad7a523bed18eafadf968d6e56a985fc47c4d379665bd62a4b43"
+      },
+      "limits": [
+        "Stub checks and static review do not prove actual browser protocol/sandbox behavior; real Linux smoke and complete six-job CI required.",
+        "No maintainer integration, release, protected completion or Pages proof asserted."
+      ]
+    },
+    "git-fixture-isolation": {
+      "type": "disposable-git-maintenance-isolation",
+      "subject_sha": "b5a53f27acfc554b50ec0b89df44006ccecd18ae",
+      "at": "2026-10-16T00:01:39.978363+00:00",
+      "status": "implementation-in-review-real-ci-required",
+      "summary": "Test Git helper disables automatic housekeeping through command-local options. Strict fixture removal and all product convergence assertions remain. No persistent/global/environment settings changes.",
+      "author": "/root/ci_temp_diagnosis",
+      "logical_owner": "codex-ci-recovery",
+      "effective_model": null,
+      "independent_reviewer": "/root/ci_git_fixture_blind",
+      "review": "Two low coverage findings patched and independently confirmed; actual commit trace and temporary global/environment persistence checks included.",
+      "checks": [
+        {
+          "command": "python3 -m unittest discover -s tests -p test_host_selection.py -v",
+          "exit_code": 0,
+          "tests": 18
+        },
+        {
+          "command": "python3 -m unittest discover -s tests -p test_installer.py -v",
+          "exit_code": 0,
+          "tests": 20
+        },
+        {
+          "command": "python3 -m unittest discover -s tests -p test_state.py -v",
+          "exit_code": 0,
+          "tests": 56
+        },
+        {
+          "command": "uvx --from ruff==0.17.0 ruff check tests/support.py tests/test_host_selection.py",
+          "exit_code": 0
+        }
+      ],
+      "files": {
+        "tests/support.py": "485ce070811862a0bdea8d1b4dd3882eb80c5806b486e2f0b6a7b6af84133d7d",
+        "tests/test_host_selection.py": "1ff84af0eeef944dac582026e72e11489e0acff6a83967354c6f631403016e24"
+      },
+      "actual_local_trace": {
+        "actual_commit_start_events": 1,
+        "head_changed": true,
+        "maintenance_or_gc_child_start_events": 0,
+        "child_environment_unchanged": true,
+        "global_config_sentinel_unchanged": true,
+        "repository_config_unchanged": true,
+        "parent_environment_unchanged": true
+      },
+      "external_handoff": {
+        "path": "/tmp/sf-ci-maintenance-handoff.json",
+        "sha256": "21121b8ac77b381144057aac5dfcb21fe7143d310e1b0fc200acb9151747b981"
+      },
+      "external_review": {
+        "path": "/tmp/sf-ci-maintenance-review.md",
+        "sha256": "614eb3252908ccac1fe42bbca69644c4b5f6c63c2b6024d68bca95920583118e"
+      },
+      "limits": [
+        "Host selection18cases and Ruff rerun after coverage fixes. Prior installer20/state56cases remain applicable: tests/support.py bytes unchanged since those passing runs and only host-selection regression coverage extended.",
+        "Focused macOS3.12 proof; fresh complete localgate and actual six-jobCI includingMac3.11 remain required.",
+        "No integration/release/protectedcompletion asserted."
+      ]
+    },
+    "shellcheck-acquisition": {
+      "type": "ci-shellcheck-acquisition-recovery",
+      "subject_sha": "a354d16d1d24360e2809b8707dcd485ee43f27b3",
+      "at": "2026-10-16T00:48:38.686072+00:00",
+      "status": "implementation-in-review-real-ci-required",
+      "summary": "CI acquires exact official ShellCheck0.11.0 with archive/binary SHA validation in owned job temp and supported wrapper override, then executes unchanged lint before unit tests and again in fullgate. Failed anonymous-metadata attempt retained.",
+      "author": "/root/ci_mermaid_diagnosis",
+      "logical_owner": "codex-ci-recovery",
+      "effective_model": null,
+      "independent_reviewer": "/root/ci_browser_blind",
+      "review": "Independent plan and actual diff accepted; no actionable findings. Root independently reran26focusedmethods and actual unchanged CI body with realofficialDarwinARMbinary+realnpmwrapper.",
+      "files": {
+        ".github/workflows/ci.yml": "5fd96302c59a341ddaefaf58ea49e9fa414326f73fade5a94a5afd2db94ea3b4",
+        "tests/test_tools.py": "0d59afc47c6562ac953abfff1ac8e67cd27dfbc99101b4c557012737d6991805",
+        "CONTRIBUTING.md": "415d5f7430422166099e7700589cd3700eda6d69b14730484bf988a3985c6b17"
+      },
+      "checks": [
+        {
+          "command": "PYTHONPATH=tests python3 -m unittest test_tools.ShellCheckAcquisitionTest test_tools.LinuxRunnerChromeTest test_tools.CheckMermaidDiagnosticsTest test_tools.CheckAllShTest -q",
+          "exit_code": 0,
+          "tests": 26,
+          "seconds": 2.087,
+          "external_log_sha256": "77cbbdbe37657eeb29c51b8cff87e5c65ead6f32c49d590e2d73c859a722f770"
+        },
+        {
+          "command": "uvx --from ruff==0.17.0 ruff check tests/test_tools.py",
+          "exit_code": 0
+        },
+        {
+          "command": "uvx check-jsonschema --builtin-schema vendor.github-workflows .github/workflows/ci.yml",
+          "exit_code": 0
+        }
+      ],
+      "independent_review": {
+        "artifact": ".software-factory/runs/software-factory-v01/evidence/ci-shellcheck-blind-review-a354d16.md",
+        "sha256": "2877af21953cb4910b9d5d4056ee0ce283ffb55bb31166b4fa5e1408ba19bb17"
+      },
+      "actual_ci_body_local_proof": {
+        "artifact": ".software-factory/runs/software-factory-v01/evidence/ci-shellcheck-actual-body-a354d16.json",
+        "sha256": "d7724cb9fed33f785a60fd2791a83cdf9b1a13cb2824b9d5d3595118c28eb3f8"
+      },
+      "source_handoff": {
+        "artifact": ".software-factory/runs/software-factory-v01/evidence/ci-shellcheck-source-handoff-a354d16.json",
+        "sha256": "bb1d31ff1a4db2df66192cab27583478ead45c9c4f24eecfd58b08b2d56ad0e0"
+      },
+      "limits": [
+        "Root actualworkflow-body proof is localDarwinARM only; allsix freshactualCI jobs and complete frozenlocalgate stillrequired.",
+        "No gatecommand/52evalcontract/permissions/credentials/globalinstallation changed.",
+        "No integration/publication/protected completion inferred."
+      ]
+    }
+  },
   "baseline_sha": null,
   "branch": null,
   "pr": null,
   "merged_sha": null,
-  "history": [],
-  "findings": [],
-  "source_key": "launch-publication/docs-examples-dogfood"
+  "history": [
+    {
+      "at": "2026-10-15T18:05:02.551421+00:00",
+      "by": "orchestrator",
+      "from": "backlog",
+      "to": "ready-for-dev"
+    },
+    {
+      "at": "2026-10-15T18:05:02.747352+00:00",
+      "by": "codex-docs",
+      "from": "ready-for-dev",
+      "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T18:57:51.337987+00:00",
+      "by": "codex-docs",
+      "from": "in-progress",
+      "to": "in-review"
+    },
+    {
+      "at": "2026-10-15T19:40:45.663797+00:00",
+      "by": "codex-dogfood",
+      "from": "in-review",
+      "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T19:42:48.912643+00:00",
+      "by": "codex-dogfood",
+      "from": "in-progress",
+      "to": "in-review"
+    },
+    {
+      "at": "2026-10-15T23:15:24.059759+00:00",
+      "by": "codex-ci-recovery",
+      "from": "in-review",
+      "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T23:19:04.796193+00:00",
+      "by": "codex-ci-recovery",
+      "from": "in-progress",
+      "to": "in-review"
+    },
+    {
+      "at": "2026-10-15T23:31:47.252045+00:00",
+      "by": "codex-ci-recovery",
+      "from": "in-review",
+      "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T23:35:51.770909+00:00",
+      "by": "codex-ci-recovery",
+      "from": "in-progress",
+      "to": "in-review"
+    },
+    {
+      "at": "2026-10-15T23:56:58.441741+00:00",
+      "by": "codex-ci-recovery",
+      "from": "in-review",
+      "to": "in-progress"
+    },
+    {
+      "at": "2026-10-16T00:01:40.011081+00:00",
+      "by": "codex-ci-recovery",
+      "from": "in-progress",
+      "to": "in-review"
+    },
+    {
+      "at": "2026-10-16T00:41:56.747270+00:00",
+      "by": "codex-ci-recovery",
+      "from": "in-review",
+      "to": "in-progress"
+    },
+    {
+      "at": "2026-10-16T00:48:38.777668+00:00",
+      "by": "codex-ci-recovery",
+      "from": "in-progress",
+      "to": "in-review"
+    }
+  ],
+  "findings": [
+    {
+      "at": "2026-10-15T18:57:51.337847+00:00",
+      "by": "codex-docs",
+      "text": "Original2770 docs review found4P2s. Exact90dd repairs independentlyaccepted; c21 finalmergedcore/cycle sourcealignment accepted. Originalfailedreviews retained; implementation/in-review doesnotclaimintegration/effect/epicacceptance."
+    }
+  ],
+  "source_key": "launch-publication/docs-examples-dogfood",
+  "evidence_contract": 1,
+  "review_subject_sha": "a354d16d1d24360e2809b8707dcd485ee43f27b3"
 }

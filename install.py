@@ -33,13 +33,18 @@ import argparse
 import dataclasses
 import fcntl
 import hashlib
+import importlib.util
 import json
 import os
+import shlex
 import shutil
+import stat
 import sys
 import tempfile
 import time
+import tomllib
 import uuid
+from contextlib import contextmanager
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -61,6 +66,7 @@ GITIGNORE_ENTRIES = (
     f"{STATE_DIR}/runs/",
     f"{STATE_DIR}/active.json",
     f"{STATE_DIR}/state.lock",
+    LOCK_REL,
     f"{STATE_DIR}/installation.json",
 )
 
@@ -77,20 +83,51 @@ CLAUDE_BLOCK = (
     "`.software-factory/` and is ignored except for the committed\n"
     "`context/` home.\n"
 )
+CODEX_BLOCK = (
+    "## Software Factory\n"
+    "\n"
+    "This project has the Software Factory pack installed for Codex.\n"
+    "Start or resume factory work with the `software-factory` skill\n"
+    "(`$software-factory`); its entry point is\n"
+    "`.agents/skills/software-factory/SKILL.md`.\n"
+    "Factory-owned files are listed in\n"
+    "`.software-factory/installation.json`; runtime state lives under\n"
+    "`.software-factory/` and is ignored except for the committed\n"
+    "`context/` home. Codex hooks run only after a one-time trust\n"
+    "review: run `/hooks` and trust the factory hooks.\n"
+    "Custom agents inherit the parent session permissions; reviewer\n"
+    "instructions do not enforce a separate read-only sandbox. When enforced\n"
+    "read-only review is required, verify an actually read-only parent/session\n"
+    "or supported restriction before proceeding with dependent work.\n"
+)
+BLOCKS = {"CLAUDE.md": CLAUDE_BLOCK, "AGENTS.md": CODEX_BLOCK}
 
-# (settings hook event, matcher, normalized hook.py event)
+# (settings hook event, matcher, normalized hook.py event); Claude Code and
+# Codex share this matcher-group shape.
 HOOK_EVENTS = (
     ("SessionStart", "startup|resume|clear|compact", "session-start"),
     ("PreCompact", "manual|auto", "pre-compact"),
+)
+# (hooks.json event, normalized hook.py event); Cursor events are flat
+# command entries with no matcher (sessionStart fires per conversation and
+# the helper filters background agents itself).
+CURSOR_HOOK_EVENTS = (
+    ("sessionStart", "session-start"),
+    ("preCompact", "pre-compact"),
 )
 
 LOCK_WAIT_SECONDS = 5.0
 LOCK_POLL_SECONDS = 0.05
 
-# Host ids with a registered projector. Cursor and Codex register here in
-# their own milestone feature; the selection plumbing already supports them.
-REGISTERED_HOSTS = ("claude-code",)
-POLICY_DIRS = {"claude-code": "claude"}
+# Host ids with a registered projector.
+REGISTERED_HOSTS = ("claude-code", "cursor", "codex")
+POLICY_DIRS = {"claude-code": "claude", "cursor": "cursor", "codex": "codex"}
+# Project-directory markers and CLI binary names used by --host auto.
+# Detection is `command -v` style (shutil.which): host binaries are never
+# executed.
+HOST_MARKERS = {"claude-code": ".claude", "cursor": ".cursor", "codex": ".codex"}
+HOST_BINARIES = {"claude-code": "claude", "cursor": "cursor-agent",
+                 "codex": "codex"}
 
 
 class InstallError(Exception):
@@ -105,6 +142,9 @@ class Action:
     kind: str  # write | merge | block | gitignore
     content: bytes | None  # None for merge kinds until planned
     host: str | None
+    inputs: dict[str, str | None] | None = None
+    overlay: bool = False
+    root_identity: tuple[int, int] | None = None
 
 
 @dataclasses.dataclass
@@ -193,25 +233,134 @@ def load_policy(host: str) -> dict:
     return policy
 
 
+def load_agent_policy(host: str) -> dict:
+    path = PACK_ROOT / "hosts" / POLICY_DIRS[host] / "agent-policy.json"
+    try:
+        policy = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise InstallError(f"pack host policy is unreadable: {path.name}") from exc
+    if not isinstance(policy, dict):
+        raise InstallError(f"pack host policy is invalid for {host}")
+    return policy
+
+
+def frontmatter_close(lines: list[str], rel: str) -> int:
+    """Index of the closing frontmatter fence; refuses a malformed block."""
+    if not lines or lines[0].strip() != "---":
+        raise InstallError(f"{rel}: missing frontmatter")
+    for index in range(1, len(lines)):
+        if lines[index].strip() == "---":
+            return index
+    raise InstallError(f"{rel}: frontmatter never closes")
+
+
 def inject_claude_frontmatter(content: bytes, skill: str, policy: dict) -> bytes:
     """Add Claude-only keys to a canonical SKILL.md; the body never changes."""
     text = content.decode("utf-8")
     lines = text.split("\n")
-    if not lines or lines[0].strip() != "---":
-        raise InstallError(f"skill {skill}: SKILL.md is missing frontmatter")
-    closing = None
-    for index in range(1, len(lines)):
-        if lines[index].strip() == "---":
-            closing = index
-            break
-    if closing is None:
-        raise InstallError(f"skill {skill}: SKILL.md frontmatter never closes")
+    closing = frontmatter_close(lines, f"skills/{skill}/SKILL.md")
     hint = policy["argument_hints"].get(skill, "[request]")
     extra = [f'argument-hint: "{hint}"']
     if skill in policy.get("explicit_only", []):
         extra.append("disable-model-invocation: true")
     lines[closing:closing] = extra
     return "\n".join(lines).encode()
+
+
+def inject_cursor_readonly(content: bytes, role: str, policy: dict) -> bytes:
+    """Add the Cursor readonly flag to a canonical agent; body never changes."""
+    text = content.decode("utf-8")
+    lines = text.split("\n")
+    closing = frontmatter_close(lines, f"agents/{role}.md")
+    readonly = "true" if role in set(policy.get("readonly", [])) else "false"
+    insert_at = closing
+    for index in range(1, closing):
+        if lines[index].startswith("model:"):
+            insert_at = index + 1
+            break
+    lines[insert_at:insert_at] = [f"readonly: {readonly}"]
+    return "\n".join(lines).encode()
+
+
+def parse_agent_frontmatter(path: Path) -> tuple[str, str, str]:
+    """(name, description, body) of a canonical role agent."""
+    text = path.read_text(encoding="utf-8")
+    lines = text.split("\n")
+    closing = frontmatter_close(lines, f"agents/{path.name}")
+    fields: dict[str, str] = {}
+    for line in lines[1:closing]:
+        if not line.strip():
+            continue
+        key, sep, raw = line.partition(":")
+        if not sep:
+            raise InstallError(f"agents/{path.name}: unparsable frontmatter line")
+        fields[key.strip()] = raw.strip()
+    name = fields.get("name", "")
+    if name != path.stem:
+        raise InstallError(f"agents/{path.name}: name does not match the file")
+    if fields.get("model") != "inherit":
+        raise InstallError(f"agents/{path.name}: canonical agents use model: inherit")
+    raw_description = fields.get("description", "")
+    if raw_description.startswith('"'):
+        try:
+            description = json.loads(raw_description)
+        except json.JSONDecodeError as exc:
+            raise InstallError(
+                f"agents/{path.name}: bad description quoting"
+            ) from exc
+    else:
+        description = raw_description
+    if not description:
+        raise InstallError(f"agents/{path.name}: missing description")
+    body = "\n".join(lines[closing + 1 :]).lstrip("\n").rstrip("\n") + "\n"
+    return name, description, body
+
+
+def codex_agent_toml(path: Path) -> bytes:
+    """Project canonical role intent; model and permissions inherit the parent.
+
+    Custom-agent sandbox_mode cannot override parent permissions. Preserve
+    reviewer instructions without claiming they create an enforced sandbox.
+    """
+    name, description, body = parse_agent_frontmatter(path)
+    if "'''" in body:
+        raise InstallError(f"agents/{path.name}: body cannot embed in TOML")
+    text = (
+        f"# Generated from agents/{name}.md by the Software Factory installer;\n"
+        "# regenerate with install.py instead of editing by hand.\n"
+        "# Permissions inherit the parent session; role instructions do not enforce isolation.\n"
+        f"name = {json.dumps(name)}\n"
+        f"description = {json.dumps(description)}\n"
+        "developer_instructions = '''\n"
+        f"{body}"
+        "'''\n"
+    )
+    return text.encode()
+
+
+def openai_yaml(skill: str, policy: dict) -> bytes:
+    """The Codex ``agents/openai.yaml`` policy file for one skill.
+
+    Written for the six entry/admin skills (``allow_implicit_invocation:
+    false``) and for working skills with an interface declaration
+    (``sf-crawl``, implicitly invocable like the design skills, which carry
+    no policy file at all).
+    """
+    lines = [
+        "# Generated by the Software Factory installer; canonical policy: "
+        + "hosts/codex/policy.json."
+    ]
+    interface = policy.get("openai_interface", {}).get(skill)
+    if interface:
+        lines.append("interface:")
+        for key in sorted(interface):
+            lines.append(f'  {key}: "{interface[key]}"')
+    explicit = skill in set(policy.get("explicit_only", []))
+    lines.append("policy:")
+    lines.append(
+        f"  allow_implicit_invocation: {'false' if explicit else 'true'}"
+    )
+    return ("\n".join(lines) + "\n").encode()
 
 
 def project_claude(root: Path, policy: dict, profile: str) -> list[Action]:
@@ -228,19 +377,25 @@ def project_claude(root: Path, policy: dict, profile: str) -> list[Action]:
             if "__pycache__" in src.parts or src.suffix == ".pyc":
                 continue
             rel = src.relative_to(skills_src).as_posix()
-            content = src.read_bytes()
+            content = project_runtime_script(rel, src.read_bytes())
             if src.name == "SKILL.md":
                 content = inject_claude_frontmatter(content, skill_dir.name, policy)
             actions.append(Action(f".claude/skills/{rel}", "write", content,
                                   "claude-code"))
+    actions.append(Action(".claude/skills/software-factory/schemas/config.schema.json", "write",
+                          auxiliary_bytes("schemas/config.schema.json"), "claude-code"))
+    actions.append(Action(".claude/skills/software-factory/scripts/trackers.py", "write",
+                          auxiliary_bytes("adapters/trackers.py"), "claude-code"))
+    for name in ("PRINCIPLES.md", "ARCHITECTURE.md", "CONVENTIONS.md"):
+        actions.append(Action(f".claude/skills/sf-help/templates/{name}", "write",
+                              auxiliary_bytes(f"templates/{name}"), "claude-code"))
+    actions.extend(bot_assets(".claude/skills", "claude-code"))
+    actions.extend(evolve_assets(".claude/skills", "claude-code"))
     if profile == "full":
         for src in sorted((PACK_ROOT / "agents").glob("sf-*.md")):
             actions.append(Action(f".claude/agents/{src.name}", "write",
                                   src.read_bytes(), "claude-code"))
-        for helper in RUNTIME_HELPERS:
-            src = PACK_ROOT / KERNEL_SCRIPTS / helper
-            actions.append(Action(f"{RUNTIME_REL}/{helper}", "write",
-                                  src.read_bytes(), None))
+        actions.extend(runtime_actions())
         actions.append(Action(".claude/settings.json", "merge", None,
                               "claude-code"))
         actions.append(Action("CLAUDE.md", "block", None, "claude-code"))
@@ -248,21 +403,230 @@ def project_claude(root: Path, policy: dict, profile: str) -> list[Action]:
     return actions
 
 
-PROJECTORS = {"claude-code": project_claude}
+def project_runtime_script(relative: str, content: bytes) -> bytes:
+    """Installed helpers must never guess a source-pack fallback in consumer paths."""
+    if relative in ("sf-agents/scripts/render_bots.py", "sf-evolve/scripts/evolve.py"):
+        marker = b"SOURCE_LAYOUT = True  # Canonical projector sets False in every installed payload."
+        if content.count(marker) != 1:
+            raise InstallError("canonical helper layout marker missing or ambiguous")
+        content = content.replace(marker, marker.replace(b"True", b"False", 1))
+    return content
+
+
+def bot_assets(prefix: str, host: str | None) -> list[Action]:
+    assets = [p.relative_to(PACK_ROOT).as_posix() for p in sorted((PACK_ROOT / "integrations/bots").rglob("*.tmpl"))]
+    actions = [Action(f"{prefix}/sf-agents/templates/{rel.removeprefix('integrations/bots/')}",
+                      "write", auxiliary_bytes(rel), host) for rel in assets]
+    actions.append(Action(f"{prefix}/sf-agents/scripts/install_lifecycle.py", "write",
+                          auxiliary_bytes("scripts/install_lifecycle.py"), host))
+    return actions
+
+
+def evolve_assets(prefix: str, host: str | None) -> list[Action]:
+    return [Action(f"{prefix}/sf-evolve/schemas/overlay.schema.json", "write",
+                   auxiliary_bytes("schemas/overlay.schema.json"), host),
+            Action(f"{prefix}/sf-evolve/scripts/bmad_install.py", "write",
+                   auxiliary_bytes("scripts/bmad_install.py"), host)]
+
+
+def evolution():
+    """Canonical pure composer; publication remains this install transaction."""
+    path = PACK_ROOT / "skills/sf-evolve/scripts/evolve.py"
+    previous = sys.dont_write_bytecode
+    sys.dont_write_bytecode = True
+    try:
+        spec = importlib.util.spec_from_file_location("sf_install_evolution", path)
+        loaded = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(loaded)
+        return loaded
+    finally:
+        sys.dont_write_bytecode = previous
+
+
+def auxiliary_bytes(relative: str) -> bytes:
+    """Read canonical schema/adapter assets without following source symlinks."""
+    descriptors = []
+    try:
+        fd = os.open(PACK_ROOT, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+        descriptors.append(fd)
+        parts = Path(relative).parts
+        for part in parts[:-1]:
+            fd = os.open(part, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=fd)
+            descriptors.append(fd)
+        leaf = os.open(parts[-1], os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK, dir_fd=fd)
+        descriptors.append(leaf)
+        before = os.fstat(leaf)
+        if not stat.S_ISREG(before.st_mode) or before.st_size > 1024 * 1024:
+            raise InstallError("canonical auxiliary asset is not a bounded regular file")
+        content = bytearray()
+        while len(content) <= 1024 * 1024:
+            chunk = os.read(leaf, min(65536, 1024 * 1024 + 1 - len(content)))
+            if not chunk:
+                break
+            content.extend(chunk)
+        after = os.fstat(leaf)
+        current = os.stat(parts[-1], dir_fd=fd, follow_symlinks=False)
+        def identity(info):
+            return (info.st_dev, info.st_ino, info.st_size, info.st_mtime_ns, info.st_ctime_ns)
+        if len(content) > 1024 * 1024 or identity(before) != identity(after) or identity(after) != identity(current):
+            raise InstallError("canonical auxiliary asset changed during read")
+        return bytes(content)
+    except OSError as exc:
+        raise InstallError("canonical auxiliary asset missing or unsafe") from exc
+    finally:
+        for descriptor in reversed(descriptors):
+            os.close(descriptor)
+
+
+def runtime_actions() -> list[Action]:
+    """The host-neutral kernel helper copies under .software-factory/runtime/."""
+    return [
+        Action(
+            f"{RUNTIME_REL}/{helper}",
+            "write",
+            (PACK_ROOT / KERNEL_SCRIPTS / helper).read_bytes(),
+            None,
+        )
+        for helper in RUNTIME_HELPERS
+    ] + [Action(f"{RUNTIME_REL}/config.schema.json", "write",
+                auxiliary_bytes("schemas/config.schema.json"), None),
+         Action(f"{RUNTIME_REL}/trackers.py", "write", auxiliary_bytes("adapters/trackers.py"), None)]
+
+
+def project_shared_skills(hosts: list[str]) -> list[Action]:
+    """The one shared .agents/skills payload for Cursor and Codex.
+
+    Apply each installed host's invocation policy to canonical sources.
+    Cursor needs its explicit-only frontmatter flag; Codex needs openai.yaml.
+    Combined Codex frontmatter tolerance and live host loading are unverified.
+    """
+    actions: list[Action] = []
+    cursor_explicit = (
+        set(load_policy("cursor").get("explicit_only", []))
+        if "cursor" in hosts else set()
+    )
+    skills_src = PACK_ROOT / "skills"
+    for skill_dir in sorted(skills_src.iterdir()):
+        if not (skill_dir / "SKILL.md").is_file():
+            continue
+        for src in sorted(skill_dir.rglob("*")):
+            if not src.is_file():
+                continue
+            if "__pycache__" in src.parts or src.suffix == ".pyc":
+                continue
+            rel = src.relative_to(skills_src).as_posix()
+            content = project_runtime_script(rel, src.read_bytes())
+            if src.name == "SKILL.md" and skill_dir.name in cursor_explicit:
+                lines = content.decode("utf-8").split("\n")
+                closing = frontmatter_close(lines, f"skills/{rel}")
+                lines[closing:closing] = ["disable-model-invocation: true"]
+                content = "\n".join(lines).encode()
+            actions.append(
+                Action(f".agents/skills/{rel}", "write", content, None)
+            )
+    actions.append(Action(".agents/skills/software-factory/schemas/config.schema.json", "write",
+                          auxiliary_bytes("schemas/config.schema.json"), None))
+    actions.append(Action(".agents/skills/software-factory/scripts/trackers.py", "write",
+                          auxiliary_bytes("adapters/trackers.py"), None))
+    for name in ("PRINCIPLES.md", "ARCHITECTURE.md", "CONVENTIONS.md"):
+        actions.append(Action(f".agents/skills/sf-help/templates/{name}", "write",
+                              auxiliary_bytes(f"templates/{name}"), None))
+    actions.extend(bot_assets(".agents/skills", None))
+    actions.extend(evolve_assets(".agents/skills", None))
+    if "codex" in hosts:
+        codex_policy = load_policy("codex")
+        policy_skills = set(codex_policy.get("explicit_only", [])) | set(
+            codex_policy.get("openai_interface", {})
+        )
+        for skill in sorted(policy_skills):
+            actions.append(
+                Action(
+                    f".agents/skills/{skill}/agents/openai.yaml",
+                    "write",
+                    openai_yaml(skill, codex_policy),
+                    None,
+                )
+            )
+    return actions
+
+
+def project_cursor(root: Path, policy: dict, profile: str) -> list[Action]:
+    """The Cursor projection: readonly-matrix agents, hooks v1, .mdc rule.
+
+    The skills payload is shared with Codex and planned once per install
+    by build_plan (project_shared_skills).
+    """
+    del root, policy  # destinations are root-relative; policy already loaded
+    actions: list[Action] = []
+    if profile == "full":
+        agent_policy = load_agent_policy("cursor")
+        for src in sorted((PACK_ROOT / "agents").glob("sf-*.md")):
+            actions.append(Action(
+                f".cursor/agents/{src.name}", "write",
+                inject_cursor_readonly(src.read_bytes(), src.stem, agent_policy),
+                "cursor"))
+        actions.extend(runtime_actions())
+        actions.append(Action(".cursor/hooks.json", "merge", None, "cursor"))
+        rule = (PACK_ROOT / "hosts" / "cursor" / "factory.mdc").read_bytes()
+        actions.append(Action(
+            ".cursor/rules/software-factory.mdc", "write", rule, "cursor"))
+    actions.append(Action(".gitignore", "gitignore", None, None))
+    return actions
+
+
+def project_codex(root: Path, policy: dict, profile: str) -> list[Action]:
+    """The Codex projection: TOML agents, hooks.json, the AGENTS.md block.
+
+    The skills payload is shared with Cursor and planned once per install
+    by build_plan (project_shared_skills).
+    """
+    del root, policy
+    actions: list[Action] = []
+    if profile == "full":
+        for src in sorted((PACK_ROOT / "agents").glob("sf-*.md")):
+            actions.append(Action(
+                f".codex/agents/{src.stem}.toml", "write",
+                codex_agent_toml(src), "codex"))
+        actions.extend(runtime_actions())
+        actions.append(Action(".codex/hooks.json", "merge", None, "codex"))
+        actions.append(Action("AGENTS.md", "block", None, "codex"))
+    actions.append(Action(".gitignore", "gitignore", None, None))
+    return actions
+
+
+PROJECTORS = {
+    "claude-code": project_claude,
+    "cursor": project_cursor,
+    "codex": project_codex,
+}
 
 
 # -- merge kinds -------------------------------------------------------------
 
 
 def detect_python() -> str:
-    return shutil.which("python3") or sys.executable
+    """Keep the interpreter that successfully ran this Python >=3.11 installer.
+
+    PATH may contain an older Python or a different environment. Preserve
+    executable symlinks so virtual environments keep their intended runtime.
+    """
+    if sys.version_info < (3, 11) or not sys.executable:
+        raise InstallError("run the installer with Python 3.11 or newer")
+    executable = Path(sys.executable).absolute()
+    if not executable.is_file() or not os.access(executable, os.X_OK):
+        raise InstallError("installer Python is unavailable; reinstall with Python 3.11 or newer")
+    return str(executable)
 
 
 def hook_command(root: Path, host: str, event: str) -> str:
     """The installed hook command; stderr merges into stdout (2>&1) so the
     sanitized recovery warning is observable on stdout (VAL-HOST-018)."""
     script = root / RUNTIME_REL / "hook.py"
-    return f'"{detect_python()}" "{script}" --host {host} --event {event} 2>&1'
+    command = shlex.join([
+        detect_python(), str(script), "--host", host, "--event", event,
+        "--workspace", str(root),
+    ])
+    return f"{command} 2>&1"
 
 
 def is_owned_handler(handler: object, host: str, event: str) -> bool:
@@ -276,23 +640,23 @@ def is_owned_handler(handler: object, host: str, event: str) -> bool:
     )
 
 
-def merge_settings(current: bytes | None, root: Path, host: str) -> bytes:
-    """Add owned hook entries to Claude settings, preserving all user data."""
-    rel = ".claude/settings.json"
+def parse_json_document(current: bytes | None, rel: str) -> dict:
+    """Parse a JSON settings/hooks document; refuse malformed bytes as-is."""
     if current is None:
-        settings: dict = {}
-    else:
-        try:
-            settings = json.loads(current.decode("utf-8"))
-        except (UnicodeDecodeError, json.JSONDecodeError) as exc:
-            raise InstallError(
-                f"{rel} is malformed ({exc}); fix or remove it manually"
-            ) from exc
-        if not isinstance(settings, dict):
-            raise InstallError(f"{rel} must contain a JSON object; refusing")
-    hooks = settings.setdefault("hooks", {})
-    if not isinstance(hooks, dict):
-        raise InstallError(f"{rel}: 'hooks' is not an object; refusing")
+        return {}
+    try:
+        doc = json.loads(current.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise InstallError(
+            f"{rel} is malformed ({exc}); fix or remove it manually"
+        ) from exc
+    if not isinstance(doc, dict):
+        raise InstallError(f"{rel} must contain a JSON object; refusing")
+    return doc
+
+
+def merge_event_groups(hooks: dict, root: Path, host: str, rel: str) -> None:
+    """Fold one owned command group per event into a matcher-group map."""
     for event, matcher, normalized in HOOK_EVENTS:
         groups = hooks.setdefault(event, [])
         if not isinstance(groups, list):
@@ -325,16 +689,70 @@ def merge_settings(current: bytes | None, root: Path, host: str) -> bytes:
             }
         )
         hooks[event] = kept
+
+
+def merge_settings(current: bytes | None, root: Path, host: str) -> bytes:
+    """Add owned hook entries to Claude settings, preserving all user data."""
+    rel = ".claude/settings.json"
+    settings = parse_json_document(current, rel)
+    hooks = settings.setdefault("hooks", {})
+    if not isinstance(hooks, dict):
+        raise InstallError(f"{rel}: 'hooks' is not an object; refusing")
+    merge_event_groups(hooks, root, host, rel)
     return (json.dumps(settings, indent=2) + "\n").encode()
 
 
-def block_text() -> str:
-    return f"{BLOCK_BEGIN}\n{CLAUDE_BLOCK}{BLOCK_END}\n"
+def merge_codex_hooks(current: bytes | None, root: Path) -> bytes:
+    """Codex hooks.json: the same matcher-group shape as Claude settings,
+    at the top level, preserving every user group and unrelated key."""
+    rel = ".codex/hooks.json"
+    doc = parse_json_document(current, rel)
+    hooks = doc.setdefault("hooks", {})
+    if not isinstance(hooks, dict):
+        raise InstallError(f"{rel}: 'hooks' is not an object; refusing")
+    merge_event_groups(hooks, root, "codex", rel)
+    return (json.dumps(doc, indent=2) + "\n").encode()
+
+
+def merge_cursor_hooks(current: bytes | None, root: Path) -> bytes:
+    """Cursor hooks.json v1: flat command entries without matchers.
+
+    The user's version and unrelated events (e.g. beforeShellExecution)
+    survive byte-value-identical; exactly one owned entry per event.
+    """
+    rel = ".cursor/hooks.json"
+    doc = parse_json_document(current, rel)
+    version = doc.get("version", 1)
+    if version != 1:
+        raise InstallError(
+            f"{rel}: unsupported hooks version {version!r}; refusing to merge"
+        )
+    doc["version"] = 1
+    hooks = doc.setdefault("hooks", {})
+    if not isinstance(hooks, dict):
+        raise InstallError(f"{rel}: 'hooks' is not an object; refusing")
+    for event, normalized in CURSOR_HOOK_EVENTS:
+        entries = hooks.setdefault(event, [])
+        if not isinstance(entries, list):
+            raise InstallError(f"{rel}: 'hooks.{event}' is not a list; refusing")
+        kept = [
+            entry
+            for entry in entries
+            if not is_owned_handler(entry, "cursor", normalized)
+        ]
+        kept.append(
+            {
+                "type": "command",
+                "command": hook_command(root, "cursor", normalized),
+            }
+        )
+        hooks[event] = kept
+    return (json.dumps(doc, indent=2) + "\n").encode()
 
 
 def merge_block(current: bytes | None, rel: str) -> bytes:
     """Insert or refresh the factory managed block; never touch user text."""
-    block = block_text()
+    block = f"{BLOCK_BEGIN}\n{BLOCKS[rel]}{BLOCK_END}\n"
     if current is None:
         return block.encode()
     try:
@@ -383,7 +801,13 @@ def merge_gitignore(current: bytes | None) -> bytes:
 
 def compute_content(action: Action, root: Path, before: bytes | None) -> bytes:
     if action.kind == "merge":
-        return merge_settings(before, root, action.host or "claude-code")
+        if action.path == ".claude/settings.json":
+            return merge_settings(before, root, action.host or "claude-code")
+        if action.path == ".cursor/hooks.json":
+            return merge_cursor_hooks(before, root)
+        if action.path == ".codex/hooks.json":
+            return merge_codex_hooks(before, root)
+        raise InstallError(f"internal error: no merge handler for {action.path}")
     if action.kind == "block":
         return merge_block(before, action.path)
     if action.kind == "gitignore":
@@ -419,34 +843,52 @@ def build_manifest(
     profile: str,
     install_id: str,
 ) -> dict:
+    """Extend ownership without adopting edits outside the current plan.
+
+    Installs are additive: selecting another host or skills-only profile
+    does not uninstall earlier projections. Preserve their recorded hashes
+    and backups, even if those files have since been changed or removed.
+    The profile records the fullest installed payload, not a downgrade.
+    """
     prior = {}
     if previous:
         for entry in previous.get("files", []):
             if isinstance(entry, dict) and "path" in entry:
                 prior[entry["path"]] = entry
-    files = []
+    files_by_path = dict(prior)
     for item in planned:
         backup = item.backup
         if backup is None:
             backup = prior.get(item.action.path, {}).get("backup")
-        files.append(
-            {
-                "path": item.action.path,
-                "sha256": item.after_hash,
-                "action": item.action.kind,
-                "host": item.action.host,
-                "backup": backup,
-            }
-        )
-    files.sort(key=lambda entry: entry["path"])
+        prior_entry = prior.get(item.action.path)
+        # Keep the original user restoration basis independent of rollback
+        # backups from later updates. Legacy manifests cannot prove it.
+        restoration = (prior_entry or {}).get("restore", "unverified")
+        if prior_entry is None:
+            restoration = (
+                {"path": item.backup, "sha256": item.before_hash}
+                if item.backup is not None else
+                None if item.before is None else "unverified"
+            )
+        files_by_path[item.action.path] = {
+            "path": item.action.path,
+            "sha256": item.after_hash,
+            "action": item.action.kind,
+            "host": item.action.host,
+            "backup": backup,
+            **({"restore": restoration} if restoration != "unverified" else {}),
+        }
+    files = sorted(files_by_path.values(), key=lambda entry: entry["path"])
+    installed_hosts = set(hosts) | set((previous or {}).get("hosts", []))
     return {
         "version": 1,
         "install_id": install_id,
         "installed_at": datetime.now(UTC).isoformat(timespec="seconds"),
         "pack": {"name": PACK_NAME, "version": PACK_VERSION},
-        "hosts": hosts,
-        "profile": profile,
+        "hosts": [host for host in REGISTERED_HOSTS if host in installed_hosts],
+        "profile": "full" if (previous or {}).get("profile") == "full" else profile,
         "files": files,
+        **({"bmad": previous["bmad"]} if previous and "bmad" in previous else {}),
     }
 
 
@@ -470,10 +912,35 @@ def build_plan(
     allow: set[str],
 ) -> tuple[list[PlannedFile], list[str], dict | None]:
     """Build the full plan; merge-kind refusals raise before any write."""
+    previous = load_manifest(root)
+    installed_hosts = set(hosts) | set((previous or {}).get("hosts", []))
     actions: list[Action] = []
     for host in hosts:
         actions.extend(PROJECTORS[host](root, load_policy(host), profile))
-    previous = load_manifest(root)
+    if any(host in ("cursor", "codex") for host in hosts):
+        actions.extend(project_shared_skills(sorted(installed_hosts)))
+    # Collapse duplicate destinations (runtime helpers, .gitignore) emitted
+    # by more than one projector; identical content is shared, divergent
+    # content is an internal error.
+    unique: list[Action] = []
+    seen_paths: dict[str, Action] = {}
+    for action in actions:
+        previous_action = seen_paths.get(action.path)
+        if previous_action is not None:
+            if (previous_action.kind, previous_action.content) != (
+                action.kind,
+                action.content,
+            ):
+                raise InstallError(
+                    f"internal error: conflicting plan for {action.path}"
+                )
+            continue
+        seen_paths[action.path] = action
+        unique.append(action)
+    try:
+        actions = evolution().overlay_actions(root, unique)
+    except (ValueError, OSError, UnicodeError) as exc:
+        raise InstallError("overlay/configuration composition refused: " + str(exc)) from None
     owned = {}
     if previous:
         for entry in previous.get("files", []):
@@ -504,10 +971,12 @@ def build_plan(
             # user edits elsewhere in the file are preserved, never conflicts.
             status = "noop" if sha256(before) == sha256(after) else action.kind
         if conflict:
-            if rel in allow:
+            if rel in allow and not action.overlay:
                 covered.add(rel)
             else:
                 conflicts.append(
+                    f"{conflict}; overlay targets require reconciliation; overwrite is unsupported"
+                    if action.overlay else
                     f"{conflict}; pass --allow-overwrite {rel} to replace it "
                     "(a private backup is written first)"
                 )
@@ -522,30 +991,26 @@ def build_plan(
 # -- apply -------------------------------------------------------------------
 
 
-def write_backup(root: Path, install_id: str, item: PlannedFile) -> str:
-    rel_backup = f"{BACKUPS_REL}/{install_id}/{item.action.path}"
-    dest = root / rel_backup
-    dest.parent.mkdir(parents=True, exist_ok=True)
-    atomic_write(dest, item.before or b"", set())
-    os.chmod(dest, 0o600)
-    base = root / BACKUPS_REL
-    walk = dest.parent
-    while True:
-        os.chmod(walk, 0o700)
-        if walk == base:
-            break
-        walk = walk.parent
-    return rel_backup
-
-
 def acquire_lock(root: Path, created_dirs: set[Path]):
     """Take the bounded installation lock; returns the lock fd and path."""
     state_dir = root / STATE_DIR
-    if not state_dir.exists():
-        state_dir.mkdir()
-        created_dirs.add(state_dir)
+    root_fd = os.open(root, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+    try:
+        try:
+            os.mkdir(STATE_DIR, dir_fd=root_fd)
+            created_dirs.add(state_dir)
+        except FileExistsError:
+            pass
+        state_fd = os.open(STATE_DIR, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW,
+                           dir_fd=root_fd)
+        try:
+            fd = os.open(Path(LOCK_REL).name, os.O_CREAT | os.O_RDWR | os.O_NOFOLLOW,
+                         0o600, dir_fd=state_fd)
+        finally:
+            os.close(state_fd)
+    finally:
+        os.close(root_fd)
     lock_path = root / LOCK_REL
-    fd = os.open(lock_path, os.O_CREAT | os.O_RDWR, 0o600)
     deadline = time.monotonic() + LOCK_WAIT_SECONDS
     while True:
         try:
@@ -561,32 +1026,79 @@ def acquire_lock(root: Path, created_dirs: set[Path]):
     return fd, lock_path
 
 
-def rollback(
-    root: Path, applied: list[PlannedFile], created_dirs: set[Path]
-) -> None:
-    """Undo this transaction's writes where the bytes are still ours."""
-    for item in reversed(applied):
-        target = root / item.action.path
-        try:
-            current = target.read_bytes() if target.is_file() else None
-        except OSError:
-            continue
-        if current is None or sha256(current) != item.after_hash:
-            continue  # a concurrent edit; never clobber it
-        if item.backup is not None:
-            backup = root / item.backup
-            if backup.is_file():
-                atomic_write(target, backup.read_bytes(), set())
-        else:
+def composition_sources(planned, published=()):
+    """Advance captured inputs only across exact, completed transaction writes."""
+    sources = {}
+    for item in planned:
+        for path, expected in (item.action.inputs or {}).items():
+            if path in sources and sources[path] != expected:
+                raise InstallError("contradictory captured composition inputs")
+            sources[path] = expected
+    destinations = {item.action.path for item in planned}
+    if set(published) - destinations:
+        raise InstallError("composition publication is outside the exact plan")
+    for item in planned:
+        path = item.action.path
+        if path in sources:
+            if sources[path] != item.before_hash:
+                raise InstallError("captured composition input differs from the planned preimage")
+            if path in published:
+                sources[path] = item.after_hash
+    return sources
+
+
+def verify_composition(root, planned, hosts, profile, *, published=()):
+    """Recheck captured inputs, allowing only our exact completed planned writes."""
+    try:
+        evolution().revalidate(root, composition_sources(planned, published))
+        if any(item.action.overlay for item in planned):
+            current, conflicts, _ = build_plan(root, hosts, profile, set())
+            # Target ownership is checked separately: after writes the old ledger
+            # deliberately still names the previous bytes until commit.
+            del conflicts
+            if [(p.action.path, p.after) for p in current] != [(p.action.path, p.after) for p in planned]:
+                raise InstallError("generated upstream changed during overlay installation")
+    except (ValueError, OSError, UnicodeError) as exc:
+        raise InstallError("overlay inputs changed or became unsafe; no composed state committed") from exc
+
+
+def lifecycle_api():
+    spec = importlib.util.spec_from_file_location("sf_install_publication", PACK_ROOT / "scripts/install_lifecycle.py")
+    loaded = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(loaded)
+    return loaded
+
+
+@contextmanager
+def installation_parent(root, root_fd, relative, created_dirs):
+    """Create/open destination ancestors through the already anchored root."""
+    parts = Path(relative).parts
+    descriptors = [os.dup(root_fd)]
+    try:
+        for index, part in enumerate(parts[:-1]):
             try:
-                target.unlink()
-            except OSError:
+                os.mkdir(part, 0o700 if relative.startswith(BACKUPS_REL + "/") and index >= 1 else 0o755,
+                         dir_fd=descriptors[-1])
+                created_dirs.add(root.joinpath(*parts[:index+1]))
+            except FileExistsError:
                 pass
-    for directory in sorted(created_dirs, key=lambda p: -len(p.parts)):
-        try:
-            directory.rmdir()  # only removes directories that are empty
-        except OSError:
-            pass
+            descriptors.append(os.open(part, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW,
+                                       dir_fd=descriptors[-1]))
+        yield descriptors[-1], parts[-1]
+    finally:
+        for descriptor in reversed(descriptors):
+            os.close(descriptor)
+
+
+def check_parent(root, root_fd, relative, descriptor, lifecycle):
+    """A captured directory may move, but cannot redirect a write into a new one."""
+    root_now, opened = os.stat(root, follow_symlinks=False), os.fstat(root_fd)
+    if (root_now.st_dev, root_now.st_ino) != (opened.st_dev, opened.st_ino):
+        raise InstallError("project root changed during installation")
+    with lifecycle.parent_fd(root_fd, relative) as (current, _):
+        before, after = os.fstat(descriptor), os.fstat(current)
+        if (before.st_dev, before.st_ino) != (after.st_dev, after.st_ino):
+            raise InstallError("destination ancestor changed during installation")
 
 
 def apply_plan(
@@ -597,41 +1109,166 @@ def apply_plan(
     profile: str,
 ) -> None:
     created_dirs: set[Path] = set()
-    fd, lock_path = acquire_lock(root, created_dirs)
-    applied: list[PlannedFile] = []
+    lifecycle = lifecycle_api()
+    fd, _lock_path = acquire_lock(root, created_dirs)
+    root_fd = None
+    applied = []
+    published = set()
+    quarantine_fd = None
     try:
-        for item in planned:  # re-verify before-hashes under the lock
-            current = read_file(root / item.action.path, item.action.path)
-            current_hash = sha256(current) if current is not None else None
-            if current_hash != item.before_hash:
-                raise InstallError(
-                    f"{item.action.path} changed while installing; retry"
-                )
+        root_fd = os.open(root, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+        identity = os.fstat(root_fd)
+        for item in planned:
+            if item.action.root_identity is not None and item.action.root_identity != (identity.st_dev, identity.st_ino):
+                raise InstallError("project root identity changed since planning")
+        manifest_before = lifecycle.anchored_read(root_fd, MANIFEST_REL)
+        if load_manifest(root) != previous:
+            raise InstallError("installation ownership changed while planning; retry")
+        for item in planned:
+            if lifecycle.anchored_read(root_fd, item.action.path) != item.before:
+                raise InstallError("target changed while installing; retry")
+        verify_composition(root, planned, hosts, profile)
         install_id = f"{datetime.now(UTC):%Y%m%dT%H%M%SZ}-{uuid.uuid4().hex[:8]}"
+        recovery = f"{BACKUPS_REL}/{install_id}/.recovery/entry"
+        with installation_parent(root, root_fd, recovery, created_dirs) as (parent, _):
+            quarantine_fd = os.dup(parent)
+            os.fchmod(quarantine_fd, 0o700)
+        def publish(relative, before, after):
+            with installation_parent(root, root_fd, relative, created_dirs) as (parent, name):
+                check_parent(root, root_fd, relative, parent, lifecycle)
+                if lifecycle.read_at(parent, name) != before:
+                    raise InstallError("target changed before publication")
+                info = os.fstat(parent)
+                applied.append((relative, before, after, (info.st_dev, info.st_ino)))
+                lifecycle.publish(parent, name, after, expected=before,
+                                  quarantine=quarantine_fd, relative=relative)
+                check_parent(root, root_fd, relative, parent, lifecycle)
+                if lifecycle.read_at(parent, name) != after:
+                    raise InstallError("published entry changed before verification")
+        def verify_outputs():
+            for item in planned:
+                with lifecycle.parent_fd(root_fd, item.action.path) as (parent, name):
+                    check_parent(root, root_fd, item.action.path, parent, lifecycle)
+                    if lifecycle.read_at(parent, name) != item.after:
+                        raise InstallError("published target changed; inspect retained recovery copies")
         try:
             for item in planned:
                 if item.status == "noop":
                     continue
+                if item.action.overlay:
+                    evolution().revalidate(root, composition_sources(planned, published))
                 if item.before is not None:
-                    item.backup = write_backup(root, install_id, item)
-                atomic_write(root / item.action.path, item.after, created_dirs)
-                applied.append(item)
+                    item.backup = f"{BACKUPS_REL}/{install_id}/{item.action.path}"
+                    # Original restoration receipts retain the established path
+                    # layout; final-window edits remain in separate recovery copies.
+                    with installation_parent(root, root_fd, item.backup, created_dirs) as (parent, name):
+                        lifecycle.publish(parent, name, item.before, expected=None,
+                                          quarantine=quarantine_fd, relative=item.backup)
+                publish(item.action.path, item.before, item.after)
+                published.add(item.action.path)
+            verify_composition(root, planned, hosts, profile, published=published)
+            verify_outputs()
             manifest = build_manifest(planned, previous, hosts, profile, install_id)
-            atomic_write(
-                root / MANIFEST_REL,
-                (json.dumps(manifest, indent=2) + "\n").encode(),
-                created_dirs,
-            )
+            publish(MANIFEST_REL, manifest_before, (json.dumps(manifest, indent=2) + "\n").encode())
+            verify_composition(root, planned, hosts, profile, published=published)
+            verify_outputs()
         except BaseException:
-            rollback(root, applied, created_dirs)
+            for relative, before, after, identity in reversed(applied):
+                try:
+                    with lifecycle.parent_fd(root_fd, relative) as (parent, name):
+                        info = os.fstat(parent)
+                        if (info.st_dev, info.st_ino) != identity or lifecycle.read_at(parent, name) != after:
+                            continue
+                        lifecycle.publish(parent, name, before, expected=after,
+                                          quarantine=quarantine_fd, relative=relative)
+                except OSError:
+                    continue  # Retain contested originals and continue independent recovery.
             raise
     finally:
+        if quarantine_fd is not None:
+            os.close(quarantine_fd)
+        if root_fd is not None:
+            os.close(root_fd)
         fcntl.flock(fd, fcntl.LOCK_UN)
         os.close(fd)
-        try:
-            lock_path.unlink()
-        except OSError:
-            pass
+        for directory in sorted(created_dirs, key=lambda p: -len(p.parts)):
+            try:
+                directory.rmdir()  # only empty directories from this transaction
+            except OSError:
+                pass
+        # Keep stable lock inode and private recovery evidence, including writes
+        # through descriptors held by an editor before the original was captured.
+
+
+# -- plugin/project stacking ---------------------------------------------------
+# A plugin install and a project projection for the same host are
+# alternatives; stacking them double-loads every skill and hook.
+
+
+def plugin_enabled_claude(root: Path) -> str | None:
+    path = root / ".claude/settings.json"
+    if not path.is_file():
+        return None
+    try:
+        settings = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError):
+        return None  # malformed settings are refused by the merge itself
+    if not isinstance(settings, dict):
+        return None
+    enabled = settings.get("enabledPlugins")
+    if not isinstance(enabled, dict):
+        return None
+    for key, value in enabled.items():
+        if isinstance(key, str) and key.startswith(f"{PACK_NAME}@") and value:
+            return ".claude/settings.json"
+    return None
+
+
+def plugin_enabled_codex(root: Path) -> str | None:
+    path = root / ".codex/config.toml"
+    if not path.is_file():
+        return None
+    try:
+        config = tomllib.loads(path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeDecodeError, tomllib.TOMLDecodeError):
+        return None  # the installer never writes config.toml; leave it alone
+    plugins = config.get("plugins")
+    if not isinstance(plugins, dict):
+        return None
+    for key, value in plugins.items():
+        if (
+            isinstance(key, str)
+            and key.startswith(f"{PACK_NAME}@")
+            and isinstance(value, dict)
+            and value.get("enabled")
+        ):
+            return ".codex/config.toml"
+    return None
+
+
+# Cursor has no documented project-scope enabled-plugin store; only hosts
+# with a detectable marker refuse stacking.
+PLUGIN_DETECTORS = {
+    "claude-code": plugin_enabled_claude,
+    "codex": plugin_enabled_codex,
+}
+
+
+def check_plugin_stacking(root: Path, hosts: list[str]) -> None:
+    """Refuse to stack a project projection on an enabled factory plugin."""
+    for host in hosts:
+        detector = PLUGIN_DETECTORS.get(host)
+        if detector is None:
+            continue
+        source = detector(root)
+        if source is not None:
+            raise InstallError(
+                f"a {PACK_NAME} plugin is already enabled for {host} in "
+                f"{source}; a plugin install and a project projection are "
+                "alternatives - migration: disable the plugin entry (or "
+                "uninstall the plugin), then rerun this install; nothing "
+                "was written"
+            )
 
 
 # -- command surface -----------------------------------------------------------
@@ -661,20 +1298,45 @@ def resolve_hosts(selection: str, root: Path) -> list[str]:
 
 
 def auto_detect(root: Path) -> str:
-    """Inspect project markers only; never executes a host binary."""
+    """Pick a host from project markers, then available binaries.
+
+    Project directories are the stronger signal; host binaries are only a
+    ``command -v``-style presence check (shutil.which) and are never
+    executed. An ambiguous or empty result demands an explicit --host.
+    """
     markers = [
-        host for host in REGISTERED_HOSTS if (root / f".{POLICY_DIRS[host]}").exists()
+        host for host in REGISTERED_HOSTS if (root / HOST_MARKERS[host]).exists()
     ]
-    if not markers:
-        raise InstallError(
-            "no host detected in this project; pass --host explicitly"
+    if len(markers) == 1:
+        print(
+            f"install: auto-detected host {markers[0]} "
+            f"(project {HOST_MARKERS[markers[0]]}/)"
         )
+        return markers[0]
     if len(markers) > 1:
         raise InstallError(
-            "multiple hosts detected; pass --host explicitly to choose"
+            "multiple hosts detected ("
+            + ", ".join(markers)
+            + "); pass --host explicitly to choose"
         )
-    print(f"install: auto-detected host {markers[0]}")
-    return markers[0]
+    available = [
+        host for host in REGISTERED_HOSTS if shutil.which(HOST_BINARIES[host])
+    ]
+    if len(available) == 1:
+        print(
+            f"install: auto-detected host {available[0]} "
+            f"({HOST_BINARIES[available[0]]} on PATH)"
+        )
+        return available[0]
+    if available:
+        raise InstallError(
+            "multiple host binaries on PATH ("
+            + ", ".join(available)
+            + ") and no project markers; pass --host explicitly to choose"
+        )
+    raise InstallError(
+        "no host detected in this project; pass --host explicitly"
+    )
 
 
 def format_plan(planned: list[PlannedFile]) -> list[str]:
@@ -691,12 +1353,22 @@ def cmd_install(args: argparse.Namespace) -> int:
     if not root.is_dir():
         raise InstallError(f"project directory does not exist: {args.project}")
     hosts = resolve_hosts(args.host, root)
+    check_plugin_stacking(root, hosts)
     allow = normalize_overwrite_paths(args.allow_overwrite)
     planned, conflicts, previous = build_plan(root, hosts, args.profile, allow)
     if conflicts:
         for conflict in conflicts:
             print(f"install: conflict: {conflict}", file=sys.stderr)
         return 1
+    installed_hosts = set(hosts) | set((previous or {}).get("hosts", []))
+    if "codex" in installed_hosts:
+        print("install: Codex custom agents inherit parent permissions; "
+              "role instructions do not enforce a separate read-only sandbox. "
+              "Live custom-agent loading is unverified.")
+    if {"cursor", "codex"} <= installed_hosts:
+        print("install: shared Cursor/Codex skills carry both invocation policies; "
+              "Codex tolerance of Cursor frontmatter and combined live host "
+              "loading are unverified.")
     if args.dry_run:
         print(f"install plan (dry-run): host {', '.join(hosts)}, "
               f"profile {args.profile}")
@@ -707,15 +1379,25 @@ def cmd_install(args: argparse.Namespace) -> int:
               "no changes written")
         return 0
     changes = [item for item in planned if item.status != "noop"]
-    if not changes:
+    manifest = build_manifest(planned, previous, hosts, args.profile, "")
+    metadata_changed = previous is None or any(
+        manifest[key] != previous.get(key) for key in ("hosts", "profile", "files")
+    )
+    if not changes and not metadata_changed:
         print(f"install: 0 changes ({len(planned)} files already current)")
-        return 0
-    apply_plan(root, planned, previous, hosts, args.profile)
-    for line in format_plan(planned):
-        print(line)
-    current = sum(1 for item in planned if item.status == "noop")
-    print(f"install: {len(changes)} change(s) applied "
-          f"({current} already current); manifest {MANIFEST_REL}")
+    else:
+        apply_plan(root, planned, previous, hosts, args.profile)
+        for line in format_plan(planned):
+            print(line)
+        current = sum(1 for item in planned if item.status == "noop")
+        print(f"install: {len(changes)} change(s) applied "
+              f"({current} already current); manifest {MANIFEST_REL}")
+    if not args.skip_bmad:
+        sys.dont_write_bytecode = True
+        spec = importlib.util.spec_from_file_location("sf_bmad_install", PACK_ROOT / "scripts/bmad_install.py")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        return module.provision(root, hosts, sys.modules[__name__])
     return 0
 
 
@@ -735,7 +1417,8 @@ def main(argv: list[str] | None = None) -> int:
     install.add_argument("--project", type=Path, required=True,
                          help="consumer project root")
     install.add_argument("--host", required=True,
-                         help="claude-code, a comma list, all, or auto")
+                         help="claude-code, cursor, codex, a comma list, "
+                              "all, or auto")
     install.add_argument("--dry-run", action="store_true",
                          help="print the plan; write nothing, spawn nothing")
     install.add_argument("--skip-bmad", action="store_true",
@@ -747,10 +1430,42 @@ def main(argv: list[str] | None = None) -> int:
     install.add_argument("--profile", choices=("full", "skills-only"),
                          default="full",
                          help="full projection or skills only")
+    uninstall = sub.add_parser("uninstall", help="remove unchanged owned projections")
+    uninstall.add_argument("--project", type=Path, required=True)
+    uninstall.add_argument("--host", default="all", help="selected hosts or all")
+    uninstall.add_argument("--dry-run", action="store_true")
+    doctor = sub.add_parser("doctor", help="read-only installation diagnostics")
+    doctor.add_argument("--project", type=Path, required=True)
+    doctor.add_argument("--json", action="store_true")
+    project = sub.add_parser("project", help="generate a native marketplace artifact")
+    project.add_argument("--host", choices=(*REGISTERED_HOSTS, "all"), required=True)
+    project.add_argument("--out", type=Path, required=True)
     args = parser.parse_args(argv)
     try:
         if args.command == "install":
             return cmd_install(args)
+        if args.command == "project":
+            sys.dont_write_bytecode = True
+            spec = importlib.util.spec_from_file_location(
+                "sf_distribution", PACK_ROOT / "scripts/distribution.py"
+            )
+            distribution = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(distribution)
+            try:
+                distribution.project(sys.modules[__name__], args.host, args.out)
+            except (OSError, ValueError) as exc:
+                raise InstallError(str(exc)) from exc
+            print("project: generated native marketplace (static format; live loading unverified)")
+            return 0
+        # Read-only diagnostics and uninstall dry-runs must not write caches
+        # into the source pack when loading their shared implementation.
+        sys.dont_write_bytecode = True
+        spec = importlib.util.spec_from_file_location(
+            "sf_install_lifecycle", PACK_ROOT / "scripts/install_lifecycle.py"
+        )
+        lifecycle = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(lifecycle)
+        return getattr(lifecycle, args.command)(args, sys.modules[__name__])
     except InstallError as exc:
         print(f"install: {exc}", file=sys.stderr)
         return 1

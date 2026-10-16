@@ -1,0 +1,133 @@
+{
+  "version": 1,
+  "project": {
+    "name": "Example project",
+    "root": "../../../examples/config",
+    "repositories": {
+      "app": {
+        "path": "."
+      }
+    }
+  },
+  "documents": {
+    "principles": {
+      "product": "PRODUCT.md",
+      "conventions": "CONVENTIONS.md",
+      "risk": "RISK.md",
+      "evals": "EVALS.md"
+    },
+    "architecture": "ARCHITECTURE.md",
+    "conventions": "CONVENTIONS.md",
+    "extra_context": []
+  },
+  "tracker": {
+    "adapter": "markdown",
+    "path": "TASKS.md"
+  },
+  "board": {
+    "dir": ".software-factory/context/board",
+    "regenerate": "on-write"
+  },
+  "planning": {
+    "depth": "adaptive"
+  },
+  "branches": {
+    "integration": "main",
+    "protected": [
+      "main"
+    ],
+    "story_prefix": "story/",
+    "merge_method": "merge",
+    "direct_push": false
+  },
+  "environments": {},
+  "agents": {
+    "native": {
+      "kind": "native",
+      "description": "Current host worker; availability must be observed",
+      "risk_tiers": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "detection": {
+        "kind": "native-inventory"
+      }
+    }
+  },
+  "routing": {
+    "coding": "native",
+    "complexity": {
+      "low": "native",
+      "medium": "native",
+      "high": "native"
+    },
+    "independent_review": "native",
+    "fallback": "native"
+  },
+  "review_bots": {},
+  "verification": {
+    "required_checks": [
+      "qa",
+      "evals",
+      "code_review",
+      "ci",
+      "review_bots"
+    ]
+  },
+  "autonomy": {
+    "local_edits": true,
+    "commits": false,
+    "push": false,
+    "open_pr": false,
+    "merge_integration": false,
+    "deploy": false,
+    "standing_delegations": [],
+    "blocked_behavior": "continue-independent"
+  },
+  "checkpoints": {
+    "transitions": [
+      "epic-acceptance"
+    ],
+    "manual": true,
+    "before_reset": true,
+    "before_external_write": true,
+    "retro_cadence": "epic"
+  },
+  "budgets": {
+    "mode": "alarm",
+    "stall_repetitions": 3,
+    "max_parallel_workers": 3
+  },
+  "reporting": {
+    "style": "concise-evidence"
+  },
+  "context": {
+    "retention": "RISK.md",
+    "redaction": "RISK.md"
+  },
+  "bmad": {
+    "install_version": "6.12.0",
+    "modules": [
+      "core",
+      "bmm",
+      "bmb",
+      "cis",
+      "tea"
+    ],
+    "custom_root": "_bmad/custom",
+    "automatic_updates": false
+  },
+  "extensions": {
+    "skills": [],
+    "mcp": [],
+    "overlays": []
+  },
+  "operations": {
+    "enabled": false,
+    "sources": [],
+    "followup": "propose-bug",
+    "notifications": "meaningful-changes"
+  }
+}

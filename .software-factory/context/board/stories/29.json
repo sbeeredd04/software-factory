@@ -4,8 +4,8 @@
   "epic": 5,
   "type": "story",
   "title": "Hand-built showcase site with self-hosted OFL fonts",
-  "status": "backlog",
-  "owner": null,
+  "status": "in-review",
+  "owner": "codex-showcase",
   "after": [
     28
   ],
@@ -26,12 +26,190 @@
   "plan_checkpoint": false,
   "done_checkpoint": false,
   "blocked": null,
-  "receipts": {},
+  "receipts": {
+    "active-attempt": {
+      "type": "agent-attempt",
+      "subject_sha": "2d7c674c06cfca0b8f7807afbd8ef31779960460",
+      "agent": "/root/showcase",
+      "role": "sf-engineer",
+      "skill": "software-factory",
+      "requested_model": "gpt-6.1-sol",
+      "effective_model": null,
+      "phase": "implementation",
+      "status": "assigned",
+      "recorded_at": "2026-10-15T13:44:07.427782+00:00",
+      "summary": "Original29 dispatched after reviewed28 and owner22-case admission. Complete bespoke static showcase, local licensed fonts, exact setup-copy prompt, browser/accessibility evidence and manual-only Pages workflow. Isolated reused showcaseworktree; primary sole board/plan/run authority. No realdeploy orlivehost claims."
+    },
+    "worker-handoff": {
+      "subject_sha": "ec0992aedfb661bf0f5f7957ab87fd74d5cd9cc4",
+      "clean": true,
+      "source_fingerprint": "fcad9e74aad6e1c3f51205c8754f967fc291b819371cc38725ab65c6738556da",
+      "changed_paths": 36,
+      "command": "bash scripts/check_all.sh (bundled Python 3.12 and Node 24.19.0 on PATH)",
+      "exit": 1,
+      "unit_tests": {
+        "ran": 724,
+        "passed": 721,
+        "failed": 2,
+        "skipped": 1,
+        "seconds": 300.589,
+        "failures": [
+          "test_premerge_run_is_offline_green_and_guarded",
+          "test_codebase_regeneration_is_stable"
+        ],
+        "skip_reason": "optional jsonschema cross-check not requested"
+      },
+      "evals": {
+        "ran": 48,
+        "passed": 47,
+        "failed": 1,
+        "failed_case": "SKL-CRAWL-002",
+        "reason": "root-owned CODEBASE projection is stale; not changed in this worktree"
+      },
+      "passed_steps": [
+        "compileall",
+        "ruff",
+        "shellcheck",
+        "validate",
+        "scan_public",
+        "check_links",
+        "distribution",
+        "check_mermaid",
+        "check-jsonschema workflows",
+        "check-jsonschema issue forms"
+      ],
+      "agent_skills_validators_passed": 11,
+      "narrow_tests": {
+        "ran": 15,
+        "passed": 15,
+        "exit": 0
+      },
+      "copy_overlap_synthetic_unit": {
+        "cases": 3,
+        "passed": 3,
+        "node": "24.19.0",
+        "exit": 0
+      },
+      "product_source_review": "accepted exact ec0992a; /tmp/sf-showcase-copy-race-final-review.json",
+      "remaining_proof": "Native prefers-reduced-motion emulation remains unverified; original SITE006 is pending root-owned authorized alternative browser proof. Author preliminary UI observations were unbound development evidence, superseded by root-owned exact-subject reviews.",
+      "source_resource_bytes": 427018,
+      "gzip_css_bytes": 4817,
+      "gzip_js_bytes": 1846,
+      "log_sha256": "b20a005689e47d16049837f180024626108e87ca8ece665fd15f346df1095e25",
+      "type": "worker-handoff",
+      "author": "codex-showcase",
+      "status": "source-reviewed-native-media-proof-pending",
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/showcase-worker-handoff.json",
+      "artifact_sha256": "d475c34170679359e29f70be85fb90f5b426fc989669ec1fe46fcc174596fa60",
+      "summary": "Static showcase/canonical prompts implemented and independently reviewed after actual motion/copy/marker regressions and overlap repair. Full worker gate retains only isolated source-map freshness failures. Native reduced-motion emulation pending explicit alternate-browser method approval; original assertion preserved. No built/done/publication/epic acceptance claim."
+    },
+    "independent-review": {
+      "type": "independent-review",
+      "subject_sha": "ec0992aedfb661bf0f5f7957ab87fd74d5cd9cc4",
+      "author": "codex-showcase",
+      "reviewer": "/root/product_expert",
+      "status": "pass",
+      "scope": "Original36path source review chain: f0 product review,2ffd delta,cb rejectedrace,ec final accepted repair. Root actual CUA/source HTTP observations separate and precisely subject-bound.",
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/showcase-final-review.md",
+      "artifact_sha256": "abd18880a66b757ba885c2a58ed0be404e91ea0c96dccf47c9ea5836025365bc",
+      "limitations": [
+        "Source review does not establish native reduced-motion emulation, actual clipboard string read, deployedPages, remoteintegration or owner epic acceptance."
+      ]
+    },
+    "combined-primary-proof": {
+      "type": "verification",
+      "subject_sha": "026deb9860a81a6413f1037a76f7876526896b65",
+      "status": "pass",
+      "command": "bash scripts/check_all.sh",
+      "exit_code": 0,
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/showcase-integrated-49-gate.log",
+      "artifact_sha256": "b66e66bb36b9bc5b4b2af560100577c945c42ea9054eccec84a78bcfc5f78b07",
+      "unit_tests": {
+        "run": 724,
+        "passed": 723,
+        "failed": 0,
+        "skipped": 1,
+        "seconds": 303.024,
+        "skip_reason": "optional jsonschema crosscheck not requested"
+      },
+      "evals": {
+        "failed": 0,
+        "passed": 49,
+        "quarantined": 0,
+        "skipped": 0,
+        "unverified": 0
+      },
+      "eval_run": "r-20261015T145006Z-premerge",
+      "eval_receipt_sha256": "5c73acc2b8a2b2fce9b3265d7033efdb9eb692dad3bfac670bbc0166a47e21bf",
+      "source_equivalence": {
+        "worker_subject": "ec0992aedfb661bf0f5f7957ab87fd74d5cd9cc4",
+        "exact_files": 36,
+        "reviewer": "/root/mission_status",
+        "artifact": ".software-factory/runs/software-factory-v01/evidence/showcase-integrated-source-review.md",
+        "artifact_sha256": "2cdabf9e760296bcbf13e2c5c686f6df2491bc83eb4d2cf5421a983daf1f17c9"
+      },
+      "summary": "Integrated showcase source and exact approved49-case admission pass all gates after root-owned map refresh. Actual approved BMad/skills network checks and21 other static steps pass. Old isolated red gates retained; strict new source/admission review accepted.",
+      "limitations": [
+        "Native SITE006 reduced-motion emulation remains pending separately requested browser-method authorization. No headless browser has launched.",
+        "Actual clipboard byte reading was unavailable; observed selectable full prompts/source equality and browser feedback are separately scoped.",
+        "No owner epic acceptance, remote integration, live host loading, deployedPages or public release is established."
+      ]
+    },
+    "native-media-verification": {
+      "type": "browser-verification",
+      "subject_sha": "39ee461f133383930f275ca841acc12e41f48386",
+      "status": "pass",
+      "scope": "Six native default/reduced-motion cases at three viewport sizes; content parity, four local fonts, hero decoding, all-element/pseudo motion, no overflow or page/resource errors. Second passed run adds actual viewport PNGs; root reviewed five unique viewport captures.",
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/showcase-authorized-native-media-39ee-summary.json",
+      "artifact_sha256": "7238eeff9dd55f8fb1fd0e71328e186e1d6eb92d105c7ca8bee084c229abd6a0",
+      "authorization_source_ref": "conversation:call_f49cf33eda0c42c3ab2e6d56505b7a53:owner-answer",
+      "limitations": [
+        "Independent evidence review pending; original passing static gate remains separately bound to39ee.",
+        "Local isolated Chromium only; no deployed Pages, live host loading or owner epic acceptance."
+      ]
+    },
+    "native-media-review": {
+      "type": "independent-review",
+      "subject_sha": "39ee461f133383930f275ca841acc12e41f48386",
+      "reviewer": "/root/mission_status",
+      "status": "pass-bounded-evidence",
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/showcase-headless-independent-review-39ee.json",
+      "artifact_sha256": "8f6dcb48ea1bbb2c88ea4d33415ff7a3d19d1473039c2175dd62ef838d88207b",
+      "scope": "Independently matched both frozen22-file Git inventories,18PNG hashes/dimensions, six-case native motion results twice, parity/font/resource checks, actual launch and normal cleanup logs.",
+      "limitations": [
+        "No browser rerun or independent visual inspection; root reviewed actual PNG pixels separately.",
+        "Overflow assertion is document-horizontal only; separate asset loop overflow was repaired by asset worker.",
+        "Raw browser stderr retains11/12 macOS CVDisplayLink errors; page-error arrays are empty.",
+        "Scripts independently inspected now are not runtime-digest-bound by original result; no global orphan audit, deployed site, host loading or epic acceptance."
+      ]
+    }
+  },
   "baseline_sha": null,
   "branch": null,
   "pr": null,
   "merged_sha": null,
-  "history": [],
+  "history": [
+    {
+      "at": "2026-10-15T13:42:57.235855+00:00",
+      "by": "orchestrator",
+      "from": "backlog",
+      "to": "ready-for-dev"
+    },
+    {
+      "at": "2026-10-15T13:42:57.345517+00:00",
+      "by": "codex-showcase",
+      "from": "ready-for-dev",
+      "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T14:42:58.343305+00:00",
+      "by": "codex-showcase",
+      "from": "in-progress",
+      "to": "in-review"
+    }
+  ],
   "findings": [],
-  "source_key": "launch-publication/showcase-site"
+  "source_key": "launch-publication/showcase-site",
+  "review_subject_sha": "ec0992aedfb661bf0f5f7957ab87fd74d5cd9cc4",
+  "evidence_contract": 1
 }

@@ -28,3 +28,4 @@ dist/
 .software-factory/state.lock
 .software-factory/board.lock
 .software-factory/installation.json
+.software-factory/.install.lock

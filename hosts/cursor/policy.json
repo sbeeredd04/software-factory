@@ -1,0 +1,20 @@
+{
+  "host": "cursor",
+  "skills_dest": ".agents/skills",
+  "agents_dest": ".cursor/agents",
+  "hooks": ".cursor/hooks.json",
+  "pointer": ".cursor/rules/software-factory.mdc",
+  "explicit_only": [
+    "software-factory",
+    "sf-help",
+    "sf-agents",
+    "sf-evolve",
+    "sf-eval",
+    "sf-principles"
+  ],
+  "agent_policy": "agent-policy.json",
+  "notes": "The shared .agents/skills payload adds disable-model-invocation: true for entry/admin skills whenever Cursor is installed. Working skills retain canonical frontmatter. Combined Codex frontmatter tolerance and live host loading are unverified.",
+  "sources": [
+    "https://cursor.com/docs/skills"
+  ]
+}

@@ -1,0 +1,3426 @@
+{
+  "evidence": {
+    "browser": {
+      "browser_version": "156.0.8078.4",
+      "captures": [
+        {
+          "cycle": {
+            "bounds": [
+              490.875,
+              87.65625,
+              1232,
+              532.328125
+            ],
+            "geometry": [
+              8,
+              12,
+              985,
+              586
+            ],
+            "observed_use_selector": "use[href=\"../../site/img/delivery-graph.svg#factory-cycle\"]",
+            "text_fonts": [
+              {
+                "bounds": [
+                  520.5223999023438,
+                  102.00664520263672,
+                  838.6630249023438,
+                  126.00664520263672
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 33,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "Orchestrator / active coding host"
+              },
+              {
+                "bounds": [
+                  520.5223999023438,
+                  127.98135375976562,
+                  1049.5537109375,
+                  147.98135375976562
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 72,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Prioritize \u00b7 staff \u00b7 inspect proof \u00b7 manage budgets \u00b7 recover \u00b7 continue"
+              },
+              {
+                "bounds": [
+                  517.5579223632812,
+                  179.63638305664062,
+                  794.0735473632812,
+                  197.63638305664062
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 37,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "Human decision \u00b7 any phase, if needed"
+              },
+              {
+                "bounds": [
+                  517.5579223632812,
+                  199.90550231933594,
+                  784.6985473632812,
+                  215.90548706054688
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 40,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Risk \u00b7 assets \u00b7 agreed autonomy \u2192 resume"
+              },
+              {
+                "bounds": [
+                  517.5579223632812,
+                  250.48948669433594,
+                  644.0422973632812,
+                  272.489501953125
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 13,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "Ground + plan"
+              },
+              {
+                "bounds": [
+                  517.5579223632812,
+                  282.13427734375,
+                  618.5735473632812,
+                  302.1343078613281
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 12,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "BMad stories"
+              },
+              {
+                "bounds": [
+                  517.5579223632812,
+                  307.1090087890625,
+                  657.7141723632812,
+                  325.1090087890625
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 18,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "ACs \u00b7 dependencies"
+              },
+              {
+                "bounds": [
+                  517.5579223632812,
+                  334.0126953125,
+                  626.1360473632812,
+                  354.0126953125
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 13,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Plan review \u21ba"
+              },
+              {
+                "bounds": [
+                  517.5579223632812,
+                  369.1041564941406,
+                  640.9329223632812,
+                  388.1041564941406
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 16,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "\u2192 Ready frontier"
+              },
+              {
+                "bounds": [
+                  702.837890625,
+                  250.48948669433594,
+                  817.962890625,
+                  272.489501953125
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 13,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "Parallel work"
+              },
+              {
+                "bounds": [
+                  709.5079345703125,
+                  289.80438232421875,
+                  812.7579345703125,
+                  308.8043518066406
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 15,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Story A \u00b7 build"
+              },
+              {
+                "bounds": [
+                  709.5079345703125,
+                  332.0481872558594,
+                  812.1954345703125,
+                  351.0481872558594
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 15,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Story B \u00b7 build"
+              },
+              {
+                "bounds": [
+                  702.837890625,
+                  369.1041564941406,
+                  818.197265625,
+                  388.1041564941406
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 17,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Claim \u00b7 self-test"
+              },
+              {
+                "bounds": [
+                  888.1177978515625,
+                  250.48948669433594,
+                  1001.3052978515625,
+                  272.489501953125
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 11,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "Independent"
+              },
+              {
+                "bounds": [
+                  888.1177978515625,
+                  277.1697998046875,
+                  936.3834228515625,
+                  299.1697998046875
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 5,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "proof"
+              },
+              {
+                "bounds": [
+                  888.1177978515625,
+                  307.59124755859375,
+                  999.0552978515625,
+                  326.59124755859375
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 17,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "QA \u00b7 evals \u00b7 diff"
+              },
+              {
+                "bounds": [
+                  888.1177978515625,
+                  328.8248291015625,
+                  979.4615478515625,
+                  348.8248596191406
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 11,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Review + CI"
+              },
+              {
+                "bounds": [
+                  888.1177978515625,
+                  369.1041564941406,
+                  975.0552978515625,
+                  388.1041564941406
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 11,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "Per story \u2192"
+              },
+              {
+                "bounds": [
+                  1073.397705078125,
+                  250.48948669433594,
+                  1153.882080078125,
+                  272.489501953125
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 9,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "Integrate"
+              },
+              {
+                "bounds": [
+                  1073.397705078125,
+                  277.1697998046875,
+                  1151.569580078125,
+                  299.1697998046875
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 9,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "+ deliver"
+              },
+              {
+                "bounds": [
+                  1073.397705078125,
+                  307.59124755859375,
+                  1205.147705078125,
+                  326.59124755859375
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 15,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "One merge owner"
+              },
+              {
+                "bounds": [
+                  1073.397705078125,
+                  328.8248291015625,
+                  1194.225830078125,
+                  348.8248596191406
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 14,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "SHA + behavior"
+              },
+              {
+                "bounds": [
+                  1073.397705078125,
+                  370.1041564941406,
+                  1201.272705078125,
+                  387.1041564941406
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 18,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Approved authority"
+              },
+              {
+                "bounds": [
+                  713.2135620117188,
+                  430.3582458496094,
+                  967.4479370117188,
+                  450.3582458496094
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 33,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Fail / unknown \u2192 repair or replan"
+              },
+              {
+                "bounds": [
+                  667.26416015625,
+                  473.34320068359375,
+                  1021.8109741210938,
+                  493.34320068359375
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 44,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "Authorized feedback \u2192 triage \u2192 next priority"
+              },
+              {
+                "bounds": [
+                  519.78125,
+                  505.2113342285156,
+                  1029.03125,
+                  525.2113647460938
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 68,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Shared context \u00b7 board \u00b7 claims \u00b7 receipts \u00b7 decisions \u00b7 checkpoints"
+              }
+            ],
+            "viewbox": [
+              0,
+              0,
+              1000,
+              600
+            ]
+          },
+          "errors": [],
+          "id": "social-preview",
+          "ready": {
+            "failed": [],
+            "fonts": [
+              "Bricolage:700",
+              "Inter:400",
+              "Inter:600",
+              "JetBrains Mono:400"
+            ],
+            "images_decoded": true,
+            "overflow": [],
+            "policy_violations": [],
+            "resources": [
+              "/site/styles/tokens.css",
+              "/site/styles/base.css",
+              "/assets/templates/assets.css",
+              "/site/img/mark.svg",
+              "/assets/templates/ready.js",
+              "/site/img/delivery-graph.svg",
+              "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+              "/site/fonts/inter/Inter-SemiBold.woff2",
+              "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
+              "/site/fonts/inter/Inter-Regular.woff2"
+            ],
+            "viewport": [
+              1280,
+              640
+            ]
+          },
+          "requests": [
+            {
+              "path": "/assets/templates/social-preview.html",
+              "type": "document"
+            },
+            {
+              "path": "/site/styles/tokens.css",
+              "type": "stylesheet"
+            },
+            {
+              "path": "/site/styles/base.css",
+              "type": "stylesheet"
+            },
+            {
+              "path": "/assets/templates/assets.css",
+              "type": "stylesheet"
+            },
+            {
+              "path": "/assets/templates/ready.js",
+              "type": "script"
+            },
+            {
+              "path": "/site/img/mark.svg",
+              "type": "image"
+            },
+            {
+              "path": "/site/img/delivery-graph.svg",
+              "type": "other"
+            },
+            {
+              "path": "/site/fonts/inter/Inter-SemiBold.woff2",
+              "type": "font"
+            },
+            {
+              "path": "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+              "type": "font"
+            },
+            {
+              "path": "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
+              "type": "font"
+            },
+            {
+              "path": "/site/fonts/inter/Inter-Regular.woff2",
+              "type": "font"
+            }
+          ]
+        },
+        {
+          "cycle": {
+            "bounds": [
+              617.515625,
+              141.59375,
+              1534,
+              691.484375
+            ],
+            "geometry": [
+              8,
+              12,
+              985,
+              586
+            ],
+            "observed_use_selector": "use[href=\"../../site/img/delivery-graph.svg#factory-cycle\"]",
+            "text_fonts": [
+              {
+                "bounds": [
+                  654.1749877929688,
+                  158.83554077148438,
+                  1047.518798828125,
+                  188.83554077148438
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 33,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "Orchestrator / active coding host"
+              },
+              {
+                "bounds": [
+                  654.1749877929688,
+                  191.24655151367188,
+                  1308.471923828125,
+                  216.24655151367188
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 72,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Prioritize \u00b7 staff \u00b7 inspect proof \u00b7 manage budgets \u00b7 recover \u00b7 continue"
+              },
+              {
+                "bounds": [
+                  650.509033203125,
+                  254.65101623535156,
+                  992.321533203125,
+                  276.6510009765625
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 37,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "Human decision \u00b7 any phase, if needed"
+              },
+              {
+                "bounds": [
+                  650.509033203125,
+                  280.4796142578125,
+                  980.712158203125,
+                  300.4796142578125
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 40,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Risk \u00b7 assets \u00b7 agreed autonomy \u2192 resume"
+              },
+              {
+                "bounds": [
+                  650.509033203125,
+                  343.2159423828125,
+                  806.977783203125,
+                  371.2159423828125
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 13,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "Ground + plan"
+              },
+              {
+                "bounds": [
+                  650.509033203125,
+                  381.87530517578125,
+                  775.446533203125,
+                  406.87530517578125
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 12,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "BMad stories"
+              },
+              {
+                "bounds": [
+                  650.509033203125,
+                  412.28631591796875,
+                  823.759033203125,
+                  434.2862854003906
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 18,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "ACs \u00b7 dependencies"
+              },
+              {
+                "bounds": [
+                  650.509033203125,
+                  446.0292053222656,
+                  784.790283203125,
+                  471.0292053222656
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 13,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Plan review \u21ba"
+              },
+              {
+                "bounds": [
+                  650.509033203125,
+                  489.1875,
+                  803.055908203125,
+                  513.1875
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 16,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "\u2192 Ready frontier"
+              },
+              {
+                "bounds": [
+                  879.630126953125,
+                  343.2159423828125,
+                  1022.036376953125,
+                  371.2159423828125
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 13,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "Parallel work"
+              },
+              {
+                "bounds": [
+                  887.8785400390625,
+                  391.1236572265625,
+                  1015.5347900390625,
+                  415.1236572265625
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 15,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Story A \u00b7 build"
+              },
+              {
+                "bounds": [
+                  887.8785400390625,
+                  443.36328125,
+                  1014.8472900390625,
+                  467.36328125
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 15,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Story B \u00b7 build"
+              },
+              {
+                "bounds": [
+                  879.630126953125,
+                  489.1875,
+                  1022.270751953125,
+                  513.1875
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 17,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Claim \u00b7 self-test"
+              },
+              {
+                "bounds": [
+                  1108.751220703125,
+                  343.2159423828125,
+                  1248.766845703125,
+                  371.2159423828125
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 11,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "Independent"
+              },
+              {
+                "bounds": [
+                  1108.751220703125,
+                  376.2093811035156,
+                  1168.454345703125,
+                  404.20941162109375
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 5,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "proof"
+              },
+              {
+                "bounds": [
+                  1108.751220703125,
+                  413.1192932128906,
+                  1245.923095703125,
+                  437.1192932128906
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 17,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "QA \u00b7 evals \u00b7 diff"
+              },
+              {
+                "bounds": [
+                  1108.751220703125,
+                  439.61383056640625,
+                  1221.719970703125,
+                  464.61383056640625
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 11,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Review + CI"
+              },
+              {
+                "bounds": [
+                  1108.751220703125,
+                  489.1875,
+                  1216.235595703125,
+                  513.1875
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 11,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "Per story \u2192"
+              },
+              {
+                "bounds": [
+                  1337.872314453125,
+                  343.2159423828125,
+                  1437.434814453125,
+                  371.2159423828125
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 9,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "Integrate"
+              },
+              {
+                "bounds": [
+                  1337.872314453125,
+                  376.2093811035156,
+                  1434.559814453125,
+                  404.20941162109375
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 9,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "+ deliver"
+              },
+              {
+                "bounds": [
+                  1337.872314453125,
+                  413.1192932128906,
+                  1500.778564453125,
+                  437.1192932128906
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 15,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "One merge owner"
+              },
+              {
+                "bounds": [
+                  1337.872314453125,
+                  439.61383056640625,
+                  1487.325439453125,
+                  464.61383056640625
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 14,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "SHA + behavior"
+              },
+              {
+                "bounds": [
+                  1337.872314453125,
+                  491.1875,
+                  1495.997314453125,
+                  512.1875
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 18,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Approved authority"
+              },
+              {
+                "bounds": [
+                  892.4609375,
+                  565.1721801757812,
+                  1206.9140625,
+                  590.1721801757812
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 33,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Fail / unknown \u2192 repair or replan"
+              },
+              {
+                "bounds": [
+                  835.638916015625,
+                  618.3282470703125,
+                  1274.138916015625,
+                  643.3282470703125
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 44,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "Authorized feedback \u2192 triage \u2192 next priority"
+              },
+              {
+                "bounds": [
+                  653.258544921875,
+                  657.7371215820312,
+                  1283.102294921875,
+                  682.7371215820312
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 68,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Shared context \u00b7 board \u00b7 claims \u00b7 receipts \u00b7 decisions \u00b7 checkpoints"
+              }
+            ],
+            "viewbox": [
+              0,
+              0,
+              1000,
+              600
+            ]
+          },
+          "errors": [],
+          "id": "hero",
+          "ready": {
+            "failed": [],
+            "fonts": [
+              "Bricolage:700",
+              "Inter:400",
+              "Inter:600",
+              "JetBrains Mono:400"
+            ],
+            "images_decoded": true,
+            "overflow": [],
+            "policy_violations": [],
+            "resources": [
+              "/site/styles/tokens.css",
+              "/site/styles/base.css",
+              "/assets/templates/assets.css",
+              "/site/img/mark.svg",
+              "/assets/templates/ready.js",
+              "/site/img/delivery-graph.svg",
+              "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
+              "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+              "/site/fonts/inter/Inter-SemiBold.woff2",
+              "/site/fonts/inter/Inter-Regular.woff2"
+            ],
+            "viewport": [
+              1600,
+              900
+            ]
+          },
+          "requests": [
+            {
+              "path": "/assets/templates/hero.html",
+              "type": "document"
+            },
+            {
+              "path": "/site/styles/tokens.css",
+              "type": "stylesheet"
+            },
+            {
+              "path": "/site/styles/base.css",
+              "type": "stylesheet"
+            },
+            {
+              "path": "/assets/templates/assets.css",
+              "type": "stylesheet"
+            },
+            {
+              "path": "/assets/templates/ready.js",
+              "type": "script"
+            },
+            {
+              "path": "/site/img/mark.svg",
+              "type": "image"
+            },
+            {
+              "path": "/site/img/delivery-graph.svg",
+              "type": "other"
+            },
+            {
+              "path": "/site/fonts/inter/Inter-SemiBold.woff2",
+              "type": "font"
+            },
+            {
+              "path": "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+              "type": "font"
+            },
+            {
+              "path": "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
+              "type": "font"
+            },
+            {
+              "path": "/site/fonts/inter/Inter-Regular.woff2",
+              "type": "font"
+            }
+          ]
+        },
+        {
+          "cycle": {
+            "bounds": [
+              60,
+              197.65625,
+              677.28125,
+              568.015625
+            ],
+            "geometry": [
+              8,
+              12,
+              985,
+              586
+            ],
+            "observed_use_selector": "use[href=\"../../site/img/delivery-graph.svg#factory-cycle\"]",
+            "text_fonts": [
+              {
+                "bounds": [
+                  84.69844055175781,
+                  209.43319702148438,
+                  349.5890655517578,
+                  229.43319702148438
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 33,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "Orchestrator / active coding host"
+              },
+              {
+                "bounds": [
+                  84.69844055175781,
+                  231.5684356689453,
+                  525.1203155517578,
+                  247.5684356689453
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 72,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Prioritize \u00b7 staff \u00b7 inspect proof \u00b7 manage budgets \u00b7 recover \u00b7 continue"
+              },
+              {
+                "bounds": [
+                  82.22937774658203,
+                  273.92523193359375,
+                  312.47937774658203,
+                  288.92523193359375
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 37,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "Human decision \u00b7 any phase, if needed"
+              },
+              {
+                "bounds": [
+                  82.22937774658203,
+                  290.9741516113281,
+                  304.71375274658203,
+                  304.97412109375
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 40,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Risk \u00b7 assets \u00b7 agreed autonomy \u2192 resume"
+              },
+              {
+                "bounds": [
+                  82.22937774658203,
+                  333.2690734863281,
+                  187.6199951171875,
+                  352.2690734863281
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 13,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "Ground + plan"
+              },
+              {
+                "bounds": [
+                  82.22937774658203,
+                  359.9596862792969,
+                  166.3231201171875,
+                  375.9596862792969
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 12,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "BMad stories"
+              },
+              {
+                "bounds": [
+                  82.22937774658203,
+                  380.09490966796875,
+                  198.93247985839844,
+                  395.09490966796875
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 18,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "ACs \u00b7 dependencies"
+              },
+              {
+                "bounds": [
+                  82.22937774658203,
+                  403.16827392578125,
+                  172.6199951171875,
+                  419.16827392578125
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 13,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Plan review \u21ba"
+              },
+              {
+                "bounds": [
+                  82.22937774658203,
+                  431.5625,
+                  184.9793701171875,
+                  447.5625
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 16,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "\u2192 Ready frontier"
+              },
+              {
+                "bounds": [
+                  236.5457763671875,
+                  333.2690734863281,
+                  332.4676208496094,
+                  352.2690734863281
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 13,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "Parallel work"
+              },
+              {
+                "bounds": [
+                  242.10116577148438,
+                  365.51507568359375,
+                  328.1011962890625,
+                  381.51507568359375
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 15,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Story A \u00b7 build"
+              },
+              {
+                "bounds": [
+                  242.10116577148438,
+                  400.69921875,
+                  327.6324462890625,
+                  416.69921875
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 15,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Story B \u00b7 build"
+              },
+              {
+                "bounds": [
+                  236.5457763671875,
+                  431.5625,
+                  332.6239013671875,
+                  447.5625
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 17,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Claim \u00b7 self-test"
+              },
+              {
+                "bounds": [
+                  390.8621826171875,
+                  333.2690734863281,
+                  485.1746826171875,
+                  352.2690734863281
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 11,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "Independent"
+              },
+              {
+                "bounds": [
+                  390.8621826171875,
+                  355.4906311035156,
+                  431.0653076171875,
+                  374.4906311035156
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 5,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "proof"
+              },
+              {
+                "bounds": [
+                  390.8621826171875,
+                  380.3294677734375,
+                  483.2684326171875,
+                  396.3294677734375
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 17,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "QA \u00b7 evals \u00b7 diff"
+              },
+              {
+                "bounds": [
+                  390.8621826171875,
+                  398.847412109375,
+                  466.9090576171875,
+                  414.847412109375
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 11,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Review + CI"
+              },
+              {
+                "bounds": [
+                  390.8621826171875,
+                  431.5625,
+                  463.2684631347656,
+                  447.5625
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 11,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "Per story \u2192"
+              },
+              {
+                "bounds": [
+                  545.1785888671875,
+                  333.2690734863281,
+                  612.2254638671875,
+                  352.2690734863281
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 9,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "Integrate"
+              },
+              {
+                "bounds": [
+                  545.1785888671875,
+                  355.4906311035156,
+                  610.3035278320312,
+                  374.4906311035156
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 9,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "+ deliver"
+              },
+              {
+                "bounds": [
+                  545.1785888671875,
+                  380.3294677734375,
+                  654.9129028320312,
+                  396.3294677734375
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 15,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "One merge owner"
+              },
+              {
+                "bounds": [
+                  545.1785888671875,
+                  398.847412109375,
+                  645.7723388671875,
+                  414.847412109375
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 14,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "SHA + behavior"
+              },
+              {
+                "bounds": [
+                  545.1785888671875,
+                  433.5625,
+                  651.6160888671875,
+                  447.5625
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 18,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Approved authority"
+              },
+              {
+                "bounds": [
+                  245.1875,
+                  483.4128112792969,
+                  456.84375,
+                  499.4128112792969
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 33,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Fail / unknown \u2192 repair or replan"
+              },
+              {
+                "bounds": [
+                  206.9170379638672,
+                  519.2142333984375,
+                  502.0732879638672,
+                  535.2142333984375
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 44,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "Authorized feedback \u2192 triage \u2192 next priority"
+              },
+              {
+                "bounds": [
+                  84.08116912841797,
+                  545.7566528320312,
+                  508.04988861083984,
+                  561.7566528320312
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 68,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Shared context \u00b7 board \u00b7 claims \u00b7 receipts \u00b7 decisions \u00b7 checkpoints"
+              }
+            ],
+            "viewbox": [
+              0,
+              0,
+              1000,
+              600
+            ]
+          },
+          "errors": [],
+          "id": "loop",
+          "ready": {
+            "failed": [],
+            "fonts": [
+              "Bricolage:700",
+              "Inter:400",
+              "Inter:600",
+              "JetBrains Mono:400"
+            ],
+            "images_decoded": true,
+            "overflow": [],
+            "policy_violations": [],
+            "resources": [
+              "/site/styles/tokens.css",
+              "/site/styles/base.css",
+              "/assets/templates/assets.css",
+              "/site/img/mark.svg",
+              "/assets/templates/ready.js",
+              "/site/img/delivery-graph.svg",
+              "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+              "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
+              "/site/fonts/inter/Inter-SemiBold.woff2",
+              "/site/fonts/inter/Inter-Regular.woff2"
+            ],
+            "viewport": [
+              1200,
+              800
+            ]
+          },
+          "requests": [
+            {
+              "path": "/assets/templates/loop.html",
+              "type": "document"
+            },
+            {
+              "path": "/site/styles/tokens.css",
+              "type": "stylesheet"
+            },
+            {
+              "path": "/site/styles/base.css",
+              "type": "stylesheet"
+            },
+            {
+              "path": "/assets/templates/assets.css",
+              "type": "stylesheet"
+            },
+            {
+              "path": "/assets/templates/ready.js",
+              "type": "script"
+            },
+            {
+              "path": "/site/img/mark.svg",
+              "type": "image"
+            },
+            {
+              "path": "/site/img/delivery-graph.svg",
+              "type": "other"
+            },
+            {
+              "path": "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+              "type": "font"
+            },
+            {
+              "path": "/site/fonts/inter/Inter-SemiBold.woff2",
+              "type": "font"
+            },
+            {
+              "path": "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
+              "type": "font"
+            },
+            {
+              "path": "/site/fonts/inter/Inter-Regular.woff2",
+              "type": "font"
+            }
+          ]
+        },
+        {
+          "cycle": null,
+          "errors": [],
+          "id": "team",
+          "ready": {
+            "failed": [],
+            "fonts": [
+              "Bricolage:700",
+              "Inter:400",
+              "Inter:600",
+              "JetBrains Mono:400"
+            ],
+            "images_decoded": true,
+            "overflow": [],
+            "policy_violations": [],
+            "resources": [
+              "/site/styles/tokens.css",
+              "/site/styles/base.css",
+              "/assets/templates/assets.css",
+              "/site/img/mark.svg",
+              "/assets/templates/ready.js",
+              "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+              "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
+              "/site/fonts/inter/Inter-SemiBold.woff2",
+              "/site/fonts/inter/Inter-Regular.woff2"
+            ],
+            "viewport": [
+              1200,
+              800
+            ]
+          },
+          "requests": [
+            {
+              "path": "/assets/templates/team.html",
+              "type": "document"
+            },
+            {
+              "path": "/site/styles/tokens.css",
+              "type": "stylesheet"
+            },
+            {
+              "path": "/site/styles/base.css",
+              "type": "stylesheet"
+            },
+            {
+              "path": "/assets/templates/assets.css",
+              "type": "stylesheet"
+            },
+            {
+              "path": "/assets/templates/ready.js",
+              "type": "script"
+            },
+            {
+              "path": "/site/img/mark.svg",
+              "type": "image"
+            },
+            {
+              "path": "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+              "type": "font"
+            },
+            {
+              "path": "/site/fonts/inter/Inter-SemiBold.woff2",
+              "type": "font"
+            },
+            {
+              "path": "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
+              "type": "font"
+            },
+            {
+              "path": "/site/fonts/inter/Inter-Regular.woff2",
+              "type": "font"
+            }
+          ]
+        },
+        {
+          "cycle": null,
+          "errors": [],
+          "id": "hosts",
+          "ready": {
+            "failed": [],
+            "fonts": [
+              "Bricolage:700",
+              "Inter:400",
+              "Inter:600",
+              "JetBrains Mono:400"
+            ],
+            "images_decoded": true,
+            "overflow": [],
+            "policy_violations": [],
+            "resources": [
+              "/site/styles/tokens.css",
+              "/site/styles/base.css",
+              "/assets/templates/assets.css",
+              "/site/img/mark.svg",
+              "/assets/templates/ready.js",
+              "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+              "/site/fonts/inter/Inter-SemiBold.woff2",
+              "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
+              "/site/fonts/inter/Inter-Regular.woff2"
+            ],
+            "viewport": [
+              1200,
+              800
+            ]
+          },
+          "requests": [
+            {
+              "path": "/assets/templates/hosts.html",
+              "type": "document"
+            },
+            {
+              "path": "/site/styles/tokens.css",
+              "type": "stylesheet"
+            },
+            {
+              "path": "/site/styles/base.css",
+              "type": "stylesheet"
+            },
+            {
+              "path": "/assets/templates/assets.css",
+              "type": "stylesheet"
+            },
+            {
+              "path": "/assets/templates/ready.js",
+              "type": "script"
+            },
+            {
+              "path": "/site/img/mark.svg",
+              "type": "image"
+            },
+            {
+              "path": "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+              "type": "font"
+            },
+            {
+              "path": "/site/fonts/inter/Inter-SemiBold.woff2",
+              "type": "font"
+            },
+            {
+              "path": "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
+              "type": "font"
+            },
+            {
+              "path": "/site/fonts/inter/Inter-Regular.woff2",
+              "type": "font"
+            }
+          ]
+        },
+        {
+          "cycle": {
+            "bounds": [
+              449.5,
+              100.953125,
+              1158,
+              526.046875
+            ],
+            "geometry": [
+              8,
+              12,
+              985,
+              586
+            ],
+            "observed_use_selector": "use[href=\"../../site/img/delivery-graph.svg#factory-cycle\"]",
+            "text_fonts": [
+              {
+                "bounds": [
+                  477.84478759765625,
+                  113.83515930175781,
+                  781.8447875976562,
+                  137.8351593017578
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 33,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "Orchestrator / active coding host"
+              },
+              {
+                "bounds": [
+                  477.84478759765625,
+                  139.79833984375,
+                  983.5010375976562,
+                  158.79833984375
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 72,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Prioritize \u00b7 staff \u00b7 inspect proof \u00b7 manage budgets \u00b7 recover \u00b7 continue"
+              },
+              {
+                "bounds": [
+                  475.0108337402344,
+                  188.2671356201172,
+                  739.2139892578125,
+                  205.2671356201172
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 37,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "Human decision \u00b7 any phase, if needed"
+              },
+              {
+                "bounds": [
+                  475.0108337402344,
+                  208.6878662109375,
+                  730.3233032226562,
+                  223.6878662109375
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 40,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Risk \u00b7 assets \u00b7 agreed autonomy \u2192 resume"
+              },
+              {
+                "bounds": [
+                  475.0108337402344,
+                  256.8245849609375,
+                  595.9639892578125,
+                  277.8245849609375
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 13,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "Ground + plan"
+              },
+              {
+                "bounds": [
+                  475.0108337402344,
+                  287.1641845703125,
+                  571.5577392578125,
+                  306.1641845703125
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 12,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "BMad stories"
+              },
+              {
+                "bounds": [
+                  475.0108337402344,
+                  310.1273498535156,
+                  608.9171142578125,
+                  327.1273498535156
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 18,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "ACs \u00b7 dependencies"
+              },
+              {
+                "bounds": [
+                  475.0108337402344,
+                  336.7584533691406,
+                  578.7921142578125,
+                  355.7584533691406
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 13,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Plan review \u21ba"
+              },
+              {
+                "bounds": [
+                  475.0108337402344,
+                  370.3489685058594,
+                  592.9171142578125,
+                  388.3489685058594
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 16,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "\u2192 Ready frontier"
+              },
+              {
+                "bounds": [
+                  652.1332397460938,
+                  256.8245849609375,
+                  762.2269897460938,
+                  277.8245849609375
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 13,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "Parallel work"
+              },
+              {
+                "bounds": [
+                  658.5096435546875,
+                  294.54058837890625,
+                  757.1815185546875,
+                  312.54058837890625
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 15,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Story A \u00b7 build"
+              },
+              {
+                "bounds": [
+                  658.5096435546875,
+                  334.92449951171875,
+                  756.6502685546875,
+                  352.92449951171875
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 15,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Story B \u00b7 build"
+              },
+              {
+                "bounds": [
+                  652.1332397460938,
+                  370.3489685058594,
+                  762.3676147460938,
+                  388.3489685058594
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 17,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Claim \u00b7 self-test"
+              },
+              {
+                "bounds": [
+                  829.255615234375,
+                  256.8245849609375,
+                  937.489990234375,
+                  277.8245849609375
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 11,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "Independent"
+              },
+              {
+                "bounds": [
+                  829.255615234375,
+                  282.3302001953125,
+                  875.411865234375,
+                  303.3302307128906
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 5,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "proof"
+              },
+              {
+                "bounds": [
+                  829.255615234375,
+                  311.5443115234375,
+                  935.271240234375,
+                  329.5443115234375
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 17,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "QA \u00b7 evals \u00b7 diff"
+              },
+              {
+                "bounds": [
+                  829.255615234375,
+                  331.79901123046875,
+                  916.552490234375,
+                  350.79901123046875
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 11,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Review + CI"
+              },
+              {
+                "bounds": [
+                  829.255615234375,
+                  370.3489685058594,
+                  912.333740234375,
+                  388.3489685058594
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 11,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "Per story \u2192"
+              },
+              {
+                "bounds": [
+                  1006.3779907226562,
+                  256.8245849609375,
+                  1083.3468017578125,
+                  277.8245849609375
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 9,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "Integrate"
+              },
+              {
+                "bounds": [
+                  1006.3779907226562,
+                  282.3302001953125,
+                  1081.1280517578125,
+                  303.3302307128906
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 9,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "+ deliver"
+              },
+              {
+                "bounds": [
+                  1006.3779907226562,
+                  311.5443115234375,
+                  1132.2843017578125,
+                  329.5443115234375
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 15,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "One merge owner"
+              },
+              {
+                "bounds": [
+                  1006.3779907226562,
+                  331.79901123046875,
+                  1121.8779296875,
+                  350.79901123046875
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 14,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "SHA + behavior"
+              },
+              {
+                "bounds": [
+                  1006.3779907226562,
+                  371.3489685058594,
+                  1128.6279296875,
+                  387.3489685058594
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 18,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Approved authority"
+              },
+              {
+                "bounds": [
+                  662.0520629882812,
+                  428.8620910644531,
+                  905.0677490234375,
+                  447.8620910644531
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 33,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Fail / unknown \u2192 repair or replan"
+              },
+              {
+                "bounds": [
+                  618.125732421875,
+                  469.9544982910156,
+                  957.000732421875,
+                  488.95452880859375
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 44,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "Authorized feedback \u2192 triage \u2192 next priority"
+              },
+              {
+                "bounds": [
+                  477.13629150390625,
+                  500.4195251464844,
+                  963.9019165039062,
+                  519.4195556640625
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 68,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Shared context \u00b7 board \u00b7 claims \u00b7 receipts \u00b7 decisions \u00b7 checkpoints"
+              }
+            ],
+            "viewbox": [
+              0,
+              0,
+              1000,
+              600
+            ]
+          },
+          "errors": [],
+          "id": "launch-landscape",
+          "ready": {
+            "failed": [],
+            "fonts": [
+              "Bricolage:700",
+              "Inter:400",
+              "Inter:600",
+              "JetBrains Mono:400"
+            ],
+            "images_decoded": true,
+            "overflow": [],
+            "policy_violations": [],
+            "resources": [
+              "/site/styles/tokens.css",
+              "/site/styles/base.css",
+              "/assets/templates/assets.css",
+              "/site/img/mark.svg",
+              "/assets/templates/ready.js",
+              "/site/img/delivery-graph.svg",
+              "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+              "/site/fonts/inter/Inter-SemiBold.woff2",
+              "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
+              "/site/fonts/inter/Inter-Regular.woff2"
+            ],
+            "viewport": [
+              1200,
+              675
+            ]
+          },
+          "requests": [
+            {
+              "path": "/assets/templates/launch-landscape.html",
+              "type": "document"
+            },
+            {
+              "path": "/site/styles/tokens.css",
+              "type": "stylesheet"
+            },
+            {
+              "path": "/site/styles/base.css",
+              "type": "stylesheet"
+            },
+            {
+              "path": "/assets/templates/assets.css",
+              "type": "stylesheet"
+            },
+            {
+              "path": "/assets/templates/ready.js",
+              "type": "script"
+            },
+            {
+              "path": "/site/img/mark.svg",
+              "type": "image"
+            },
+            {
+              "path": "/site/img/delivery-graph.svg",
+              "type": "other"
+            },
+            {
+              "path": "/site/fonts/inter/Inter-SemiBold.woff2",
+              "type": "font"
+            },
+            {
+              "path": "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+              "type": "font"
+            },
+            {
+              "path": "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
+              "type": "font"
+            },
+            {
+              "path": "/site/fonts/inter/Inter-Regular.woff2",
+              "type": "font"
+            }
+          ]
+        },
+        {
+          "cycle": {
+            "bounds": [
+              88,
+              493.578125,
+              992,
+              1035.96875
+            ],
+            "geometry": [
+              8,
+              12,
+              985,
+              586
+            ],
+            "observed_use_selector": "use[href=\"../../site/img/delivery-graph.svg#factory-cycle\"]",
+            "text_fonts": [
+              {
+                "bounds": [
+                  124.16719055175781,
+                  510.2574157714844,
+                  512.1046905517578,
+                  540.2574462890625
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 33,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "Orchestrator / active coding host"
+              },
+              {
+                "bounds": [
+                  124.16719055175781,
+                  543.2809448242188,
+                  769.3859405517578,
+                  567.2809448242188
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 72,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Prioritize \u00b7 staff \u00b7 inspect proof \u00b7 manage budgets \u00b7 recover \u00b7 continue"
+              },
+              {
+                "bounds": [
+                  120.55125427246094,
+                  604.847900390625,
+                  457.70750427246094,
+                  626.847900390625
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 37,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "Human decision \u00b7 any phase, if needed"
+              },
+              {
+                "bounds": [
+                  120.55125427246094,
+                  630.3515014648438,
+                  446.36375427246094,
+                  650.3515014648438
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 40,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Risk \u00b7 assets \u00b7 agreed autonomy \u2192 resume"
+              },
+              {
+                "bounds": [
+                  120.55125427246094,
+                  692.1503295898438,
+                  274.8324890136719,
+                  719.1503295898438
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 13,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "Ground + plan"
+              },
+              {
+                "bounds": [
+                  120.55125427246094,
+                  731.3096923828125,
+                  243.75437927246094,
+                  755.3096923828125
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 12,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "BMad stories"
+              },
+              {
+                "bounds": [
+                  120.55125427246094,
+                  760.3331909179688,
+                  291.4418640136719,
+                  782.3331909179688
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 18,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "ACs \u00b7 dependencies"
+              },
+              {
+                "bounds": [
+                  120.55125427246094,
+                  794.588623046875,
+                  252.97312927246094,
+                  818.588623046875
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 13,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Plan review \u21ba"
+              },
+              {
+                "bounds": [
+                  120.55125427246094,
+                  837.171875,
+                  271.03564453125,
+                  860.171875
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 16,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "\u2192 Ready frontier"
+              },
+              {
+                "bounds": [
+                  346.5473327636719,
+                  692.1503295898438,
+                  486.9692077636719,
+                  719.1503295898438
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 13,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "Parallel work"
+              },
+              {
+                "bounds": [
+                  354.6831970214844,
+                  740.445556640625,
+                  480.6206970214844,
+                  763.445556640625
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 15,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Story A \u00b7 build"
+              },
+              {
+                "bounds": [
+                  354.6831970214844,
+                  791.97265625,
+                  479.9488220214844,
+                  814.97265625
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 15,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Story B \u00b7 build"
+              },
+              {
+                "bounds": [
+                  346.5473327636719,
+                  837.171875,
+                  487.2504577636719,
+                  860.171875
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 17,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Claim \u00b7 self-test"
+              },
+              {
+                "bounds": [
+                  572.54345703125,
+                  692.1503295898438,
+                  710.60595703125,
+                  719.1503295898438
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 11,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "Independent"
+              },
+              {
+                "bounds": [
+                  572.54345703125,
+                  724.6937255859375,
+                  631.40283203125,
+                  751.6937255859375
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 5,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "proof"
+              },
+              {
+                "bounds": [
+                  572.54345703125,
+                  762.1411743164062,
+                  707.8716430664062,
+                  785.1411743164062
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 17,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "QA \u00b7 evals \u00b7 diff"
+              },
+              {
+                "bounds": [
+                  572.54345703125,
+                  788.2607421875,
+                  683.93408203125,
+                  812.2607421875
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 11,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Review + CI"
+              },
+              {
+                "bounds": [
+                  572.54345703125,
+                  837.171875,
+                  678.57470703125,
+                  860.171875
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 11,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "Per story \u2192"
+              },
+              {
+                "bounds": [
+                  798.53955078125,
+                  692.1503295898438,
+                  896.7113647460938,
+                  719.1503295898438
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 9,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "Integrate"
+              },
+              {
+                "bounds": [
+                  798.53955078125,
+                  724.6937255859375,
+                  893.88330078125,
+                  751.6937255859375
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 9,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "+ deliver"
+              },
+              {
+                "bounds": [
+                  798.53955078125,
+                  762.1411743164062,
+                  959.24267578125,
+                  785.1411743164062
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 15,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "One merge owner"
+              },
+              {
+                "bounds": [
+                  798.53955078125,
+                  788.2607421875,
+                  945.91455078125,
+                  812.2607421875
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 14,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "SHA + behavior"
+              },
+              {
+                "bounds": [
+                  798.53955078125,
+                  838.171875,
+                  954.47705078125,
+                  859.171875
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 18,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Approved authority"
+              },
+              {
+                "bounds": [
+                  359.203125,
+                  912.1065673828125,
+                  669.28125,
+                  936.1065673828125
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 33,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Fail / unknown \u2192 repair or replan"
+              },
+              {
+                "bounds": [
+                  303.1560974121094,
+                  964.5376586914062,
+                  735.5623779296875,
+                  988.5376586914062
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter SemiBold",
+                    "glyphCount": 44,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-SemiBold"
+                  }
+                ],
+                "text": "Authorized feedback \u2192 triage \u2192 next priority"
+              },
+              {
+                "bounds": [
+                  123.26319885253906,
+                  1003.408935546875,
+                  744.3725738525391,
+                  1027.408935546875
+                ],
+                "fonts": [
+                  {
+                    "familyName": "Inter",
+                    "glyphCount": 68,
+                    "isCustomFont": true,
+                    "postScriptName": "Inter-Regular"
+                  }
+                ],
+                "text": "Shared context \u00b7 board \u00b7 claims \u00b7 receipts \u00b7 decisions \u00b7 checkpoints"
+              }
+            ],
+            "viewbox": [
+              0,
+              0,
+              1000,
+              600
+            ]
+          },
+          "errors": [],
+          "id": "launch-portrait",
+          "ready": {
+            "failed": [],
+            "fonts": [
+              "Bricolage:700",
+              "Inter:400",
+              "Inter:600",
+              "JetBrains Mono:400"
+            ],
+            "images_decoded": true,
+            "overflow": [],
+            "policy_violations": [],
+            "resources": [
+              "/site/styles/tokens.css",
+              "/site/styles/base.css",
+              "/assets/templates/assets.css",
+              "/site/img/mark.svg",
+              "/assets/templates/ready.js",
+              "/site/img/delivery-graph.svg",
+              "/site/fonts/inter/Inter-SemiBold.woff2",
+              "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
+              "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+              "/site/fonts/inter/Inter-Regular.woff2"
+            ],
+            "viewport": [
+              1080,
+              1350
+            ]
+          },
+          "requests": [
+            {
+              "path": "/assets/templates/launch-portrait.html",
+              "type": "document"
+            },
+            {
+              "path": "/site/styles/tokens.css",
+              "type": "stylesheet"
+            },
+            {
+              "path": "/site/styles/base.css",
+              "type": "stylesheet"
+            },
+            {
+              "path": "/assets/templates/assets.css",
+              "type": "stylesheet"
+            },
+            {
+              "path": "/assets/templates/ready.js",
+              "type": "script"
+            },
+            {
+              "path": "/site/img/mark.svg",
+              "type": "image"
+            },
+            {
+              "path": "/site/img/delivery-graph.svg",
+              "type": "other"
+            },
+            {
+              "path": "/site/fonts/inter/Inter-SemiBold.woff2",
+              "type": "font"
+            },
+            {
+              "path": "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+              "type": "font"
+            },
+            {
+              "path": "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
+              "type": "font"
+            },
+            {
+              "path": "/site/fonts/inter/Inter-Regular.woff2",
+              "type": "font"
+            }
+          ]
+        }
+      ],
+      "packages": {
+        "greenlet": "3.5.6",
+        "playwright": "1.64.0",
+        "pyee": "14.0.0",
+        "typing_extensions": "4.16.0"
+      },
+      "python": "3.12.14",
+      "settings": {
+        "color_scheme": "light",
+        "locale": "en-US",
+        "permissions": [],
+        "sandbox": true,
+        "scale": 1,
+        "service_workers": "block",
+        "timezone": "UTC"
+      },
+      "system": "Darwin"
+    },
+    "launch": {
+      "chromium_sandbox": true,
+      "flags": [
+        "--disable-field-trial-config",
+        "--disable-background-networking",
+        "--disable-background-timer-throttling",
+        "--disable-backgrounding-occluded-windows",
+        "--disable-back-forward-cache",
+        "--disable-breakpad",
+        "--disable-client-side-phishing-detection",
+        "--disable-component-extensions-with-background-pages",
+        "--disable-component-update",
+        "--no-default-browser-check",
+        "--disable-default-apps",
+        "--disable-dev-shm-usage",
+        "--disable-edgeupdater",
+        "--disable-extensions",
+        "--disable-features",
+        "--enable-features",
+        "--allow-pre-commit-input",
+        "--disable-hang-monitor",
+        "--disable-ipc-flooding-protection",
+        "--disable-popup-blocking",
+        "--disable-prompt-on-repost",
+        "--disable-renderer-backgrounding",
+        "--disable-updater-scheduler",
+        "--force-color-profile",
+        "--metrics-recording-only",
+        "--no-first-run",
+        "--password-store",
+        "--use-mock-keychain",
+        "--no-service-autorun",
+        "--export-tagged-pdf",
+        "--disable-search-engine-choice-screen",
+        "--unsafely-disable-devtools-self-xss-warnings",
+        "--edge-skip-compat-layer-relaunch",
+        "--disable-infobars",
+        "--disable-search-engine-choice-screen",
+        "--disable-sync",
+        "--headless",
+        "--hide-scrollbars",
+        "--mute-audio",
+        "--blink-settings",
+        "--user-data-dir",
+        "--remote-debugging-pipe",
+        "--no-startup-window"
+      ],
+      "log_sha256": "a9c46571ab44b98f4da36b9b011f11076a7a9bd4ef876679a55782136decc48b"
+    },
+    "server_requests": [
+      {
+        "path": "/assets/templates/social-preview.html",
+        "status": 200
+      },
+      {
+        "path": "/site/styles/tokens.css",
+        "status": 200
+      },
+      {
+        "path": "/site/styles/base.css",
+        "status": 200
+      },
+      {
+        "path": "/assets/templates/assets.css",
+        "status": 200
+      },
+      {
+        "path": "/assets/templates/ready.js",
+        "status": 200
+      },
+      {
+        "path": "/site/img/mark.svg",
+        "status": 200
+      },
+      {
+        "path": "/site/img/delivery-graph.svg",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/inter/Inter-SemiBold.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/inter/Inter-Regular.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/img/delivery-graph.svg",
+        "status": 200
+      },
+      {
+        "path": "/site/styles/tokens.css",
+        "status": 200
+      },
+      {
+        "path": "/site/styles/base.css",
+        "status": 200
+      },
+      {
+        "path": "/assets/templates/assets.css",
+        "status": 200
+      },
+      {
+        "path": "/assets/templates/hero.html",
+        "status": 200
+      },
+      {
+        "path": "/site/styles/tokens.css",
+        "status": 200
+      },
+      {
+        "path": "/site/styles/base.css",
+        "status": 200
+      },
+      {
+        "path": "/assets/templates/assets.css",
+        "status": 200
+      },
+      {
+        "path": "/assets/templates/ready.js",
+        "status": 200
+      },
+      {
+        "path": "/site/img/mark.svg",
+        "status": 200
+      },
+      {
+        "path": "/site/img/delivery-graph.svg",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/inter/Inter-SemiBold.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/inter/Inter-Regular.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/img/delivery-graph.svg",
+        "status": 200
+      },
+      {
+        "path": "/site/styles/tokens.css",
+        "status": 200
+      },
+      {
+        "path": "/site/styles/base.css",
+        "status": 200
+      },
+      {
+        "path": "/assets/templates/assets.css",
+        "status": 200
+      },
+      {
+        "path": "/assets/templates/loop.html",
+        "status": 200
+      },
+      {
+        "path": "/site/styles/tokens.css",
+        "status": 200
+      },
+      {
+        "path": "/site/styles/base.css",
+        "status": 200
+      },
+      {
+        "path": "/assets/templates/assets.css",
+        "status": 200
+      },
+      {
+        "path": "/assets/templates/ready.js",
+        "status": 200
+      },
+      {
+        "path": "/site/img/mark.svg",
+        "status": 200
+      },
+      {
+        "path": "/site/img/delivery-graph.svg",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/inter/Inter-SemiBold.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/inter/Inter-Regular.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/img/delivery-graph.svg",
+        "status": 200
+      },
+      {
+        "path": "/site/styles/tokens.css",
+        "status": 200
+      },
+      {
+        "path": "/site/styles/base.css",
+        "status": 200
+      },
+      {
+        "path": "/assets/templates/assets.css",
+        "status": 200
+      },
+      {
+        "path": "/assets/templates/team.html",
+        "status": 200
+      },
+      {
+        "path": "/site/styles/tokens.css",
+        "status": 200
+      },
+      {
+        "path": "/site/styles/base.css",
+        "status": 200
+      },
+      {
+        "path": "/assets/templates/assets.css",
+        "status": 200
+      },
+      {
+        "path": "/assets/templates/ready.js",
+        "status": 200
+      },
+      {
+        "path": "/site/img/mark.svg",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/inter/Inter-SemiBold.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/inter/Inter-Regular.woff2",
+        "status": 200
+      },
+      {
+        "path": "/assets/templates/hosts.html",
+        "status": 200
+      },
+      {
+        "path": "/site/styles/tokens.css",
+        "status": 200
+      },
+      {
+        "path": "/site/styles/base.css",
+        "status": 200
+      },
+      {
+        "path": "/assets/templates/assets.css",
+        "status": 200
+      },
+      {
+        "path": "/assets/templates/ready.js",
+        "status": 200
+      },
+      {
+        "path": "/site/img/mark.svg",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/inter/Inter-SemiBold.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/inter/Inter-Regular.woff2",
+        "status": 200
+      },
+      {
+        "path": "/assets/templates/launch-landscape.html",
+        "status": 200
+      },
+      {
+        "path": "/site/styles/tokens.css",
+        "status": 200
+      },
+      {
+        "path": "/site/styles/base.css",
+        "status": 200
+      },
+      {
+        "path": "/assets/templates/assets.css",
+        "status": 200
+      },
+      {
+        "path": "/assets/templates/ready.js",
+        "status": 200
+      },
+      {
+        "path": "/site/img/mark.svg",
+        "status": 200
+      },
+      {
+        "path": "/site/img/delivery-graph.svg",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/inter/Inter-SemiBold.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/inter/Inter-Regular.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/img/delivery-graph.svg",
+        "status": 200
+      },
+      {
+        "path": "/site/styles/tokens.css",
+        "status": 200
+      },
+      {
+        "path": "/site/styles/base.css",
+        "status": 200
+      },
+      {
+        "path": "/assets/templates/assets.css",
+        "status": 200
+      },
+      {
+        "path": "/assets/templates/launch-portrait.html",
+        "status": 200
+      },
+      {
+        "path": "/site/styles/tokens.css",
+        "status": 200
+      },
+      {
+        "path": "/site/styles/base.css",
+        "status": 200
+      },
+      {
+        "path": "/assets/templates/assets.css",
+        "status": 200
+      },
+      {
+        "path": "/assets/templates/ready.js",
+        "status": 200
+      },
+      {
+        "path": "/site/img/mark.svg",
+        "status": 200
+      },
+      {
+        "path": "/site/img/delivery-graph.svg",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/inter/Inter-SemiBold.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/fonts/inter/Inter-Regular.woff2",
+        "status": 200
+      },
+      {
+        "path": "/site/img/delivery-graph.svg",
+        "status": 200
+      },
+      {
+        "path": "/site/styles/tokens.css",
+        "status": 200
+      },
+      {
+        "path": "/site/styles/base.css",
+        "status": 200
+      },
+      {
+        "path": "/assets/templates/assets.css",
+        "status": 200
+      }
+    ]
+  },
+  "inputs": {
+    "assets/manifest.json": "0a789c959be56b5113cd549149b19a6d47bc7545e4c4296f94db48c36e7ba146",
+    "assets/templates/assets.css": "081bd22f29dd50b63c54f793aa5f6a1eb28f1862a4a61e10d9f1c571e23bbb18",
+    "assets/templates/hero.html": "58bfde6c5294b4e6d05eda085dde589436a6ba3b864306bf6242ffd024f19266",
+    "assets/templates/hosts.html": "7e3ffda79e81b0fd58db18ecfd102c224c6055a5fe632f6ee3a07b2dc8d8548b",
+    "assets/templates/launch-landscape.html": "ccec84cae01a9e38f46ca72e4bff9dd748339bbf613c8bbc23ee7bef449d6961",
+    "assets/templates/launch-portrait.html": "6697da97e8995b3acf38f892393ac779d20e47909ec95b9b059bd5eda3493882",
+    "assets/templates/loop.html": "2da92b79d6a005b6880edf817b38a6d30fab4794686fc1c99d2154bafea2ff1f",
+    "assets/templates/ready.js": "265328896459a4eca66397ba4655edd830071b497ecae4ee3f2cd7f781989af3",
+    "assets/templates/social-preview.html": "2b13d4ee6bc3179b5a25b4a1e84fdcda5c9c8e273f1e52e1bc75740b57bbfbce",
+    "assets/templates/team.html": "d403cf7225c19a1d60948d195f32a17ab9b4de64471f48adefa306223e8f1a38",
+    "assets/toolchain.json": "1cfea5c01d5dccac4dcfbf6ac420a264f1f40ed9dd29ff219614a9817f88e9f8",
+    "assets/tools/capture.py": "9da037b6d32d2484892620b124f4c46530abf0b39d863fd3694fa566dcd5e50e",
+    "scripts/render_assets.py": "f8af931f062a765ddadc7aa02c2130105d82e1581cd92416d43b601391e2f450",
+    "site/fonts/bricolage/BricolageGrotesque96pt-Bold.woff2": "908de7414bcad8649c2127a27e9aec08159059fca39b42bf724b4327a6780961",
+    "site/fonts/inter/Inter-Regular.woff2": "e06f6b1bc553aaea4e4668023ed0ab0a147129c3107f511bc7d03d361b0ae085",
+    "site/fonts/inter/Inter-SemiBold.woff2": "5cb7103e4e605989afebc03d989c79201e54b21b5183db33981f70db9178a301",
+    "site/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2": "a9cb1cd82332b23a47e3a1239d25d13c86d16c4220695e34b243effa999f45f2",
+    "site/img/delivery-graph.svg": "8fbfba36c93c2c73014291cdf2bca728a2936cdc90cf717ea29c2e640a77f03f",
+    "site/img/mark.svg": "a9afdfd07235005a4fc3c0a3d7450935b6f97808b0214e7fcc536a6396d0cec1",
+    "site/styles/base.css": "6fec0a26fefa5c80a96e18f4c547eeca1590b637becc7178540522e66e202e33",
+    "site/styles/tokens.css": "c5d5e88aa4bf77a283d1e7c5d1d3d7b2175e2fa6980f55399208f32eb747abec"
+  },
+  "outputs": {
+    "assets/hero.png": {
+      "bytes": 196116,
+      "dimensions": [
+        1600,
+        900
+      ],
+      "sha256": "a27158727f0e1f310dcff86050d7c99b6f0d7050c03f01d63c967ca221d3dc75"
+    },
+    "assets/hosts.png": {
+      "bytes": 108150,
+      "dimensions": [
+        1200,
+        800
+      ],
+      "sha256": "39f75302d3d680d6a10fdcefd3a69203e5a2b53648bb6af8c2b096a8aa25158b"
+    },
+    "assets/launch-landscape.png": {
+      "bytes": 134533,
+      "dimensions": [
+        1200,
+        675
+      ],
+      "sha256": "fc6648c1c3955cc1cb95553314fb6fd39db41c0843daeb9401d111b95cffa72e"
+    },
+    "assets/launch-portrait.png": {
+      "bytes": 182616,
+      "dimensions": [
+        1080,
+        1350
+      ],
+      "sha256": "779747ab01d38ef7a5ca6ed1f6e3fa06176e0e115f00a55ff91ff71923d856f0"
+    },
+    "assets/loop.png": {
+      "bytes": 160245,
+      "dimensions": [
+        1200,
+        800
+      ],
+      "sha256": "adddb87f59aeb4f16df24b6bb352fbc7dbf04d72909386564944a401021cd222"
+    },
+    "assets/social-preview.png": {
+      "bytes": 127321,
+      "dimensions": [
+        1280,
+        640
+      ],
+      "sha256": "dafd053f99b4bc38a1e5853e32115055dde4741d8cf7afecd401c92e1f09b425"
+    },
+    "assets/team.png": {
+      "bytes": 92367,
+      "dimensions": [
+        1200,
+        800
+      ],
+      "sha256": "45da92d046e87228a3d8a31ded5f015765d16f28082d1b5019afaf15dcf671b8"
+    },
+    "site/img/hosts.png": {
+      "bytes": 108150,
+      "dimensions": [
+        1200,
+        800
+      ],
+      "sha256": "39f75302d3d680d6a10fdcefd3a69203e5a2b53648bb6af8c2b096a8aa25158b"
+    },
+    "site/img/loop.png": {
+      "bytes": 160245,
+      "dimensions": [
+        1200,
+        800
+      ],
+      "sha256": "adddb87f59aeb4f16df24b6bb352fbc7dbf04d72909386564944a401021cd222"
+    },
+    "site/img/team.png": {
+      "bytes": 92367,
+      "dimensions": [
+        1200,
+        800
+      ],
+      "sha256": "45da92d046e87228a3d8a31ded5f015765d16f28082d1b5019afaf15dcf671b8"
+    }
+  },
+  "version": 1
+}

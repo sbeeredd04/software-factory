@@ -1,0 +1,92 @@
+{
+  "version": 1,
+  "id": 38,
+  "epic": 2,
+  "type": "spike",
+  "title": "Research Factory and review the full SDLC delivery proposal",
+  "status": "in-review",
+  "owner": "codex-product-grounding",
+  "after": [
+    16
+  ],
+  "covers": [],
+  "risk": "low",
+  "hitl": false,
+  "plan_checkpoint": false,
+  "done_checkpoint": false,
+  "blocked": null,
+  "receipts": {
+    "proposal-review": {
+      "type": "proposal-source-review",
+      "subject_sha": "1da18f35a2d6f98c2b5f26696750d0193ccda77d",
+      "author": "product-expert-and-orchestrator",
+      "reviewer": "independent-principal-architect",
+      "status": "reviewed-proposal",
+      "files": {
+        "docs/research/factory-product.md": "01d31085a3dc29ac6c0f6f6e3c393131000fd1600772bafbdbf848b508d32cc5",
+        "docs/plans/full-sdlc-delivery.md": "d4ff880ad675b725f196260c899827e093df68c7f7c9933deecd52d46e435368",
+        "docs/plans/host-contract-correction.md": "9ee88b9f378d04cb972dcf566d4a88e47a612f5278519d341315a6cbfbc91116"
+      },
+      "observed": [
+        "Public official source synthesis completed",
+        "Independent source review accepted revised delivery proposal",
+        "Narrow installer ownership repair accepted by independent source review"
+      ],
+      "limitations": [
+        "Owner has not approved proposed graph or gate semantics",
+        "Source review does not establish runtime behavior",
+        "Research does not reconstruct proprietary Factory internals"
+      ]
+    },
+    "current-contract-review": {
+      "type": "proposal-source-review",
+      "subject_sha": "38fad16312d427841ae94ce7332c3d8249976fb5",
+      "recorded_at": "2026-10-15T08:42:26.461717+00:00",
+      "author": "codex-orchestrator",
+      "reviewer": "independent-recovery-reviewer",
+      "status": "reviewed",
+      "summary": "Reconciled delivery and host plans against actual implemented corrections and owner clarification. Original story chain, human epic acceptance and pending protected-transition policy remain explicit. Independent review accepted after correcting stale parallelism wording.",
+      "verification": {
+        "validate_exit_code": 0,
+        "links_exit_code": 0,
+        "public_scan_exit_code": 0
+      }
+    }
+  },
+  "baseline_sha": null,
+  "branch": null,
+  "pr": null,
+  "merged_sha": null,
+  "history": [
+    {
+      "at": "2026-10-15T07:54:27.810641+00:00",
+      "by": "orchestrator",
+      "from": "backlog",
+      "to": "ready-for-dev"
+    },
+    {
+      "at": "2026-10-15T07:54:27.913392+00:00",
+      "by": "codex-product-grounding",
+      "from": "ready-for-dev",
+      "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T07:57:20.890576+00:00",
+      "by": "codex-product-grounding",
+      "from": "in-progress",
+      "to": "in-review"
+    }
+  ],
+  "findings": [
+    {
+      "at": "2026-10-15T07:57:20.890386+00:00",
+      "by": "codex-product-grounding",
+      "text": "Public-source research and the delivery proposal received independent source review. Proposed policy changes remain unapproved; no implementation or epic acceptance is claimed."
+    }
+  ],
+  "source_key": "expansion/factory-product-grounding",
+  "scope": [
+    "docs/research",
+    "docs/plans"
+  ]
+}
