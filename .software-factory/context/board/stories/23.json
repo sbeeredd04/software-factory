@@ -4,8 +4,8 @@
   "epic": 3,
   "type": "story",
   "title": "Pinned BMad 6.12.0 install through the official installer",
-  "status": "backlog",
-  "owner": null,
+  "status": "in-review",
+  "owner": "codex-bmad-provisioning",
   "after": [
     22
   ],
@@ -23,12 +23,304 @@
   "plan_checkpoint": false,
   "done_checkpoint": false,
   "blocked": null,
-  "receipts": {},
+  "receipts": {
+    "active-attempt": {
+      "type": "agent-attempt",
+      "subject_sha": "089bb4e2f1c731c4ba4bb7f3b20b3a792e89bae5",
+      "agent": "/root/host_contracts",
+      "role": "sf-principal-engineer",
+      "skill": "software-factory",
+      "requested_model": "gpt-6-astra",
+      "effective_model": null,
+      "phase": "implementation",
+      "status": "assigned",
+      "recorded_at": "2026-10-15T09:17:12.435041+00:00",
+      "summary": "Author implements original pinned BMad provisioning after reviewed safe uninstall/doctor; exact accepted argv, existing-install preservation and explicit partial effects."
+    },
+    "compatibility-investigation": {
+      "type": "compatibility-investigation",
+      "recorded_at": "2026-10-15T09:44:26.322708+00:00",
+      "package": "bmad-method@6.12.0",
+      "original_command": {
+        "status": "fail",
+        "source": "Author's real guarded fixture; precise dirty-source execution is retained privately, not attributed to a later committed SHA.",
+        "upstream_exit_code": 1,
+        "cause": "TEA stable v3.0.2 lacks the module definition expected by pinned CLI."
+      },
+      "exploratory_alternatives": [
+        {
+          "pins": {
+            "tea": "v1.27.2"
+          },
+          "exit_code": 0,
+          "elapsed_seconds": 8.25
+        },
+        {
+          "pins": {
+            "tea": "v1.27.2",
+            "bmb": "v2.2.2",
+            "cis": "v0.3.2"
+          },
+          "exit_code": 0,
+          "elapsed_seconds": 9.12
+        }
+      ],
+      "observed": {
+        "core": "6.12.0",
+        "bmm": "6.12.0",
+        "host_skills": {
+          "claude-code": 54,
+          "shared": 54
+        },
+        "host_cli_guard_attempts": 0,
+        "external_sources": {
+          "bmb": "4a1422274a2acb0fb0ec0511753da6263948f072",
+          "cis": "97298b22fee1c7e482710d3a8414adb5cfccccd9",
+          "tea": "d99ad29c62697c152e3393351406686d5bcd323c"
+        }
+      },
+      "reviewer": "/root/product_expert",
+      "authority": "Exploratory fixtures only; exact shipped argv amendment pending owner decision.",
+      "limitations": [
+        "Not live host loading or BMad workflow execution.",
+        "Tags can move; npm transitive dependencies are not locked.",
+        "No automatic fallback or existing-tree update authorized."
+      ],
+      "subject_sha": "22076bec9e6458cc834b096e4958eba8ecc5b8f0",
+      "subject_kind": "Sanitized research memo revision; exploratory executions identify their own upstream versions and source commits, not this repository SHA."
+    },
+    "implementation-result": {
+      "type": "agent-attempt",
+      "subject_sha": "bf22dae072e7ac632e93db65dfa17c27859baf89",
+      "agent": "/root/host_contracts",
+      "role": "sf-principal-engineer",
+      "skill": "software-factory",
+      "requested_model": "gpt-6-astra",
+      "effective_model": null,
+      "phase": "implementation",
+      "status": "awaiting-review",
+      "recorded_at": "2026-10-15T09:51:55.266035+00:00",
+      "summary": "Local provisioning source accepted by independent review after argv, contained read and output budget repairs. Author153affected tests:152executed pass,1networkskip. Original actual upstream test remains failed; tested pin amendment awaits owner. Candidate not integrated or completed.",
+      "independent_source_review": {
+        "reviewer": "/root/mission_status",
+        "status": "accepted-local-source",
+        "subject_sha": "bf22dae072e7ac632e93db65dfa17c27859baf89"
+      },
+      "verification": {
+        "author_report": {
+          "tests": 153,
+          "passed": 152,
+          "skipped": 1,
+          "exit_code": 0
+        },
+        "live_compatibility": "fail-original-command",
+        "pin_amendment": "pending-owner"
+      },
+      "limitations": [
+        "No story/epic acceptance or live host loading claimed.",
+        "Exploratory pinned installations are distinct from approved shipped command proof."
+      ]
+    },
+    "root-targeted-proof": {
+      "type": "local-verification",
+      "subject_sha": "bf22dae072e7ac632e93db65dfa17c27859baf89",
+      "status": "pass-executed-cases",
+      "recorded_at": "2026-10-15T09:56:41.459461+00:00",
+      "command": "SF_SKIP_NETWORK=1 python3 -m unittest discover -s tests -p test_bmad_install.py -v",
+      "exit_code": 0,
+      "tests": 20,
+      "passed": 19,
+      "skipped": 1,
+      "artifact": "bmad-reviewed-targeted.log",
+      "sha256": "14818d1459d4ea8cf64eced12b9926cc86f45b6582804424046d1ee608301f43",
+      "source_clean_before_and_after": true,
+      "limitations": [
+        "Real official network criterion explicitly skipped in this root run; author's original network failure remains failed.",
+        "No owner pin amendment, integration or live host loading established."
+      ]
+    },
+    "active-pin-attempt": {
+      "type": "agent-attempt",
+      "subject_sha": "bf22dae072e7ac632e93db65dfa17c27859baf89",
+      "agent": "/root/host_contracts",
+      "role": "sf-principal-engineer",
+      "skill": "software-factory",
+      "requested_model": "gpt-6-astra",
+      "effective_model": null,
+      "phase": "implementation-and-real-installer-proof",
+      "status": "assigned",
+      "summary": "Owner approved all three tested module pins; ADR0025 records authority. Amend exacthelper/test/reference scopes, rerun actual installer in guarded disposable consumers; preserve existing and partial installs, prior failure and exploratory proof."
+    },
+    "approved-pin-handoff": {
+      "type": "worker-handoff",
+      "subject_sha": "c0e23a07380b6ee6e2f717daf150d65eca9ddc65",
+      "author": "codex-bmad-provisioning",
+      "status": "source-reviewed-integration-proof-pending",
+      "targeted_network": {
+        "tests": 21,
+        "passed": 21,
+        "exit_code": 0,
+        "skipped": 0
+      },
+      "modules": {
+        "tea": {
+          "version": "v1.27.2",
+          "channel": "pinned",
+          "sha": "d99ad29c62697c152e3393351406686d5bcd323c"
+        },
+        "bmb": {
+          "version": "v2.2.2",
+          "channel": "pinned",
+          "sha": "4a1422274a2acb0fb0ec0511753da6263948f072"
+        },
+        "cis": {
+          "version": "v0.3.2",
+          "channel": "pinned",
+          "sha": "97298b22fee1c7e482710d3a8414adb5cfccccd9"
+        }
+      },
+      "full_gate": {
+        "exit_code": 1,
+        "tests": 508,
+        "failed": 2,
+        "skipped": 0,
+        "eval_passed": 28,
+        "eval_total": 30,
+        "failed_eval_ids": [
+          "SKL-BOARD-002",
+          "SKL-CRAWL-002"
+        ]
+      },
+      "frozen_source": "three-file hashes match tested and committed bytes",
+      "limitations": [
+        "Isolated board/crawl freshness failure preserved.",
+        "Module tags and npm dependencies are not an immutable lock."
+      ],
+      "recorded_at": "2026-10-15T10:44:39.920114+00:00"
+    },
+    "approved-pin-review": {
+      "type": "independent-review",
+      "subject_sha": "c0e23a07380b6ee6e2f717daf150d65eca9ddc65",
+      "author": "codex-bmad-provisioning",
+      "reviewer": "codex-orchestrator",
+      "status": "pass",
+      "scope": "three-file approved pin amendment plus prior bf22 reviewed source",
+      "reviewed": [
+        "Exact argv literal independent regression",
+        "Fresh version/channel checks and prior-install preservation",
+        "Actual21-test network log and repeated full-suite module observations",
+        "Source bytes match frozen hash map; tags remain mutable"
+      ],
+      "limitations": [
+        "Source review only; combined primary gate remains pending."
+      ],
+      "recorded_at": "2026-10-15T10:44:39.920114+00:00"
+    },
+    "combined-primary-proof": {
+      "type": "full-static-gate",
+      "subject_sha": "8d18eb4578c19b6ccc4e83323aa3e5637433d549",
+      "status": "pass",
+      "exit_code": 0,
+      "unit_tests": 611,
+      "unit_passed": 610,
+      "unit_skipped": 1,
+      "unit_skip_reason": "optional jsonschema crosscheck not requested in full suite",
+      "unit_seconds": 191.89,
+      "evals_passed": 30,
+      "evals_failed": 0,
+      "evals_unverified": 0,
+      "evals_skipped": 0,
+      "real_network_tests": [
+        "BMad6.12.0all3approvedmodulepins",
+        "skills CLI1.7.2 all3hosts canonical copies"
+      ],
+      "other_steps": "pass including shellcheck4.1.0, distribution, Mermaid,11skills-refvalidators, workflow and issueform schemas",
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/combined-install-config-gate.log",
+      "artifact_sha256": "a2f3c400b4a6d94ffcb8c8c6208e2fdc6afe5f7ab45b9231156ef36d29a25610",
+      "recorded_at": "2026-10-15T11:03:47.462473+00:00",
+      "limitations": [
+        "No owner epic acceptance, live host loading, public release delivery, production monitoring or deployment established."
+      ]
+    },
+    "actual-project-bmad": {
+      "type": "actual-bmad-provision",
+      "subject_sha": "4c16cb6f6e7bd16de3a143d8100d8ea973c1d13f",
+      "status": "pass",
+      "exit_code": 0,
+      "scope": "Actual separately pinned BMad install and54 per-module Codex skill files; unchanged3installer/helper files verified. No whole-tree frozen-subject or host-registration claim.",
+      "versions": {
+        "core": "6.12.0",
+        "bmm": "6.12.0",
+        "bmb": "v2.2.2",
+        "cis": "v0.3.2",
+        "tea": "v1.27.2"
+      },
+      "observed_module_shas": {
+        "bmb": "4a1422274a2acb0fb0ec0511753da6263948f072",
+        "cis": "97298b22fee1c7e482710d3a8414adb5cfccccd9",
+        "tea": "d99ad29c62697c152e3393351406686d5bcd323c"
+      },
+      "manifest": "_bmad/_config/manifest.yaml",
+      "manifest_sha256": "2a80f9be6051c5e9c39bf7790c1bb394577d7deae59e94daaace6354f810346a",
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/actual-bmad-provision-observation.json",
+      "artifact_sha256": "3d7bdadc6796924df5c835663f1d36c5f7c69e1f219287373455e75a66b1e29f",
+      "forbidden_host_calls": 0,
+      "tracked_file_changes": 0,
+      "limitations": [
+        "Selected BMM planning execution is recorded separately; full factory installation still pending48 repair.",
+        "Raw private receipt retains actual command/environment and snapshot reconciliation; only this public-safe summary belongs on the board."
+      ]
+    }
+  },
   "baseline_sha": null,
   "branch": null,
   "pr": null,
   "merged_sha": null,
-  "history": [],
-  "findings": [],
-  "source_key": "installer-hosts/bmad-install"
+  "history": [
+    {
+      "at": "2026-10-15T09:16:33.224982+00:00",
+      "by": "orchestrator",
+      "from": "backlog",
+      "to": "ready-for-dev"
+    },
+    {
+      "at": "2026-10-15T09:16:33.302620+00:00",
+      "by": "codex-bmad-provisioning",
+      "from": "ready-for-dev",
+      "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T09:51:55.294312+00:00",
+      "by": "codex-bmad-provisioning",
+      "from": "in-progress",
+      "to": "in-review"
+    },
+    {
+      "at": "2026-10-15T10:33:48.522739+00:00",
+      "by": "codex-bmad-provisioning",
+      "from": "in-review",
+      "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T10:44:39.958978+00:00",
+      "by": "codex-bmad-provisioning",
+      "from": "in-progress",
+      "to": "in-review"
+    }
+  ],
+  "findings": [
+    {
+      "at": "2026-10-15T09:44:45.292195+00:00",
+      "by": "orchestrator",
+      "text": "Real official installer fixture failed on incompatible TEA stable resolution; independently tested compatible pin alternatives are recorded in a research memo. Exact command amendment awaits owner decision; code review and unrelated work continue."
+    },
+    {
+      "at": "2026-10-15T10:33:48.522539+00:00",
+      "by": "codex-bmad-provisioning",
+      "text": "Owner approved all three tested external-module pins in current conversation; ADR0025 records the command amendment. Reopened exacthelper/test/reference scope, preserving original failed live proof. Actual amended install and independent review remain required."
+    }
+  ],
+  "source_key": "installer-hosts/bmad-install",
+  "review_subject_sha": "c0e23a07380b6ee6e2f717daf150d65eca9ddc65",
+  "evidence_contract": 1
 }

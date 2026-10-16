@@ -16,8 +16,8 @@ ones not shipped here.
 
 | Role | Focus |
 | --- | --- |
-| `sf-product-manager` | Outcomes and acceptance criteria; uses BMad PM/PRD skills when installed |
-| `sf-architect` | Cross-module contracts and boundaries; uses BMad architecture skills when installed |
+| `sf-product-manager` | Outcomes and acceptance criteria; uses the selected BMad PM/PRD planning route |
+| `sf-architect` | Cross-module contracts and boundaries; uses the selected BMad architecture planning route |
 | `sf-design-reviewer` | Applies the four `sf-` design skills as the anti-bloat bar on plans and diffs |
 | `sf-engineer` | Standard implementation plus tests; smallest complete change including error/recovery and obsolete paths |
 | `sf-principal-engineer` | High-risk or complex work: auth, money, state machines, migrations, concurrency |
@@ -54,10 +54,16 @@ records in `context/decisions/` so the next story starts from them.
 ## Best-fit routing
 
 Choose by capability, risk and likely total rework — not by price or habit.
-Record the requested and effective model and a one-line route rationale; never
-invent model IDs. Risk tiers and the native fallback are owned by `sf-agents`;
+Record agent, role, skill, requested model, observed effective model and a
+one-line route rationale in the optional [agent-attempt receipt](handoff.md#agent-attempt-receipts).
+Never invent model IDs. Risk tiers and the native fallback are owned by `sf-agents`;
 an unavailable capability degrades to the fallback or a concrete gap report,
 never to weaker proof.
+
+Keep authorized streams moving: wait on actual worker handles, inspect their
+returns, arrange independent verification, recover failed attempts and refill
+freed capacity from the ready frontier. A report of completion is a handoff to
+verify, not acceptance; attribution and progress remain visible on the board.
 
 ## Independence
 

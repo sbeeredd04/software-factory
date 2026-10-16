@@ -1,0 +1,216 @@
+{
+  "version": 1,
+  "id": 44,
+  "epic": 2,
+  "type": "story",
+  "title": "Require evidence and decision provenance at acceptance transitions",
+  "status": "in-review",
+  "owner": "codex-evidence-transitions",
+  "after": [
+    42
+  ],
+  "covers": [],
+  "risk": "high",
+  "hitl": true,
+  "plan_checkpoint": true,
+  "done_checkpoint": true,
+  "blocked": null,
+  "receipts": {
+    "active-attempt": {
+      "type": "agent-attempt",
+      "subject_sha": "f51b0f75f51a7042995287fa12d842bf12569e7c",
+      "agent": "/root/mission_recovery",
+      "role": "sf-principal-engineer",
+      "skill": "software-factory",
+      "requested_model": "inherit",
+      "effective_model": null,
+      "phase": "implementation",
+      "status": "assigned",
+      "recorded_at": "2026-10-15T09:24:32.585277+00:00",
+      "summary": "Owner explicitly approved recommended enforcement; ADR0023 records final instruction. Independent worker implements subject-bound gates and required checkpoint provenance, preserving historical records."
+    },
+    "worker-handoff": {
+      "type": "worker-handoff",
+      "subject_sha": "293bf670d853a0059b5f818797b32e57e7adec3f",
+      "author": "codex-evidence-transitions",
+      "status": "source-reviewed-integration-proof-pending",
+      "recorded_at": "2026-10-15T10:23:06.005830+00:00",
+      "targeted": {
+        "board_passed": 91,
+        "gate_passed": 23,
+        "trace_passed": 22
+      },
+      "full_gate": {
+        "exit_code": 1,
+        "tests": 528,
+        "failures": 2,
+        "eval_passed": 28,
+        "eval_total": 30,
+        "unverified": 0,
+        "skipped": 0,
+        "failures_detail": [
+          "isolated board/crawl dependent dogfood evaluation",
+          "isolated CODEBASE regeneration freshness"
+        ]
+      },
+      "other_steps": "pass",
+      "frozen_source": "seven scoped hashes unchanged; only captured tool-generated roadmap/dashboard bytes restored",
+      "independent_review": ".software-factory/runs/software-factory-v01/evidence/evidence-293bf67-review.json",
+      "limitations": [
+        "Source review and targeted regressions do not constitute an integrated full gate or story/epic acceptance."
+      ]
+    },
+    "independent-review": {
+      "type": "independent-review",
+      "subject_sha": "293bf670d853a0059b5f818797b32e57e7adec3f",
+      "author": "codex-evidence-transitions",
+      "reviewer": "codex-orchestrator",
+      "status": "pass",
+      "scope": "source and focused regression review",
+      "recorded_at": "2026-10-15T10:21:33.341920+00:00",
+      "reviewed": [
+        "Earlier independent review findings and follow-up diff",
+        "Protected initial config/record/directory/projection reads and captured trace API",
+        "Current-scope binding at completion and epic reconciliation",
+        "Epic actor compatibility and substantive reconciliation evidence",
+        "Frozen terminal bytes and membership safeguards",
+        "Independent32-case protected transition suite"
+      ],
+      "limitations": [
+        "Structural provenance cannot authenticate an actor or attest external effects.",
+        "Author final isolated gate still running; no integrated gate or completion accepted."
+      ]
+    },
+    "root-targeted-proof": {
+      "type": "targeted-tests",
+      "subject_sha": "293bf670d853a0059b5f818797b32e57e7adec3f",
+      "status": "pass",
+      "exit_code": 0,
+      "suite": "test_board_gate.py",
+      "tests": 32,
+      "elapsed_seconds": 18.527,
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/evidence-293bf67-root-targeted.log",
+      "artifact_sha256": "314f007b244e7c5d3c3fc737feffad4b9855da3cefe343fc618fb44bbaa6f238",
+      "recorded_at": "2026-10-15T10:21:33.341920+00:00",
+      "limitations": [
+        "Targeted suite only; integrated full gate remains pending."
+      ]
+    },
+    "integrated-first-gate": {
+      "type": "full-static-gate",
+      "subject_sha": "6ccd3b99916fe1cbe89a8fb2527940e75db25d52",
+      "status": "fail",
+      "exit_code": 1,
+      "unit_tests": 528,
+      "unit_failures": 1,
+      "failed_case": "ContextHomeTest.test_decision_records_follow_the_record_contract",
+      "reason": "ADR0023 missing required Drivers section; ADR0024 uses same incomplete template and also needs formatting repair.",
+      "evals_passed": 30,
+      "evals_total": 30,
+      "other_steps": "pass",
+      "skipped": [
+        "shellcheck: install.sh absent before story24 integration"
+      ],
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/integrated-evidence-first-gate.log",
+      "artifact_sha256": "a8a887828d9fa271973fa4c4da24b6618b844b59a4b5792447cefc7cea62ae66",
+      "recorded_at": "2026-10-15T10:28:45.642810+00:00"
+    },
+    "integrated-local-proof": {
+      "type": "full-static-gate",
+      "subject_sha": "40a6cda5aed580c52d28e21385bd9074791fd3a1",
+      "status": "pass",
+      "exit_code": 0,
+      "unit_tests": 528,
+      "unit_seconds": 163.366,
+      "evals_passed": 30,
+      "evals_total": 30,
+      "skipped": [
+        "shellcheck target absent: install.sh not yet integrated at this subject"
+      ],
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/integrated-evidence-final-gate.log",
+      "artifact_sha256": "71ac4ede6c895378b7aaa781cb46065667cd087225d6a02883695952b76bac6f",
+      "recorded_at": "2026-10-15T10:41:21.929069+00:00",
+      "limitations": [
+        "Subject predates BMad provisioning and distribution integration.",
+        "No story/epic acceptance or external effects established."
+      ]
+    },
+    "combined-primary-proof": {
+      "type": "full-static-gate",
+      "subject_sha": "8d18eb4578c19b6ccc4e83323aa3e5637433d549",
+      "status": "pass",
+      "exit_code": 0,
+      "unit_tests": 611,
+      "unit_passed": 610,
+      "unit_skipped": 1,
+      "unit_skip_reason": "optional jsonschema crosscheck not requested in full suite",
+      "unit_seconds": 191.89,
+      "evals_passed": 30,
+      "evals_failed": 0,
+      "evals_unverified": 0,
+      "evals_skipped": 0,
+      "real_network_tests": [
+        "BMad6.12.0all3approvedmodulepins",
+        "skills CLI1.7.2 all3hosts canonical copies"
+      ],
+      "other_steps": "pass including shellcheck4.1.0, distribution, Mermaid,11skills-refvalidators, workflow and issueform schemas",
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/combined-install-config-gate.log",
+      "artifact_sha256": "a2f3c400b4a6d94ffcb8c8c6208e2fdc6afe5f7ab45b9231156ef36d29a25610",
+      "recorded_at": "2026-10-15T11:03:47.462473+00:00",
+      "limitations": [
+        "No owner epic acceptance, live host loading, public release delivery, production monitoring or deployment established."
+      ]
+    }
+  },
+  "baseline_sha": null,
+  "branch": null,
+  "pr": null,
+  "merged_sha": null,
+  "history": [
+    {
+      "at": "2026-10-15T09:23:56.988592+00:00",
+      "by": "orchestrator",
+      "from": "backlog",
+      "to": "ready-for-dev"
+    },
+    {
+      "at": "2026-10-15T09:24:04.801753+00:00",
+      "by": "codex-evidence-transitions",
+      "from": "ready-for-dev",
+      "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T10:23:06.045411+00:00",
+      "by": "codex-evidence-transitions",
+      "from": "in-progress",
+      "to": "in-review"
+    }
+  ],
+  "findings": [
+    {
+      "at": "2026-10-15T09:23:56.988416+00:00",
+      "by": "orchestrator",
+      "text": "Owner explicitly approved both recommended decisions in the current conversation; ADR0023 records the final instruction and supersedes the initial guidance-only reply."
+    },
+    {
+      "at": "2026-10-15T10:04:45.042579+00:00",
+      "by": "orchestrator",
+      "text": "Independent source review found receipt-format, saved-obligation, initial-config-read, typed-scope and epic-provenance gaps; repairs and regression checks are running. Derive also preserves terminal record bytes and scope. Isolated full gates retain known board/CODEBASE freshness failures; integrated proof is pending."
+    },
+    {
+      "at": "2026-10-15T10:29:25.006059+00:00",
+      "by": "orchestrator",
+      "text": "First integrated gate at6ccd3b9:528tests, one root-authored ADR template failure;30evals passed, all other checks passed, shellcheck absent before24. Reformatted ADR0023/24 to required sections without changing decisions; focused ADR contract test passes. Full rerun pending."
+    }
+  ],
+  "source_key": "expansion/evidence-bound-transitions",
+  "scope": [
+    "skills/software-factory/scripts/roadmap.py",
+    "skills/software-factory/scripts/gate.py",
+    "skills/software-factory/schemas/board.schema.json",
+    "tests/test_board_gate.py",
+    "tests/test_gate.py"
+  ],
+  "review_subject_sha": "293bf670d853a0059b5f818797b32e57e7adec3f",
+  "evidence_contract": 1
+}

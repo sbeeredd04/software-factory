@@ -1,0 +1,15 @@
+---
+description: "Route Software Factory work to the bundled software-factory skill."
+alwaysApply: true
+---
+
+# Software Factory
+
+Start or resume with the plugin's `software-factory` skill. Explicitly invoke
+entry/admin skills by name: software-factory, sf-help, sf-agents, sf-evolve,
+sf-eval and sf-principles. Working skills remain available automatically.
+
+The plugin supplies skills, role prompts and recovery hooks. Project setup
+and BMad provisioning use the separate project installer. Runtime state belongs
+to the consumer project's `.software-factory/` directory. A recovery pointer
+is context to reconcile, never authorization to dispatch more work.

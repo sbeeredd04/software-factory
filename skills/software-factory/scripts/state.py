@@ -7,7 +7,7 @@ Git writer, and never dispatches work.
 
 Bounds (the full contract lives in the skill's recovery reference):
 
-- Claims are a lease, not a ledger: release each claim when its work is done.
+- Claims record active ownership: release each claim when its work is done.
   New claims warn above CLAIM_WARN_THRESHOLD (50) and are refused at
   MAX_ACTIVE_CLAIMS (100); the refusal names `release` and `reconcile` as the
   way out. `reconcile` lists claims whose worktree or HEAD no longer resolves
@@ -35,6 +35,7 @@ import json
 import os
 import re
 import shutil
+import stat
 import subprocess
 import sys
 import tempfile
@@ -45,6 +46,9 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 SLUG = re.compile(r"^[a-z0-9][a-z0-9-]{0,63}$")
+EVAL_RUN_ID = re.compile(
+    r"^r-([0-9]{8}T[0-9]{6}Z)-(quick|epic|premerge|canary)(?:-[1-9][0-9]*)?$"
+)
 SECRET = re.compile(
     r"sk-ant-[\w-]+|gh[pousr]_[\w]+|-----BEGIN .*PRIVATE KEY-----|"
     r"\b(?:password|api_key|access_token|secret)\s*[:=]\s*\S+",
@@ -500,62 +504,111 @@ def reconcile(workspace):
     return 0
 
 
-def is_binary(path):
-    try:
-        with path.open("rb") as stream:
-            chunk = stream.read(4096)
-    except OSError:
-        return True
-    return b"\0" in chunk
+def is_eval_run_id(name):
+    """Recognize sf-eval receipt directories without relaxing program slugs."""
+    match = EVAL_RUN_ID.fullmatch(name)
+    if match:
+        try:
+            datetime.strptime(match[1], "%Y%m%dT%H%M%SZ")
+            return True
+        except ValueError:
+            pass
+    return False
 
 
 def audit_runs(workspace, budget=RUNS_BUDGET_BYTES, artifact_limit=MAX_ARTIFACT_BYTES):
     """Measure the run tree against its layout and size budgets; read-only."""
-    root = state_dir(workspace) / "runs"
     problems = []
     total = 0
     files = 0
-    if root.is_dir():
-        for program in sorted(root.iterdir()):
-            slug = sanitize(program.name)
-            if program.is_symlink() or not program.is_dir() or not SLUG.fullmatch(program.name):
-                problems.append(f"undocumented entry under runs/: {slug}")
-                continue
-            for entry in sorted(program.iterdir()):
-                if entry.is_symlink():
-                    problems.append(f"symlink refused under runs/{slug}: {sanitize(entry.name)}")
-                elif (entry.name in RUN_LAYOUT_FILES and entry.is_file()) or (
-                    entry.name in RUN_LAYOUT_DIRS and entry.is_dir()
-                ):
-                    pass
-                else:
-                    problems.append(
-                        f"undocumented entry under runs/{slug}: {sanitize(entry.name)}; "
-                        "derived boards and status summaries are regenerable projections "
-                        "and never stored in the run folder"
-                    )
-            for path in sorted(program.rglob("*")):
-                if path.is_symlink():
-                    problems.append(
-                        f"symlink refused under runs/{slug}: {sanitize(path.relative_to(program))}"
-                    )
+    directory_flags = os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW
+
+    def incomplete(relative):
+        problems.append(f"incomplete measurement: cannot inspect runs/{sanitize(relative)}")
+
+    def inspect(parent_fd, name, relative, info):
+        nonlocal total, files
+        label = sanitize(relative)
+        is_dir = stat.S_ISDIR(info.st_mode)
+        is_file = stat.S_ISREG(info.st_mode)
+        if stat.S_ISLNK(info.st_mode):
+            problems.append(f"symlink refused under runs/: {label}")
+            return
+        depth = len(relative.parts)
+        if (depth == 0 and not is_dir) or (
+            depth == 1 and (not is_dir or not (SLUG.fullmatch(name) or is_eval_run_id(name)))
+        ) or (depth == 2 and not (
+            (name in RUN_LAYOUT_FILES and is_file) or (name in RUN_LAYOUT_DIRS and is_dir)
+        )):
+            problems.append(f"undocumented entry under runs/: {label}")
+        if not is_dir and not is_file:
+            problems.append(f"unsupported entry under runs/: {label}")
+            return
+        if is_file:
+            total += info.st_size
+            files += 1
+            if info.st_size > artifact_limit:
+                problems.append(
+                    f"artifact above the {artifact_limit}-byte limit under runs/: "
+                    f"{label}; keep large artifacts in the project or external storage and link them"
+                )
+            if name == "run.json" and info.st_size > MAX_RUN_BYTES:
+                problems.append(f"run.json above its {MAX_RUN_BYTES}-byte budget: {label}")
+        flags = directory_flags if is_dir else os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK
+        try:
+            descriptor = os.open(name, flags, dir_fd=parent_fd)
+        except OSError:
+            incomplete(relative)
+            return
+        try:
+            opened = os.fstat(descriptor)
+            if (opened.st_dev, opened.st_ino, opened.st_mode) != (
+                info.st_dev, info.st_ino, info.st_mode
+            ):
+                incomplete(relative)
+                return
+            if is_file:
+                if b"\0" in os.read(descriptor, 4096):
+                    problems.append(f"binary content refused under runs/: {label}")
+                return
+            # Preserve entries already observed if directory iteration fails partway.
+            entries = []
+            try:
+                with os.scandir(descriptor) as iterator:
+                    entries.extend(iterator)
+            except OSError:
+                incomplete(relative)
+            for entry in sorted(entries, key=lambda item: item.name):
+                child = relative / entry.name
+                try:
+                    child_info = entry.stat(follow_symlinks=False)
+                except OSError:
+                    incomplete(child)
                     continue
-                if not path.is_file():
-                    continue
-                size = path.stat().st_size
-                total += size
-                files += 1
-                relative = sanitize(path.relative_to(program))
-                if is_binary(path):
-                    problems.append(f"binary content refused under runs/: {relative}")
-                elif size > artifact_limit:
-                    problems.append(
-                        f"artifact above the {artifact_limit}-byte limit under runs/: "
-                        f"{relative}; keep large artifacts in the project or external "
-                        "storage and link them"
-                    )
-                if path.name == "run.json" and size > MAX_RUN_BYTES:
-                    problems.append(f"run.json above its {MAX_RUN_BYTES}-byte budget")
+                inspect(descriptor, entry.name, child, child_info)
+        except OSError:
+            incomplete(relative)
+        finally:
+            os.close(descriptor)
+
+    try:
+        state_fd = os.open(Path(workspace) / STATE_DIR, directory_flags)
+    except FileNotFoundError:
+        return total, files, problems
+    except OSError:
+        incomplete(" (state directory unavailable or symlinked)")
+        return total, files, problems
+    try:
+        try:
+            info = os.stat("runs", dir_fd=state_fd, follow_symlinks=False)
+        except FileNotFoundError:
+            return total, files, problems
+        except OSError:
+            incomplete("")
+            return total, files, problems
+        inspect(state_fd, "runs", Path(), info)
+    finally:
+        os.close(state_fd)
     if total > budget:
         problems.append(
             f"runs/ holds {total} bytes, above the {budget}-byte budget; "

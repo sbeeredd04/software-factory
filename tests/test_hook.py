@@ -11,7 +11,9 @@ from __future__ import annotations
 import importlib.util
 import json
 import os
+import shlex
 import shutil
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -71,6 +73,18 @@ class InertnessTests(unittest.TestCase):
         self.assertEqual("", result.stdout)
         self.assertEqual([], list(unmanaged.iterdir()))
 
+    def test_unmanaged_workspace_ignores_malformed_input_without_writes(self):
+        with tempfile.TemporaryDirectory() as root:
+            for host in HOSTS:
+                for event in ("session-start", "pre-compact"):
+                    for payload in ("not json", "x" * 70000):
+                        with self.subTest(host=host, event=event, size=len(payload)):
+                            result = run_hook(host, event, root, stdin=payload)
+                            self.assertEqual((0, "", ""), (
+                                result.returncode, result.stdout, result.stderr,
+                            ))
+                            self.assertEqual([], list(Path(root).iterdir()))
+
 
 class EnvelopeTests(HookFixture):
     def test_session_start_envelopes_per_host(self):
@@ -97,6 +111,38 @@ class EnvelopeTests(HookFixture):
         context, _ = self.context()
         self.assertNotIn(sentinel, context)
         self.assertLessEqual(len(context), 1500)
+
+    def test_essential_notes_survive_without_detailed_checkpoint_prose(self):
+        notes = support.notes()
+        notes["objective"] = "O" * 500
+        notes["next"] = "N" * 500
+        notes["completed"] = ["COMPLETED-TEXT-SENTINEL"] * 8
+        self.assertEqual(0, self.ws.checkpoint(notes).returncode)
+        self.assertIn(notes["objective"], self.ws.checkpoint_file().read_text())
+        for host in HOSTS:
+            context, _ = self.context(host=host)
+            self.assertIn(notes["objective"], context)
+            self.assertIn(notes["next"], context)
+            self.assertNotIn(notes["completed"][0], context)
+            self.assertIn("CHECKPOINT.md", context)
+            self.assertLessEqual(len(context), 1500)
+
+    def test_pointer_budget_keeps_exact_next_action_with_large_recovery_lists(self):
+        notes = support.notes()
+        notes["objective"] = "O" * 500
+        notes["next"] = "N" * 500
+        notes["completed"] = ["history " * 50] * 8
+        data = {
+            "program": "p" * 64, "checkpoint": notes,
+            "claims": {f"task-{index}": {"paths": ["src/" * 500]} for index in range(100)},
+        }
+        context = support.helper("hook").recovery_pointer(data)
+        self.assertLessEqual(len(context), 1500)
+        self.assertIn(notes["objective"], context)
+        self.assertIn(notes["next"], context)
+        self.assertIn("Saved active claims: 100", context)
+        self.assertNotIn("history", context)
+        self.assertNotIn("src/", context)
 
     def test_input_payload_is_never_echoed(self):
         marker = "PAYLOAD-SENTINEL-4c1f"
@@ -196,7 +242,13 @@ class SuppressionTests(HookFixture):
     def test_claude_host_suppresses_only_under_detected_cursor(self):
         projection = self.ws.root / ".cursor" / "hooks.json"
         projection.parent.mkdir(parents=True, exist_ok=True)
-        projection.write_text('{"version": 1, "hooks": {}}')
+        command = shlex.join([
+            sys.executable, str(self.ws.root / ".software-factory/runtime/hook.py"),
+            "--host", "cursor", "--event", "session-start",
+        ]) + " 2>&1"
+        projection.write_text(json.dumps({
+            "version": 1, "hooks": {"sessionStart": [{"command": command}]},
+        }))
         result = run_hook("claude-code", "session-start", self.ws.root, env=self.cursor_env(True))
         self.assertEqual(0, result.returncode)
         self.assertEqual("", result.stdout)
@@ -206,6 +258,40 @@ class SuppressionTests(HookFixture):
         projection.unlink()
         context, _ = self.context(env=self.cursor_env(True))
         self.assertTrue(context)
+
+    def test_unrelated_or_malformed_cursor_config_does_not_suppress_recovery(self):
+        projection = self.ws.root / ".cursor/hooks.json"
+        projection.parent.mkdir(parents=True)
+        for config in (
+            '{"version": 1, "hooks": {}}',
+            '{"version": 1, "hooks": {"sessionStart": [{"command": "echo user"}]}}',
+            '{"version": 1, "hooks": {"sessionStart": [null, {"command": 7}]}}',
+            '{"version": 1, "hooks": {"sessionStart": null}}',
+            '{"version": 1, "hooks": []}',
+            '{"broken":',
+        ):
+            with self.subTest(config=config):
+                projection.write_text(config)
+                context, result = self.context(env=self.cursor_env(True))
+                self.assertTrue(context)
+                self.assertEqual("", result.stderr)
+
+    def test_nonfactory_command_and_different_workspace_do_not_suppress(self):
+        projection = self.ws.root / ".cursor/hooks.json"
+        projection.parent.mkdir(parents=True)
+        script = str(self.ws.root / ".software-factory/runtime/hook.py")
+        for argv in (
+            ["/bin/echo", script, "--host", "cursor", "--event", "session-start"],
+            [sys.executable, script, "--host", "cursor", "--event", "session-start",
+             "--workspace", str(self.ws.root / "different-project")],
+        ):
+            with self.subTest(argv=argv):
+                projection.write_text(json.dumps({
+                    "version": 1, "hooks": {"sessionStart": [{"command": shlex.join(argv)}]},
+                }))
+                context, result = self.context(env=self.cursor_env(True))
+                self.assertTrue(context)
+                self.assertEqual("", result.stderr)
 
     def test_cursor_host_still_emits_under_cursor_env(self):
         context, _ = self.context(host="cursor", stdin=CU_START, env=self.cursor_env(True))

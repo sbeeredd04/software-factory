@@ -420,7 +420,7 @@ class Validator:
                 if not path_part:
                     continue
                 resolved = (md.parent / path_part).resolve()
-                if not str(resolved).startswith(str(self.root)):
+                if not resolved.is_relative_to(self.root.resolve()):
                     self.error(f"{md}: link '{target}' escapes the repository root")
                 elif not resolved.exists():
                     self.error(f"{md}: link target '{path_part}' does not exist")
@@ -455,6 +455,19 @@ class Validator:
             self.error(f"{path}: manifest does not parse: {exc}")
             return
 
+        # Native catalogs/components are relative to the owning marketplace
+        # or plugin root, not its hidden manifest directory. Ordinary nested
+        # manifests retain their existing parent-relative interpretation.
+        base = path.parent
+        native = False
+        if base.name in {".claude-plugin", ".cursor-plugin"}:
+            base = base.parent
+            native = True
+        elif (path.name == "marketplace.json" and base.name == "plugins"
+              and base.parent.name == ".agents"):
+            base = base.parent.parent
+            native = True
+
         def walk(node: object) -> None:
             if isinstance(node, dict):
                 for value in node.values():
@@ -463,11 +476,13 @@ class Validator:
                 for value in node:
                     walk(value)
             elif isinstance(node, str) and node.startswith(("./", "../")):
-                resolved = (path.parent / node).resolve()
-                if not str(resolved).startswith(str(self.root)):
+                resolved = (base / node).resolve()
+                if not resolved.is_relative_to(self.root.resolve()):
                     self.error(
                         f"{path}: path '{node}' points outside the repository"
                     )
+                elif native and not resolved.is_relative_to(base.resolve()):
+                    self.error(f"{path}: path '{node}' points outside its manifest root")
                 elif not resolved.exists():
                     self.error(f"{path}: path '{node}' does not exist")
 

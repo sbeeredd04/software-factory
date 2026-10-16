@@ -1,0 +1,13 @@
+{
+  "artifact": "synthetic-revision-A",
+  "behavior": "previous default behavior restored; named greeting absent",
+  "environment": "disposable-local-fixture",
+  "observed_at": "2026-01-01T00:04:40Z",
+  "origin": "invented-teaching-data",
+  "preserved_failed_history": true,
+  "result": "illustrative-restoration",
+  "scope": "fictional approved local fixture only",
+  "source": "formatter-run-001",
+  "synthetic": true,
+  "window_end": "2026-01-01T00:05:00Z"
+}

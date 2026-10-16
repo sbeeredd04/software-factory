@@ -1,0 +1,7 @@
+name: Checks
+on: push
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - run: python3 -m unittest

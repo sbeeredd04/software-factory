@@ -1,0 +1,18 @@
+---
+description: "Software Factory pack is installed for Cursor; route factory requests to the software-factory skill."
+alwaysApply: true
+---
+
+# Software Factory
+
+This project has the Software Factory pack installed for Cursor. Start or
+resume factory work with the `software-factory` skill; its entry point is
+`.agents/skills/software-factory/SKILL.md`.
+
+The six entry and admin skills (software-factory, sf-help, sf-agents,
+sf-evolve, sf-eval, sf-principles) are explicit-only: invoke them by name
+with `/`. The working skills stay available automatically.
+
+Factory-owned files are listed in `.software-factory/installation.json`;
+runtime state lives under `.software-factory/` and is ignored except for
+the committed `context/` home.

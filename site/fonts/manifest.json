@@ -1,0 +1,34 @@
+[
+  {
+    "file": "bricolage/BricolageGrotesque96pt-Bold.woff2",
+    "weight": 700,
+    "sha256": "908de7414bcad8649c2127a27e9aec08159059fca39b42bf724b4327a6780961",
+    "bytes": 46408,
+    "license": "bricolage/OFL.txt",
+    "upstream": "https://raw.githubusercontent.com/ateliertriay/bricolage/84745e5b96261ae5f8c6c856e262fe78d1d6efdd/fonts/webfonts/BricolageGrotesque96pt-Bold.woff2"
+  },
+  {
+    "file": "inter/Inter-Regular.woff2",
+    "weight": 400,
+    "sha256": "e06f6b1bc553aaea4e4668023ed0ab0a147129c3107f511bc7d03d361b0ae085",
+    "bytes": 111268,
+    "license": "inter/OFL.txt",
+    "upstream": "https://raw.githubusercontent.com/rsms/inter/e3a3d4c57d5ecc01453a575621882a384c1995a3/docs/font-files/Inter-Regular.woff2"
+  },
+  {
+    "file": "inter/Inter-SemiBold.woff2",
+    "weight": 600,
+    "sha256": "5cb7103e4e605989afebc03d989c79201e54b21b5183db33981f70db9178a301",
+    "bytes": 114812,
+    "license": "inter/OFL.txt",
+    "upstream": "https://raw.githubusercontent.com/rsms/inter/e3a3d4c57d5ecc01453a575621882a384c1995a3/docs/font-files/Inter-SemiBold.woff2"
+  },
+  {
+    "file": "jetbrains-mono/JetBrainsMono-Regular.woff2",
+    "weight": 400,
+    "sha256": "a9cb1cd82332b23a47e3a1239d25d13c86d16c4220695e34b243effa999f45f2",
+    "bytes": 92164,
+    "license": "jetbrains-mono/OFL.txt",
+    "upstream": "https://raw.githubusercontent.com/JetBrains/JetBrainsMono/cd5227bd1f61dff3bbd6c814ceaf7ffd95e947d9/fonts/webfonts/JetBrainsMono-Regular.woff2"
+  }
+]

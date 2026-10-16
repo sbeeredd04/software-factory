@@ -48,7 +48,8 @@ approved, recorded narrower applicability instead of a silent exemption.
 Record the PR, merge, deployment and effect receipts. Release reconciled claims
 when safe, checkpoint, and update the story's board record and its planning
 source after merge and deploy proof.
-Keep epic acceptance pending until the human owner completes the manual
-checkpoint; independent eligible work continues meanwhile. Reports distinguish
-implemented, tested, merged, deployed and manually accepted — five separate
+Keep epic acceptance pending until the policy-selected actor completes the
+current evidence/authority checks in [authority](authority.md); independent eligible
+work continues. Reports distinguish implemented, tested, merged, deployed and
+accepted (with the actual actor and mode) — five separate
 states, never collapsed into "done".

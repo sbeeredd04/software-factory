@@ -24,6 +24,24 @@ What `scripts/crawl.py` sees, what it never claims, and how it fails.
 
 ## Bounds
 
+In a Git worktree, read-only `git ls-files --cached --others --exclude-standard
+-z -- .` selects tracked paths plus nonignored new files beneath the requested
+root. Git's standard excludes include `.gitignore`, `.git/info/exclude` and
+configured global excludes; tracked ignored paths remain selected. Names are
+NUL-delimited, deduplicated and sorted before parsing. This works with nested
+roots and linked worktrees. Host folders have no blanket exclusion: tracked or
+nonignored user code in `.agents` or `.codex` remains eligible. Git is invoked
+with optional locks and filesystem monitoring disabled, never through a shell.
+
+Git submodules are inventory boundaries, not recursively crawled projects;
+selected directory boundaries and missing/deleted tracked paths are reported.
+Run a separate crawl inside a submodule when its code is needed. An unusable
+Git inventory (non-repository, unavailable executable, failure, ten-second
+timeout or malformed paths) selects the filesystem fallback and records that
+ignored files may then be included. Git stderr and exception text are omitted.
+The report's `source.selection` and artifact header identify the actual policy;
+fallback is never represented as a successful empty Git inventory.
+
 Ignored directories: `.git`, `.hg`, `.svn`, `.idea`, `.vscode`,
 `.software-factory` (the factory's own state, not codebase content),
 `.venv`, `venv`, `env`, `__pycache__`, `.tox`, `.nox`, `.mypy_cache`,
@@ -33,6 +51,11 @@ are counted, not parsed. At most `--max-files` source files are parsed
 (default 5000), in sorted path order; hitting the cap is reported as a
 stated limit with the totals, never as silent truncation. Artifact tables
 are capped the same way, with the remainder counted and stated.
+These static bounds also apply to tracked paths. Packaging entry points are
+read only from selected, nonsymlinked root manifests within the same size bound;
+an ignored untracked `pyproject.toml` or `package.json` contributes no entry
+points. Source files beneath a symlinked ancestor are not followed. This is a
+static observation, not a security boundary against concurrent tree changes.
 
 ## Degradation and exit codes
 

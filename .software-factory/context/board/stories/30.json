@@ -4,8 +4,8 @@
   "epic": 5,
   "type": "story",
   "title": "Marketing PNGs rendered reproducibly from HTML templates",
-  "status": "backlog",
-  "owner": null,
+  "status": "in-review",
+  "owner": "codex-assets",
   "after": [
     29
   ],
@@ -21,12 +21,670 @@
   "plan_checkpoint": false,
   "done_checkpoint": false,
   "blocked": null,
-  "receipts": {},
+  "receipts": {
+    "active-attempt": {
+      "type": "agent-attempt",
+      "subject_sha": "d2c2a6b29455c1bfdcbd9507bc05405c245318fc",
+      "agent": "/root/assets",
+      "role": "sf-principal-engineer",
+      "skill": "software-factory",
+      "requested_model": "gpt-6-astra",
+      "requested_reasoning": "high",
+      "effective_model": null,
+      "phase": "implementation",
+      "status": "assigned",
+      "summary": "Story30 follows reviewed29 via existing readiness. Isolated source implementation and fixture tests authorized; browser rendering waits explicit alternative-method approval. Root owns primary state/integration. Developer-only Playwright helper excluded consumer release; no runtime dependency/daemon change."
+    },
+    "preparation-review": {
+      "type": "independent-review",
+      "subject_sha": "094b6b84baf00614c8dcf40462b8c1ab1e943b73",
+      "author": "codex-assets",
+      "reviewer": "/root/launch_copy",
+      "requested_model": "gpt-6.1-sol",
+      "effective_model": null,
+      "status": "changes-required",
+      "scope": "Preparatory source only;22 independent fixture checks pass. Separate actual stdlib probes reproduce prepared-temp foreign replacement/cleanup and SIGTERM orphan defects; malformed palette validation also needs repair. Worker retains ownership and repairs; final PNGs and render receipt remain absent.",
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/assets-preparation-review-094.md",
+      "artifact_sha256": "117c07214c8ce85123c647a245a2358c21e41a0d73c34538fa06bb5d30ea4720",
+      "limitations": [
+        "No browser or renderer execution; published-artifact test excluded and not passing.",
+        "Normal in-app-browser CSP event also reproduces on a minimal control page with browser-comments DOM; isolated render result remains unverified.",
+        "Headless-method owner answer, final visual review, integrated verification and human/publication acceptance remain separate."
+      ]
+    },
+    "source-readiness": {
+      "type": "independent-review",
+      "subject_sha": "e80b348508d4f4cab6e90cc4737c620fbe265faf",
+      "author": "codex-assets",
+      "reviewer": "/root/launch_copy",
+      "requested_model": "gpt-6.1-sol",
+      "effective_model": null,
+      "status": "pass",
+      "scope": "Source readiness only. Original prepared-temp ownership, SIGTERM child cleanup and malformed PNG findings repaired; final delta independently accepted. Root independently ran30 source/fixture tests,0fail/errors/skips. Original rejected reviews and real regression failures retained.",
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/assets-source-final-review-e80.md",
+      "artifact_sha256": "1fc64783664e1c60ed572ee2c513238995477aa73cdbb34d51e569e77008b815",
+      "limitations": [
+        "Real PNGs, aliases and render receipt absent; published-artifact check excluded and not passing.",
+        "No separate showcase/asset-capture browser execution; explicit alternative-method answer remains pending.",
+        "No final story handoff, integrated asset gate, case50 admission, publication or human epic acceptance."
+      ]
+    },
+    "method-authorization": {
+      "type": "human-method-authorization",
+      "subject_sha": "39ee461f133383930f275ca841acc12e41f48386",
+      "source_ref": "conversation:call_f49cf33eda0c42c3ab2e6d56505b7a53:owner-answer",
+      "answer": "Authorize the isolated headless check (recommended)",
+      "scope": "Temporary isolated headless Chromium check against frozen public local site, native reduced-motion verification and screenshots; existing asset implementation GO continues under the same authorized isolated method.",
+      "limits": [
+        "No external publication, existing browser-session access or macOS setting changes.",
+        "No epic acceptance or deployment equivalence decision is implied."
+      ]
+    },
+    "worker-handoff": {
+      "type": "agent-attempt",
+      "subject_sha": "dbdade03590300039b3c308255511453dc7d4097",
+      "agent": "/root/assets",
+      "role": "sf-principal-engineer",
+      "skill": "software-factory",
+      "requested_model": "gpt-6-astra",
+      "requested_reasoning": "high",
+      "effective_model": null,
+      "phase": "implementation",
+      "status": "awaiting-review",
+      "summary": "Clean final source: seven real PNG masters, three byte-identical aliases and actual receipt. Author64scoped tests and static checks pass; two release builds identical, actual missing-cache refusal preserves11prioroutputs. Run1/2failed before publication; loop overflow repaired, run3/4pass; finalimages match root/reviewer visual hashes. No runtime/map/board writes. Root integrated whole-pack gate pending.",
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/assets-actual-render-evidence-dbdade0.json",
+      "artifact_sha256": "ca18a44a318f3344673de0a5e38896b4a4184a9d8b891d6b01a199ceb81fee46",
+      "limitations": [
+        "Final independent review pending; scoped checks do not replace frozen integrated full gate.",
+        "No publication, deployment, live host loading or human epic acceptance."
+      ]
+    },
+    "final-independent-review": {
+      "type": "independent-review",
+      "subject_sha": "dbdade03590300039b3c308255511453dc7d4097",
+      "reviewer": "/root/launch_copy",
+      "status": "pass",
+      "scope": "Final candidate source/actualrender acceptance.20Gitinputhashes,10PNGhashes/dimensions,3aliases,7independentvisualinspections,70local200responses/fonts/CSP/overflow,actual launch/rawlog/cleanup,missingcachepreservation andauthor64scopedchecks bound. Prior actual failures retained.",
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/assets-final-review-dbdade0.json",
+      "artifact_sha256": "0caa17cd007c418d60c4626f50ed9d7330571e1abdf03293dbca905bf2111780",
+      "limitations": [
+        "Root integrated full gate/maps/currentcase50 admission proof pending.",
+        "No publication, real consumer deployment, live host loading or human epic acceptance."
+      ]
+    },
+    "integrated-primary-proof": {
+      "type": "integrated-verification",
+      "subject_sha": "4f20f851a9776c542f0ad09d61cd2b099a3530d2",
+      "exit_code": 0,
+      "tests": {
+        "run": 756,
+        "passed": 755,
+        "failed": 0,
+        "skipped": 1,
+        "seconds": 284.166,
+        "skip": "optional jsonschema cross-check"
+      },
+      "evals": {
+        "run_id": "r-20261015T181049Z-premerge",
+        "passed": 50,
+        "failed": 0,
+        "unverified": 0,
+        "quarantined": 0,
+        "skipped": 0
+      },
+      "gate_log_sha256": "44b4c52e3f1c5c336c2c93160d3671f7370f8fc7ecde5307d6d57e17fb4cf7ba",
+      "eval_receipt_sha256": "b33fa48a4f71c7b9940dcca2ac02b0e820ae69d99b1b3ac7d7869a6cb9a1c617",
+      "plan_payload_sha256": "a070c3a7aa63483bdb96a1980680044fbac21a9633016ff90d2ca076d824ab0b",
+      "scope": "All existing static and authorized network gate steps passed; independent34-file source/admission review accepted. Integrated site separately passed6native media/card cases.",
+      "limitations": [
+        "Exact earlier policy subject only; latest owner risk-adaptive/BMad/visual amendment is new work, not verified by this result.",
+        "No external integration/deployment/publication or live host-loading proof."
+      ]
+    },
+    "integrated-native-card-proof": {
+      "type": "browser-verification",
+      "subject_sha": "4f20f851a9776c542f0ad09d61cd2b099a3530d2",
+      "status": "passed",
+      "exit_code": 0,
+      "report_sha256": "4e842cabbcd4c5962740627e315762561c82609dc531fe248d24c91c5b4798a9",
+      "controller_sha256": "21db0bd6a1ce6b1f50d042c3aa1eb3e9b6d7a3060fc22699631e41b10fcfd65f",
+      "script_current_sha256": "a7c7f32a1ea5327381efcf4725200c0e6ad93862fe9a49fd2e8599d8bb423554",
+      "cases": [
+        {
+          "viewport_requested": {
+            "width": 360,
+            "height": 640
+          },
+          "motion_requested": "default",
+          "failures": [],
+          "checks": {
+            "actual_html_bytes": true,
+            "viewport_matches": true,
+            "four_font_faces_loaded": true,
+            "four_font_resources_observed": true,
+            "hero_loaded_intrinsic_dimensions": true,
+            "same_origin_observed_resources": true,
+            "no_blocked_request": true,
+            "no_page_or_console_errors": true,
+            "no_http_or_request_failures": true,
+            "no_horizontal_document_overflow": true
+          },
+          "asset_cards": [
+            {
+              "src": "img/loop.png",
+              "complete": true,
+              "naturalWidth": 1200,
+              "naturalHeight": 800,
+              "renderedWidth": 320,
+              "renderedHeight": 214,
+              "figureWidth": 320,
+              "figureScrollWidth": 320,
+              "figureHeight": 268,
+              "figureScrollHeight": 268,
+              "passed": true
+            },
+            {
+              "src": "img/team.png",
+              "complete": true,
+              "naturalWidth": 1200,
+              "naturalHeight": 800,
+              "renderedWidth": 320,
+              "renderedHeight": 214,
+              "figureWidth": 320,
+              "figureScrollWidth": 320,
+              "figureHeight": 268,
+              "figureScrollHeight": 268,
+              "passed": true
+            },
+            {
+              "src": "img/hosts.png",
+              "complete": true,
+              "naturalWidth": 1200,
+              "naturalHeight": 800,
+              "renderedWidth": 320,
+              "renderedHeight": 214,
+              "figureWidth": 320,
+              "figureScrollWidth": 320,
+              "figureHeight": 270,
+              "figureScrollHeight": 270,
+              "passed": true
+            }
+          ],
+          "final_io_checks": {
+            "no_blocked_requests": true,
+            "no_request_failures": true,
+            "no_page_errors": true,
+            "no_console_errors": true,
+            "no_http_errors": true
+          }
+        },
+        {
+          "viewport_requested": {
+            "width": 360,
+            "height": 640
+          },
+          "motion_requested": "reduce",
+          "failures": [],
+          "checks": {
+            "actual_html_bytes": true,
+            "viewport_matches": true,
+            "four_font_faces_loaded": true,
+            "four_font_resources_observed": true,
+            "hero_loaded_intrinsic_dimensions": true,
+            "same_origin_observed_resources": true,
+            "no_blocked_request": true,
+            "no_page_or_console_errors": true,
+            "no_http_or_request_failures": true,
+            "no_horizontal_document_overflow": true,
+            "native_reduced_motion_true": true,
+            "all_elements_and_pseudos_motion_disabled": true,
+            "root_scroll_auto": true
+          },
+          "asset_cards": [
+            {
+              "src": "img/loop.png",
+              "complete": true,
+              "naturalWidth": 1200,
+              "naturalHeight": 800,
+              "renderedWidth": 320,
+              "renderedHeight": 214,
+              "figureWidth": 320,
+              "figureScrollWidth": 320,
+              "figureHeight": 268,
+              "figureScrollHeight": 268,
+              "passed": true,
+              "screenshot": {
+                "path": "/private/tmp/sf-showcase-headless-qa-assets-4f20f85/360x640-reduce-loop-card.png",
+                "sha256": "0280f9997e4565726cbc8009d8acd9b7c5a3558b54cba1bf855b1e6d9903d24c",
+                "bytes": 27260,
+                "dimensions": [
+                  320,
+                  269
+                ]
+              }
+            },
+            {
+              "src": "img/team.png",
+              "complete": true,
+              "naturalWidth": 1200,
+              "naturalHeight": 800,
+              "renderedWidth": 320,
+              "renderedHeight": 214,
+              "figureWidth": 320,
+              "figureScrollWidth": 320,
+              "figureHeight": 268,
+              "figureScrollHeight": 268,
+              "passed": true,
+              "screenshot": {
+                "path": "/private/tmp/sf-showcase-headless-qa-assets-4f20f85/360x640-reduce-team-card.png",
+                "sha256": "dc2a861a5ff0e62f52340b345b95b26f4325879adea03da75f297b2d19d13706",
+                "bytes": 22554,
+                "dimensions": [
+                  320,
+                  269
+                ]
+              }
+            },
+            {
+              "src": "img/hosts.png",
+              "complete": true,
+              "naturalWidth": 1200,
+              "naturalHeight": 800,
+              "renderedWidth": 320,
+              "renderedHeight": 214,
+              "figureWidth": 320,
+              "figureScrollWidth": 320,
+              "figureHeight": 270,
+              "figureScrollHeight": 270,
+              "passed": true,
+              "screenshot": {
+                "path": "/private/tmp/sf-showcase-headless-qa-assets-4f20f85/360x640-reduce-hosts-card.png",
+                "sha256": "4cc107809525957f2225865ae4631e39f1849945876bba81668f822c330f5497",
+                "bytes": 25736,
+                "dimensions": [
+                  320,
+                  271
+                ]
+              }
+            }
+          ],
+          "final_io_checks": {
+            "no_blocked_requests": true,
+            "no_request_failures": true,
+            "no_page_errors": true,
+            "no_console_errors": true,
+            "no_http_errors": true
+          }
+        },
+        {
+          "viewport_requested": {
+            "width": 768,
+            "height": 1024
+          },
+          "motion_requested": "default",
+          "failures": [],
+          "checks": {
+            "actual_html_bytes": true,
+            "viewport_matches": true,
+            "four_font_faces_loaded": true,
+            "four_font_resources_observed": true,
+            "hero_loaded_intrinsic_dimensions": true,
+            "same_origin_observed_resources": true,
+            "no_blocked_request": true,
+            "no_page_or_console_errors": true,
+            "no_http_or_request_failures": true,
+            "no_horizontal_document_overflow": true
+          },
+          "asset_cards": [
+            {
+              "src": "img/loop.png",
+              "complete": true,
+              "naturalWidth": 1200,
+              "naturalHeight": 800,
+              "renderedWidth": 691.1875,
+              "renderedHeight": 461.453125,
+              "figureWidth": 691,
+              "figureScrollWidth": 691,
+              "figureHeight": 515,
+              "figureScrollHeight": 515,
+              "passed": true
+            },
+            {
+              "src": "img/team.png",
+              "complete": true,
+              "naturalWidth": 1200,
+              "naturalHeight": 800,
+              "renderedWidth": 691.1875,
+              "renderedHeight": 461.453125,
+              "figureWidth": 691,
+              "figureScrollWidth": 691,
+              "figureHeight": 515,
+              "figureScrollHeight": 515,
+              "passed": true
+            },
+            {
+              "src": "img/hosts.png",
+              "complete": true,
+              "naturalWidth": 1200,
+              "naturalHeight": 800,
+              "renderedWidth": 691.1875,
+              "renderedHeight": 461.453125,
+              "figureWidth": 691,
+              "figureScrollWidth": 691,
+              "figureHeight": 515,
+              "figureScrollHeight": 515,
+              "passed": true
+            }
+          ],
+          "final_io_checks": {
+            "no_blocked_requests": true,
+            "no_request_failures": true,
+            "no_page_errors": true,
+            "no_console_errors": true,
+            "no_http_errors": true
+          }
+        },
+        {
+          "viewport_requested": {
+            "width": 768,
+            "height": 1024
+          },
+          "motion_requested": "reduce",
+          "failures": [],
+          "checks": {
+            "actual_html_bytes": true,
+            "viewport_matches": true,
+            "four_font_faces_loaded": true,
+            "four_font_resources_observed": true,
+            "hero_loaded_intrinsic_dimensions": true,
+            "same_origin_observed_resources": true,
+            "no_blocked_request": true,
+            "no_page_or_console_errors": true,
+            "no_http_or_request_failures": true,
+            "no_horizontal_document_overflow": true,
+            "native_reduced_motion_true": true,
+            "all_elements_and_pseudos_motion_disabled": true,
+            "root_scroll_auto": true
+          },
+          "asset_cards": [
+            {
+              "src": "img/loop.png",
+              "complete": true,
+              "naturalWidth": 1200,
+              "naturalHeight": 800,
+              "renderedWidth": 691.1875,
+              "renderedHeight": 461.453125,
+              "figureWidth": 691,
+              "figureScrollWidth": 691,
+              "figureHeight": 515,
+              "figureScrollHeight": 515,
+              "passed": true
+            },
+            {
+              "src": "img/team.png",
+              "complete": true,
+              "naturalWidth": 1200,
+              "naturalHeight": 800,
+              "renderedWidth": 691.1875,
+              "renderedHeight": 461.453125,
+              "figureWidth": 691,
+              "figureScrollWidth": 691,
+              "figureHeight": 515,
+              "figureScrollHeight": 515,
+              "passed": true
+            },
+            {
+              "src": "img/hosts.png",
+              "complete": true,
+              "naturalWidth": 1200,
+              "naturalHeight": 800,
+              "renderedWidth": 691.1875,
+              "renderedHeight": 461.453125,
+              "figureWidth": 691,
+              "figureScrollWidth": 691,
+              "figureHeight": 515,
+              "figureScrollHeight": 515,
+              "passed": true
+            }
+          ],
+          "final_io_checks": {
+            "no_blocked_requests": true,
+            "no_request_failures": true,
+            "no_page_errors": true,
+            "no_console_errors": true,
+            "no_http_errors": true
+          }
+        },
+        {
+          "viewport_requested": {
+            "width": 1440,
+            "height": 900
+          },
+          "motion_requested": "default",
+          "failures": [],
+          "checks": {
+            "actual_html_bytes": true,
+            "viewport_matches": true,
+            "four_font_faces_loaded": true,
+            "four_font_resources_observed": true,
+            "hero_loaded_intrinsic_dimensions": true,
+            "same_origin_observed_resources": true,
+            "no_blocked_request": true,
+            "no_page_or_console_errors": true,
+            "no_http_or_request_failures": true,
+            "no_horizontal_document_overflow": true
+          },
+          "asset_cards": [
+            {
+              "src": "img/loop.png",
+              "complete": true,
+              "naturalWidth": 1200,
+              "naturalHeight": 800,
+              "renderedWidth": 760,
+              "renderedHeight": 507.328125,
+              "figureWidth": 760,
+              "figureScrollWidth": 760,
+              "figureHeight": 561,
+              "figureScrollHeight": 561,
+              "passed": true,
+              "screenshot": {
+                "path": "/private/tmp/sf-showcase-headless-qa-assets-4f20f85/1440x900-default-loop-card.png",
+                "sha256": "3164b5ce7ba0f2fb58b4d6058696166bddace1c9fe0a4419bd908ca9c3425493",
+                "bytes": 85069,
+                "dimensions": [
+                  760,
+                  562
+                ]
+              }
+            },
+            {
+              "src": "img/team.png",
+              "complete": true,
+              "naturalWidth": 1200,
+              "naturalHeight": 800,
+              "renderedWidth": 760,
+              "renderedHeight": 507.328125,
+              "figureWidth": 760,
+              "figureScrollWidth": 760,
+              "figureHeight": 561,
+              "figureScrollHeight": 561,
+              "passed": true,
+              "screenshot": {
+                "path": "/private/tmp/sf-showcase-headless-qa-assets-4f20f85/1440x900-default-team-card.png",
+                "sha256": "1df559bc02f20d366566e81e168da788eb1fcfd66e629d629a677454e889fae2",
+                "bytes": 69284,
+                "dimensions": [
+                  760,
+                  562
+                ]
+              }
+            },
+            {
+              "src": "img/hosts.png",
+              "complete": true,
+              "naturalWidth": 1200,
+              "naturalHeight": 800,
+              "renderedWidth": 760,
+              "renderedHeight": 507.328125,
+              "figureWidth": 760,
+              "figureScrollWidth": 760,
+              "figureHeight": 561,
+              "figureScrollHeight": 561,
+              "passed": true,
+              "screenshot": {
+                "path": "/private/tmp/sf-showcase-headless-qa-assets-4f20f85/1440x900-default-hosts-card.png",
+                "sha256": "addc535aca9b87e4b2594ad0e22bdd8852565d30bd607cc10f1e409e05475519",
+                "bytes": 84016,
+                "dimensions": [
+                  760,
+                  563
+                ]
+              }
+            }
+          ],
+          "final_io_checks": {
+            "no_blocked_requests": true,
+            "no_request_failures": true,
+            "no_page_errors": true,
+            "no_console_errors": true,
+            "no_http_errors": true
+          }
+        },
+        {
+          "viewport_requested": {
+            "width": 1440,
+            "height": 900
+          },
+          "motion_requested": "reduce",
+          "failures": [],
+          "checks": {
+            "actual_html_bytes": true,
+            "viewport_matches": true,
+            "four_font_faces_loaded": true,
+            "four_font_resources_observed": true,
+            "hero_loaded_intrinsic_dimensions": true,
+            "same_origin_observed_resources": true,
+            "no_blocked_request": true,
+            "no_page_or_console_errors": true,
+            "no_http_or_request_failures": true,
+            "no_horizontal_document_overflow": true,
+            "native_reduced_motion_true": true,
+            "all_elements_and_pseudos_motion_disabled": true,
+            "root_scroll_auto": true
+          },
+          "asset_cards": [
+            {
+              "src": "img/loop.png",
+              "complete": true,
+              "naturalWidth": 1200,
+              "naturalHeight": 800,
+              "renderedWidth": 760,
+              "renderedHeight": 507.328125,
+              "figureWidth": 760,
+              "figureScrollWidth": 760,
+              "figureHeight": 561,
+              "figureScrollHeight": 561,
+              "passed": true
+            },
+            {
+              "src": "img/team.png",
+              "complete": true,
+              "naturalWidth": 1200,
+              "naturalHeight": 800,
+              "renderedWidth": 760,
+              "renderedHeight": 507.328125,
+              "figureWidth": 760,
+              "figureScrollWidth": 760,
+              "figureHeight": 561,
+              "figureScrollHeight": 561,
+              "passed": true
+            },
+            {
+              "src": "img/hosts.png",
+              "complete": true,
+              "naturalWidth": 1200,
+              "naturalHeight": 800,
+              "renderedWidth": 760,
+              "renderedHeight": 507.328125,
+              "figureWidth": 760,
+              "figureScrollWidth": 760,
+              "figureHeight": 561,
+              "figureScrollHeight": 561,
+              "passed": true
+            }
+          ],
+          "final_io_checks": {
+            "no_blocked_requests": true,
+            "no_request_failures": true,
+            "no_page_errors": true,
+            "no_console_errors": true,
+            "no_http_errors": true
+          }
+        }
+      ],
+      "content_parity": [
+        {
+          "viewport": {
+            "width": 360,
+            "height": 640
+          },
+          "default_vs_reduce_equal": true,
+          "comparison": "body visible text, generated prompt/command, headings and link text/targets; no source mutation"
+        },
+        {
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          },
+          "default_vs_reduce_equal": true,
+          "comparison": "body visible text, generated prompt/command, headings and link text/targets; no source mutation"
+        },
+        {
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "default_vs_reduce_equal": true,
+          "comparison": "body visible text, generated prompt/command, headings and link text/targets; no source mutation"
+        }
+      ],
+      "engine_version": "156.0.8078.4",
+      "forbidden_flags_present": [],
+      "root_visual_review": "Viewed all six mobile-reduced/desktop-default card screenshots at original detail; images uncropped, matching full-size links and descriptive alt text present. Small mobile figure detail available through full-size link.",
+      "limitations": [
+        "Raw reports/PNGs retained externally; no binary run artifacts.",
+        "Current script hash is inspected after execution, not independently authenticated runtime source proof.",
+        "Automated overflow tests cover document horizontal and each figure box, not all internal page elements.",
+        "No production, host-loading, owner-acceptance or universal orphan proof."
+      ]
+    }
+  },
   "baseline_sha": null,
   "branch": null,
   "pr": null,
   "merged_sha": null,
-  "history": [],
+  "history": [
+    {
+      "at": "2026-10-15T14:43:54.013606+00:00",
+      "by": "orchestrator",
+      "from": "backlog",
+      "to": "ready-for-dev"
+    },
+    {
+      "at": "2026-10-15T14:43:54.230648+00:00",
+      "by": "codex-assets",
+      "from": "ready-for-dev",
+      "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T18:03:09.131424+00:00",
+      "by": "codex-assets",
+      "from": "in-progress",
+      "to": "in-review"
+    }
+  ],
   "findings": [],
-  "source_key": "launch-publication/marketing-assets"
+  "source_key": "launch-publication/marketing-assets",
+  "review_subject_sha": "dbdade03590300039b3c308255511453dc7d4097",
+  "evidence_contract": 1
 }

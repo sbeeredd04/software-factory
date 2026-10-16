@@ -1,0 +1,8 @@
+{
+  "readonly": [
+    "sf-code-reviewer",
+    "sf-design-reviewer",
+    "sf-evaluator",
+    "sf-security-reviewer"
+  ]
+}

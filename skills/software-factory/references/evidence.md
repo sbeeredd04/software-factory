@@ -54,3 +54,183 @@ anything in the manifest.
 **The gate does not prove the artifacts are true.** The independent reviewer
 still reads the diff and runs or inspects the evidence; the gate exists so that
 stale, mismatched or self-approved evidence cannot slip through unnoticed.
+
+## Protected board transitions
+
+New `built` and `done` transitions call the strict gate in `gate.py`; an actor
+label alone cannot advance them. Historical version-1 terminal records remain
+readable and frozen without migration or invented proof.
+
+The worker submits `in-review` while still holding the claim. Use `--sha` with
+the full current review commit when receipts contain several subjects. The
+board records `review_subject_sha`; a new `built` must match it. Full SHA
+syntax and recorded subject equality are checked, not Git commit existence or
+the truth of the worker's observation. The independent reviewer reconciles
+the actual diff and commit before acceptance.
+
+For either protected transition pass `--sha <full-subject>` and
+`--evidence <workspace-relative-manifest.json>`. Artifact and decision paths
+inside these board manifests are **workspace-relative** (the standalone gate
+CLI continues to use its explicit `--root`). Every passing check needs an
+`artifact_sha256` matching the current bytes. Reads are limited to 1 MiB per
+file, refuse symlinks at every component and never execute manifest commands.
+New strict reads reject duplicate JSON keys and non-finite numbers; each
+gate accepts at most 64 required checks and reads at most 8 MiB of check
+artifacts in aggregate. JSON receipts (by case-insensitive suffix or
+JSON-looking content) with subject/verdict/self-hash fields must reproduce
+those claims; unknown subjects, non-pass verdicts and any declared status
+other than `pass` fail. Partial-case success is not full gate proof. BOM and
+UTF-16/32 structured evidence must be normalized to UTF-8 without a BOM
+before submission; changing a filename or encoding cannot hide a failed receipt. Required check names
+still come from the existing `verification.required_checks` list. A required
+review check is named `review` or carries `kind: review`; author and reviewer
+are nonempty distinct identities, and author matches the implementation owner.
+These labels are structural assertions, not authenticated identities.
+
+`built` still requires every provider done and every applicable epic gate
+accepted; readiness continues to count in-review providers as met. It stores
+the manifest path, SHA-256, subject, current `scope_sha256`, identities and
+check bindings under `accepted_gates.premerge`. Changing accepted story scope
+or checkpoint flags requires revision before completion or epic reconciliation. `done` consumes the complete-phase gate for the
+merge SHA, rechecks the accepted premerge manifest/artifacts, and requires:
+
+- `candidate_sha` equal to the accepted premerge subject;
+- `integration` with `status: pass`, that `candidate_sha` and merge `subject_sha`;
+- the `deploy` check's matching `deployed_sha`, plus nonempty `artifact_id`
+  and `environment` identifying the observed effect or approved local staging.
+
+Completion retains every previously accepted premerge check obligation and
+adds current configured requirements. Weakening the configuration cannot
+remove old proof from revalidation. Protected transitions read configuration
+once through the same bounded, no-follow reader; present null/scalar/array
+configuration is invalid. Initial target and board reads also use bounded,
+no-follow regular-file reads, so a symlink, FIFO or oversize record cannot
+reach the legacy parser. Board loading is capped at 4096 directory entries
+per record directory and 32 MiB of source bytes in aggregate. Existing
+projection inputs are checked before transition writes and read safely during
+regeneration (8 MiB each). Graph queries retain their captured-source contract.
+
+Completion requires a passing effect check, rather than an applicability
+exclusion standing in for effect proof.
+
+This establishes recorded provenance, not a remote merge or deployment fact.
+An unknown external outcome must be reconciled before writing a pass report.
+
+## Required checkpoint decisions and exceptions
+
+`plan_checkpoint` requires a decision before ready-for-dev and premerge;
+`hitl` or `done_checkpoint` requires one before completion. Supply
+`--decision <workspace-relative-decision.json>` once. The board saves its
+digest and reuses a still-valid scoped decision; superseded references remain
+in `checkpoint_history`. No repeated interview is needed for the same scope.
+
+The JSON decision has `decision: approve`, `scope: {story: <integer>}`,
+`phase: plan|complete`, nonempty `approved_by`, timezone-aware `approved_at`,
+and either the matching full `subject_sha` or `scope_sha256`. The latter is
+`roadmap.scope_digest(record)`: SHA-256 of compact sorted JSON over id, epic,
+source_key, title, type, after, covers, scope, risk and the three checkpoint
+flags. If both subject and scope are supplied, both must match. Its `source`
+contains `kind: user-conversation|approval-surface`, a nonempty trusted-source
+`ref`, a contained nonempty `artifact`, and that artifact's `sha256`. The host
+must reconcile this reference with the trusted owner conversation; a local
+file and `--actor human` do not authenticate approval. Missing, revoked,
+changed or out-of-scope decisions block the transition with no story or
+projection write. Governing policy and final publication authority stay separate.
+
+A `not_applicable` check additionally carries `decision_sha256` for its
+`decision_ref`; the scoped decision's phase is `exception:<check-name>`.
+Independent review cannot be excluded, and a failed verdict cannot be
+relabeled as an applicability exception. An eval receipt whose override
+changes a non-pass verdict needs an explicit `disposition: approved_override`
+and `override_decision_ref`/`override_decision_sha256`, phase
+`override:<check-name>`. That decision also names the exact receipt
+`artifact_sha256`. Original receipt bytes and verdict history remain
+the evidence; the disposition is saved explicitly rather than hidden as an
+ordinary passing result.
+
+On revision the worker must hold or regain the claim, return in-review/built
+work to in-progress, and submit a fresh review subject. Existing receipts and
+prior gate bindings in `gate_history` remain; affected evidence must be
+refreshed. Use immutable, attempt-specific artifact paths to keep prior proof
+inspectable. Failed gates leave the story and generated projections unchanged.
+
+## Epic acceptance and preserved history
+
+Both human and delegated orchestrator epic acceptance recheck current child closure, exact explicit
+child membership/order, accepted providers, protected child gates and required
+checkpoint references. It binds the declared epic outcome and exact current
+child/provider record bytes with `roadmap.epic_review_scope(...)`. Scope reads
+are bounded to 8 MiB in aggregate; an epic review admits at most 256
+children and 256 provider references. Merely reaching
+`awaiting-acceptance` does not authorize closure after descendants change.
+
+Supply `--decision <workspace-relative-decision.json>` to human epic `done`.
+The source-linked decision uses `scope: {epic: <integer>}`, `phase: epic`, the
+matching `scope_sha256`, and an `evidence` binding with `artifact` and `sha256`.
+That contained independent reconciliation bundle has `status: pass`, the same
+`scope_sha256`, distinct nonempty `author`/`reviewer` identities and exact
+`legacy_children`. The reviewer cannot own a reviewed child implementation.
+The report includes substantive nonempty `reconciliation` outcome detail or
+nonempty digest-bound outcome `artifacts`. Those contained artifact bindings
+are limited to 64 and 8 MiB total including the bundle. If `--evidence` is supplied,
+it must identify the very bundle the owner approved. Replaced acceptance
+references remain in `acceptance_history`. Acceptance retains `by: human`
+for existing board readers and records the decision identity in `approved_by`.
+
+Historical done children need no synthetic gate backfill. The new decision
+and independently reviewed bundle must explicitly list their IDs in
+`legacy_children`, with the bundle bound to the exact reviewed scope. This
+is reconciliation evidence for owner review, not a claim that old external
+effects became kernel-verified. Newly created or reviewed stories carry
+`evidence_contract: 1` and cannot use this historical reconciliation route
+to omit their required gates. Cancelled children are included in the reviewed
+scope without implying implementation or deployment.
+
+Derivation also respects frozen terminal stories and epics: unchanged source
+preserves terminal source bytes, but changed terminal fields, child additions,
+order or stream membership are refused before publishing any records or projections. Route
+changed accepted scope to new work and an explicit decision. Historical
+terminal records remain readable without a schema/version migration.
+
+
+## Delegated epic evidence
+
+Use `roadmap.py epic --epic ID --actor orchestrator --status done --owner IDENTITY
+--delegation GRANT --assessment ASSESSMENT --evidence REVIEW` with workspace-relative
+paths. `--decision` stays exclusively the source-bound human route. Adaptive mode,
+manual false and no epic HITL reservation are prerequisites, never sufficient proof.
+
+The current `autonomy.standing_delegations` must cite the grant's exact `source`
+and `sha256` once, with a human-readable scope. The JSON grant has:
+`schema: sf-epic-delegation/1`, `decision: delegate`, `actions: [accept-epic]`,
+`scope: {epics: [IDs]}`, actual `approved_by`, aware `approved_at`, optional aware
+`until`, and `source: {kind, ref, artifact, sha256}`. Source kinds remain
+`user-conversation` or `approval-surface`, pointing to nonempty current bytes.
+Epic IDs are 1–256 unique positive integers, no wildcard; optional `legacy_children`
+explicitly enumerates any authorized historical reconciliation. Removed, changed,
+expired or out-of-scope grants refuse. Registry prose cannot widen typed scope.
+
+The JSON assessment has `schema: sf-consequence-assessment/1`, `scope: {epic: ID}`,
+exact `scope_sha256`, `config_sha256`, and `risk`, `delegation`, `evidence` bindings
+(each `{artifact, sha256}`). Risk points to the configured risk-principles document.
+Required bounded text fields (1–4096 characters each): `cause`, `outcome`, `affected`,
+`method`, `permissions`, `effect`, `recovery`, `blast_radius`, `authority`, `rationale`.
+For delegated acceptance, `decision` is `proceed`; `reservations`, `unknowns` and
+`blocked_dependents` are empty arrays; `permission_status: authorized`,
+`effect_status: pass`, `recovery_status: bounded`, `risk_status: resolved` are explicit.
+Other phase assessments can record review/escalate and blockers; those do not
+permit delegated acceptance. Independent review must inspect these assertions.
+The bundle's `assessment_sha256` binds SHA256 of UTF-8 `json.dumps` on the assessment
+with only `evidence` omitted, `sort_keys=True`, `separators=(",", ":")` (default
+ASCII escaping). Draft the assessment, review that subject, then bind the final
+bundle in `assessment.evidence`. This reciprocal binding avoids a digest cycle
+and prevents reusing a scope-only review for different consequence assertions.
+
+The helper records `by: orchestrator`, `mode: delegated`, actual `actor`, owner
+`approved_by`, current grant/assessment/config/risk/evidence bindings and scope.
+It checks assertions and provenance, not real identity, authority or reasoning.
+Both actors capture and recheck protected source bytes, file/directory identities
+and board membership under the board lock before publication. Writers ignoring
+that lock after the final check are outside the helper's coordination guarantee.
+Failure publishes no acceptance or regenerated projections. Frozen history stays
+readable and unchanged; no profile grants an evidence waiver.

@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "packages": {
+    "playwright": "1.64.0",
+    "greenlet": "3.5.6",
+    "pyee": "14.0.0",
+    "typing_extensions": "4.16.0"
+  },
+  "browser": "chromium-headless-shell",
+  "browser_version": "156.0.8078.4",
+  "browser_revision": "1248"
+}

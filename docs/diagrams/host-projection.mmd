@@ -1,0 +1,17 @@
+flowchart LR
+  A[Eleven canonical skills and role prompts] --> B[Installer or allowlisted native bundle generator]
+  C[Canonical host policy and required auxiliary assets] --> B
+  B --> D[Claude Code generated layout]
+  B --> E[Cursor generated layout]
+  B --> F[Codex generated layout]
+  D --> G[Active host loads supported instructions]
+  E --> G
+  F --> G
+  G --> H[Host orchestrator chooses eligible work and staff]
+  H --> I[Actual host tools, permissions and available models]
+  I --> J[Workers act only within applicable GO]
+  J --> K[Local helpers validate, record or project bounded facts]
+  K --> H
+  L[Read-only registry and routing proposals] --> H
+  M[Static format checks] --> N[Format evidence only; live loading remains separate]
+  B --> M

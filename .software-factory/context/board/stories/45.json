@@ -1,0 +1,106 @@
+{
+  "version": 1,
+  "id": 45,
+  "epic": 2,
+  "type": "story",
+  "title": "Connect authorized observations to prioritization and bug delivery",
+  "status": "in-review",
+  "owner": "codex-operations-loop",
+  "after": [
+    40
+  ],
+  "covers": [],
+  "risk": "standard",
+  "hitl": false,
+  "plan_checkpoint": false,
+  "done_checkpoint": false,
+  "blocked": null,
+  "receipts": {
+    "implementation-result": {
+      "type": "agent-attempt",
+      "subject_sha": "089bb4e2f1c731c4ba4bb7f3b20b3a792e89bae5",
+      "agent": "/root/autonomy_contract",
+      "role": "sf-principal-engineer",
+      "skill": "software-factory",
+      "requested_model": "inherit",
+      "effective_model": null,
+      "phase": "implementation",
+      "status": "awaiting-review",
+      "recorded_at": "2026-10-15T09:16:15.435020+00:00",
+      "summary": "Integrated operations contract after independent source review by mission_status and four-scenario bounded instruction-use exercise by operations_forward_use; no instruction defects. Integrated full gate pending.",
+      "source_sha": "94b771127f2d8f93664d7f5a8b9364ab215a7b28",
+      "independent_source_review": {
+        "reviewer": "/root/mission_status",
+        "status": "accepted",
+        "subject_sha": "94b771127f2d8f93664d7f5a8b9364ab215a7b28"
+      },
+      "forward_use": {
+        "agent": "/root/operations_forward_use",
+        "scenario_count": 4,
+        "instruction_defects": 0,
+        "limitations": "Decision exercise, no real monitoring, scheduling, source access or deployment effects."
+      }
+    },
+    "integrated-local-proof": {
+      "type": "local-verification",
+      "subject_sha": "c94554e9da7670c21b505efb5a63f623581b6cb0",
+      "recorded_at": "2026-10-15T09:22:14.602201+00:00",
+      "status": "pass",
+      "full_static_gate": {
+        "exit_code": 0,
+        "unit_tests": 487,
+        "evals": 30,
+        "failed": 0,
+        "unverified": 0,
+        "skipped": [
+          "shellcheck: no install.sh exists until story24"
+        ],
+        "artifact": "lifecycle-operations-gate.log",
+        "sha256": "22783c02319ccfecd30431efb21e1ee1c670ad2da8a9d1182f0fce4f6549b94f",
+        "not_present": "shellcheck has no target until install.sh is implemented in story24",
+        "evals_skipped": 0
+      },
+      "limitations": [
+        "Local verification does not establish provider CI, integration, deployment, live host loading or human acceptance."
+      ]
+    }
+  },
+  "baseline_sha": null,
+  "branch": null,
+  "pr": null,
+  "merged_sha": null,
+  "history": [
+    {
+      "at": "2026-10-15T09:06:01.118358+00:00",
+      "by": "orchestrator",
+      "from": "backlog",
+      "to": "ready-for-dev"
+    },
+    {
+      "at": "2026-10-15T09:06:01.208763+00:00",
+      "by": "codex-operations-loop",
+      "from": "ready-for-dev",
+      "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T09:16:15.532821+00:00",
+      "by": "codex-operations-loop",
+      "from": "in-progress",
+      "to": "in-review"
+    }
+  ],
+  "findings": [
+    {
+      "at": "2026-10-15T09:06:01.118209+00:00",
+      "by": "orchestrator",
+      "text": "Owner explicitly requested monitoring setup, risk-based escalation, prioritization and bug fixes in the autonomous loop. This prose contract uses existing authority, board and receipts; it adds no service or config runtime."
+    }
+  ],
+  "source_key": "expansion/authorized-operations-loop",
+  "scope": [
+    "skills/software-factory/references/operations.md",
+    "skills/software-factory/references/authority.md",
+    "skills/software-factory/workflows/feature.md",
+    "skills/software-factory/workflows/bug.md"
+  ]
+}

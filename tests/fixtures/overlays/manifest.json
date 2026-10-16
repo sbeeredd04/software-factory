@@ -1,0 +1,54 @@
+{
+  "approval": {
+    "by": "project-owner",
+    "decision": {
+      "path": "evidence/decision.md",
+      "sha256": "efb10f5023a5d94c5f5f4bb9dd6e918ab4de3853e6f70e584b594aae47f82d61"
+    },
+    "kind": "standing-go",
+    "subject_sha256": "1a746d18ec0836d344180e715a7775e4910639b331d34c03aa66e6deb36904ac"
+  },
+  "author": "implementer",
+  "base_sha256": "a012bcbc184ee3c83d4182b3e38d26d5fba7854810cec1fe85aac0072fd4fa66",
+  "canary": {
+    "artifact": {
+      "path": "evidence/canary.json",
+      "sha256": "c6eaa035fedeef103414afd9ed913fa64c59932bd49a73c70884857a64ae2eea"
+    },
+    "result": "pass",
+    "subject_sha256": "1a746d18ec0836d344180e715a7775e4910639b331d34c03aa66e6deb36904ac"
+  },
+  "evidence": [
+    {
+      "path": "evidence/failure.txt",
+      "sha256": "307e18eff2da6e3b47eb715439935564d6a3da9c0cac13adba87643c5c009fa0"
+    }
+  ],
+  "id": "lesson",
+  "mode": "append",
+  "payload": {
+    "path": ".software-factory/overlays/lesson/payload.md",
+    "sha256": "07f008377d264135d58306e5e01591eb3521c85f444c1dacb72724687024f4b9"
+  },
+  "regression": {
+    "artifact": {
+      "path": "evidence/regression.json",
+      "sha256": "c6eaa035fedeef103414afd9ed913fa64c59932bd49a73c70884857a64ae2eea"
+    },
+    "result": "pass",
+    "subject_sha256": "1a746d18ec0836d344180e715a7775e4910639b331d34c03aa66e6deb36904ac"
+  },
+  "review": {
+    "artifact": {
+      "path": "evidence/review.json",
+      "sha256": "365ff22b21ad0c23348f8b2493edc5d7257d6a6de4bbb091b2d45c33ade91c03"
+    },
+    "by": "independent-reviewer",
+    "subject_sha256": "1a746d18ec0836d344180e715a7775e4910639b331d34c03aa66e6deb36904ac",
+    "verdict": "approved"
+  },
+  "risk": "routine",
+  "subject_sha256": "1a746d18ec0836d344180e715a7775e4910639b331d34c03aa66e6deb36904ac",
+  "target": ".agents/skills/sf-crawl/references/artifact.md",
+  "version": 1
+}

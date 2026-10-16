@@ -1,0 +1,8 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "software-factory",
+  "version": "0.1.0",
+  "description": "Portable Software Factory skills. Use the project installer for full setup and generated native bundles for host policies and recovery hooks.",
+  "license": "MIT",
+  "author": {"name": "Software Factory contributors"}
+}

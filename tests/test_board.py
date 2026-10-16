@@ -7,8 +7,10 @@ readiness with cross-stream diagnostics, and claims mirrored read-only.
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import re
+import stat
 import threading
 import unittest
 
@@ -110,10 +112,69 @@ class Board:
         return self.board("build", *args, env=env)
 
     def update(self, story, *args):
+        # Legacy lifecycle tests receive explicit synthetic gate fixtures.
+        # Rejection tests in test_board_gate call board() without this helper.
+        if "--status" in args and "--actor" in args and args[args.index("--actor") + 1] == "orchestrator":
+            status = args[args.index("--status") + 1]
+            if status == "built" and "--sha" not in args:
+                args = (*args, "--sha", SHA_A)
+            if status in ("built", "done") and "--sha" in args and "--evidence" not in args:
+                sha = args[args.index("--sha") + 1]
+                phase = "premerge" if status == "built" else "complete"
+                args = (*args, "--evidence", self.gate_manifest(story, sha, phase))
         return self.board("update", "--story", str(story), *args)
 
+    def gate_manifest(self, story, sha, phase):
+        directory = self.root / "proof"
+        directory.mkdir(exist_ok=True)
+        artifact = directory / f"{story}-{phase}.txt"
+        artifact.write_text("Synthetic fixture evidence; no actual effect claimed.\n")
+        names = ("tests", "eval", "review", "ci") + (("deploy",) if phase == "complete" else ())
+        checks = {name: {"status": "pass", "subject_sha": sha,
+                         "artifact": artifact.relative_to(self.root).as_posix(),
+                         "artifact_sha256": hashlib.sha256(artifact.read_bytes()).hexdigest(),
+                         "exit_code": 0} for name in names}
+        record = self.story(story)
+        report = {"subject_sha": sha, "author": record.get("owner") or "worker",
+                  "reviewer": "independent-reviewer", "checks": checks}
+        if phase == "complete":
+            candidate = record.get("accepted_gates", {}).get("premerge", {}).get("subject_sha", SHA_A)
+            report.update(candidate_sha=candidate,
+                          integration={"status": "pass", "subject_sha": sha, "candidate_sha": candidate})
+            checks["deploy"].update(deployed_sha=sha, artifact_id="fixture-artifact", environment="fixture")
+        manifest = directory / f"{story}-{phase}.json"
+        manifest.write_text(json.dumps(report))
+        return manifest.relative_to(self.root).as_posix()
+
     def epic(self, epic, *args):
+        if ("--actor" in args and args[args.index("--actor") + 1] == "human"
+                and "--status" in args and args[args.index("--status") + 1] == "done"
+                and "--decision" not in args and self.epic_record(epic)["status"] == "awaiting-acceptance"):
+            args = (*args, "--decision", self.epic_approval(epic))
         return self.board("epic", "--epic", str(epic), *args)
+
+    def epic_approval(self, epic):
+        """Synthetic independent outcome/owner fixtures, never real acceptance."""
+        module = support.helper("roadmap")
+        digest, children, _ = module.epic_review_scope(self.root, module.board_config(self.root), self.epic_record(epic))
+        legacy = [story["id"] for story in children
+                  if story["status"] == "done" and not story.get("accepted_gates", {}).get("complete")]
+        bundle = self.root / f"epic-{epic}-review.json"
+        bundle.write_text(json.dumps({"status": "pass", "scope_sha256": digest,
+                                      "author": "fixture-reconciler", "reviewer": "fixture-independent",
+                                      "legacy_children": legacy,
+                                      "reconciliation": "Synthetic review reconciled the fixture outcome and all child scope."}))
+        source = self.root / f"epic-{epic}-owner.txt"
+        source.write_text("Synthetic owner approval; not an authenticated decision.\n")
+        approval = {"decision": "approve", "scope": {"epic": epic}, "phase": "epic",
+                    "scope_sha256": digest, "approved_by": "fixture-owner", "approved_at": "2026-10-15T00:00:00Z",
+                    "legacy_children": legacy,
+                    "source": {"kind": "user-conversation", "ref": "fixture:epic-owner",
+                               "artifact": source.name, "sha256": hashlib.sha256(source.read_bytes()).hexdigest()},
+                    "evidence": {"artifact": bundle.name, "sha256": hashlib.sha256(bundle.read_bytes()).hexdigest()}}
+        path = self.root / f"epic-{epic}-approval.json"
+        path.write_text(json.dumps(approval))
+        return path.name
 
     # -- records -------------------------------------------------------------
     def story(self, story_id):
@@ -133,11 +194,17 @@ class Board:
 
     def board_snapshot(self):
         """Every file under the board dir, content-keyed, for zero-write proofs."""
-        return {
-            str(path.relative_to(self.dir())): path.read_bytes()
-            for path in sorted(self.dir().rglob("*"))
-            if path.is_file()
-        }
+        snapshot = {}
+        for path in sorted(self.dir().rglob("*")):
+            mode = path.lstat().st_mode
+            key = str(path.relative_to(self.dir()))
+            if stat.S_ISREG(mode):
+                snapshot[key] = path.read_bytes()
+            elif stat.S_ISLNK(mode):
+                snapshot[key] = ("symlink", str(path.readlink()))
+            elif not stat.S_ISDIR(mode):
+                snapshot[key] = ("special", stat.S_IFMT(mode))
+        return snapshot
 
     def write_meta(self, **changes):
         path = self.dir() / "meta.json"
@@ -254,20 +321,56 @@ class DeriveTests(unittest.TestCase):
         board.update(1, "--actor", "orchestrator", "--status", "cancelled", "--reason", "superseded")
         board.update(1, "--actor", "human", "--status", "cancelled", "--decision", "D-7")
         source = planning_source()
-        source["epics"][0]["stories"][0]["title"] = "State helper, renamed"
         source["epics"][0]["stories"].append(
             {"key": "hook", "title": "Hook helper", "type": "story",
              "after": [], "covers": ["R5"], "risk": "T0"}
         )
         board.derive(source)
-        renamed = board.story(1)
-        self.assertEqual(renamed["title"], "State helper, renamed")
-        self.assertEqual(renamed["status"], "cancelled")  # live status untouched
+        retained = board.story(1)
+        self.assertEqual(retained["title"], "State helper")
+        self.assertEqual(retained["status"], "cancelled")  # frozen history untouched
         new = board.story(5)
         self.assertEqual(new["title"], "Hook helper")
         self.assertEqual(new["status"], "backlog")
         meta = json.loads((board.dir() / "meta.json").read_text())
         self.assertEqual(meta["next_story_id"], 6)  # id 2..4 still live, 1 cancelled, none reused
+
+    def test_rederive_refuses_terminal_story_structural_changes_without_writes(self):
+        for status in ("done", "cancelled"):
+            with self.subTest(status=status):
+                board = Board(self)
+                board.derive()
+                board.write_story(1, status=status)
+                source = planning_source()
+                source["epics"][0]["stories"][0]["title"] = "Rewritten history"
+                before = board.board_snapshot()
+                result = board.derive_raw(source)
+                self.assertEqual(2, result.returncode, result.stderr)
+                self.assertIn("frozen terminal", result.stderr)
+                self.assertEqual(before, board.board_snapshot())
+
+    def test_terminal_epic_dangling_order_cannot_authorize_a_new_child(self):
+        board = Board(self)
+        board.derive()
+        epic = board.epic_record(1)
+        epic.update(status="done", order=[1, 2, 99])
+        board.epic_file(1).write_text(json.dumps(epic))
+        board.write_meta(next_story_id=99)
+        source = planning_source()
+        source["epics"][0]["stories"].append({"key": "late", "title": "Late child"})
+        before = board.board_snapshot()
+        result = board.derive_raw(source)
+        self.assertEqual(2, result.returncode, result.stderr)
+        self.assertIn("frozen terminal child membership", result.stderr)
+        self.assertEqual(before, board.board_snapshot())
+
+        # Even malformed historical open children cannot redefine accepted scope.
+        source = planning_source()
+        source["epics"][0]["stories"][0]["title"] = "Edited accepted descendant"
+        result = board.derive_raw(source)
+        self.assertEqual(2, result.returncode, result.stderr)
+        self.assertIn("frozen terminal", result.stderr)
+        self.assertEqual(before, board.board_snapshot())
 
     def test_unknown_record_keys_are_ignored_at_read_time(self):
         board = Board(self)

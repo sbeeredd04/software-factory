@@ -1,0 +1,20 @@
+flowchart TD
+  A[Trust pack source; choose physical consumer root and host] --> B[Choose project profile and preview plan]
+  B --> C{Full or skills-only?}
+  C -->|full| D[Skills, roles, policies, hooks and auxiliary assets]
+  C -->|skills-only| E[Skills and required auxiliary assets; reduced integration]
+  D --> F[Inspect ownership, collisions and preserved user bytes]
+  E --> F
+  F -->|unsafe or conflicting| G[Refuse; preserve bytes; owner reconciles]
+  F -->|reviewed local install scope| H[Installer lock and source revalidation]
+  H --> I[Conditional publication and ownership manifest]
+  I -->|concurrent edit or source change| G
+  I --> J[Inspect resulting files; repeat is unchanged]
+  J --> K{Separately consented BMad provisioning?}
+  K -->|no, skip-bmad| L[Installer smoke only; BMad planning remains unverified]
+  K -->|yes| M[Pinned official installer; prerequisites and output checks]
+  M -->|missing or failed| N[Record planning-readiness gap or partial state; no implicit retry]
+  M --> O[Observe installed modules; workflow quality still unproved]
+  J --> P[Doctor: report checks and unknowns; gh auth may run]
+  P --> Q[Dry-run uninstall; selected ownership only]
+  Q --> R[Authorized uninstall preserves edits and user context]

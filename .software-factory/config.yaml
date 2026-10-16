@@ -1,0 +1,149 @@
+{
+  "agents": {
+    "native": {
+      "description": "Current host worker; availability must be observed",
+      "detection": {
+        "kind": "native-inventory"
+      },
+      "kind": "native",
+      "risk_tiers": [
+        0,
+        1,
+        2,
+        3
+      ]
+    }
+  },
+  "autonomy": {
+    "blocked_behavior": "continue-independent",
+    "commits": true,
+    "deploy": false,
+    "local_edits": true,
+    "merge_integration": false,
+    "mode": "risk-adaptive",
+    "open_pr": false,
+    "push": false,
+    "standing_delegations": [
+      {
+        "scope": "Continue the approved Software Factory completion outcome through local implementation, testing, independent review, fixes and recovery. Required epic acceptance and external/publication authority remain separate.",
+        "sha256": "637b0458214f78d8c34893fc1ab2eece4ccf0579549cb6eb84583ad27a9645e0",
+        "source": ".software-factory/context/decisions/0021-continuous-host-orchestration.md"
+      },
+      {
+        "scope": "Finite routine acceptance of current epics1\u20135 under direct owner risk-adaptive direction/ADR0027, only after current child/effect/independent consequence proof; no legacy exception, explicit reservation waiver or external-action authority.",
+        "sha256": "18e01061f4a106395dd2a303848e3da13dfd376e70171586ebaf886260e9a27d",
+        "source": ".software-factory/runs/software-factory-v01/evidence/owner-adaptive-epic-delegation.json"
+      }
+    ]
+  },
+  "bmad": {
+    "automatic_updates": false,
+    "custom_root": "_bmad/custom",
+    "install_version": "6.12.0",
+    "modules": [
+      "core",
+      "bmm",
+      "bmb",
+      "cis",
+      "tea"
+    ]
+  },
+  "board": {
+    "dir": ".software-factory/context/board",
+    "regenerate": "on-write"
+  },
+  "branches": {
+    "direct_push": false,
+    "integration": "dev",
+    "merge_method": "merge",
+    "protected": [
+      "main"
+    ],
+    "story_prefix": "codex/"
+  },
+  "budgets": {
+    "mode": "alarm",
+    "stall_repetitions": 3
+  },
+  "checkpoints": {
+    "before_external_write": true,
+    "before_reset": true,
+    "manual": false,
+    "retro_cadence": "epic",
+    "transitions": [
+      "epic-acceptance"
+    ]
+  },
+  "context": {
+    "redaction": ".software-factory/context/principles/risk.md",
+    "retention": ".software-factory/context/principles/risk.md"
+  },
+  "documents": {
+    "architecture": ".software-factory/context/ARCHITECTURE.md",
+    "conventions": ".software-factory/context/principles/conventions.md",
+    "extra_context": [
+      "AGENTS.md",
+      "CONTRIBUTING.md",
+      "evals/eval.config.json"
+    ],
+    "principles": {
+      "conventions": ".software-factory/context/principles/conventions.md",
+      "evals": ".software-factory/context/principles/evals.md",
+      "product": ".software-factory/context/principles/product.md",
+      "risk": ".software-factory/context/principles/risk.md"
+    }
+  },
+  "environments": {},
+  "extensions": {
+    "mcp": [],
+    "overlays": [],
+    "skills": []
+  },
+  "operations": {
+    "enabled": false,
+    "followup": "propose-bug",
+    "notifications": "meaningful-changes",
+    "sources": []
+  },
+  "planning": {
+    "depth": "adaptive",
+    "method": "bmad"
+  },
+  "project": {
+    "name": "Software Factory",
+    "repositories": {
+      "app": {
+        "path": "."
+      }
+    },
+    "root": ".."
+  },
+  "reporting": {
+    "style": "concise-evidence"
+  },
+  "review_bots": {},
+  "routing": {
+    "coding": "native",
+    "complexity": {
+      "high": "native",
+      "low": "native",
+      "medium": "native"
+    },
+    "fallback": "native",
+    "independent_review": "native"
+  },
+  "tracker": {
+    "adapter": "markdown",
+    "path": ".software-factory/context/TASKS.md"
+  },
+  "verification": {
+    "required_checks": [
+      "qa",
+      "evals",
+      "code_review",
+      "ci",
+      "review_bots"
+    ]
+  },
+  "version": 1
+}

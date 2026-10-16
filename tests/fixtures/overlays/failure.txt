@@ -1,0 +1,1 @@
+Observed fixture failure, source revision recorded.

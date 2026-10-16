@@ -1,0 +1,6 @@
+/* Negative fixture: descendants do not include the scrolling html element. */
+html[data-motion='off'] * {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}

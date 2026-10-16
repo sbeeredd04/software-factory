@@ -2,12 +2,14 @@
 
 Phase: the whole feature loop, from a plain request to the next ready frontier.
 The orchestrator owns every node, including staffing and acceptance. The entry's
-hard boundaries apply to every edge below.
+hard boundaries apply to every edge below. Reassess consequences and actual
+authority at every phase under [authority](../references/authority.md); a reserved
+decision blocks its dependents while independent approved work continues.
 
 ```mermaid
 flowchart TD
   Q[Plain request: feature, refactor or migration] --> G[Grounded intent: principles, architecture docs, tracker, real Git state, prior GO]
-  G --> P[Plan: BMad planning when installed, current code, sf-design judgment, risks, stories with ACs and proof]
+  G --> P[Plan: BMad structured epics/stories; explicit native or approved legacy route, current code, sf-design judgment, risks, stories with ACs and proof]
   P --> R[Independent plan review by a non-author]
   R -->|material acceptance or risk findings: revise| P
   R --> A{Scoped GO already valid?}
@@ -19,17 +21,19 @@ flowchart TD
   V -->|fail or unknown| W
   V --> D[Actual-diff review plus CI and configured review bots]
   D -->|confirmed findings: fix| W
-  D --> T{Gates green and risk or authority resolved?}
+  D --> T{Current authority and consequences resolved after passing gates?}
   T -->|no| N[One targeted question to the human; independent safe work continues]
   N --> T
   T -->|yes| M[Single integration owner: gated sequential merge to the integration branch]
   M --> S[Deploy or staging proof: deployed SHA plus affected behavior]
   S -->|failed or unknown: back to work| W
   S --> C{Epic boundary?}
-  C -->|yes| E[Human epic checkpoint: acceptance stays pending until confirmed]
+  C -->|yes| E[Policy-selected epic acceptance: current proof, grant and consequences; human when reserved]
   C -->|no| K[Durable receipts, decisions, planning-source and board-record update, short retro]
   E --> K
   K -->|next frontier| O
+  K --> OP[Authorized observation and signal triage: operations reference]
+  OP -->|eligible priorities within GO| O
 ```
 
 ## The flow in prose
@@ -86,8 +90,9 @@ explicitly not proof, and a merge is not a deploy. Work that cannot be deployed
 needs an approved, recorded narrower applicability instead of silent exemption.
 Failed or unknown proof goes back into the work loop with receipts preserved.
 
-**Checkpoint and close.** At an epic boundary the human owner performs the
-manual checkpoint; the epic stays pending until they confirm. Close with durable
+**Checkpoint and close.** Reconcile epic evidence and current consequence/authority
+assessment under [authority](../references/authority.md). Use delegated acceptance
+only when its conditions hold; reserved human decisions block their dependents. Close with durable
 receipts, recorded decisions, planning-source updates plus the worker's own
 board-record update (`.software-factory/context/board/`) and a short retro whose
 learnings feed the next frontier — under one single-status rule: the per-story
@@ -97,3 +102,9 @@ parallel live store; `roadmap.json` and the dashboard are locked, regenerable
 derived projections; `state.py` claims remain the path-exclusivity system of
 record; the checkpoint is recovery context. There is no second live status
 store. Then select the next ready frontier.
+
+**Observe and reprioritize.** [Operations](../references/operations.md) owns
+authorized observation, source attribution, deduplication and signal routing.
+Use it to feed confirmed bugs and grounded priorities back into delivery while
+independent approved work continues; observation access alone grants no repair
+or deployment authority.

@@ -1,0 +1,229 @@
+{
+  "version": 1,
+  "evidence_contract": 1,
+  "id": 49,
+  "epic": 2,
+  "type": "bug",
+  "title": "Keep installed generated files out of the default project crawl",
+  "status": "in-review",
+  "owner": "codex-crawl-repair",
+  "after": [
+    11
+  ],
+  "covers": [
+    "SKL-CRAWL-001",
+    "SKL-CRAWL-002",
+    "VAL-CRAWL-001"
+  ],
+  "risk": "standard",
+  "hitl": false,
+  "plan_checkpoint": false,
+  "done_checkpoint": false,
+  "blocked": null,
+  "receipts": {
+    "active-attempt": {
+      "type": "agent-attempt",
+      "subject_sha": "21f45331a4c974a75318f529b8a136ef11db3688",
+      "agent": "/root/crawl_repair",
+      "reviewer_planner": "/root/final_audit",
+      "role": "sf-engineer",
+      "skill": "sf-crawl",
+      "requested_model": "native host inherited model",
+      "effective_model": null,
+      "phase": "implementation",
+      "status": "assigned",
+      "scope": "Default Git-aware source inventory, explicit filesystem fallback and matching contract/regression tests. Five canonical paths in isolated worktree. Preserve original eval command, tracked ignored source and nonignored new code; no blanket host directory exclusion.",
+      "reproduction": {
+        "case": "SKL-CRAWL-002",
+        "exit_code": 1,
+        "output_lines": 443
+      },
+      "limitations": [
+        "Actual source fix, independent review, integrated native recrawl and combined gate still pending."
+      ]
+    },
+    "reproduction": {
+      "type": "verification-observation",
+      "subject_sha": "21f45331a4c974a75318f529b8a136ef11db3688",
+      "status": "cancelled",
+      "exit_code": 143,
+      "reason": "Unchanged approved SKL-CRAWL-002 independently reproduced exit 1 after actual installed projections and upstream sources entered the default crawl. Cancelled the owned full gate before completion to repair the defect.",
+      "full_gate_pass": false,
+      "reproduction": {
+        "case": "SKL-CRAWL-002",
+        "exit_code": 1,
+        "output_lines": 443
+      },
+      "partial_log_sha256": "66113f089e3f58a42f59bb77ccc3b80e37a01f55492a1b2f5d027528c7c72c23",
+      "scope": "The partial log records completed checks only; no final unit-count or full 51-case result is asserted."
+    },
+    "worker-handoff": {
+      "story": "49",
+      "owner": "codex-crawl-repair",
+      "subject_sha": "f90acb14c613da17b8e1a32a17695f260fedf9af",
+      "base_sha": "21f4533",
+      "result": "ready-for-independent-review",
+      "files": [
+        "skills/sf-crawl/scripts/crawl.py",
+        "skills/sf-crawl/SKILL.md",
+        "skills/sf-crawl/references/coverage.md",
+        "skills/sf-crawl/references/artifact.md",
+        "tests/test_crawl.py"
+      ],
+      "failure_before": {
+        "baseline": "21f4533",
+        "tests_run": 1,
+        "failures": 1,
+        "errors": 0,
+        "observation": "Ignored generated skill, module and local copies were wrongly selected.",
+        "log_sha256": "0fb5f9edcf2b67ce9b53c8b7496fab35b72614427577b5f7d818443e480349cb"
+      },
+      "checks": [
+        {
+          "command": "python3 -m unittest discover -s tests -p test_crawl.py -v",
+          "exit": 0,
+          "tests_run": 33,
+          "failures": 0,
+          "skips": 0
+        },
+        {
+          "command": "python3 -m unittest discover -s tests -p test_trace.py -v",
+          "exit": 0,
+          "tests_run": 22,
+          "failures": 0,
+          "skips": 0
+        },
+        {
+          "command": "uvx --from ruff==0.17.0 ruff check .",
+          "exit": 0
+        },
+        {
+          "command": "python3 scripts/validate.py",
+          "exit": 0
+        },
+        {
+          "command": "python3 scripts/scan_public.py",
+          "exit": 0,
+          "files_scanned": 487
+        },
+        {
+          "command": "python3 scripts/check_links.py",
+          "exit": 0
+        },
+        {
+          "command": "python3 scripts/check_distribution.py",
+          "exit": 0
+        },
+        {
+          "command": "python3 -m compileall -q skills/sf-crawl tests/test_crawl.py",
+          "exit": 0
+        },
+        {
+          "command": "git diff --check",
+          "exit": 0
+        }
+      ],
+      "limitations": [
+        "Root must independently verify the committed subject and run the integrated full gate.",
+        "No canonical map, trace, live board, claim, run or eval metadata was written by this worker.",
+        "Git inventories stop at submodules and nested repositories; missing tracked paths are reported.",
+        "Unavailable, failed, timed-out or malformed Git inventories fall back explicitly to the static filesystem policy, which can include ignored files.",
+        "Non-UTF-8 Git names cause explicit fallback; the filesystem renderer retains its prior Unicode filename limitations.",
+        "Inventory, parse and manifest observations are static and do not defend against concurrent tree mutation."
+      ]
+    },
+    "independent-review": {
+      "type": "independent-review",
+      "subject_sha": "f90acb14c613da17b8e1a32a17695f260fedf9af",
+      "reviewer": "/root",
+      "author": "/root/crawl_repair",
+      "status": "pass",
+      "scope": "Five claimed canonical crawler/contract/test paths; Git selection and explicit degradation, preservation of tracked ignored/new code, filesystem and packaging boundaries. Actual committed diff inspected.",
+      "checks": {
+        "crawl_tests": {
+          "run": 33,
+          "passed": 33,
+          "failed": 0,
+          "skipped": 0,
+          "exit_code": 0
+        },
+        "trace_tests": {
+          "run": 22,
+          "passed": 22,
+          "failed": 0,
+          "skipped": 0,
+          "exit_code": 0
+        },
+        "actual_installed_primary_probe": {
+          "exit_code": 0,
+          "python_modules": 79,
+          "source_files": 89,
+          "selection": "git-tracked-and-unignored",
+          "index_unchanged": true,
+          "json_bytes": 902975
+        }
+      },
+      "findings": [],
+      "limits": [
+        "The actual-primary probe used candidate crawler f90 against pre-integration source 06f812e; it is not combined-source proof.",
+        "Full gate and native installed-helper refresh remain pending. Filesystem fallback can include ignored material; submodules and nested repositories require separate crawls.",
+        "No eval criteria or grader command was changed."
+      ]
+    },
+    "actual-installed-native-proof": {
+      "type": "installed-helper-observation",
+      "subject_sha": "b0695b11bf5b557b178bcb436cb98ef1f80c4b6a",
+      "status": "pass",
+      "helper": "Installed sf-crawl after normal safe project refresh",
+      "exit_code": 0,
+      "owned_files_verified": 116,
+      "inventory": {
+        "cap_reached": false,
+        "max_files": 5000,
+        "revision": "b0695b11bf5b557b178bcb436cb98ef1f80c4b6a",
+        "root": ".",
+        "selection": "git-tracked-and-unignored",
+        "source_files_found": 89,
+        "source_files_parsed": 89
+      },
+      "python_modules": 79,
+      "json_bytes": 911843,
+      "json_sha256": "f65404cd37d25c17f84ae96e776532960e09ae67dc333e6e2ff1aee110e4b7ac",
+      "canonical_helper_matches_installed": true,
+      "limits": [
+        "No snapshot workaround; actual installed project was crawled natively. Combined full gate and live host loading remain separate."
+      ],
+      "unchanged_case": {
+        "exit_code": 0,
+        "criteria_or_command_changed": false
+      }
+    }
+  },
+  "baseline_sha": null,
+  "branch": null,
+  "pr": null,
+  "merged_sha": null,
+  "history": [
+    {
+      "at": "2026-10-15T19:38:51.000507+00:00",
+      "by": "orchestrator",
+      "from": "backlog",
+      "to": "ready-for-dev"
+    },
+    {
+      "at": "2026-10-15T19:38:51.228154+00:00",
+      "by": "codex-crawl-repair",
+      "from": "ready-for-dev",
+      "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T19:46:45.525585+00:00",
+      "by": "codex-crawl-repair",
+      "from": "in-progress",
+      "to": "in-review"
+    }
+  ],
+  "findings": [],
+  "source_key": "expansion/crawl-installed-inventory",
+  "review_subject_sha": "f90acb14c613da17b8e1a32a17695f260fedf9af"
+}

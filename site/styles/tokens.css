@@ -1,0 +1,16 @@
+:root {
+  --paper: #f4f1e9;
+  --surface: #faf8f2;
+  --ink: #252820;
+  --muted: #5d6255;
+  --line: #c6c9bb;
+  --rust: #a13f23;
+  --rust-soft: #f0dfd3;
+  --green: #365a40;
+  --green-soft: #e4eadd;
+  --display: 'Bricolage', 'Arial', sans-serif;
+  --body: 'Inter', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, monospace;
+  --measure: 1240px;
+  --gutter: clamp(20px, 5vw, 72px);
+}

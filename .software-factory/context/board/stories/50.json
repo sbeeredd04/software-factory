@@ -1,0 +1,109 @@
+{
+  "version": 1,
+  "evidence_contract": 1,
+  "id": 50,
+  "epic": 3,
+  "type": "bug",
+  "title": "Bound raw skills acquisition to canonical pack sources",
+  "status": "in-review",
+  "owner": "codex-route-repair",
+  "after": [
+    24
+  ],
+  "covers": [
+    "TLS-DIST-001",
+    "VAL-HOST-001",
+    "VAL-README-002"
+  ],
+  "risk": "standard",
+  "hitl": false,
+  "plan_checkpoint": false,
+  "done_checkpoint": false,
+  "blocked": null,
+  "receipts": {
+    "reproduction": {
+      "type": "verification-observation",
+      "subject_sha": "92f33f1d5ae69158ced797a33fc2acb1f7bd3388",
+      "status": "failed",
+      "full_gate_exit_code": 1,
+      "unit_tests": {
+        "run": 817,
+        "passed": 815,
+        "failed": 1,
+        "skipped": 1,
+        "seconds": 393.333
+      },
+      "failure": "Real pinned skills CLI local-root acquisition discovered the separately installed BMad skills as well as canonical eleven; network-marked test failed its exact ownership set.",
+      "evals": {
+        "run_id": "r-20261015T195645Z-premerge",
+        "passed": 51,
+        "failed": 0,
+        "unverified": 0,
+        "skipped": 0,
+        "verdict": "pass"
+      },
+      "other_steps": "All other full-gate steps passed, including native crawl reproducibility, lint, syntax, shellcheck, static distribution, Mermaid, skills and schema validation.",
+      "gate_log_sha256": "e2fb92316be2f059e15628f396153a5f431a3d7ee5050f2a68b6492c96ab42e9",
+      "eval_receipt_sha256": "51a5b6384bcc8309daed6a31e2d8a633f9d84142f2578170a4422132ad991c3b",
+      "candidate_probe": {
+        "change": "Bound local acquisition to canonical skills directory",
+        "real_pinned_cli_version": "1.7.2",
+        "tests_run": 1,
+        "exit_code": 0,
+        "all_three_hosts_exact_canonical_eleven": true
+      },
+      "limits": [
+        "The successful unchanged 51-case evals do not turn this failed full gate green. Source/test/docs correction and resulting full gate remain pending."
+      ]
+    },
+    "independent-review": {
+      "type": "independent-review",
+      "subject_sha": "b595fc664bb09e88d2c6bde9b54b7fd7ac08e42b",
+      "reviewer": "/root/skills_route_review",
+      "author": "/root",
+      "status": "pass",
+      "scope": "Exact reviewed two-file canonical acquisition documentation and literal-route network/static regression implementation committed without byte changes.",
+      "checks": {
+        "tests_run": 2,
+        "tests_passed": 2,
+        "exit_code": 0,
+        "real_cli_version": "1.7.2",
+        "consumer_scenarios": 2,
+        "mutation_refusals": 8,
+        "links_exit_code": 0,
+        "diff_exit_code": 0
+      },
+      "findings": [],
+      "limits": [
+        "No combined full-gate, marketplace/live-host or external publication acceptance. Real pinned CLI acquisition is separately network-marked; offline skips remain unverified."
+      ]
+    }
+  },
+  "baseline_sha": null,
+  "branch": null,
+  "pr": null,
+  "merged_sha": null,
+  "history": [
+    {
+      "at": "2026-10-15T20:02:12.842733+00:00",
+      "by": "orchestrator",
+      "from": "backlog",
+      "to": "ready-for-dev"
+    },
+    {
+      "at": "2026-10-15T20:02:13.069206+00:00",
+      "by": "codex-route-repair",
+      "from": "ready-for-dev",
+      "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T20:09:31.479028+00:00",
+      "by": "codex-route-repair",
+      "from": "in-progress",
+      "to": "in-review"
+    }
+  ],
+  "findings": [],
+  "source_key": "installer-hosts/canonical-skills-acquisition",
+  "review_subject_sha": "b595fc664bb09e88d2c6bde9b54b7fd7ac08e42b"
+}

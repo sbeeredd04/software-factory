@@ -4,8 +4,8 @@
   "epic": 4,
   "type": "story",
   "title": "sf-evolve: fold-in registry, overlays and retro pipeline",
-  "status": "backlog",
-  "owner": null,
+  "status": "in-review",
+  "owner": "codex-evolution",
   "after": [
     27
   ],
@@ -22,12 +22,223 @@
   "plan_checkpoint": false,
   "done_checkpoint": true,
   "blocked": null,
-  "receipts": {},
+  "receipts": {
+    "active-attempt": {
+      "type": "agent-attempt",
+      "subject_sha": "6747cb9be598c8985acfb998a4f3bc397bd7696a",
+      "agent": "/root/evolution",
+      "role": "sf-principal-engineer",
+      "skill": "sf-evolve",
+      "requested_model": "gpt-6-astra",
+      "effective_model": null,
+      "phase": "implementation",
+      "status": "assigned",
+      "recorded_at": "2026-10-15T12:35:58.114064+00:00",
+      "summary": "Original28 begins after independently reviewed27in-review through existing readiness. Source-pinned registry, composed installer overlays, BMad customization/recursion and reviewed retro loop; one canonical ownership transaction. Isolated reusedworktree baseline6747cb9, primary combined677-testgate pending."
+    },
+    "installer-baseline-race": {
+      "type": "forward-use",
+      "status": "finding",
+      "subject_sha": "6747cb9be598c8985acfb998a4f3bc397bd7696a",
+      "reviewer": "mission-status",
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/evolution-installer-baseline-race.json",
+      "artifact_sha256": "b809843ce081a6ae12a9f5d6ea7783a5e2516a82bf754588947adf5daedf8395",
+      "command": "bundled Python -I -B frozen baseline build_plan/apply_plan race probe",
+      "exit_code": 0,
+      "summary": "Two actualbaselineAPIcases reproduce late-useredit loss atpath-basedinstallerpublication: initiallyabsenttargetcreatedlate andpreapprovedexistingtargeteditedlate. Apply completesandlatebytesare absentfromtarget/backups. Existing677tests donotcoverthisrace. Story28 ownsfixthroughsameinstallertransaction; no secondwriter.",
+      "limits": [
+        "Deterministicisolatedfixture observation, not production/WIPacceptance. No host/provider/network/source/primary effects; inheritedHOME unchanged."
+      ]
+    },
+    "source-review-3d5": {
+      "type": "source-review",
+      "status": "changes-required",
+      "subject_sha": "3d5bd8200a5e53375e63b2453a24a25d929a1043",
+      "reviewer": "mission-status",
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/evolution-3d5-source-review.md",
+      "artifact_sha256": "a8cc3af36c8901f1331ceedec92647237384791fff587f3a44da343a30f933fc",
+      "summary": "Independent review finds one required pre-mutation case-alias authority refusal repair. Eight exact-source publication/recovery API probes pass. Alias probe observes transient governing candidate publication, later rejection and original-byte restoration; no committed governing edit established.",
+      "limits": [
+        "No full gate, live host/provider execution, canonical eval admission or human acceptance claimed."
+      ]
+    },
+    "worker-gate-3d5": {
+      "type": "verification",
+      "status": "fail",
+      "subject_sha": "3d5bd8200a5e53375e63b2453a24a25d929a1043",
+      "command": "bash scripts/check_all.sh",
+      "exit_code": 1,
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/evolution-3d5-worker-gate.log",
+      "artifact_sha256": "8eccf795394ed8c77dfd07a234b6e8c5595af2da172124d24b300be9aaebd76d",
+      "unit_tests": {
+        "run": 708,
+        "passed": 696,
+        "failed": 11,
+        "skipped": 1,
+        "seconds": 212.192
+      },
+      "evals": {
+        "passed": 27,
+        "failed": 3,
+        "unverified": 0,
+        "quarantined": 0,
+        "skipped": 0
+      },
+      "summary": "Frozen worker full gate failed unit tests, links and evals. Two unit freshness failures; six host projection assertions, copied fixture link, uninstall fixture config and broad BMad import guard also need repair. Separate authority-alias finding is not erased by this result.",
+      "limits": [
+        "Worker report plus root log inspection; root did not rerun this worker gate. Primary dc8992 green677/30 predates evolution implementation."
+      ]
+    },
+    "corrected-source-review": {
+      "type": "source-review",
+      "status": "accepted",
+      "subject_sha": "c8ec5ca67e339ccefa0a8a3cb6c018105bbb64c5",
+      "reviewer": "mission-status",
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/evolution-c8ec-source-review.md",
+      "artifact_sha256": "e937910d0783172d3a05a25a61d7a1b437845d0dbb8c93b0038e5a9f7aab4769",
+      "summary": "Exact corrected-source delta accepted; ten independent API cases include six actual filesystem authority aliases refusing declaration/replanning/stale-plan apply with zero publication calls and preserved target/ownership. Prior3d5 failure remains retained.",
+      "limits": [
+        "Source review and isolated API proofs only. Full gate, six separate installed/native contexts, canonical eval admission and human acceptance remain separate."
+      ]
+    },
+    "worker-handoff": {
+      "type": "worker-handoff",
+      "status": "implementation-complete-review-pending",
+      "subject_sha": "c8ec5ca67e339ccefa0a8a3cb6c018105bbb64c5",
+      "owner": "codex-evolution",
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/evolution-c8ec-worker-handoff.json",
+      "artifact_sha256": "5aac6b50bd402c1eeea315760ccb2e65e6e117f92bfa958caba8b8c112186e05",
+      "summary": "29 candidate files independently verified against clean committed blobs and live claimed scopes. Exact worker fullgate709:706pass/2crawl-freshness failures/1optional skip;29of30evalpass, all other gate steps pass. Source accepted independently; complete primary gate and six-context QA remain pending.",
+      "limits": [
+        "No live host agent, upstream resolver, provider authentication, MCP service connection, deployment, publication or epic acceptance proof.",
+        "Approval strings and hashes establish structural provenance, not authenticated human consent; host GO reconciliation remains required.",
+        "Supported overlays cover generated canonical skill entry/reference Markdown with unchanged entry frontmatter; arbitrary files/scripts/policies/BMad output are excluded.",
+        "Worker relocation unit proof covered combined all-host installation (two physical helper paths) plus three native contexts; separate six-context independent QA is owned by primary.",
+        "No primary board, state, projection, CODEBASE or canonical eval plan was edited by this worker; primary owner must regenerate crawl and run integrated gate.",
+        "New evaluation supplement admission is pending the owner decision; the unchanged thirty-case plan was used."
+      ]
+    },
+    "integrated-primary-proof": {
+      "type": "verification",
+      "status": "pass",
+      "subject_sha": "d896d12bcfd6e9efc4405d43239540ed9783c031",
+      "command": "bash scripts/check_all.sh",
+      "exit_code": 0,
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/evolution-integrated-gate.log",
+      "artifact_sha256": "5682b47df5f67d2ab46ecb6d2e395c264cbe577888e78503c684d589133342d1",
+      "unit_tests": {
+        "run": 709,
+        "passed": 708,
+        "failed": 0,
+        "skipped": 1,
+        "seconds": 215.122
+      },
+      "evals": {
+        "passed": 30,
+        "failed": 0,
+        "quarantined": 0,
+        "skipped": 0,
+        "unverified": 0
+      },
+      "eval": {
+        "artifact": ".software-factory/runs/software-factory-v01/evidence/evolution-integrated-eval.json",
+        "artifact_sha256": "34bae9439fca258d4a3c7d1e50c489b8531449a0050d6b778c02ebd51f4e4c08"
+      },
+      "summary": "Full integrated gate passes after canonical map refresh. Actual BMad approved pins and skills distribution network fixtures plus all static steps exit0. Optional fullgate schema crosscheck remains skipped; separate actual current config and overlay external checks pass.",
+      "limits": [
+        "No remote CI, maintainer integration, live host/trust, authenticated review/owner acceptance, staging-equivalence, human epic acceptance, publication or monitoring proof. Canonical evaluation supplement admission remains pending; unchanged original30 used."
+      ]
+    },
+    "integrated-source-review": {
+      "type": "source-review",
+      "status": "accepted",
+      "subject_sha": "d896d12bcfd6e9efc4405d43239540ed9783c031",
+      "reviewer": "mission-status",
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/evolution-d896-source-review.md",
+      "artifact_sha256": "6f511b02f62023c9fbfb236d27c61547d3ed180544b2e9edbf060ddcbe580b64",
+      "comparison": {
+        "artifact": ".software-factory/runs/software-factory-v01/evidence/evolution-d896-equivalence.json",
+        "artifact_sha256": "2c9426c99920244e27fb7a957134b22b10fb27459ec120c717dfd0ce96adea06"
+      },
+      "summary": "All29 acceptedc8ec implementation blobs/modes/content hashes match integratedd896. Only6 intended bookkeeping/map paths differ. Lifecycleactual/renderer digest1fbd unchanged. Gitobject-onlyreview, no test/helper/probe execution.",
+      "limits": [
+        "No remote CI, maintainer integration, live host/trust, authenticated review/owner acceptance, staging-equivalence, human epic acceptance, publication or monitoring proof. Canonical evaluation supplement admission remains pending; unchanged original30 used."
+      ]
+    },
+    "six-context-packaging": {
+      "type": "forward-use",
+      "status": "pass-executed-cases",
+      "subject_sha": "c8ec5ca67e339ccefa0a8a3cb6c018105bbb64c5",
+      "reviewer": "mission-recovery",
+      "artifact": ".software-factory/runs/software-factory-v01/evidence/evolution-c8ec-packaging-proof.json",
+      "artifact_sha256": "c9ca551eb9f31647c94194f986d9a3541aa62065d14f93e4560dcf63b1431f21",
+      "commands": 128,
+      "observations": 140,
+      "exit_zero": 91,
+      "expected_refusals": 37,
+      "forbidden_command_hits": 0,
+      "summary": "Six DISTINCT installed/native contexts after source relocation; actual extracted-release installer overlay install/repeat/update/remove/uninstall/selective-host paths pass. Two identical486-member1080328B releases. Original user backups, edits, evidence and readonly inputs preserved. MCP-config-open auditing covers relative paths.",
+      "limits": [
+        "Disposable synthetic consent/review/evidence; structural bindings do not authenticate owner authority. Componentc8ec proof, integrated source equivalence separately reviewed. First17-command harnessmtime attempt preserved, not counted in final128. No actualHOME audit or provider/host/network/production/publication effect."
+      ]
+    },
+    "external-schema-crosschecks": {
+      "type": "verification",
+      "status": "pass",
+      "subject_sha": "d896d12bcfd6e9efc4405d43239540ed9783c031",
+      "command": "opt-in Draft202012 config fixture crosscheck; check-jsonschema overlay schema/fixture",
+      "exit_code": 0,
+      "config": {
+        "artifact": ".software-factory/runs/software-factory-v01/evidence/evolution-config-external-schema-crosscheck.log",
+        "artifact_sha256": "38051afe3bfee412fbbf523aa94e1b9cad8ee7ca5cf9c146995b8c6ab52fc378"
+      },
+      "overlay": {
+        "artifact": ".software-factory/runs/software-factory-v01/evidence/evolution-overlay-external-schema-crosscheck.log",
+        "artifact_sha256": "6e03843105fcecad274e749986a5c904a825ffd0ac6ce3ca0126fb632b154db8"
+      },
+      "summary": "Actual current integrated config optionalcrosscheck1pass in0.117s and external overlay schemafixture validation exit0; development-only dependency, shipped code remains stdlib.",
+      "limits": [
+        "Parseable fixture/meta checks only; does not establish real permission/host/effect. Fullgate optional unit skip is not relabeled as pass."
+      ]
+    }
+  },
   "baseline_sha": null,
   "branch": null,
   "pr": null,
   "merged_sha": null,
-  "history": [],
-  "findings": [],
-  "source_key": "onboarding-integrations/sf-evolve-skill"
+  "history": [
+    {
+      "at": "2026-10-15T12:35:11.961323+00:00",
+      "by": "orchestrator",
+      "from": "backlog",
+      "to": "ready-for-dev"
+    },
+    {
+      "at": "2026-10-15T12:35:12.086442+00:00",
+      "by": "codex-evolution",
+      "from": "ready-for-dev",
+      "to": "in-progress"
+    },
+    {
+      "at": "2026-10-15T13:15:57.884036+00:00",
+      "by": "codex-evolution",
+      "from": "in-progress",
+      "to": "in-review"
+    }
+  ],
+  "findings": [
+    {
+      "at": "2026-10-15T12:50:24.716582+00:00",
+      "by": "orchestrator",
+      "text": "Fixed-baseline6747cb9 probes reproduce two final-publication races losing concurrent user bytes. Story28 will harden the existing installer owner with anchored expected-byte publication; prior677-test pass does not cover these races."
+    },
+    {
+      "at": "2026-10-15T13:07:59.196036+00:00",
+      "by": "orchestrator",
+      "text": "Candidate3d5 requires pre-publication refusal of case aliases to governing paths; transient candidate write was rejected and restored. Eight independent preservation probes pass. Failed708-test worker gate and27of30eval evidence preserved; repair and exact-source review pending."
+    }
+  ],
+  "source_key": "onboarding-integrations/sf-evolve-skill",
+  "review_subject_sha": "c8ec5ca67e339ccefa0a8a3cb6c018105bbb64c5",
+  "evidence_contract": 1
 }

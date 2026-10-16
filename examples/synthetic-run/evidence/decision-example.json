@@ -1,0 +1,13 @@
+{
+  "actual_approval": false,
+  "artifact": "synthetic-revision-B",
+  "authenticated_owner": false,
+  "decision_ref": "synthetic-example-only",
+  "environment": "disposable-local-fixture",
+  "observed_at": "2026-01-01T00:04:25Z",
+  "origin": "invented-teaching-data",
+  "scope": "local illustrative rollback",
+  "source": "formatter-run-001",
+  "synthetic": true,
+  "window_end": "2026-01-01T00:05:00Z"
+}

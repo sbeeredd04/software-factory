@@ -299,7 +299,7 @@
       "epic": "foundation",
       "suite": "regression",
       "kind": "pass_to_pass",
-      "criterion": "Negative: a tampered receipt fails verification with a nonzero exit \u2014 proof is never counted on trust.",
+      "criterion": "Negative: a tampered receipt fails verification with a nonzero exit — proof is never counted on trust.",
       "surface": "tools",
       "tier": [
         "quick",
@@ -709,6 +709,490 @@
         "path": ".software-factory/context/decisions/0001-agent-directed-loop.md"
       },
       "nondeterministic": false
+    },
+    {
+      "id": "TLS-INSTALL-001",
+      "story": "installer-hosts/cursor-codex-projections",
+      "epic": "installer-hosts",
+      "suite": "regression",
+      "kind": "pass_to_pass",
+      "criterion": "Fresh disposable installs preserve ownership and ship config dependencies; repeat/update failures preserve consumer bytes.",
+      "surface": "tools",
+      "tier": [
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "command",
+        "run": "SF_SKIP_NETWORK=1 python3 -m unittest discover -s tests -p 'test_install*.py'",
+        "expect": {
+          "exit": 0,
+          "output_matches": "Ran [1-9][0-9]* tests?"
+        }
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "TLS-HOST-001",
+      "story": "installer-hosts/hooks-wiring",
+      "epic": "installer-hosts",
+      "suite": "regression",
+      "kind": "pass_to_pass",
+      "criterion": "All three project projections and host-selection convergence retain correct files and preserve unrelated user settings.",
+      "surface": "tools",
+      "tier": [
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "command",
+        "run": "SF_SKIP_NETWORK=1 python3 -m unittest discover -s tests -p 'test_host*.py'",
+        "expect": {
+          "exit": 0,
+          "output_matches": "Ran [1-9][0-9]* tests?"
+        }
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "TLS-BMAD-001",
+      "story": "installer-hosts/bmad-install",
+      "epic": "installer-hosts",
+      "suite": "regression",
+      "kind": "pass_to_pass",
+      "criterion": "Pinned BMad argv and stubbed module results are checked; missing prerequisites, preserved installations and failed attempts never trigger implicit retry.",
+      "surface": "tools",
+      "tier": [
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "command",
+        "run": "SF_SKIP_NETWORK=1 python3 -m unittest discover -s tests -p 'test_bmad_install.py' -k BmadTests",
+        "expect": {
+          "exit": 0,
+          "output_matches": "Ran [1-9][0-9]* tests?"
+        }
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "TLS-DIST-001",
+      "story": "installer-hosts/distribution",
+      "epic": "installer-hosts",
+      "suite": "regression",
+      "kind": "pass_to_pass",
+      "criterion": "Generated native bundles and release payloads are reproducible, allowlisted and self-contained; unsafe sources and captured-source replacements cannot widen payloads.",
+      "surface": "tools",
+      "tier": [
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "command",
+        "run": "SF_SKIP_NETWORK=1 python3 -m unittest discover -s tests -p 'test_distribution.py'",
+        "expect": {
+          "exit": 0,
+          "output_matches": "Ran [1-9][0-9]* tests?"
+        }
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "TLS-BOOTSTRAP-001",
+      "story": "installer-hosts/distribution",
+      "epic": "installer-hosts",
+      "suite": "regression",
+      "kind": "pass_to_pass",
+      "criterion": "Stubbed release downloads enforce checksum, archive bounds and safe extraction before installation; local mode and argument forwarding remain usable.",
+      "surface": "tools",
+      "tier": [
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "command",
+        "run": "SF_SKIP_NETWORK=1 python3 -m unittest discover -s tests -p 'test_bootstrap.py'",
+        "expect": {
+          "exit": 0,
+          "output_matches": "Ran [1-9][0-9]* tests?"
+        }
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "KRN-CONFIG-001",
+      "story": "onboarding-integrations/config-schema-trackers",
+      "epic": "onboarding-integrations",
+      "suite": "regression",
+      "kind": "pass_to_pass",
+      "criterion": "Strict configuration validates labeled fixtures and legacy eval grades, rejects invalid semantics/secrets/authority path aliases, and reads without unsafe filesystem effects.",
+      "surface": "kernel",
+      "tier": [
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "command",
+        "run": "SF_SKIP_NETWORK=1 python3 -m unittest discover -s tests -p 'test_config*.py'",
+        "expect": {
+          "exit": 0,
+          "output_matches": "Ran [1-9][0-9]* tests?"
+        }
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "KRN-TRACKER-001",
+      "story": "onboarding-integrations/config-schema-trackers",
+      "epic": "onboarding-integrations",
+      "suite": "regression",
+      "kind": "pass_to_pass",
+      "criterion": "BMad v6 and Markdown observations yield bounded evidence-bound owner proposals; whitespace, empty criteria, unsupported v7 and ancestry replacement are handled honestly.",
+      "surface": "kernel",
+      "tier": [
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "command",
+        "run": "SF_SKIP_NETWORK=1 python3 -m unittest discover -s tests -p 'test_trackers.py'",
+        "expect": {
+          "exit": 0,
+          "output_matches": "Ran [1-9][0-9]* tests?"
+        }
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "SKL-HELP-002",
+      "story": "onboarding-integrations/sf-help-skill",
+      "epic": "onboarding-integrations",
+      "suite": "regression",
+      "kind": "pass_to_pass",
+      "criterion": "Discovery is read-only and bounded; twenty mapped answers yield approved, valid, source-bound setup; repeat and stale/partial/raced inputs preserve user bytes and unknown monitoring remains unknown.",
+      "surface": "skills",
+      "tier": [
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "command",
+        "run": "SF_SKIP_NETWORK=1 python3 -m unittest discover -s tests -p 'test_onboarding.py'",
+        "expect": {
+          "exit": 0,
+          "output_matches": "Ran [1-9][0-9]* tests?"
+        }
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "SKL-AGENTS-001",
+      "story": "onboarding-integrations/sf-agents-skill",
+      "epic": "onboarding-integrations",
+      "suite": "regression",
+      "kind": "pass_to_pass",
+      "criterion": "Presence discovery never invokes host agents; risk routing preserves native fallback, truthful capability unknowns and permission boundaries, including installed-only helpers.",
+      "surface": "skills",
+      "tier": [
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "command",
+        "run": "SF_SKIP_NETWORK=1 python3 -m unittest discover -s tests -p 'test_agents.py'",
+        "expect": {
+          "exit": 0,
+          "output_matches": "Ran [1-9][0-9]* tests?"
+        }
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "SKL-AGENTS-002",
+      "story": "onboarding-integrations/sf-agents-skill",
+      "epic": "onboarding-integrations",
+      "suite": "regression",
+      "kind": "pass_to_pass",
+      "criterion": "Selected bot configs retain digest-bound principles provenance and user content; stale approval, concurrent edits and contested rollback preserve independent targets and recovery evidence.",
+      "surface": "skills",
+      "tier": [
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "command",
+        "run": "SF_SKIP_NETWORK=1 python3 -m unittest discover -s tests -p 'test_bot_rendering.py'",
+        "expect": {
+          "exit": 0,
+          "output_matches": "Ran [1-9][0-9]* tests?"
+        }
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "SKL-AGENTS-003",
+      "story": "onboarding-integrations/sf-agents-skill",
+      "epic": "onboarding-integrations",
+      "suite": "regression",
+      "kind": "pass_to_pass",
+      "criterion": "Offline captured review pages require complete PR/repository/head attribution and pagination; unresolved state and untrusted suggestions cannot become authorized external actions.",
+      "surface": "skills",
+      "tier": [
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "command",
+        "run": "SF_SKIP_NETWORK=1 python3 -m unittest discover -s tests -p 'test_review_triage.py'",
+        "expect": {
+          "exit": 0,
+          "output_matches": "Ran [1-9][0-9]* tests?"
+        }
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "SKL-STATUS-001",
+      "story": "expansion/mission-status-view",
+      "epic": "expansion",
+      "suite": "regression",
+      "kind": "pass_to_pass",
+      "criterion": "Progress keeps review/built/accepted states, actual versus requested attribution, and recorded claims versus process liveness distinct.",
+      "surface": "skills",
+      "tier": [
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "command",
+        "run": "SF_SKIP_NETWORK=1 python3 -m unittest discover -s tests -p 'test_dashboard.py'",
+        "expect": {
+          "exit": 0,
+          "output_matches": "Ran [1-9][0-9]* tests?"
+        }
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "KRN-AUDIT-001",
+      "story": "expansion/audit-eval-run-layout",
+      "epic": "expansion",
+      "suite": "regression",
+      "kind": "pass_to_pass",
+      "criterion": "Read-only audit recognizes historical eval runs and counts safely observed invalid entries while reporting incomplete reads without destructive repair.",
+      "surface": "kernel",
+      "tier": [
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "command",
+        "run": "SF_SKIP_NETWORK=1 python3 -m unittest discover -s tests -p 'test_run_audit.py'",
+        "expect": {
+          "exit": 0,
+          "output_matches": "Ran [1-9][0-9]* tests?"
+        }
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "KRN-BOARD-001",
+      "story": "expansion/board-write-consistency",
+      "epic": "expansion",
+      "suite": "regression",
+      "kind": "pass_to_pass",
+      "criterion": "Concurrent story/cancellation updates preserve receipts and frozen state; broken ownership suppresses ready work without repairing authority.",
+      "surface": "kernel",
+      "tier": [
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "command",
+        "run": "SF_SKIP_NETWORK=1 python3 -m unittest discover -s tests -p 'test_board_consistency.py'",
+        "expect": {
+          "exit": 0,
+          "output_matches": "Ran [1-9][0-9]* tests?"
+        }
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "SKL-TRACE-001",
+      "story": "expansion/derived-lifecycle-graph",
+      "epic": "expansion",
+      "suite": "regression",
+      "kind": "pass_to_pass",
+      "criterion": "Derived graph queries retain captured provenance, stale/unknown proof and factual cycles; fresh queries write neither consumer nor pack and source/publication races refuse.",
+      "surface": "skills",
+      "tier": [
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "command",
+        "run": "SF_SKIP_NETWORK=1 python3 -m unittest discover -s tests -p 'test_trace.py'",
+        "expect": {
+          "exit": 0,
+          "output_matches": "Ran [1-9][0-9]* tests?"
+        }
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "KRN-BOARD-002",
+      "story": "expansion/evidence-bound-transitions",
+      "epic": "expansion",
+      "suite": "regression",
+      "kind": "pass_to_pass",
+      "criterion": "Protected transitions require subject/digest-bound passing proof and source-linked required decisions; stale scope, tampering, legacy bypass and incomplete effects refuse without advancement.",
+      "surface": "kernel",
+      "tier": [
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "command",
+        "run": "SF_SKIP_NETWORK=1 python3 -m unittest discover -s tests -p 'test_board_gate.py'",
+        "expect": {
+          "exit": 0,
+          "output_matches": "Ran [1-9][0-9]* tests?"
+        }
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "SKL-EVOLVE-001",
+      "story": "onboarding-integrations/sf-evolve-skill",
+      "epic": "onboarding-integrations",
+      "suite": "story",
+      "kind": "fail_to_pass",
+      "criterion": "Extension registry observations preserve unknown adoption/authentication, BMad customization follows installed pinned fields and recursion rules, and installed/native packages include their standalone dependencies.",
+      "surface": "skills",
+      "tier": [
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "command",
+        "run": "SF_SKIP_NETWORK=1 python3 -m unittest discover -s tests -p 'test_evolve.py'",
+        "expect": {
+          "exit": 0,
+          "output_matches": "Ran [1-9][0-9]* tests?"
+        }
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "SKL-EVOLVE-002",
+      "story": "onboarding-integrations/sf-evolve-skill",
+      "epic": "onboarding-integrations",
+      "suite": "story",
+      "kind": "fail_to_pass",
+      "criterion": "Exact-base overlays require independent subject-bound evidence and applicable authority, survive reinstall once, refuse drift and protected targets, and preserve concurrent user changes and recovery evidence through publication and rollback.",
+      "surface": "skills",
+      "tier": [
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "command",
+        "run": "SF_SKIP_NETWORK=1 python3 -m unittest discover -s tests -p 'test_overlays.py'",
+        "expect": {
+          "exit": 0,
+          "output_matches": "Ran [1-9][0-9]* tests?"
+        }
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "TLS-SITE-001",
+      "story": "launch-publication/showcase-site",
+      "epic": "launch-publication",
+      "suite": "story",
+      "kind": "fail_to_pass",
+      "criterion": "The static showcase supplies required sections, self-hosted licensed font assets, declared accessibility/reduced-motion hooks and local resource references.",
+      "surface": "tools",
+      "tier": [
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "command",
+        "run": "SF_SKIP_NETWORK=1 python3 -m unittest discover -s tests -p 'test_showcase.py'",
+        "expect": {
+          "exit": 0,
+          "output_matches": "Ran [1-9][0-9]* tests?"
+        }
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "TLS-ASSET-001",
+      "story": "launch-publication/marketing-assets",
+      "epic": "launch-publication",
+      "suite": "story",
+      "kind": "fail_to_pass",
+      "criterion": "Declared PNG assets have their exact dimensions and valid local usage references; absent or dimension-mismatched files refuse, with documented regeneration inputs.",
+      "surface": "tools",
+      "tier": [
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "command",
+        "run": "SF_SKIP_NETWORK=1 python3 -m unittest discover -s tests -p 'test_assets.py'",
+        "expect": {
+          "exit": 0,
+          "output_matches": "Ran [1-9][0-9]* tests?"
+        }
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "TLS-JOURNEY-001",
+      "story": "launch-publication/docs-examples-dogfood",
+      "epic": "launch-publication",
+      "suite": "story",
+      "kind": "fail_to_pass",
+      "criterion": "Documented local examples and setup steps preserve existing user files; operations/no-fix/recovery contract checks and bounded synthetic journey scenarios retain separate observation, repair and rollback authority and truthful evidence distinctions.",
+      "surface": "tools",
+      "tier": [
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "command",
+        "run": "SF_SKIP_NETWORK=1 python3 -m unittest discover -s tests -p 'test_docs_journey.py'",
+        "expect": {
+          "exit": 0,
+          "output_matches": "Ran [1-9][0-9]* tests?"
+        }
+      },
+      "nondeterministic": false
+    },
+    {
+      "id": "TLS-README-001",
+      "story": "launch-publication/readme",
+      "epic": "launch-publication",
+      "suite": "story",
+      "kind": "fail_to_pass",
+      "criterion": "Exact README local install commands produce the documented three-host assets and repeat without changing user-owned files; command drift and missing resources fail.",
+      "surface": "tools",
+      "tier": [
+        "epic",
+        "premerge"
+      ],
+      "grade": {
+        "type": "command",
+        "run": "SF_SKIP_NETWORK=1 python3 -m unittest discover -s tests -p 'test_readme_journey.py'",
+        "expect": {
+          "exit": 0,
+          "output_matches": "Ran [1-9][0-9]* tests?"
+        }
+      },
+      "nondeterministic": false
     }
   ],
   "modes": {
@@ -776,9 +1260,9 @@
   },
   "signoff": {
     "status": "approved",
-    "approved_by": "the repository maintainer (@sbeeredd04)",
-    "approved_at": "2026-10-11",
-    "plan_sha256": "35998a2ea381efe8c0242f5fe78b7b5451527bad395b8167fb869b5bd6c49992",
+    "approved_by": "Repository owner (current conversation)",
+    "approved_at": "2026-10-15",
+    "plan_sha256": "6de4045d29dd9c49867d7e66c03702b8753ac9ad52d2ce79e7be526eb9c6d2ff",
     "digest_rule": "sha256 over the plan serialized as UTF-8 JSON with sorted keys and compact separators, the signoff object excluded"
   }
 }

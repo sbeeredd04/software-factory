@@ -21,7 +21,7 @@ changes. The normative record contract is the shipped
 Ownership is enforced in code: workers self-serve `in-progress` / `in-review`
 / `blocked` and receipts on the story they hold a live claim for; the
 orchestrator owns `ready-for-dev`, `built`, `done` and structural edits;
-humans confirm cancellations and accept epics; `done` and `cancelled`
+humans confirm cancellations; epic acceptance follows current scoped authority; `done` and `cancelled`
 records are frozen history. Standard library only; never calls a model, an
 agent CLI, Git or the network.
 """
@@ -38,6 +38,8 @@ from pathlib import Path
 
 _STATE = None
 _DASHBOARD = None
+_GATE = None
+_UNSET = object()
 
 DEFAULT_BOARD_DIR = ".software-factory/context/board"
 CONFIG_FILE = ".software-factory/config.yaml"
@@ -89,22 +91,379 @@ def now():
     return state_module().now()
 
 
+def gate_module():
+    global _GATE
+    if _GATE is None:
+        spec = importlib.util.spec_from_file_location(
+            "sf_board_gate", Path(__file__).resolve().with_name("gate.py")
+        )
+        _GATE = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(_GATE)
+    return _GATE
+
+
+def scope_digest(record):
+    """Stable approved story scope; progress and evidence do not redefine it."""
+    scope = {key: record.get(key) for key in (
+        "id", "epic", "source_key", "title", "type", "after", "covers", "scope", "risk",
+        "hitl", "plan_checkpoint", "done_checkpoint",
+    )}
+    return gate_module().digest(json.dumps(scope, sort_keys=True, separators=(",", ":")).encode())
+
+
+def protected_configuration(workspace):
+    try:
+        data = gate_module().strict_json(gate_module().bound_read(workspace, CONFIG_FILE))
+        if not isinstance(data, dict):
+            raise TypeError("protected configuration must be an object")
+        return data
+    except FileNotFoundError:
+        return None
+    except (OSError, ValueError, TypeError) as exc:
+        raise BoardError("protected transition configuration is unsafe, malformed or over budget") from exc
+
+
+def transition_config(workspace, args):
+    protected = (args.command == "update" and args.actor == "orchestrator"
+                 and args.status in ("ready-for-dev", "built", "done")) or (
+                     args.command == "epic" and args.actor in ("human", "orchestrator") and args.status == "done")
+    if not protected:
+        return board_config(workspace)
+    data = protected_configuration(workspace)
+    args._strict_config_data = data
+    args._validated_config = board_config(workspace, parsed_data=data)
+    return args._validated_config
+
+
+def protected_record(workspace, path, *, missing=False, limit=None, budget=None):
+    gate = gate_module()
+    try:
+        read_limit = gate.MAX_EVIDENCE_BYTES if limit is None else limit
+        if budget is not None:
+            read_limit = min(read_limit, 32 * gate.MAX_EVIDENCE_BYTES - budget[0])
+        content = gate.bound_read(workspace, path.relative_to(workspace).as_posix(), limit=read_limit)
+        if budget is not None:
+            budget[0] += len(content)
+            if budget[0] > 32 * gate.MAX_EVIDENCE_BYTES:
+                raise ValueError("protected board exceeded its aggregate read budget")
+        record = gate.strict_json(content)
+        if not isinstance(record, dict):
+            raise TypeError("board record must be an object")
+        return record
+    except FileNotFoundError:
+        if missing:
+            return None
+        raise BoardError("protected board record is missing") from None
+    except (OSError, ValueError, TypeError, RecursionError) as exc:
+        raise BoardError("protected board record is unsafe, malformed or over budget") from exc
+
+
+def protected_board(workspace, config):
+    """Strict transition reader; default load_board still supports captured paths."""
+    gate = gate_module()
+    directory = workspace / config["dir"]
+    measured = [0]
+
+    def reader(path):
+        return protected_record(workspace, path, budget=measured)
+
+    def entries(path):
+        try:
+            return [path / name for name in gate.bound_names(workspace, path.relative_to(workspace).as_posix())]
+        except (OSError, ValueError, TypeError) as exc:
+            raise BoardError("protected board directory is unsafe or over budget") from exc
+
+    loaded = load_board(directory, reader=reader, entries=entries)
+    if loaded[-1]:
+        raise BoardError("protected transition requires valid consistent board records")
+    return loaded
+
+
+def protected_projection_inputs(workspace, config):
+    """Reject unsafe existing projection inputs before any transition write."""
+    gate = gate_module()
+    directory = workspace / config["dir"]
+    roadmap = protected_record(workspace, directory / "roadmap.json", missing=True,
+                               limit=gate.MAX_BOUND_ARTIFACT_BYTES)
+    dashboard = None
+    try:
+        dashboard = gate.bound_read(workspace, (directory / "dashboard.html").relative_to(workspace).as_posix(),
+                                   limit=gate.MAX_BOUND_ARTIFACT_BYTES).decode("utf-8")
+    except FileNotFoundError:
+        pass
+    except (OSError, ValueError, TypeError) as exc:
+        raise BoardError("protected dashboard input is unsafe, malformed or over budget") from exc
+    return roadmap, dashboard
+
+
+def required_checkpoint(workspace, record, args, phase, sha=None, *, use_argument=True):
+    """Reuse a valid scoped decision; never treat --actor as authentication."""
+    saved = record.get("checkpoint_decisions", {}).get(phase, {})
+    if not isinstance(saved, dict):
+        raise BoardError(f"{phase} checkpoint decision record is malformed")
+    supplied = args.decision if use_argument else None
+    path = supplied or saved.get("path")
+    gate = gate_module()
+    try:
+        content = gate.bound_read(workspace, path)
+        expected = gate.digest(content) if supplied else saved.get("sha256")
+        gate.decision(workspace, path, expected, scope={"story": record["id"]},
+                      phase=phase, sha=sha, scope_digest=scope_digest(record))
+    except (OSError, ValueError, TypeError, AttributeError, RecursionError) as exc:
+        raise BoardError(f"{phase} checkpoint needs a current source-linked scoped approval") from exc
+    if saved and saved != {"path": path, "sha256": expected}:
+        record.setdefault("checkpoint_history", []).append({"phase": phase, **saved})
+    record.setdefault("checkpoint_decisions", {})[phase] = {"path": path, "sha256": expected}
+
+
+def protected_gate(workspace, record, args, phase):
+    gate = gate_module()
+    sha = args.sha
+    if not isinstance(sha, str) or not gate.SHA1.fullmatch(sha):
+        raise BoardError(f"{phase} needs --sha with the full current subject SHA")
+    if phase == "premerge" and record.get("review_subject_sha") != sha:
+        raise BoardError("premerge SHA does not match the current review subject; submit a fresh review")
+    if not args.evidence:
+        raise BoardError(f"{phase} requires --evidence <workspace-relative gate manifest>")
+    try:
+        content = gate.bound_read(workspace, args.evidence)
+        report = gate.strict_json(content)
+        # Board manifests use workspace-relative artifact/decision paths; every
+        # read starts at the same pinned root, including intermediate parents.
+        root = workspace
+        config_data = getattr(args, "_strict_config_data", _UNSET)
+        if config_data is _UNSET:
+            config_data = protected_configuration(workspace)
+        required = list(gate.DEFAULT_REQUIRED[phase])
+        if config_data is not None and "verification" in config_data:
+            required = gate.required_from_data(config_data, phase)
+        built = record.get("accepted_gates", {}).get("premerge")
+        accepted_checks = None
+        if phase == "complete":
+            if not isinstance(built, dict) or not isinstance(built.get("checks"), dict) or not built["checks"]:
+                raise ValueError("complete requires accepted premerge obligations")
+            if built.get("scope_sha256") != scope_digest(record):
+                raise ValueError("accepted story scope changed; return to revision before completion")
+            accepted_checks = built["checks"]
+            required = list(dict.fromkeys([*accepted_checks, *required]))
+        errors = gate.validate_bound(report, root, sha, phase, required,
+                                     scope={"story": record["id"]}, scope_digest=scope_digest(record))
+        if errors:
+            raise ValueError("; ".join(errors))
+        if report.get("author") != record.get("owner"):
+            raise ValueError("gate author does not match the story's implementation owner")
+        if phase == "complete":
+            if not isinstance(built, dict) or report.get("candidate_sha") != built.get("subject_sha"):
+                raise ValueError("integration must cite the accepted candidate SHA")
+            if record.get("review_subject_sha") != built["subject_sha"]:
+                raise ValueError("current review subject changed after premerge acceptance")
+            accepted = gate.bound_read(workspace, built.get("path"))
+            if gate.digest(accepted) != built.get("sha256"):
+                raise ValueError("accepted premerge manifest changed")
+            prior_required = (gate.required_from_data(config_data, "premerge")
+                              if config_data is not None and "verification" in config_data
+                              else list(gate.DEFAULT_REQUIRED["premerge"]))
+            prior_required = list(dict.fromkeys([*accepted_checks, *prior_required]))
+            prior_report = gate.strict_json(accepted)
+            if any(prior_report.get("checks", {}).get(name) != check for name, check in accepted_checks.items()):
+                raise ValueError("accepted premerge obligations contradict their manifest")
+            prior_errors = gate.validate_bound(prior_report, workspace, built["subject_sha"],
+                                               "premerge", prior_required,
+                                               scope={"story": record["id"]}, scope_digest=scope_digest(record))
+            if prior_errors:
+                raise ValueError("accepted premerge evidence changed: " + "; ".join(prior_errors))
+            if record["plan_checkpoint"]:
+                required_checkpoint(workspace, record, args, "plan", built["subject_sha"], use_argument=False)
+            integration = report.get("integration")
+            if (not isinstance(integration, dict) or integration.get("status") != "pass"
+                    or integration.get("subject_sha") != sha
+                    or integration.get("candidate_sha") != built["subject_sha"]):
+                raise ValueError("integration outcome is missing, stale or unobserved")
+            effect = report["checks"].get("deploy", {})
+            if effect.get("status") != "pass" or not all(isinstance(effect.get(key), str) and effect[key].strip()
+                       for key in ("artifact_id", "environment")):
+                raise ValueError("complete evidence needs effect artifact and environment identities")
+        if record["plan_checkpoint"] and phase == "premerge":
+            required_checkpoint(workspace, record, args, "plan", sha)
+        if phase == "complete" and (record["hitl"] or record["done_checkpoint"]):
+            required_checkpoint(workspace, record, args, "complete", sha)
+        binding = {"path": args.evidence, "sha256": gate.digest(content), "subject_sha": sha,
+                   "scope_sha256": scope_digest(record),
+                   "phase": phase, "author": report["author"], "reviewer": report["reviewer"],
+                   "checks": {name: report["checks"][name] for name in required}}
+        record.setdefault("accepted_gates", {})[phase] = binding
+        record["evidence_contract"] = 1
+    except (OSError, ValueError, TypeError, AttributeError, KeyError, RecursionError) as exc:
+        raise BoardError(f"{phase} gate refused: {exc}") from exc
+
+
+def epic_review_scope(workspace, config, record):
+    """Bind exact current child records and the declared epic outcome."""
+    gate = gate_module()
+    directory = workspace / config["dir"]
+    _, _, epics, stories, problems = protected_board(workspace, config)
+    if problems:
+        raise BoardError("epic acceptance requires a readable consistent board")
+    children = sorted((story for story in stories.values() if story["epic"] == record["id"]), key=lambda s: s["id"])
+    if len(children) > 256 or len(record["needs"]) > 256:
+        raise BoardError("epic review exceeds the 256-child/provider evidence budget; reconcile its scope")
+    if len(record["order"]) != len(children) or set(record["order"]) != {story["id"] for story in children}:
+        raise BoardError("epic child membership changed; reconcile the explicit order before acceptance")
+    scope = {"epic": {key: record.get(key) for key in (
+        "id", "title", "outcome", "done_when", "covers", "order", "needs", "source_key", "hitl",
+    )}, "children": [], "providers": []}
+    measured = 0
+    for kind, records in (("children", children), ("providers", [epics.get(i) for i in record["needs"]])):
+        for item in records:
+            if item is None:
+                raise BoardError("epic acceptance has an unknown prerequisite")
+            path = directory / ("stories" if kind == "children" else "epics") / f"{item['id']}.json"
+            content = gate.bound_read(workspace, path.relative_to(workspace).as_posix())
+            measured += len(content)
+            if measured > gate.MAX_BOUND_ARTIFACT_BYTES:
+                raise BoardError("epic scope reads exceeded the aggregate byte budget")
+            if gate.strict_json(content) != item:
+                raise BoardError("epic review sources changed while reading; retry")
+            scope[kind].append({"id": item["id"], "sha256": gate.digest(content)})
+    digest = gate.digest(json.dumps(scope, sort_keys=True, separators=(",", ":")).encode())
+    return digest, children, epics
+
+
+def validate_child_acceptance(workspace, child, config_data):
+    gate = gate_module()
+    accepted = child.get("accepted_gates", {})
+    for phase in ("premerge", "complete"):
+        binding = accepted.get(phase)
+        if not isinstance(binding, dict) or not isinstance(binding.get("checks"), dict):
+            raise TypeError("protected child has missing acceptance evidence")
+        if binding.get("scope_sha256") != scope_digest(child):
+            raise ValueError("accepted child scope changed; revision is required")
+        content = gate.bound_read(workspace, binding.get("path"))
+        if gate.digest(content) != binding.get("sha256"):
+            raise ValueError("child acceptance manifest changed")
+        report = gate.strict_json(content)
+        required = (gate.required_from_data(config_data, phase)
+                    if config_data is not None and "verification" in config_data
+                    else list(gate.DEFAULT_REQUIRED[phase]))
+        required = list(dict.fromkeys([*binding["checks"], *required]))
+        if any(report.get("checks", {}).get(name) != check for name, check in binding["checks"].items()):
+            raise ValueError("child acceptance obligations changed")
+        errors = gate.validate_bound(report, workspace, binding["subject_sha"], phase, required,
+                                     scope={"story": child["id"]}, scope_digest=scope_digest(child))
+        if errors or report.get("author") != child.get("owner"):
+            raise ValueError("child gate no longer passes")
+        if phase == "complete":
+            candidate = accepted.get("premerge", {}).get("subject_sha")
+            integration = report.get("integration", {})
+            effect = report["checks"].get("deploy", {})
+            if (report.get("candidate_sha") != candidate or integration.get("candidate_sha") != candidate
+                    or integration.get("status") != "pass" or integration.get("subject_sha") != binding["subject_sha"]
+                    or effect.get("status") != "pass"
+                    or not all(isinstance(effect.get(key), str) and effect[key].strip()
+                               for key in ("artifact_id", "environment"))):
+                raise ValueError("child integration or effect identity is unresolved")
+    if (accepted["premerge"]["subject_sha"] != child.get("review_subject_sha")
+            or accepted["complete"]["subject_sha"] != child.get("merged_sha")):
+        raise ValueError("child acceptance subject changed")
+    for phase, required, subject in (
+        ("plan", child["plan_checkpoint"], child["review_subject_sha"]),
+        ("complete", child["hitl"] or child["done_checkpoint"], child["merged_sha"]),
+    ):
+        if required:
+            saved = child.get("checkpoint_decisions", {}).get(phase, {})
+            gate.decision(workspace, saved.get("path"), saved.get("sha256"),
+                          scope={"story": child["id"]}, phase=phase, sha=subject,
+                          scope_digest=scope_digest(child))
+
+
+def accept_epic(workspace, config, record, args):
+    gate = gate_module()
+    try:
+        scoped, children, epics = epic_review_scope(workspace, config, record)
+        if any(child["status"] not in TERMINAL for child in children):
+            raise ValueError("epic still has open descendants; repeat the closure check")
+        if any(epics[provider]["status"] != "done" for provider in record["needs"]):
+            raise ValueError("epic prerequisite acceptance is unresolved")
+        legacy = []
+        for child in children:
+            if child["status"] == "done" and child.get("accepted_gates", {}).get("complete"):
+                validate_child_acceptance(workspace, child, args._strict_config_data)
+            elif child["status"] == "done":
+                if child.get("evidence_contract") == 1:
+                    raise ValueError("new protected child cannot be accepted as legacy evidence")
+                legacy.append(child["id"])
+        delegated = args.actor == "orchestrator"
+        authority = {}
+        if delegated:
+            data = args._strict_config_data or {}
+            checkpoints = data.get("checkpoints", {})
+            if (data.get("autonomy", {}).get("mode") != "risk-adaptive"
+                    or record.get("hitl", False) or checkpoints.get("manual") is not False):
+                raise ValueError("epic acceptance is reserved for the human by the current profile")
+            if not isinstance(args.owner, str) or not args.owner.strip():
+                raise ValueError("delegated acceptance needs an accountable --owner")
+            if args.owner in {child.get("owner") for child in children}:
+                raise ValueError("acceptance owner also owns child implementation")
+            if args.decision:
+                raise ValueError("delegated acceptance uses --delegation and --assessment, not a human decision")
+            grant, delegation = gate.epic_delegation(workspace, args.delegation, data, record["id"], legacy)
+            evidence_bytes = gate.bound_read(workspace, args.evidence)
+            evidence = {"artifact": args.evidence, "sha256": gate.digest(evidence_bytes)}
+            config_bytes = gate.bound_read(workspace, CONFIG_FILE)
+            if gate.strict_json(config_bytes) != data:
+                raise ValueError("configuration changed during acceptance")
+            assessment, risk, assessment_subject = gate.consequence_assessment(workspace, args.assessment, data, config_bytes,
+                                                           record["id"], scoped, delegation, evidence)
+            authority = {"mode": "delegated", "actor": args.owner, "approved_by": grant["approved_by"],
+                         "delegation": delegation, "assessment": assessment,
+                         "config_sha256": gate.digest(config_bytes), "risk": risk}
+        else:
+            content = gate.bound_read(workspace, args.decision)
+            decision_digest = gate.digest(content)
+            approval = gate.decision(workspace, args.decision, decision_digest,
+                                     scope={"epic": record["id"]}, phase="epic", scope_digest=scoped)
+            if (approval.get("legacy_children", []) != legacy
+                    or any(type(value) is not int for value in approval.get("legacy_children", []))):
+                raise ValueError("legacy descendants need explicit independent reconciliation")
+            evidence = approval.get("evidence")
+            if args.evidence and (not isinstance(evidence, dict) or evidence.get("artifact") != args.evidence):
+                raise ValueError("supplied epic evidence differs from the owner's reviewed bundle")
+            authority = {"approved_by": approval["approved_by"], "decision": args.decision,
+                         "decision_sha256": decision_digest}
+        reconciliation = gate.review_bundle(workspace, evidence, scoped, legacy)
+        if delegated and reconciliation.get("assessment_sha256") != assessment_subject:
+            raise ValueError("independent reconciliation does not bind the current consequence assessment")
+        if reconciliation["reviewer"] in {child.get("owner") for child in children}:
+            raise ValueError("epic reconciliation reviewer also owns child implementation")
+        if record.get("acceptance"):
+            record.setdefault("acceptance_history", []).append(record["acceptance"])
+        record["acceptance"] = {"by": args.actor, **authority, "at": now(), "scope_sha256": scoped,
+                                "evidence": evidence, "legacy_children": legacy, "provenance_only": True}
+    except (OSError, ValueError, TypeError, AttributeError, KeyError, RecursionError) as exc:
+        raise BoardError(f"epic acceptance refused: {exc}") from exc
+
+
 # -- configuration ------------------------------------------------------------
 
 
-def board_config(workspace: Path):
+def board_config(workspace: Path, *, parsed_data=_UNSET):
     """Read the board keys from config.yaml; fail closed on malformed config."""
-    path = workspace / CONFIG_FILE
     config = {"dir": DEFAULT_BOARD_DIR, "regenerate": "on-write"}
-    if not path.is_file():
+    data = parsed_data
+    if data is _UNSET:
+        # Preserve trace's captured-only SnapshotPath reader contract.
+        path = workspace / CONFIG_FILE
+        if not path.is_file():
+            return config
+        try:
+            data = json.loads(path.read_text())
+        except (OSError, ValueError) as exc:
+            raise BoardError(
+                "config: .software-factory/config.yaml is not valid JSON "
+                "(the v1 JSON-compatible YAML subset); refusing to guess board paths"
+            ) from exc
+    elif data is None:
         return config
-    try:
-        data = json.loads(path.read_text())
-    except (OSError, ValueError) as exc:
-        raise BoardError(
-            "config: .software-factory/config.yaml is not valid JSON "
-            "(the v1 JSON-compatible YAML subset); refusing to guess board paths"
-        ) from exc
     if not isinstance(data, dict):
         raise BoardError("config: configuration must be an object at the top level")
     section = data.get("board")
@@ -175,6 +534,8 @@ def validate_story(record):
     """None when valid, else the reason; unknown extra keys are ignored."""
     if record.get("version") != 1:
         return "version must be 1"
+    if "evidence_contract" in record and (type(record["evidence_contract"]) is not int or record["evidence_contract"] != 1):
+        return "unknown evidence contract"
     if not _is_int(record.get("id")):
         return "id must be a positive integer"
     if not _is_int(record.get("epic")):
@@ -207,6 +568,17 @@ def validate_story(record):
     for key in ("sprint", "baseline_sha", "branch", "pr", "merged_sha", "source_key"):
         if key in record and record[key] is not None and not isinstance(record[key], str):
             return f"{key} must be a string"
+    if "review_subject_sha" in record and (
+        not isinstance(record["review_subject_sha"], str)
+        or not gate_module().SHA1.fullmatch(record["review_subject_sha"])
+    ):
+        return "review_subject_sha must be a full Git SHA"
+    for key in ("accepted_gates", "checkpoint_decisions"):
+        if key in record and not isinstance(record[key], dict):
+            return f"{key} must be an object"
+    for key in ("gate_history", "checkpoint_history"):
+        if key in record and not isinstance(record[key], list):
+            return f"{key} must be an array"
     if "scope" in record and not _is_str_list(record.get("scope")):
         return "scope must be an array of repo-relative paths"
     blocked = record.get("blocked")
@@ -271,15 +643,20 @@ def validate_epic(record):
     status = record.get("status")
     if status not in EPIC_STATUSES:
         return f"unknown epic status {status!r}"
+    if "hitl" in record and type(record["hitl"]) is not bool:
+        return "epic hitl must be a boolean"
     if not isinstance(record.get("history", []), list):
         return "history must be an array"
     return None
 
 
-def load_board(directory: Path):
+def load_board(directory: Path, *, reader=None, entries=None):
     """Load and validate every record; degenerate entries become problems."""
     problems = []
-    streams_doc = read_record(directory / "streams.json")
+    reader = read_record if reader is None else reader
+    if entries is None:
+        entries = lambda path: sorted(path.glob("*.json")) if path.is_dir() else []
+    streams_doc = reader(directory / "streams.json")
     if (
         not streams_doc
         or streams_doc.get("version") != 1
@@ -298,11 +675,11 @@ def load_board(directory: Path):
             or not all(_is_int(item) for item in entry["epics"])
         ):
             raise BoardError(
-                f"board: invalid stream entry {entry.get('id')!r} in streams.json; "
+                "board: invalid stream entry in streams.json; "
                 "reconcile the board"
             )
         streams.append(entry)
-    meta = read_record(directory / "meta.json")
+    meta = reader(directory / "meta.json")
     if (
         not meta
         or meta.get("version") != 1
@@ -311,8 +688,8 @@ def load_board(directory: Path):
     ):
         raise BoardError("board: meta.json missing or invalid; reconcile the board")
     epics = {}
-    for path in sorted((directory / "epics").glob("*.json")) if (directory / "epics").is_dir() else []:
-        record = read_record(path)
+    for path in entries(directory / "epics"):
+        record = reader(path)
         reason = None if record is None else validate_epic(record)
         if record is None or reason:
             problems.append(
@@ -325,23 +702,22 @@ def load_board(directory: Path):
         epics[record["id"]] = record
     stories = {}
     stories_dir = directory / "stories"
-    if stories_dir.is_dir():
-        for path in sorted(stories_dir.glob("*.json")):
-            record = read_record(path)
-            reason = None if record is None else validate_story(record)
-            if record is None or reason:
-                problems.append(
-                    {"file": f"stories/{path.name}", "story": _maybe_int(path.stem),
-                     "reason": reason or "unreadable or not an object"}
-                )
-                continue
-            if record["id"] in stories:
-                problems.append(
-                    {"file": f"stories/{path.name}", "story": record["id"],
-                     "reason": f"duplicate story id {record['id']}"}
-                )
-                continue
-            stories[record["id"]] = record
+    for path in entries(stories_dir):
+        record = reader(path)
+        reason = None if record is None else validate_story(record)
+        if record is None or reason:
+            problems.append(
+                {"file": f"stories/{path.name}", "story": _maybe_int(path.stem),
+                 "reason": reason or "unreadable or not an object"}
+            )
+            continue
+        if record["id"] in stories:
+            problems.append(
+                {"file": f"stories/{path.name}", "story": record["id"],
+                 "reason": f"duplicate story id {record['id']}"}
+            )
+            continue
+        stories[record["id"]] = record
     return streams, meta, epics, stories, problems
 
 
@@ -362,20 +738,19 @@ def write_record(path: Path, record):
 def live_claims(workspace: Path):
     """Read live claims from the run state; never writes, never expires them."""
     state = state_module()
-    pointer = state.pointer_path(workspace)
-    if not pointer.is_file():
-        return {}
     try:
-        reference = state.read_json(pointer)
-        run = state.within(workspace, workspace / reference.get("run", ""))
-        data = state.read_run(run)
+        pointer = state.pointer_path(workspace)
+        try:
+            pointer.lstat()
+        except FileNotFoundError:
+            return {}  # No active program is valid; a broken existing pointer is not.
+        _, data = state.load(workspace)
     except (state.StateError, OSError) as exc:
         raise BoardError(
             "the claims state exists but is unreadable; reconcile it with "
             "state.py repair before worker board updates"
         ) from exc
-    claims = data.get("claims")
-    return claims if isinstance(claims, dict) else {}
+    return data["claims"]
 
 
 def claims_or_empty(workspace: Path):
@@ -392,6 +767,7 @@ def claims_or_empty(workspace: Path):
 def new_story(story_id, epic_id, epic_key, source):
     return {
         "version": 1,
+        "evidence_contract": 1,
         "id": story_id,
         "epic": epic_id,
         "type": source.get("type", "story"),
@@ -435,6 +811,19 @@ def new_epic(epic_id, source):
     }
 
 
+def refresh_reservations(record, source, keys):
+    """Planning updates cannot revoke a recorded human decision boundary."""
+    for key in keys:
+        if key not in source:
+            continue
+        if type(source[key]) is not bool:
+            raise BoardError(f"{key} reservation must be a boolean")
+        if record.get(key) is True and source[key] is False:
+            raise BoardError(f"{key} human reservation cannot be removed by ordinary derive; "
+                             "an explicit owner amendment is required")
+        record[key] = source[key]
+
+
 def refresh_story(record, source, epic_id, after):
     """Update structure fields only; status, receipts and history are live data."""
     record["epic"] = epic_id
@@ -443,9 +832,7 @@ def refresh_story(record, source, epic_id, after):
     record["after"] = after
     record["covers"] = list(source.get("covers", []))
     record["risk"] = source.get("risk", record.get("risk", ""))
-    for key in ("hitl", "plan_checkpoint", "done_checkpoint"):
-        if key in source:
-            record[key] = bool(source[key])
+    refresh_reservations(record, source, ("hitl", "plan_checkpoint", "done_checkpoint"))
     for key in ("sprint", "scope"):
         if key in source:
             record[key] = source[key]
@@ -515,6 +902,14 @@ def derive(workspace: Path, source_path: Path):
             named = ", ".join(item["file"] for item in problems)
             raise BoardError(f"degenerate records block a structural derive: {named}")
         check_id_counters(directory, meta, epics, stories)
+        frozen_epics = {key: json.dumps(record, sort_keys=True) for key, record in epics.items()
+                        if record["status"] in TERMINAL}
+        frozen_stories = {key: json.dumps(record, sort_keys=True) for key, record in stories.items()
+                          if record["status"] in TERMINAL or record["epic"] in frozen_epics}
+        frozen_membership = {key: [stream["id"] for stream in streams if key in stream["epics"]]
+                             for key in frozen_epics}
+        frozen_children = {key: {story["id"] for story in stories.values() if story["epic"] == key}
+                           for key in frozen_epics}
         epics_by_key = {e.get("source_key"): e for e in epics.values() if e.get("source_key")}
         stories_by_key = {s.get("source_key"): s for s in stories.values() if s.get("source_key")}
         streams_by_id = {s["id"]: s for s in streams}
@@ -557,6 +952,7 @@ def derive(workspace: Path, source_path: Path):
             epic["title"] = epic_source.get("title", epic["title"])
             if "outcome" in epic_source:
                 epic["outcome"] = epic_source["outcome"]
+            refresh_reservations(epic, epic_source, ("hitl",))
             for key in ("done_when", "covers"):
                 if key in epic_source:
                     epic[key] = list(epic_source[key])
@@ -607,12 +1003,31 @@ def derive(workspace: Path, source_path: Path):
             declared = declared_by_stream.get(stream["id"], [])
             stream["epics"] = declared + [e for e in stream["epics"] if e not in declared]
 
+        # Derivation is a structural proposal, never authority to rewrite accepted
+        # scope or cancelled history. Refuse the entire proposal before publication.
+        for noun, frozen, current in (("epic", frozen_epics, epics),
+                                      ("story", frozen_stories, stories)):
+            for key, original in frozen.items():
+                if json.dumps(current[key], sort_keys=True) != original:
+                    raise BoardError(f"{noun} {key} is frozen terminal history; "
+                                     "route changed scope to new work and a decision")
+        for key, children in frozen_children.items():
+            if {story["id"] for story in stories.values() if story["epic"] == key} != children:
+                raise BoardError(f"epic {key} has frozen terminal child membership; "
+                                 "route changed scope to new work and a decision")
+        for key, membership in frozen_membership.items():
+            if [stream["id"] for stream in streams if key in stream["epics"]] != membership:
+                raise BoardError(f"epic {key} has frozen terminal stream membership; "
+                                 "route changed scope to new work and a decision")
+
         write_record(directory / "streams.json", {"version": 1, "streams": streams})
         write_record(directory / "meta.json", meta)
         for epic in epics.values():
-            write_record(directory / "epics" / f"{epic['id']}.json", epic)
+            if epic["id"] not in frozen_epics:
+                write_record(directory / "epics" / f"{epic['id']}.json", epic)
         for story in stories.values():
-            write_record(directory / "stories" / f"{story['id']}.json", story)
+            if story["id"] not in frozen_stories:
+                write_record(directory / "stories" / f"{story['id']}.json", story)
     return len(epics), len(stories)
 
 
@@ -639,10 +1054,10 @@ def resolve_after(after, epic_key, epics_by_key, stories_by_key):
 # -- transitions: who-transitions-what, enforced in code ---------------------------
 
 
-def story_path(workspace: Path, config, story_id):
-    directory = board_dir(workspace, config)
+def story_path(workspace: Path, config, story_id, *, protected=False):
+    directory = workspace / config["dir"] if protected else board_dir(workspace, config)
     path = directory / "stories" / f"{story_id}.json"
-    record = read_record(path)
+    record = protected_record(workspace, path) if protected else read_record(path)
     reason = None if record is None else validate_story(record)
     if record is None or reason:
         raise BoardError(
@@ -724,11 +1139,15 @@ def worker_update(record, args, claims):
     if args.status is not None:
         current = record["status"]
         if args.status == "in-progress":
-            if current != "ready-for-dev":
+            if current not in ("ready-for-dev", "in-review", "built"):
                 raise BoardError(
                     f"story {story_id} is {current}; the orchestrator moves a story to "
                     "ready-for-dev before a worker can start it"
                 )
+            if current in ("in-review", "built"):
+                if record.get("accepted_gates"):
+                    record.setdefault("gate_history", []).append(record.pop("accepted_gates"))
+                record.pop("review_subject_sha", None)
         elif args.status == "in-review":
             if current != "in-progress":
                 raise BoardError(f"story {story_id} is {current}; only in-progress work enters review")
@@ -749,6 +1168,13 @@ def worker_update(record, args, claims):
             )
     apply_blocked(record, args)
     add_receipts(record, args.receipt or [])
+    if args.status == "in-review":
+        subjects = {receipt.get("subject_sha") for receipt in record["receipts"].values()}
+        subject = args.sha or (next(iter(subjects)) if len(subjects) == 1 else None)
+        if not isinstance(subject, str) or not gate_module().SHA1.fullmatch(subject) or subject not in subjects:
+            raise BoardError("in-review needs the full current --sha matching a submitted receipt")
+        record["review_subject_sha"] = subject
+        record["evidence_contract"] = 1
     if args.finding:
         record.setdefault("findings", []).append({"at": now(), "by": args.owner, "text": args.finding})
     if args.status is not None:
@@ -765,6 +1191,8 @@ def orchestrator_update(workspace, config, record, args):
         if args.status == "ready-for-dev":
             if current != "backlog":
                 raise BoardError(f"story {story_id} is {current}; ready-for-dev comes from backlog")
+            if record["plan_checkpoint"]:
+                required_checkpoint(workspace, record, args, "plan", args.sha)
         elif args.status == "built":
             if current != "in-review":
                 raise BoardError(f"story {story_id} is {current}; built comes from in-review")
@@ -774,18 +1202,14 @@ def orchestrator_update(workspace, config, record, args):
                     f"story {story_id} cannot reach built before its providers merge: "
                     + "; ".join(unmet)
                 )
+            protected_gate(workspace, record, args, "premerge")
         elif args.status == "done":
             if current != "built":
                 raise BoardError(
                     f"story {story_id} is {current}; only the merge step moves built work to done"
                 )
-            if not args.sha:
-                raise BoardError(
-                    "done needs --sha: integration evidence is bound to the merge SHA"
-                )
+            protected_gate(workspace, record, args, "complete")
             record["merged_sha"] = args.sha
-            if args.evidence:
-                add_receipts(record, [f"integration={args.evidence}"])
         elif args.status == "cancelled":
             if not args.reason:
                 raise BoardError("a cancellation proposal needs --reason")
@@ -835,8 +1259,7 @@ def human_update(record, args):
 
 def unmet_dependencies(workspace, config, record, for_merge=False):
     """Human-readable unmet prerequisites; merge-level needs providers done."""
-    directory = board_dir(workspace, config)
-    _, _, epics, stories, _ = load_board(directory)
+    _, _, epics, stories, _ = protected_board(workspace, config)
     unmet = []
     for item in record.get("after", []):
         if isinstance(item, dict):
@@ -858,32 +1281,37 @@ def unmet_dependencies(workspace, config, record, for_merge=False):
 
 
 def update_story(workspace: Path, args):
-    config = board_config(workspace)
+    config = transition_config(workspace, args)
     try:
         story_id = int(args.story)
     except (TypeError, ValueError) as exc:
         raise BoardError("story id must be a positive integer") from exc
     if story_id < 1:
         raise BoardError("story id must be a positive integer")
-    path, record = story_path(workspace, config, story_id)
-    if record["status"] in TERMINAL and not (
-        args.actor == "human" and args.status == "cancelled" and record["status"] == "cancelled"
-    ):
-        require_frozen_check(record)
-    if args.actor == "worker":
-        if not args.owner:
-            raise BoardError("worker updates need --owner matching the live claim owner")
-        worker_update(record, args, live_claims(workspace))
-    elif args.actor == "orchestrator":
-        orchestrator_update(workspace, config, record, args)
-    elif args.actor == "human":
-        human_update(record, args)
-    else:
-        raise BoardError("actor must be worker, orchestrator or human")
-    invalid = validate_story(record)
-    if invalid:
-        raise BoardError(f"the update would leave story {story_id} invalid: {invalid}")
-    write_record(path, record)
+    with board_locked(workspace):
+        protected = hasattr(args, "_validated_config")
+        if protected:
+            protected_board(workspace, config)
+            protected_projection_inputs(workspace, config)
+        path, record = story_path(workspace, config, story_id, protected=protected)
+        if record["status"] in TERMINAL and not (
+            args.actor == "human" and args.status == "cancelled" and record["status"] == "cancelled"
+        ):
+            require_frozen_check(record)
+        if args.actor == "worker":
+            if not args.owner:
+                raise BoardError("worker updates need --owner matching the live claim owner")
+            worker_update(record, args, live_claims(workspace))
+        elif args.actor == "orchestrator":
+            orchestrator_update(workspace, config, record, args)
+        elif args.actor == "human":
+            human_update(record, args)
+        else:
+            raise BoardError("actor must be worker, orchestrator or human")
+        invalid = validate_story(record)
+        if invalid:
+            raise BoardError(f"the update would leave story {story_id} invalid: {invalid}")
+        write_record(path, record)
     return record
 
 
@@ -891,13 +1319,25 @@ def update_story(workspace: Path, args):
 
 
 def epic_update(workspace: Path, args):
-    config = board_config(workspace)
-    directory = board_dir(workspace, config)
+    try:
+        with gate_module().read_snapshot(workspace) as revalidate:
+            return _epic_update(workspace, args, revalidate)
+    except (OSError, ValueError, TypeError) as exc:
+        raise BoardError(f"epic transition sources changed or are unsafe: {exc}") from exc
+
+
+def _epic_update(workspace: Path, args, revalidate):
+    config = transition_config(workspace, args)
+    protected = hasattr(args, "_validated_config")
+    directory = workspace / config["dir"] if protected else board_dir(workspace, config)
     epic_id = int(args.epic)
     with board_locked(workspace):
+        if protected:
+            protected_board(workspace, config)
+            protected_projection_inputs(workspace, config)
         path, record = None, None
         candidate = directory / "epics" / f"{epic_id}.json"
-        record = read_record(candidate)
+        record = protected_record(workspace, candidate) if protected else read_record(candidate)
         reason = None if record is None else validate_epic(record)
         if record is None or reason:
             raise BoardError(f"epic {epic_id} has no valid record ({reason or 'missing'})")
@@ -908,7 +1348,13 @@ def epic_update(workspace: Path, args):
                 f"epic {epic_id} is {current}; terminal epic records are frozen history"
             )
         if args.actor == "orchestrator":
-            if args.status == "in-progress":
+            if args.status == "done":
+                if current != "awaiting-acceptance":
+                    raise BoardError("epic needs awaiting-acceptance after the closure check")
+                accept_epic(workspace, config, record, args)
+                history_row(record, "orchestrator", "done")
+                record["status"] = "done"
+            elif args.status == "in-progress":
                 if current not in ("planned", "parked"):
                     raise BoardError(f"epic {epic_id} is {current}")
                 history_row(record, "orchestrator", "in-progress")
@@ -937,7 +1383,7 @@ def epic_update(workspace: Path, args):
             else:
                 raise BoardError(
                     "the orchestrator moves epics to in-progress or awaiting-acceptance "
-                    "and proposes parks; humans accept, park and cancel"
+                    "and proposes parks, or accepts under current delegated authority; humans park and cancel"
                 )
         elif args.actor == "human":
             if args.status == "done":
@@ -946,9 +1392,9 @@ def epic_update(workspace: Path, args):
                         f"epic {epic_id} is {current}; the orchestrator moves it to "
                         "awaiting-acceptance after the closure check, then a human accepts"
                     )
+                accept_epic(workspace, config, record, args)
                 history_row(record, "human", "done")
                 record["status"] = "done"
-                record["acceptance"] = {"by": "human", "at": now()}
             elif args.status == "parked":
                 proposal = record.get("park_proposal")
                 if not isinstance(proposal, dict):
@@ -981,6 +1427,11 @@ def epic_update(workspace: Path, args):
                 raise BoardError("humans accept (done), confirm parked, or cancel epics")
         else:
             raise BoardError("epic transitions are written by the orchestrator or a human")
+        if protected:
+            revalidate()
+            if args.actor == "orchestrator":
+                gate_module().epic_delegation(workspace, args.delegation, args._strict_config_data,
+                                              record["id"], record["acceptance"]["legacy_children"])
         write_record(path, record)
     return record
 
@@ -1064,9 +1515,9 @@ def critical_paths(stories, stream_of):
     return per_stream
 
 
-def compute_roadmap(workspace: Path, config, directory: Path):
+def compute_roadmap(workspace: Path, config, directory: Path, *, loaded_board=None):
     """Derive the full projection from the records plus a read-only claims mirror."""
-    streams, _meta, epics, stories, problems = load_board(directory)
+    streams, _meta, epics, stories, problems = load_board(directory) if loaded_board is None else loaded_board
 
     # Membership: an epic joins its stream through the stream's epics array.
     stream_of_epic = {}
@@ -1200,7 +1651,7 @@ def compute_roadmap(workspace: Path, config, directory: Path):
         deps_met = not missing
         claim = claims.get(str(story_id))
         if status in ("backlog", "ready-for-dev"):
-            state = "ready" if deps_met and not story.get("blocked") else "planned"
+            state = "ready" if deps_met and not story.get("blocked") and not claims_problem else "planned"
         else:
             state = {
                 "in-progress": "in-progress", "in-review": "review",
@@ -1212,7 +1663,7 @@ def compute_roadmap(workspace: Path, config, directory: Path):
                 waiting.append({"id": story_id, "epic": story["epic"],
                                 "stream": stream_of[story_id], "title": story["title"],
                                 "missing": missing})
-            elif not story.get("blocked") and claim is None:
+            elif not story.get("blocked") and claim is None and not claims_problem:
                 why = "; ".join([*(f"after {part}" for part in met_parts)] or ["no prerequisites"])
                 frontier_ready.append({"id": story_id, "epic": story["epic"],
                                        "stream": stream_of[story_id], "title": story["title"],
@@ -1306,7 +1757,9 @@ def compute_roadmap(workspace: Path, config, directory: Path):
             decision_queue.append({
                 "kind": "epic-acceptance", "epic": epic_id,
                 "question": f"accept epic {epic_id} ({epic['title']}) against its done-when?",
-                "next_action": "run the epic checkpoint and confirm",
+                "next_action": "reconcile current evidence and authority; use delegated acceptance only when eligible",
+                "epic_hitl": epic.get("hitl", False),
+                "reason": "human-reservation" if epic.get("hitl", False) else "acceptance-evidence-and-authority",
             })
         proposal = epic.get("park_proposal")
         if isinstance(proposal, dict):
@@ -1402,20 +1855,23 @@ def compute_roadmap(workspace: Path, config, directory: Path):
     return payload
 
 
-def build(workspace: Path):
+def build(workspace: Path, config=None, *, protected=False):
     """Regenerate roadmap.json and dashboard.html from the records; locked."""
-    config = board_config(workspace)
-    directory = board_dir(workspace, config)
-    if not (directory / "streams.json").is_file():
+    config = board_config(workspace) if config is None else config
+    directory = workspace / config["dir"] if protected else board_dir(workspace, config)
+    if not protected and not (directory / "streams.json").is_file():
         raise BoardError(
             f"no board at {config['dir']}; run `roadmap.py init` or `roadmap.py derive` first"
         )
     with board_locked(workspace):
-        payload = compute_roadmap(workspace, config, directory)
+        loaded = protected_board(workspace, config) if protected else None
+        existing, dashboard_before = protected_projection_inputs(workspace, config) if protected else (None, None)
+        payload = compute_roadmap(workspace, config, directory, loaded_board=loaded)
         roadmap_path = directory / "roadmap.json"
         revision = 1
         generated_at = now()
-        existing = read_record(roadmap_path)
+        if not protected:
+            existing = read_record(roadmap_path)
         if existing is not None:
             prior = {key: value for key, value in existing.items()
                      if key not in ("revision", "generated_at")}
@@ -1437,7 +1893,10 @@ def build(workspace: Path):
         state_module().atomic_json(roadmap_path, document)
         html = dashboard_module().render_html(document)
         dashboard_path = directory / "dashboard.html"
-        if not dashboard_path.is_file() or dashboard_path.read_text() != html:
+        if protected:
+            if dashboard_before != html:
+                state_module().atomic_text(dashboard_path, html)
+        elif not dashboard_path.is_file() or dashboard_path.read_text() != html:
             state_module().atomic_text(dashboard_path, html)
     stories = len(payload["stories"])
     problems = len(payload["problems"])
@@ -1463,9 +1922,9 @@ def init_board(workspace: Path):
     return directory
 
 
-def maybe_build(workspace: Path, config):
+def maybe_build(workspace: Path, config, *, protected=False):
     if config["regenerate"] == "on-write":
-        build(workspace)
+        build(workspace, config=config, protected=protected)
 
 
 def main():
@@ -1488,6 +1947,8 @@ def main():
     parser.add_argument("--next-action")
     parser.add_argument("--finding")
     parser.add_argument("--decision")
+    parser.add_argument("--delegation")
+    parser.add_argument("--assessment")
     parser.add_argument("--resume")
     args = parser.parse_args()
     root = args.workspace.resolve()
@@ -1511,14 +1972,16 @@ def main():
             if args.story is None or args.actor is None:
                 parser.error("update needs --story and --actor")
             record = update_story(root, args)
-            maybe_build(root, board_config(root))
+            maybe_build(root, args._validated_config if hasattr(args, "_validated_config") else board_config(root),
+                        protected=hasattr(args, "_validated_config"))
             print(f"board: story {record['id']} updated ({record['status']})")
             return 0
         if args.command == "epic":
             if args.epic is None or args.actor is None or args.status is None:
                 parser.error("epic needs --epic, --actor and --status")
             record = epic_update(root, args)
-            maybe_build(root, board_config(root))
+            maybe_build(root, args._validated_config if hasattr(args, "_validated_config") else board_config(root),
+                        protected=hasattr(args, "_validated_config"))
             print(f"board: epic {record['id']} updated ({record['status']})")
             return 0
         return 2

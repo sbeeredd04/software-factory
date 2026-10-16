@@ -1,0 +1,7 @@
+# Synthetic delivery run
+
+**Everything in this directory is invented teaching data.** It is not copied from an incident, private log, approved board, provider or human decision. The [walkthrough](walkthrough.md) follows a greeting feature, a reproduced invalid-input bug, a correct-escaping no-fix report, an unknown observation, deduplicated signal, expired window, resumed claim and a local rollback proposal.
+
+Read [scenario.json](scenario.json) first. It names the fictional source, artifact, bounded window and distinct observation/repair/rollback scopes. The [evidence examples](evidence/feature-before.json) has before/after examples and sample checkpoint/review/decision shapes. These are illustrative fields, not valid production receipts or authenticated approval. The real method's [evidence contract](../../skills/software-factory/references/evidence.md), [operations contract](../../skills/software-factory/references/operations.md) and [recovery contract](../../skills/software-factory/references/recovery.md) remain authoritative.
+
+The included [principles](PRINCIPLES.md), [architecture](ARCHITECTURE.md), [conventions](CONVENTIONS.md), [risk](RISK.md) and [tasks](TASKS.md) make the story self-contained. `factory.config.draft.json` is a draft-only illustration. No helper executes this scenario as an operation engine; a real host must observe, decide, review and prove actual effects within its own authority.

@@ -17,6 +17,11 @@ touches. A failed run leaves the previous artifact intact.
 The header states the tool and the exact regeneration command, the source
 revision (the repository's `HEAD`, or `unknown (not a git repository)`) and
 the UTC generation timestamp.
+It also identifies `git-tracked-and-unignored` or `filesystem-fallback` file
+selection. The machine report records this as `source.selection`; exclusions,
+fallback limitations, missing tracked paths and submodule boundaries follow the
+[coverage contract](coverage.md). The census and packaging entry points use that
+same selected inventory, before source parsing and table caps.
 
 ## Sections
 
