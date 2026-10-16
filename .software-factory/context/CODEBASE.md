@@ -5,9 +5,9 @@
 > (`<skill-dir>` is the installed skill directory, e.g. `.claude/skills/sf-crawl`
 > or `.agents/skills/sf-crawl`).
 
-- Source revision: b5a53f27acfc554b50ec0b89df44006ccecd18ae
+- Source revision: a354d16d1d24360e2809b8707dcd485ee43f27b3
 - File selection: git-tracked-and-unignored
-- Generated: 2026-10-16T00:01:40Z
+- Generated: 2026-10-16T00:48:56Z
 
 ## Limits
 
@@ -112,7 +112,7 @@
 | `tests.test_showcase` | `tests/test_showcase.py` | 4 | 0 | 14 |
 | `tests.test_skills_distribution` | `tests/test_skills_distribution.py` | 3 | 0 | 9 |
 | `tests.test_state` | `tests/test_state.py` | 17 | 0 | 16 |
-| `tests.test_tools` | `tests/test_tools.py` | 21 | 0 | 14 |
+| `tests.test_tools` | `tests/test_tools.py` | 22 | 0 | 16 |
 | `tests.test_trace` | `tests/test_trace.py` | 2 | 0 | 13 |
 | `tests.test_trackers` | `tests/test_trackers.py` | 1 | 0 | 5 |
 | `tests.test_uninstall` | `tests/test_uninstall.py` | 1 | 0 | 14 |
@@ -223,7 +223,7 @@ No internal import edges.
 - `scripts.bmad_install.save_record` (line 402) calls `Path` (unconfirmed), `api.InstallError` (unconfirmed), `encode` (unconfirmed), `importlib.util.module_from_spec` (unconfirmed), `importlib.util.spec_from_file_location` (unconfirmed), `json.dumps` (unconfirmed), `json.loads` (unconfirmed), `lifecycle.parent_fd` (unconfirmed), `lifecycle.publish` (unconfirmed), `lifecycle.recovery_directory` (unconfirmed), `os.close` (unconfirmed), `os.open` (unconfirmed), `read_at_bounded` (confirmed: scripts.bmad_install.read_at_bounded), `spec.loader.exec_module` (unconfirmed), `with_name` (unconfirmed)
 - `scripts.bmad_install.provision` (line 425) calls `api.InstallError` (unconfirmed), `api.acquire_lock` (unconfirmed), `api.sha256` (unconfirmed), `attempt` (confirmed: scripts.bmad_install.attempt), `describe` (confirmed: scripts.bmad_install.describe), `fcntl.flock` (unconfirmed), `int` (unconfirmed), `isinstance` (unconfirmed), `load_ownership` (confirmed: scripts.bmad_install.load_ownership), `os.close` (unconfirmed), `previous.get` (unconfirmed), `print` (unconfirmed), `prior_bmad.get` (unconfirmed), `read_payload` (confirmed: scripts.bmad_install.read_payload), `record.update` (unconfirmed), `save_record` (confirmed: scripts.bmad_install.save_record), `set` (unconfirmed)
 - `scripts.build_release.release_files` (line 17) calls `Path` (unconfirmed), `ValueError` (unconfirmed), `all` (unconfirmed), `any` (unconfirmed), `distribution.bundle_files` (unconfirmed), `distribution.load_api` (unconfirmed), `files.items` (unconfirmed), `files.update` (unconfirmed), `is_relative_to` (unconfirmed), `isinstance` (unconfirmed), `items` (unconfirmed), `json.loads` (unconfirmed), `len` (unconfirmed), `name.startswith` (unconfirmed), `p.is_symlink` (unconfirmed), `path.is_file` (unconfirmed), `path.is_symlink` (unconfirmed), `path.parent.mkdir` (unconfirmed), `path.read_bytes` (unconfirmed), `path.resolve` (unconfirmed), `path.write_bytes` (unconfirmed), `read_text` (unconfirmed), `resolve` (unconfirmed), `root.resolve` (unconfirmed), `set` (unconfirmed) … (call cap reached)
-- … 1606 more call rows (cap reached)
+- … 1620 more call rows (cap reached)
 
 ## Entry points
 

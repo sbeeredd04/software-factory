@@ -282,6 +282,57 @@
         "Focused macOS3.12 proof; fresh complete localgate and actual six-jobCI includingMac3.11 remain required.",
         "No integration/release/protectedcompletion asserted."
       ]
+    },
+    "shellcheck-acquisition": {
+      "type": "ci-shellcheck-acquisition-recovery",
+      "subject_sha": "a354d16d1d24360e2809b8707dcd485ee43f27b3",
+      "at": "2026-10-16T00:48:38.686072+00:00",
+      "status": "implementation-in-review-real-ci-required",
+      "summary": "CI acquires exact official ShellCheck0.11.0 with archive/binary SHA validation in owned job temp and supported wrapper override, then executes unchanged lint before unit tests and again in fullgate. Failed anonymous-metadata attempt retained.",
+      "author": "/root/ci_mermaid_diagnosis",
+      "logical_owner": "codex-ci-recovery",
+      "effective_model": null,
+      "independent_reviewer": "/root/ci_browser_blind",
+      "review": "Independent plan and actual diff accepted; no actionable findings. Root independently reran26focusedmethods and actual unchanged CI body with realofficialDarwinARMbinary+realnpmwrapper.",
+      "files": {
+        ".github/workflows/ci.yml": "5fd96302c59a341ddaefaf58ea49e9fa414326f73fade5a94a5afd2db94ea3b4",
+        "tests/test_tools.py": "0d59afc47c6562ac953abfff1ac8e67cd27dfbc99101b4c557012737d6991805",
+        "CONTRIBUTING.md": "415d5f7430422166099e7700589cd3700eda6d69b14730484bf988a3985c6b17"
+      },
+      "checks": [
+        {
+          "command": "PYTHONPATH=tests python3 -m unittest test_tools.ShellCheckAcquisitionTest test_tools.LinuxRunnerChromeTest test_tools.CheckMermaidDiagnosticsTest test_tools.CheckAllShTest -q",
+          "exit_code": 0,
+          "tests": 26,
+          "seconds": 2.087,
+          "external_log_sha256": "77cbbdbe37657eeb29c51b8cff87e5c65ead6f32c49d590e2d73c859a722f770"
+        },
+        {
+          "command": "uvx --from ruff==0.17.0 ruff check tests/test_tools.py",
+          "exit_code": 0
+        },
+        {
+          "command": "uvx check-jsonschema --builtin-schema vendor.github-workflows .github/workflows/ci.yml",
+          "exit_code": 0
+        }
+      ],
+      "independent_review": {
+        "artifact": ".software-factory/runs/software-factory-v01/evidence/ci-shellcheck-blind-review-a354d16.md",
+        "sha256": "2877af21953cb4910b9d5d4056ee0ce283ffb55bb31166b4fa5e1408ba19bb17"
+      },
+      "actual_ci_body_local_proof": {
+        "artifact": ".software-factory/runs/software-factory-v01/evidence/ci-shellcheck-actual-body-a354d16.json",
+        "sha256": "d7724cb9fed33f785a60fd2791a83cdf9b1a13cb2824b9d5d3595118c28eb3f8"
+      },
+      "source_handoff": {
+        "artifact": ".software-factory/runs/software-factory-v01/evidence/ci-shellcheck-source-handoff-a354d16.json",
+        "sha256": "bb1d31ff1a4db2df66192cab27583478ead45c9c4f24eecfd58b08b2d56ad0e0"
+      },
+      "limits": [
+        "Root actualworkflow-body proof is localDarwinARM only; allsix freshactualCI jobs and complete frozenlocalgate stillrequired.",
+        "No gatecommand/52evalcontract/permissions/credentials/globalinstallation changed.",
+        "No integration/publication/protected completion inferred."
+      ]
     }
   },
   "baseline_sha": null,
@@ -354,6 +405,18 @@
       "by": "codex-ci-recovery",
       "from": "in-progress",
       "to": "in-review"
+    },
+    {
+      "at": "2026-10-16T00:41:56.747270+00:00",
+      "by": "codex-ci-recovery",
+      "from": "in-review",
+      "to": "in-progress"
+    },
+    {
+      "at": "2026-10-16T00:48:38.777668+00:00",
+      "by": "codex-ci-recovery",
+      "from": "in-progress",
+      "to": "in-review"
     }
   ],
   "findings": [
@@ -365,5 +428,5 @@
   ],
   "source_key": "launch-publication/docs-examples-dogfood",
   "evidence_contract": 1,
-  "review_subject_sha": "b5a53f27acfc554b50ec0b89df44006ccecd18ae"
+  "review_subject_sha": "a354d16d1d24360e2809b8707dcd485ee43f27b3"
 }
