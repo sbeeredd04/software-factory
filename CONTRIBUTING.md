@@ -24,6 +24,13 @@ developer caches but are not global shipped dependencies. Node.js >= 20 is neede
 npx-based checks when run. Optional BMad provisioning has its own Node >=20.12
 and official package boundary; the local `--skip-bmad` path stays available.
 
+CI acquires upstream ShellCheck v0.11.0 into its job temporary directory, verifies pinned
+archive and binary SHA-256 digests, and confirms the actual version before linting. The
+pinned npm wrapper remains `shellcheck@4.1.0`; its supported `SHELLCHECKJS_BIN` override
+uses the verified binary without querying GitHub's anonymous latest-release API. No
+binary is committed or globally installed. The full gate still runs the same shell lint.
+The pins come from the [official v0.11.0 release](https://github.com/koalaman/shellcheck/releases/tag/v0.11.0).
+
 ## The verification gate
 
 Run the full gate before every pull request and every handoff:

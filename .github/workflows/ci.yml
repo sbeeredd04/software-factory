@@ -53,6 +53,71 @@ jobs:
         run: |
           printf 'flowchart TD\n  A --> B\n' > "$RUNNER_TEMP/sf-mermaid-smoke.mmd"
           python3 scripts/check_mermaid.py "$RUNNER_TEMP/sf-mermaid-smoke.mmd"
+      - name: Acquire and verify pinned ShellCheck
+        shell: bash
+        run: |
+          set -euo pipefail
+          case "$(uname -s)/$(uname -m)" in
+            Darwin/arm64)
+              platform=darwin.aarch64
+              archive_sha=56affdd8de5527894dca6dc3d7e0a99a873b0f004d7aabc30ae407d3f48b0a79
+              binary_sha=61c17246d69f012cd458ae82f244c46023dac75d1b69733ca1cc7d28fb270fd7
+              ;;
+            Darwin/x86_64)
+              platform=darwin.x86_64
+              archive_sha=3c89db4edcab7cf1c27bff178882e0f6f27f7afdf54e859fa041fca10febe4c6
+              binary_sha=2589be755bb115f4421b8271eb7c08df1e03729f00350c1e4cf53b4a0bf9c2df
+              ;;
+            Linux/x86_64)
+              platform=linux.x86_64
+              archive_sha=8c3be12b05d5c177a04c29e3c78ce89ac86f1595681cab149b65b97c4e227198
+              binary_sha=4da528ddb3a4d1b7b24a59d4e16eb2f5fd960f4bd9a3708a15baddbdf1d5a55b
+              ;;
+            *) printf 'error: unsupported ShellCheck runner platform\n' >&2; exit 1 ;;
+          esac
+          workdir="$(mktemp -d "$RUNNER_TEMP/sf-shellcheck.XXXXXX")"
+          case "$workdir" in
+            *$'\r'*|*$'\n'*) printf 'error: invalid ShellCheck temporary path\n' >&2; exit 1 ;;
+          esac
+          url="https://github.com/koalaman/shellcheck/releases/download/v0.11.0/shellcheck-v0.11.0.$platform.tar.xz"
+          printf 'ShellCheck source: %s\n' "$url"
+          curl --fail --location --silent --show-error --proto '=https' --proto-redir '=https' \
+            --max-time 120 --max-filesize 16777216 --output "$workdir/archive.tar.xz" "$url"
+          python3 - "$workdir" "$archive_sha" "$binary_sha" <<'PYVERIFY'
+          import hashlib
+          import subprocess
+          import sys
+          import tarfile
+          from pathlib import Path
+          root = Path(sys.argv[1])
+          archive = root / "archive.tar.xz"
+          if archive.stat().st_size > 16 * 1024 * 1024:
+              raise SystemExit("ShellCheck archive exceeds size limit")
+          archive_hash = hashlib.sha256(archive.read_bytes()).hexdigest()
+          if archive_hash != sys.argv[2]:
+              raise SystemExit("ShellCheck archive checksum mismatch")
+          with tarfile.open(archive, "r:xz") as bundle:
+              member = bundle.getmember("shellcheck-v0.11.0/shellcheck")
+              if not member.isfile() or not 0 < member.size <= 64 * 1024 * 1024:
+                  raise SystemExit("ShellCheck binary is not a bounded regular file")
+              with bundle.extractfile(member) as stream:
+                  binary = stream.read(64 * 1024 * 1024 + 1)
+          if len(binary) != member.size or hashlib.sha256(binary).hexdigest() != sys.argv[3]:
+              raise SystemExit("ShellCheck binary checksum mismatch")
+          target = root / "shellcheck"
+          with target.open("xb") as output:
+              output.write(binary)
+          target.chmod(0o700)
+          version = subprocess.run([str(target), "--version"], capture_output=True,
+                                   text=True, encoding="utf-8", errors="replace", check=True, timeout=15)
+          if "version: 0.11.0" not in version.stdout.splitlines():
+              raise SystemExit("ShellCheck version mismatch")
+          print(f"ShellCheck archive SHA256: {archive_hash}")
+          print(f"ShellCheck binary SHA256: {sys.argv[3]}")
+          print(version.stdout, end="")
+          PYVERIFY
+          SHELLCHECKJS_BIN="$workdir/shellcheck" npx -y shellcheck@4.1.0 install.sh hosts/plugins/hook.sh
+          printf 'SHELLCHECKJS_BIN=%s\n' "$workdir/shellcheck" >> "$GITHUB_ENV"
       - name: Byte-compile shipped Python
         run: python3 -m compileall -q install.py scripts skills tests
       - name: Unit tests

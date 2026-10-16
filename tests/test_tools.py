@@ -8,8 +8,10 @@ from __future__ import annotations
 
 import hashlib
 import importlib.util
+import io
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -1265,6 +1267,178 @@ class LinuxRunnerChromeTest(unittest.TestCase):
                     [self.bash, "-n"], input=self.step(name)[1], capture_output=True, text=True, check=False,
                 )
                 self.assertEqual(0, result.returncode, result.stderr)
+
+
+class ShellCheckAcquisitionTest(unittest.TestCase):
+    STEP = "Acquire and verify pinned ShellCheck"
+    PINS = (
+        "56affdd8de5527894dca6dc3d7e0a99a873b0f004d7aabc30ae407d3f48b0a79",
+        "61c17246d69f012cd458ae82f244c46023dac75d1b69733ca1cc7d28fb270fd7",
+        "3c89db4edcab7cf1c27bff178882e0f6f27f7afdf54e859fa041fca10febe4c6",
+        "2589be755bb115f4421b8271eb7c08df1e03729f00350c1e4cf53b4a0bf9c2df",
+        "8c3be12b05d5c177a04c29e3c78ce89ac86f1595681cab149b65b97c4e227198",
+        "4da528ddb3a4d1b7b24a59d4e16eb2f5fd960f4bd9a3708a15baddbdf1d5a55b",
+    )
+
+    def setUp(self):
+        temp = tempfile.TemporaryDirectory(prefix="sf shellcheck fixture ")
+        self.addCleanup(temp.cleanup)
+        self.root = Path(temp.name).resolve()
+        self.bash = shutil.which("bash")
+        self.assertIsNotNone(self.bash)
+        workflow = (REPO / ".github/workflows/ci.yml").read_text()
+        self.block = workflow.split(f"      - name: {self.STEP}\n", 1)[1].split("      - name:", 1)[0]
+        self.body = textwrap.dedent(self.block.split("        run: |\n", 1)[1])
+        self.env_file = self.root / "github env"
+        self.env_file.write_text("")
+        self.archive = self.root / "fixture.tar.xz"
+        self.env = dict(os.environ, PATH=str(self.root), RUNNER_TEMP=str(self.root),
+                        GITHUB_ENV=str(self.env_file), FIXTURE_ARCHIVE=str(self.archive),
+                        FIXTURE_OS="Darwin", FIXTURE_ARCH="arm64", FIXTURE_CURL_EXIT="0",
+                        FIXTURE_LINT_EXIT="0")
+        for name, target in (("python3", sys.executable), ("mktemp", shutil.which("mktemp"))):
+            self.assertIsNotNone(target)
+            (self.root / name).symlink_to(target)
+        self.stub("uname", "import os,sys\nprint(os.environ['FIXTURE_OS' if sys.argv[1] == '-s' else 'FIXTURE_ARCH'])\n")
+        self.stub("curl", "import os,sys,shutil\nfrom pathlib import Path\n"
+                  "assert sys.argv[-1].startswith('https://github.com/koalaman/shellcheck/releases/download/v0.11.0/')\n"
+                  "assert ['--proto', '=https'] == sys.argv[sys.argv.index('--proto'):sys.argv.index('--proto')+2]\n"
+                  "assert sys.argv[sys.argv.index('--proto-redir')+1] == '=https'\n"
+                  "assert sys.argv[sys.argv.index('--max-time')+1] == '120'\n"
+                  "assert sys.argv[sys.argv.index('--max-filesize')+1] == '16777216'\n"
+                  "assert '--fail' in sys.argv and '--location' in sys.argv\n"
+                  "if int(os.environ['FIXTURE_CURL_EXIT']): raise SystemExit(int(os.environ['FIXTURE_CURL_EXIT']))\n"
+                  "shutil.copyfile(os.environ['FIXTURE_ARCHIVE'], sys.argv[sys.argv.index('--output')+1])\n")
+        self.stub("npx", "import os,sys\nfrom pathlib import Path\n"
+                  "assert sys.argv[1:] == ['-y','shellcheck@4.1.0','install.sh','hosts/plugins/hook.sh']\n"
+                  "target = Path(os.environ['SHELLCHECKJS_BIN'])\nassert target.is_file()\n"
+                  "assert target.stat().st_mode & 0o777 == 0o700\n"
+                  "(target.parent / 'lint-called').write_text(str(target))\n"
+                  "raise SystemExit(int(os.environ['FIXTURE_LINT_EXIT']))\n")
+
+    def stub(self, name, code):
+        path = self.root / name
+        path.write_text(f"#!{sys.executable}\n" + code)
+        path.chmod(0o755)
+
+    def fixture(self, code="print('version: 0.11.0')\n", *, member_name="shellcheck-v0.11.0/shellcheck", symlink=False):
+        binary = (f"#!{sys.executable}\n" + code).encode()
+        with tarfile.open(self.archive, "w:xz") as bundle:
+            member = tarfile.TarInfo(member_name)
+            if symlink:
+                member.type = tarfile.SYMTYPE
+                member.linkname = "../outside"
+                bundle.addfile(member)
+            else:
+                member.size = len(binary)
+                bundle.addfile(member, io.BytesIO(binary))
+        self.binary_hash = hashlib.sha256(binary).hexdigest()
+        self.archive_hash = hashlib.sha256(self.archive.read_bytes()).hexdigest()
+
+    def run_body(self, *, binary_hash=None):
+        # Only substitute reviewed literal checksums for tiny offline fixture bytes.
+        body = re.sub(r"archive_sha=[0-9a-f]{64}", f"archive_sha={self.archive_hash}", self.body)
+        body = re.sub(r"binary_sha=[0-9a-f]{64}", f"binary_sha={binary_hash or self.binary_hash}", body)
+        return subprocess.run([self.bash, "-e", "-u", "-o", "pipefail", "-c", body],
+                              env=self.env, capture_output=True, text=True, check=False)
+
+    def assert_unexported(self, result):
+        self.assertNotEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertEqual("", self.env_file.read_text())
+        self.assertFalse(list(self.root.glob("sf-shellcheck.*/lint-called")))
+
+    def test_exact_pins_and_blocking_gate_preserved(self):
+        for pin in self.PINS:
+            self.assertIn(pin, self.body)
+        self.assertNotIn("if:", self.block)
+        self.assertNotIn("continue-on-error:", self.block)
+        self.assertIn('SHELLCHECKJS_BIN="$workdir/shellcheck" npx -y shellcheck@4.1.0 install.sh hosts/plugins/hook.sh', self.body)
+        self.assertIn('run_step "shellcheck" npx -y shellcheck@4.1.0 install.sh hosts/plugins/hook.sh',
+                      (TOOLS / "check_all.sh").read_text())
+        self.assertNotIn("releases/latest", self.body)
+        self.assertNotIn("GITHUB_TOKEN", self.body)
+        result = subprocess.run([self.bash, "-n"], input=self.body, capture_output=True, text=True, check=False)
+        self.assertEqual(0, result.returncode, result.stderr)
+
+    def test_actual_body_success_and_export_for_supported_platforms(self):
+        self.fixture()
+        for system, arch, asset in (("Darwin", "arm64", "darwin.aarch64"),
+                                    ("Darwin", "x86_64", "darwin.x86_64"),
+                                    ("Linux", "x86_64", "linux.x86_64")):
+            with self.subTest(system=system, arch=arch):
+                self.env_file.write_text("")
+                self.env.update(FIXTURE_OS=system, FIXTURE_ARCH=arch)
+                result = self.run_body()
+                self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+                self.assertIn(f"shellcheck-v0.11.0.{asset}.tar.xz", result.stdout)
+                self.assertIn("version: 0.11.0", result.stdout)
+                lines = self.env_file.read_text().splitlines()
+                self.assertEqual(1, len(lines))
+                key, path = lines[0].split("=", 1)
+                self.assertEqual("SHELLCHECKJS_BIN", key)
+                self.assertEqual(self.binary_hash, hashlib.sha256(Path(path).read_bytes()).hexdigest())
+                self.assertEqual(path, (Path(path).parent / "lint-called").read_text())
+
+    def test_unsupported_platform_or_download_failure_never_exports(self):
+        self.fixture()
+        self.env["FIXTURE_ARCH"] = "unsupported"
+        result = self.run_body()
+        self.assert_unexported(result)
+        self.assertIn("unsupported ShellCheck runner platform", result.stderr)
+        self.env.update(FIXTURE_ARCH="arm64", FIXTURE_CURL_EXIT="22")
+        result = self.run_body()
+        self.assert_unexported(result)
+        self.assertEqual(22, result.returncode)
+
+    def test_linebreak_in_temporary_path_is_rejected_before_download(self):
+        self.fixture()
+        temporary = self.root / "invalid\npath"
+        temporary.mkdir()
+        self.env["RUNNER_TEMP"] = str(temporary)
+        result = self.run_body()
+        self.assert_unexported(result)
+        self.assertIn("invalid ShellCheck temporary path", result.stderr)
+        self.assertFalse(list(temporary.glob("sf-shellcheck.*/archive.tar.xz")))
+
+    def test_corrupt_or_oversized_archive_never_executes_or_exports(self):
+        self.fixture()
+        self.archive.write_bytes(b"corrupt archive")
+        result = self.run_body()
+        self.assert_unexported(result)
+        self.assertIn("archive checksum mismatch", result.stderr)
+        self.archive.write_bytes(b"x" * (16 * 1024 * 1024 + 1))
+        self.archive_hash = hashlib.sha256(self.archive.read_bytes()).hexdigest()
+        result = self.run_body()
+        self.assert_unexported(result)
+        self.assertIn("archive exceeds size limit", result.stderr)
+
+    def test_missing_or_symlink_member_rejected(self):
+        for kwargs in ({"member_name": "../outside"}, {"symlink": True}):
+            with self.subTest(kwargs=kwargs):
+                self.fixture(**kwargs)
+                self.assert_unexported(self.run_body())
+        self.assertFalse((self.root / "outside").exists())
+
+    def test_binary_checksum_failure_precedes_execution(self):
+        self.fixture("raise SystemExit('BINARY EXECUTED')\n")
+        result = self.run_body(binary_hash="0" * 64)
+        self.assert_unexported(result)
+        self.assertIn("binary checksum mismatch", result.stderr)
+        self.assertNotIn("BINARY EXECUTED", result.stderr)
+
+    def test_wrong_or_failed_version_never_lints_or_exports(self):
+        for code in ("print('version: 0.10.0')\n", "raise SystemExit(8)\n"):
+            with self.subTest(code=code):
+                self.fixture(code)
+                self.assert_unexported(self.run_body())
+
+    def test_lint_failure_prevents_environment_handoff(self):
+        self.fixture()
+        self.env["FIXTURE_LINT_EXIT"] = "9"
+        result = self.run_body()
+        self.assertEqual(9, result.returncode, result.stdout + result.stderr)
+        self.assertEqual("", self.env_file.read_text())
+        self.assertEqual(1, len(list(self.root.glob("sf-shellcheck.*/lint-called"))))
 
 
 class CheckAllShTest(unittest.TestCase):
