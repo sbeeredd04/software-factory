@@ -5,8 +5,8 @@
     "command": "python3 scripts/roadmap.py build --workspace <project-root>",
     "note": "Locked projection: do not hand-edit; regenerate it from the board records with `python3 scripts/roadmap.py build --workspace <project-root>`."
   },
-  "generated_at": "2026-10-16T00:49:01.438555+00:00",
-  "revision": 367,
+  "generated_at": "2026-10-16T18:51:43.050311+00:00",
+  "revision": 372,
   "streams": [
     {
       "id": "W-foundation",
@@ -109,7 +109,7 @@
         "planned": 0,
         "ready": 1,
         "in-progress": 0,
-        "review": 7,
+        "review": 8,
         "built": 0,
         "done": 0,
         "cancelled": 0
@@ -301,7 +301,8 @@
         33,
         47,
         53,
-        54
+        54,
+        55
       ],
       "needs": [
         4
@@ -9692,6 +9693,79 @@
       "source_key": "launch-publication/lifecycle-system-map",
       "evidence_contract": 1,
       "review_subject_sha": "a6434eeb3ecbc4308f272db1da55a4543911d73a"
+    },
+    {
+      "id": 55,
+      "epic": 5,
+      "stream": "W-launch",
+      "type": "bug",
+      "title": "Correct verified release and showcase publication status",
+      "status": "in-review",
+      "state": "review",
+      "owner": "codex-postpub-docs",
+      "after": [],
+      "covers": [
+        "VAL-README-002",
+        "VAL-SITE-006",
+        "VAL-PUB-002"
+      ],
+      "risk": "standard",
+      "hitl": false,
+      "plan_checkpoint": false,
+      "done_checkpoint": false,
+      "blocked": null,
+      "receipts": {
+        "worker-handoff": {
+          "type": "agent-attempt",
+          "recorded_at": "2026-10-16T18:51:42.848483+00:00",
+          "subject_sha": "47a65a88c3d6a7e1b5469a147b4ab42503647276",
+          "agent": "/root/postpub_docs_impl",
+          "role": "sf-engineer",
+          "skill": "bmad-build",
+          "effective_model": null,
+          "status": "awaiting-current-gate-and-applicability-decision",
+          "summary": "Exact approved six-file publication copy correction.12README/18showcase checks and static validation/link/public scan pass;22public tag sources match. Three independent BMad layers triaged;8pre-existing/optional follow-ups deferred,2claims refuted. First fullgate failed only its committed-board freshness case while board was uncommitted; remaining gate cancelled143 and original proof preserved. No fullgate/CI/merge/Pages success claimed.",
+          "checks": {
+            "readme_tests_passed": 12,
+            "showcase_tests_passed": 18,
+            "static_checks_exit_code": 0,
+            "public_tag_sources_matched": 22
+          },
+          "scope": "Approved six-file documentation correction; required root tracking separate. Existing release tag/assets immutable. Required review_bots applicability still unresolved for55."
+        }
+      },
+      "baseline_sha": null,
+      "branch": null,
+      "pr": null,
+      "merged_sha": null,
+      "claim": {
+        "live": false
+      },
+      "blocks": [],
+      "history": [
+        {
+          "at": "2026-10-16T18:36:18.316845+00:00",
+          "by": "orchestrator",
+          "from": "backlog",
+          "to": "ready-for-dev"
+        },
+        {
+          "at": "2026-10-16T18:37:44.836750+00:00",
+          "by": "codex-postpub-docs",
+          "from": "ready-for-dev",
+          "to": "in-progress"
+        },
+        {
+          "at": "2026-10-16T18:51:42.891538+00:00",
+          "by": "codex-postpub-docs",
+          "from": "in-progress",
+          "to": "in-review"
+        }
+      ],
+      "findings": [],
+      "source_key": "launch-publication/post-publication-docs",
+      "evidence_contract": 1,
+      "review_subject_sha": "47a65a88c3d6a7e1b5469a147b4ab42503647276"
     }
   ],
   "frontier": {

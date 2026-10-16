@@ -21,8 +21,10 @@ the local checkout, even with `--ref`. No download occurs on that route.
 A standalone `install.sh` uses the documented default `v0.1.0`, or `--ref TAG`.
 It downloads `sf-TAG.tar.gz` and `SHA256SUMS` from
 `https://github.com/sbeeredd04/software-factory/releases/download/TAG/`.
-This is the configured public artifact destination, not a statement that a
-release has been published. No latest lookup or fallback occurs.
+The [v0.1.0 pre-release](https://github.com/sbeeredd04/software-factory/releases/tag/v0.1.0)
+is published from commit `bc206b3751da7c3ca0cc32436893be96bfe6c42b`; both public
+assets and standalone setup were verified. Other tags require separate release
+verification. No latest lookup or fallback occurs.
 
 The trusted bootstrap verifies SHA-256 before extraction or installer execution.
 It rejects ambiguous checksums, traversal, links, devices, collisions, oversized

@@ -1237,6 +1237,21 @@
           "hitl": false,
           "plan_checkpoint": false,
           "done_checkpoint": false
+        },
+        {
+          "key": "post-publication-docs",
+          "title": "Correct verified release and showcase publication status",
+          "type": "bug",
+          "after": [],
+          "covers": [
+            "VAL-README-002",
+            "VAL-SITE-006",
+            "VAL-PUB-002"
+          ],
+          "risk": "standard",
+          "hitl": false,
+          "plan_checkpoint": false,
+          "done_checkpoint": false
         }
       ]
     }
