@@ -13,9 +13,12 @@ import itertools
 import json
 import os
 import shutil
+import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 _spec = importlib.util.spec_from_file_location(
     "sf_test_support", Path(__file__).resolve().parent / "support.py"
@@ -67,6 +70,95 @@ def projection_hashes(repo):
         for rel, digest in support.tree_hashes(repo).items()
         if rel != MANIFEST and not rel.startswith(".software-factory/backups/")
     }
+
+
+class GitFixtureTests(unittest.TestCase):
+    def test_git_wrapper_preserves_arguments_options_result_and_errors(self):
+        repo = Path('fixture-repo')
+        args = ('-c', 'user.name=Fixture', 'commit', '-q', '-m', 'fixture')
+        expected = ['git', '-c', 'maintenance.auto=false', '-c', 'gc.auto=0',
+                    '-C', str(repo), *args]
+        result = subprocess.CompletedProcess(expected, 0, stdout='fixture output\n')
+        with mock.patch.object(support.subprocess, 'run', return_value=result) as run:
+            self.assertIs(result, support.Workspace.git(repo, *args))
+            run.assert_called_once_with(
+                expected, check=True, capture_output=True, text=True,
+            )
+        error = subprocess.CalledProcessError(7, expected, stderr='fixture failure')
+        with mock.patch.object(support.subprocess, 'run', side_effect=error) as run:
+            with self.assertRaises(subprocess.CalledProcessError) as caught:
+                support.Workspace.git(repo, *args)
+            self.assertIs(error, caught.exception)
+            run.assert_called_once_with(
+                expected, check=True, capture_output=True, text=True,
+            )
+
+    def test_git_maintenance_controls_override_child_environment_without_persistence(self):
+        parent_env = dict(os.environ)
+        with tempfile.TemporaryDirectory(prefix='sf-git-control-') as temporary:
+            repo = support.fresh_repo(temporary)
+            config = repo / '.git/config'
+            before = config.read_bytes()
+            global_config = Path(temporary).resolve() / 'global.gitconfig'
+            global_before = b'[maintenance]\n\tauto = true\n[gc]\n\tauto = 1\n'
+            global_config.write_bytes(global_before)
+            trace = Path(temporary).resolve() / 'git-trace.jsonl'
+            child_env = dict(parent_env)
+            child_env.pop('GIT_CONFIG_PARAMETERS', None)
+            child_env.update(
+                GIT_CONFIG_COUNT='2',
+                GIT_CONFIG_KEY_0='maintenance.auto', GIT_CONFIG_VALUE_0='true',
+                GIT_CONFIG_KEY_1='gc.auto', GIT_CONFIG_VALUE_1='1',
+                GIT_CONFIG_GLOBAL=str(global_config), GIT_TRACE2_EVENT=str(trace),
+                PYTHONPATH=str(Path(__file__).resolve().parent),
+            )
+            child = '''
+import json
+import os
+import subprocess
+import sys
+from pathlib import Path
+import support
+
+before_env = dict(os.environ)
+observed = {}
+for key in ('maintenance.auto', 'gc.auto'):
+    inherited = subprocess.run(
+        ['git', '-C', sys.argv[1], 'config', '--get', key],
+        check=True, capture_output=True, text=True,
+    )
+    controlled = support.Workspace.git(sys.argv[1], 'config', '--get', key)
+    observed[key] = [inherited.stdout.strip(), controlled.stdout.strip()]
+before_head = support.Workspace.git(sys.argv[1], 'rev-parse', 'HEAD').stdout.strip()
+support.Workspace.git(
+    sys.argv[1], '-c', 'user.name=' + support.FIXTURE_NAME,
+    '-c', 'user.email=' + support.FIXTURE_EMAIL,
+    'commit', '--allow-empty', '--no-gpg-sign', '-m', 'fixture maintenance check',
+)
+after_head = support.Workspace.git(sys.argv[1], 'rev-parse', 'HEAD').stdout.strip()
+events = [json.loads(line) for line in Path(os.environ['GIT_TRACE2_EVENT']).read_text().splitlines()]
+automatic_children = [event for event in events if event.get('event') == 'child_start'
+                      and any(arg in ('maintenance', 'gc') or Path(arg).name in ('git-maintenance', 'git-gc')
+                              for arg in event.get('argv', []))]
+commit_events = [event for event in events if event.get('event') == 'start'
+                 and 'commit' in event.get('argv', []) and '--allow-empty' in event['argv']]
+print(json.dumps({'values': observed, 'head_changed': before_head != after_head,
+                  'commit_events': len(commit_events), 'automatic_children': len(automatic_children),
+                  'environment_unchanged': before_env == dict(os.environ)}))
+'''
+            result = subprocess.run(
+                [sys.executable, '-c', child, str(repo)], cwd=temporary,
+                env=child_env, check=True, capture_output=True, text=True,
+            )
+            self.assertEqual(
+                {'values': {'maintenance.auto': ['true', 'false'], 'gc.auto': ['1', '0']},
+                 'head_changed': True, 'commit_events': 1, 'automatic_children': 0,
+                 'environment_unchanged': True},
+                json.loads(result.stdout),
+            )
+            self.assertEqual(before, config.read_bytes())
+            self.assertEqual(global_before, global_config.read_bytes())
+        self.assertEqual(parent_env, dict(os.environ))
 
 
 class SelectionCase(unittest.TestCase):

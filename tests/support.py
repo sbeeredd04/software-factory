@@ -156,8 +156,10 @@ class Workspace:
     # -- git fixtures --------------------------------------------------------
     @staticmethod
     def git(repo, *args):
+        # Disposable fixtures must not leave detached maintenance behind.
         return subprocess.run(
-            ["git", "-C", str(repo), *args],
+            ["git", "-c", "maintenance.auto=false", "-c", "gc.auto=0",
+             "-C", str(repo), *args],
             check=True,
             capture_output=True,
             text=True,
