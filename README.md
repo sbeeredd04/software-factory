@@ -10,7 +10,7 @@ An active Claude Code, Cursor or Codex session supplies the model, workers and t
 
 [![CI workflow configured](https://img.shields.io/badge/CI-workflow%20configured-informational)](docs/verification.md) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE) [![Release: pre-release](https://img.shields.io/badge/release-pre--release-orange)](CHANGELOG.md)
 
-> **Pre-release, targeting v0.1.0.** A local checkout is the available setup route described here. The release and public bootstrap endpoints are configured targets, not verified published artifacts. This project is non-affiliated with Anthropic, Anysphere, OpenAI, GitHub, BMad Method and Factory. See [Notice](NOTICE.md).
+> **Public pre-release v0.1.0.** [Download the release](https://github.com/sbeeredd04/software-factory/releases/tag/v0.1.0) and [explore the showcase](https://sbeeredd04.github.io/software-factory/). The two release assets and standalone bootstrap were verified against the published commit; trusted local checkout setup remains available. This project is non-affiliated with Anthropic, Anysphere, OpenAI, GitHub, BMad Method and Factory. See [Notice](NOTICE.md).
 
 ## Install locally
 
@@ -96,7 +96,7 @@ Ground one small real story in project facts and accepted BMad planning sources.
 
 The project installer uses host-specific invocation names. Raw portable skill discovery, native plugin loading and full project setup are distinct routes; use the actual host listing to confirm invocation. Native bundle loading, Codex hook trust, provider authentication and model/worker availability require separate observation. Do not stack project and plugin hooks for the same host without reconciling duplicate recovery.
 
-A separately downloaded and reviewed standalone `install.sh` fetches `sf-TAG.tar.gz` and `SHA256SUMS` for explicit `--ref TAG` or default `v0.1.0`; it never resolves `latest`. These configured release endpoints remain unpublished targets. The same-origin checksum checks integrity, not an independent publisher signature. Download and review the script before execution: piping fetched code to a shell would execute the bootstrap before its archive verification. [Bootstrap trust and format details](docs/distribution.md#bootstrap).
+A separately downloaded and reviewed standalone `install.sh` fetches `sf-TAG.tar.gz` and `SHA256SUMS` for explicit `--ref TAG` or default `v0.1.0`; it never resolves `latest`. The verified v0.1.0 pre-release provides both assets at those endpoints. Other tags require their own publication and verification. The same-origin checksum checks integrity, not an independent publisher signature. Download and review the script before execution: piping fetched code to a shell would execute the bootstrap before its archive verification. [Bootstrap trust and format details](docs/distribution.md#bootstrap).
 
 ## The nine workflow maps
 
@@ -388,7 +388,7 @@ The [dogfood record](docs/DOGFOOD.md) names actual local source subjects, gate o
 
 **What data leaves my machine?** The local Python helpers make no model calls and send no telemetry. The chosen coding host and any separately enabled provider, BMad package acquisition, skills CLI, review bot or monitoring source have their own data paths and permissions. Inspect those tools and your project privacy rules before enabling them. [Security](docs/security.md) covers the trust boundary.
 
-**Which platforms are verified?** Source and fixture checks exercise the host projections; local execution evidence is macOS/Python 3.12. Python 3.11+ and POSIX filesystem behavior are required. Native Windows, combined Cursor/Codex live frontmatter, plugin registration, Codex custom-agent loading and real provider access remain unverified. [Hosts](docs/hosts.md) and [limitations](docs/limitations.md) track details.
+**Which platforms are verified?** Source and fixture checks exercise the host projections. [Actual release-source CI](https://github.com/sbeeredd04/software-factory/actions/runs/38857687865) passed on Ubuntu and macOS across Python 3.11–3.13; local execution evidence also includes macOS/Python 3.12. Python 3.11+ and POSIX filesystem behavior are required. Native Windows, combined Cursor/Codex live frontmatter, plugin registration, Codex custom-agent loading and real provider access remain unverified. [Hosts](docs/hosts.md) and [limitations](docs/limitations.md) track details.
 
 **How do I recover or remove it?** Reconcile Git, ownership manifest and actual effects before retrying a partial action. Preview uninstall and retain edited user files, context and backups. [Recovery](docs/recovery.md) and [installation](docs/installation.md#doctor-and-removal) give the bounded commands.
 

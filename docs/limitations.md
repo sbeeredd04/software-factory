@@ -18,8 +18,12 @@ and trust/invocation policies. See [installation](installation.md).
 ## Platform and network boundaries
 
 Local filesystem helpers require Python3.11+ and POSIX descriptor/no-follow and
-locking APIs. Current execution proof is macOS/Python3.12. Native Windows support,
-Linux/WSL execution and remote CI success are not implied by portability or YAML.
+locking APIs. [Release-source CI](https://github.com/sbeeredd04/software-factory/actions/runs/38857687865)
+passed on Ubuntu and macOS across Python3.11–3.13 at published commit
+`bc206b3751da7c3ca0cc32436893be96bfe6c42b`; local execution also includes
+macOS/Python3.12. These checks do not establish native Windows or WSL execution,
+live coding-host loading/trust or real provider access. Portability and workflow
+configuration alone do not establish those capabilities.
 
 Kernel/admin observation is local; explicit bootstrap acquisition and consented
 BMad provisioning have network/subprocess boundaries. Doctor can invoke available

@@ -223,7 +223,7 @@ class ReadmeJourneyTests(unittest.TestCase):
         self.assertNotIn("/software-factory:software-factory", rows["Raw pinned skills acquisition"])
         for term in ("separately downloaded and reviewed", "sf-TAG.tar.gz", "SHA256SUMS",
                      "explicit `--ref TAG`", "default `v0.1.0`", "never resolves `latest`",
-                     "unpublished targets", "same-origin checksum", "not an independent publisher signature",
+                     "verified v0.1.0 pre-release", "same-origin checksum", "not an independent publisher signature",
                      "before its archive verification"):
             self.assertIn(term, routes)
         self.assertNotRegex(routes, r"curl[^\n]*\|\s*(?:sh|bash)")

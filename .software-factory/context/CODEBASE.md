@@ -5,9 +5,9 @@
 > (`<skill-dir>` is the installed skill directory, e.g. `.claude/skills/sf-crawl`
 > or `.agents/skills/sf-crawl`).
 
-- Source revision: a354d16d1d24360e2809b8707dcd485ee43f27b3
+- Source revision: 47a65a88c3d6a7e1b5469a147b4ab42503647276
 - File selection: git-tracked-and-unignored
-- Generated: 2026-10-16T00:48:56Z
+- Generated: 2026-10-16T18:51:43Z
 
 ## Limits
 
